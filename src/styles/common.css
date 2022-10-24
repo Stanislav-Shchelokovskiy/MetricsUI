@@ -1,0 +1,17 @@
+.FlexRow {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: 'flex-start';
+  align-items: stretch;
+}
+
+.FlexColumn {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.FlexColumn .Tribes {
+  gap: 30px;
+}
