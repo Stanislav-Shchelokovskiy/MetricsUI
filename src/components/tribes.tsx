@@ -10,9 +10,9 @@ interface TribesList {
 }
 
 
-export default function Tribes({ tribes }: TribesList) {
+function Tribes({ tribes }: TribesList) {
     return (
-        <div>
+        <div className="Tribes">
             {
                 tribes?.map((tribe) => {
                     return tribe.name
@@ -21,3 +21,5 @@ export default function Tribes({ tribes }: TribesList) {
         </div>
     )
 }
+
+export default Tribes
