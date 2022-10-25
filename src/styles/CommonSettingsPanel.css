@@ -1,0 +1,20 @@
+.IncomeTypeSelector {}
+
+.PositionsSelector {
+    min-width: 20%;
+}
+
+.TribesSelector {
+    min-width: 30%;
+}
+
+
+.CommonSettingsPanel {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: 'flex-start';
+    align-items: flex-start;
+    background-color: rgb(212, 150, 150);
+    padding: 8px;
+    gap: 30px;
+}

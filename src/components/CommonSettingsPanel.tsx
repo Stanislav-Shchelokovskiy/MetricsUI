@@ -66,7 +66,7 @@ function TribesSelector({ tribes }: TribesList) {
     </div>)
 }
 
-function CommonSettings({ tribes }: TribesList) {
+function CommonSettingsPanel({ tribes }: TribesList) {
     return (
         <div className="CommonSettingsPanel">
             <IncomeSelector />
@@ -77,4 +77,4 @@ function CommonSettings({ tribes }: TribesList) {
 
 }
 
-export default CommonSettings
+export default CommonSettingsPanel

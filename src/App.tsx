@@ -1,21 +1,30 @@
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 import React, { useState } from 'react';
-import './styles/common.css';
-import Tribes, { Tribe } from './components/tribes'
-import CommonSettings from './components/CommonSettingsPanel'
+import './styles/App.css';
+import './styles/CommonSettingsPanel.css';
+import './styles/Tribes.css';
+import './styles/Tribe.css';
+import Tribes, { TribeData } from './components/Tribes'
+import CommonSettingsPanel from './components/CommonSettingsPanel'
 
 function App() {
 
 
   return (
     <div className="App">
-      <CommonSettings tribes={
+      <CommonSettingsPanel tribes={
         [
-          { id: '1', name: 'WinForms Desktop UI' }, 
+          { id: '1', name: 'WinForms Desktop UI' },
           { id: '2', name: 'Data Visualization and Analysis' },
           { id: '3', name: 'App Frameworks (UI, API, ORM)' },
           { id: '4', name: 'XAML United Team' },
+        ]
+      } />
+      <Tribes tribes={
+        [
+          { id: '1', name: 'WinForms Desktop UI' },
+          { id: '2', name: 'Data Visualization and Analysis' },
         ]
       } />
     </div>

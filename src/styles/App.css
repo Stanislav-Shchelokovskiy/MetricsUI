@@ -1,0 +1,18 @@
+.FlexRow {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: 'flex-start';
+  align-items: stretch;
+}
+
+.FlexColumn,
+.App{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.App {
+  background-color: rgb(242, 11, 11);
+}
