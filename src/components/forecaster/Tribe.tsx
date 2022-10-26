@@ -1,7 +1,7 @@
 import React from 'react'
 import Accordion, { Item } from 'devextreme-react/accordion';
-import TacticalForecast from './forecasts/TacticalForecast'
-import StrategicForecast from './forecasts/StrategicForecast'
+import TacticalForecast from './TacticalForecast'
+import StrategicForecast from './StrategicForecast'
 
 interface TribeData {
     name: string

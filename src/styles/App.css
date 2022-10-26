@@ -5,8 +5,7 @@
   align-items: stretch;
 }
 
-.FlexColumn,
-.App {
+.FlexColumn {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
