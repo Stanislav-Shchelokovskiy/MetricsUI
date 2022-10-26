@@ -14,7 +14,8 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path='/forecaster'
-              element={<Forecaster />}></Route>
+              element={<Forecaster />}>
+            </Route>
           </Routes>
         </BrowserRouter>
       </header>

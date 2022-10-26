@@ -50,9 +50,9 @@ function TribesSelector({ tribes }: { tribes: Array<Tribe> }) {
             label='Tribes'
             labelMode='static'
         >
-            <Validator>
-                <RequiredRule />
-            </Validator>
+            {/* <Validator>
+                <RequiredRule/>
+            </Validator> */}
         </TagBox>
     </div>)
 }
