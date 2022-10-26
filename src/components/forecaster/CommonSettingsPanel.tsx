@@ -1,25 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React from 'react';
 import TagBox from 'devextreme-react/tag-box';
 import SelectBox from 'devextreme-react/select-box';
 import Validator, { RequiredRule } from 'devextreme-react/validator';
+import { Tribe } from './Tribe'
 
-export interface Tribe {
-    id: string
-    name: string
-}
 
-interface TribesList {
-    tribes?: Array<Tribe>
-}
-
-function IncomeSelector() {
+function IncomeSelector({ incomeTypes }: { incomeTypes: Array<string> }) {
     return (
-        <div className="IncomeTypeSelector">
+        <div className='IncomeTypeSelector'>
             <SelectBox
-                dataSource={["income 1", "income 2"]}
-                label="Income type"
-                labelMode="static"
-                value="income 1"
+                dataSource={incomeTypes}
+                label='Income type'
+                labelMode='static'
+                value={incomeTypes?.[0]}
             />
         </div>
     )
@@ -27,36 +20,35 @@ function IncomeSelector() {
 
 function PositionsSelector() {
     return (
-        <div className="PositionsSelector">
+        <div className='PositionsSelector'>
             <TagBox
-                placeholder="Select positions to filter by..."
-                dataSource={["Support", "Developer"]}
+                placeholder='Select positions to filter by...'
+                dataSource={['Support', 'Developer']}
                 multiline={true}
-                selectAllMode="allPages"
+                selectAllMode='allPages'
                 showSelectionControls={true}
                 showDropDownButton={false}
-                label="Display only positions"
-                labelMode="static"
+                label='Display only positions'
+                labelMode='static'
             />
         </div>
     )
-
 }
 
-function TribesSelector({ tribes }: TribesList) {
-    return (<div className="TribesSelector">
+function TribesSelector({ tribes }: { tribes: Array<Tribe> }) {
+    return (<div className='TribesSelector'>
         <TagBox
             items={tribes?.map((tribe) => {
                 return tribe.name
             })}
-            placeholder="Select tribes to display..."
+            placeholder='Select tribes to display...'
             // defaultValue={this.defaultPosition}
             multiline={true}
-            selectAllMode="allPages"
+            selectAllMode='allPages'
             showSelectionControls={true}
             showDropDownButton={false}
-            label="Tribes"
-            labelMode="static"
+            label='Tribes'
+            labelMode='static'
         >
             <Validator>
                 <RequiredRule />
@@ -65,15 +57,18 @@ function TribesSelector({ tribes }: TribesList) {
     </div>)
 }
 
-function CommonSettingsPanel({ tribes }: TribesList) {
+interface CommonSettings {
+    incomeTypes: Array<string>
+    tribes: Array<Tribe>
+}
+
+export default function CommonSettingsPanel({ incomeTypes, tribes }: CommonSettings) {
     return (
-        <div className="CommonSettingsPanel">
-            <IncomeSelector />
+        <div className='CommonSettingsPanel'>
+            <IncomeSelector incomeTypes={incomeTypes} />
             <PositionsSelector />
             <TribesSelector tribes={tribes} />
         </div>
     )
 
 }
-
-export default CommonSettingsPanel

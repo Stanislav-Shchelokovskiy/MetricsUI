@@ -1,16 +1,19 @@
-import React from "react";
+import React from 'react';
 import Plot from 'react-plotly.js';
 import SelectBox from 'devextreme-react/select-box';
+import { RepliesForecast } from './Forecaster';
+import { TribeID } from './Tribe';
 
 
-function Header() {
+function Header({ replyTypes }: { replyTypes: Array<string> }) {
     return (
-        <div className="ForecastHeader">
+        <div className='ForecastHeader'>
             <SelectBox
-                dataSource={["Support", "Support & Team"]}
-                label="Forecast Mode"
-                labelMode="static"
-                value="Support"
+                dataSource={replyTypes}
+                label='Forecast Mode'
+                labelMode='static'
+                value={replyTypes?.[0]}
+                width={'22%'}
             />
         </div>
     )
@@ -18,7 +21,7 @@ function Header() {
 
 function Metric() {
     return (
-        <div className="TacticalForecastMetric">
+        <div className='TacticalForecastMetric'>
             <Plot
                 data={[
                     { type: 'bar', x: [1], y: [2] },
@@ -29,9 +32,9 @@ function Metric() {
     )
 }
 
-function Graph() {
+function Graph({ tribeID }: TribeID) {
     return (
-        <div className="ForecastGraph">
+        <div className='ForecastGraph'>
             <Plot
                 data={[
                     {
@@ -55,22 +58,25 @@ function Graph() {
     )
 }
 
-function Body() {
+function Body({ tribeID }: TribeID) {
     return (
-        <div className="ForecastBody">
-            <Graph />
+        <div className='ForecastBody'>
+            <Graph tribeID={tribeID} />
             <Metric />
         </div>
     )
 }
 
-function TacticalForecast() {
+interface Settings {
+    tribeID: string
+    replyTypes: Array<string>
+}
+
+export default function TacticalForecast({ tribeID, replyTypes }: Settings) {
     return (
-        <div className="ForecastContainer">
-            <Header />
-            <Body />
+        <div className='ForecastContainer'>
+            <Header replyTypes={replyTypes} />
+            <Body tribeID={tribeID} />
         </div>
     )
 }
-
-export default TacticalForecast

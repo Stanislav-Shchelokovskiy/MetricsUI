@@ -1,29 +1,30 @@
-import React from "react";
+import React from 'react';
 import Plot from 'react-plotly.js';
 import SelectBox from 'devextreme-react/select-box';
+import { TribeID } from './Tribe';
 
-function Header() {
+function Header({ forecastHorizons, tiles }: Settings) {
     return (
-        <div className="ForecastHeader">
+        <div className='ForecastHeader'>
             <SelectBox
-                dataSource={["D_14", "D_90"]}
-                label="Forecast Horizon"
-                labelMode="static"
-                value="D_14"
+                dataSource={forecastHorizons}
+                label='Forecast Horizon'
+                labelMode='static'
+                value={forecastHorizons?.[0]}
             />
             <SelectBox
-                dataSource={[3, 4, 5]}
-                label="Performance Level"
-                labelMode="static"
-                value={4}
+                dataSource={tiles}
+                label='Performance Level'
+                labelMode='static'
+                value={tiles?.[tiles?.length % 2]}
             />
         </div>
     )
 }
 
-function Graph() {
+function Graph({ tribeID }: TribeID) {
     return (
-        <div className="ForecastGraph">
+        <div className='ForecastGraph'>
             <Plot
                 data={[
                     {
@@ -47,21 +48,28 @@ function Graph() {
     )
 }
 
-function Body() {
+function Body({ tribeID }: TribeID) {
     return (
-        <div className="ForecastBody">
-            <Graph />
+        <div className='ForecastBody'>
+            <Graph
+                tribeID={tribeID} />
         </div>
     )
 }
 
-function StrategicForecast() {
+interface Settings {
+    forecastHorizons: Array<string>
+    tiles: Array<number>
+}
+
+export default function StrategicForecast({ tribeID, forecastHorizons, tiles }: TribeID & Settings) {
     return (
-        <div className="ForecastContainer">
-            <Header />
-            <Body />
+        <div className='ForecastContainer'>
+            <Header
+                forecastHorizons={forecastHorizons}
+                tiles={tiles} />
+            <Body
+                tribeID={tribeID} />
         </div>
     )
 }
-
-export default StrategicForecast

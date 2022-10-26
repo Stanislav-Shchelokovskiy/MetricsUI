@@ -1,34 +1,35 @@
-import React, { useRef, useEffect } from "react";
+import React from 'react';
 import ScrollView from 'devextreme-react/scroll-view';
-import Tribe from './Tribe'
+import TribeContainer, { Tribe } from './Tribe'
 
-export interface TribeData {
-    id: string
-    name: string
+
+export interface ForecastSettingsValues {
+    replyTypes: Array<string>
+    forecastHorizons: Array<string>
+    tiles: Array<number>
 }
 
-interface TribesList {
-    tribes?: Array<TribeData>
-}
-
-
-function Tribes({ tribes }: TribesList) {
+export default function TribesContainer({ tribes, replyTypes, forecastHorizons, tiles }: { tribes: Array<Tribe> } & ForecastSettingsValues) {
     return (
-        <div className="TribesContainer">
-            <ScrollView id="scrollview"
-                showScrollbar="onHover"
+        <div className='TribesContainer'>
+            <ScrollView id='scrollview'
+                showScrollbar='onHover'
                 scrollByThumb={true}
                 scrollByContent={true}
-                height={"89vh"}
+                height={'89vh'}
             >
-                <div className="Tribes">
+                <div className='Tribes'>
                     {tribes?.map((tribe) => {
-                        return <Tribe name={tribe.name} />
+                        return <TribeContainer
+                            key={tribe.id}
+                            tribe={tribe}
+                            replyTypes={replyTypes}
+                            forecastHorizons={forecastHorizons}
+                            tiles={tiles}
+                        />
                     })}
                 </div>
             </ScrollView>
         </div >
     )
 }
-
-export default Tribes
