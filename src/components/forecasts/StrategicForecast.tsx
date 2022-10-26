@@ -4,8 +4,7 @@ import SelectBox from 'devextreme-react/select-box';
 
 function Header() {
     return (
-        <div className="Header">
-            <label>Strtegic Forecast</label>
+        <div className="ForecastHeader">
             <SelectBox
                 dataSource={["D_14", "D_90"]}
                 label="Forecast Horizon"
@@ -24,7 +23,7 @@ function Header() {
 
 function Graph() {
     return (
-        <div className="Graph">
+        <div className="ForecastGraph">
             <Plot
                 data={[
                     {
@@ -36,7 +35,13 @@ function Graph() {
                     },
                     { type: 'bar', x: [2, 3], y: [5, 3] },
                 ]}
-                layout={{ height: 400, width: 1510, title: 'A Fancy Plot' }}
+                layout={{
+                    height: 400, width: 1510, margin: {
+                        t: 10,
+                        l: 10,
+                        r: 10,
+                    },
+                }}
             />
         </div>
     )
@@ -44,7 +49,7 @@ function Graph() {
 
 function Body() {
     return (
-        <div className="Body">
+        <div className="ForecastBody">
             <Graph />
         </div>
     )
@@ -52,7 +57,7 @@ function Body() {
 
 function StrategicForecast() {
     return (
-        <div className="Forecast">
+        <div className="ForecastContainer">
             <Header />
             <Body />
         </div>

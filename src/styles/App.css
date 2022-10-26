@@ -6,7 +6,7 @@
 }
 
 .FlexColumn,
-.App{
+.App {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;

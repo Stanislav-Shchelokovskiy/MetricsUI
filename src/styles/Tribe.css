@@ -5,3 +5,7 @@
     align-items: stretch;
     background-color: orange;
 }
+
+.TribeHeader {
+    padding-left: 10px;
+}

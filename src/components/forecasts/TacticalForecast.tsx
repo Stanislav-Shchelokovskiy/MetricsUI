@@ -5,8 +5,7 @@ import SelectBox from 'devextreme-react/select-box';
 
 function Header() {
     return (
-        <div className="Header">
-            <label>Tactical Forecast</label>
+        <div className="ForecastHeader">
             <SelectBox
                 dataSource={["Support", "Support & Team"]}
                 label="Forecast Mode"
@@ -19,7 +18,7 @@ function Header() {
 
 function Metric() {
     return (
-        <div className="Metric">
+        <div className="TacticalForecastMetric">
             <Plot
                 data={[
                     { type: 'bar', x: [1], y: [2] },
@@ -32,7 +31,7 @@ function Metric() {
 
 function Graph() {
     return (
-        <div className="Graph">
+        <div className="ForecastGraph">
             <Plot
                 data={[
                     {
@@ -44,7 +43,13 @@ function Graph() {
                     },
                     { type: 'bar', x: [1, 2, 3], y: [2, 5, 3] },
                 ]}
-                layout={{ height: 300, width: 1200, title: 'A Fancy Plot' }}
+                layout={{
+                    height: 300, width: 1200, margin: {
+                        t: 10,
+                        l: 10,
+                        r: 10,
+                    },
+                }}
             />
         </div>
     )
@@ -52,7 +57,7 @@ function Graph() {
 
 function Body() {
     return (
-        <div className="Body">
+        <div className="ForecastBody">
             <Graph />
             <Metric />
         </div>
@@ -61,7 +66,7 @@ function Body() {
 
 function TacticalForecast() {
     return (
-        <div className="Forecast">
+        <div className="ForecastContainer">
             <Header />
             <Body />
         </div>

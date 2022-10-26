@@ -1,25 +1,25 @@
-.Header,
-.Body {
+.ForecastHeader,
+.ForecastBody {
     display: flex;
     flex-flow: row nowrap;
     justify-content: 'flex-start';
     align-items: center;
 }
 
-.Forecast {
+.ForecastContainer {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: stretch;
 }
 
-.Forecast,
-.Header,
-.Body {
+.ForecastHeader,
+.ForecastBody {
     gap: 10px;
 }
 
+.TacticalForecastMetric {}
 
-.Graph {}
-
-.Metric {}
+.ForecastGraph {
+    background-color: blue;
+}

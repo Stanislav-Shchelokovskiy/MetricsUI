@@ -1,4 +1,5 @@
 import React from 'react'
+import Accordion, { Item } from 'devextreme-react/accordion';
 import TacticalForecast from './forecasts/TacticalForecast'
 import StrategicForecast from './forecasts/StrategicForecast'
 
@@ -8,15 +9,21 @@ interface TribeData {
 
 
 function Header({ name }: TribeData) {
-    return <h1>{name}</h1>
+    return <h3 className='TribeHeader'> { name }</h3 >
 }
 
 function Tribe({ name }: TribeData) {
     return (
         <div className='Tribe'>
             <Header name={name} />
-            <TacticalForecast />
-            <StrategicForecast />
+            <Accordion
+                collapsible={true}
+                multiple={true}
+                focusStateEnabled={false}>
+                <Item title="Tactical forecast"><TacticalForecast /></Item>
+                <Item title="Strategic forecast"><StrategicForecast /></Item>
+            </Accordion>
+
         </div>
     )
 
