@@ -1,0 +1,25 @@
+.Header,
+.Body {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: 'flex-start';
+    align-items: center;
+}
+
+.Forecast {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.Forecast,
+.Header,
+.Body {
+    gap: 10px;
+}
+
+
+.Graph {}
+
+.Metric {}

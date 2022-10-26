@@ -5,6 +5,7 @@ import './styles/App.css';
 import './styles/CommonSettingsPanel.css';
 import './styles/Tribes.css';
 import './styles/Tribe.css';
+import './styles/Forecast.css'
 import Tribes, { TribeData } from './components/Tribes'
 import CommonSettingsPanel from './components/CommonSettingsPanel'
 

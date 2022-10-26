@@ -62,7 +62,6 @@ function TribesSelector({ tribes }: TribesList) {
                 <RequiredRule />
             </Validator>
         </TagBox>
-
     </div>)
 }
 
