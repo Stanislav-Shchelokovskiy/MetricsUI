@@ -33,9 +33,10 @@ function Header(
                 label='Forecast Mode'
                 labelMode='static'
                 width={'22%'}>
-                <DropDownOptions 
-                    hideOnOutsideClick={true} 
-                    hideOnParentScroll={true} />
+                <DropDownOptions
+                    hideOnOutsideClick={true}
+                    hideOnParentScroll={true}
+                    container='#tribe_accordion' />
             </SelectBox>
         </div>
     )

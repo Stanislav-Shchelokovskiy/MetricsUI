@@ -34,6 +34,7 @@ export default function TribeContainer(
         <div className='Tribe'>
             <Header tribeName={tribe.name} />
             <Accordion
+                id='tribe_accordion'
                 collapsible={true}
                 multiple={true}
                 focusStateEnabled={false}>

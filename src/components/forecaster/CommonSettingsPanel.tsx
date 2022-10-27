@@ -28,7 +28,7 @@ function IncomeSelector(
             onValueChange={onIncomeTypeChange}
             label='Income type'
             labelMode='static'>
-            <DropDownOptions 
+            <DropDownOptions
                 hideOnOutsideClick={true} 
                 hideOnParentScroll={true} />
         </SelectBox >
@@ -69,7 +69,7 @@ function TribesSelector(
             showDropDownButton={false}
             label='Tribes'
             labelMode='static'>
-            <DropDownOptionsTagBox 
+            <DropDownOptionsTagBox
                 hideOnOutsideClick={true} 
                 hideOnParentScroll={true} />
         </TagBox>

@@ -30,7 +30,8 @@ function PositionsSelector() {
             labelMode='static'>
             <DropDownOptionsTagBox
                 hideOnOutsideClick={true}
-                hideOnParentScroll={true} />
+                hideOnParentScroll={true}
+                container='#tribe_accordion' />
         </TagBox>
     )
 }
@@ -57,7 +58,10 @@ function Header(
                 onValueChange={onForecastHorizonChange}
                 label='Forecast Horizon'
                 labelMode='static'>
-                <DropDownOptions hideOnOutsideClick={true} hideOnParentScroll={true} />
+                <DropDownOptions 
+                    hideOnOutsideClick={true} 
+                    hideOnParentScroll={true}
+                    container='#tribe_accordion' />
             </SelectBox>
             <SelectBox
                 dataSource={tiles}
@@ -66,8 +70,9 @@ function Header(
                 label='Performance Level'
                 labelMode='static'>
                 <DropDownOptions
-                    hideOnOutsideClick={true}
-                    hideOnParentScroll={true} />
+                    hideOnOutsideClick={true} 
+                    hideOnParentScroll={true}
+                    container='#tribe_accordion' />
             </SelectBox>
             <PositionsSelector />
         </div>
