@@ -1,14 +1,15 @@
-import './styles/CommonSettingsPanel.css';
-import './styles/Tribes.css';
-import './styles/Tribe.css';
-import './styles/Forecast.css';
+import './styles/CommonSettingsPanel.css'
+import './styles/Tribes.css'
+import './styles/Tribe.css'
+import './styles/Forecast.css'
 
-import React, { useEffect, useState } from 'react';
-import { LoadIndicator } from 'devextreme-react/load-indicator';
+import React, { useEffect, useState } from 'react'
+import { LoadIndicator } from 'devextreme-react/load-indicator'
 
-import TribesContainer from './Tribes';
-import CommonSettingsPanel from './CommonSettingsPanel';
-import FetchForecastSettingsValues, { FetchResult, ForecasterSettingsValues } from './TribeLoadServer';
+import TribesContainer from './Tribes'
+import { Tribe } from './Tribe'
+import CommonSettingsPanel from './CommonSettingsPanel'
+import FetchForecastSettingsValues, { emptyFetchResult, FetchResult } from './TribeLoadServer'
 
 
 export interface RepliesForecast {
@@ -28,36 +29,47 @@ export interface IncomeForecast {
 
 
 export default function Forecaster() {
-    const [forecastSettingsValues, setForecastSettingsValues] = useState<ForecasterSettingsValues>();
-    const [forecastSettingsValuesLoaded, setForecastSettingsValuesLoaded] = useState(false);
+    const [{ success: forecastSettingsValuesLoaded, forecastSettingsValues }, setForecastSettingsValuesLoaded] = useState(emptyFetchResult)
+    const [tribes, setTribes] = useState<Array<Tribe>>([])
+    const [incomeType, setIncomeType] = useState<string>('')
+    console.log(tribes)
+    console.log(incomeType)
 
     useEffect(() => {
         (async () => {
-            setForecastSettingsValuesLoaded(false);
-            const fetchResult: FetchResult = await FetchForecastSettingsValues();
+            const fetchResult: FetchResult = await FetchForecastSettingsValues()
+            setForecastSettingsValuesLoaded(fetchResult)
             if (fetchResult.success) {
-                setForecastSettingsValuesLoaded(true);
-                setForecastSettingsValues(fetchResult.data)
+                setIncomeType(fetchResult.forecastSettingsValues.incomeTypes?.[0])
             }
-        })();
-    }, []);
+        })()
+    }, [])
 
-    return (
-        forecastSettingsValuesLoaded ? (
+    if (forecastSettingsValuesLoaded) {
+        return (
             <div className='Forecaster' >
                 <CommonSettingsPanel
                     incomeTypes={forecastSettingsValues?.incomeTypes}
-                    tribes={forecastSettingsValues?.tribes} />
-                <TribesContainer
+                    defaultIncomeType={forecastSettingsValues?.incomeTypes[0]}
                     tribes={forecastSettingsValues?.tribes}
-                    replyTypes={forecastSettingsValues?.replyTypes}
-                    forecastHorizons={forecastSettingsValues?.forecastHorizons}
-                    tiles={forecastSettingsValues?.tiles}
-                />
-            </div>) :
-            <div className='LoadIndicator'>
-                <LoadIndicator
-                    height={100}
-                    width={100} />
-            </div>)
+                    onTribeSelect={setTribes}
+                    onIncomeTypeChange={setIncomeType} />
+                {tribes.length ? (
+                    <TribesContainer
+                        tribes={tribes}
+                        incomeType={incomeType}
+                        replyTypes={forecastSettingsValues?.replyTypes}
+                        forecastHorizons={forecastSettingsValues?.forecastHorizons}
+                        tiles={forecastSettingsValues?.tiles}
+                    />) : (<div></div>)}
+            </div>
+        )
+    }
+    return (
+        <div className='LoadIndicator'>
+            <LoadIndicator
+                height={100}
+                width={100} />
+        </div>
+    )
 }

@@ -1,18 +1,37 @@
-import React from 'react';
-import Plot from 'react-plotly.js';
-import SelectBox from 'devextreme-react/select-box';
-import { RepliesForecast } from './Forecaster';
-import { TribeID } from './Tribe';
+import React, { useState } from 'react'
+import Plot from 'react-plotly.js'
+import SelectBox from 'devextreme-react/select-box'
+import { ForecastParams } from './Tribe'
+import { RepliesForecast } from './Forecaster'
 
+interface ForecastSettingsValues {
+    replyTypes: Array<string>
+}
 
-function Header({ replyTypes }: { replyTypes: Array<string> }) {
+interface ForecastSettings {
+    replyType: string
+}
+
+type ReplyTypeChangeCallable = (replyType: string) => void
+
+function Header(
+    {
+        replyTypes,
+        replyType,
+        onReplyTypeChange
+    }:
+        ForecastSettingsValues &
+        ForecastSettings &
+        { onReplyTypeChange: ReplyTypeChangeCallable }
+) {
     return (
         <div className='ForecastHeader'>
             <SelectBox
                 dataSource={replyTypes}
+                defaultValue={replyType}
+                onValueChange={onReplyTypeChange}
                 label='Forecast Mode'
                 labelMode='static'
-                value={replyTypes?.[0]}
                 width={'22%'}
             />
         </div>
@@ -32,7 +51,7 @@ function Metric() {
     )
 }
 
-function Graph({ tribeID }: TribeID) {
+function Graph({ tribeID, incomeType }: ForecastParams) {
     return (
         <div className='ForecastGraph'>
             <Plot
@@ -58,25 +77,38 @@ function Graph({ tribeID }: TribeID) {
     )
 }
 
-function Body({ tribeID }: TribeID) {
+function Body({ tribeID, incomeType }: ForecastParams) {
     return (
         <div className='ForecastBody'>
-            <Graph tribeID={tribeID} />
+            <Graph
+                tribeID={tribeID}
+                incomeType={incomeType} />
             <Metric />
         </div>
     )
 }
 
-interface Settings {
-    tribeID: string
-    replyTypes: Array<string>
-}
+export default function TacticalForecast(
+    {
+        tribeID,
+        incomeType,
+        replyTypes
+    }:
+        ForecastParams &
+        ForecastSettingsValues
+) {
+    const [replyType, setReplyType] = useState<string>(replyTypes[0])
+    console.log(`replyType = ${replyType}`)
 
-export default function TacticalForecast({ tribeID, replyTypes }: Settings) {
     return (
         <div className='ForecastContainer'>
-            <Header replyTypes={replyTypes} />
-            <Body tribeID={tribeID} />
+            <Header
+                replyTypes={replyTypes}
+                replyType={replyType}
+                onReplyTypeChange={setReplyType} />
+            <Body
+                tribeID={tribeID}
+                incomeType={incomeType} />
         </div>
     )
 }

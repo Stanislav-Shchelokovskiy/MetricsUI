@@ -1,46 +1,62 @@
-import React from 'react';
-import TagBox from 'devextreme-react/tag-box';
-import SelectBox from 'devextreme-react/select-box';
-import Validator, { RequiredRule } from 'devextreme-react/validator';
+import React from 'react'
+import TagBox from 'devextreme-react/tag-box'
+import SelectBox from 'devextreme-react/select-box'
 import { Tribe } from './Tribe'
 
+interface CommonSettings {
+    incomeTypes: Array<string>
+    defaultIncomeType: string
+    tribes: Array<Tribe>
+}
+type tribeSelectCallable = (tribes: Array<Tribe>) => void
+type incomeTypeChangeCallable = (incomeType: string) => void
 
-function IncomeSelector({ incomeTypes }: { incomeTypes: Array<string> }) {
+function IncomeSelector(
+    {
+        incomeTypes,
+        defaultIncomeType,
+        onIncomeTypeChange
+    }:
+        { incomeTypes: Array<string> } &
+        { defaultIncomeType: string } &
+        { onIncomeTypeChange: incomeTypeChangeCallable }
+) {
     return (
-        <div className='IncomeTypeSelector'>
-            <SelectBox
-                dataSource={incomeTypes}
-                label='Income type'
-                labelMode='static'
-                value={incomeTypes?.[0]}
-            />
-        </div>
+        <SelectBox
+            dataSource={incomeTypes}
+            defaultValue={defaultIncomeType}
+            onValueChange={onIncomeTypeChange}
+            label='Income type'
+            labelMode='static'
+        />
     )
 }
 
-function PositionsSelector() {
-    return (
-        <div className='PositionsSelector'>
-            <TagBox
-                placeholder='Select positions to filter by...'
-                dataSource={['Support', 'Developer']}
-                multiline={true}
-                selectAllMode='allPages'
-                showSelectionControls={true}
-                showDropDownButton={false}
-                label='Display only positions'
-                labelMode='static'
-            />
-        </div>
-    )
-}
+function TribesSelector(
+    {
+        tribes,
+        onTribeSelect
+    }:
+        { tribes: Array<Tribe> } &
+        { onTribeSelect: tribeSelectCallable }
+) {
+    const renderItem = (tribe: Tribe) => {
+        return <div>{tribe.name}</div>
+    }
+    const renderTag = (tribe: Tribe) => {
+        return (
+            <div className='dx-tag-content'>
+                {tribe.name}
+                <div className='dx-tag-remove-button'></div>
+            </div>
+        )
+    }
 
-function TribesSelector({ tribes }: { tribes: Array<Tribe> }) {
-    return (<div className='TribesSelector'>
-        <TagBox
-            items={tribes?.map((tribe) => {
-                return tribe.name
-            })}
+    return (
+        <TagBox className='TribesSelector'
+            itemRender={renderItem}
+            tagRender={renderTag}
+            items={tribes}
             placeholder='Select tribes to display...'
             // defaultValue={this.defaultPosition}
             multiline={true}
@@ -49,25 +65,35 @@ function TribesSelector({ tribes }: { tribes: Array<Tribe> }) {
             showDropDownButton={false}
             label='Tribes'
             labelMode='static'
+            onValueChange={onTribeSelect}
         >
-            {/* <Validator>
-                <RequiredRule/>
-            </Validator> */}
         </TagBox>
-    </div>)
+    )
 }
 
-interface CommonSettings {
-    incomeTypes: Array<string>
-    tribes: Array<Tribe>
-}
-
-export default function CommonSettingsPanel({ incomeTypes, tribes }: CommonSettings) {
+export default function CommonSettingsPanel(
+    {
+        incomeTypes,
+        defaultIncomeType,
+        tribes,
+        onTribeSelect,
+        onIncomeTypeChange
+    }:
+        CommonSettings &
+        { onTribeSelect: tribeSelectCallable } &
+        { onIncomeTypeChange: incomeTypeChangeCallable }
+) {
     return (
         <div className='CommonSettingsPanel'>
-            <IncomeSelector incomeTypes={incomeTypes} />
-            <PositionsSelector />
-            <TribesSelector tribes={tribes} />
+            <IncomeSelector
+                incomeTypes={incomeTypes}
+                defaultIncomeType={defaultIncomeType}
+                onIncomeTypeChange={onIncomeTypeChange}
+            />
+            <TribesSelector
+                tribes={tribes}
+                onTribeSelect={onTribeSelect}
+            />
         </div>
     )
 

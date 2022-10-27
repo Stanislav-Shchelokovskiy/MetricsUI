@@ -1,5 +1,5 @@
-import React from 'react';
-import ScrollView from 'devextreme-react/scroll-view';
+import React from 'react'
+import ScrollView from 'devextreme-react/scroll-view'
 import TribeContainer, { Tribe } from './Tribe'
 
 
@@ -9,13 +9,24 @@ export interface ForecastSettingsValues {
     tiles: Array<number>
 }
 
-export default function TribesContainer({ tribes, replyTypes, forecastHorizons, tiles }: { tribes: Array<Tribe> } & ForecastSettingsValues) {
+export default function TribesContainer(
+    {
+        tribes,
+        incomeType,
+        replyTypes,
+        forecastHorizons,
+        tiles
+    }:
+        { tribes: Array<Tribe> } &
+        { incomeType: string } &
+        ForecastSettingsValues
+) {
     return (
         <div className='TribesContainer'>
             <ScrollView id='scrollview'
                 showScrollbar='onHover'
                 scrollByThumb={true}
-                scrollByContent={true}
+                scrollByContent={false}
                 height={'89vh'}
             >
                 <div className='Tribes'>
@@ -23,6 +34,7 @@ export default function TribesContainer({ tribes, replyTypes, forecastHorizons, 
                         return <TribeContainer
                             key={tribe.id}
                             tribe={tribe}
+                            incomeType={incomeType}
                             replyTypes={replyTypes}
                             forecastHorizons={forecastHorizons}
                             tiles={tiles}

@@ -1,11 +1,3 @@
-.ForecastHeader,
-.ForecastBody {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: 'flex-start';
-    align-items: center;
-}
-
 .ForecastContainer {
     display: flex;
     flex-flow: column nowrap;
@@ -15,14 +7,29 @@
 
 .ForecastHeader,
 .ForecastBody {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: 'flex-start';
+    align-items: stretch;
     gap: 10px;
 }
 
-.TacticalForecastMetric {}
+.ForecastHeader {
+    background-color: coral;
+    padding-left: 8px;
+    padding-bottom: 8px;
+}
+
+.PositionsSelector {
+    min-width: 20%;
+    background-color: orange;
+}
 
 .ForecastGraph {
     background-color: blue;
 }
+
+.TacticalForecastMetric {}
 
 .LoadIndicator {
     display: flex;
