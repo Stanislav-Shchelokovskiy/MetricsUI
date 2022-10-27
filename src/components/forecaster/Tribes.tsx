@@ -23,7 +23,8 @@ export default function TribesContainer(
 ) {
     return (
         <div className='TribesContainer'>
-            <ScrollView id='scrollview'
+            <ScrollView
+                id='scrollview'
                 showScrollbar='onHover'
                 scrollByThumb={true}
                 scrollByContent={false}

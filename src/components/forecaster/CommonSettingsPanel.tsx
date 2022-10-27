@@ -1,6 +1,6 @@
 import React from 'react'
-import TagBox from 'devextreme-react/tag-box'
-import SelectBox from 'devextreme-react/select-box'
+import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
+import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import { Tribe } from './Tribe'
 
 interface CommonSettings {
@@ -27,8 +27,11 @@ function IncomeSelector(
             defaultValue={defaultIncomeType}
             onValueChange={onIncomeTypeChange}
             label='Income type'
-            labelMode='static'
-        />
+            labelMode='static'>
+            <DropDownOptions 
+                hideOnOutsideClick={true} 
+                hideOnParentScroll={true} />
+        </SelectBox >
     )
 }
 
@@ -57,6 +60,7 @@ function TribesSelector(
             itemRender={renderItem}
             tagRender={renderTag}
             items={tribes}
+            onValueChange={onTribeSelect}
             placeholder='Select tribes to display...'
             // defaultValue={this.defaultPosition}
             multiline={true}
@@ -64,9 +68,10 @@ function TribesSelector(
             showSelectionControls={true}
             showDropDownButton={false}
             label='Tribes'
-            labelMode='static'
-            onValueChange={onTribeSelect}
-        >
+            labelMode='static'>
+            <DropDownOptionsTagBox 
+                hideOnOutsideClick={true} 
+                hideOnParentScroll={true} />
         </TagBox>
     )
 }

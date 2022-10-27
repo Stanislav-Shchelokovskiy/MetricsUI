@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Plot from 'react-plotly.js'
-import SelectBox from 'devextreme-react/select-box'
+import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import { ForecastParams } from './Tribe'
 import { RepliesForecast } from './Forecaster'
 
@@ -32,8 +32,11 @@ function Header(
                 onValueChange={onReplyTypeChange}
                 label='Forecast Mode'
                 labelMode='static'
-                width={'22%'}
-            />
+                width={'22%'}>
+                <DropDownOptions 
+                    hideOnOutsideClick={true} 
+                    hideOnParentScroll={true} />
+            </SelectBox>
         </div>
     )
 }

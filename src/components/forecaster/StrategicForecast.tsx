@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Plot from 'react-plotly.js'
-import SelectBox from 'devextreme-react/select-box'
-import TagBox from 'devextreme-react/tag-box'
+import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
+import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
 import { ForecastParams } from './Tribe'
 
 interface ForecastSettingsValues {
@@ -27,8 +27,11 @@ function PositionsSelector() {
             showSelectionControls={true}
             showDropDownButton={false}
             label='Display only positions'
-            labelMode='static'
-        />
+            labelMode='static'>
+            <DropDownOptionsTagBox
+                hideOnOutsideClick={true}
+                hideOnParentScroll={true} />
+        </TagBox>
     )
 }
 
@@ -53,15 +56,19 @@ function Header(
                 defaultValue={forecastHorizon}
                 onValueChange={onForecastHorizonChange}
                 label='Forecast Horizon'
-                labelMode='static'
-            />
+                labelMode='static'>
+                <DropDownOptions hideOnOutsideClick={true} hideOnParentScroll={true} />
+            </SelectBox>
             <SelectBox
                 dataSource={tiles}
                 defaultValue={tile}
                 onValueChange={onTileChange}
                 label='Performance Level'
-                labelMode='static'
-            />
+                labelMode='static'>
+                <DropDownOptions
+                    hideOnOutsideClick={true}
+                    hideOnParentScroll={true} />
+            </SelectBox>
             <PositionsSelector />
         </div>
     )
