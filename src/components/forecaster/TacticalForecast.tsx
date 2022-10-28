@@ -60,14 +60,8 @@ function Graph({ tribeID, incomeType }: ForecastParams) {
         <div className='ForecastGraph'>
             <Plot
                 data={[
-                    {
-                        x: [1, 2, 3],
-                        y: [2, 6, 3],
-                        type: 'scatter',
-                        mode: 'lines+markers',
-                        marker: { color: 'red' },
-                    },
-                    { type: 'bar', x: [1, 2, 3], y: [2, 5, 3] },
+
+                    { type: 'scatter', x: [2, 3], y: [5, 3] },
                 ]}
                 layout={{
                     height: 300, width: 1200, margin: {

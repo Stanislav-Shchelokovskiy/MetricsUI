@@ -84,13 +84,48 @@ function Graph({ tribeID, incomeType }: ForecastParams) {
         <div className='ForecastGraph'>
             <Plot
                 data={[
-                    {
-                        x: [1, 3],
-                        y: [2, 3],
-                        type: 'scatter',
-                        mode: 'lines+markers',
-                        marker: { color: 'red' },
-                    },
+                    // {
+                    //     x: tribe_load_forecast[ForecastMeta.ds],
+                    //     y: tribe_load_forecast[ForecastMeta.y],
+                    //     type: 'scatter',
+                    //     name: 'fact',
+                    //     line_color: palette.get_color('fact'),
+                    //     line_shape: 'spline',
+                    //     hovertemplate: 'Fact: <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
+                    //     connectgaps: true,
+                    // },
+                    // {
+                    //     x: tribe_load_forecast[ForecastMeta.ds],
+                    //     y: tribe_load_forecast[ForecastMeta.yhat_rmse_upper],
+                    //     name: 'forecast_upper',
+                    //     showlegend: false,
+                    //     line_color: palette.get_color('forecast_boundary'),
+                    //     line_shape: 'spline',
+                    //     hovertemplate: 'Forecast upper: <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
+                    //     connectgaps: true,
+                    // },
+                    // {
+                    //     x: tribe_load_forecast[ForecastMeta.ds],
+                    //     y: tribe_load_forecast[ForecastMeta.yhat],
+                    //     name: 'forecast',
+                    //     fill: 'tonexty',
+                    //     line_color: color_palette.get_color('forecast'),
+                    //     fillcolor: color_palette.get_color('forecast_fill'),
+                    //     line_shape: 'spline',
+                    //     hovertemplate: 'Forecast: <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
+                    //     connectgaps: True,
+                    // }, {
+                    //     x: tribe_load_forecast[ForecastMeta.ds],
+                    //     y: tribe_load_forecast[ForecastMeta.yhat_rmse_lower],
+                    //     name: 'forecast_lower',
+                    //     fill: 'tonexty',
+                    //     showlegend: False,
+                    //     line_color: color_palette.get_color('forecast_boundary'),
+                    //     fillcolor: color_palette.get_color('forecast_fill'),
+                    //     line_shape: 'spline',
+                    //     hovertemplate: 'Forecast lower: <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
+                    //     connectgaps: True,
+                    // }
                     { type: 'bar', x: [2, 3], y: [5, 3] },
                 ]}
                 layout={{

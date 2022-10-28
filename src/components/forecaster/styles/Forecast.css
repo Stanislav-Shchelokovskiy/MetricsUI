@@ -15,18 +15,18 @@
 }
 
 .ForecastHeader {
-    background-color: coral;
+    /* background-color: coral; */
     padding-left: 8px;
     padding-bottom: 8px;
 }
 
 .PositionsSelector {
     min-width: 20%;
-    background-color: orange;
+    /* background-color: orange; */
 }
 
 .ForecastGraph {
-    background-color: blue;
+    /* background-color: blue; */
 }
 
 .TacticalForecastMetric {}

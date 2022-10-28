@@ -3,7 +3,7 @@
     flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: stretch;
-    background-color: orange;
+    /* background-color: orange; */
 }
 
 .TribeHeader {
