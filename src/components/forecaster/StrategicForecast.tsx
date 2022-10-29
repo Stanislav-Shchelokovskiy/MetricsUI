@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Plot from 'react-plotly.js'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
-import { ForecastParams } from './Tribe'
+import { FetchTribeIncomeForecast, emptyIncomeForecast, FetchResult } from './TribeLoadServer'
+import { IncomeForecast } from './Forecaster'
+import LoadIndicator from './utils/LoadIndicator'
+import GetColor from './utils/ColorPalette'
 
 interface ForecastSettingsValues {
     forecastHorizons: Array<string>
@@ -11,6 +14,13 @@ interface ForecastSettingsValues {
 
 interface ForecastSettings {
     forecastHorizon: string
+    tile: number
+}
+
+interface ForecastParams {
+    tribeID: string
+    forecastHorizon: string
+    incomeType: string
     tile: number
 }
 
@@ -58,8 +68,8 @@ function Header(
                 onValueChange={onForecastHorizonChange}
                 label='Forecast Horizon'
                 labelMode='static'>
-                <DropDownOptions 
-                    hideOnOutsideClick={true} 
+                <DropDownOptions
+                    hideOnOutsideClick={true}
                     hideOnParentScroll={true}
                     container='#tribe_accordion' />
             </SelectBox>
@@ -70,7 +80,7 @@ function Header(
                 label='Performance Level'
                 labelMode='static'>
                 <DropDownOptions
-                    hideOnOutsideClick={true} 
+                    hideOnOutsideClick={true}
                     hideOnParentScroll={true}
                     container='#tribe_accordion' />
             </SelectBox>
@@ -79,74 +89,116 @@ function Header(
     )
 }
 
-function Graph({ tribeID, incomeType }: ForecastParams) {
-    return (
-        <div className='ForecastGraph'>
-            <Plot
-                data={[
-                    // {
-                    //     x: tribe_load_forecast[ForecastMeta.ds],
-                    //     y: tribe_load_forecast[ForecastMeta.y],
-                    //     type: 'scatter',
-                    //     name: 'fact',
-                    //     line_color: palette.get_color('fact'),
-                    //     line_shape: 'spline',
-                    //     hovertemplate: 'Fact: <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
-                    //     connectgaps: true,
-                    // },
-                    // {
-                    //     x: tribe_load_forecast[ForecastMeta.ds],
-                    //     y: tribe_load_forecast[ForecastMeta.yhat_rmse_upper],
-                    //     name: 'forecast_upper',
-                    //     showlegend: false,
-                    //     line_color: palette.get_color('forecast_boundary'),
-                    //     line_shape: 'spline',
-                    //     hovertemplate: 'Forecast upper: <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
-                    //     connectgaps: true,
-                    // },
-                    // {
-                    //     x: tribe_load_forecast[ForecastMeta.ds],
-                    //     y: tribe_load_forecast[ForecastMeta.yhat],
-                    //     name: 'forecast',
-                    //     fill: 'tonexty',
-                    //     line_color: color_palette.get_color('forecast'),
-                    //     fillcolor: color_palette.get_color('forecast_fill'),
-                    //     line_shape: 'spline',
-                    //     hovertemplate: 'Forecast: <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
-                    //     connectgaps: True,
-                    // }, {
-                    //     x: tribe_load_forecast[ForecastMeta.ds],
-                    //     y: tribe_load_forecast[ForecastMeta.yhat_rmse_lower],
-                    //     name: 'forecast_lower',
-                    //     fill: 'tonexty',
-                    //     showlegend: False,
-                    //     line_color: color_palette.get_color('forecast_boundary'),
-                    //     fillcolor: color_palette.get_color('forecast_fill'),
-                    //     line_shape: 'spline',
-                    //     hovertemplate: 'Forecast lower: <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
-                    //     connectgaps: True,
-                    // }
-                    { type: 'bar', x: [2, 3], y: [5, 3] },
-                ]}
-                layout={{
-                    height: 400, width: 1510, margin: {
-                        t: 10,
-                        l: 10,
-                        r: 10,
-                        b: 30
-                    },
-                }}
-            />
-        </div>
-    )
+function Graph({ tribeID, forecastHorizon, incomeType, tile }: ForecastParams) {
+    const [{ success: forecastLoaded, data: income_Forecast }, setForecastLoaded] = useState<FetchResult<Array<IncomeForecast>>>(emptyIncomeForecast)
+
+    useEffect(() => {
+        (async () => {
+            const fetchResult: FetchResult<Array<IncomeForecast>> = await FetchTribeIncomeForecast({ tribeID, forecastHorizon, incomeType })
+            setForecastLoaded(fetchResult)
+            console.log('use effect')
+        })()
+    }, [])
+
+    if (forecastLoaded) {
+        console.log(`forecastLoaded ${forecastLoaded}`)
+        const ds = income_Forecast.map(forecast => new Date(forecast.ds))
+        const y = income_Forecast.map(forecast => forecast.y)
+        const yhat_rmse_upper = income_Forecast.map(forecast => forecast.yhat_rmse_upper)
+        const yhat = income_Forecast.map(forecast => forecast.yhat)
+        const yhat_rmse_lower = income_Forecast.map(forecast => forecast.yhat_rmse_lower)
+
+        const yaxisMin = 0
+        const yaxisMax = Math.max(
+            Math.max(...yhat_rmse_upper),
+            Math.max(...y),
+            // tribe_members_replies.groupby(by=TribeDailyRepliesMeta.reply_date)[TribeDailyRepliesMeta.iteration_count].sum().max()
+        ) + 5
+
+        let xaxisMin = new Date(ds.reduce((a, b) => a < b ? a : b))
+        xaxisMin.setDate(xaxisMin.getDate() - 1)
+        let xaxisMax = new Date(ds.reduce((a, b) => a > b ? a : b))
+        xaxisMax.setDate(xaxisMax.getDate() + 1)
+
+
+        console.log(income_Forecast)
+        return (
+            <div className='ForecastGraph'>
+                <Plot
+                    data={[
+                        {
+                            type: 'scatter',
+                            x: ds,
+                            y: y,
+                            name: 'fact',
+                            line: { shape: 'spline', color: GetColor('fact') },
+                            hovertemplate: 'Actual income: <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
+                            connectgaps: true,
+                        },
+                        {
+                            type: 'scatter',
+                            x: ds,
+                            y: yhat_rmse_upper,
+                            name: 'Income forecast (upper boundary)',
+                            showlegend: false,
+                            line: { shape: 'spline', color: GetColor('forecast_boundary') },
+                            hovertemplate: 'Income forecast (upper boundary): <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
+                            connectgaps: true,
+                        },
+                        {
+                            type: 'scatter',
+                            x: ds,
+                            y: yhat,
+                            name: 'Income forecast',
+                            fill: 'tonexty',
+                            line: { shape: 'spline', color: GetColor('forecast') },
+                            fillcolor: GetColor('forecast_fill'),
+                            hovertemplate: 'Income forecast: <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
+                            connectgaps: true,
+                        },
+                        {
+                            type: 'scatter',
+                            x: ds,
+                            y: yhat_rmse_lower,
+                            name: 'Income forecast (lower boundary)',
+                            fill: 'tonexty',
+                            showlegend: false,
+                            line: { shape: 'spline', color: GetColor('forecast_boundary') },
+                            fillcolor: GetColor('forecast_fill'),
+                            hovertemplate: 'Income forecast (lower boundary): <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
+                            connectgaps: true,
+                        }
+                        // { type: 'bar', x: [2, 3], y: [5, 3] },
+                    ]}
+                    layout={{
+                        height: 400, width: 1510, margin: {
+                            t: 10,
+                            l: 30,
+                            r: 10,
+                            b: 30
+                        },
+                        yaxis: { range: [yaxisMin, yaxisMax] },
+                        xaxis: { range: [xaxisMin, xaxisMax] },
+                        barmode: 'stack',
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                    }}
+                    config={{ displayModeBar: false }}
+                />
+            </div>
+        )
+    }
+    return <LoadIndicator />
 }
 
-function Body({ tribeID, incomeType }: ForecastParams) {
+function Body({ tribeID, forecastHorizon, incomeType, tile }: ForecastParams) {
     return (
         <div className='ForecastBody'>
             <Graph
                 tribeID={tribeID}
-                incomeType={incomeType} />
+                forecastHorizon={forecastHorizon}
+                incomeType={incomeType}
+                tile={tile} />
         </div>
     )
 }
@@ -158,7 +210,7 @@ export default function StrategicForecast(
         forecastHorizons,
         tiles
     }:
-        ForecastParams &
+        { tribeID: string, incomeType: string } &
         ForecastSettingsValues
 ) {
     const [forecastHorizon, setForecastHorizon] = useState<string>(forecastHorizons[0])
@@ -168,7 +220,7 @@ export default function StrategicForecast(
 
 
     return (
-        <div className='ForecastContainer'>
+        <div className='ForforecastHorizonecastContainer'>
             <Header
                 forecastHorizons={forecastHorizons}
                 tiles={tiles}
@@ -178,7 +230,9 @@ export default function StrategicForecast(
                 onTileChange={setTile} />
             <Body
                 tribeID={tribeID}
-                incomeType={incomeType} />
+                forecastHorizon={forecastHorizon}
+                incomeType={incomeType}
+                tile={tile} />
         </div>
     )
 }

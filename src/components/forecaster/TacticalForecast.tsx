@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
 import Plot from 'react-plotly.js'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
-import { ForecastParams } from './Tribe'
 import { RepliesForecast } from './Forecaster'
+
+
+interface ForecastParams {
+    tribeID: string
+    incomeType: string
+}
 
 interface ForecastSettingsValues {
     replyTypes: Array<string>

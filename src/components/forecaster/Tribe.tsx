@@ -9,11 +9,6 @@ export interface Tribe {
     name: string
 }
 
-export interface ForecastParams {
-    tribeID: string
-    incomeType: string
-}
-
 function Header({ tribeName }: { tribeName: string }) {
     return <h3 className='TribeHeader'> {tribeName}</h3 >
 }

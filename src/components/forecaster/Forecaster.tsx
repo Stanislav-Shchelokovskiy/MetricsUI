@@ -4,12 +4,12 @@ import './styles/Tribe.css'
 import './styles/Forecast.css'
 
 import React, { useEffect, useState } from 'react'
-import { LoadIndicator } from 'devextreme-react/load-indicator'
+import LoadIndicator from './utils/LoadIndicator'
 
 import TribesContainer from './Tribes'
 import { Tribe } from './Tribe'
 import CommonSettingsPanel from './CommonSettingsPanel'
-import FetchForecastSettingsValues, { emptyFetchResult, FetchResult } from './TribeLoadServer'
+import { FetchForecastSettingsValues, emptyForecasterSettingsValues, FetchResult, ForecasterSettingsValues } from './TribeLoadServer'
 
 
 export interface RepliesForecast {
@@ -29,7 +29,7 @@ export interface IncomeForecast {
 
 
 export default function Forecaster() {
-    const [{ success: forecastSettingsValuesLoaded, forecastSettingsValues }, setForecastSettingsValuesLoaded] = useState(emptyFetchResult)
+    const [{ success: forecastSettingsValuesLoaded, data: forecastSettingsValues }, setForecastSettingsValuesLoaded] = useState(emptyForecasterSettingsValues)
     const [tribes, setTribes] = useState<Array<Tribe>>([])
     const [incomeType, setIncomeType] = useState<string>('')
     console.log(tribes)
@@ -37,10 +37,10 @@ export default function Forecaster() {
 
     useEffect(() => {
         (async () => {
-            const fetchResult: FetchResult = await FetchForecastSettingsValues()
+            const fetchResult: FetchResult<ForecasterSettingsValues> = await FetchForecastSettingsValues()
             setForecastSettingsValuesLoaded(fetchResult)
             if (fetchResult.success) {
-                setIncomeType(fetchResult.forecastSettingsValues.incomeTypes?.[0])
+                setIncomeType(fetchResult.data.incomeTypes?.[0])
             }
         })()
     }, [])
@@ -65,11 +65,5 @@ export default function Forecaster() {
             </div>
         )
     }
-    return (
-        <div className='LoadIndicator'>
-            <LoadIndicator
-                height={100}
-                width={100} />
-        </div>
-    )
+    return <LoadIndicator />
 }
