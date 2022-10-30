@@ -3,11 +3,11 @@ import FetchResult from './fetchResult'
 import { Tribe } from '../Tribe'
 
 export interface ForecasterSettingsValues {
-    incomeTypes: Array<string> | any
-    replyTypes: Array<string> | any
-    tiles: Array<number> | any
-    forecastHorizons: Array<string> | any
-    tribes: Array<Tribe> | any
+    incomeTypes: Array<string>
+    replyTypes: Array<string>
+    tiles: Array<number>
+    forecastHorizons: Array<string>
+    tribes: Array<Tribe>
 }
 
 export const emptyForecasterSettingsValues: FetchResult<ForecasterSettingsValues> = {
