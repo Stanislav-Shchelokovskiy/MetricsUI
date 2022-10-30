@@ -9,7 +9,9 @@ import LoadIndicator from './utils/LoadIndicator'
 import TribesContainer from './Tribes'
 import { Tribe } from './Tribe'
 import CommonSettingsPanel from './CommonSettingsPanel'
-import { FetchForecastSettingsValues, emptyForecasterSettingsValues, FetchResult, ForecasterSettingsValues } from './TribeLoadServer'
+
+import FetchResult from './dataFetcher/fetchResult'
+import { FetchForecastSettingsValues, emptyForecasterSettingsValues, ForecasterSettingsValues } from './dataFetcher/FetchForecastSettingsValues'
 
 
 export interface RepliesForecast {
@@ -20,11 +22,11 @@ export interface RepliesForecast {
 }
 
 export interface IncomeForecast {
-    ds: string
-    y: number
-    yhat: number
-    yhat_rmse_upper: number
-    yhat_rmse_lower: number
+    ds: Array<Date>
+    y: Array<number>
+    yhat: Array<number>
+    yhat_rmse_upper: Array<number>
+    yhat_rmse_lower: Array<number>
 }
 
 

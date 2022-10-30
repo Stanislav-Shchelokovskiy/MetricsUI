@@ -1,6 +1,6 @@
-import { Tribe } from './Tribe'
-import { IncomeForecast } from './Forecaster'
-
+import endPoint from './endPoint'
+import FetchResult from './fetchResult'
+import { Tribe } from '../Tribe'
 
 export interface ForecasterSettingsValues {
     incomeTypes: Array<string> | any
@@ -8,11 +8,6 @@ export interface ForecasterSettingsValues {
     tiles: Array<number> | any
     forecastHorizons: Array<string> | any
     tribes: Array<Tribe> | any
-}
-
-export interface FetchResult<T> {
-    success: boolean
-    data: T
 }
 
 export const emptyForecasterSettingsValues: FetchResult<ForecasterSettingsValues> = {
@@ -26,7 +21,6 @@ export const emptyForecasterSettingsValues: FetchResult<ForecasterSettingsValues
     }
 }
 
-const endPoint = 'http://ubuntu-support.corp.devexpress.com:11002' //'http://localhost:11002'
 export const FetchForecastSettingsValues: () => Promise<FetchResult<ForecasterSettingsValues>> = async function () {
     try {
         const incomeTypes = await fetch(`${endPoint}/get_income_types`).then(response => response.json())
@@ -49,54 +43,3 @@ export const FetchForecastSettingsValues: () => Promise<FetchResult<ForecasterSe
         return emptyForecasterSettingsValues
     }
 }
-
-
-export const emptyIncomeForecast: FetchResult<Array<IncomeForecast>> =
-{
-    success: false,
-    data: [{
-        ds: '',
-        y: 0,
-        yhat: 0,
-        yhat_rmse_upper: 0,
-        yhat_rmse_lower: 0
-    }]
-}
-
-export const FetchTribeIncomeForecast: (
-    {
-        tribeID,
-        forecastHorizon,
-        incomeType
-    }: {
-        tribeID: string,
-        forecastHorizon: string,
-        incomeType: string
-    }) => Promise<FetchResult<Array<IncomeForecast>>> = async function ({
-        tribeID,
-        forecastHorizon,
-        incomeType
-    }: {
-        tribeID: string,
-        forecastHorizon: string,
-        incomeType: string
-    }) {
-        try {
-            const tribeIncomeForecast = await fetch(
-                `${endPoint}/get_forecast?` +
-                new URLSearchParams({
-                    tribe_id: tribeID,
-                    horizon: forecastHorizon,
-                    income_type: incomeType
-                })
-            ).then(response => response.json())
-
-            return {
-                success: true,
-                data: tribeIncomeForecast
-            }
-        } catch (error) {
-            console.log(error)
-            return emptyIncomeForecast
-        }
-    }
