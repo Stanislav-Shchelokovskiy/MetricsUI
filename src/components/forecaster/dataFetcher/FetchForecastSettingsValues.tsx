@@ -1,5 +1,5 @@
-import endPoint from './endPoint'
-import FetchResult from './fetchResult'
+import endPoint from './EndPoint'
+import FetchResult from './FetchResult'
 import { Tribe } from '../Tribe'
 
 export interface ForecasterSettingsValues {

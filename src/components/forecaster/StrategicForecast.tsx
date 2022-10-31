@@ -6,7 +6,7 @@ import { IncomeForecast } from './Forecaster'
 import ForecastMissing from './utils/ForecastMissing'
 import GetColor from './utils/ColorPalette'
 
-import FetchResult from './dataFetcher/fetchResult'
+import FetchResult from './dataFetcher/FetchResult'
 import { FetchTribeIncomeForecast, emptyIncomeForecast } from './dataFetcher/FetchTribeIncomeForecast'
 
 interface ForecastSettingsValues {
@@ -95,7 +95,7 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile }: ForecastParams) {
     console.log(`forecastHorizon = ${forecastHorizon}`)
     console.log(`tile = ${tile}`)
 
-    const [{ success: forecastLoaded, data: income_Forecast }, setForecastLoaded] = useState<FetchResult<IncomeForecast>>(emptyIncomeForecast)
+    const [{ success: forecastLoaded, data: incomeForecast }, setForecastLoaded] = useState<FetchResult<IncomeForecast>>(emptyIncomeForecast)
 
     useEffect(() => {
         (async () => {
@@ -111,26 +111,26 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile }: ForecastParams) {
 
         const yaxisMin = 0
         const yaxisMax = Math.max(
-            Math.max(...income_Forecast.yhat_rmse_upper),
-            Math.max(...income_Forecast.y),
+            Math.max(...incomeForecast.yhat_rmse_upper),
+            Math.max(...incomeForecast.y),
             // tribe_members_replies.groupby(by=TribeDailyRepliesMeta.reply_date)[TribeDailyRepliesMeta.iteration_count].sum().max()
         ) + 5
 
-        let xaxisMin = new Date(income_Forecast.ds.reduce((a, b) => a < b ? a : b))
+        let xaxisMin = new Date(incomeForecast.ds.reduce((a, b) => a < b ? a : b))
         xaxisMin.setDate(xaxisMin.getDate() - 1)
-        let xaxisMax = new Date(income_Forecast.ds.reduce((a, b) => a > b ? a : b))
+        let xaxisMax = new Date(incomeForecast.ds.reduce((a, b) => a > b ? a : b))
         xaxisMax.setDate(xaxisMax.getDate() + 1)
 
 
-        console.log(income_Forecast)
+        console.log(incomeForecast)
         return (
             <div className='ForecastGraph'>
                 <Plot
                     data={[
                         {
                             type: 'scatter',
-                            x: income_Forecast.ds,
-                            y: income_Forecast.y,
+                            x: incomeForecast.ds,
+                            y: incomeForecast.y,
                             name: 'fact',
                             line: { shape: 'spline', color: GetColor('fact') },
                             hovertemplate: 'Actual income: <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
@@ -138,8 +138,8 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile }: ForecastParams) {
                         },
                         {
                             type: 'scatter',
-                            x: income_Forecast.ds,
-                            y: income_Forecast.yhat_rmse_upper,
+                            x: incomeForecast.ds,
+                            y: incomeForecast.yhat_rmse_upper,
                             name: 'Income forecast (upper boundary)',
                             showlegend: false,
                             line: { shape: 'spline', color: GetColor('forecast_boundary') },
@@ -148,8 +148,8 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile }: ForecastParams) {
                         },
                         {
                             type: 'scatter',
-                            x: income_Forecast.ds,
-                            y: income_Forecast.yhat,
+                            x: incomeForecast.ds,
+                            y: incomeForecast.yhat,
                             name: 'Income forecast',
                             fill: 'tonexty',
                             line: { shape: 'spline', color: GetColor('forecast') },
@@ -159,8 +159,8 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile }: ForecastParams) {
                         },
                         {
                             type: 'scatter',
-                            x: income_Forecast.ds,
-                            y: income_Forecast.yhat_rmse_lower,
+                            x: incomeForecast.ds,
+                            y: incomeForecast.yhat_rmse_lower,
                             name: 'Income forecast (lower boundary)',
                             fill: 'tonexty',
                             showlegend: false,
@@ -178,8 +178,8 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile }: ForecastParams) {
                             r: 10,
                             b: 30
                         },
-                        yaxis: { range: [yaxisMin, yaxisMax] },
-                        xaxis: { range: [xaxisMin, xaxisMax] },
+                        yaxis: { range: [yaxisMin, yaxisMax],  'showgrid': true, zeroline: false  },
+                        xaxis: { range: [xaxisMin, xaxisMax],'showgrid': false },
                         barmode: 'stack',
                         paper_bgcolor: 'rgba(0,0,0,0)',
                         plot_bgcolor: 'rgba(0,0,0,0)',

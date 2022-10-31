@@ -1,5 +1,5 @@
-import endPoint from './endPoint'
-import FetchResult from './fetchResult'
+import endPoint from './EndPoint'
+import FetchResult from './FetchResult'
 import { IncomeForecast } from '../Forecaster'
 
 export const emptyIncomeForecast: FetchResult<IncomeForecast> =
@@ -14,7 +14,7 @@ export const emptyIncomeForecast: FetchResult<IncomeForecast> =
     }
 }
 
-interface IncomeForecastRaw {
+interface RawIncomeForecast {
     ds: string
     y: number
     yhat: number
@@ -41,7 +41,7 @@ export const FetchTribeIncomeForecast: (
         incomeType: string
     }) {
         try {
-            const tribeIncomeForecast: Array<IncomeForecastRaw> = await fetch(
+            const tribeIncomeForecast: Array<RawIncomeForecast> = await fetch(
                 `${endPoint}/get_forecast?` +
                 new URLSearchParams({
                     tribe_id: tribeID,

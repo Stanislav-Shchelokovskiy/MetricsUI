@@ -10,7 +10,7 @@ import TribesContainer from './Tribes'
 import { Tribe } from './Tribe'
 import CommonSettingsPanel from './CommonSettingsPanel'
 
-import FetchResult from './dataFetcher/fetchResult'
+import FetchResult from './dataFetcher/FetchResult'
 import { FetchForecastSettingsValues, emptyForecasterSettingsValues, ForecasterSettingsValues } from './dataFetcher/FetchForecastSettingsValues'
 
 
