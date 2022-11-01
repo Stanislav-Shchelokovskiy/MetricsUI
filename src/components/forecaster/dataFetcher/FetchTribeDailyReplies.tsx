@@ -6,6 +6,7 @@ interface RawDailyTribeReplies {
     user_tribe_name: string
     position_name: string
     user_name: string
+    user_display_name: string
     user_id: string
     reply_date: Array<string>
     iteration_count: Array<number>
@@ -16,6 +17,7 @@ export interface DailyTribeReplies {
     user_tribe_name: string
     position_name: string
     user_name: string
+    user_display_name: string
     user_id: string
     reply_date: Array<Date>
     iteration_count: Array<number>
@@ -29,6 +31,7 @@ export const emptyDailyTribeReplies: FetchResult<Array<DailyTribeReplies>> =
         user_tribe_name: '',
         position_name: '',
         user_name: '',
+        user_display_name: '',
         user_id: '',
         reply_date: Array<Date>(),
         iteration_count: Array<number>()
@@ -69,6 +72,7 @@ export const FetchDailyTribeReplies: (
                     user_tribe_name: replies.user_tribe_name,
                     position_name: replies.position_name,
                     user_name: replies.user_name,
+                    user_display_name: replies.user_display_name,
                     user_id: replies.user_id,
                     reply_date: replies.reply_date.map(dt => new Date(dt)),
                     iteration_count: replies.iteration_count,

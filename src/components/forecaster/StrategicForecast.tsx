@@ -1,5 +1,6 @@
 import React, { useState, useReducer, useEffect } from 'react'
 import Plot from 'react-plotly.js'
+import { Data as GraphData } from 'plotly.js';
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
 import ForecastMissing from './utils/ForecastMissing'
@@ -24,22 +25,25 @@ interface ForecastParams {
     forecastHorizon: string
     incomeType: string
     tile: number
+    positionsFilter: Array<string>
 }
 
 type ForecastHorizonChangeCallable = (forecastHorizon: string) => void
 type TileChangeCallable = (tile: number) => void
+type PositionsChangeCallable = (positions: Array<string>) => void
 
-function PositionsSelector() {
+function PositionsSelector({ onPositionsChange }: { onPositionsChange: PositionsChangeCallable }) {
     return (
         <TagBox className='PositionsSelector'
             placeholder='Select positions to filter by...'
-            dataSource={['Support', 'Developer']}
+            dataSource={['Support', 'Developer', 'EM', 'PM', 'Technical Writer']}
             multiline={true}
             selectAllMode='allPages'
             showSelectionControls={true}
             showDropDownButton={false}
             label='Display only positions'
-            labelMode='static'>
+            labelMode='static'
+            onValueChange={onPositionsChange}>
             <DropDownOptionsTagBox
                 hideOnOutsideClick={true}
                 hideOnParentScroll={true}
@@ -55,12 +59,14 @@ function Header(
         forecastHorizon,
         tile,
         onForecastHorizonChange,
-        onTileChange
+        onTileChange,
+        onPositionsChange,
     }:
         ForecastSettingsValues &
         ForecastSettings &
         { onForecastHorizonChange: ForecastHorizonChangeCallable } &
-        { onTileChange: TileChangeCallable }
+        { onTileChange: TileChangeCallable } &
+        { onPositionsChange: PositionsChangeCallable }
 ) {
     return (
         <div className='ForecastHeader'>
@@ -86,10 +92,109 @@ function Header(
                     hideOnParentScroll={true}
                     container='#tribe_accordion' />
             </SelectBox>
-            <PositionsSelector />
+            <PositionsSelector
+                onPositionsChange={onPositionsChange} />
         </div>
     )
 }
+
+function getScatters(state: State): Array<GraphData> {
+    if (state.incomeForecastLoaded) {
+        return [{
+            type: 'scatter',
+            x: state.incomeForecast.ds,
+            y: state.incomeForecast.y,
+            name: 'fact',
+            line: { shape: 'spline', color: GetColor('fact') },
+            hovertemplate: 'Actual income: <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
+            connectgaps: true,
+        },
+        {
+            type: 'scatter',
+            x: state.incomeForecast.ds,
+            y: state.incomeForecast.yhat_rmse_upper,
+            name: 'Income forecast (upper boundary)',
+            showlegend: false,
+            line: { shape: 'spline', color: GetColor('forecast_boundary') },
+            hovertemplate: 'Income forecast (upper boundary): <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
+            connectgaps: true,
+        },
+        {
+            type: 'scatter',
+            x: state.incomeForecast.ds,
+            y: state.incomeForecast.yhat,
+            name: 'Income forecast',
+            fill: 'tonexty',
+            line: { shape: 'spline', color: GetColor('forecast') },
+            fillcolor: GetColor('forecast_fill'),
+            hovertemplate: 'Income forecast: <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
+            connectgaps: true,
+        },
+        {
+            type: 'scatter',
+            x: state.incomeForecast.ds,
+            y: state.incomeForecast.yhat_rmse_lower,
+            name: 'Income forecast (lower boundary)',
+            fill: 'tonexty',
+            showlegend: false,
+            line: { shape: 'spline', color: GetColor('forecast_boundary') },
+            fillcolor: GetColor('forecast_fill'),
+            hovertemplate: 'Income forecast (lower boundary): <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
+            connectgaps: true,
+        }
+        ]
+    }
+    return []
+}
+
+function getBarVisibility(
+    belonging: number,
+    positionName: string,
+    positionsFilter: Array<string>
+): boolean | 'legendonly' | undefined {
+    if (!positionsFilter.length) {
+        const differentTribe = 3
+        return belonging === differentTribe ? 'legendonly' : undefined
+    }
+
+    for (const posName of positionsFilter) {
+        if (posName === positionName || (posName !== 'Developer' && positionName.includes(posName))) {
+            return undefined
+        }
+    }
+    return 'legendonly'
+}
+
+function getBars(state: State, positionsFilter: Array<string>): Array<GraphData> {
+    if (state.tribeRepliesLoaded) {
+        const data: Array<GraphData> = []
+        for (const user of state.tribeReplies) {
+            data.push(
+                {
+                    type: 'bar',
+                    name: user.user_display_name,
+                    x: user.reply_date,
+                    y: user.iteration_count,
+                    opacity: 0.6,
+                    hovertext: user.user_name,
+                    hovertemplate: `<b>${user.user_name}</b><br>` + 'Date: %{x}<br>' + 'Count: %{y}<br>' + '<extra></extra>',
+                    // marker_color=color_palette.get_legend_color(
+                    //     user_name = user_name,
+                    //     belonging = belonging,
+                    // ),
+                    visible: getBarVisibility(
+                        user.tribe_belonging_status,
+                        user.position_name,
+                        positionsFilter,
+                    ),
+                }
+            )
+        }
+        return data
+    }
+    return []
+}
+
 
 interface State {
     incomeForecastLoaded: boolean
@@ -99,25 +204,45 @@ interface State {
 }
 
 interface Action {
-    type: string,
-    payload: any,
+    type: string
+    incomeForecastLoaded: boolean
+    incomeForecast: IncomeForecast
+    tribeRepliesLoaded: boolean
+    tribeReplies: Array<DailyTribeReplies>
 }
 
 function reducer(state: State, action: Action): State {
     switch (action.type) {
         case 'fetchIncomeForecast':
-            if (state.incomeForecast === action.payload) {
+            if (state.incomeForecast === action.incomeForecast) {
                 return state;
             }
-            return { ...state, incomeForecast: action.payload }
+            if (action.incomeForecastLoaded) {
+                return {
+                    ...state,
+                    incomeForecastLoaded: action.incomeForecastLoaded,
+                    incomeForecast: action.incomeForecast
+                }
+            }
+            return state
         case 'fetchDailyTribeReplies':
-            return { ...state, tribeReplies: action.payload }
+            if (state.tribeReplies === action.tribeReplies) {
+                return state;
+            }
+            if (action.tribeRepliesLoaded) {
+                return {
+                    ...state,
+                    tribeRepliesLoaded: action.tribeRepliesLoaded,
+                    tribeReplies: action.tribeReplies
+                }
+            }
+            return state
         default:
             throw new Error('Invalid action type ' + action.type);
     }
 }
 
-function Graph({ tribeID, forecastHorizon, incomeType, tile }: ForecastParams) {
+function Graph({ tribeID, forecastHorizon, incomeType, tile, positionsFilter }: ForecastParams) {
     console.log(`forecastHorizon = ${forecastHorizon}`)
     console.log(`tile = ${tile}`)
 
@@ -133,9 +258,21 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile }: ForecastParams) {
     useEffect(() => {
         (async () => {
             const fetchedIncomeForecast: FetchResult<IncomeForecast> = await FetchTribeIncomeForecast({ tribeID, forecastHorizon, incomeType })
-            dispatch({ type: 'fetchIncomeForecast', payload: fetchedIncomeForecast })
+            dispatch({
+                type: 'fetchIncomeForecast',
+                incomeForecastLoaded: fetchedIncomeForecast.success,
+                incomeForecast: fetchedIncomeForecast.data,
+                tribeRepliesLoaded: initialState.tribeRepliesLoaded,
+                tribeReplies: initialState.tribeReplies,
+            })
             const fetchedDailyTribeReplies: FetchResult<Array<DailyTribeReplies>> = await FetchDailyTribeReplies({ tile, tribeID, forecastHorizon })
-            dispatch({ type: 'fetchDailyTribeReplies', payload: fetchedDailyTribeReplies })
+            dispatch({
+                type: 'fetchDailyTribeReplies',
+                incomeForecastLoaded: initialState.incomeForecastLoaded,
+                incomeForecast: initialState.incomeForecast,
+                tribeRepliesLoaded: fetchedDailyTribeReplies.success,
+                tribeReplies: fetchedDailyTribeReplies.data,
+            })
             console.log('use effect')
         })()
     }, [tribeID, forecastHorizon, incomeType, tile])
@@ -143,66 +280,32 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile }: ForecastParams) {
     if (state.incomeForecastLoaded || state.tribeRepliesLoaded) {
         console.log(`incomeForecastLoaded || tribeRepliesLoaded`)
 
+        const sum = state.tribeReplies.reduce<Array<number>>(function (accumulator, curValue) {
+            return accumulator.map((num, idx) => num + curValue.iteration_count[idx])
+        }, new Array(state.tribeReplies.length).fill(0))
+        console.log(`length ${state.tribeReplies.length}`)
+        console.log(`sum${sum}`)
         const yaxisMin = 0
         const yaxisMax = Math.max(
             Math.max(...state.incomeForecast.yhat_rmse_upper),
             Math.max(...state.incomeForecast.y),
-            // tribe_members_replies.groupby(by=TribeDailyRepliesMeta.reply_date)[TribeDailyRepliesMeta.iteration_count].sum().max()
-        ) + 5
+            Math.max(...sum),
+        ) + 10
 
         let xaxisMin = new Date(state.incomeForecast.ds.reduce((a, b) => a < b ? a : b))
         xaxisMin.setDate(xaxisMin.getDate() - 1)
         let xaxisMax = new Date(state.incomeForecast.ds.reduce((a, b) => a > b ? a : b))
         xaxisMax.setDate(xaxisMax.getDate() + 1)
 
+        const data: Array<GraphData> = []
+        data.push(...getScatters(state))
+        data.push(...getBars(state, positionsFilter))
+
         console.log(state.incomeForecast)
         return (
             <div className='ForecastGraph'>
                 <Plot
-                    data={[{
-                        type: 'scatter',
-                        x: state.incomeForecast.ds,
-                        y: state.incomeForecast.y,
-                        name: 'fact',
-                        line: { shape: 'spline', color: GetColor('fact') },
-                        hovertemplate: 'Actual income: <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
-                        connectgaps: true,
-                    },
-                    {
-                        type: 'scatter',
-                        x: state.incomeForecast.ds,
-                        y: state.incomeForecast.yhat_rmse_upper,
-                        name: 'Income forecast (upper boundary)',
-                        showlegend: false,
-                        line: { shape: 'spline', color: GetColor('forecast_boundary') },
-                        hovertemplate: 'Income forecast (upper boundary): <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
-                        connectgaps: true,
-                    },
-                    {
-                        type: 'scatter',
-                        x: state.incomeForecast.ds,
-                        y: state.incomeForecast.yhat,
-                        name: 'Income forecast',
-                        fill: 'tonexty',
-                        line: { shape: 'spline', color: GetColor('forecast') },
-                        fillcolor: GetColor('forecast_fill'),
-                        hovertemplate: 'Income forecast: <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
-                        connectgaps: true,
-                    },
-                    {
-                        type: 'scatter',
-                        x: state.incomeForecast.ds,
-                        y: state.incomeForecast.yhat_rmse_lower,
-                        name: 'Income forecast (lower boundary)',
-                        fill: 'tonexty',
-                        showlegend: false,
-                        line: { shape: 'spline', color: GetColor('forecast_boundary') },
-                        fillcolor: GetColor('forecast_fill'),
-                        hovertemplate: 'Income forecast (lower boundary): <b>%{y}</b><br>Date: %{x}<br><extra></extra>',
-                        connectgaps: true,
-                    }
-                        //{ type: 'bar', x: [2, 3], y: [5, 3] }
-                    ]}
+                    data={data}
                     layout={{
                         height: 400, width: 1510, margin: {
                             t: 10,
@@ -224,14 +327,15 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile }: ForecastParams) {
     return <ForecastMissing />
 }
 
-function Body({ tribeID, forecastHorizon, incomeType, tile }: ForecastParams) {
+function Body({ tribeID, forecastHorizon, incomeType, tile, positionsFilter }: ForecastParams) {
     return (
         <div className='ForecastBody'>
             <Graph
                 tribeID={tribeID}
                 forecastHorizon={forecastHorizon}
                 incomeType={incomeType}
-                tile={tile} />
+                tile={tile}
+                positionsFilter={positionsFilter} />
         </div>
     )
 }
@@ -248,6 +352,7 @@ export default function StrategicForecast(
 ) {
     const [forecastHorizon, setForecastHorizon] = useState<string>(dailyForecastHorizons[0])
     const [tile, setTile] = useState<number>(tiles[tiles.length % 2])
+    const [positionsFilter, setPositionsFilter] = useState<Array<string>>([])
 
     return (
         <div className='ForforecastHorizonecastContainer'>
@@ -257,12 +362,14 @@ export default function StrategicForecast(
                 forecastHorizon={forecastHorizon}
                 tile={tile}
                 onForecastHorizonChange={setForecastHorizon}
-                onTileChange={setTile} />
+                onTileChange={setTile}
+                onPositionsChange={setPositionsFilter} />
             <Body
                 tribeID={tribeID}
                 forecastHorizon={forecastHorizon}
                 incomeType={incomeType}
-                tile={tile} />
+                tile={tile}
+                positionsFilter={positionsFilter} />
         </div>
     )
 }
