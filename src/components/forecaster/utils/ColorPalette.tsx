@@ -12,7 +12,6 @@ const palette: { [index: string]: string } = {
     grid_line: 'rgba(190,190,190,0.3)',
     tribe_replies: 'rgb(255,128,64)',
     tribe_replies_greater_fill: 'rgb(179,255,174,0.4)',
-    tribe_replies_greater: 'rgb(179,255,174)',
     tribe_replies_lower_fill: 'rgb(255,100,100,0.7)',
     transparent: 'rgba(0,0,0,0)',
     vline: 'green',

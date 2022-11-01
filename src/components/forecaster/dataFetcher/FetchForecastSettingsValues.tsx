@@ -6,7 +6,7 @@ export interface ForecasterSettingsValues {
     incomeTypes: Array<string>
     replyTypes: Array<string>
     tiles: Array<number>
-    forecastHorizons: Array<string>
+    dailyForecastHorizons: Array<string>
     tribes: Array<Tribe>
 }
 
@@ -16,7 +16,7 @@ export const emptyForecasterSettingsValues: FetchResult<ForecasterSettingsValues
         incomeTypes: Array<string>(),
         replyTypes: Array<string>(),
         tiles: Array<number>(),
-        forecastHorizons: Array<string>(),
+        dailyForecastHorizons: Array<string>(),
         tribes: Array<Tribe>(),
     }
 }
@@ -26,7 +26,7 @@ export const FetchForecastSettingsValues: () => Promise<FetchResult<ForecasterSe
         const incomeTypes = await fetch(`${endPoint}/get_income_types`).then(response => response.json())
         const replyTypes = await fetch(`${endPoint}/get_reply_type_filters`).then(response => response.json())
         const tiles = await fetch(`${endPoint}/get_tiles`).then(response => response.json())
-        const forecastHorizons = await fetch(`${endPoint}/get_forecast_horizons`).then(response => response.json())
+        const dailyForecastHorizons = await fetch(`${endPoint}/get_daily_horizons`).then(response => response.json())
         const tribes = await fetch(`${endPoint}/get_available_tribes`).then(response => response.json())
         return {
             success: true,
@@ -34,7 +34,7 @@ export const FetchForecastSettingsValues: () => Promise<FetchResult<ForecasterSe
                 incomeTypes: (incomeTypes as Array<string>),
                 replyTypes: (replyTypes as Array<string>),
                 tiles: (tiles as Array<number>),
-                forecastHorizons: (forecastHorizons as Array<string>),
+                dailyForecastHorizons: (dailyForecastHorizons as Array<string>),
                 tribes: (tribes as Array<Tribe>),
             }
         }

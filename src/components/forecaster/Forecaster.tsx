@@ -5,29 +5,12 @@ import './styles/Forecast.css'
 
 import React, { useEffect, useState } from 'react'
 import LoadIndicator from './utils/LoadIndicator'
-
 import TribesContainer from './Tribes'
 import { Tribe } from './Tribe'
 import CommonSettingsPanel from './CommonSettingsPanel'
 
 import FetchResult from './dataFetcher/FetchResult'
 import { FetchForecastSettingsValues, emptyForecasterSettingsValues, ForecasterSettingsValues } from './dataFetcher/FetchForecastSettingsValues'
-
-
-export interface RepliesForecast {
-    ds: string
-    yhat: number
-    yhat_rmse_upper: number
-    yhat_rmse_lower: number
-}
-
-export interface IncomeForecast {
-    ds: Array<Date>
-    y: Array<number>
-    yhat: Array<number>
-    yhat_rmse_upper: Array<number>
-    yhat_rmse_lower: Array<number>
-}
 
 
 export default function Forecaster() {
@@ -61,7 +44,7 @@ export default function Forecaster() {
                         tribes={tribes}
                         incomeType={incomeType}
                         replyTypes={forecastSettingsValues?.replyTypes}
-                        forecastHorizons={forecastSettingsValues?.forecastHorizons}
+                        dailyForecastHorizons={forecastSettingsValues?.dailyForecastHorizons}
                         tiles={forecastSettingsValues?.tiles}
                     />) : (<div></div>)}
             </div>

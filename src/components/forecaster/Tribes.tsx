@@ -5,7 +5,7 @@ import TribeContainer, { Tribe } from './Tribe'
 
 export interface ForecastSettingsValues {
     replyTypes: Array<string>
-    forecastHorizons: Array<string>
+    dailyForecastHorizons: Array<string>
     tiles: Array<number>
 }
 
@@ -14,7 +14,7 @@ export default function TribesContainer(
         tribes,
         incomeType,
         replyTypes,
-        forecastHorizons,
+        dailyForecastHorizons,
         tiles
     }:
         { tribes: Array<Tribe> } &
@@ -37,7 +37,7 @@ export default function TribesContainer(
                             tribe={tribe}
                             incomeType={incomeType}
                             replyTypes={replyTypes}
-                            forecastHorizons={forecastHorizons}
+                            dailyForecastHorizons={dailyForecastHorizons}
                             tiles={tiles}
                         />
                     })}

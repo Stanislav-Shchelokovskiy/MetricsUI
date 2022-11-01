@@ -1,6 +1,21 @@
 import endPoint from './EndPoint'
 import FetchResult from './FetchResult'
-import { IncomeForecast } from '../Forecaster'
+
+interface RawIncomeForecast {
+    ds: string
+    y: number
+    yhat: number
+    yhat_rmse_upper: number
+    yhat_rmse_lower: number
+}
+
+export interface IncomeForecast {
+    ds: Array<Date>
+    y: Array<number>
+    yhat: Array<number>
+    yhat_rmse_upper: Array<number>
+    yhat_rmse_lower: Array<number>
+}
 
 export const emptyIncomeForecast: FetchResult<IncomeForecast> =
 {
@@ -12,14 +27,6 @@ export const emptyIncomeForecast: FetchResult<IncomeForecast> =
         yhat_rmse_upper: Array<number>(),
         yhat_rmse_lower: Array<number>()
     }
-}
-
-interface RawIncomeForecast {
-    ds: string
-    y: number
-    yhat: number
-    yhat_rmse_upper: number
-    yhat_rmse_lower: number
 }
 
 export const FetchTribeIncomeForecast: (

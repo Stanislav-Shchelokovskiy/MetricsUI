@@ -18,7 +18,7 @@ export default function TribeContainer(
         tribe,
         incomeType,
         replyTypes,
-        forecastHorizons,
+        dailyForecastHorizons,
         tiles
     }:
         { tribe: Tribe } &
@@ -43,7 +43,7 @@ export default function TribeContainer(
                     <StrategicForecast
                         tribeID={tribe.id}
                         incomeType={incomeType}
-                        forecastHorizons={forecastHorizons}
+                        dailyForecastHorizons={dailyForecastHorizons}
                         tiles={tiles} />
                 </Item>
             </Accordion>

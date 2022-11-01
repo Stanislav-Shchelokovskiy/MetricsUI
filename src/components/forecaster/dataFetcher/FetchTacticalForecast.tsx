@@ -1,6 +1,24 @@
 import endPoint from './EndPoint'
 import FetchResult from './FetchResult'
 
+interface RawTacticalForecast {
+    ds: string
+    yhat_rmse_upper: number
+    yhat: number
+    yhat_rmse_lower: number
+    iteration_count: number
+    upper_replies: number
+}
+
+export interface HourlyTacticalForecast {
+    ds: Array<Date>
+    yhat_rmse_upper: Array<number>
+    yhat: Array<number>
+    yhat_rmse_lower: Array<number>
+    iteration_count: Array<number>
+    upper_replies: Array<number>
+}
+
 export const emptyTacticalForecast: FetchResult<HourlyTacticalForecast> =
 {
     success: false,
@@ -12,25 +30,6 @@ export const emptyTacticalForecast: FetchResult<HourlyTacticalForecast> =
         iteration_count: Array<number>(),
         upper_replies: Array<number>()
     }
-}
-
-
-export interface HourlyTacticalForecast {
-    ds: Array<Date>
-    yhat_rmse_upper: Array<number>
-    yhat: Array<number>
-    yhat_rmse_lower: Array<number>
-    iteration_count: Array<number>
-    upper_replies: Array<number>
-}
-
-interface RawTacticalForecast {
-    ds: string
-    yhat_rmse_upper: number
-    yhat: number
-    yhat_rmse_lower: number
-    iteration_count: number
-    upper_replies: number
 }
 
 export const FetchTacticalForecast: (
