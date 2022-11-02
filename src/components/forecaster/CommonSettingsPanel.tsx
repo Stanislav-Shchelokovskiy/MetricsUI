@@ -8,8 +8,8 @@ interface CommonSettings {
     defaultIncomeType: string
     tribes: Array<Tribe>
 }
-type tribeSelectCallable = (tribes: Array<Tribe>) => void
-type incomeTypeChangeCallable = (incomeType: string) => void
+type TribeSelectCallable = (tribes: Array<Tribe>) => void
+type IncomeTypeChangeCallable = (incomeType: string) => void
 
 function IncomeSelector(
     {
@@ -19,7 +19,7 @@ function IncomeSelector(
     }:
         { incomeTypes: Array<string> } &
         { defaultIncomeType: string } &
-        { onIncomeTypeChange: incomeTypeChangeCallable }
+        { onIncomeTypeChange: IncomeTypeChangeCallable }
 ) {
     return (
         <SelectBox
@@ -41,7 +41,7 @@ function TribesSelector(
         onTribeSelect
     }:
         { tribes: Array<Tribe> } &
-        { onTribeSelect: tribeSelectCallable }
+        { onTribeSelect: TribeSelectCallable }
 ) {
     const renderItem = (tribe: Tribe) => {
         return <div>{tribe.name}</div>
@@ -85,8 +85,8 @@ export default function CommonSettingsPanel(
         onIncomeTypeChange
     }:
         CommonSettings &
-        { onTribeSelect: tribeSelectCallable } &
-        { onIncomeTypeChange: incomeTypeChangeCallable }
+        { onTribeSelect: TribeSelectCallable } &
+        { onIncomeTypeChange: IncomeTypeChangeCallable }
 ) {
     return (
         <div className='CommonSettingsPanel'>

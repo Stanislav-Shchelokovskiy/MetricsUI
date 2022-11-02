@@ -4,7 +4,7 @@ import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import ForecastMissing from './utils/ForecastMissing'
 
 import FetchResult from './dataFetcher/FetchResult'
-import { HourlyTacticalForecast, emptyTacticalForecast, FetchTacticalForecast } from './dataFetcher/FetchTacticalForecast'
+import { HourlyTacticalForecast, EMPTY_TACTICAL_FORECAST, FetchTacticalForecast } from './dataFetcher/FetchTacticalForecast'
 import GetColor from './utils/ColorPalette'
 
 
@@ -70,7 +70,7 @@ function Graph({ tribeID, incomeType, replyType }: ForecastParams & ForecastSett
     console.log(`replyType = ${replyType}`)
     console.log(`tile = ${incomeType}`)
 
-    const [{ success: forecastLoaded, data: tacticalForecast }, setForecastLoaded] = useState<FetchResult<HourlyTacticalForecast>>(emptyTacticalForecast)
+    const [{ success: forecastLoaded, data: tacticalForecast }, setForecastLoaded] = useState<FetchResult<HourlyTacticalForecast>>(EMPTY_TACTICAL_FORECAST)
 
     useEffect(() => {
         (async () => {

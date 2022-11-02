@@ -1,6 +1,4 @@
-import { Belonging } from './Meta'
-
-const palette: { [index: string]: string } = {
+const PALETTE: { [index: string]: string } = {
     fact: 'rgb(245,0,245)',
     forecast: 'rgb(0,120,245)',
     forecast_fill: 'rgba(195,195,195,0.5)',
@@ -18,7 +16,7 @@ const palette: { [index: string]: string } = {
 }
 
 const GetColor: (key: string) => string = function (key) {
-    return palette[key]
+    return PALETTE[key]
 }
 
 export default GetColor

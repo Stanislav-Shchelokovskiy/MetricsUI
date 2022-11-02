@@ -10,11 +10,11 @@ import { Tribe } from './Tribe'
 import CommonSettingsPanel from './CommonSettingsPanel'
 
 import FetchResult from './dataFetcher/FetchResult'
-import { FetchForecastSettingsValues, emptyForecasterSettingsValues, ForecasterSettingsValues } from './dataFetcher/FetchForecastSettingsValues'
+import { FetchForecastSettingsValues, EMPTY_FORECATER_SETTINGS_VALUES, ForecasterSettingsValues } from './dataFetcher/FetchForecastSettingsValues'
 
 
 export default function Forecaster() {
-    const [{ success: forecastSettingsValuesLoaded, data: forecastSettingsValues }, setForecastSettingsValuesLoaded] = useState(emptyForecasterSettingsValues)
+    const [{ success: forecastSettingsValuesLoaded, data: forecastSettingsValues }, setForecastSettingsValuesLoaded] = useState(EMPTY_FORECATER_SETTINGS_VALUES)
     const [tribes, setTribes] = useState<Array<Tribe>>([])
     const [incomeType, setIncomeType] = useState<string>('')
     console.log(tribes)

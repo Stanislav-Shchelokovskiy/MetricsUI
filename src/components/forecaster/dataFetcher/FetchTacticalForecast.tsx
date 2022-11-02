@@ -1,4 +1,4 @@
-import endPoint from './EndPoint'
+import END_POINT from './EndPoint'
 import FetchResult from './FetchResult'
 
 interface RawTacticalForecast {
@@ -19,7 +19,7 @@ export interface HourlyTacticalForecast {
     upper_replies: Array<number>
 }
 
-export const emptyTacticalForecast: FetchResult<HourlyTacticalForecast> =
+export const EMPTY_TACTICAL_FORECAST: FetchResult<HourlyTacticalForecast> =
 {
     success: false,
     data: {
@@ -54,7 +54,7 @@ export const FetchTacticalForecast: (
     }) {
         try {
             const rawTacticalForecast: Array<RawTacticalForecast> = await fetch(
-                `${endPoint}/get_tactical_forecast?` +
+                `${END_POINT}/get_tactical_forecast?` +
                 new URLSearchParams({
                     income_type: incomeType,
                     tribe_id: tribeID,
@@ -83,6 +83,6 @@ export const FetchTacticalForecast: (
             }
         } catch (error) {
             console.log(error)
-            return emptyTacticalForecast
+            return EMPTY_TACTICAL_FORECAST
         }
     }

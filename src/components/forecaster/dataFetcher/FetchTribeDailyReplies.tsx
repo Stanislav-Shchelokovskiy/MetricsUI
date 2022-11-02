@@ -1,4 +1,4 @@
-import endPoint from './EndPoint'
+import END_POINT from './EndPoint'
 import FetchResult from './FetchResult'
 
 interface RawDailyTribeReplies {
@@ -23,7 +23,7 @@ export interface DailyTribeReplies {
     iteration_count: Array<number>
 }
 
-export const emptyDailyTribeReplies: FetchResult<Array<DailyTribeReplies>> =
+export const EMPTY_DAILY_TRIBE_REPLIES: FetchResult<Array<DailyTribeReplies>> =
 {
     success: false,
     data: [{
@@ -58,7 +58,7 @@ export const FetchDailyTribeReplies: (
     }) {
         try {
             const rawDailyTribeReplies: Array<RawDailyTribeReplies> = await fetch(
-                `${endPoint}/get_tribe_replies?` +
+                `${END_POINT}/get_tribe_replies?` +
                 new URLSearchParams({
                     tile: tile.toString(),
                     tribe_id: tribeID,
@@ -85,6 +85,6 @@ export const FetchDailyTribeReplies: (
             }
         } catch (error) {
             console.log(error)
-            return emptyDailyTribeReplies
+            return EMPTY_DAILY_TRIBE_REPLIES
         }
     }

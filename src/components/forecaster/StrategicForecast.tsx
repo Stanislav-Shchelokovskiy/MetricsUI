@@ -7,8 +7,8 @@ import ForecastMissing from './utils/ForecastMissing'
 import GetColor from './utils/ColorPalette'
 
 import FetchResult from './dataFetcher/FetchResult'
-import { IncomeForecast, FetchTribeIncomeForecast, emptyIncomeForecast } from './dataFetcher/FetchTribeIncomeForecast'
-import { DailyTribeReplies, FetchDailyTribeReplies, emptyDailyTribeReplies } from './dataFetcher/FetchTribeDailyReplies'
+import { IncomeForecast, FetchTribeIncomeForecast, EMPTY_INCOME_FORECAST } from './dataFetcher/FetchTribeIncomeForecast'
+import { DailyTribeReplies, FetchDailyTribeReplies, EMPTY_DAILY_TRIBE_REPLIES } from './dataFetcher/FetchTribeDailyReplies'
 
 interface ForecastSettingsValues {
     dailyForecastHorizons: Array<string>
@@ -247,10 +247,10 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile, positionsFilter }: 
     console.log(`tile = ${tile}`)
 
     const initialState: State = {
-        incomeForecastLoaded: emptyIncomeForecast.success,
-        incomeForecast: emptyIncomeForecast.data,
-        tribeRepliesLoaded: emptyDailyTribeReplies.success,
-        tribeReplies: emptyDailyTribeReplies.data,
+        incomeForecastLoaded: EMPTY_INCOME_FORECAST.success,
+        incomeForecast: EMPTY_INCOME_FORECAST.data,
+        tribeRepliesLoaded: EMPTY_DAILY_TRIBE_REPLIES.success,
+        tribeReplies: EMPTY_DAILY_TRIBE_REPLIES.data,
     }
 
     const [state, dispatch] = useReducer(reducer, initialState)

@@ -1,4 +1,4 @@
-import endPoint from './EndPoint'
+import END_POINT from './EndPoint'
 import FetchResult from './FetchResult'
 
 interface RawIncomeForecast {
@@ -17,7 +17,7 @@ export interface IncomeForecast {
     yhat_rmse_lower: Array<number>
 }
 
-export const emptyIncomeForecast: FetchResult<IncomeForecast> =
+export const EMPTY_INCOME_FORECAST: FetchResult<IncomeForecast> =
 {
     success: false,
     data: {
@@ -49,7 +49,7 @@ export const FetchTribeIncomeForecast: (
     }) {
         try {
             const tribeIncomeForecast: Array<RawIncomeForecast> = await fetch(
-                `${endPoint}/get_forecast?` +
+                `${END_POINT}/get_forecast?` +
                 new URLSearchParams({
                     tribe_id: tribeID,
                     horizon: forecastHorizon,
@@ -75,6 +75,6 @@ export const FetchTribeIncomeForecast: (
             }
         } catch (error) {
             console.log(error)
-            return emptyIncomeForecast
+            return EMPTY_INCOME_FORECAST
         }
     }

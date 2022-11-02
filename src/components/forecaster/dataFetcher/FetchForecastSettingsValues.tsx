@@ -1,4 +1,4 @@
-import endPoint from './EndPoint'
+import END_POINT from './EndPoint'
 import FetchResult from './FetchResult'
 import { Tribe } from '../Tribe'
 
@@ -10,7 +10,7 @@ export interface ForecasterSettingsValues {
     tribes: Array<Tribe>
 }
 
-export const emptyForecasterSettingsValues: FetchResult<ForecasterSettingsValues> = {
+export const EMPTY_FORECATER_SETTINGS_VALUES: FetchResult<ForecasterSettingsValues> = {
     success: false,
     data: {
         incomeTypes: Array<string>(),
@@ -23,11 +23,11 @@ export const emptyForecasterSettingsValues: FetchResult<ForecasterSettingsValues
 
 export const FetchForecastSettingsValues: () => Promise<FetchResult<ForecasterSettingsValues>> = async function () {
     try {
-        const incomeTypes = await fetch(`${endPoint}/get_income_types`).then(response => response.json())
-        const replyTypes = await fetch(`${endPoint}/get_reply_type_filters`).then(response => response.json())
-        const tiles = await fetch(`${endPoint}/get_tiles`).then(response => response.json())
-        const dailyForecastHorizons = await fetch(`${endPoint}/get_daily_horizons`).then(response => response.json())
-        const tribes = await fetch(`${endPoint}/get_available_tribes`).then(response => response.json())
+        const incomeTypes = await fetch(`${END_POINT}/get_income_types`).then(response => response.json())
+        const replyTypes = await fetch(`${END_POINT}/get_reply_type_filters`).then(response => response.json())
+        const tiles = await fetch(`${END_POINT}/get_tiles`).then(response => response.json())
+        const dailyForecastHorizons = await fetch(`${END_POINT}/get_daily_horizons`).then(response => response.json())
+        const tribes = await fetch(`${END_POINT}/get_available_tribes`).then(response => response.json())
         return {
             success: true,
             data: {
@@ -40,6 +40,6 @@ export const FetchForecastSettingsValues: () => Promise<FetchResult<ForecasterSe
         }
     } catch (error) {
         console.log(error)
-        return emptyForecasterSettingsValues
+        return EMPTY_FORECATER_SETTINGS_VALUES
     }
 }
