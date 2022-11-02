@@ -98,7 +98,7 @@ function Header(
     )
 }
 
-function getScatters(state: State): Array<GraphData> {
+function getScatters(state: GraphState): Array<GraphData> {
     if (state.incomeForecastLoaded) {
         return [{
             type: 'scatter',
@@ -165,7 +165,7 @@ function getBarVisibility(
     return 'legendonly'
 }
 
-function getBars(state: State, positionsFilter: Array<string>): Array<GraphData> {
+function getBars(state: GraphState, positionsFilter: Array<string>): Array<GraphData> {
     if (state.tribeRepliesLoaded) {
         const data: Array<GraphData> = []
         for (const user of state.tribeReplies) {
@@ -196,14 +196,21 @@ function getBars(state: State, positionsFilter: Array<string>): Array<GraphData>
 }
 
 
-interface State {
+interface GraphState {
     incomeForecastLoaded: boolean
     incomeForecast: IncomeForecast
     tribeRepliesLoaded: boolean
     tribeReplies: Array<DailyTribeReplies>
 }
 
-interface Action {
+const initialGraphState: GraphState = {
+    incomeForecastLoaded: EMPTY_INCOME_FORECAST.success,
+    incomeForecast: EMPTY_INCOME_FORECAST.data,
+    tribeRepliesLoaded: EMPTY_DAILY_TRIBE_REPLIES.success,
+    tribeReplies: EMPTY_DAILY_TRIBE_REPLIES.data,
+}
+
+interface GraphAction {
     type: string
     incomeForecastLoaded: boolean
     incomeForecast: IncomeForecast
@@ -211,7 +218,7 @@ interface Action {
     tribeReplies: Array<DailyTribeReplies>
 }
 
-function reducer(state: State, action: Action): State {
+function graphStateReducer(state: GraphState, action: GraphAction): GraphState {
     switch (action.type) {
         case 'fetchIncomeForecast':
             if (state.incomeForecast === action.incomeForecast) {
@@ -246,30 +253,21 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile, positionsFilter }: 
     console.log(`forecastHorizon = ${forecastHorizon}`)
     console.log(`tile = ${tile}`)
 
-    const initialState: State = {
-        incomeForecastLoaded: EMPTY_INCOME_FORECAST.success,
-        incomeForecast: EMPTY_INCOME_FORECAST.data,
-        tribeRepliesLoaded: EMPTY_DAILY_TRIBE_REPLIES.success,
-        tribeReplies: EMPTY_DAILY_TRIBE_REPLIES.data,
-    }
-
-    const [state, dispatch] = useReducer(reducer, initialState)
+    const [state, dispatch] = useReducer(graphStateReducer, initialGraphState)
 
     useEffect(() => {
         (async () => {
             const fetchedIncomeForecast: FetchResult<IncomeForecast> = await FetchTribeIncomeForecast({ tribeID, forecastHorizon, incomeType })
             dispatch({
                 type: 'fetchIncomeForecast',
+                ...initialGraphState,
                 incomeForecastLoaded: fetchedIncomeForecast.success,
                 incomeForecast: fetchedIncomeForecast.data,
-                tribeRepliesLoaded: initialState.tribeRepliesLoaded,
-                tribeReplies: initialState.tribeReplies,
             })
             const fetchedDailyTribeReplies: FetchResult<Array<DailyTribeReplies>> = await FetchDailyTribeReplies({ tile, tribeID, forecastHorizon })
             dispatch({
                 type: 'fetchDailyTribeReplies',
-                incomeForecastLoaded: initialState.incomeForecastLoaded,
-                incomeForecast: initialState.incomeForecast,
+                ...initialGraphState,
                 tribeRepliesLoaded: fetchedDailyTribeReplies.success,
                 tribeReplies: fetchedDailyTribeReplies.data,
             })
