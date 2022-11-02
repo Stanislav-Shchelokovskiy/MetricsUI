@@ -280,23 +280,6 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile, positionsFilter }: 
     if (state.incomeForecastLoaded || state.tribeRepliesLoaded) {
         console.log(`incomeForecastLoaded || tribeRepliesLoaded`)
 
-        const sum = state.tribeReplies.reduce<Array<number>>(function (accumulator, curValue) {
-            return accumulator.map((num, idx) => num + curValue.iteration_count[idx])
-        }, new Array(state.tribeReplies.length).fill(0))
-        console.log(`length ${state.tribeReplies.length}`)
-        console.log(`sum${sum}`)
-        const yaxisMin = 0
-        const yaxisMax = Math.max(
-            Math.max(...state.incomeForecast.yhat_rmse_upper),
-            Math.max(...state.incomeForecast.y),
-            Math.max(...sum),
-        ) + 10
-
-        let xaxisMin = new Date(state.incomeForecast.ds.reduce((a, b) => a < b ? a : b))
-        xaxisMin.setDate(xaxisMin.getDate() - 1)
-        let xaxisMax = new Date(state.incomeForecast.ds.reduce((a, b) => a > b ? a : b))
-        xaxisMax.setDate(xaxisMax.getDate() + 1)
-
         const data: Array<GraphData> = []
         data.push(...getScatters(state))
         data.push(...getBars(state, positionsFilter))
@@ -313,13 +296,14 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile, positionsFilter }: 
                             r: 10,
                             b: 30
                         },
-                        yaxis: { range: [yaxisMin, yaxisMax], 'showgrid': true, zeroline: false },
-                        xaxis: { range: [xaxisMin, xaxisMax], 'showgrid': false },
+                        xaxis: { autorange: true, automargin: false },
+                        yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: false },
                         barmode: 'stack',
                         paper_bgcolor: 'rgba(0,0,0,0)',
                         plot_bgcolor: 'rgba(0,0,0,0)',
+                        autosize: true
                     }}
-                    config={{ displayModeBar: false }}
+                    config={{ displayModeBar: false, doubleClick: 'autosize' }}
                 />
             </div>
         )

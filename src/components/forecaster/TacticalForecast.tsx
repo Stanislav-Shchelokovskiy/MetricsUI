@@ -168,8 +168,9 @@ function Graph({ tribeID, incomeType, replyType }: ForecastParams & ForecastSett
                         height: 300,
                         width: 1200,
                         margin: { t: 10, l: 30, r: 10 },
-                        xaxis: { 'showgrid': false },
-                        yaxis: { 'showgrid': true, zeroline: false },
+                        xaxis: { 'showgrid': false, autorange: true, automargin: false },
+                        yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: false },
+                        autosize: true,
                         paper_bgcolor: 'rgba(0,0,0,0)',
                         plot_bgcolor: 'rgba(0,0,0,0)',
                         hovermode: 'x',
@@ -182,7 +183,7 @@ function Graph({ tribeID, incomeType, replyType }: ForecastParams & ForecastSett
                             line: { color: GetColor('vline'), width: 3, dash: 'dash' }
                         },]
                     }}
-                    config={{ displayModeBar: false }}
+                    config={{ displayModeBar: false, doubleClick: 'autosize' }}
                 />
             </div>
         )
