@@ -1,7 +1,7 @@
 import React from 'react'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
-import { Tribe } from './Tribe'
+import { Tribe } from '../Tribe'
 
 interface CommonSettings {
     incomeTypes: Array<string>
@@ -29,7 +29,7 @@ function IncomeSelector(
             label='Income type'
             labelMode='static'>
             <DropDownOptions
-                hideOnOutsideClick={true} 
+                hideOnOutsideClick={true}
                 hideOnParentScroll={true} />
         </SelectBox >
     )
@@ -70,7 +70,7 @@ function TribesSelector(
             label='Tribes'
             labelMode='static'>
             <DropDownOptionsTagBox
-                hideOnOutsideClick={true} 
+                hideOnOutsideClick={true}
                 hideOnParentScroll={true} />
         </TagBox>
     )
@@ -101,5 +101,4 @@ export default function CommonSettingsPanel(
             />
         </div>
     )
-
 }

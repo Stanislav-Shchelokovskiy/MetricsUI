@@ -2,15 +2,18 @@ import './styles/CommonSettingsPanel.css'
 import './styles/Tribes.css'
 import './styles/Tribe.css'
 import './styles/Forecast.css'
+import './styles/Menu.css'
+import './styles/CommandPanel.css'
 
 import React, { useEffect, useState } from 'react'
 import LoadIndicator from './utils/LoadIndicator'
 import TribesContainer from './Tribes'
 import { Tribe } from './Tribe'
-import CommonSettingsPanel from './CommonSettingsPanel'
+import CommonSettingsPanel from './menu/CommonSettingsPanel'
+import CommandPanel from './menu/CommandPanel'
 
-import FetchResult from './dataFetcher/FetchResult'
-import { FetchForecastSettingsValues, EMPTY_FORECATER_SETTINGS_VALUES, ForecasterSettingsValues } from './dataFetcher/FetchForecastSettingsValues'
+import FetchResult from './network_resource_fetcher/FetchResult'
+import { FetchForecastSettingsValues, EMPTY_FORECATER_SETTINGS_VALUES, ForecasterSettingsValues } from './network_resource_fetcher/FetchForecastSettingsValues'
 
 
 export default function Forecaster() {
@@ -33,12 +36,15 @@ export default function Forecaster() {
     if (forecastSettingsValuesLoaded) {
         return (
             <div className='Forecaster' >
-                <CommonSettingsPanel
-                    incomeTypes={forecastSettingsValues?.incomeTypes}
-                    defaultIncomeType={forecastSettingsValues?.incomeTypes[0]}
-                    tribes={forecastSettingsValues?.tribes}
-                    onTribeSelect={setTribes}
-                    onIncomeTypeChange={setIncomeType} />
+                <div className='Menu' >
+                    <CommonSettingsPanel
+                        incomeTypes={forecastSettingsValues?.incomeTypes}
+                        defaultIncomeType={forecastSettingsValues?.incomeTypes[0]}
+                        tribes={forecastSettingsValues?.tribes}
+                        onTribeSelect={setTribes}
+                        onIncomeTypeChange={setIncomeType} />
+                    <CommandPanel />
+                </div>
                 {tribes.length ? (
                     <TribesContainer
                         tribes={tribes}
@@ -50,5 +56,7 @@ export default function Forecaster() {
             </div>
         )
     }
-    return <LoadIndicator />
+    return <LoadIndicator
+        width={100}
+        height={100} />
 }

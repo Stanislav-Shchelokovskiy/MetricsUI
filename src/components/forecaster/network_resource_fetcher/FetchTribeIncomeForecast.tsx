@@ -1,4 +1,4 @@
-import END_POINT from './EndPoint'
+import FORECASTER_END_POINT from './EndPoint'
 import FetchResult from './FetchResult'
 
 interface RawIncomeForecast {
@@ -49,7 +49,7 @@ export const FetchTribeIncomeForecast: (
     }) {
         try {
             const tribeIncomeForecast: Array<RawIncomeForecast> = await fetch(
-                `${END_POINT}/get_forecast?` +
+                `${FORECASTER_END_POINT}/get_forecast?` +
                 new URLSearchParams({
                     tribe_id: tribeID,
                     horizon: forecastHorizon,

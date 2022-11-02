@@ -3,8 +3,8 @@ import Plot from 'react-plotly.js'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import ForecastMissing from './utils/ForecastMissing'
 
-import FetchResult from './dataFetcher/FetchResult'
-import { HourlyTacticalForecast, EMPTY_TACTICAL_FORECAST, FetchTacticalForecast } from './dataFetcher/FetchTacticalForecast'
+import FetchResult from './network_resource_fetcher/FetchResult'
+import { HourlyTacticalForecast, EMPTY_TACTICAL_FORECAST, FetchTacticalForecast } from './network_resource_fetcher/FetchTacticalForecast'
 import GetColor from './utils/ColorPalette'
 
 

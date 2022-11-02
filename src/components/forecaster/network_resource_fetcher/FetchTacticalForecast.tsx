@@ -1,4 +1,4 @@
-import END_POINT from './EndPoint'
+import FORECASTER_END_POINT from './EndPoint'
 import FetchResult from './FetchResult'
 
 interface RawTacticalForecast {
@@ -54,12 +54,11 @@ export const FetchTacticalForecast: (
     }) {
         try {
             const rawTacticalForecast: Array<RawTacticalForecast> = await fetch(
-                `${END_POINT}/get_tactical_forecast?` +
+                `${FORECASTER_END_POINT}/get_tactical_forecast?` +
                 new URLSearchParams({
                     income_type: incomeType,
                     tribe_id: tribeID,
                     reply_type_filter: replyType,
-
                 })
             ).then(response => response.json())
 

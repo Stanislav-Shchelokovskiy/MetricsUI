@@ -6,9 +6,9 @@ import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-rea
 import ForecastMissing from './utils/ForecastMissing'
 import GetColor from './utils/ColorPalette'
 
-import FetchResult from './dataFetcher/FetchResult'
-import { IncomeForecast, FetchTribeIncomeForecast, EMPTY_INCOME_FORECAST } from './dataFetcher/FetchTribeIncomeForecast'
-import { DailyTribeReplies, FetchDailyTribeReplies, EMPTY_DAILY_TRIBE_REPLIES } from './dataFetcher/FetchTribeDailyReplies'
+import FetchResult from './network_resource_fetcher/FetchResult'
+import { IncomeForecast, FetchTribeIncomeForecast, EMPTY_INCOME_FORECAST } from './network_resource_fetcher/FetchTribeIncomeForecast'
+import { DailyTribeReplies, FetchDailyTribeReplies, EMPTY_DAILY_TRIBE_REPLIES } from './network_resource_fetcher/FetchTribeDailyReplies'
 
 interface ForecastSettingsValues {
     dailyForecastHorizons: Array<string>

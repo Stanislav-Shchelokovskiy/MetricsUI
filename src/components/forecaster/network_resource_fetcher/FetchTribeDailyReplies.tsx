@@ -1,4 +1,4 @@
-import END_POINT from './EndPoint'
+import FORECASTER_END_POINT from './EndPoint'
 import FetchResult from './FetchResult'
 
 interface RawDailyTribeReplies {
@@ -58,7 +58,7 @@ export const FetchDailyTribeReplies: (
     }) {
         try {
             const rawDailyTribeReplies: Array<RawDailyTribeReplies> = await fetch(
-                `${END_POINT}/get_tribe_replies?` +
+                `${FORECASTER_END_POINT}/get_tribe_replies?` +
                 new URLSearchParams({
                     tile: tile.toString(),
                     tribe_id: tribeID,
@@ -88,3 +88,4 @@ export const FetchDailyTribeReplies: (
             return EMPTY_DAILY_TRIBE_REPLIES
         }
     }
+    
