@@ -17,6 +17,8 @@ export interface SyncTribeRepliesWithWfTask {
 
 export const FetchSyncTribeRepliesWithWfTasksNames: () => Promise<FetchResult<SyncTribeRepliesWithWfTasksNames>> = async function () {
     try {
+        // const end_point = 'http://localhost:11002'
+        // const taskNames: Array<string> = await fetch(`${end_point}/get_sync_tribe_replies_with_wf_tasks_names`).then(response => response.json())
         const taskNames: Array<string> = await fetch(`${FORECASTER_END_POINT}/get_sync_tribe_replies_with_wf_tasks_names`).then(response => response.json())
         return {
             success: true,
@@ -59,7 +61,6 @@ export const FetchSyncTribeRepliesWithWfTasksStarted: (names: Array<string>) => 
                 })
             ).then(response => response.json())
             if (Object.keys(taskStarted).length !== 0) {
-                console.log(Object.keys(taskStarted).length)
                 return {
                     success: true,
                     data: { started: true }

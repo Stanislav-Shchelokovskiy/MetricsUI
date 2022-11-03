@@ -5,54 +5,146 @@ import './styles/Forecast.css'
 import './styles/Menu.css'
 import './styles/CommandPanel.css'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import LoadIndicator from './utils/LoadIndicator'
-import TribesContainer from './Tribes'
-import { Tribe } from './Tribe'
+import TribesContainer, { TribesTribeContainerState } from './Tribes'
 import CommonSettingsPanel from './menu/CommonSettingsPanel'
 import CommandPanel from './menu/CommandPanel'
+import { Tribe } from './Tribe'
 
 import FetchResult from './network_resource_fetcher/FetchResult'
 import { FetchForecastSettingsValues, EMPTY_FORECATER_SETTINGS_VALUES, ForecasterSettingsValues } from './network_resource_fetcher/FetchForecastSettingsValues'
 
 
+interface ForecasterState {
+    forecasterSettingsValuesLoaded: boolean
+    incomeTypes: Array<string>
+    tribes: Array<Tribe>
+    tribesContainerState: TribesTribeContainerState
+}
+
+export interface Action {
+    type: string
+    payload: any
+}
+
+
+function tribeContainerStateReducer(state: ForecasterState, action: Action): ForecasterState {
+    switch (action.type) {
+        case 'forecasterSettingsValuesLoadedChange':
+            if (state.forecasterSettingsValuesLoaded === action.payload) {
+                return state;
+            }
+            return {
+                ...state,
+                forecasterSettingsValuesLoaded: action.payload,
+            }
+
+        case 'forecastSettingsValuesChange':
+            if (state.tribesContainerState === action.payload) {
+                return state;
+            }
+            return {
+                ...state,
+                tribes: action.payload.tribes,
+                incomeTypes: action.payload.incomeTypes,
+                tribesContainerState: {
+                    incomeType: action.payload.incomeTypes[0],
+
+                    replyTypes: action.payload.replyTypes,
+                    defaultReplyType: action.payload.replyTypes[0],
+
+                    dailyForecastHorizons: action.payload.dailyForecastHorizons,
+                    defaultDailyForecastHorizon: action.payload.dailyForecastHorizons[0],
+
+                    tiles: action.payload.tiles,
+                    defaultTile: action.payload.tiles[action.payload.tiles.length % 2],
+
+                    tribes: Array<Tribe>(),
+
+                    lastUpdate: state.tribesContainerState.lastUpdate
+                }
+            }
+
+        case 'tribesChange':
+            if (state.tribesContainerState.tribes === action.payload) {
+                return state;
+            }
+            return {
+                ...state,
+                tribesContainerState: {
+                    ...state.tribesContainerState,
+                    tribes: action.payload
+                }
+            }
+
+        case 'incomeTypeChange':
+            if (state.tribesContainerState.incomeType === action.payload) {
+                return state;
+            }
+            return {
+                ...state,
+                tribesContainerState: {
+                    ...state.tribesContainerState,
+                    incomeType: action.payload,
+                }
+            }
+
+        case 'lastDataUpdateChange':
+            if (state.tribesContainerState.lastUpdate === action.payload) {
+                return state;
+            }
+            return {
+                ...state,
+                tribesContainerState: {
+                    ...state.tribesContainerState,
+                    lastUpdate: action.payload
+                }
+            }
+
+        default:
+            throw new Error('Invalid action type ' + action.type);
+    }
+}
+
 export default function Forecaster() {
-    const [{ success: forecastSettingsValuesLoaded, data: forecastSettingsValues }, setForecastSettingsValuesLoaded] = useState(EMPTY_FORECATER_SETTINGS_VALUES)
-    const [tribes, setTribes] = useState<Array<Tribe>>([])
-    const [incomeType, setIncomeType] = useState<string>('')
-    console.log(tribes)
-    console.log(incomeType)
+    const initialTribesContainerState: ForecasterState = {
+        forecasterSettingsValuesLoaded: false,
+        incomeTypes: Array<string>(),
+        tribes: Array<Tribe>(),
+        tribesContainerState: {
+            ...EMPTY_FORECATER_SETTINGS_VALUES.data,
+            incomeType: '',
+            defaultReplyType: '',
+            defaultDailyForecastHorizon: '',
+            defaultTile: 0,
+            lastUpdate: Date.now()
+        }
+    }
+    const [forecasterState, tribeContainerStateDispatch] = useReducer(tribeContainerStateReducer, initialTribesContainerState)
 
     useEffect(() => {
         (async () => {
             const fetchResult: FetchResult<ForecasterSettingsValues> = await FetchForecastSettingsValues()
-            setForecastSettingsValuesLoaded(fetchResult)
             if (fetchResult.success) {
-                setIncomeType(fetchResult.data.incomeTypes?.[0])
+                tribeContainerStateDispatch({ type: 'forecastSettingsValuesChange', payload: fetchResult.data })
+                tribeContainerStateDispatch({ type: 'forecasterSettingsValuesLoadedChange', payload: fetchResult.success })
             }
         })()
     }, [])
 
-    if (forecastSettingsValuesLoaded) {
+    if (forecasterState.forecasterSettingsValuesLoaded) {
         return (
             <div className='Forecaster' >
                 <div className='Menu' >
                     <CommonSettingsPanel
-                        incomeTypes={forecastSettingsValues?.incomeTypes}
-                        defaultIncomeType={forecastSettingsValues?.incomeTypes[0]}
-                        tribes={forecastSettingsValues?.tribes}
-                        onTribeSelect={setTribes}
-                        onIncomeTypeChange={setIncomeType} />
-                    <CommandPanel />
+                        incomeTypes={forecasterState.incomeTypes}
+                        defaultIncomeType={forecasterState.tribesContainerState.incomeType}
+                        tribes={forecasterState.tribes}
+                        forecastDispatch={tribeContainerStateDispatch} />
+                    <CommandPanel forecastDispatch={tribeContainerStateDispatch} />
                 </div>
-                {tribes.length ? (
-                    <TribesContainer
-                        tribes={tribes}
-                        incomeType={incomeType}
-                        replyTypes={forecastSettingsValues?.replyTypes}
-                        dailyForecastHorizons={forecastSettingsValues?.dailyForecastHorizons}
-                        tiles={forecastSettingsValues?.tiles}
-                    />) : (<div></div>)}
+                {forecasterState.tribesContainerState.tribes.length ? <TribesContainer state={forecasterState.tribesContainerState} /> : <div></div>}
             </div>
         )
     }

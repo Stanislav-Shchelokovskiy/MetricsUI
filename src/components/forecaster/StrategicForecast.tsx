@@ -1,36 +1,17 @@
 import React, { useState, useReducer, useEffect } from 'react'
 import Plot from 'react-plotly.js'
-import { Data as GraphData } from 'plotly.js';
+import { Data as GraphData } from 'plotly.js'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
 import ForecastMissing from './utils/ForecastMissing'
 import GetColor from './utils/ColorPalette'
+import { ForecastMainParams } from './Tribe'
 
 import FetchResult from './network_resource_fetcher/FetchResult'
 import { IncomeForecast, FetchTribeIncomeForecast, EMPTY_INCOME_FORECAST } from './network_resource_fetcher/FetchTribeIncomeForecast'
 import { DailyTribeReplies, FetchDailyTribeReplies, EMPTY_DAILY_TRIBE_REPLIES } from './network_resource_fetcher/FetchTribeDailyReplies'
 
-interface ForecastSettingsValues {
-    dailyForecastHorizons: Array<string>
-    tiles: Array<number>
-}
 
-interface ForecastSettings {
-    forecastHorizon: string
-    tile: number
-}
-
-interface ForecastParams {
-    tribeID: string
-    forecastHorizon: string
-    incomeType: string
-    tile: number
-    positionsFilter: Array<string>
-}
-
-type ForecastHorizonChangeCallable = (forecastHorizon: string) => void
-type TileChangeCallable = (tile: number) => void
-type PositionsChangeCallable = (positions: Array<string>) => void
 
 function PositionsSelector({ onPositionsChange }: { onPositionsChange: PositionsChangeCallable }) {
     return (
@@ -52,9 +33,9 @@ function PositionsSelector({ onPositionsChange }: { onPositionsChange: Positions
     )
 }
 
-function Header(
+function ForecastSettingsPanel(
     {
-        dailyForecastHorizons: forecastHorizons,
+        forecastHorizons: forecastHorizons,
         tiles,
         forecastHorizon,
         tile,
@@ -249,9 +230,7 @@ function graphStateReducer(state: GraphState, action: GraphAction): GraphState {
     }
 }
 
-function Graph({ tribeID, forecastHorizon, incomeType, tile, positionsFilter }: ForecastParams) {
-    console.log(`forecastHorizon = ${forecastHorizon}`)
-    console.log(`tile = ${tile}`)
+function Graph({ tribeID, forecastHorizon, incomeType, tile, positionsFilter, lastUpdate }: ForecastParams) {
 
     const [state, dispatch] = useReducer(graphStateReducer, initialGraphState)
 
@@ -271,18 +250,15 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile, positionsFilter }: 
                 tribeRepliesLoaded: fetchedDailyTribeReplies.success,
                 tribeReplies: fetchedDailyTribeReplies.data,
             })
-            console.log('use effect')
         })()
-    }, [tribeID, forecastHorizon, incomeType, tile])
+    }, [tribeID, forecastHorizon, incomeType, tile, lastUpdate])
 
     if (state.incomeForecastLoaded || state.tribeRepliesLoaded) {
-        console.log(`incomeForecastLoaded || tribeRepliesLoaded`)
 
         const data: Array<GraphData> = []
         data.push(...getScatters(state))
         data.push(...getBars(state, positionsFilter))
 
-        console.log(state.incomeForecast)
         return (
             <div className='ForecastGraph'>
                 <Plot
@@ -309,7 +285,7 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile, positionsFilter }: 
     return <ForecastMissing />
 }
 
-function Body({ tribeID, forecastHorizon, incomeType, tile, positionsFilter }: ForecastParams) {
+function ForecastPanel({ tribeID, forecastHorizon, lastUpdate, incomeType, tile, positionsFilter }: ForecastParams) {
     return (
         <div className='ForecastBody'>
             <Graph
@@ -317,41 +293,55 @@ function Body({ tribeID, forecastHorizon, incomeType, tile, positionsFilter }: F
                 forecastHorizon={forecastHorizon}
                 incomeType={incomeType}
                 tile={tile}
-                positionsFilter={positionsFilter} />
+                positionsFilter={positionsFilter}
+                lastUpdate={lastUpdate} />
         </div>
     )
 }
 
-export default function StrategicForecast(
-    {
-        tribeID,
-        incomeType,
-        dailyForecastHorizons,
-        tiles
-    }:
-        { tribeID: string, incomeType: string } &
-        ForecastSettingsValues
-) {
-    const [forecastHorizon, setForecastHorizon] = useState<string>(dailyForecastHorizons[0])
-    const [tile, setTile] = useState<number>(tiles[tiles.length % 2])
+
+type ForecastHorizonChangeCallable = (forecastHorizon: string) => void
+type TileChangeCallable = (tile: number) => void
+type PositionsChangeCallable = (positions: Array<string>) => void
+
+interface ForecastSettings {
+    forecastHorizon: string
+    tile: number
+}
+
+interface ForecastSettingsValues {
+    forecastHorizons: Array<string>
+    tiles: Array<number>
+}
+
+interface ForecastParams extends ForecastMainParams, ForecastSettings {
+    positionsFilter: Array<string>
+}
+
+export type StrategicForecastState = ForecastMainParams & ForecastSettings & ForecastSettingsValues
+
+export default function StrategicForecast({ state }: { state: StrategicForecastState }) {
+    const [forecastHorizon, setForecastHorizon] = useState<string>(state.forecastHorizon)
+    const [tile, setTile] = useState<number>(state.tile)
     const [positionsFilter, setPositionsFilter] = useState<Array<string>>([])
 
     return (
         <div className='ForforecastHorizonecastContainer'>
-            <Header
-                dailyForecastHorizons={dailyForecastHorizons}
-                tiles={tiles}
+            <ForecastSettingsPanel
+                forecastHorizons={state.forecastHorizons}
+                tiles={state.tiles}
                 forecastHorizon={forecastHorizon}
                 tile={tile}
                 onForecastHorizonChange={setForecastHorizon}
                 onTileChange={setTile}
                 onPositionsChange={setPositionsFilter} />
-            <Body
-                tribeID={tribeID}
+            <ForecastPanel
+                tribeID={state.tribeID}
                 forecastHorizon={forecastHorizon}
-                incomeType={incomeType}
+                incomeType={state.incomeType}
                 tile={tile}
-                positionsFilter={positionsFilter} />
+                positionsFilter={positionsFilter}
+                lastUpdate={state.lastUpdate} />
         </div>
     )
 }

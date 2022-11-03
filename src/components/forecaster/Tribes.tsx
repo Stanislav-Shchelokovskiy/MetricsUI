@@ -2,25 +2,22 @@ import React from 'react'
 import ScrollView from 'devextreme-react/scroll-view'
 import TribeContainer, { Tribe } from './Tribe'
 
-
-export interface ForecastSettingsValues {
+interface TribeContainerState {
+    incomeType: string
     replyTypes: Array<string>
+    defaultReplyType: string
     dailyForecastHorizons: Array<string>
+    defaultDailyForecastHorizon: string
     tiles: Array<number>
+    defaultTile: number
+    lastUpdate: number
 }
 
-export default function TribesContainer(
-    {
-        tribes,
-        incomeType,
-        replyTypes,
-        dailyForecastHorizons,
-        tiles
-    }:
-        { tribes: Array<Tribe> } &
-        { incomeType: string } &
-        ForecastSettingsValues
-) {
+export interface TribesTribeContainerState extends TribeContainerState {
+    tribes: Array<Tribe>
+}
+
+export default function TribesContainer({ state }: { state: TribesTribeContainerState }) {
     return (
         <div className='TribesContainer'>
             <ScrollView
@@ -31,14 +28,10 @@ export default function TribesContainer(
                 height={'89vh'}
             >
                 <div className='Tribes'>
-                    {tribes?.map((tribe) => {
+                    {state.tribes?.map((tribe) => {
                         return <TribeContainer
                             key={tribe.id}
-                            tribe={tribe}
-                            incomeType={incomeType}
-                            replyTypes={replyTypes}
-                            dailyForecastHorizons={dailyForecastHorizons}
-                            tiles={tiles}
+                            state={{ tribe: tribe, ...state, }}
                         />
                     })}
                 </div>

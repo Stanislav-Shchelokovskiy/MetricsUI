@@ -2,37 +2,14 @@ import React, { useState, useEffect } from 'react'
 import Plot from 'react-plotly.js'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import ForecastMissing from './utils/ForecastMissing'
+import { ForecastMainParams } from './Tribe'
+import GetColor from './utils/ColorPalette'
 
 import FetchResult from './network_resource_fetcher/FetchResult'
 import { HourlyTacticalForecast, EMPTY_TACTICAL_FORECAST, FetchTacticalForecast } from './network_resource_fetcher/FetchTacticalForecast'
-import GetColor from './utils/ColorPalette'
 
 
-interface ForecastParams {
-    tribeID: string
-    incomeType: string
-}
-
-interface ForecastSettingsValues {
-    replyTypes: Array<string>
-}
-
-interface ForecastSettings {
-    replyType: string
-}
-
-type ReplyTypeChangeCallable = (replyType: string) => void
-
-function Header(
-    {
-        replyTypes,
-        replyType,
-        onReplyTypeChange
-    }:
-        ForecastSettingsValues &
-        ForecastSettings &
-        { onReplyTypeChange: ReplyTypeChangeCallable }
-) {
+function ForecastSettingsPanel({ replyTypes, replyType, onReplyTypeChange }: ForecastSettingsValues & { onReplyTypeChange: OnReplyTypeChangeCallable }) {
     return (
         <div className='ForecastHeader'>
             <SelectBox
@@ -66,7 +43,6 @@ function Metric({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast
 function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast }) {
     const dtNow = new Date().getTime()
     const maxY = Math.max(...tacticalForecast.yhat_rmse_upper)
-
     return (
         <div className='ForecastGraph'>
             <Plot
@@ -170,16 +146,15 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
     )
 }
 
-function Body({ tribeID, incomeType, replyType }: ForecastParams & ForecastSettings) {
+function ForecastPanel({ tribeID, incomeType, lastUpdate, replyType }: ForecastParams) {
     const [{ success: forecastLoaded, data: tacticalForecast }, setForecastLoaded] = useState<FetchResult<HourlyTacticalForecast>>(EMPTY_TACTICAL_FORECAST)
 
     useEffect(() => {
         (async () => {
             const fetchResult: FetchResult<HourlyTacticalForecast> = await FetchTacticalForecast({ tribeID, incomeType, replyType })
             setForecastLoaded(fetchResult)
-            console.log('use effect')
         })()
-    }, [tribeID, incomeType, replyType])
+    }, [tribeID, incomeType, replyType, lastUpdate])
 
     if (forecastLoaded) {
         return (
@@ -192,28 +167,35 @@ function Body({ tribeID, incomeType, replyType }: ForecastParams & ForecastSetti
     return <ForecastMissing />
 }
 
-export default function TacticalForecast(
-    {
-        tribeID,
-        incomeType,
-        replyTypes
-    }:
-        ForecastParams &
-        ForecastSettingsValues
-) {
-    const [replyType, setReplyType] = useState<string>(replyTypes[0])
-    console.log(`replyType = ${replyType}`)
+
+type OnReplyTypeChangeCallable = (replyType: string) => void
+
+interface ForecastSettings {
+    replyType: string
+}
+
+interface ForecastSettingsValues extends ForecastSettings {
+    replyTypes: Array<string>
+}
+
+type ForecastParams = ForecastMainParams & ForecastSettings
+
+export type TacticalForecastState = ForecastMainParams & ForecastSettingsValues
+
+export default function TacticalForecast({ state }: { state: TacticalForecastState }) {
+    const [replyType, setReplyType] = useState<string>(state.replyType)
 
     return (
         <div className='ForecastContainer'>
-            <Header
-                replyTypes={replyTypes}
+            <ForecastSettingsPanel
+                replyTypes={state.replyTypes}
                 replyType={replyType}
                 onReplyTypeChange={setReplyType} />
-            <Body
-                tribeID={tribeID}
-                incomeType={incomeType}
-                replyType={replyType} />
+            <ForecastPanel
+                tribeID={state.tribeID}
+                incomeType={state.incomeType}
+                replyType={replyType}
+                lastUpdate={state.lastUpdate} />
         </div>
     )
 }
