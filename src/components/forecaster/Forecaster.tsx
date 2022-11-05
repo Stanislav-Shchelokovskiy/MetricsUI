@@ -33,7 +33,7 @@ function tribeContainerStateReducer(state: ForecasterState, action: Action): For
     switch (action.type) {
         case 'forecasterSettingsValuesLoadedChange':
             if (state.forecasterSettingsValuesLoaded === action.payload) {
-                return state;
+                return state
             }
             return {
                 ...state,
@@ -58,7 +58,7 @@ function tribeContainerStateReducer(state: ForecasterState, action: Action): For
                     defaultDailyForecastHorizon: action.payload.dailyForecastHorizons[0],
 
                     tiles: action.payload.tiles,
-                    defaultTile: action.payload.tiles[action.payload.tiles.length % 2],
+                    defaultTile: action.payload.tiles[Math.floor(action.payload.tiles.length / 2)],
 
                     tribes: Array<Tribe>(),
 
@@ -68,7 +68,7 @@ function tribeContainerStateReducer(state: ForecasterState, action: Action): For
 
         case 'tribesChange':
             if (state.tribesContainerState.tribes === action.payload) {
-                return state;
+                return state
             }
             return {
                 ...state,
@@ -80,7 +80,7 @@ function tribeContainerStateReducer(state: ForecasterState, action: Action): For
 
         case 'incomeTypeChange':
             if (state.tribesContainerState.incomeType === action.payload) {
-                return state;
+                return state
             }
             return {
                 ...state,
@@ -92,7 +92,7 @@ function tribeContainerStateReducer(state: ForecasterState, action: Action): For
 
         case 'lastDataUpdateChange':
             if (state.tribesContainerState.lastUpdate === action.payload) {
-                return state;
+                return state
             }
             return {
                 ...state,
@@ -136,7 +136,7 @@ export default function Forecaster() {
     if (forecasterState.forecasterSettingsValuesLoaded) {
         return (
             <div className='Forecaster' >
-                <div className='Menu' >
+                <div aria-label='Menu' className='Menu' >
                     <CommonSettingsPanel
                         incomeTypes={forecasterState.incomeTypes}
                         defaultIncomeType={forecasterState.tribesContainerState.incomeType}
@@ -148,7 +148,5 @@ export default function Forecaster() {
             </div>
         )
     }
-    return <LoadIndicator
-        width={100}
-        height={100} />
+    return <LoadIndicator width={100} height={100} />
 }

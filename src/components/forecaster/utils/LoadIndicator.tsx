@@ -10,7 +10,7 @@ interface Size {
 
 function LoadIndicator({ width, height }: Size) {
     return (
-        <div className='LoadIndicator'>
+        <div aria-label='LoadIndicator' className='LoadIndicator'>
             <DxLoadIndicator
                 height={height}
                 width={width} />

@@ -18,7 +18,7 @@ export interface SyncTribeRepliesWithWfTask {
 export const FetchSyncTribeRepliesWithWfTasksNames: () => Promise<FetchResult<SyncTribeRepliesWithWfTasksNames>> = async function () {
     try {
         // const end_point = 'http://localhost:11002'
-        // const taskNames: Array<string> = await fetch(`${end_point}/get_sync_tribe_replies_with_wf_tasks_names`).then(response => response.json())
+        //const taskNames: Array<string> = await fetch(`${end_point}/get_sync_tribe_replies_with_wf_tasks_names`).then(response => response.json())
         const taskNames: Array<string> = await fetch(`${FORECASTER_END_POINT}/get_sync_tribe_replies_with_wf_tasks_names`).then(response => response.json())
         return {
             success: true,
@@ -37,6 +37,8 @@ export const FetchSyncTribeRepliesWithWfTasksNames: () => Promise<FetchResult<Sy
 export const FetchApplySyncTribeRepliesWithWfTask: () => Promise<FetchResult<SyncTribeRepliesWithWfTask>> = async function () {
     try {
         const { 'task-id': task_id }: { 'task-id': string } = await fetch(`${FLOWER_END_POINT}/api/task/apply/sync_tribe_replies_with_wf`, { method: 'POST' }).then(response => response.json())
+
+        console.log(task_id)
         return {
             success: true,
             data: { task_id: task_id }
@@ -52,18 +54,21 @@ export const FetchApplySyncTribeRepliesWithWfTask: () => Promise<FetchResult<Syn
 
 
 export const FetchSyncTribeRepliesWithWfTasksStarted: (names: Array<string>) => Promise<FetchResult<SyncTribeRepliesWithWfTasks>> = async function (names: Array<string>) {
+    const states = ['STARTED', 'RECEIVED']
     try {
         for (const taskName of names) {
-            const taskStarted = await fetch(`${FLOWER_END_POINT}/api/tasks?` +
-                new URLSearchParams({
-                    taskname: taskName,
-                    state: 'STARTED'
-                })
-            ).then(response => response.json())
-            if (Object.keys(taskStarted).length !== 0) {
-                return {
-                    success: true,
-                    data: { started: true }
+            for (const state of states) {
+                const task = await fetch(`${FLOWER_END_POINT}/api/tasks?` +
+                    new URLSearchParams({
+                        taskname: taskName,
+                        state: state
+                    })
+                ).then(response => response.json())
+                if (Object.keys(task).length !== 0) {
+                    return {
+                        success: true,
+                        data: { started: true }
+                    }
                 }
             }
         }
