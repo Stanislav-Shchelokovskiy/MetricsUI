@@ -136,7 +136,7 @@ export default function Forecaster() {
     if (forecasterState.forecasterSettingsValuesLoaded) {
         return (
             <div className='Forecaster' >
-                <div aria-label='Menu' className='Menu' >
+                <div data-testid='Menu' className='Menu' >
                     <CommonSettingsPanel
                         incomeTypes={forecasterState.incomeTypes}
                         defaultIncomeType={forecasterState.tribesContainerState.incomeType}

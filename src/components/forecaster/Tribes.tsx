@@ -19,7 +19,7 @@ export interface TribesTribeContainerState extends TribeContainerState {
 
 export default function TribesContainer({ state }: { state: TribesTribeContainerState }) {
     return (
-        <div className='TribesContainer'>
+        <div data-testid='TribesContainer' className='TribesContainer'>
             <ScrollView
                 id='scrollview'
                 showScrollbar='onHover'
