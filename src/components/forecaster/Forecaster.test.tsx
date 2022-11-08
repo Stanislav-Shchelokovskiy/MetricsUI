@@ -18,7 +18,6 @@ beforeEach(() => {
             }
         }
     )
-
 });
 
 afterEach(() => {

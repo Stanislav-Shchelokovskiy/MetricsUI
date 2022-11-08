@@ -1,10 +1,5 @@
-import FORECASTER_END_POINT, { FLOWER_END_POINT } from './EndPoint'
+import FORECASTER_END_POINT from './EndPoint'
 import FetchResult from './FetchResult'
-
-
-export interface SyncTribeRepliesWithWfTasksNames {
-    names: Array<string>
-}
 
 export interface SyncTribeRepliesWithWfTasks {
     started: boolean
@@ -15,28 +10,9 @@ export interface SyncTribeRepliesWithWfTask {
 }
 
 
-export const FetchSyncTribeRepliesWithWfTasksNames: () => Promise<FetchResult<SyncTribeRepliesWithWfTasksNames>> = async function () {
-    try {
-        // const end_point = 'http://localhost:11002'
-        //const taskNames: Array<string> = await fetch(`${end_point}/get_sync_tribe_replies_with_wf_tasks_names`).then(response => response.json())
-        const taskNames: Array<string> = await fetch(`${FORECASTER_END_POINT}/get_sync_tribe_replies_with_wf_tasks_names`).then(response => response.json())
-        return {
-            success: true,
-            data: { names: taskNames }
-        }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: { names: Array<string>() }
-        }
-    }
-}
-
-
 export const FetchApplySyncTribeRepliesWithWfTask: () => Promise<FetchResult<SyncTribeRepliesWithWfTask>> = async function () {
     try {
-        const { 'task-id': task_id }: { 'task-id': string } = await fetch(`${FLOWER_END_POINT}/api/task/apply/sync_tribe_replies_with_wf`, { method: 'POST' }).then(response => response.json())
+        const { 'task-id': task_id }: { 'task-id': string } = await fetch(`${FORECASTER_END_POINT}/apply_sync_tribe_replies_with_wf_task`, { method: 'POST' }).then(response => response.json())
 
         console.log(task_id)
         return {
@@ -53,28 +29,12 @@ export const FetchApplySyncTribeRepliesWithWfTask: () => Promise<FetchResult<Syn
 }
 
 
-export const FetchSyncTribeRepliesWithWfTasksStarted: (names: Array<string>) => Promise<FetchResult<SyncTribeRepliesWithWfTasks>> = async function (names: Array<string>) {
-    const states = ['STARTED', 'RECEIVED']
+export const FetchSyncTribeRepliesWithWfTasksStarted: () => Promise<FetchResult<SyncTribeRepliesWithWfTasks>> = async function () {
     try {
-        for (const taskName of names) {
-            for (const state of states) {
-                const task = await fetch(`${FLOWER_END_POINT}/api/tasks?` +
-                    new URLSearchParams({
-                        taskname: taskName,
-                        state: state
-                    })
-                ).then(response => response.json())
-                if (Object.keys(task).length !== 0) {
-                    return {
-                        success: true,
-                        data: { started: true }
-                    }
-                }
-            }
-        }
+        const response: { started: boolean } = await fetch(`${FORECASTER_END_POINT}/get_sync_tribe_replies_with_wf_tasks_started`).then(response => response.json())
         return {
             success: true,
-            data: { started: false }
+            data: response
         }
     } catch (error) {
         console.log(error)

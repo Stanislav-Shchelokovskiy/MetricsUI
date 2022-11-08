@@ -5,8 +5,6 @@ import { Action } from '../Forecaster'
 
 import FetchResult from '../network_resource_fetcher/FetchResult'
 import {
-    FetchSyncTribeRepliesWithWfTasksNames,
-    SyncTribeRepliesWithWfTasksNames,
     FetchSyncTribeRepliesWithWfTasksStarted,
     SyncTribeRepliesWithWfTasks,
     FetchApplySyncTribeRepliesWithWfTask,
@@ -28,13 +26,8 @@ function ButtonUpdateTribeReplies({ forecastDispatch }: { forecastDispatch: Reac
     const onClick = () => {
         setTaskStarted(true);
 
-        let tasksNames = Array<string>();
         (async () => {
-            const fetchTasksNames: FetchResult<SyncTribeRepliesWithWfTasksNames> = await FetchSyncTribeRepliesWithWfTasksNames();
-            if (fetchTasksNames.success) {
-                tasksNames = fetchTasksNames.data.names;
-            }
-            const fetchTaskStarted: FetchResult<SyncTribeRepliesWithWfTasks> = await FetchSyncTribeRepliesWithWfTasksStarted(tasksNames);
+            const fetchTaskStarted: FetchResult<SyncTribeRepliesWithWfTasks> = await FetchSyncTribeRepliesWithWfTasksStarted();
             if (fetchTaskStarted.success && !fetchTaskStarted.data.started) {
                 await FetchApplySyncTribeRepliesWithWfTask()
             }
@@ -42,7 +35,7 @@ function ButtonUpdateTribeReplies({ forecastDispatch }: { forecastDispatch: Reac
 
         const intervalId = setInterval(() => {
             (async () => {
-                const fetchResult: FetchResult<SyncTribeRepliesWithWfTasks> = await FetchSyncTribeRepliesWithWfTasksStarted(tasksNames);
+                const fetchResult: FetchResult<SyncTribeRepliesWithWfTasks> = await FetchSyncTribeRepliesWithWfTasksStarted();
                 if (!fetchResult.success || !fetchResult.data.started) {
                     setTaskStarted(false);
                     forecastDispatch({ type: 'lastDataUpdateChange', payload: Date.now() })
