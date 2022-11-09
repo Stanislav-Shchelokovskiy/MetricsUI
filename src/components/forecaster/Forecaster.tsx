@@ -20,6 +20,7 @@ interface ForecasterState {
     forecasterSettingsValuesLoaded: boolean
     incomeTypes: Array<string>
     tribes: Array<Tribe>
+    defaultTribes: Array<Tribe>
     tribesContainerState: TribesTribeContainerState
 }
 
@@ -47,6 +48,7 @@ function tribeContainerStateReducer(state: ForecasterState, action: Action): For
             return {
                 ...state,
                 tribes: action.payload.tribes,
+                defaultTribes: action.payload.defaultTribes,
                 incomeTypes: action.payload.incomeTypes,
                 tribesContainerState: {
                     incomeType: action.payload.incomeTypes[0],
@@ -112,6 +114,7 @@ export default function Forecaster() {
         forecasterSettingsValuesLoaded: false,
         incomeTypes: Array<string>(),
         tribes: Array<Tribe>(),
+        defaultTribes: Array<Tribe>(),
         tribesContainerState: {
             ...EMPTY_FORECATER_SETTINGS_VALUES.data,
             incomeType: '',
@@ -141,6 +144,7 @@ export default function Forecaster() {
                         incomeTypes={forecasterState.incomeTypes}
                         defaultIncomeType={forecasterState.tribesContainerState.incomeType}
                         tribes={forecasterState.tribes}
+                        defaultTribes={forecasterState.defaultTribes}
                         forecastDispatch={tribeContainerStateDispatch} />
                     <CommandPanel forecastDispatch={tribeContainerStateDispatch} />
                 </div>

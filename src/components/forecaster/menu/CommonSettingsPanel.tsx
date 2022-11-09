@@ -31,9 +31,11 @@ function IncomeSelector(
 function TribesSelector(
     {
         tribes,
+        defaultTribes,
         onTribeSelect
     }:
         { tribes: Array<Tribe> } &
+        { defaultTribes: Array<Tribe> } &
         { onTribeSelect: TribeSelectCallable }
 ) {
     const renderItem = (tribe: Tribe) => {
@@ -53,6 +55,7 @@ function TribesSelector(
             itemRender={renderItem}
             tagRender={renderTag}
             items={tribes}
+            defaultValue={defaultTribes}
             onValueChange={onTribeSelect}
             placeholder='Select tribes to display...'
             multiline={true}
@@ -75,10 +78,11 @@ interface CommonSettingsPanelState {
     incomeTypes: Array<string>
     defaultIncomeType: string
     tribes: Array<Tribe>
+    defaultTribes: Array<Tribe>
     forecastDispatch: React.Dispatch<Action>
 }
 
-export default function CommonSettingsPanel({ incomeTypes, defaultIncomeType, tribes, forecastDispatch }: CommonSettingsPanelState) {
+export default function CommonSettingsPanel({ incomeTypes, defaultIncomeType, tribes, defaultTribes, forecastDispatch }: CommonSettingsPanelState) {
     const onIncomeTypeChange: IncomeTypeChangeCallable = (incomeType: string) => {
         forecastDispatch({ type: 'incomeTypeChange', payload: incomeType })
     }
@@ -96,6 +100,7 @@ export default function CommonSettingsPanel({ incomeTypes, defaultIncomeType, tr
             />
             <TribesSelector
                 tribes={tribes}
+                defaultTribes={defaultTribes}
                 onTribeSelect={onTribeSelect}
             />
         </div>
