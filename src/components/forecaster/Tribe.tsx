@@ -2,6 +2,7 @@ import React from 'react'
 import Accordion, { Item } from 'devextreme-react/accordion'
 import TacticalForecast, { TacticalForecastState } from './TacticalForecast'
 import StrategicForecast, { StrategicForecastState } from './StrategicForecast'
+import getValueFromStoreOrDefault, { saveValueToStore } from './utils/LocalStorage'
 
 export interface Tribe {
     id: string
@@ -50,6 +51,14 @@ export default function TribeContainer({ state }: { state: TribeContainerState }
         lastUpdate: state.lastUpdate
     }
 
+
+    const itemsKey = `${state.tribe.id}_selected_items`
+    const selectedItems = getValueFromStoreOrDefault(itemsKey, [])
+
+    const onSelectedItemsChange = (e: any) => {
+        saveValueToStore(itemsKey, e)
+    }
+
     return (
         <div className='Tribe'>
             <Header tribeName={state.tribe.name} />
@@ -57,11 +66,15 @@ export default function TribeContainer({ state }: { state: TribeContainerState }
                 id='tribe_accordion'
                 collapsible={true}
                 multiple={true}
-                focusStateEnabled={false}>
+                focusStateEnabled={false}
+                keyExpr='title'
+                selectedItemKeys={selectedItems}
+                onSelectedItemKeysChange={onSelectedItemsChange}
+            >
                 <Item title='Tactical forecast'>
                     <TacticalForecast state={tacticalForecastState} />
                 </Item>
-                <Item title='Strategic forecast'>
+                <Item title='Strategic forecast' >
                     <StrategicForecast state={strategicForecastState} />
                 </Item>
             </Accordion>
