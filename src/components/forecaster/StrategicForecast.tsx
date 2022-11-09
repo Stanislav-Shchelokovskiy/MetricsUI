@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from 'react'
+import React, { useState, useReducer, useEffect, useCallback, useMemo } from 'react'
 import Plot from 'react-plotly.js'
 import { Data as GraphData } from 'plotly.js'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
@@ -35,7 +35,7 @@ function PositionsSelector({ positions, positionsFilter, onPositionsChange }: { 
     )
 }
 
-function ForecastSettingsPanel(
+const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel(
     {
         forecastHorizons,
         tiles,
@@ -85,7 +85,7 @@ function ForecastSettingsPanel(
                 onPositionsChange={onPositionsChange} />
         </div>
     )
-}
+})
 
 function getScatters(state: GraphState): Array<GraphData> {
     if (state.incomeForecastLoaded) {
@@ -154,10 +154,12 @@ function getBarVisibility(
     return 'legendonly'
 }
 
-function getBars(state: GraphState, positionsFilter: Array<string>): Array<GraphData> {
+function getBars(state: GraphState, positionsFilter: Array<string>, hiddenLegends: Array<string>): Array<GraphData> {
     if (state.tribeRepliesLoaded) {
+
         const data: Array<GraphData> = []
         for (const user of state.tribeReplies) {
+            const visible = positionsFilter.length === 0 && hiddenLegends.includes(user.user_name) ? 'legendonly' : undefined
             data.push(
                 {
                     type: 'bar',
@@ -167,7 +169,7 @@ function getBars(state: GraphState, positionsFilter: Array<string>): Array<Graph
                     opacity: 0.6,
                     hovertext: user.user_name,
                     hovertemplate: `<b>${user.user_name}</b><br>Date: %{x}<br>Count: %{y}<br><extra></extra>`,
-                    visible: getBarVisibility(
+                    visible: visible || getBarVisibility(
                         user.tribe_belonging_status,
                         user.position_name,
                         positionsFilter,
@@ -234,6 +236,11 @@ function graphStateReducer(state: GraphState, action: GraphAction): GraphState {
     }
 }
 
+
+interface LegendClickObject {
+    data: Array<GraphData>
+}
+
 function Graph({ tribeID, forecastHorizon, incomeType, tile, positionsFilter, lastUpdate }: ForecastParams) {
 
     const [state, dispatch] = useReducer(graphStateReducer, initialGraphState)
@@ -257,11 +264,21 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile, positionsFilter, la
         })()
     }, [tribeID, forecastHorizon, incomeType, tile, lastUpdate])
 
+    const hiddenLegendsKey = `${tribeID}_hiddenLegends`
+    const onLegendClick = useCallback(({ data }: LegendClickObject) => {
+        setTimeout(() => {
+            const legendsToStore = data.filter(legend => legend.type === 'bar' && legend.visible === 'legendonly').map(legend => legend.hovertext)
+            saveValueToStore(hiddenLegendsKey, legendsToStore)
+        }, 500)
+        return true
+    }, [hiddenLegendsKey])
+    const hiddenLegends = getValueFromStoreOrDefault<Array<string>>(hiddenLegendsKey, [])
+
     if (state.incomeForecastLoaded || state.tribeRepliesLoaded) {
 
         const data: Array<GraphData> = []
         data.push(...getScatters(state))
-        data.push(...getBars(state, positionsFilter))
+        data.push(...getBars(state, positionsFilter, hiddenLegends))
 
         return (
             <div className='ForecastGraph'>
@@ -282,6 +299,7 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile, positionsFilter, la
                         autosize: true
                     }}
                     config={{ displayModeBar: false, doubleClick: 'autosize' }}
+                    onLegendClick={onLegendClick}
                 />
             </div>
         )
@@ -289,7 +307,7 @@ function Graph({ tribeID, forecastHorizon, incomeType, tile, positionsFilter, la
     return <ForecastMissing />
 }
 
-function ForecastPanel({ tribeID, forecastHorizon, lastUpdate, incomeType, tile, positionsFilter }: ForecastParams) {
+const ForecastPanel = React.memo(function ForecastPanel({ tribeID, forecastHorizon, lastUpdate, incomeType, tile, positionsFilter }: ForecastParams) {
     return (
         <div className='ForecastBody'>
             <Graph
@@ -301,7 +319,7 @@ function ForecastPanel({ tribeID, forecastHorizon, lastUpdate, incomeType, tile,
                 lastUpdate={lastUpdate} />
         </div>
     )
-}
+})
 
 
 type ForecastHorizonChangeCallable = (forecastHorizon: string) => void
@@ -330,27 +348,27 @@ export default function StrategicForecast({ state }: { state: StrategicForecastS
     const forecastHorizonKey = `${state.tribeID}_forecastHorizon`
     const defaultForecastHorizon = getValueFromStoreOrDefault<string>(forecastHorizonKey, state.forecastHorizon, state.forecastHorizons)
     const [forecastHorizon, setForecastHorizon] = useState<string>(defaultForecastHorizon)
-    const onForecastHorizonChange: ForecastHorizonChangeCallable = (forecastHorizon: string) => {
+    const onForecastHorizonChange: ForecastHorizonChangeCallable = useCallback((forecastHorizon: string) => {
         saveValueToStore(forecastHorizonKey, forecastHorizon)
         setForecastHorizon(forecastHorizon)
-    }
+    }, [forecastHorizonKey])
 
     const tileKey = `${state.tribeID}_tile`
     const defaultTile = getValueFromStoreOrDefault<number>(tileKey, state.tile, state.tiles)
     const [tile, setTile] = useState<number>(defaultTile)
-    const onTileChange: TileChangeCallable = (tile: number) => {
+    const onTileChange: TileChangeCallable = useCallback((tile: number) => {
         saveValueToStore(tileKey, tile)
         setTile(tile)
-    }
+    }, [tileKey])
 
-    const positions: Array<string> = ['Support', 'Developer', 'EM', 'PM', 'Technical Writer']
+    const positions = useMemo<Array<string>>(() => { return ['Support', 'Developer', 'EM', 'PM', 'Technical Writer'] }, [])
     const positionsKey = `${state.tribeID}_positionsKey`
     const defaultPositions = getValueFromStoreOrDefault<Array<string>>(positionsKey, [], positions)
     const [positionsFilter, setPositionsFilter] = useState<Array<string>>(defaultPositions)
-    const onPositionsChange: PositionsChangeCallable = (positions: Array<string>) => {
+    const onPositionsChange: PositionsChangeCallable = useCallback((positions: Array<string>) => {
         saveValueToStore(positionsKey, positions)
         setPositionsFilter(positions)
-    }
+    }, [positionsKey])
 
     return (
         <div className='ForforecastHorizonecastContainer'>

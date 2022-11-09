@@ -154,7 +154,7 @@ export default function Forecaster() {
                 <div data-testid='Menu' className='Menu' >
                     <CommonSettingsPanel
                         incomeTypes={forecasterState.incomeTypes}
-                        defaultIncomeType={forecasterState.tribesContainerState.incomeType}
+                        defaultIncomeType={forecasterState.defaultIncomeType}
                         tribes={forecasterState.tribes}
                         defaultTribes={forecasterState.defaultTribes}
                         forecastDispatch={tribeContainerStateDispatch} />

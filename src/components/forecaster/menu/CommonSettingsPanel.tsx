@@ -71,7 +71,7 @@ interface CommonSettingsPanelState {
     forecastDispatch: React.Dispatch<Action>
 }
 
-export default function CommonSettingsPanel({ incomeTypes, defaultIncomeType, tribes, defaultTribes, forecastDispatch }: CommonSettingsPanelState) {
+function CommonSettingsPanel({ incomeTypes, defaultIncomeType, tribes, defaultTribes, forecastDispatch }: CommonSettingsPanelState) {
     const onIncomeTypeChange: IncomeTypeChangeCallable = (incomeType: string) => {
         forecastDispatch({ type: 'incomeTypeChange', payload: incomeType })
     }
@@ -96,3 +96,5 @@ export default function CommonSettingsPanel({ incomeTypes, defaultIncomeType, tr
         </div>
     )
 }
+
+export default React.memo(CommonSettingsPanel);

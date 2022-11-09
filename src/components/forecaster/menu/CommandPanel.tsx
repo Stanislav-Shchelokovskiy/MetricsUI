@@ -11,7 +11,7 @@ import {
 } from '../network_resource_fetcher/FetchSyncTribeRepliesWithWfTask'
 
 
-export default function CommandPanel({ forecastDispatch }: { forecastDispatch: React.Dispatch<Action> }) {
+function CommandPanel({ forecastDispatch }: { forecastDispatch: React.Dispatch<Action> }) {
     return (
         <div className='CommandPanel'>
             <ButtonUpdateTribeReplies forecastDispatch={forecastDispatch} />
@@ -61,3 +61,5 @@ function ButtonUpdateTribeReplies({ forecastDispatch }: { forecastDispatch: Reac
             onClick={onClick} />
     )
 }
+
+export default React.memo(CommandPanel)

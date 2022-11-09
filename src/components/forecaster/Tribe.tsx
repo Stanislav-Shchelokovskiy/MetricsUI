@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import Accordion, { Item } from 'devextreme-react/accordion'
 import TacticalForecast, { TacticalForecastState } from './TacticalForecast'
 import StrategicForecast, { StrategicForecastState } from './StrategicForecast'
@@ -33,23 +33,41 @@ function Header({ tribeName }: { tribeName: string }) {
 
 export default function TribeContainer({ state }: { state: TribeContainerState }) {
 
-    const tacticalForecastState: TacticalForecastState = {
-        tribeID: state.tribe.id,
-        incomeType: state.incomeType,
-        replyTypes: state.replyTypes,
-        replyType: state.defaultReplyType,
-        lastUpdate: state.lastUpdate,
-    }
+    const tacticalForecastState = useMemo<TacticalForecastState>(() => {
+        return {
+            tribeID: state.tribe.id,
+            incomeType: state.incomeType,
+            replyTypes: state.replyTypes,
+            replyType: state.defaultReplyType,
+            lastUpdate: state.lastUpdate,
+        }
+    }, [
+        state.tribe.id,
+        state.incomeType,
+        state.replyTypes,
+        state.defaultReplyType,
+        state.lastUpdate
+    ])
 
-    const strategicForecastState: StrategicForecastState = {
-        tribeID: state.tribe.id,
-        incomeType: state.incomeType,
-        forecastHorizons: state.dailyForecastHorizons,
-        forecastHorizon: state.defaultDailyForecastHorizon,
-        tiles: state.tiles,
-        tile: state.defaultTile,
-        lastUpdate: state.lastUpdate
-    }
+    const strategicForecastState = useMemo<StrategicForecastState>(() => {
+        return {
+            tribeID: state.tribe.id,
+            incomeType: state.incomeType,
+            forecastHorizons: state.dailyForecastHorizons,
+            forecastHorizon: state.defaultDailyForecastHorizon,
+            tiles: state.tiles,
+            tile: state.defaultTile,
+            lastUpdate: state.lastUpdate
+        }
+    }, [
+        state.tribe.id,
+        state.incomeType,
+        state.dailyForecastHorizons,
+        state.defaultDailyForecastHorizon,
+        state.tiles,
+        state.defaultTile,
+        state.lastUpdate
+    ])
 
 
     const itemsKey = `${state.tribe.id}_selected_items`
