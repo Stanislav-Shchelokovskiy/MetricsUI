@@ -7,6 +7,7 @@ import GetColor from './utils/ColorPalette'
 
 import FetchResult from './network_resource_fetcher/FetchResult'
 import { HourlyTacticalForecast, EMPTY_TACTICAL_FORECAST, FetchTacticalForecast } from './network_resource_fetcher/FetchTacticalForecast'
+import getValueFromStoreOrDefault, { saveValueToStore } from './utils/LocalStorage'
 
 
 function ForecastSettingsPanel({ replyTypes, replyType, onReplyTypeChange }: ForecastSettingsValues & { onReplyTypeChange: OnReplyTypeChangeCallable }) {
@@ -183,14 +184,20 @@ type ForecastParams = ForecastMainParams & ForecastSettings
 export type TacticalForecastState = ForecastMainParams & ForecastSettingsValues
 
 export default function TacticalForecast({ state }: { state: TacticalForecastState }) {
-    const [replyType, setReplyType] = useState<string>(state.replyType)
+    const replyTypeKey = `${state.tribeID}_replyType`
+    const defaultReplyType = getValueFromStoreOrDefault<string>(replyTypeKey, state.replyType)
+    const [replyType, setReplyType] = useState<string>(defaultReplyType)
+    const onReplyTypeChange: OnReplyTypeChangeCallable = (replyType: string) => {
+        saveValueToStore(replyTypeKey, replyType)
+        setReplyType(replyType)
+    }
 
     return (
         <div className='ForecastContainer'>
             <ForecastSettingsPanel
                 replyTypes={state.replyTypes}
                 replyType={replyType}
-                onReplyTypeChange={setReplyType} />
+                onReplyTypeChange={onReplyTypeChange} />
             <ForecastPanel
                 tribeID={state.tribeID}
                 incomeType={state.incomeType}

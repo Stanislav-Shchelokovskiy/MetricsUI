@@ -14,11 +14,13 @@ import { Tribe } from './Tribe'
 
 import FetchResult from './network_resource_fetcher/FetchResult'
 import { FetchForecastSettingsValues, EMPTY_FORECATER_SETTINGS_VALUES, ForecasterSettingsValues } from './network_resource_fetcher/FetchForecastSettingsValues'
+import getValueFromStoreOrDefault, { saveValueToStore } from './utils/LocalStorage'
 
 
 interface ForecasterState {
     forecasterSettingsValuesLoaded: boolean
     incomeTypes: Array<string>
+    defaultIncomeType: string
     tribes: Array<Tribe>
     defaultTribes: Array<Tribe>
     tribesContainerState: TribesTribeContainerState
@@ -45,13 +47,20 @@ function tribeContainerStateReducer(state: ForecasterState, action: Action): For
             if (state.tribesContainerState === action.payload) {
                 return state;
             }
+
+            const defaultIncomeType = getValueFromStoreOrDefault<string>('incomeType', action.payload.incomeTypes[0], action.payload.incomeTypes)
+            const defaultTribes = getValueFromStoreOrDefault<Array<Tribe>>('tribes', state.defaultTribes, action.payload.tribes)
+            console.log('defaultTribes', defaultTribes)
+            console.log('state.defaultTribes', state.defaultTribes)
+            console.log('state.includes', defaultTribes.every(value => action.payload.tribes.includes(value)))
             return {
                 ...state,
-                tribes: action.payload.tribes,
-                defaultTribes: action.payload.defaultTribes,
                 incomeTypes: action.payload.incomeTypes,
+                defaultIncomeType: defaultIncomeType,
+                tribes: action.payload.tribes,
+                defaultTribes: defaultTribes,
                 tribesContainerState: {
-                    incomeType: action.payload.incomeTypes[0],
+                    incomeType: defaultIncomeType,
 
                     replyTypes: action.payload.replyTypes,
                     defaultReplyType: action.payload.replyTypes[0],
@@ -62,7 +71,7 @@ function tribeContainerStateReducer(state: ForecasterState, action: Action): For
                     tiles: action.payload.tiles,
                     defaultTile: action.payload.tiles[Math.floor(action.payload.tiles.length / 2)],
 
-                    tribes: Array<Tribe>(),
+                    tribes: defaultTribes,
 
                     lastUpdate: state.tribesContainerState.lastUpdate
                 }
@@ -72,6 +81,9 @@ function tribeContainerStateReducer(state: ForecasterState, action: Action): For
             if (state.tribesContainerState.tribes === action.payload) {
                 return state
             }
+
+            console.log('tribesChange', action.payload)
+            saveValueToStore('tribes', action.payload)
             return {
                 ...state,
                 tribesContainerState: {
@@ -84,6 +96,8 @@ function tribeContainerStateReducer(state: ForecasterState, action: Action): For
             if (state.tribesContainerState.incomeType === action.payload) {
                 return state
             }
+
+            saveValueToStore('incomeType', action.payload)
             return {
                 ...state,
                 tribesContainerState: {
@@ -113,6 +127,7 @@ export default function Forecaster() {
     const initialTribesContainerState: ForecasterState = {
         forecasterSettingsValuesLoaded: false,
         incomeTypes: Array<string>(),
+        defaultIncomeType: '',
         tribes: Array<Tribe>(),
         defaultTribes: Array<Tribe>(),
         tribesContainerState: {

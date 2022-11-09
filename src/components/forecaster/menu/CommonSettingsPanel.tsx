@@ -38,24 +38,13 @@ function TribesSelector(
         { defaultTribes: Array<Tribe> } &
         { onTribeSelect: TribeSelectCallable }
 ) {
-    const renderItem = (tribe: Tribe) => {
-        return <div>{tribe.name}</div>
-    }
-    const renderTag = (tribe: Tribe) => {
-        return (
-            <div className='dx-tag-content'>
-                {tribe.name}
-                <div className='dx-tag-remove-button'></div>
-            </div>
-        )
-    }
-
+    const defaultValue = defaultTribes.map(tribe => tribe.id)
     return (
         <TagBox className='TribesSelector'
-            itemRender={renderItem}
-            tagRender={renderTag}
-            items={tribes}
-            defaultValue={defaultTribes}
+            displayExpr='name'
+            valueExpr='id'
+            dataSource={tribes}
+            defaultValue={defaultValue}
             onValueChange={onTribeSelect}
             placeholder='Select tribes to display...'
             multiline={true}
@@ -71,7 +60,7 @@ function TribesSelector(
     )
 }
 
-type TribeSelectCallable = (tribes: Array<Tribe>) => void
+type TribeSelectCallable = (tribes: Array<string>) => void
 type IncomeTypeChangeCallable = (incomeType: string) => void
 
 interface CommonSettingsPanelState {
@@ -87,8 +76,9 @@ export default function CommonSettingsPanel({ incomeTypes, defaultIncomeType, tr
         forecastDispatch({ type: 'incomeTypeChange', payload: incomeType })
     }
 
-    const onTribeSelect: TribeSelectCallable = (tribes: Array<Tribe>) => {
-        forecastDispatch({ type: 'tribesChange', payload: tribes })
+    const onTribeSelect: TribeSelectCallable = (tribeIds: Array<string>) => {
+        const selectedTribes = tribeIds.map(tribeId => tribes.find(tribe => tribe.id === tribeId))
+        forecastDispatch({ type: 'tribesChange', payload: selectedTribes })
     }
 
     return (

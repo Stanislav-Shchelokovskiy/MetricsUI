@@ -10,14 +10,16 @@ import { ForecastMainParams } from './Tribe'
 import FetchResult from './network_resource_fetcher/FetchResult'
 import { IncomeForecast, FetchTribeIncomeForecast, EMPTY_INCOME_FORECAST } from './network_resource_fetcher/FetchTribeIncomeForecast'
 import { DailyTribeReplies, FetchDailyTribeReplies, EMPTY_DAILY_TRIBE_REPLIES } from './network_resource_fetcher/FetchTribeDailyReplies'
+import getValueFromStoreOrDefault, { saveValueToStore } from './utils/LocalStorage'
 
 
 
-function PositionsSelector({ onPositionsChange }: { onPositionsChange: PositionsChangeCallable }) {
+function PositionsSelector({ positions, positionsFilter, onPositionsChange }: { positions: Array<string>, positionsFilter: Array<string>, onPositionsChange: PositionsChangeCallable }) {
     return (
         <TagBox className='PositionsSelector'
             placeholder='Select positions to filter by...'
-            dataSource={['Support', 'Developer', 'EM', 'PM', 'Technical Writer']}
+            dataSource={positions}
+            defaultValue={positionsFilter}
             multiline={true}
             selectAllMode='allPages'
             showSelectionControls={true}
@@ -35,16 +37,20 @@ function PositionsSelector({ onPositionsChange }: { onPositionsChange: Positions
 
 function ForecastSettingsPanel(
     {
-        forecastHorizons: forecastHorizons,
+        forecastHorizons,
         tiles,
         forecastHorizon,
         tile,
+        positions,
+        positionsFilter,
         onForecastHorizonChange,
         onTileChange,
         onPositionsChange,
     }:
         ForecastSettingsValues &
         ForecastSettings &
+        { positions: Array<string> } &
+        { positionsFilter: Array<string> } &
         { onForecastHorizonChange: ForecastHorizonChangeCallable } &
         { onTileChange: TileChangeCallable } &
         { onPositionsChange: PositionsChangeCallable }
@@ -74,6 +80,8 @@ function ForecastSettingsPanel(
                     container='#tribe_accordion' />
             </SelectBox>
             <PositionsSelector
+                positions={positions}
+                positionsFilter={positionsFilter}
                 onPositionsChange={onPositionsChange} />
         </div>
     )
@@ -158,11 +166,7 @@ function getBars(state: GraphState, positionsFilter: Array<string>): Array<Graph
                     y: user.iteration_count,
                     opacity: 0.6,
                     hovertext: user.user_name,
-                    hovertemplate: `<b>${user.user_name}</b><br>` + 'Date: %{x}<br>' + 'Count: %{y}<br>' + '<extra></extra>',
-                    // marker_color=color_palette.get_legend_color(
-                    //     user_name = user_name,
-                    //     belonging = belonging,
-                    // ),
+                    hovertemplate: `<b>${user.user_name}</b><br>Date: %{x}<br>Count: %{y}<br><extra></extra>`,
                     visible: getBarVisibility(
                         user.tribe_belonging_status,
                         user.position_name,
@@ -320,10 +324,33 @@ interface ForecastParams extends ForecastMainParams, ForecastSettings {
 
 export type StrategicForecastState = ForecastMainParams & ForecastSettings & ForecastSettingsValues
 
+
 export default function StrategicForecast({ state }: { state: StrategicForecastState }) {
-    const [forecastHorizon, setForecastHorizon] = useState<string>(state.forecastHorizon)
-    const [tile, setTile] = useState<number>(state.tile)
-    const [positionsFilter, setPositionsFilter] = useState<Array<string>>([])
+
+    const forecastHorizonKey = `${state.tribeID}_forecastHorizon`
+    const defaultForecastHorizon = getValueFromStoreOrDefault<string>(forecastHorizonKey, state.forecastHorizon, state.forecastHorizons)
+    const [forecastHorizon, setForecastHorizon] = useState<string>(defaultForecastHorizon)
+    const onForecastHorizonChange: ForecastHorizonChangeCallable = (forecastHorizon: string) => {
+        saveValueToStore(forecastHorizonKey, forecastHorizon)
+        setForecastHorizon(forecastHorizon)
+    }
+
+    const tileKey = `${state.tribeID}_tile`
+    const defaultTile = getValueFromStoreOrDefault<number>(tileKey, state.tile, state.tiles)
+    const [tile, setTile] = useState<number>(defaultTile)
+    const onTileChange: TileChangeCallable = (tile: number) => {
+        saveValueToStore(tileKey, tile)
+        setTile(tile)
+    }
+
+    const positions: Array<string> = ['Support', 'Developer', 'EM', 'PM', 'Technical Writer']
+    const positionsKey = `${state.tribeID}_positionsKey`
+    const defaultPositions = getValueFromStoreOrDefault<Array<string>>(positionsKey, [], positions)
+    const [positionsFilter, setPositionsFilter] = useState<Array<string>>(defaultPositions)
+    const onPositionsChange: PositionsChangeCallable = (positions: Array<string>) => {
+        saveValueToStore(positionsKey, positions)
+        setPositionsFilter(positions)
+    }
 
     return (
         <div className='ForforecastHorizonecastContainer'>
@@ -332,9 +359,11 @@ export default function StrategicForecast({ state }: { state: StrategicForecastS
                 tiles={state.tiles}
                 forecastHorizon={forecastHorizon}
                 tile={tile}
-                onForecastHorizonChange={setForecastHorizon}
-                onTileChange={setTile}
-                onPositionsChange={setPositionsFilter} />
+                positions={positions}
+                positionsFilter={positionsFilter}
+                onForecastHorizonChange={onForecastHorizonChange}
+                onTileChange={onTileChange}
+                onPositionsChange={onPositionsChange} />
             <ForecastPanel
                 tribeID={state.tribeID}
                 forecastHorizon={forecastHorizon}

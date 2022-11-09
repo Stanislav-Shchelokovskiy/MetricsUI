@@ -49,7 +49,7 @@ export default function TribeContainer({ state }: { state: TribeContainerState }
         tile: state.defaultTile,
         lastUpdate: state.lastUpdate
     }
-    
+
     return (
         <div className='Tribe'>
             <Header tribeName={state.tribe.name} />
