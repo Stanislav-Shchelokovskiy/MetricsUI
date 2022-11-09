@@ -50,9 +50,7 @@ function tribeContainerStateReducer(state: ForecasterState, action: Action): For
 
             const defaultIncomeType = getValueFromStoreOrDefault<string>('incomeType', action.payload.incomeTypes[0], action.payload.incomeTypes)
             const defaultTribes = getValueFromStoreOrDefault<Array<Tribe>>('tribes', state.defaultTribes, action.payload.tribes)
-            console.log('defaultTribes', defaultTribes)
-            console.log('state.defaultTribes', state.defaultTribes)
-            console.log('state.includes', defaultTribes.every(value => action.payload.tribes.includes(value)))
+
             return {
                 ...state,
                 incomeTypes: action.payload.incomeTypes,
@@ -82,7 +80,6 @@ function tribeContainerStateReducer(state: ForecasterState, action: Action): For
                 return state
             }
 
-            console.log('tribesChange', action.payload)
             saveValueToStore('tribes', action.payload)
             return {
                 ...state,
