@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import Accordion, { Item } from 'devextreme-react/accordion'
 import TacticalForecast, { TacticalForecastState } from './TacticalForecast'
 import StrategicForecast, { StrategicForecastState } from './StrategicForecast'
@@ -55,9 +55,9 @@ export default function TribeContainer({ state }: { state: TribeContainerState }
     const itemsKey = `${state.tribe.id}_selected_items`
     const selectedItems = getValueFromStoreOrDefault(itemsKey, [])
 
-    const onSelectedItemsChange = (e: any) => {
+    const onSelectedItemsChange = useCallback((e: any) => {
         saveValueToStore(itemsKey, e)
-    }
+    }, [itemsKey])
 
     return (
         <div className='Tribe'>
