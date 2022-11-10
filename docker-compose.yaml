@@ -8,9 +8,7 @@ services:
     container_name: stat_app
     environment:
       - REACT_APP_FORECASTER_END_POINT
-    command: nginx -g "daemon off";
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
+    command: nginx -g "daemon off;"
     ports:
       - "80:80"
 
