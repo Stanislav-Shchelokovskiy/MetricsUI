@@ -86,7 +86,7 @@ export default function TribeContainer({ state }: { state: TribeContainerState }
                 multiple={true}
                 focusStateEnabled={false}
                 keyExpr='title'
-                selectedItemKeys={selectedItems}
+                defaultSelectedItemKeys={selectedItems}
                 onSelectedItemKeysChange={onSelectedItemsChange}
             >
                 <Item title='Tactical forecast'>

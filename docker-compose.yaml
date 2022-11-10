@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  stat_app:
+    image: shchelokovskiy/stat_app:latest
+    restart: always
+    hostname: stat_app
+    container_name: stat_app
+    environment:
+      - REACT_APP_FORECASTER_END_POINT
+    command: nginx -g "daemon off";
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - "80:80"
+
+networks:
+  default:
+    name: support_analytics
+    external: true
