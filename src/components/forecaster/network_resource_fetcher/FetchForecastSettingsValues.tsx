@@ -75,3 +75,19 @@ export const fetchTribes: () => Promise<FetchResult<Array<Tribe>>> = async funct
         }
     }
 }
+
+export const fetchReplyTypes: () => Promise<FetchResult<Array<string>>> = async function () {
+    try {
+        const replyTypes = await fetch(`${FORECASTER_END_POINT}/get_reply_type_filters`).then(response => response.json())
+        return {
+            success: true,
+            data: (replyTypes as Array<string>)
+        }
+    } catch (error) {
+        console.log(error)
+        return {
+            success: false,
+            data: Array<string>()
+        }
+    }
+}

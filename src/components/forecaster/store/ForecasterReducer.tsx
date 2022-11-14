@@ -1,7 +1,7 @@
 import { AnyAction, PayloadAction } from "@reduxjs/toolkit"
 import { Tribe } from "../Tribe"
-import { ForecasterState } from './Interfcaces'
-import { INITIAL_FORECASTER_STATE } from './InitialStates'
+import { ForecasterState, TribeContainerState } from './Interfaces'
+import { INITIAL_FORECASTER_STATE, INITIAL_TRIBE_CONTAINER_STATE } from './InitialStates'
 
 
 const CHANGE_INCOME_TYPE = 'forecaster/change_income_type'
@@ -46,10 +46,17 @@ export const ForecasterReducer = (state: ForecasterState = INITIAL_FORECASTER_ST
                 currentTribeContainersStates: state.currentTribeContainersStates.map((x) => { return { ...x, lastUpdated: lastUpdated } })
             }
         case CHANGE_SELECTED_TRIBES:
-            const selectedTribes = action.payload
+            const selectedTribes = (action.payload as Array<Tribe>)
+            const currentTribeContainersStates = [...state.currentTribeContainersStates]
+            for (const tribe of selectedTribes) {
+                if (state.currentTribeContainersStates.find(x => x.tribeId === tribe.id) === undefined) {
+                    currentTribeContainersStates.push(INITIAL_TRIBE_CONTAINER_STATE)
+                }
+            }
             return {
                 ...state,
-                selectedTribes: selectedTribes
+                selectedTribes: selectedTribes,
+                currentTribeContainersStates: currentTribeContainersStates
             }
         default:
             return state

@@ -4,7 +4,7 @@ import {
     StrategicForecastState,
     ForecasterState,
     TribeContainerState
-} from './Interfcaces'
+} from './Interfaces'
 
 const INITIAL_TACTICAL_FORECAST_STATE: TacticalForecastState = {
     replyType: ''

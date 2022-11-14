@@ -1,7 +1,7 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback } from 'react'
 import Accordion, { Item } from 'devextreme-react/accordion'
-import TacticalForecast, { TacticalForecastState } from './TacticalForecast'
-import StrategicForecast, { StrategicForecastState } from './StrategicForecast'
+import TacticalForecast from './TacticalForecast'
+import StrategicForecast from './StrategicForecast'
 import getValueFromStoreOrDefault, { saveValueToStore } from './utils/LocalStorage'
 
 export interface Tribe {
@@ -32,43 +32,6 @@ function Header({ tribeName }: { tribeName: string }) {
 }
 
 export default function TribeContainer({ tribe }: { tribe: Tribe }) {
-
-    // const tacticalForecastState = useMemo<TacticalForecastState>(() => {
-    //     return {
-    //         tribeID: state.tribe.id,
-    //         incomeType: state.incomeType,
-    //         lastUpdate: state.lastUpdate,
-    //         replyTypes: state.replyTypes,
-    //         replyType: state.defaultReplyType
-    //     }
-    // }, [
-    //     state.tribe.id,
-    //     state.incomeType,
-    //     state.replyTypes,
-    //     state.defaultReplyType,
-    //     state.lastUpdate
-    // ])
-
-    // const strategicForecastState = useMemo<StrategicForecastState>(() => {
-    //     return {
-    //         tribeID: state.tribe.id,
-    //         incomeType: state.incomeType,
-    //         lastUpdate: state.lastUpdate,
-    //         forecastHorizons: state.dailyForecastHorizons,
-    //         forecastHorizon: state.defaultDailyForecastHorizon,
-    //         tiles: state.tiles,
-    //         tile: state.defaultTile
-    //     }
-    // }, [
-    //     state.tribe.id,
-    //     state.incomeType,
-    //     state.dailyForecastHorizons,
-    //     state.defaultDailyForecastHorizon,
-    //     state.tiles,
-    //     state.defaultTile,
-    //     state.lastUpdate
-    // ])
-
 
     const itemsKey = `${tribe.id}_selected_items`
     const selectedItems = getValueFromStoreOrDefault(itemsKey, [])

@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import Plot from 'react-plotly.js'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import ForecastMissing from './utils/ForecastMissing'
 import { ForecastMainParams } from './Tribe'
 import GetColor from './utils/ColorPalette'
+import LoadIndicator from './utils/LoadIndicator'
 
 import FetchResult from './network_resource_fetcher/FetchResult'
 import { HourlyTacticalForecast, EMPTY_TACTICAL_FORECAST, FetchTacticalForecast } from './network_resource_fetcher/FetchTacticalForecast'
@@ -11,25 +12,43 @@ import getValueFromStoreOrDefault, { saveValueToStore } from './utils/LocalStora
 
 import { ForecasterState } from './store/ForecasterState'
 import { useForecasterDispatch, useForecasterSelector } from './store/Hooks'
+import { fetchReplyTypes } from './network_resource_fetcher/FetchForecastSettingsValues'
 
 
-const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel({ replyTypes, defaultReplyType, onReplyTypeChange }: { replyTypes: Array<string> } & { defaultReplyType: string } & { onReplyTypeChange: OnReplyTypeChangeCallable }) {
-    return (
-        <div className='ForecastHeader'>
-            <SelectBox
-                dataSource={replyTypes}
-                defaultValue={defaultReplyType}
-                onValueChange={onReplyTypeChange}
-                label='Forecast Mode'
-                labelMode='static'
-                width={'22%'}>
-                <DropDownOptions
-                    hideOnOutsideClick={true}
-                    hideOnParentScroll={true}
-                    container='#tribe_accordion' />
-            </SelectBox>
-        </div>
-    )
+const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel({ defaultReplyType, onReplyTypeChange }: { defaultReplyType: string } & { onReplyTypeChange: OnReplyTypeChangeCallable }) {
+    const renderCount = useRef(0)
+    console.log('ForecastSettingsPanel render: ', renderCount.current++)
+
+    const [replyTypes, setReplyTypes] = useState<Array<string>>([])
+
+    useEffect(() => {
+        (async () => {
+            const fetchResult: FetchResult<Array<string>> = await fetchReplyTypes()
+            if (fetchResult.success) {
+                setReplyTypes(fetchResult.data)
+            }
+        })()
+    }, [])
+
+    if (replyTypes.length > 0) {
+        return (
+            <div className='ForecastHeader'>
+                <SelectBox
+                    dataSource={replyTypes}
+                    defaultValue={defaultReplyType}
+                    onValueChange={onReplyTypeChange}
+                    label='Forecast Mode'
+                    labelMode='static'
+                    width={'22%'}>
+                    <DropDownOptions
+                        hideOnOutsideClick={true}
+                        hideOnParentScroll={true}
+                        container='#tribe_accordion' />
+                </SelectBox>
+            </div>
+        )
+    }
+    return <LoadIndicator width={undefined} height={25} />
 })
 
 function Metric({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast }) {
@@ -179,10 +198,10 @@ type ForecastParams = ForecastMainParams & { replyType: string }
 export type TacticalForecastState = ForecastMainParams & { replyTypes: Array<string> } & { replyType: string }
 
 export default function TacticalForecast(tribeId: string) {
-    const state = useForecasterSelector((state: ForecasterState) => state.forecaster.currentTribeContainersStates)
+    const state = useForecasterSelector((state: ForecasterState) => state.forecaster.currentTribeContainersStates.find(x => x.tribeId === tribeId))
 
-    const replyTypeKey = `${state.tribeID}_replyType`
-    const defaultReplyType = getValueFromStoreOrDefault<string>(replyTypeKey, state.replyType)
+    const replyTypeKey = `${tribeId}_replyType`
+    const defaultReplyType = getValueFromStoreOrDefault<string>(replyTypeKey, (state?.tacticalForecastState.replyType as string))
     const [replyType, setReplyType] = useState<string>(defaultReplyType)
     const onReplyTypeChange: OnReplyTypeChangeCallable = useCallback((replyType: string) => {
         saveValueToStore(replyTypeKey, replyType)
@@ -192,14 +211,13 @@ export default function TacticalForecast(tribeId: string) {
     return (
         <div className='ForecastContainer'>
             <ForecastSettingsPanel
-                replyTypes={state.replyTypes}
                 defaultReplyType={defaultReplyType}
                 onReplyTypeChange={onReplyTypeChange} />
             <ForecastPanel
-                tribeID={state.tribeID}
-                incomeType={state.incomeType}
+                tribeID={tribeId}
+                incomeType={(state?.incomeType as string)}
                 replyType={replyType}
-                lastUpdate={state.lastUpdate} />
+                lastUpdate={(state?.lastUpdated as number)} />
         </div>
     )
 }
