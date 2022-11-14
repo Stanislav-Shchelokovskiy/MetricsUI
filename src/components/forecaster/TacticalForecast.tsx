@@ -10,12 +10,12 @@ import { HourlyTacticalForecast, EMPTY_TACTICAL_FORECAST, FetchTacticalForecast 
 import getValueFromStoreOrDefault, { saveValueToStore } from './utils/LocalStorage'
 
 
-const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel({ replyTypes, replyType, onReplyTypeChange }: ForecastSettingsValues & { onReplyTypeChange: OnReplyTypeChangeCallable }) {
+const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel({ replyTypes, defaultReplyType, onReplyTypeChange }: { replyTypes: Array<string> } & { defaultReplyType: string } & { onReplyTypeChange: OnReplyTypeChangeCallable }) {
     return (
         <div className='ForecastHeader'>
             <SelectBox
                 dataSource={replyTypes}
-                defaultValue={replyType}
+                defaultValue={defaultReplyType}
                 onValueChange={onReplyTypeChange}
                 label='Forecast Mode'
                 labelMode='static'
@@ -147,7 +147,7 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
     )
 }
 
-const ForecastPanel = React.memo(function ForecastPanel({ tribeID, incomeType, lastUpdate, replyType }: ForecastParams) {
+const ForecastPanel = React.memo(function ForecastPanel({ tribeID, incomeType, replyType, lastUpdate }: ForecastParams) {
     const [{ success: forecastLoaded, data: tacticalForecast }, setForecastLoaded] = useState<FetchResult<HourlyTacticalForecast>>(EMPTY_TACTICAL_FORECAST)
 
     useEffect(() => {
@@ -171,17 +171,9 @@ const ForecastPanel = React.memo(function ForecastPanel({ tribeID, incomeType, l
 
 type OnReplyTypeChangeCallable = (replyType: string) => void
 
-interface ForecastSettings {
-    replyType: string
-}
+type ForecastParams = ForecastMainParams & { replyType: string }
 
-interface ForecastSettingsValues extends ForecastSettings {
-    replyTypes: Array<string>
-}
-
-type ForecastParams = ForecastMainParams & ForecastSettings
-
-export type TacticalForecastState = ForecastMainParams & ForecastSettingsValues
+export type TacticalForecastState = ForecastMainParams & { replyTypes: Array<string> } & { replyType: string }
 
 export default function TacticalForecast({ state }: { state: TacticalForecastState }) {
     const replyTypeKey = `${state.tribeID}_replyType`
@@ -196,7 +188,7 @@ export default function TacticalForecast({ state }: { state: TacticalForecastSta
         <div className='ForecastContainer'>
             <ForecastSettingsPanel
                 replyTypes={state.replyTypes}
-                replyType={replyType}
+                defaultReplyType={defaultReplyType}
                 onReplyTypeChange={onReplyTypeChange} />
             <ForecastPanel
                 tribeID={state.tribeID}
