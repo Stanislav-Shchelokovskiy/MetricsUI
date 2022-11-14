@@ -48,7 +48,7 @@ export const fetchIncomeTypes: () => Promise<FetchResult<Array<string>>> = async
     try {
         const incomeTypes = await fetch(`${FORECASTER_END_POINT}/get_income_types`).then(response => response.json())
         return {
-            success: false,
+            success: true,
             data: (incomeTypes as Array<string>)
         }
     } catch (error) {
@@ -56,6 +56,22 @@ export const fetchIncomeTypes: () => Promise<FetchResult<Array<string>>> = async
         return {
             success: false,
             data: Array<string>()
+        }
+    }
+}
+
+export const fetchTribes: () => Promise<FetchResult<Array<Tribe>>> = async function () {
+    try {
+        const tribes = await fetch(`${FORECASTER_END_POINT}/get_available_tribes`).then(response => response.json())
+        return {
+            success: true,
+            data: (tribes as Array<Tribe>)
+        }
+    } catch (error) {
+        console.log(error)
+        return {
+            success: false,
+            data: Array<Tribe>()
         }
     }
 }

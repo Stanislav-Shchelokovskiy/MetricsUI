@@ -1,5 +1,4 @@
 import { AnyAction } from "@reduxjs/toolkit"
-import { act } from "react-dom/test-utils"
 import { Tribe } from "../Tribe"
 
 

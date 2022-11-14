@@ -31,46 +31,46 @@ function Header({ tribeName }: { tribeName: string }) {
     return <h3 className='TribeHeader'> {tribeName}</h3 >
 }
 
-export default function TribeContainer({ state }: { state: TribeContainerState }) {
+export default function TribeContainer({ tribe }: { tribe: Tribe }) {
 
-    const tacticalForecastState = useMemo<TacticalForecastState>(() => {
-        return {
-            tribeID: state.tribe.id,
-            incomeType: state.incomeType,
-            lastUpdate: state.lastUpdate,
-            replyTypes: state.replyTypes,
-            replyType: state.defaultReplyType
-        }
-    }, [
-        state.tribe.id,
-        state.incomeType,
-        state.replyTypes,
-        state.defaultReplyType,
-        state.lastUpdate
-    ])
+    // const tacticalForecastState = useMemo<TacticalForecastState>(() => {
+    //     return {
+    //         tribeID: state.tribe.id,
+    //         incomeType: state.incomeType,
+    //         lastUpdate: state.lastUpdate,
+    //         replyTypes: state.replyTypes,
+    //         replyType: state.defaultReplyType
+    //     }
+    // }, [
+    //     state.tribe.id,
+    //     state.incomeType,
+    //     state.replyTypes,
+    //     state.defaultReplyType,
+    //     state.lastUpdate
+    // ])
 
-    const strategicForecastState = useMemo<StrategicForecastState>(() => {
-        return {
-            tribeID: state.tribe.id,
-            incomeType: state.incomeType,
-            lastUpdate: state.lastUpdate,
-            forecastHorizons: state.dailyForecastHorizons,
-            forecastHorizon: state.defaultDailyForecastHorizon,
-            tiles: state.tiles,
-            tile: state.defaultTile
-        }
-    }, [
-        state.tribe.id,
-        state.incomeType,
-        state.dailyForecastHorizons,
-        state.defaultDailyForecastHorizon,
-        state.tiles,
-        state.defaultTile,
-        state.lastUpdate
-    ])
+    // const strategicForecastState = useMemo<StrategicForecastState>(() => {
+    //     return {
+    //         tribeID: state.tribe.id,
+    //         incomeType: state.incomeType,
+    //         lastUpdate: state.lastUpdate,
+    //         forecastHorizons: state.dailyForecastHorizons,
+    //         forecastHorizon: state.defaultDailyForecastHorizon,
+    //         tiles: state.tiles,
+    //         tile: state.defaultTile
+    //     }
+    // }, [
+    //     state.tribe.id,
+    //     state.incomeType,
+    //     state.dailyForecastHorizons,
+    //     state.defaultDailyForecastHorizon,
+    //     state.tiles,
+    //     state.defaultTile,
+    //     state.lastUpdate
+    // ])
 
 
-    const itemsKey = `${state.tribe.id}_selected_items`
+    const itemsKey = `${tribe.id}_selected_items`
     const selectedItems = getValueFromStoreOrDefault(itemsKey, [])
 
     const onSelectedItemsChange = useCallback((e: any) => {
@@ -79,7 +79,7 @@ export default function TribeContainer({ state }: { state: TribeContainerState }
 
     return (
         <div className='Tribe'>
-            <Header tribeName={state.tribe.name} />
+            <Header tribeName={tribe.name} />
             <Accordion
                 id='tribe_accordion'
                 collapsible={true}
@@ -90,10 +90,10 @@ export default function TribeContainer({ state }: { state: TribeContainerState }
                 onSelectedItemKeysChange={onSelectedItemsChange}
             >
                 <Item title='Tactical forecast'>
-                    <TacticalForecast state={tacticalForecastState} />
+                    <TacticalForecast tribeId={tribe.id} />
                 </Item>
                 <Item title='Strategic forecast' >
-                    <StrategicForecast state={strategicForecastState} />
+                    <StrategicForecast tribeId={tribe.id}/>
                 </Item>
             </Accordion>
         </div>

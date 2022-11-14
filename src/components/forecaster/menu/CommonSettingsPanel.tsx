@@ -1,28 +1,32 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
-import { Tribe } from '../Tribe'
-import { Action } from '../Forecaster'
-import LoadIndicator from '../utils/LoadIndicator'
-import FetchResult from '../network_resource_fetcher/FetchResult'
-import { fetchIncomeTypes } from '../network_resource_fetcher/FetchForecastSettingsValues'
-import getValueFromStoreOrDefault from '../utils/LocalStorage'
-import { useDispatch, useSelector } from 'react-redux';
-import {ForecasterState} from '../store/ForecasterState'
 
-function IncomeSelector(
-    {
-        onIncomeTypeChange
-    }:
-        { defaultIncomeType: string } &
-        { onIncomeTypeChange: IncomeTypeChangeCallable }
-) {
+import { Tribe } from '../Tribe'
+
+import getValueFromStoreOrDefault from '../utils/LocalStorage'
+import LoadIndicator from '../utils/LoadIndicator'
+
+import FetchResult from '../network_resource_fetcher/FetchResult'
+import { fetchIncomeTypes, fetchTribes } from '../network_resource_fetcher/FetchForecastSettingsValues'
+
+import { changeIncomeType, changeSelectedTribes } from '../store/ForecasterReducer'
+import { ForecasterState } from '../store/ForecasterState'
+import { useForecasterDispatch, useForecasterSelector } from '../store/Hooks'
+
+function IncomeSelector() {
+    const renderCount = useRef(0)
+    console.log('IncomeSelector render: ', renderCount.current++)
 
     const [incomeTypes, setIncomeTypes] = useState<Array<string>>([])
-   // const defaultIncomeType = getValueFromStoreOrDefault<string>('incomeType', incomeTypes[0], incomeTypes)
+    const stateIncomeType = useForecasterSelector((state: ForecasterState) => state.forecaster.incomeType)
+    const defaultIncomeType = getValueFromStoreOrDefault<string>('incomeType', stateIncomeType, incomeTypes)
 
-    const defaultIncomeType = useSelector((state: ForecasterState) => state.incomeType)
-    const dispatch = useDispatch()
+
+    const dispatch = useForecasterDispatch()
+    const onIncomeTypeChange: (incomeType: string) => void = (incomeType: string) => {
+        dispatch(changeIncomeType(incomeType))
+    }
 
     useEffect(() => {
         (async () => {
@@ -50,17 +54,30 @@ function IncomeSelector(
     return <LoadIndicator width={undefined} height={25} />
 }
 
-function TribesSelector(
-    {
-        tribes,
-        defaultTribes,
-        onTribeSelect
-    }:
-        { tribes: Array<Tribe> } &
-        { defaultTribes: Array<Tribe> } &
-        { onTribeSelect: TribeSelectCallable }
-) {
-    const defaultValue = defaultTribes.map(tribe => tribe.id)
+function TribesSelector() {
+    const renderCount = useRef(0)
+    console.log('TribesSelector render: ', renderCount.current++)
+
+    const [tribes, setTribes] = useState<Array<Tribe>>([])
+    const stateTribes = useForecasterSelector((state: ForecasterState) => state.forecaster.selectedTribes)
+    const defaultTribes = getValueFromStoreOrDefault<Array<Tribe>>('tribes', stateTribes, tribes)
+    const defaultValue = defaultTribes?.map(tribe => tribe.id)
+
+    const dispatch = useForecasterDispatch()
+    const onTribeSelect: (tribes: Array<string>) => void = (tribeIds: Array<string>) => {
+        const selectedTribes = (tribeIds.map(tribeId => tribes.find(tribe => tribe.id === tribeId)) as Array<Tribe>)
+        dispatch(changeSelectedTribes(selectedTribes))
+    }
+
+    useEffect(() => {
+        (async () => {
+            const fetchResult: FetchResult<Array<Tribe>> = await fetchTribes()
+            if (fetchResult.success) {
+                setTribes(fetchResult.data)
+            }
+        })()
+    }, [])
+
     return (
         <TagBox className='TribesSelector'
             displayExpr='name'
@@ -82,37 +99,16 @@ function TribesSelector(
     )
 }
 
-type TribeSelectCallable = (tribes: Array<string>) => void
-type IncomeTypeChangeCallable = (incomeType: string) => void
-
-interface CommonSettingsPanelState {
-    incomeTypes: Array<string>
-    defaultIncomeType: string
-    tribes: Array<Tribe>
-    defaultTribes: Array<Tribe>
-    forecastDispatch: React.Dispatch<Action>
-}
-
-function CommonSettingsPanel({ incomeTypes, defaultIncomeType, tribes, defaultTribes, forecastDispatch }: CommonSettingsPanelState) {
-    const onIncomeTypeChange: IncomeTypeChangeCallable = (incomeType: string) => {
-        forecastDispatch({ type: 'incomeTypeChange', payload: incomeType })
-    }
-
-    const onTribeSelect: TribeSelectCallable = (tribeIds: Array<string>) => {
-        const selectedTribes = tribeIds.map(tribeId => tribes.find(tribe => tribe.id === tribeId))
-        forecastDispatch({ type: 'tribesChange', payload: selectedTribes })
-    }
+function CommonSettingsPanel() {
+    const renderCount = useRef(0)
+    console.log('CommonSettingsPanel render: ', renderCount.current++)
 
     return (
         <div className='CommonSettingsPanel'>
-            <IncomeSelector/>
-            <TribesSelector
-                tribes={tribes}
-                defaultTribes={defaultTribes}
-                onTribeSelect={onTribeSelect}
-            />
+            <IncomeSelector />
+            <TribesSelector />
         </div>
     )
 }
 
-export default React.memo(CommonSettingsPanel);
+export default CommonSettingsPanel

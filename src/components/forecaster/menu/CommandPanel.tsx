@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from 'devextreme-react/button';
 import LoadIndicator from '../utils/LoadIndicator'
-import { Action } from '../Forecaster'
 
 import FetchResult from '../network_resource_fetcher/FetchResult'
 import {
@@ -9,19 +8,22 @@ import {
     SyncTribeRepliesWithWfTasks,
     FetchApplySyncTribeRepliesWithWfTask,
 } from '../network_resource_fetcher/FetchSyncTribeRepliesWithWfTask'
+import { changeLastUpdated } from '../store/ForecasterReducer'
+import {useForecasterDispatch} from '../store/Hooks'
 
 
-function CommandPanel({ forecastDispatch }: { forecastDispatch: React.Dispatch<Action> }) {
+function CommandPanel() {
     return (
         <div className='CommandPanel'>
-            <ButtonUpdateTribeReplies forecastDispatch={forecastDispatch} />
+            <ButtonUpdateTribeReplies />
         </div>
     )
 }
 
 
-function ButtonUpdateTribeReplies({ forecastDispatch }: { forecastDispatch: React.Dispatch<Action> }) {
+function ButtonUpdateTribeReplies() {
     const [taskStarted, setTaskStarted] = useState<boolean>(false);
+    const dispatch = useForecasterDispatch()
 
     const onClick = () => {
         setTaskStarted(true);
@@ -38,7 +40,7 @@ function ButtonUpdateTribeReplies({ forecastDispatch }: { forecastDispatch: Reac
                 const fetchResult: FetchResult<SyncTribeRepliesWithWfTasks> = await FetchSyncTribeRepliesWithWfTasksStarted();
                 if (!fetchResult.success || !fetchResult.data.started) {
                     setTaskStarted(false);
-                    forecastDispatch({ type: 'lastDataUpdateChange', payload: Date.now() })
+                    dispatch(changeLastUpdated())
                     clearInterval(intervalId);
                 }
             })();
@@ -62,4 +64,4 @@ function ButtonUpdateTribeReplies({ forecastDispatch }: { forecastDispatch: Reac
     )
 }
 
-export default React.memo(CommandPanel)
+export default CommandPanel

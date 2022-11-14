@@ -9,6 +9,9 @@ import FetchResult from './network_resource_fetcher/FetchResult'
 import { HourlyTacticalForecast, EMPTY_TACTICAL_FORECAST, FetchTacticalForecast } from './network_resource_fetcher/FetchTacticalForecast'
 import getValueFromStoreOrDefault, { saveValueToStore } from './utils/LocalStorage'
 
+import { ForecasterState } from './store/ForecasterState'
+import { useForecasterDispatch, useForecasterSelector } from './store/Hooks'
+
 
 const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel({ replyTypes, defaultReplyType, onReplyTypeChange }: { replyTypes: Array<string> } & { defaultReplyType: string } & { onReplyTypeChange: OnReplyTypeChangeCallable }) {
     return (
@@ -175,7 +178,9 @@ type ForecastParams = ForecastMainParams & { replyType: string }
 
 export type TacticalForecastState = ForecastMainParams & { replyTypes: Array<string> } & { replyType: string }
 
-export default function TacticalForecast({ state }: { state: TacticalForecastState }) {
+export default function TacticalForecast(tribeId: string) {
+    const state = useForecasterSelector((state: ForecasterState) => state.forecaster.currentTribeContainersStates)
+
     const replyTypeKey = `${state.tribeID}_replyType`
     const defaultReplyType = getValueFromStoreOrDefault<string>(replyTypeKey, state.replyType)
     const [replyType, setReplyType] = useState<string>(defaultReplyType)
