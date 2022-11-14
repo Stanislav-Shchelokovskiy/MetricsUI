@@ -37,9 +37,9 @@ export default function TribeContainer({ state }: { state: TribeContainerState }
         return {
             tribeID: state.tribe.id,
             incomeType: state.incomeType,
-            replyTypes: state.replyTypes,
-            replyType: state.defaultReplyType,
             lastUpdate: state.lastUpdate,
+            replyTypes: state.replyTypes,
+            replyType: state.defaultReplyType
         }
     }, [
         state.tribe.id,
@@ -53,11 +53,11 @@ export default function TribeContainer({ state }: { state: TribeContainerState }
         return {
             tribeID: state.tribe.id,
             incomeType: state.incomeType,
+            lastUpdate: state.lastUpdate,
             forecastHorizons: state.dailyForecastHorizons,
             forecastHorizon: state.defaultDailyForecastHorizon,
             tiles: state.tiles,
-            tile: state.defaultTile,
-            lastUpdate: state.lastUpdate
+            tile: state.defaultTile
         }
     }, [
         state.tribe.id,

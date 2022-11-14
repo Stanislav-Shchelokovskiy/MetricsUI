@@ -1,31 +1,53 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import { Tribe } from '../Tribe'
 import { Action } from '../Forecaster'
+import LoadIndicator from '../utils/LoadIndicator'
+import FetchResult from '../network_resource_fetcher/FetchResult'
+import { fetchIncomeTypes } from '../network_resource_fetcher/FetchForecastSettingsValues'
+import getValueFromStoreOrDefault from '../utils/LocalStorage'
+import { useDispatch, useSelector } from 'react-redux';
+import {ForecasterState} from '../store/ForecasterState'
 
 function IncomeSelector(
     {
-        incomeTypes,
-        defaultIncomeType,
         onIncomeTypeChange
     }:
-        { incomeTypes: Array<string> } &
         { defaultIncomeType: string } &
         { onIncomeTypeChange: IncomeTypeChangeCallable }
 ) {
-    return (
-        <SelectBox
-            dataSource={incomeTypes}
-            defaultValue={defaultIncomeType}
-            onValueChange={onIncomeTypeChange}
-            label='Income type'
-            labelMode='static'>
-            <DropDownOptions
-                hideOnOutsideClick={true}
-                hideOnParentScroll={true} />
-        </SelectBox >
-    )
+
+    const [incomeTypes, setIncomeTypes] = useState<Array<string>>([])
+   // const defaultIncomeType = getValueFromStoreOrDefault<string>('incomeType', incomeTypes[0], incomeTypes)
+
+    const defaultIncomeType = useSelector((state: ForecasterState) => state.incomeType)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        (async () => {
+            const fetchResult: FetchResult<Array<string>> = await fetchIncomeTypes()
+            if (fetchResult.success) {
+                setIncomeTypes(fetchResult.data)
+            }
+        })()
+    }, [])
+
+    if (incomeTypes.length > 0) {
+        return (
+            <SelectBox
+                dataSource={incomeTypes}
+                defaultValue={defaultIncomeType}
+                onValueChange={onIncomeTypeChange}
+                label='Income type'
+                labelMode='static'>
+                <DropDownOptions
+                    hideOnOutsideClick={true}
+                    hideOnParentScroll={true} />
+            </SelectBox >
+        )
+    }
+    return <LoadIndicator width={undefined} height={25} />
 }
 
 function TribesSelector(
@@ -83,11 +105,7 @@ function CommonSettingsPanel({ incomeTypes, defaultIncomeType, tribes, defaultTr
 
     return (
         <div className='CommonSettingsPanel'>
-            <IncomeSelector
-                incomeTypes={incomeTypes}
-                defaultIncomeType={defaultIncomeType}
-                onIncomeTypeChange={onIncomeTypeChange}
-            />
+            <IncomeSelector/>
             <TribesSelector
                 tribes={tribes}
                 defaultTribes={defaultTribes}

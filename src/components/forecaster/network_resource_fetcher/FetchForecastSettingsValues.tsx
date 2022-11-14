@@ -43,3 +43,19 @@ export const FetchForecastSettingsValues: () => Promise<FetchResult<ForecasterSe
         return EMPTY_FORECATER_SETTINGS_VALUES
     }
 }
+
+export const fetchIncomeTypes: () => Promise<FetchResult<Array<string>>> = async function () {
+    try {
+        const incomeTypes = await fetch(`${FORECASTER_END_POINT}/get_income_types`).then(response => response.json())
+        return {
+            success: false,
+            data: (incomeTypes as Array<string>)
+        }
+    } catch (error) {
+        console.log(error)
+        return {
+            success: false,
+            data: Array<string>()
+        }
+    }
+}
