@@ -8,11 +8,20 @@ import getValueFromStoreOrDefault from '../utils/LocalStorage'
 import LoadIndicator from '../utils/LoadIndicator'
 
 import FetchResult from '../network_resource_fetcher/FetchResult'
-import { fetchIncomeTypes, fetchTribes } from '../network_resource_fetcher/FetchForecastSettingsValues'
+import {
+    fetchIncomeTypes,
+    fetchTribes
+} from '../network_resource_fetcher/FetchForecastSettingsValues'
 
-import { changeIncomeType, changeSelectedTribes } from '../store/ForecasterReducer'
-import { ForecasterState } from '../store/ForecasterState'
-import { useForecasterDispatch, useForecasterSelector } from '../store/Hooks'
+import {
+    forecasterChangeIncomeType,
+    forecasterChangeSelectedTribes
+} from '../store/ForecasterReducer'
+import {
+    useForecasterDispatch,
+    useForecasterSelector,
+    ForecasterState
+} from '../store/ForecasterStore'
 
 function IncomeSelector() {
     const renderCount = useRef(0)
@@ -25,7 +34,7 @@ function IncomeSelector() {
 
     const dispatch = useForecasterDispatch()
     const onIncomeTypeChange: (incomeType: string) => void = (incomeType: string) => {
-        dispatch(changeIncomeType(incomeType))
+        dispatch(forecasterChangeIncomeType(incomeType))
     }
 
     useEffect(() => {
@@ -66,7 +75,7 @@ function TribesSelector() {
     const dispatch = useForecasterDispatch()
     const onTribeSelect: (tribes: Array<string>) => void = (tribeIds: Array<string>) => {
         const selectedTribes = (tribeIds.map(tribeId => tribes.find(tribe => tribe.id === tribeId)) as Array<Tribe>)
-        dispatch(changeSelectedTribes(selectedTribes))
+        dispatch(forecasterChangeSelectedTribes(selectedTribes))
     }
 
     useEffect(() => {

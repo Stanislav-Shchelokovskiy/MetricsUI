@@ -42,9 +42,9 @@ export const StrategicForecastReducer = (state: ForecasterState = INITIAL_FORECA
             const forecastHorizonPayload: Payload<string> = action.payload
             return {
                 ...state,
-                currentTribeContainersStates: updateTribeContainersStates(
+                currentTribeContainers: updateTribeContainersStates(
                     forecastHorizonPayload.tribeId,
-                    state.currentTribeContainersStates,
+                    state.currentTribeContainers,
                     (currState: TribeContainerState) => {
                         return {
                             ...currState,
@@ -60,9 +60,9 @@ export const StrategicForecastReducer = (state: ForecasterState = INITIAL_FORECA
             const tilePayload: Payload<number> = action.payload
             return {
                 ...state,
-                currentTribeContainersStates: updateTribeContainersStates(
+                currentTribeContainers: updateTribeContainersStates(
                     tilePayload.tribeId,
-                    state.currentTribeContainersStates,
+                    state.currentTribeContainers,
                     (currState: TribeContainerState) => {
                         return {
                             ...currState,
@@ -78,9 +78,9 @@ export const StrategicForecastReducer = (state: ForecasterState = INITIAL_FORECA
             const positionsFilterPayload: Payload<Array<string>> = action.payload
             return {
                 ...state,
-                currentTribeContainersStates: updateTribeContainersStates(
+                currentTribeContainers: updateTribeContainersStates(
                     positionsFilterPayload.tribeId,
-                    state.currentTribeContainersStates,
+                    state.currentTribeContainers,
                     (currState: TribeContainerState) => {
                         return {
                             ...currState,
@@ -96,9 +96,9 @@ export const StrategicForecastReducer = (state: ForecasterState = INITIAL_FORECA
             const legendsOnlyLegendsPayload: Payload<Array<string>> = action.payload
             return {
                 ...state,
-                currentTribeContainersStates: updateTribeContainersStates(
+                currentTribeContainers: updateTribeContainersStates(
                     legendsOnlyLegendsPayload.tribeId,
-                    state.currentTribeContainersStates,
+                    state.currentTribeContainers,
                     (currState: TribeContainerState) => {
                         return {
                             ...currState,

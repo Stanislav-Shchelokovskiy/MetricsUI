@@ -3,8 +3,11 @@ import React, { useRef } from 'react'
 import ScrollView from 'devextreme-react/scroll-view'
 import TribeContainer, { Tribe } from './Tribe'
 
-import { ForecasterState } from './store/ForecasterState'
-import { useForecasterDispatch, useForecasterSelector } from './store/Hooks'
+import {
+    useForecasterDispatch,
+    useForecasterSelector,
+    ForecasterState
+} from './store/ForecasterStore'
 
 interface TribeContainerState {
     incomeType: string

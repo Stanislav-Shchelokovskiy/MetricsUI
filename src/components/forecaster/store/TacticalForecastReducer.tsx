@@ -17,9 +17,9 @@ export const TacalForecastReducer = (state: ForecasterState = INITIAL_FORECASTER
             const payload: Payload<string> = action.payload
             return {
                 ...state,
-                currentTribeContainersStates: updateTribeContainersStates(
+                currentTribeContainers: updateTribeContainersStates(
                     payload.tribeId,
-                    state.currentTribeContainersStates,
+                    state.currentTribeContainers,
                     (currState: TribeContainerState) => {
                         return {
                             ...currState,

@@ -7,11 +7,19 @@ import GetColor from './utils/ColorPalette'
 import LoadIndicator from './utils/LoadIndicator'
 
 import FetchResult from './network_resource_fetcher/FetchResult'
-import { HourlyTacticalForecast, EMPTY_TACTICAL_FORECAST, FetchTacticalForecast } from './network_resource_fetcher/FetchTacticalForecast'
+import {
+    HourlyTacticalForecast,
+    EMPTY_TACTICAL_FORECAST,
+    FetchTacticalForecast
+} from './network_resource_fetcher/FetchTacticalForecast'
+
 import getValueFromStoreOrDefault, { saveValueToStore } from './utils/LocalStorage'
 
-import { ForecasterState } from './store/ForecasterState'
-import { useForecasterDispatch, useForecasterSelector } from './store/Hooks'
+import {
+    useForecasterDispatch,
+    useForecasterSelector,
+    ForecasterState
+} from './store/ForecasterStore'
 import { fetchReplyTypes } from './network_resource_fetcher/FetchForecastSettingsValues'
 
 
@@ -198,7 +206,7 @@ type ForecastParams = ForecastMainParams & { replyType: string }
 export type TacticalForecastState = ForecastMainParams & { replyTypes: Array<string> } & { replyType: string }
 
 export default function TacticalForecast(tribeId: string) {
-    const state = useForecasterSelector((state: ForecasterState) => state.forecaster.currentTribeContainersStates.find(x => x.tribeId === tribeId))
+    const state = useForecasterSelector((state: ForecasterState) => state.forecaster.currentTribeContainers.find(x => x.tribeId === tribeId))
 
     const replyTypeKey = `${tribeId}_replyType`
     const defaultReplyType = getValueFromStoreOrDefault<string>(replyTypeKey, (state?.tacticalForecastState.replyType as string))
