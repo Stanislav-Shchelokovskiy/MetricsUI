@@ -1,6 +1,6 @@
 import { AnyAction, PayloadAction } from "@reduxjs/toolkit"
 import { Tribe } from "../Tribe"
-import { ForecasterState, TribeContainerState } from './Interfaces'
+import { ForecasterState } from './Interfaces'
 import { INITIAL_FORECASTER_STATE, INITIAL_TRIBE_CONTAINER_STATE } from './InitialStates'
 
 
@@ -49,7 +49,7 @@ export const ForecasterReducer = (state: ForecasterState = INITIAL_FORECASTER_ST
             const selectedTribes = (action.payload as Array<Tribe>)
             const currentTribeContainersStates = [...state.currentTribeContainersStates]
             for (const tribe of selectedTribes) {
-                if (state.currentTribeContainersStates.find(x => x.tribeId === tribe.id) === undefined) {
+                if (currentTribeContainersStates.find(x => x.tribeId === tribe.id) === undefined) {
                     currentTribeContainersStates.push(INITIAL_TRIBE_CONTAINER_STATE)
                 }
             }

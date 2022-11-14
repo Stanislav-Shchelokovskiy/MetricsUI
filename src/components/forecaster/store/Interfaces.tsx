@@ -27,3 +27,8 @@ export interface ForecasterState {
     homeTribeContainersStates: Array<TribeContainerState>
 }
 
+
+export interface Payload<T> {
+    tribeId: string
+    data: T
+}
