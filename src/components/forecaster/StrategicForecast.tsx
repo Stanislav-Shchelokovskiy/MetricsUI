@@ -10,7 +10,6 @@ import FetchResult from './network_resource_fetcher/FetchResult'
 import { fetchForecastHorizons, fetchTiles } from './network_resource_fetcher/FetchForecastSettingsValues'
 import { IncomeForecast, FetchTribeIncomeForecast, EMPTY_INCOME_FORECAST } from './network_resource_fetcher/FetchTribeIncomeForecast'
 import { DailyTribeReplies, FetchDailyTribeReplies, EMPTY_DAILY_TRIBE_REPLIES } from './network_resource_fetcher/FetchTribeDailyReplies'
-import getValueFromStoreOrDefault, { saveValueToStore } from './utils/LocalStorage'
 import {
     useForecasterDispatch,
     useForecasterSelector,
@@ -23,16 +22,13 @@ import { INITIAL_STRATEGIC_FORECAST_STATE, StrategicForecastState } from './stor
 
 
 
-function PositionsSelector({ tribeId }: { tribeId: string }) {
+function PositionsSelector({ tribeId, defaultPositions }: { tribeId: string, defaultPositions: Array<string> }) {
     const positions = useMemo<Array<string>>(() => { return ['Support', 'Developer', 'EM', 'PM', 'Technical Writer'] }, [])
-    const positionsKey = `${tribeId}_positionsKey`
-    const defaultPositions = getValueFromStoreOrDefault<Array<string>>(positionsKey, [], positions)
 
     const dispatch = useForecasterDispatch()
     const onPositionsChange = useCallback((positions: Array<string>) => {
-        saveValueToStore(positionsKey, positions)
         dispatch(changePositionsFilter(tribeId, positions))
-    }, [positionsKey, tribeId, dispatch])
+    }, [tribeId, dispatch])
 
     return (
         <TagBox className='PositionsSelector'
@@ -74,21 +70,14 @@ const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel({ state 
 
     const dispatch = useForecasterDispatch()
 
-    const forecastHorizonKey = `${state.tribeId}_forecastHorizon`
-    const defaultForecastHorizon = getValueFromStoreOrDefault<string>(forecastHorizonKey, state.forecastHorizon, forecastHorizons)
-
     const onForecastHorizonChange = useCallback((forecastHorizon: string) => {
-        saveValueToStore(forecastHorizonKey, forecastHorizon)
         dispatch(changeForecastHorizon(state.tribeId, forecastHorizon))
-    }, [forecastHorizonKey, state.tribeId, dispatch])
+    }, [state.tribeId, dispatch])
 
-    const tileKey = `${state.tribeId}_tile`
-    const defaultTile = getValueFromStoreOrDefault<number>(tileKey, state.tile, tiles)
 
     const onTileChange = useCallback((tile: number) => {
-        saveValueToStore(tileKey, tile)
         dispatch(changeTile(state.tribeId, tile))
-    }, [tileKey, state.tribeId, dispatch])
+    }, [state.tribeId, dispatch])
 
 
 
@@ -97,7 +86,7 @@ const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel({ state 
         <div className='ForecastHeader'>
             <SelectBox
                 dataSource={forecastHorizons}
-                defaultValue={defaultForecastHorizon}
+                defaultValue={state.forecastHorizon}
                 onValueChange={onForecastHorizonChange}
                 label='Forecast Horizon'
                 labelMode='static'>
@@ -108,7 +97,7 @@ const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel({ state 
             </SelectBox>
             <SelectBox
                 dataSource={tiles}
-                defaultValue={defaultTile}
+                defaultValue={state.tile}
                 onValueChange={onTileChange}
                 label='Performance Level'
                 labelMode='static'>
@@ -117,7 +106,9 @@ const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel({ state 
                     hideOnParentScroll={true}
                     container='#tribe_accordion' />
             </SelectBox>
-            <PositionsSelector tribeId={state.tribeId} />
+            <PositionsSelector
+                tribeId={state.tribeId}
+                defaultPositions={state.positionsFilter} />
         </div>
     )
 })
@@ -283,14 +274,16 @@ function Graph(
         incomeType,
         tile,
         positionsFilter,
+        hiddenLegends,
         lastUpdated
     }:
         {
-            tribeId: string,
-            forecastHorizon: string,
-            incomeType: string,
-            tile: number,
-            positionsFilter: Array<string>,
+            tribeId: string
+            forecastHorizon: string
+            incomeType: string
+            tile: number
+            positionsFilter: Array<string>
+            hiddenLegends: Array<string>
             lastUpdated: number
         }) {
 
@@ -315,17 +308,14 @@ function Graph(
         })()
     }, [tribeId, forecastHorizon, incomeType, tile, lastUpdated])
 
-    const hiddenLegendsKey = `${tribeId}_hiddenLegends`
     const forecasterDispatch = useForecasterDispatch()
     const onLegendClick = useCallback(({ data }: LegendClickObject) => {
         setTimeout(() => {
             const legendsToStore = (data.filter(legend => legend.type === 'bar' && legend.visible === 'legendonly').map(legend => legend.hovertext) as Array<string>)
-            saveValueToStore(hiddenLegendsKey, legendsToStore)
             forecasterDispatch(legendClick(tribeId, legendsToStore))
         }, 500)
         return true
-    }, [hiddenLegendsKey, tribeId, forecasterDispatch])
-    const hiddenLegends = getValueFromStoreOrDefault<Array<string>>(hiddenLegendsKey, [])
+    }, [tribeId, forecasterDispatch])
 
     if (state.incomeForecastLoaded || state.tribeRepliesLoaded) {
 
@@ -367,6 +357,7 @@ const ForecastPanel = React.memo(function ForecastPanel(
         incomeType,
         tile,
         positionsFilter,
+        hiddenLegends,
         lastUpdated
     }: {
         tribeId: string
@@ -374,6 +365,7 @@ const ForecastPanel = React.memo(function ForecastPanel(
         incomeType: string
         tile: number
         positionsFilter: Array<string>
+        hiddenLegends: Array<string>
         lastUpdated: number
     }) {
     return (
@@ -384,6 +376,7 @@ const ForecastPanel = React.memo(function ForecastPanel(
                 incomeType={incomeType}
                 tile={tile}
                 positionsFilter={positionsFilter}
+                hiddenLegends={hiddenLegends}
                 lastUpdated={lastUpdated} />
         </div>
     )
@@ -403,6 +396,7 @@ export default function StrategicForecast({ tribeId }: { tribeId: string }) {
                 incomeType={forecasterState.incomeType}
                 tile={strategicForecastState.tile}
                 positionsFilter={strategicForecastState.positionsFilter}
+                hiddenLegends={strategicForecastState.legendsOnlyLegends}
                 lastUpdated={forecasterState.lastUpdated} />
         </div>
     )

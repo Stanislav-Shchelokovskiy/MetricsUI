@@ -2,7 +2,8 @@ import React, { useCallback } from 'react'
 import Accordion, { Item } from 'devextreme-react/accordion'
 import TacticalForecast from './TacticalForecast'
 import StrategicForecast from './StrategicForecast'
-import getValueFromStoreOrDefault, { saveValueToStore } from './utils/LocalStorage'
+import { useForecasterSelector, ForecasterStore, useForecasterDispatch } from './store/ForecasterStore'
+import { selectForecastItems } from './store/Actions'
 
 export interface Tribe {
     id: string
@@ -32,13 +33,12 @@ function Header({ tribeName }: { tribeName: string }) {
 }
 
 export default function TribeContainer({ tribe }: { tribe: Tribe }) {
+    const selectedItems: Array<string> = useForecasterSelector((state: ForecasterStore) => state.selectedForecastItems)
 
-    const itemsKey = `${tribe.id}_selected_items`
-    const selectedItems = getValueFromStoreOrDefault(itemsKey, [])
-
+    const dispatch = useForecasterDispatch()
     const onSelectedItemsChange = useCallback((e: any) => {
-        saveValueToStore(itemsKey, e)
-    }, [itemsKey])
+        dispatch(selectForecastItems(e))
+    }, [dispatch])
 
     return (
         <div className='Tribe'>
@@ -56,7 +56,7 @@ export default function TribeContainer({ tribe }: { tribe: Tribe }) {
                     <TacticalForecast tribeId={tribe.id} />
                 </Item>
                 <Item title='Strategic forecast' >
-                    <StrategicForecast tribeId={tribe.id}/>
+                    <StrategicForecast tribeId={tribe.id} />
                 </Item>
             </Accordion>
         </div>

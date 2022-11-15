@@ -4,32 +4,21 @@ import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 
 import { Tribe } from '../Tribe'
 
-import getValueFromStoreOrDefault from '../utils/LocalStorage'
 import LoadIndicator from '../utils/LoadIndicator'
 
 import FetchResult from '../network_resource_fetcher/FetchResult'
-import {
-    fetchIncomeTypes,
-    fetchTribes
-} from '../network_resource_fetcher/FetchForecastSettingsValues'
+import { fetchIncomeTypes, fetchTribes } from '../network_resource_fetcher/FetchForecastSettingsValues'
 
-import {
-    changeIncomeType,
-    changeSelectedTribes
-} from '../store/Actions'
-import {
-    useForecasterDispatch,
-    useForecasterSelector,
-    ForecasterStore
-} from '../store/ForecasterStore'
+import { changeIncomeType, changeSelectedTribes } from '../store/Actions'
+import { useForecasterDispatch, useForecasterSelector, ForecasterStore } from '../store/ForecasterStore'
+
 
 function IncomeSelector() {
     const renderCount = useRef(0)
     console.log('IncomeSelector render: ', renderCount.current++)
 
     const [incomeTypes, setIncomeTypes] = useState<Array<string>>([])
-    const stateIncomeType = useForecasterSelector((state: ForecasterStore) => state.forecaster.incomeType)
-    const defaultIncomeType = getValueFromStoreOrDefault<string>('incomeType', stateIncomeType, incomeTypes)
+    const incomeType = useForecasterSelector((state: ForecasterStore) => state.forecaster.incomeType)
 
 
     const dispatch = useForecasterDispatch()
@@ -50,7 +39,7 @@ function IncomeSelector() {
         return (
             <SelectBox
                 dataSource={incomeTypes}
-                defaultValue={defaultIncomeType}
+                defaultValue={incomeType}
                 onValueChange={onIncomeTypeChange}
                 label='Income type'
                 labelMode='static'>
@@ -68,9 +57,8 @@ function TribesSelector() {
     console.log('TribesSelector render: ', renderCount.current++)
 
     const [tribes, setTribes] = useState<Array<Tribe>>([])
-    const stateTribes = useForecasterSelector((state: ForecasterStore) => state.forecaster.selectedTribes)
-    const defaultTribes = getValueFromStoreOrDefault<Array<Tribe>>('tribes', stateTribes, tribes)
-    const defaultValue = defaultTribes?.map(tribe => tribe.id)
+    const selectedTribes = useForecasterSelector((state: ForecasterStore) => state.forecaster.selectedTribes)
+    const defaultValue = selectedTribes?.map(tribe => tribe.id)
 
     const dispatch = useForecasterDispatch()
     const onTribeSelect: (tribes: Array<string>) => void = (tribeIds: Array<string>) => {

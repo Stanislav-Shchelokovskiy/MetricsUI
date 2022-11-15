@@ -12,8 +12,6 @@ import {
     FetchTacticalForecast
 } from './network_resource_fetcher/FetchTacticalForecast'
 
-import getValueFromStoreOrDefault, { saveValueToStore } from './utils/LocalStorage'
-
 import {
     useForecasterDispatch,
     useForecasterSelector,
@@ -34,14 +32,11 @@ const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel({ tribeI
     const [replyTypes, setReplyTypes] = useState<Array<string>>([])
 
     const state: TacticalForecastState = useForecasterSelector((state: ForecasterStore) => state.tacticalForecast.find(x => x.tribeId === tribeId) || INITIAL_TACTICAL_FORECAST_STATE)
-    const replyTypeKey = `${tribeId}_replyType`
-    const defaultReplyType = getValueFromStoreOrDefault<string>(replyTypeKey, (state?.replyType as string))
 
     const dispatch = useForecasterDispatch()
     const onReplyTypeChange = useCallback((replyType: string) => {
-        saveValueToStore(replyTypeKey, replyType)
         dispatch(changeReplyType(tribeId, replyType))
-    }, [replyTypeKey, tribeId, dispatch])
+    }, [tribeId, dispatch])
 
     useEffect(() => {
         (async () => {
@@ -57,7 +52,7 @@ const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel({ tribeI
             <div className='ForecastHeader'>
                 <SelectBox
                     dataSource={replyTypes}
-                    defaultValue={defaultReplyType}
+                    defaultValue={state?.replyType}
                     onValueChange={onReplyTypeChange}
                     label='Forecast Mode'
                     labelMode='static'

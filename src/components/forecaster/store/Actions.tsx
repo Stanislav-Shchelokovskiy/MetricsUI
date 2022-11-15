@@ -69,3 +69,11 @@ export const legendClick = (tribeId: string, legendsOnlyLegends: Array<string>):
         payload: { tribeId: tribeId, data: legendsOnlyLegends }
     }
 }
+
+export const SELECT_FORECAST_ITEMS = 'tribes_container/select_forecast_items'
+export const selectForecastItems = (selectedItems: Array<string>): PayloadAction<Array<string>> => {
+    return {
+        type: SELECT_FORECAST_ITEMS,
+        payload: selectedItems
+    }
+}
