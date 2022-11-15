@@ -32,33 +32,14 @@ export const EMPTY_TACTICAL_FORECAST: FetchResult<HourlyTacticalForecast> =
     }
 }
 
-export const FetchTacticalForecast: (
-    {
-        incomeType,
-        tribeID,
-        replyType
-    }: {
-        incomeType: string
-        tribeID: string,
-        replyType: string,
-
-    }) => Promise<FetchResult<HourlyTacticalForecast>> = async function ({
-        incomeType,
-        tribeID,
-        replyType
-    }: {
-        incomeType: string
-        tribeID: string,
-        replyType: string,
-
-    }) {
+export const FetchTacticalForecast: (incomeType: string, tribeId: string, replyType: string,) => Promise<FetchResult<HourlyTacticalForecast>> =
+    async function (incomeType: string, tribeId: string, replyType: string) {
         try {
             const rawTacticalForecast: Array<RawTacticalForecast> = await fetch(
-                `${FORECASTER_END_POINT}/get_tactical_forecast?` +
-                new URLSearchParams({
+                `${FORECASTER_END_POINT}/get_tactical_forecast?` + new URLSearchParams({
                     income_type: incomeType,
-                    tribe_id: tribeID,
-                    reply_type_filter: replyType,
+                    tribe_id: tribeId,
+                    reply_type_filter: replyType
                 })
             ).then(response => response.json())
 

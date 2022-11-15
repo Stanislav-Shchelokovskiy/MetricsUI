@@ -21,25 +21,82 @@ export const EMPTY_FORECATER_SETTINGS_VALUES: FetchResult<ForecasterSettingsValu
     }
 }
 
-export const FetchForecastSettingsValues: () => Promise<FetchResult<ForecasterSettingsValues>> = async function () {
+export const fetchIncomeTypes: () => Promise<FetchResult<Array<string>>> = async function () {
     try {
         const incomeTypes = await fetch(`${FORECASTER_END_POINT}/get_income_types`).then(response => response.json())
-        const replyTypes = await fetch(`${FORECASTER_END_POINT}/get_reply_type_filters`).then(response => response.json())
-        const tiles = await fetch(`${FORECASTER_END_POINT}/get_tiles`).then(response => response.json())
-        const dailyForecastHorizons = await fetch(`${FORECASTER_END_POINT}/get_daily_horizons`).then(response => response.json())
-        const tribes = await fetch(`${FORECASTER_END_POINT}/get_available_tribes`).then(response => response.json())
         return {
             success: true,
-            data: {
-                incomeTypes: (incomeTypes as Array<string>),
-                replyTypes: (replyTypes as Array<string>),
-                tiles: (tiles as Array<number>),
-                dailyForecastHorizons: (dailyForecastHorizons as Array<string>),
-                tribes: (tribes as Array<Tribe>),
-            }
+            data: (incomeTypes as Array<string>)
         }
     } catch (error) {
         console.log(error)
-        return EMPTY_FORECATER_SETTINGS_VALUES
+        return {
+            success: false,
+            data: Array<string>()
+        }
+    }
+}
+
+export const fetchTribes: () => Promise<FetchResult<Array<Tribe>>> = async function () {
+    try {
+        const tribes = await fetch(`${FORECASTER_END_POINT}/get_available_tribes`).then(response => response.json())
+        return {
+            success: true,
+            data: (tribes as Array<Tribe>)
+        }
+    } catch (error) {
+        console.log(error)
+        return {
+            success: false,
+            data: Array<Tribe>()
+        }
+    }
+}
+
+export const fetchReplyTypes: () => Promise<FetchResult<Array<string>>> = async function () {
+    try {
+        const replyTypes = await fetch(`${FORECASTER_END_POINT}/get_reply_type_filters`).then(response => response.json())
+        return {
+            success: true,
+            data: (replyTypes as Array<string>)
+        }
+    } catch (error) {
+        console.log(error)
+        return {
+            success: false,
+            data: Array<string>()
+        }
+    }
+}
+
+export const fetchForecastHorizons: () => Promise<FetchResult<Array<string>>> = async function () {
+    try {
+        const forecastHorizons = await fetch(`${FORECASTER_END_POINT}/get_daily_horizons`).then(response => response.json())
+        return {
+            success: true,
+            data: (forecastHorizons as Array<string>)
+        }
+    } catch (error) {
+        console.log(error)
+        return {
+            success: false,
+            data: Array<string>()
+        }
+    }
+}
+
+export const fetchTiles: () => Promise<FetchResult<Array<number>>> = async function () {
+    try {
+        const tiles = await fetch(`${FORECASTER_END_POINT}/get_tiles`).then(response => response.json())
+        return {
+            success: true,
+            data: (tiles as Array<number>)
+        }
+    } catch (error) {
+        console.log(error)
+        return {
+            success: false,
+            data: Array<number>()
+        }
     }
 }

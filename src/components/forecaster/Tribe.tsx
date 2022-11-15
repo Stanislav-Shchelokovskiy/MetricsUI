@@ -1,8 +1,9 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback } from 'react'
 import Accordion, { Item } from 'devextreme-react/accordion'
-import TacticalForecast, { TacticalForecastState } from './TacticalForecast'
-import StrategicForecast, { StrategicForecastState } from './StrategicForecast'
-import getValueFromStoreOrDefault, { saveValueToStore } from './utils/LocalStorage'
+import TacticalForecast from './tacticalForecast/TacticalForecast'
+import StrategicForecast from './strategicForecast/StrategicForecast'
+import { useForecasterSelector, ForecasterStore, useForecasterDispatch } from './store/ForecasterStore'
+import { selectForecastItems } from './store/Actions'
 
 export interface Tribe {
     id: string
@@ -31,55 +32,17 @@ function Header({ tribeName }: { tribeName: string }) {
     return <h3 className='TribeHeader'> {tribeName}</h3 >
 }
 
-export default function TribeContainer({ state }: { state: TribeContainerState }) {
+export default function TribeContainer({ tribe }: { tribe: Tribe }) {
+    const selectedItems: Array<string> = useForecasterSelector((state: ForecasterStore) => state.selectedForecastItems)
 
-    const tacticalForecastState = useMemo<TacticalForecastState>(() => {
-        return {
-            tribeID: state.tribe.id,
-            incomeType: state.incomeType,
-            replyTypes: state.replyTypes,
-            replyType: state.defaultReplyType,
-            lastUpdate: state.lastUpdate,
-        }
-    }, [
-        state.tribe.id,
-        state.incomeType,
-        state.replyTypes,
-        state.defaultReplyType,
-        state.lastUpdate
-    ])
-
-    const strategicForecastState = useMemo<StrategicForecastState>(() => {
-        return {
-            tribeID: state.tribe.id,
-            incomeType: state.incomeType,
-            forecastHorizons: state.dailyForecastHorizons,
-            forecastHorizon: state.defaultDailyForecastHorizon,
-            tiles: state.tiles,
-            tile: state.defaultTile,
-            lastUpdate: state.lastUpdate
-        }
-    }, [
-        state.tribe.id,
-        state.incomeType,
-        state.dailyForecastHorizons,
-        state.defaultDailyForecastHorizon,
-        state.tiles,
-        state.defaultTile,
-        state.lastUpdate
-    ])
-
-
-    const itemsKey = `${state.tribe.id}_selected_items`
-    const selectedItems = getValueFromStoreOrDefault(itemsKey, [])
-
+    const dispatch = useForecasterDispatch()
     const onSelectedItemsChange = useCallback((e: any) => {
-        saveValueToStore(itemsKey, e)
-    }, [itemsKey])
+        dispatch(selectForecastItems(e))
+    }, [dispatch])
 
     return (
         <div className='Tribe'>
-            <Header tribeName={state.tribe.name} />
+            <Header tribeName={tribe.name} />
             <Accordion
                 id='tribe_accordion'
                 collapsible={true}
@@ -90,10 +53,10 @@ export default function TribeContainer({ state }: { state: TribeContainerState }
                 onSelectedItemKeysChange={onSelectedItemsChange}
             >
                 <Item title='Tactical forecast'>
-                    <TacticalForecast state={tacticalForecastState} />
+                    <TacticalForecast tribeId={tribe.id} />
                 </Item>
                 <Item title='Strategic forecast' >
-                    <StrategicForecast state={strategicForecastState} />
+                    <StrategicForecast tribeId={tribe.id} />
                 </Item>
             </Accordion>
         </div>

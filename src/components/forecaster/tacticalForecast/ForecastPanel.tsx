@@ -1,33 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Plot from 'react-plotly.js'
-import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
-import ForecastMissing from './utils/ForecastMissing'
-import { ForecastMainParams } from './Tribe'
-import GetColor from './utils/ColorPalette'
+import ForecastMissing from '../utils/ForecastMissing'
+import GetColor from '../utils/ColorPalette'
 
-import FetchResult from './network_resource_fetcher/FetchResult'
-import { HourlyTacticalForecast, EMPTY_TACTICAL_FORECAST, FetchTacticalForecast } from './network_resource_fetcher/FetchTacticalForecast'
-import getValueFromStoreOrDefault, { saveValueToStore } from './utils/LocalStorage'
+import FetchResult from '../network_resource_fetcher/FetchResult'
+import {
+    HourlyTacticalForecast,
+    EMPTY_TACTICAL_FORECAST,
+    FetchTacticalForecast
+} from '../network_resource_fetcher/FetchTacticalForecast'
 
-
-const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel({ replyTypes, replyType, onReplyTypeChange }: ForecastSettingsValues & { onReplyTypeChange: OnReplyTypeChangeCallable }) {
-    return (
-        <div className='ForecastHeader'>
-            <SelectBox
-                dataSource={replyTypes}
-                defaultValue={replyType}
-                onValueChange={onReplyTypeChange}
-                label='Forecast Mode'
-                labelMode='static'
-                width={'22%'}>
-                <DropDownOptions
-                    hideOnOutsideClick={true}
-                    hideOnParentScroll={true}
-                    container='#tribe_accordion' />
-            </SelectBox>
-        </div>
-    )
-})
 
 function Metric({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast }) {
     const today = new Date().setUTCHours(23, 0, 0, 0)
@@ -147,62 +129,41 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
     )
 }
 
-const ForecastPanel = React.memo(function ForecastPanel({ tribeID, incomeType, lastUpdate, replyType }: ForecastParams) {
-    const [{ success: forecastLoaded, data: tacticalForecast }, setForecastLoaded] = useState<FetchResult<HourlyTacticalForecast>>(EMPTY_TACTICAL_FORECAST)
+const ForecastPanel = React.memo(
+    function ForecastPanel(
+        {
+            tribeId,
+            incomeType,
+            replyType,
+            lastUpdated,
+        }: {
+            tribeId: string
+            incomeType: string
+            replyType: string
+            lastUpdated: number
+        }) {
+        const renderCount = useRef(0)
+        console.log('Tactical ForecastPanel render: ', renderCount.current++)
+        const [{ success: forecastLoaded, data: tacticalForecast }, setForecastLoaded] = useState<FetchResult<HourlyTacticalForecast>>(EMPTY_TACTICAL_FORECAST)
 
-    useEffect(() => {
-        (async () => {
-            const fetchResult: FetchResult<HourlyTacticalForecast> = await FetchTacticalForecast({ tribeID, incomeType, replyType })
-            setForecastLoaded(fetchResult)
-        })()
-    }, [tribeID, incomeType, replyType, lastUpdate])
+        useEffect(() => {
+            (async () => {
+                if (replyType === '')
+                    return
+                const fetchResult: FetchResult<HourlyTacticalForecast> = await FetchTacticalForecast(incomeType, tribeId, replyType)
+                setForecastLoaded(fetchResult)
+            })();
+        }, [tribeId, incomeType, replyType, lastUpdated])
 
-    if (forecastLoaded) {
-        return (
-            <div className='ForecastBody'>
-                <Graph tacticalForecast={tacticalForecast} />
-                <Metric tacticalForecast={tacticalForecast} />
-            </div>
-        )
-    }
-    return <ForecastMissing />
-})
+        if (forecastLoaded) {
+            return (
+                <div className='ForecastBody'>
+                    <Graph tacticalForecast={tacticalForecast} />
+                    <Metric tacticalForecast={tacticalForecast} />
+                </div>
+            )
+        }
+        return <ForecastMissing />
+    })
 
-
-type OnReplyTypeChangeCallable = (replyType: string) => void
-
-interface ForecastSettings {
-    replyType: string
-}
-
-interface ForecastSettingsValues extends ForecastSettings {
-    replyTypes: Array<string>
-}
-
-type ForecastParams = ForecastMainParams & ForecastSettings
-
-export type TacticalForecastState = ForecastMainParams & ForecastSettingsValues
-
-export default function TacticalForecast({ state }: { state: TacticalForecastState }) {
-    const replyTypeKey = `${state.tribeID}_replyType`
-    const defaultReplyType = getValueFromStoreOrDefault<string>(replyTypeKey, state.replyType)
-    const [replyType, setReplyType] = useState<string>(defaultReplyType)
-    const onReplyTypeChange: OnReplyTypeChangeCallable = useCallback((replyType: string) => {
-        saveValueToStore(replyTypeKey, replyType)
-        setReplyType(replyType)
-    }, [replyTypeKey])
-
-    return (
-        <div className='ForecastContainer'>
-            <ForecastSettingsPanel
-                replyTypes={state.replyTypes}
-                replyType={replyType}
-                onReplyTypeChange={onReplyTypeChange} />
-            <ForecastPanel
-                tribeID={state.tribeID}
-                incomeType={state.incomeType}
-                replyType={replyType}
-                lastUpdate={state.lastUpdate} />
-        </div>
-    )
-}
+export default ForecastPanel
