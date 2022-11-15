@@ -1,27 +1,16 @@
-import React, { useState } from 'react';
-import { Button } from 'devextreme-react/button';
-import LoadIndicator from '../utils/LoadIndicator'
-
-import FetchResult from '../network_resource_fetcher/FetchResult'
+import React, { useState } from 'react'
+import { Button } from 'devextreme-react/button'
+import LoadIndicator from '../../utils/LoadIndicator'
+import FetchResult from '../../network_resource_fetcher/FetchResult'
 import {
     FetchSyncTribeRepliesWithWfTasksStarted,
     SyncTribeRepliesWithWfTasks,
     FetchApplySyncTribeRepliesWithWfTask,
-} from '../network_resource_fetcher/FetchSyncTribeRepliesWithWfTask'
-import { changeLastUpdated } from '../store/Actions'
-import { useForecasterDispatch } from '../store/ForecasterStore'
+} from '../../network_resource_fetcher/FetchSyncTribeRepliesWithWfTask'
+import { changeLastUpdated } from '../../store/Actions'
+import { useForecasterDispatch } from '../../store/ForecasterStore'
 
-
-function CommandPanel() {
-    return (
-        <div className='CommandPanel'>
-            <ButtonUpdateTribeReplies />
-        </div>
-    )
-}
-
-
-function ButtonUpdateTribeReplies() {
+export default function UpdateTribeRepliesButton() {
     const [taskStarted, setTaskStarted] = useState<boolean>(false);
     const dispatch = useForecasterDispatch()
 
@@ -63,5 +52,3 @@ function ButtonUpdateTribeReplies() {
             onClick={onClick} />
     )
 }
-
-export default CommandPanel

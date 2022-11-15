@@ -1,72 +1,15 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Plot from 'react-plotly.js'
-import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
-import ForecastMissing from './utils/ForecastMissing'
-import GetColor from './utils/ColorPalette'
-import LoadIndicator from './utils/LoadIndicator'
+import ForecastMissing from '../utils/ForecastMissing'
+import GetColor from '../utils/ColorPalette'
 
-import FetchResult from './network_resource_fetcher/FetchResult'
+import FetchResult from '../network_resource_fetcher/FetchResult'
 import {
     HourlyTacticalForecast,
     EMPTY_TACTICAL_FORECAST,
     FetchTacticalForecast
-} from './network_resource_fetcher/FetchTacticalForecast'
+} from '../network_resource_fetcher/FetchTacticalForecast'
 
-import {
-    useForecasterDispatch,
-    useForecasterSelector,
-    ForecasterStore
-} from './store/ForecasterStore'
-
-import { changeReplyType } from './store/Actions'
-import { ForecasterState } from './store/ForecasterReducer'
-import { INITIAL_TACTICAL_FORECAST_STATE, TacticalForecastState } from './store/TribeContainerReducer'
-
-import { fetchReplyTypes } from './network_resource_fetcher/FetchForecastSettingsValues'
-
-
-const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel({ tribeId }: { tribeId: string }) {
-    const renderCount = useRef(0)
-    console.log('ForecastSettingsPanel render: ', renderCount.current++)
-
-    const [replyTypes, setReplyTypes] = useState<Array<string>>([])
-
-    const state: TacticalForecastState = useForecasterSelector((state: ForecasterStore) => state.tacticalForecast.find(x => x.tribeId === tribeId) || INITIAL_TACTICAL_FORECAST_STATE)
-
-    const dispatch = useForecasterDispatch()
-    const onReplyTypeChange = useCallback((replyType: string) => {
-        dispatch(changeReplyType(tribeId, replyType))
-    }, [tribeId, dispatch])
-
-    useEffect(() => {
-        (async () => {
-            const fetchResult: FetchResult<Array<string>> = await fetchReplyTypes()
-            if (fetchResult.success) {
-                setReplyTypes(fetchResult.data)
-            }
-        })()
-    }, [])
-
-    if (replyTypes.length > 0) {
-        return (
-            <div className='ForecastHeader'>
-                <SelectBox
-                    dataSource={replyTypes}
-                    defaultValue={state?.replyType}
-                    onValueChange={onReplyTypeChange}
-                    label='Forecast Mode'
-                    labelMode='static'
-                    width={'22%'}>
-                    <DropDownOptions
-                        hideOnOutsideClick={true}
-                        hideOnParentScroll={true}
-                        container='#tribe_accordion' />
-                </SelectBox>
-            </div>
-        )
-    }
-    return <LoadIndicator width={undefined} height={25} />
-})
 
 function Metric({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast }) {
     const today = new Date().setUTCHours(23, 0, 0, 0)
@@ -186,38 +129,41 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
     )
 }
 
-const ForecastPanel = React.memo(function ForecastPanel({ tribeId }: { tribeId: string }) {
-    const tacticalForecastState: TacticalForecastState = useForecasterSelector((state: ForecasterStore) => state.tacticalForecast.find(x => x.tribeId === tribeId) || INITIAL_TACTICAL_FORECAST_STATE)
-    const forecasterState: ForecasterState = useForecasterSelector((state: ForecasterStore) => state.forecaster)
-    const [{ success: forecastLoaded, data: tacticalForecast }, setForecastLoaded] = useState<FetchResult<HourlyTacticalForecast>>(EMPTY_TACTICAL_FORECAST)
+const ForecastPanel = React.memo(
+    function ForecastPanel(
+        {
+            tribeId,
+            incomeType,
+            replyType,
+            lastUpdated,
+        }: {
+            tribeId: string
+            incomeType: string
+            replyType: string
+            lastUpdated: number
+        }) {
+        const renderCount = useRef(0)
+        console.log('Tactical ForecastPanel render: ', renderCount.current++)
+        const [{ success: forecastLoaded, data: tacticalForecast }, setForecastLoaded] = useState<FetchResult<HourlyTacticalForecast>>(EMPTY_TACTICAL_FORECAST)
 
-    useEffect(() => {
-        (async () => {
-            const fetchResult: FetchResult<HourlyTacticalForecast> = await FetchTacticalForecast({
-                incomeType: forecasterState.incomeType,
-                tribeId: tacticalForecastState.tribeId,
-                replyType: tacticalForecastState.replyType
-            })
-            setForecastLoaded(fetchResult)
-        })()
-    }, [tribeId, tacticalForecastState, forecasterState])
+        useEffect(() => {
+            (async () => {
+                if (replyType === '')
+                    return
+                const fetchResult: FetchResult<HourlyTacticalForecast> = await FetchTacticalForecast(incomeType, tribeId, replyType)
+                setForecastLoaded(fetchResult)
+            })();
+        }, [tribeId, incomeType, replyType, lastUpdated])
 
-    if (forecastLoaded) {
-        return (
-            <div className='ForecastBody'>
-                <Graph tacticalForecast={tacticalForecast} />
-                <Metric tacticalForecast={tacticalForecast} />
-            </div>
-        )
-    }
-    return <ForecastMissing />
-})
+        if (forecastLoaded) {
+            return (
+                <div className='ForecastBody'>
+                    <Graph tacticalForecast={tacticalForecast} />
+                    <Metric tacticalForecast={tacticalForecast} />
+                </div>
+            )
+        }
+        return <ForecastMissing />
+    })
 
-export default function TacticalForecast({ tribeId }: { tribeId: string }) {
-    return (
-        <div className='ForecastContainer'>
-            <ForecastSettingsPanel tribeId={tribeId} />
-            <ForecastPanel tribeId={tribeId} />
-        </div>
-    )
-}
+export default ForecastPanel

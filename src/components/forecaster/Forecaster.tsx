@@ -8,11 +8,12 @@ import './styles/CommandPanel.css'
 import React from 'react'
 
 import TribesContainer from './Tribes'
-import CommonSettingsPanel from './menu/CommonSettingsPanel'
-import CommandPanel from './menu/CommandPanel'
+import CommonSettingsPanel from './menu/commonSettingsPanel/CommonSettingsPanel'
+import CommandPanel from './menu/commandPanel.tsx/CommandPanel'
 
 
 export default function Forecaster() {
+
     return (
         <div className='Forecaster' >
             <div data-testid='Menu' className='Menu' >

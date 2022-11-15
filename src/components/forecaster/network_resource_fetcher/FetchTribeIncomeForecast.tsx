@@ -29,29 +29,13 @@ export const EMPTY_INCOME_FORECAST: FetchResult<IncomeForecast> =
     }
 }
 
-export const FetchTribeIncomeForecast: (
-    {
-        tribeID,
-        forecastHorizon,
-        incomeType
-    }: {
-        tribeID: string,
-        forecastHorizon: string,
-        incomeType: string
-    }) => Promise<FetchResult<IncomeForecast>> = async function ({
-        tribeID,
-        forecastHorizon,
-        incomeType
-    }: {
-        tribeID: string,
-        forecastHorizon: string,
-        incomeType: string
-    }) {
+export const FetchTribeIncomeForecast: (tribeId: string, forecastHorizon: string, incomeType: string) => Promise<FetchResult<IncomeForecast>> =
+    async function (tribeId: string, forecastHorizon: string, incomeType: string) {
         try {
             const tribeIncomeForecast: Array<RawIncomeForecast> = await fetch(
                 `${FORECASTER_END_POINT}/get_forecast?` +
                 new URLSearchParams({
-                    tribe_id: tribeID,
+                    tribe_id: tribeId,
                     horizon: forecastHorizon,
                     income_type: incomeType
                 })

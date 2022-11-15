@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import Accordion, { Item } from 'devextreme-react/accordion'
-import TacticalForecast from './TacticalForecast'
-import StrategicForecast from './StrategicForecast'
+import TacticalForecast from './tacticalForecast/TacticalForecast'
+import StrategicForecast from './strategicForecast/StrategicForecast'
 import { useForecasterSelector, ForecasterStore, useForecasterDispatch } from './store/ForecasterStore'
 import { selectForecastItems } from './store/Actions'
 

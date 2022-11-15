@@ -1,5 +1,5 @@
-import { PayloadAction } from "@reduxjs/toolkit"
-import { Tribe } from "../Tribe"
+import { PayloadAction } from '@reduxjs/toolkit'
+import { Tribe } from '../Tribe'
 
 interface Payload<T> {
     tribeId: string

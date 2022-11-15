@@ -38,30 +38,14 @@ export const EMPTY_DAILY_TRIBE_REPLIES: FetchResult<Array<DailyTribeReplies>> =
     }]
 }
 
-export const FetchDailyTribeReplies: (
-    {
-        tile,
-        tribeID,
-        forecastHorizon,
-    }: {
-        tile: number,
-        tribeID: string,
-        forecastHorizon: string
-    }) => Promise<FetchResult<Array<DailyTribeReplies>>> = async function ({
-        tile,
-        tribeID,
-        forecastHorizon,
-    }: {
-        tile: number,
-        tribeID: string,
-        forecastHorizon: string
-    }) {
+export const FetchDailyTribeReplies: (tile: number, tribeId: string, forecastHorizon: string) => Promise<FetchResult<Array<DailyTribeReplies>>> =
+    async function (tile: number, tribeId: string, forecastHorizon: string) {
         try {
             const rawDailyTribeReplies: Array<RawDailyTribeReplies> = await fetch(
                 `${FORECASTER_END_POINT}/get_tribe_replies?` +
                 new URLSearchParams({
                     tile: tile.toString(),
-                    tribe_id: tribeID,
+                    tribe_id: tribeId,
                     horizon: forecastHorizon,
                 })
             ).then(response => response.json())
@@ -88,4 +72,3 @@ export const FetchDailyTribeReplies: (
             return EMPTY_DAILY_TRIBE_REPLIES
         }
     }
-    

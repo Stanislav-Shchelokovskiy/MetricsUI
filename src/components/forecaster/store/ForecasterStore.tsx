@@ -1,7 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { ForecasterReducer } from './ForecasterReducer'
-import { TacalForecastReducer, StrategicForecastReducer } from './TribeContainerReducer'
+import { TacticalForecastReducer, StrategicForecastReducer } from './TribeContainerReducer'
 import { ForecasterItemsReducer } from './ForecastItemsReducer'
 import { loadState, saveState } from '../utils/LocalStorage'
 
@@ -9,7 +9,7 @@ import { loadState, saveState } from '../utils/LocalStorage'
 export const store = configureStore({
     reducer: {
         forecaster: ForecasterReducer,
-        tacticalForecast: TacalForecastReducer,
+        tacticalForecast: TacticalForecastReducer,
         strategicForecast: StrategicForecastReducer,
         selectedForecastItems: ForecasterItemsReducer
     },

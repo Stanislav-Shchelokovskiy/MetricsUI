@@ -1,4 +1,4 @@
-import { AnyAction } from "@reduxjs/toolkit"
+import { AnyAction } from '@reduxjs/toolkit'
 import {
     CHANGE_SELECTED_TRIBES,
     CHANGE_REPLY_TYPE,
@@ -7,6 +7,7 @@ import {
     CHANGE_POSITIONS_FILTER,
     CHANGE_LEGENDS
 } from './Actions'
+import { Tribe } from '../Tribe'
 
 
 export interface TacticalForecastState extends TribeContainerState {
@@ -39,34 +40,22 @@ export const INITIAL_STRATEGIC_FORECAST_STATE: StrategicForecastState = {
 }
 
 
-export const TacalForecastReducer = (state: Array<TacticalForecastState> = Array<TacticalForecastState>(), action: AnyAction): Array<TacticalForecastState> => {
-    return TribeContainerReducer(state, action, INITIAL_TACTICAL_FORECAST_STATE)
-}
-
-export const StrategicForecastReducer = (state: Array<StrategicForecastState> = Array<StrategicForecastState>(), action: AnyAction): Array<StrategicForecastState> => {
-    return TribeContainerReducer(state, action, INITIAL_STRATEGIC_FORECAST_STATE)
-}
-
-
-function TribeContainerReducer<T extends TribeContainerState>(
-    state: Array<T>,
-    action: AnyAction,
-    initialState: T
-): Array<T> {
+export const TacticalForecastReducer = (state: Array<TacticalForecastState> = Array<TacticalForecastState>(), action: AnyAction): Array<TacticalForecastState> => {
     switch (action.type) {
         case CHANGE_SELECTED_TRIBES:
-            const selectedTribes = action.payload
-            const currentTribeContainersStates = [...state]
-            for (const tribe of selectedTribes) {
-                if (currentTribeContainersStates.find(x => x.tribeId === tribe.id) === undefined) {
-                    currentTribeContainersStates.push({ ...initialState, tribeId: tribe.id })
-                }
-            }
-            console.log('CHANGE_SELECTED_TRIBES', currentTribeContainersStates)
-            return currentTribeContainersStates
+            return filterTribes(state, action, INITIAL_TACTICAL_FORECAST_STATE)
 
         case CHANGE_REPLY_TYPE:
             return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, replyType: action.payload.data } })
+        default:
+            return state
+    }
+}
+
+export const StrategicForecastReducer = (state: Array<StrategicForecastState> = Array<StrategicForecastState>(), action: AnyAction): Array<StrategicForecastState> => {
+    switch (action.type) {
+        case CHANGE_SELECTED_TRIBES:
+            return filterTribes(state, action, INITIAL_STRATEGIC_FORECAST_STATE)
 
         case CHANGE_FORECAST_HORIZON:
             return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, forecastHorizon: action.payload.data } })
@@ -78,10 +67,21 @@ function TribeContainerReducer<T extends TribeContainerState>(
             return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, positionsFilter: action.payload.data } })
 
         case CHANGE_LEGENDS:
-            return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, positionsFilter: action.payload.data } })
+            return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, legendsOnlyLegends: action.payload.data } })
         default:
             return state
     }
+}
+
+function filterTribes<T extends TribeContainerState>(state: Array<T>, action: AnyAction, initialState: T): Array<T> {
+    const selectedTribes: Array<Tribe> = action.payload
+    const currentTribeContainersStates = [...state]
+    for (const tribe of selectedTribes) {
+        if (currentTribeContainersStates.find(x => x.tribeId === tribe.id) === undefined) {
+            currentTribeContainersStates.push({ ...initialState, tribeId: tribe.id })
+        }
+    }
+    return currentTribeContainersStates
 }
 
 function updateTribeContainersStates<T extends TribeContainerState>(tribeId: string, state: Array<T>, replaceState: (currState: T) => T): Array<T> {
