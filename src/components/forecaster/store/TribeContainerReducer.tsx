@@ -1,83 +1,89 @@
-import { AnyAction, PayloadAction } from "@reduxjs/toolkit"
-import { Tribe } from "../Tribe"
+import { AnyAction } from "@reduxjs/toolkit"
+import {
+    CHANGE_SELECTED_TRIBES,
+    CHANGE_REPLY_TYPE,
+    CHANGE_FORECAST_HORIZON,
+    CHANGE_TILE,
+    CHANGE_POSITIONS_FILTER,
+    CHANGE_LEGENDS
+} from './Actions'
 
-export interface TacticalForecastState {
-    tribeId: string
-    incomeType: string
-    lastUpdated: number
+
+export interface TacticalForecastState extends TribeContainerState {
     replyType: string
 }
 
-export interface StrategicForecastState {
-    tribeId: string
-    incomeType: string
-    lastUpdated: number
+export interface StrategicForecastState extends TribeContainerState {
     forecastHorizon: string
     tile: number
     positionsFilter: Array<string>
     legendsOnlyLegends: Array<string>
 }
 
-const INITIAL_TACTICAL_FORECAST_STATE: TacticalForecastState = {
+interface TribeContainerState {
+    tribeId: string
+}
+
+
+export const INITIAL_TACTICAL_FORECAST_STATE: TacticalForecastState = {
     tribeId: '',
-    incomeType: '',
-    lastUpdated: Date.now(),
     replyType: ''
 }
 
-const INITIAL_STRATEGIC_FORECAST_STATE: StrategicForecastState = {
+export const INITIAL_STRATEGIC_FORECAST_STATE: StrategicForecastState = {
     tribeId: '',
-    incomeType: '',
-    lastUpdated: Date.now(),
     forecastHorizon: '',
     tile: 4,
     positionsFilter: Array<string>(),
     legendsOnlyLegends: Array<string>()
 }
 
-const SELECT_TRIBES = 'tribe_container/select_tribes'
-export const tribeContainerSelectTribes = (tribes: Array<Tribe>): PayloadAction<Array<Tribe>> => {
-    return {
-        type: SELECT_TRIBES,
-        payload: tribes
-    }
+
+export const TacalForecastReducer = (state: Array<TacticalForecastState> = Array<TacticalForecastState>(), action: AnyAction): Array<TacticalForecastState> => {
+    return TribeContainerReducer(state, action, INITIAL_TACTICAL_FORECAST_STATE)
 }
 
-const CHANGE_INCOME_TYPE = 'tribe_container/change_income_type'
-export const tribeContainerChangeIncomeType = (incomeType: string): PayloadAction<string> => {
-    return {
-        type: CHANGE_INCOME_TYPE,
-        payload: incomeType
-    }
+export const StrategicForecastReducer = (state: Array<StrategicForecastState> = Array<StrategicForecastState>(), action: AnyAction): Array<StrategicForecastState> => {
+    return TribeContainerReducer(state, action, INITIAL_STRATEGIC_FORECAST_STATE)
 }
 
-const CHANGE_LAST_UPDATED = 'tribe_container/change_last_updated'
-export const tribeContainerChangeLastUpdated = (): PayloadAction<number> => {
-    return {
-        type: CHANGE_LAST_UPDATED,
-        payload: Date.now()
-    }
-}
 
-export const TribeContainerReducer = (state: Array<TribeContainerState> = INITIAL_STATE, action: AnyAction): Array<TribeContainerState> => {
+function TribeContainerReducer<T extends TribeContainerState>(
+    state: Array<T>,
+    action: AnyAction,
+    initialState: T
+): Array<T> {
     switch (action.type) {
-        case SELECT_TRIBES:
+        case CHANGE_SELECTED_TRIBES:
             const selectedTribes = action.payload
             const currentTribeContainersStates = [...state]
             for (const tribe of selectedTribes) {
                 if (currentTribeContainersStates.find(x => x.tribeId === tribe.id) === undefined) {
-                    currentTribeContainersStates.push(INITIAL_TRIBE_CONTAINER_STATE)
+                    currentTribeContainersStates.push({ ...initialState, tribeId: tribe.id })
                 }
             }
+            console.log('CHANGE_SELECTED_TRIBES', currentTribeContainersStates)
             return currentTribeContainersStates
 
-        case CHANGE_INCOME_TYPE:
-            return state.map((x) => { return { ...x, incomeType: action.payload } })
+        case CHANGE_REPLY_TYPE:
+            return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, replyType: action.payload.data } })
 
-        case CHANGE_LAST_UPDATED:
-            return state.map((x) => { return { ...x, lastUpdated: action.payload } })
+        case CHANGE_FORECAST_HORIZON:
+            return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, forecastHorizon: action.payload.data } })
 
+        case CHANGE_TILE:
+            return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, tile: action.payload.data } })
+
+        case CHANGE_POSITIONS_FILTER:
+            return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, positionsFilter: action.payload.data } })
+
+        case CHANGE_LEGENDS:
+            return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, positionsFilter: action.payload.data } })
         default:
             return state
     }
+}
+
+function updateTribeContainersStates<T extends TribeContainerState>(tribeId: string, state: Array<T>, replaceState: (currState: T) => T): Array<T> {
+    return state.map((x) => { return x.tribeId === tribeId ? replaceState(x) : x })
 }

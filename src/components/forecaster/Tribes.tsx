@@ -4,9 +4,8 @@ import ScrollView from 'devextreme-react/scroll-view'
 import TribeContainer, { Tribe } from './Tribe'
 
 import {
-    useForecasterDispatch,
     useForecasterSelector,
-    ForecasterState
+    ForecasterStore
 } from './store/ForecasterStore'
 
 interface TribeContainerState {
@@ -28,7 +27,7 @@ export default function TribesContainer() {
     const renderCount = useRef(0)
     console.log('TribesContainer render: ', renderCount.current++)
 
-    const selectedTribes = useForecasterSelector((state: ForecasterState) => state.forecaster.selectedTribes)
+    const selectedTribes = useForecasterSelector((state: ForecasterStore) => state.forecaster.selectedTribes)
     console.log('selectedTribes', selectedTribes)
 
     if (selectedTribes?.length > 0) {

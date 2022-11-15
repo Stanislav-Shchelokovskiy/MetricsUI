@@ -1,30 +1,22 @@
-import { AnyAction, PayloadAction } from "@reduxjs/toolkit"
-import { Tribe } from "../Tribe"
+import { AnyAction } from '@reduxjs/toolkit'
+import { Tribe } from '../Tribe'
+import {
+    CHANGE_INCOME_TYPE,
+    CHANGE_SELECTED_TRIBES,
+    CHANGE_LAST_UPDATED
+} from './Actions'
+
 
 export interface ForecasterState {
     incomeType: string
     selectedTribes: Array<Tribe>
-}
-
-const CHANGE_INCOME_TYPE = 'forecaster/change_income_type'
-export const forecasterChangeIncomeType = (incomeType: string): PayloadAction<string> => {
-    return {
-        type: CHANGE_INCOME_TYPE,
-        payload: incomeType
-    }
-}
-
-const CHANGE_SELECTED_TRIBES = 'forecaster/change_selected_tribes'
-export const forecasterChangeSelectedTribes = (selectedTribes: Array<Tribe>): PayloadAction<Array<Tribe>> => {
-    return {
-        type: CHANGE_SELECTED_TRIBES,
-        payload: selectedTribes
-    }
+    lastUpdated: number
 }
 
 const INITIAL_FORECASTER_STATE: ForecasterState = {
     incomeType: '',
-    selectedTribes: Array<Tribe>()
+    selectedTribes: Array<Tribe>(),
+    lastUpdated: Date.now()
 }
 
 
@@ -39,6 +31,11 @@ export const ForecasterReducer = (state: ForecasterState = INITIAL_FORECASTER_ST
             return {
                 ...state,
                 selectedTribes: action.payload
+            }
+        case CHANGE_LAST_UPDATED:
+            return {
+                ...state,
+                lastUpdated: action.payload
             }
         default:
             return state

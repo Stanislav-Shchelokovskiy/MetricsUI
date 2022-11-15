@@ -14,13 +14,13 @@ import {
 } from '../network_resource_fetcher/FetchForecastSettingsValues'
 
 import {
-    forecasterChangeIncomeType,
-    forecasterChangeSelectedTribes
-} from '../store/ForecasterReducer'
+    changeIncomeType,
+    changeSelectedTribes
+} from '../store/Actions'
 import {
     useForecasterDispatch,
     useForecasterSelector,
-    ForecasterState
+    ForecasterStore
 } from '../store/ForecasterStore'
 
 function IncomeSelector() {
@@ -28,13 +28,13 @@ function IncomeSelector() {
     console.log('IncomeSelector render: ', renderCount.current++)
 
     const [incomeTypes, setIncomeTypes] = useState<Array<string>>([])
-    const stateIncomeType = useForecasterSelector((state: ForecasterState) => state.forecaster.incomeType)
+    const stateIncomeType = useForecasterSelector((state: ForecasterStore) => state.forecaster.incomeType)
     const defaultIncomeType = getValueFromStoreOrDefault<string>('incomeType', stateIncomeType, incomeTypes)
 
 
     const dispatch = useForecasterDispatch()
     const onIncomeTypeChange: (incomeType: string) => void = (incomeType: string) => {
-        dispatch(forecasterChangeIncomeType(incomeType))
+        dispatch(changeIncomeType(incomeType))
     }
 
     useEffect(() => {
@@ -68,14 +68,14 @@ function TribesSelector() {
     console.log('TribesSelector render: ', renderCount.current++)
 
     const [tribes, setTribes] = useState<Array<Tribe>>([])
-    const stateTribes = useForecasterSelector((state: ForecasterState) => state.forecaster.selectedTribes)
+    const stateTribes = useForecasterSelector((state: ForecasterStore) => state.forecaster.selectedTribes)
     const defaultTribes = getValueFromStoreOrDefault<Array<Tribe>>('tribes', stateTribes, tribes)
     const defaultValue = defaultTribes?.map(tribe => tribe.id)
 
     const dispatch = useForecasterDispatch()
     const onTribeSelect: (tribes: Array<string>) => void = (tribeIds: Array<string>) => {
         const selectedTribes = (tribeIds.map(tribeId => tribes.find(tribe => tribe.id === tribeId)) as Array<Tribe>)
-        dispatch(forecasterChangeSelectedTribes(selectedTribes))
+        dispatch(changeSelectedTribes(selectedTribes))
     }
 
     useEffect(() => {

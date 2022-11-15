@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useRef } from 'react'
 import Plot from 'react-plotly.js'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import ForecastMissing from './utils/ForecastMissing'
-import { ForecastMainParams } from './Tribe'
 import GetColor from './utils/ColorPalette'
 import LoadIndicator from './utils/LoadIndicator'
 
@@ -18,16 +17,31 @@ import getValueFromStoreOrDefault, { saveValueToStore } from './utils/LocalStora
 import {
     useForecasterDispatch,
     useForecasterSelector,
-    ForecasterState
+    ForecasterStore
 } from './store/ForecasterStore'
+
+import { changeReplyType } from './store/Actions'
+import { ForecasterState } from './store/ForecasterReducer'
+import { INITIAL_TACTICAL_FORECAST_STATE, TacticalForecastState } from './store/TribeContainerReducer'
+
 import { fetchReplyTypes } from './network_resource_fetcher/FetchForecastSettingsValues'
 
 
-const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel({ defaultReplyType, onReplyTypeChange }: { defaultReplyType: string } & { onReplyTypeChange: OnReplyTypeChangeCallable }) {
+const ForecastSettingsPanel = React.memo(function ForecastSettingsPanel({ tribeId }: { tribeId: string }) {
     const renderCount = useRef(0)
     console.log('ForecastSettingsPanel render: ', renderCount.current++)
 
     const [replyTypes, setReplyTypes] = useState<Array<string>>([])
+
+    const state: TacticalForecastState = useForecasterSelector((state: ForecasterStore) => state.tacticalForecast.find(x => x.tribeId === tribeId) || INITIAL_TACTICAL_FORECAST_STATE)
+    const replyTypeKey = `${tribeId}_replyType`
+    const defaultReplyType = getValueFromStoreOrDefault<string>(replyTypeKey, (state?.replyType as string))
+
+    const dispatch = useForecasterDispatch()
+    const onReplyTypeChange = useCallback((replyType: string) => {
+        saveValueToStore(replyTypeKey, replyType)
+        dispatch(changeReplyType(tribeId, replyType))
+    }, [replyTypeKey, tribeId, dispatch])
 
     useEffect(() => {
         (async () => {
@@ -177,15 +191,21 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
     )
 }
 
-const ForecastPanel = React.memo(function ForecastPanel({ tribeID, incomeType, replyType, lastUpdate }: ForecastParams) {
+const ForecastPanel = React.memo(function ForecastPanel({ tribeId }: { tribeId: string }) {
+    const tacticalForecastState: TacticalForecastState = useForecasterSelector((state: ForecasterStore) => state.tacticalForecast.find(x => x.tribeId === tribeId) || INITIAL_TACTICAL_FORECAST_STATE)
+    const forecasterState: ForecasterState = useForecasterSelector((state: ForecasterStore) => state.forecaster)
     const [{ success: forecastLoaded, data: tacticalForecast }, setForecastLoaded] = useState<FetchResult<HourlyTacticalForecast>>(EMPTY_TACTICAL_FORECAST)
 
     useEffect(() => {
         (async () => {
-            const fetchResult: FetchResult<HourlyTacticalForecast> = await FetchTacticalForecast({ tribeID, incomeType, replyType })
+            const fetchResult: FetchResult<HourlyTacticalForecast> = await FetchTacticalForecast({
+                incomeType: forecasterState.incomeType,
+                tribeId: tacticalForecastState.tribeId,
+                replyType: tacticalForecastState.replyType
+            })
             setForecastLoaded(fetchResult)
         })()
-    }, [tribeID, incomeType, replyType, lastUpdate])
+    }, [tribeId, tacticalForecastState, forecasterState])
 
     if (forecastLoaded) {
         return (
@@ -198,34 +218,11 @@ const ForecastPanel = React.memo(function ForecastPanel({ tribeID, incomeType, r
     return <ForecastMissing />
 })
 
-
-type OnReplyTypeChangeCallable = (replyType: string) => void
-
-type ForecastParams = ForecastMainParams & { replyType: string }
-
-export type TacticalForecastState = ForecastMainParams & { replyTypes: Array<string> } & { replyType: string }
-
-export default function TacticalForecast(tribeId: string) {
-    const state = useForecasterSelector((state: ForecasterState) => state.forecaster.currentTribeContainers.find(x => x.tribeId === tribeId))
-
-    const replyTypeKey = `${tribeId}_replyType`
-    const defaultReplyType = getValueFromStoreOrDefault<string>(replyTypeKey, (state?.tacticalForecastState.replyType as string))
-    const [replyType, setReplyType] = useState<string>(defaultReplyType)
-    const onReplyTypeChange: OnReplyTypeChangeCallable = useCallback((replyType: string) => {
-        saveValueToStore(replyTypeKey, replyType)
-        setReplyType(replyType)
-    }, [replyTypeKey])
-
+export default function TacticalForecast({ tribeId }: { tribeId: string }) {
     return (
         <div className='ForecastContainer'>
-            <ForecastSettingsPanel
-                defaultReplyType={defaultReplyType}
-                onReplyTypeChange={onReplyTypeChange} />
-            <ForecastPanel
-                tribeID={tribeId}
-                incomeType={(state?.incomeType as string)}
-                replyType={replyType}
-                lastUpdate={(state?.lastUpdated as number)} />
+            <ForecastSettingsPanel tribeId={tribeId} />
+            <ForecastPanel tribeId={tribeId} />
         </div>
     )
 }

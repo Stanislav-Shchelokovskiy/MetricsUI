@@ -91,3 +91,35 @@ export const fetchReplyTypes: () => Promise<FetchResult<Array<string>>> = async 
         }
     }
 }
+
+export const fetchForecastHorizons: () => Promise<FetchResult<Array<string>>> = async function () {
+    try {
+        const forecastHorizons = await fetch(`${FORECASTER_END_POINT}/get_daily_horizons`).then(response => response.json())
+        return {
+            success: true,
+            data: (forecastHorizons as Array<string>)
+        }
+    } catch (error) {
+        console.log(error)
+        return {
+            success: false,
+            data: Array<string>()
+        }
+    }
+}
+
+export const fetchTiles: () => Promise<FetchResult<Array<number>>> = async function () {
+    try {
+        const tiles = await fetch(`${FORECASTER_END_POINT}/get_tiles`).then(response => response.json())
+        return {
+            success: true,
+            data: (tiles as Array<number>)
+        }
+    } catch (error) {
+        console.log(error)
+        return {
+            success: false,
+            data: Array<number>()
+        }
+    }
+}

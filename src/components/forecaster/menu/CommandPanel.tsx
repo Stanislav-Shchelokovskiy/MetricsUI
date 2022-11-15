@@ -8,8 +8,8 @@ import {
     SyncTribeRepliesWithWfTasks,
     FetchApplySyncTribeRepliesWithWfTask,
 } from '../network_resource_fetcher/FetchSyncTribeRepliesWithWfTask'
-import { changeLastUpdated } from '../store/ForecasterReducer'
-import {useForecasterDispatch} from '../store/Hooks'
+import { changeLastUpdated } from '../store/Actions'
+import { useForecasterDispatch } from '../store/ForecasterStore'
 
 
 function CommandPanel() {
