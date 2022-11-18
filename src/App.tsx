@@ -28,12 +28,6 @@ function Root() {
           text='Forecaster'
           focusStateEnabled={false} />
       </Link>
-      <Link to={'qwec'}>
-        <Button
-          className='NavElement'
-          focusStateEnabled={false}
-          text='qwec' />
-      </Link>
     </div>
   )
 }
