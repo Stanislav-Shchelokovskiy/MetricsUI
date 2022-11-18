@@ -14,10 +14,6 @@
   align-items: stretch;
 }
 
-.App {
-  /* background-color: rgb(242, 11, 11); */
-}
-
 .ErrorPage,
 .Root {
   align-items: center;
