@@ -209,21 +209,27 @@ function Graph({ state }: { state: ForecastPanelState }) {
             <div className='ForecastGraph'>
                 <Plot
                     data={data}
+                    style={{
+                        width: '100%',
+                        minHeight: 400,
+                        height: '100%'
+                    }}
+                    useResizeHandler={true}
                     layout={{
-                        height: 400, width: 1510, margin: {
+                        margin: {
                             t: 10,
                             l: 30,
                             r: 10,
                             b: 30
                         },
-                        xaxis: { autorange: true, automargin: false },
-                        yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: false },
+                        xaxis: { autorange: true, automargin: true },
+                        yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: true },
                         barmode: 'stack',
                         paper_bgcolor: 'rgba(0,0,0,0)',
                         plot_bgcolor: 'rgba(0,0,0,0)',
                         autosize: true
                     }}
-                    config={{ displayModeBar: false, doubleClick: 'autosize' }}
+                    config={{ displayModeBar: false, doubleClick: 'autosize', responsive: true }}
                     onLegendClick={onLegendClick}
                 />
             </div>

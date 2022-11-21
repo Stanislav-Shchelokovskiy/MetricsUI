@@ -104,12 +104,16 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
                         connectgaps: true,
                     },
                 ]}
+                style={{
+                    width: '100%',
+                    minHeight: 300,
+                    height: '100%'
+                }}
+                useResizeHandler={true}
                 layout={{
-                    height: 300,
-                    width: 1200,
                     margin: { t: 10, l: 30, r: 10 },
-                    xaxis: { 'showgrid': false, autorange: true, automargin: false },
-                    yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: false },
+                    xaxis: { 'showgrid': false, autorange: true, automargin: true },
+                    yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: true },
                     autosize: true,
                     paper_bgcolor: 'rgba(0,0,0,0)',
                     plot_bgcolor: 'rgba(0,0,0,0)',
@@ -123,7 +127,7 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
                         line: { color: GetColor('vline'), width: 3, dash: 'dash' }
                     },]
                 }}
-                config={{ displayModeBar: false, doubleClick: 'autosize' }}
+                config={{ displayModeBar: false, doubleClick: 'autosize', responsive: true }}
             />
         </div>
     )

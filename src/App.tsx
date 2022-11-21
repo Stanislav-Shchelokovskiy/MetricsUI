@@ -18,7 +18,6 @@ function ErrorPage() {
   )
 }
 
-
 function Root() {
   return (
     <div className='Root'>
