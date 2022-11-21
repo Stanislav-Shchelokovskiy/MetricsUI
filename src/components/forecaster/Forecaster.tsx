@@ -9,7 +9,7 @@ import React from 'react'
 
 import TribesContainer from './Tribes'
 import ForecasterCommonSettingsPanel from './menu/commonSettingsPanel/CommonSettingsPanel'
-import ForecasterCommandPanel from './menu/commandPanel.tsx/CommandPanel'
+import ForecasterCommandPanel from './menu/commandPanel/CommandPanel'
 
 
 export default function Forecaster() {

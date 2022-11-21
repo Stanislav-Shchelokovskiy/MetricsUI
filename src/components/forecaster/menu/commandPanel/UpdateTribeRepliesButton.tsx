@@ -42,8 +42,7 @@ export default function UpdateTribeRepliesButton() {
     }
     return (
         <Button
-            width={150}
-            height={40}
+            className='ForecasterUpdateTribeRepliesButton'
             render={renderButton}
             disabled={taskStarted}
             type='normal'

@@ -4,7 +4,7 @@ import UpdateTribeRepliesButton from './UpdateTribeRepliesButton'
 
 function CommandPanel() {
     return (
-        <div className='CommandPanel'>
+        <div className='ForecasterCommandPanel'>
             <UpdateTribeRepliesButton />
         </div>
     )
