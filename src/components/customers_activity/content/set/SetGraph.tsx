@@ -3,7 +3,7 @@ import Plot from 'react-plotly.js'
 import { Data as GraphData } from 'plotly.js'
 
 
-export default function Graph() {
+export default function SetGraph() {
     return (
         <div className='CustomersActivity_Graph'>
             <Plot

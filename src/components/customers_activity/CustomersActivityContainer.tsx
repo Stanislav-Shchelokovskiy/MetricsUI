@@ -1,7 +1,5 @@
 import './styles/CustomersActivityContainer.css'
 import './styles/Menu.css'
-import './styles/SetHeader.css'
-import './styles/SetSettingsPanel.css'
 import './styles/Set.css'
 import './styles/SetsComparisonPanel.css'
 

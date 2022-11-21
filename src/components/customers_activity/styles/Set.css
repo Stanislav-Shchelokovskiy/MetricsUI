@@ -1,1 +1,37 @@
-.CustomersActivity_Graph {}
+.CustomerActivity_SetHeader {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: 'flex-start';
+    align-items: center;
+    padding-left: 8px;
+    gap: 3%;
+    background-color: rgba(240, 240, 240, 0.5);
+}
+
+.CustomersActivity_SetSettingsPanel {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 1%;
+    gap: 1%;
+    background-color: rgba(240, 240, 240, 0.5);
+}
+
+.CustomersActivity_CustomersGroupsSelector,
+.CustomersActivity_TicketsTypesSelector,
+.CustomersActivity_TicketsTagsSelector,
+.CustomersActivity_TribesSelector {
+    min-width: 20%
+}
+
+.CustomersActivity_ApplyButton {
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+.CustomersActivity_Graph {
+    flex-grow: 1;
+}

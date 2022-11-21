@@ -1,14 +1,14 @@
 import React from 'react'
-import Header from './header/Header'
+import SetHeader from './header/SetHeader'
 import SetSettingsPanel from './settings_panel/SetSettingsPanel'
-import Graph from './Graph'
+import SetGraph from './SetGraph'
 
 export default function Set() {
     return (
         <div className='CustomersActivity_Set'>
-            <Header />
+            <SetHeader />
             <SetSettingsPanel />
-            <Graph />
+            <SetGraph />
         </div>
     )
 }
