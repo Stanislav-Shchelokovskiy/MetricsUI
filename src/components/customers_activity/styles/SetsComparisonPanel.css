@@ -1,0 +1,13 @@
+.CustomersActivity_SetsComparisonPanel {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    background-color: rgb(255, 251, 0);
+    height: 100px;
+    flex-grow: 1
+}
+
+.CustomersActivity_SetsSelector {}
+
+.CustomersActivity_ComparisonMethodSelector {}

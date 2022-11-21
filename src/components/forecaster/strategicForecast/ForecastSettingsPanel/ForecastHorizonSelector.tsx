@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect, useCallback } from 'react'
 import { AnyAction } from '@reduxjs/toolkit'
-import LoadIndicator from '../../utils/LoadIndicator'
+import LoadIndicator from '../../../common/LoadIndicator'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import FetchResult from '../../network_resource_fetcher/FetchResult'
 import { fetchForecastHorizons } from '../../network_resource_fetcher/FetchForecastSettingsValues'

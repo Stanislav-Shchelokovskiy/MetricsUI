@@ -5,7 +5,7 @@ import TribesSelector from './TribesSelector'
 
 function CommonSettingsPanel() {
     return (
-        <div className='CommonSettingsPanel'>
+        <div className='ForecasterCommonSettingsPanel'>
             <IncomeSelector />
             <TribesSelector />
         </div>

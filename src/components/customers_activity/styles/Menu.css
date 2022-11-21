@@ -1,0 +1,31 @@
+.CustomersActivity_Menu {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    background-color: rgb(182, 187, 103);
+    gap: 10px;
+}
+
+.CustomersActivity_CommonSettingsPanel {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 8px;
+    gap: 1%;
+    background-color: dodgerblue;
+    min-width: 90%;
+}
+
+.CustomersActivity_PeriodSelector {
+    background-color: rgb(0, 255, 251);
+    margin-bottom: 0px;
+    min-width: 60%;
+    width: 60%;
+}
+
+.CustomersActivity_GroupByPeriodSelector,
+.CustomersActivity_MetricSelector {
+    height: 35%;
+}

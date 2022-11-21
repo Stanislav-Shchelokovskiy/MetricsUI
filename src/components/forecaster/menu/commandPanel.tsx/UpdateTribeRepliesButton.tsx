@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button } from 'devextreme-react/button'
-import LoadIndicator from '../../utils/LoadIndicator'
+import LoadIndicator from '../../../common/LoadIndicator'
 import FetchResult from '../../network_resource_fetcher/FetchResult'
 import {
     FetchSyncTribeRepliesWithWfTasksStarted,

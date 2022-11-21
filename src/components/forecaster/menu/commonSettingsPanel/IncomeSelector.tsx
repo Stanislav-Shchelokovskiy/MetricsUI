@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from 'react'
 import { AnyAction } from '@reduxjs/toolkit'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
-import LoadIndicator from '../../utils/LoadIndicator'
+import LoadIndicator from '../../../common/LoadIndicator'
 import FetchResult from '../../network_resource_fetcher/FetchResult'
 import { fetchIncomeTypes } from '../../network_resource_fetcher/FetchForecastSettingsValues'
 import { changeIncomeType } from '../../store/Actions'
