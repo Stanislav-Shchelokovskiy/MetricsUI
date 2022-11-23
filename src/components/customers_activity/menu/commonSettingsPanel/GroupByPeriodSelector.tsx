@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
+import { AnyAction } from '@reduxjs/toolkit'
 import { changeGroupByPeriod } from '../../store/Actions'
 import { useAppDispatch, useAppSelector, AppStore } from '../../../common/AppStore'
 

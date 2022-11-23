@@ -1,5 +1,5 @@
-import FORECASTER_END_POINT from './EndPoint'
-import FetchResult from './FetchResult'
+import FORECASTER_END_POINT from '../../common/EndPoint'
+import FetchResult from '../../common/FetchResult'
 
 interface RawDailyTribeReplies {
     tribe_belonging_status: number

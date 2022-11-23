@@ -5,6 +5,14 @@ interface Payload<T> {
     data: T
 }
 
+export const CHANGE_PERIOD = 'customers_activity/change_period'
+export const changePeriod = (period: Array<Date>): PayloadAction<Array<string>> => {
+    return {
+        type: CHANGE_PERIOD,
+        payload: period.map(x=>x.toISOString().slice(0,10))
+    }
+}
+
 export const CHANGE_GROUP_BY_PERIOD = 'customers_activity/change_group_by_period'
 export const changeGroupByPeriod = (groupBy: string): PayloadAction<string> => {
     return {
