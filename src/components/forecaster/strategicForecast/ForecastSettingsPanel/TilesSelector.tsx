@@ -4,7 +4,7 @@ import LoadIndicator from '../../../common/LoadIndicator'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import FetchResult from '../../network_resource_fetcher/FetchResult'
 import { fetchTiles } from '../../network_resource_fetcher/FetchForecastSettingsValues'
-import { useForecasterDispatch } from '../../store/ForecasterStore'
+import { useAppDispatch } from '../../../common/AppStore'
 import { changeTile } from '../../store/Actions'
 
 
@@ -63,7 +63,7 @@ export default function TilesSelector(
         })()
     }, [])
 
-    const dispatch = useForecasterDispatch()
+    const dispatch = useAppDispatch()
 
 
     const onTileChange = useCallback((tile: number) => {

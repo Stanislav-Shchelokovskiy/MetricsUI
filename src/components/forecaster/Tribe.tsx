@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import Accordion, { Item } from 'devextreme-react/accordion'
 import TacticalForecast from './tacticalForecast/TacticalForecast'
 import StrategicForecast from './strategicForecast/StrategicForecast'
-import { useForecasterSelector, ForecasterStore, useForecasterDispatch } from './store/ForecasterStore'
+import { useAppSelector, AppStore, useAppDispatch } from '../common/AppStore'
 import { selectForecastItems } from './store/Actions'
 
 export interface Tribe {
@@ -33,9 +33,9 @@ function Header({ tribeName }: { tribeName: string }) {
 }
 
 export default function TribeContainer({ tribe }: { tribe: Tribe }) {
-    const selectedItems: Array<string> = useForecasterSelector((state: ForecasterStore) => state.selectedForecastItems)
+    const selectedItems: Array<string> = useAppSelector((state: AppStore) => state.selectedForecastItems)
 
-    const dispatch = useForecasterDispatch()
+    const dispatch = useAppDispatch()
     const onSelectedItemsChange = useCallback((e: any) => {
         dispatch(selectForecastItems(e))
     }, [dispatch])

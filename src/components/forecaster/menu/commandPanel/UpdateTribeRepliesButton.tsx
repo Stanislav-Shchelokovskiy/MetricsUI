@@ -8,11 +8,11 @@ import {
     FetchApplySyncTribeRepliesWithWfTask,
 } from '../../network_resource_fetcher/FetchSyncTribeRepliesWithWfTask'
 import { changeLastUpdated } from '../../store/Actions'
-import { useForecasterDispatch } from '../../store/ForecasterStore'
+import { useAppDispatch } from '../../../common/AppStore'
 
 export default function UpdateTribeRepliesButton() {
     const [taskStarted, setTaskStarted] = useState<boolean>(false);
-    const dispatch = useForecasterDispatch()
+    const dispatch = useAppDispatch()
 
     const onClick = () => {
         setTaskStarted(true);

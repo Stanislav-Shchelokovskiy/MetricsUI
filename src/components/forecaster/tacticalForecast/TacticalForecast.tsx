@@ -1,5 +1,5 @@
 import React from 'react'
-import { useForecasterSelector, ForecasterStore } from '../store/ForecasterStore'
+import { useAppSelector, AppStore } from '../../common/AppStore'
 import { ForecasterState } from '../store/ForecasterReducer'
 import { INITIAL_TACTICAL_FORECAST_STATE, TacticalForecastState } from '../store/TribeContainerReducer'
 import ForecastSettingsPanel from './ForecastSettingsPanel'
@@ -7,8 +7,8 @@ import ForecastPanel from './ForecastPanel'
 
 
 export default function TacticalForecast({ tribeId }: { tribeId: string }) {
-    const tacticalForecastState: TacticalForecastState = useForecasterSelector((state: ForecasterStore) => state.tacticalForecast.find(x => x.tribeId === tribeId) || INITIAL_TACTICAL_FORECAST_STATE)
-    const forecasterState: ForecasterState = useForecasterSelector((state: ForecasterStore) => state.forecaster)
+    const tacticalForecastState: TacticalForecastState = useAppSelector((state: AppStore) => state.tacticalForecast.find(x => x.tribeId === tribeId) || INITIAL_TACTICAL_FORECAST_STATE)
+    const forecasterState: ForecasterState = useAppSelector((state: AppStore) => state.forecaster)
     return (
         <div className='ForecastContainer'>
             <ForecastSettingsPanel

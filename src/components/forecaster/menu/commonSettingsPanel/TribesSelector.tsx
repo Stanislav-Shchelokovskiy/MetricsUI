@@ -5,14 +5,14 @@ import LoadIndicator from '../../../common/LoadIndicator'
 import FetchResult from '../../network_resource_fetcher/FetchResult'
 import { fetchTribes } from '../../network_resource_fetcher/FetchForecastSettingsValues'
 import { changeSelectedTribes } from '../../store/Actions'
-import { useForecasterDispatch, useForecasterSelector, ForecasterStore } from '../../store/ForecasterStore'
+import { useAppDispatch, useAppSelector, AppStore } from '../../../common/AppStore'
 
 export default function TribesSelector() {
     const [tribes, setTribes] = useState<Array<Tribe>>([])
-    const selectedTribes = useForecasterSelector((store: ForecasterStore) => store.forecaster.selectedTribes)
+    const selectedTribes = useAppSelector((store: AppStore) => store.forecaster.selectedTribes)
     const defaultValue = selectedTribes?.map(tribe => tribe.id)
 
-    const dispatch = useForecasterDispatch()
+    const dispatch = useAppDispatch()
     const onTribeSelect: (tribes: Array<string>) => void = (tribeIds: Array<string>) => {
         const selectedTribes = (tribeIds.map(tribeId => tribes.find(tribe => tribe.id === tribeId)) as Array<Tribe>)
         dispatch(changeSelectedTribes(selectedTribes))

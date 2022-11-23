@@ -5,7 +5,7 @@ import LoadIndicator from '../../../common/LoadIndicator'
 import FetchResult from '../../network_resource_fetcher/FetchResult'
 import { fetchIncomeTypes } from '../../network_resource_fetcher/FetchForecastSettingsValues'
 import { changeIncomeType } from '../../store/Actions'
-import { useForecasterDispatch, useForecasterSelector, ForecasterStore } from '../../store/ForecasterStore'
+import { useAppDispatch, useAppSelector, AppStore } from '../../../common/AppStore'
 
 
 interface IncomeSelectorState {
@@ -40,10 +40,10 @@ function incomeSelectorStateReducer(state: IncomeSelectorState, action: AnyActio
 
 export default function IncomeSelector() {
     const [incomeSelectorState, incomeSelectorDispatch] = useReducer(incomeSelectorStateReducer, INITIAL_STATE)
-    const incomeType = useForecasterSelector((store: ForecasterStore) => store.forecaster.incomeType) || incomeSelectorState.incomeType
+    const incomeType = useAppSelector((store: AppStore) => store.forecaster.incomeType) || incomeSelectorState.incomeType
 
 
-    const forecasterDispatch = useForecasterDispatch()
+    const forecasterDispatch = useAppDispatch()
     const onIncomeTypeChange: (incomeType: string) => void = (incomeType: string) => {
         forecasterDispatch(changeIncomeType(incomeType))
     }
