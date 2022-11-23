@@ -21,8 +21,6 @@ export default function SetsSelector() {
             // onValueChange={onTribeSelect}
             placeholder='Select sets for comparison...'
             multiline={true}
-            selectAllMode='allPages'
-
             //showSelectionControls={true}
             showDropDownButton={false}
             label='Sets'

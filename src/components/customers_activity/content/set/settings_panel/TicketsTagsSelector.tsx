@@ -13,8 +13,7 @@ export default function TicketsTagsSelector() {
             // onValueChange={onTribeSelect}
             placeholder='Select tickets tags'
             multiline={true}
-            selectAllMode='allPages'
-            showSelectionControls={true}
+            searchEnabled={true}
             showDropDownButton={false}
             label='Tickets tags'
             labelMode='static'>

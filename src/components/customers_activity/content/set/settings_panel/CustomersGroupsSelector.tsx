@@ -13,8 +13,7 @@ export default function CustomersGroupsSelector() {
             // onValueChange={onTribeSelect}
             placeholder='Select customers groups'
             multiline={true}
-            selectAllMode='allPages'
-            showSelectionControls={true}
+            searchEnabled={true}
             showDropDownButton={false}
             label='Customers groups'
             labelMode='static'>

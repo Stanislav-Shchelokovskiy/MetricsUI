@@ -1,6 +1,6 @@
 import React from 'react'
 import Sets from './Sets'
-import SetsComparisonPanel from '../sets_comparison_panel.tsx/SetsComparisonPanel'
+import SetsComparisonPanel from '../sets_comparison_panel/SetsComparisonPanel'
 
 
 export default function CustomersActivityContent() {

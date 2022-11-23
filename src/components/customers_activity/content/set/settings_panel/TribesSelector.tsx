@@ -11,8 +11,7 @@ export default function TribesSelector() {
             // onValueChange={onTribeSelect}
             placeholder='Select tribes to display...'
             multiline={true}
-            selectAllMode='allPages'
-            showSelectionControls={true}
+            searchEnabled={true}
             showDropDownButton={false}
             label='Tribes'
             labelMode='static'>

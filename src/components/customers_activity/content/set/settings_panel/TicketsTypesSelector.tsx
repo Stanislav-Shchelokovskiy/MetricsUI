@@ -13,8 +13,7 @@ export default function TicketsTypesSelector() {
             // onValueChange={onTribeSelect}
             placeholder='Select tickets types'
             multiline={true}
-            selectAllMode='allPages'
-            showSelectionControls={true}
+            searchEnabled={true}
             showDropDownButton={false}
             label='Tickets types'
             labelMode='static'>
