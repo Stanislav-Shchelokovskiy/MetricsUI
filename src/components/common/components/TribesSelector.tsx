@@ -1,21 +1,29 @@
 import React, { useState, useEffect } from 'react'
+import { PayloadAction } from '@reduxjs/toolkit'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
-import { Tribe } from '../../Tribe'
-import LoadIndicator from '../../../common/LoadIndicator'
-import FetchResult from '../../../common/FetchResult'
-import { fetchTribes } from '../../network_resource_fetcher/FetchForecastSettingsValues'
-import { changeSelectedTribes } from '../../store/Actions'
-import { useAppDispatch, useAppSelector, AppStore } from '../../../common/AppStore'
+import { Tribe } from '../Interfaces'
+import LoadIndicator from '../LoadIndicator'
+import FetchResult from '../FetchResult'
+import { fetchTribes } from '../network_resource_fetcher/FetchAvailableTribes'
+import { useAppDispatch, useAppSelector, AppStore } from '../AppStore'
 
-export default function TribesSelector() {
+export default function TribesSelector(
+    {
+        stateSelector,
+        changeSelectedTribesAction
+    }:
+        {
+            stateSelector: (store: AppStore) => Array<Tribe>,
+            changeSelectedTribesAction: (selectedTribes: Array<Tribe>) => PayloadAction<Array<Tribe>>
+        }) {
     const [tribes, setTribes] = useState<Array<Tribe>>([])
-    const selectedTribes = useAppSelector((store: AppStore) => store.forecaster.selectedTribes)
+    const selectedTribes = useAppSelector(stateSelector)
     const defaultValue = selectedTribes?.map(tribe => tribe.id)
 
     const dispatch = useAppDispatch()
     const onTribeSelect: (tribes: Array<string>) => void = (tribeIds: Array<string>) => {
         const selectedTribes = (tribeIds.map(tribeId => tribes.find(tribe => tribe.id === tribeId)) as Array<Tribe>)
-        dispatch(changeSelectedTribes(selectedTribes))
+        dispatch(changeSelectedTribesAction(selectedTribes))
     }
 
     useEffect(() => {

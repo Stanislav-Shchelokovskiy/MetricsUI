@@ -1,7 +1,8 @@
 import React from 'react'
 
 import ScrollView from 'devextreme-react/scroll-view'
-import TribeContainer, { Tribe } from './Tribe'
+import { Tribe } from '../common/Interfaces'
+import TribeContainer from './Tribe'
 
 import {
     useAppSelector,

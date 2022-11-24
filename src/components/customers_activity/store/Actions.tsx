@@ -9,7 +9,10 @@ export const CHANGE_PERIOD = 'customers_activity/change_period'
 export const changePeriod = (period: Array<Date>): PayloadAction<Array<string>> => {
     return {
         type: CHANGE_PERIOD,
-        payload: period.map(x=>x.toISOString().slice(0,10))
+        payload: period.map((x => {
+            const offset = x.getTimezoneOffset()
+            return new Date(x.getTime() - (offset * 60 * 1000)).toISOString().slice(0, 10)
+        }))
     }
 }
 

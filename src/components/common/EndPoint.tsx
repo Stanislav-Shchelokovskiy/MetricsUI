@@ -3,5 +3,6 @@ const baseEndPoint = 'http://localhost'
 
 const FORECASTER_END_POINT = baseEndPoint + ':11002'
 export const SUPPORT_ANALYTICS_END_POINT = baseEndPoint + ':11003'
+export const QUERY_SERVICE_END_POINT = baseEndPoint + ':11005'
 
 export default FORECASTER_END_POINT

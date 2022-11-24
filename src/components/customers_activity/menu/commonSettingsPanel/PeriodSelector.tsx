@@ -1,14 +1,11 @@
 import React, { useReducer, useEffect, useCallback, useRef } from 'react'
 import { AnyAction } from '@reduxjs/toolkit'
 import { RangeSelector as DxRangeSelector, Margin, Scale, MinorTick, SliderMarker } from 'devextreme-react/range-selector'
+import LoadIndicator from '../../../common/LoadIndicator'
 import { fetchPeriod, Period } from '../../network_resource_fetcher/FetchPeriod'
 import FetchResult from '../../../common/FetchResult'
 import { changePeriod } from '../../store/Actions'
 import { useAppDispatch, useAppSelector, AppStore } from '../../../common/AppStore'
-
-const startValue = new Date(2011, 1, 1)
-const endValue = new Date(2013, 6, 1)
-const range = [new Date(2011, 1, 5), new Date(2011, 2, 5)]
 
 interface PeriodSelectorState {
     periodStart: string
@@ -90,5 +87,5 @@ export default function PeriodSelector() {
             </DxRangeSelector>
         )
     }
-    return <div></div>
+    return <LoadIndicator width={50} height={50} />
 }

@@ -3,7 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { loadState, saveState } from './LocalStorage'
 import { ForecasterReducer } from '../forecaster/store/ForecasterReducer'
 import { TacticalForecastReducer, StrategicForecastReducer } from '../forecaster/store/TribeContainerReducer'
-import { ForecasterItemsReducer } from '../forecaster/store/ForecastItemsReducer'
+import { ForecasterItemsReducer } from '../forecaster/store/TribeContainerReducer'
 import { CustomersActivityReducer } from '../customers_activity/store/CustomersActivityReducer'
 
 

@@ -4,11 +4,8 @@ import TacticalForecast from './tacticalForecast/TacticalForecast'
 import StrategicForecast from './strategicForecast/StrategicForecast'
 import { useAppSelector, AppStore, useAppDispatch } from '../common/AppStore'
 import { selectForecastItems } from './store/Actions'
-
-export interface Tribe {
-    id: string
-    name: string
-}
+import { Tribe } from '../common/Interfaces'
+import { ForecasterItemsState, INITIAL_FORECAST_ITEMS_EXPANDED_STATE } from './store/TribeContainerReducer'
 
 export interface ForecastMainParams {
     tribeID: string
@@ -33,12 +30,13 @@ function Header({ tribeName }: { tribeName: string }) {
 }
 
 export default function TribeContainer({ tribe }: { tribe: Tribe }) {
-    const selectedItems: Array<string> = useAppSelector((state: AppStore) => state.selectedForecastItems)
+    const forecasterItemsState: ForecasterItemsState = useAppSelector((state: AppStore) => state.selectedForecastItems.find(x => x.tribeId === tribe.id)) || INITIAL_FORECAST_ITEMS_EXPANDED_STATE
 
     const dispatch = useAppDispatch()
     const onSelectedItemsChange = useCallback((e: any) => {
-        dispatch(selectForecastItems(e))
-    }, [dispatch])
+        console.log(e)
+        dispatch(selectForecastItems(tribe.id, e))
+    }, [dispatch, tribe.id])
 
     return (
         <div className='Tribe'>
@@ -49,7 +47,7 @@ export default function TribeContainer({ tribe }: { tribe: Tribe }) {
                 multiple={true}
                 focusStateEnabled={false}
                 keyExpr='title'
-                defaultSelectedItemKeys={selectedItems}
+                defaultSelectedItemKeys={forecasterItemsState.expandedItems}
                 onSelectedItemKeysChange={onSelectedItemsChange}
             >
                 <Item title='Tactical forecast'>

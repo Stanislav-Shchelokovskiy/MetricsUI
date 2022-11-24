@@ -2,7 +2,7 @@ import React from 'react'
 import CustomersGroupsSelector from './CustomersGroupsSelector'
 import TicketsTypesSelector from './TicketsTypesSelector'
 import TicketsTagsSelector from './TicketsTagsSelector'
-import TribesSelector from './TribesSelector'
+import TribesSelector from '../../../../common/components/TribesSelector'
 import ApplyButton from './ApplyButton'
 
 
@@ -13,7 +13,7 @@ function SetSettingsPanel() {
             <CustomersGroupsSelector />
             <TicketsTypesSelector />
             <TicketsTagsSelector />
-            <TribesSelector />
+            {/* <TribesSelector /> */}
             <ApplyButton />
         </div>
     )
