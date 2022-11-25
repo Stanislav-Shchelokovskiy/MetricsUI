@@ -5,7 +5,7 @@ import { ForecasterReducer } from '../forecaster/store/ForecasterReducer'
 import { TacticalForecastReducer, StrategicForecastReducer } from '../forecaster/store/TribeContainerReducer'
 import { ForecasterItemsReducer } from '../forecaster/store/TribeContainerReducer'
 import { CustomersActivityReducer } from '../customers_activity/store/CustomersActivityReducer'
-import { SetReducer } from '../customers_activity/store/SetReducer'
+import { SetsReducer } from '../customers_activity/store/SetsReducer'
 
 
 const currentStateKey = 'stat_app_current_state'
@@ -19,6 +19,7 @@ export const store = configureStore({
         selectedForecastItems: ForecasterItemsReducer,
         /*****CUSTOMERS_ACTIVITY*****/
         customersActivity: CustomersActivityReducer,
+        customersActivitySets: SetsReducer,
     },
     preloadedState: loadState(currentStateKey)
 })

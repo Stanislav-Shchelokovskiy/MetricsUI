@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
 import LoadIndicator from '../../../../common/LoadIndicator'
 
-export default function CustomersGroupsSelector() {
+function CustomersGroupsSelector() {
+    const renderCount = useRef(0)
+    console.log(' CustomersGroupsSelector render ', renderCount.current++)
+
     return (
         <TagBox
             className='CustomersActivity_CustomersGroupsSelector'
@@ -22,4 +25,6 @@ export default function CustomersGroupsSelector() {
                 hideOnParentScroll={true} />
         </TagBox>
     )
-} 
+}
+
+export default React.memo(CustomersGroupsSelector)

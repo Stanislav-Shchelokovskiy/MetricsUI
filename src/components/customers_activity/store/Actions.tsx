@@ -1,9 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { Tribe } from '../../common/Interfaces'
-import { SetState } from './SetReducer'
 
 interface Payload<T> {
-    tribeId: string
+    title: string
     data: T
 }
 
@@ -51,7 +50,7 @@ export const removeSet = (title: string): PayloadAction<string> => {
 }
 
 export const CHANGE_SELECTED_TRIBES = 'customers_activity/change_selected_tribes'
-export const changeSelectedTribes = (selectedTribes: Array<Tribe>): PayloadAction<Array<Tribe>> => {
+export const changeSelectedTribes = (selectedTribes: Payload<Array<Tribe>>): PayloadAction<Payload<Array<Tribe>>> => {
     return {
         type: CHANGE_SELECTED_TRIBES,
         payload: selectedTribes

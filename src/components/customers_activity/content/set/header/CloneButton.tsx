@@ -5,7 +5,7 @@ import { addSet } from '../../../store/Actions'
 
 export default function CloneButton({ title }: { title: string }) {
     const renderCount = useRef(0)
-    console.log(title, ' CloneButton ', renderCount.current++)
+    console.log(title, ' CloneButton render ', renderCount.current++)
 
     const dispatch = useAppDispatch()
     const onClick = useCallback(() => {

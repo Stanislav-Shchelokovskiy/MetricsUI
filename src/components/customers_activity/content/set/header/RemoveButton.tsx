@@ -5,7 +5,7 @@ import { removeSet } from '../../../store/Actions'
 
 export default function RemoveButton({ title }: { title: string }) {
     const renderCount = useRef(0)
-    console.log(title, ' RemoveButton ', renderCount.current++)
+    console.log(title, ' RemoveButton render ', renderCount.current++)
 
     const dispatch = useAppDispatch()
     const onClick = useCallback(() => {

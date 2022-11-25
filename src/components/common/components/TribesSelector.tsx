@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { PayloadAction } from '@reduxjs/toolkit'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
 import { Tribe } from '../Interfaces'
@@ -14,8 +14,12 @@ export default function TribesSelector(
     }:
         {
             stateSelector: (store: AppStore) => Array<Tribe>,
-            changeSelectedTribesAction: (selectedTribes: Array<Tribe>) => PayloadAction<Array<Tribe>>
+            changeSelectedTribesAction: (selectedTribes: Array<Tribe>) => PayloadAction<any>
         }) {
+    const renderCount = useRef(0)
+    console.log(' SetSettingsPanel render ', renderCount.current++)
+
+
     const [tribes, setTribes] = useState<Array<Tribe>>([])
     const selectedTribes = useAppSelector(stateSelector)
     const defaultValue = selectedTribes?.map(tribe => tribe.id)
