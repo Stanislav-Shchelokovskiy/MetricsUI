@@ -1,4 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit'
+import { Tribe } from '../../common/Interfaces'
+import { SetState } from './SetReducer'
 
 interface Payload<T> {
     tribeId: string
@@ -29,5 +31,29 @@ export const changeMetric = (metric: string): PayloadAction<string> => {
     return {
         type: CHANGE_METRIC,
         payload: metric
+    }
+}
+
+export const ADD_SET = 'customers_activity/add_set'
+export const addSet = (baseSetTitle: string): PayloadAction<string> => {
+    return {
+        type: ADD_SET,
+        payload: baseSetTitle
+    }
+}
+
+export const REMOVE_SET = 'customers_activity/remove_set'
+export const removeSet = (title: string): PayloadAction<string> => {
+    return {
+        type: REMOVE_SET,
+        payload: title
+    }
+}
+
+export const CHANGE_SELECTED_TRIBES = 'customers_activity/change_selected_tribes'
+export const changeSelectedTribes = (selectedTribes: Array<Tribe>): PayloadAction<Array<Tribe>> => {
+    return {
+        type: CHANGE_SELECTED_TRIBES,
+        payload: selectedTribes
     }
 }

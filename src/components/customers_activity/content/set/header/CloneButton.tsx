@@ -1,18 +1,27 @@
-import React from 'react'
+import React, { useCallback, useRef } from 'react'
 import { Button } from 'devextreme-react/button'
+import { useAppDispatch } from '../../../../common/AppStore'
+import { addSet } from '../../../store/Actions'
 
-export default function CloneButton() {
+export default function CloneButton({ title }: { title: string }) {
+    const renderCount = useRef(0)
+    console.log(title, ' CloneButton ', renderCount.current++)
+
+    const dispatch = useAppDispatch()
+    const onClick = useCallback(() => {
+        dispatch(addSet(title))
+    }, [title, dispatch])
+
     return (
         <Button
-            width={150}
-            height={40}
+            className='SetHeaderButton'
             text='Clone set'
             // render={}
             // disabled={}
             type='normal'
             stylingMode='outlined'
             focusStateEnabled={false}
-        //onClick={onClick} 
+            onClick={onClick}
         />
     )
 }

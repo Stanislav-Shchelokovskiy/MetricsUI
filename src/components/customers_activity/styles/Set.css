@@ -3,7 +3,9 @@
     flex-flow: row nowrap;
     justify-content: 'flex-start';
     align-items: center;
-    padding-left: 8px;
+    max-height: min-content;
+
+    padding: 1%;
     gap: 3%;
     background-color: rgba(240, 240, 240, 0.5);
 }
@@ -35,4 +37,13 @@
 
 .CustomersActivity_Graph {
     flex-grow: 1;
+}
+
+.SetHeaderButton .dx-button-content {
+    padding: 3px;
+    padding-top: 0px;
+}
+
+.SetHeaderTitle{
+    font-weight: bold;
 }

@@ -1,8 +1,13 @@
 import React from 'react'
 import ScrollView from 'devextreme-react/scroll-view'
 import Set from './set/Set'
+import {
+    useAppSelector,
+    AppStore
+} from '../../common/AppStore'
 
 export default function Sets() {
+    const sets = useAppSelector((state: AppStore) => state.customersActivity.sets)
     return (
         <ScrollView
             className='CustomersActivity_Sets_ScrollView'
@@ -13,8 +18,11 @@ export default function Sets() {
             height={'80vh'}
         >
             <div className='CustomersActivity_Sets'>
-                <Set />
-                <Set />
+                {sets?.map((set) => {
+                    return <Set
+                        key={set.title}
+                        title={set.title} />
+                })}
             </div>
         </ScrollView>
     )

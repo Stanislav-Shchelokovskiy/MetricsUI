@@ -5,6 +5,7 @@ import { ForecasterReducer } from '../forecaster/store/ForecasterReducer'
 import { TacticalForecastReducer, StrategicForecastReducer } from '../forecaster/store/TribeContainerReducer'
 import { ForecasterItemsReducer } from '../forecaster/store/TribeContainerReducer'
 import { CustomersActivityReducer } from '../customers_activity/store/CustomersActivityReducer'
+import { SetReducer } from '../customers_activity/store/SetReducer'
 
 
 const currentStateKey = 'stat_app_current_state'
