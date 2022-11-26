@@ -3,7 +3,7 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
 import { Tribe } from '../Interfaces'
 import LoadIndicator from '../LoadIndicator'
-import FetchResult from '../FetchResult'
+import FetchResult from '../Interfaces'
 import { fetchTribes } from '../network_resource_fetcher/FetchAvailableTribes'
 import { useAppDispatch, useAppSelector, AppStore } from '../AppStore'
 
@@ -17,7 +17,7 @@ export default function TribesSelector(
             changeSelectedTribesAction: (selectedTribes: Array<Tribe>) => PayloadAction<any>
         }) {
     const renderCount = useRef(0)
-    console.log(' SetSettingsPanel render ', renderCount.current++)
+    console.log(' TribesSelector render ', renderCount.current++)
 
 
     const [tribes, setTribes] = useState<Array<Tribe>>([])

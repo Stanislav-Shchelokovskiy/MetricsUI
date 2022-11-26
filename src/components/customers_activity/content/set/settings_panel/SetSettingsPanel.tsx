@@ -4,8 +4,7 @@ import TicketsTypesSelector from './TicketsTypesSelector'
 import TicketsTagsSelector from './TicketsTagsSelector'
 import TribesSelector from '../../../../common/components/TribesSelector'
 import ApplyButton from './ApplyButton'
-import { AppStore, useAppSelector } from '../../../../common/AppStore'
-import { SetState, INITIAL_SET_STATE } from '../../../store/SetsReducer'
+import { AppStore } from '../../../../common/AppStore'
 import { changeSelectedTribes } from '../../../store/Actions'
 import { Tribe } from '../../../../common/Interfaces'
 
@@ -21,7 +20,7 @@ function SetSettingsPanel({ title }: { title: string }) {
     //const setState: SetState = useAppSelector((state: AppStore) => state.customersActivity.sets.find(x => x.title === title) || INITIAL_SET_STATE)
     return (
         <div className='CustomersActivity_SetSettingsPanel'>
-            <CustomersGroupsSelector />
+            <CustomersGroupsSelector title={title} />
             <TicketsTypesSelector />
             <TicketsTagsSelector />
             <TribesSelector

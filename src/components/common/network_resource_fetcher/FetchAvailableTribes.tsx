@@ -1,4 +1,4 @@
-import FetchResult from '../../common/FetchResult'
+import FetchResult from '../../common/Interfaces'
 import { Tribe } from '../Interfaces'
 import { QUERY_SERVICE_END_POINT } from '../EndPoint'
 

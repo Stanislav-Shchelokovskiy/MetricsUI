@@ -1,5 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { Tribe } from '../../common/Interfaces'
+import { CustomersGroup } from '../network_resource_fetcher/FetchCustomersGroups'
 
 interface Payload<T> {
     title: string
@@ -54,5 +55,13 @@ export const changeSelectedTribes = (selectedTribes: Payload<Array<Tribe>>): Pay
     return {
         type: CHANGE_SELECTED_TRIBES,
         payload: selectedTribes
+    }
+}
+
+export const CHANGE_SELECTED_CUSTOMERS_GROUPS = 'customers_activity/change_selected_customers_groups'
+export const changeSelectedCustomersGroups = (selectedCustomersGroups: Payload<Array<CustomersGroup>>): PayloadAction<Payload<Array<CustomersGroup>>> => {
+    return {
+        type: CHANGE_SELECTED_CUSTOMERS_GROUPS,
+        payload: selectedCustomersGroups
     }
 }

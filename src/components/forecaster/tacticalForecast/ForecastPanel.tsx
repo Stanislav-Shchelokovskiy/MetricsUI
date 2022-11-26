@@ -3,7 +3,7 @@ import Plot from 'react-plotly.js'
 import ForecastMissing from '../utils/ForecastMissing'
 import GetColor from '../utils/ColorPalette'
 
-import FetchResult from '../../common/FetchResult'
+import FetchResult from '../../common/Interfaces'
 import {
     HourlyTacticalForecast,
     EMPTY_TACTICAL_FORECAST,

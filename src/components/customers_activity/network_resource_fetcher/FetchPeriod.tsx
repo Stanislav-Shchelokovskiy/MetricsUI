@@ -1,5 +1,5 @@
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import FetchResult from '../../common/FetchResult'
+import FetchResult from '../../common/Interfaces'
 
 export interface Period {
     period_start: string

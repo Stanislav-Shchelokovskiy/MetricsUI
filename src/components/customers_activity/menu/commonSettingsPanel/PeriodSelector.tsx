@@ -3,7 +3,7 @@ import { AnyAction } from '@reduxjs/toolkit'
 import { RangeSelector as DxRangeSelector, Margin, Scale, MinorTick, SliderMarker } from 'devextreme-react/range-selector'
 import LoadIndicator from '../../../common/LoadIndicator'
 import { fetchPeriod, Period } from '../../network_resource_fetcher/FetchPeriod'
-import FetchResult from '../../../common/FetchResult'
+import FetchResult from '../../../common/Interfaces'
 import { changePeriod } from '../../store/Actions'
 import { useAppDispatch, useAppSelector, AppStore } from '../../../common/AppStore'
 
