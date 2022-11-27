@@ -2,6 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { Tribe } from '../../common/Interfaces'
 import { CustomersGroup } from '../network_resource_fetcher/FetchCustomersGroups'
 import { TicketsType } from '../network_resource_fetcher/FetchTicketsTypes'
+import { TicketsTag } from '../network_resource_fetcher/FetchTicketsTags'
 
 interface Payload<T> {
     title: string
@@ -72,5 +73,13 @@ export const changeSelectedTicketsTypes = (selectedTicketsTypes: Payload<Array<T
     return {
         type: CHANGE_SELECTED_TICKETS_TYPES,
         payload: selectedTicketsTypes
+    }
+}
+
+export const CHANGE_SELECTED_TICKETS_TAGS = 'customers_activity/change_selected_tickets_tags'
+export const changeSelectedTicketsTags = (selectedTicketsTags: Payload<Array<TicketsTag>>): PayloadAction<Payload<Array<TicketsTag>>> => {
+    return {
+        type: CHANGE_SELECTED_TICKETS_TAGS,
+        payload: selectedTicketsTags
     }
 }

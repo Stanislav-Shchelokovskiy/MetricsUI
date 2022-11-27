@@ -22,7 +22,7 @@ function SetSettingsPanel({ title }: { title: string }) {
         <div className='CustomersActivity_SetSettingsPanel'>
             <CustomersGroupsSelector title={title} />
             <TicketsTypesSelector title={title} />
-            <TicketsTagsSelector />
+            <TicketsTagsSelector title={title} />
             <TribesSelector
                 stateSelector={stateSelector}
                 changeSelectedTribesAction={changeSelectedTribesAction} />
