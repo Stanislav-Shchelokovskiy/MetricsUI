@@ -17,7 +17,7 @@ function CustomersGroupsSelector({ title }: { title: string }) {
     const defaultValue = selectedGroups?.map(group => group.id)
 
     const dispatch = useAppDispatch()
-    const onGroupSelect: (tribes: Array<string>) => void = (groupIds: Array<string>) => {
+    const onGroupSelect: (groupIds: Array<string>) => void = (groupIds: Array<string>) => {
         const selectedGroups = (groupIds.map(groupId => groups.find(group => group.id === groupId)) as Array<CustomersGroup>)
         dispatch(changeSelectedCustomersGroups({ title: title, data: selectedGroups }))
     }

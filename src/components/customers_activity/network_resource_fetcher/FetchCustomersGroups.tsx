@@ -21,5 +21,3 @@ export const fetchCustomersGroups: () => Promise<FetchResult<Array<CustomersGrou
         }
     }
 }
-
-

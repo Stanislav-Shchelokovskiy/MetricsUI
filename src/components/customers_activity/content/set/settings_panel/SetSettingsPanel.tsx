@@ -21,7 +21,7 @@ function SetSettingsPanel({ title }: { title: string }) {
     return (
         <div className='CustomersActivity_SetSettingsPanel'>
             <CustomersGroupsSelector title={title} />
-            <TicketsTypesSelector />
+            <TicketsTypesSelector title={title} />
             <TicketsTagsSelector />
             <TribesSelector
                 stateSelector={stateSelector}
