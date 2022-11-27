@@ -26,7 +26,7 @@ function SetSettingsPanel({ title }: { title: string }) {
             <TribesSelector
                 stateSelector={stateSelector}
                 changeSelectedTribesAction={changeSelectedTribesAction} />
-            <ApplyButton />
+            <ApplyButton title={title} />
         </div>
     )
 }

@@ -1,11 +1,29 @@
-import React, { useMemo } from 'react'
+import React, { useRef } from 'react'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import { changeGroupByPeriod } from '../../store/Actions'
 import { useAppDispatch, useAppSelector, AppStore } from '../../../common/AppStore'
 
+interface GroupByPeriod {
+    name: string
+    format: string
+}
+
+/* 
+    format should contain a valid strftime string.
+    https://sqlite.org/lang_datefunc.html 
+*/
+const groupByPeriods: Array<GroupByPeriod> = [
+    { name: 'Day', format: '%Y-%m-%d' },
+    { name: 'Week-Year', format: '%Y-%W' },
+    { name: 'Month-Year', format: '%Y-%m' },
+    { name: 'Year', format: '%Y' },
+]
+
 export default function GroupByPeriodSelector() {
-    const groupByPeriods = useMemo<Array<string>>(() => { return ['Day', 'Week-Year', 'Month-Year', 'Year'] }, [])
-    const selectedGroupByPeriod = useAppSelector((store: AppStore) => store.customersActivity.groupByPeriod) || groupByPeriods[0]
+    const renderCount = useRef(0)
+    console.log('GroupByPeriodSelector render ', renderCount.current++)
+
+    const selectedGroupByPeriod = useAppSelector((store: AppStore) => store.customersActivity.groupByPeriod) || groupByPeriods[0].format
 
     const appDispatch = useAppDispatch()
     const onGroupByPeriodChange: (groupByPeriod: string) => void = (groupByPeriod: string) => {
@@ -15,6 +33,8 @@ export default function GroupByPeriodSelector() {
     return (
         <SelectBox
             className='CustomersActivity_GroupByPeriodSelector'
+            displayExpr='name'
+            valueExpr='format'
             dataSource={groupByPeriods}
             defaultValue={selectedGroupByPeriod}
             onValueChange={onGroupByPeriodChange}
