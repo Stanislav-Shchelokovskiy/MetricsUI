@@ -14,11 +14,13 @@ export interface TicketsWithIterationsAggregates {
     iterations: Array<number>
 }
 
+
 export const EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES = {
     periods: [],
     tickets: [],
     iterations: [],
 }
+
 
 export const fetchTicketsWithIterationsAggregates: (
     group_by_period: string,

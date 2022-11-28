@@ -10,6 +10,7 @@ import { SetsReducer } from '../customers_activity/store/SetsReducer'
 
 const currentStateKey = 'stat_app_current_state'
 
+
 export const store = configureStore({
     reducer: {
         /*****FORECASTER*****/
@@ -24,9 +25,11 @@ export const store = configureStore({
     preloadedState: loadState(currentStateKey)
 })
 
+
 store.subscribe(() => {
     saveState(store.getState(), currentStateKey);
 });
+
 
 export type AppStore = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

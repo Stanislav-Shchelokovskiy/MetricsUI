@@ -1,4 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit'
+import { GenerateNewSetTitle } from './SetsReducer'
+import { INITIAL_SET_STATE } from '../store/SetsReducer'
 import {
     CHANGE_PERIOD,
     CHANGE_GROUP_BY_PERIOD,
@@ -7,8 +9,6 @@ import {
     ADD_SET,
     REMOVE_SET,
 } from './Actions'
-import { GenerateNewSetTitle } from './SetsReducer'
-import { INITIAL_SET_STATE } from '../store/SetsReducer'
 
 
 export interface CustomersActivityState {
@@ -18,6 +18,7 @@ export interface CustomersActivityState {
     comparisonMethod: string
     sets: Array<string>
 }
+
 
 const INITIAL_CUSTOMERS_ACTIVITY_STATE: CustomersActivityState = {
     range: Array<string>(),
@@ -48,6 +49,7 @@ export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL
                 ...state,
                 metric: action.payload
             }
+            
         case CHANGE_COMPARISON_METHOD:
             return {
                 ...state,

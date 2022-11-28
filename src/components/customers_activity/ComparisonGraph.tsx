@@ -3,14 +3,13 @@ import Plot from 'react-plotly.js'
 import { Data as GraphData } from 'plotly.js'
 import { useAppSelector, AppStore } from '../common/AppStore'
 import FetchResult from '../common/Interfaces'
+import { isTicketsMetricSelected } from './commonSettingsPanel/MetricSelector'
+import { isAbsoluteComparisonMethodSelected } from './commonSettingsPanel/ComparisonMethodSelector'
 import {
     fetchTicketsWithIterationsAggregates,
     TicketsWithIterationsAggregates,
     EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES
 } from './network_resource_fetcher/FetchTicketsWithIterationsAggregates'
-import { isTicketsMetricSelected } from './commonSettingsPanel/MetricSelector'
-import { CustomersActivityState } from './store/CustomersActivityReducer'
-import { isAbsoluteComparisonMethodSelected } from './commonSettingsPanel/ComparisonMethodSelector'
 
 
 interface SetAggregates {
@@ -18,10 +17,12 @@ interface SetAggregates {
     aggregates: TicketsWithIterationsAggregates
 }
 
+
 const INITIAL_STATE = {
     name: '',
     aggregates: EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES,
 }
+
 
 export default function ComparisonGraph() {
     const renderCount = useRef(0)

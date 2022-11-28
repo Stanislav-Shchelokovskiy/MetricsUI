@@ -2,6 +2,7 @@ import FORECASTER_END_POINT from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 import { Tribe } from '../../common/Interfaces'
 
+
 export interface ForecasterSettingsValues {
     incomeTypes: Array<string>
     replyTypes: Array<string>
@@ -20,6 +21,7 @@ export const EMPTY_FORECATER_SETTINGS_VALUES: FetchResult<ForecasterSettingsValu
         tribes: Array<Tribe>(),
     }
 }
+
 
 export const fetchIncomeTypes: () => Promise<FetchResult<Array<string>>> = async function () {
     try {

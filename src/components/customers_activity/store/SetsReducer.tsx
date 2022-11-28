@@ -21,6 +21,7 @@ export interface SetState {
     selectedTribes: Array<Tribe>
 }
 
+
 export const INITIAL_SET_STATE: SetState = {
     title: '0',
     selectedCustomersGroups: Array<CustomersGroup>(),

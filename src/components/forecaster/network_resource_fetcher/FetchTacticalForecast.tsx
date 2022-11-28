@@ -1,6 +1,7 @@
 import FORECASTER_END_POINT from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 
+
 interface RawTacticalForecast {
     ds: string
     yhat_rmse_upper: number
@@ -19,6 +20,7 @@ export interface HourlyTacticalForecast {
     upper_replies: Array<number>
 }
 
+
 export const EMPTY_TACTICAL_FORECAST: FetchResult<HourlyTacticalForecast> =
 {
     success: false,
@@ -31,6 +33,7 @@ export const EMPTY_TACTICAL_FORECAST: FetchResult<HourlyTacticalForecast> =
         upper_replies: Array<number>()
     }
 }
+
 
 export const FetchTacticalForecast: (incomeType: string, tribeId: string, replyType: string,) => Promise<FetchResult<HourlyTacticalForecast>> =
     async function (incomeType: string, tribeId: string, replyType: string) {

@@ -1,7 +1,8 @@
-import React, { useMemo, useEffect, useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import { useAppDispatch, useAppSelector, AppStore } from '../../common/AppStore'
 import { changeComparisonMethod } from '../store/Actions'
+
 
 const ABSOLUTE = 'Absolute'
 const RELATIVE = 'Relative'
@@ -9,6 +10,7 @@ const RELATIVE = 'Relative'
 export const isAbsoluteComparisonMethodSelected: (method: string) => boolean = (metric: string) => {
     return metric === ABSOLUTE
 }
+
 
 export default function ComparisonMethodSelector() {
     const renderCount = useRef(0)

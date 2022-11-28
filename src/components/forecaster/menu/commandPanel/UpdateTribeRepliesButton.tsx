@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { Button } from 'devextreme-react/button'
 import LoadIndicator from '../../../common/LoadIndicator'
 import FetchResult from '../../../common/Interfaces'
+import { changeLastUpdated } from '../../store/Actions'
+import { useAppDispatch } from '../../../common/AppStore'
 import {
     FetchSyncTribeRepliesWithWfTasksStarted,
     SyncTribeRepliesWithWfTasks,
     FetchApplySyncTribeRepliesWithWfTask,
 } from '../../network_resource_fetcher/FetchSyncTribeRepliesWithWfTask'
-import { changeLastUpdated } from '../../store/Actions'
-import { useAppDispatch } from '../../../common/AppStore'
+
 
 export default function UpdateTribeRepliesButton() {
     const [taskStarted, setTaskStarted] = useState<boolean>(false);

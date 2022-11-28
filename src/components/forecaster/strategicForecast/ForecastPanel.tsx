@@ -10,6 +10,40 @@ import { useAppDispatch } from '../../common/AppStore'
 import { legendClick } from '../store/Actions'
 
 
+export interface ForecastPanelState {
+    tribeId: string
+    forecastHorizon: string
+    incomeType: string
+    tile: number
+    positionsFilter: Array<string>
+    hiddenLegends: Array<string>
+    lastUpdated: number
+}
+
+function ForecastPanel({ state }: { state: ForecastPanelState }) {
+    const renderCount = useRef(0)
+    console.log('Strategic ForecastPanel render: ', renderCount.current++)
+    return (
+        <div className='ForecastBody'>
+            <Graph state={state} />
+        </div>
+    )
+}
+
+function areEqual(prevProps: { state: ForecastPanelState }, nextProps: { state: ForecastPanelState }) {
+    const res = (prevProps.state.tribeId === nextProps.state.tribeId) &&
+        (prevProps.state.forecastHorizon === nextProps.state.forecastHorizon) &&
+        (prevProps.state.incomeType === nextProps.state.incomeType) &&
+        (prevProps.state.tile === nextProps.state.tile) &&
+        (prevProps.state.lastUpdated === nextProps.state.lastUpdated) &&
+        (prevProps.state.hiddenLegends.sort().join(',') === nextProps.state.hiddenLegends.sort().join(',')) &&
+        (prevProps.state.positionsFilter.sort().join(',') === nextProps.state.positionsFilter.sort().join(','))
+    return res
+}
+
+export default React.memo(ForecastPanel, areEqual)
+
+
 function getScatters(state: GraphState): Array<GraphData> {
     if (state.incomeForecastLoaded) {
         return [{
@@ -59,23 +93,6 @@ function getScatters(state: GraphState): Array<GraphData> {
     return []
 }
 
-function getBarVisibility(
-    belonging: number,
-    positionName: string,
-    positionsFilter: Array<string>
-): boolean | 'legendonly' | undefined {
-    if (!positionsFilter.length) {
-        const differentTribe = 3
-        return belonging === differentTribe ? 'legendonly' : undefined
-    }
-
-    for (const posName of positionsFilter) {
-        if (posName === positionName || (posName !== 'Developer' && positionName.includes(posName))) {
-            return undefined
-        }
-    }
-    return 'legendonly'
-}
 
 function getBars(state: GraphState, positionsFilter: Array<string>, hiddenLegends: Array<string>): Array<GraphData> {
     if (state.tribeRepliesLoaded) {
@@ -103,6 +120,24 @@ function getBars(state: GraphState, positionsFilter: Array<string>, hiddenLegend
         return data
     }
     return []
+}
+
+function getBarVisibility(
+    belonging: number,
+    positionName: string,
+    positionsFilter: Array<string>
+): boolean | 'legendonly' | undefined {
+    if (!positionsFilter.length) {
+        const differentTribe = 3
+        return belonging === differentTribe ? 'legendonly' : undefined
+    }
+
+    for (const posName of positionsFilter) {
+        if (posName === positionName || (posName !== 'Developer' && positionName.includes(posName))) {
+            return undefined
+        }
+    }
+    return 'legendonly'
 }
 
 
@@ -237,36 +272,3 @@ function Graph({ state }: { state: ForecastPanelState }) {
     }
     return <ForecastMissing />
 }
-
-function ForecastPanel({ state }: { state: ForecastPanelState }) {
-    const renderCount = useRef(0)
-    console.log('Strategic ForecastPanel render: ', renderCount.current++)
-    return (
-        <div className='ForecastBody'>
-            <Graph state={state} />
-        </div>
-    )
-}
-
-export interface ForecastPanelState {
-    tribeId: string
-    forecastHorizon: string
-    incomeType: string
-    tile: number
-    positionsFilter: Array<string>
-    hiddenLegends: Array<string>
-    lastUpdated: number
-}
-
-function areEqual(prevProps: { state: ForecastPanelState }, nextProps: { state: ForecastPanelState }) {
-    const res = (prevProps.state.tribeId === nextProps.state.tribeId) &&
-        (prevProps.state.forecastHorizon === nextProps.state.forecastHorizon) &&
-        (prevProps.state.incomeType === nextProps.state.incomeType) &&
-        (prevProps.state.tile === nextProps.state.tile) &&
-        (prevProps.state.lastUpdated === nextProps.state.lastUpdated) &&
-        (prevProps.state.hiddenLegends.sort().join(',') === nextProps.state.hiddenLegends.sort().join(',')) &&
-        (prevProps.state.positionsFilter.sort().join(',') === nextProps.state.positionsFilter.sort().join(','))
-    return res
-}
-
-export default React.memo(ForecastPanel, areEqual)

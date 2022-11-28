@@ -3,6 +3,7 @@ import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import { changeGroupByPeriod } from '../store/Actions'
 import { useAppDispatch, useAppSelector, AppStore } from '../../common/AppStore'
 
+
 interface GroupByPeriod {
     name: string
     format: string
@@ -18,6 +19,7 @@ const groupByPeriods: Array<GroupByPeriod> = [
     { name: 'Month-Year', format: '%Y-%m' },
     { name: 'Year', format: '%Y' },
 ]
+
 
 export default function GroupByPeriodSelector() {
     const renderCount = useRef(0)

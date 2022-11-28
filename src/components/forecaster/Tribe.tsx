@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react'
 import Accordion, { Item } from 'devextreme-react/accordion'
-import TacticalForecast from './tacticalForecast/TacticalForecast'
-import StrategicForecast from './strategicForecast/StrategicForecast'
+import { Tribe } from '../common/Interfaces'
 import { useAppSelector, AppStore, useAppDispatch } from '../common/AppStore'
 import { selectForecastItems } from './store/Actions'
-import { Tribe } from '../common/Interfaces'
 import { ForecasterItemsState, INITIAL_FORECAST_ITEMS_EXPANDED_STATE } from './store/TribeContainerReducer'
+import TacticalForecast from './tacticalForecast/TacticalForecast'
+import StrategicForecast from './strategicForecast/StrategicForecast'
+
 
 export interface ForecastMainParams {
     tribeID: string
@@ -25,9 +26,6 @@ export interface TribeContainerState {
     lastUpdate: number
 }
 
-function Header({ tribeName }: { tribeName: string }) {
-    return <h3 className='TribeHeader'> {tribeName}</h3 >
-}
 
 export default function TribeContainer({ tribe }: { tribe: Tribe }) {
     const forecasterItemsState: ForecasterItemsState = useAppSelector((state: AppStore) => state.selectedForecastItems.find(x => x.tribeId === tribe.id)) || INITIAL_FORECAST_ITEMS_EXPANDED_STATE
@@ -59,4 +57,8 @@ export default function TribeContainer({ tribe }: { tribe: Tribe }) {
             </Accordion>
         </div>
     )
+}
+
+function Header({ tribeName }: { tribeName: string }) {
+    return <h3 className='TribeHeader'> {tribeName}</h3 >
 }

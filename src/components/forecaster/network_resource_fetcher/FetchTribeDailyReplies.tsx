@@ -1,6 +1,7 @@
 import FORECASTER_END_POINT from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 
+
 interface RawDailyTribeReplies {
     tribe_belonging_status: number
     user_tribe_name: string
@@ -23,6 +24,7 @@ export interface DailyTribeReplies {
     iteration_count: Array<number>
 }
 
+
 export const EMPTY_DAILY_TRIBE_REPLIES: FetchResult<Array<DailyTribeReplies>> =
 {
     success: false,
@@ -37,6 +39,7 @@ export const EMPTY_DAILY_TRIBE_REPLIES: FetchResult<Array<DailyTribeReplies>> =
         iteration_count: Array<number>()
     }]
 }
+
 
 export const FetchDailyTribeReplies: (tile: number, tribeId: string, forecastHorizon: string) => Promise<FetchResult<Array<DailyTribeReplies>>> =
     async function (tile: number, tribeId: string, forecastHorizon: string) {

@@ -18,8 +18,10 @@ const INITIAL_STATE: ReplyTypeSelectorState = {
     replyType: ''
 }
 
+
 const CHANGE_REPLY_TYPES = 'change_reply_types'
 const CHANGE_REPLY_TYPE = 'change_reply_type'
+
 
 function replyTypeSelectorStateReducer(state: ReplyTypeSelectorState, action: AnyAction): ReplyTypeSelectorState {
     switch (action.type) {

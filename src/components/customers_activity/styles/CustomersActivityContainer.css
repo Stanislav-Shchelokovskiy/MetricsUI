@@ -12,7 +12,7 @@
 .CustomersActivity_Sets {
     background-color: rgba(240, 240, 240, 0.3);
     max-height: 40vh;
-    flex:3
+    flex: 3
 }
 
 .CustomersActivity_ComparisonGraph {

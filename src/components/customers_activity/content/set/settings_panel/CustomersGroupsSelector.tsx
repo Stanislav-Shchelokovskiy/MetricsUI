@@ -2,15 +2,14 @@ import React, { useState, useEffect, useRef } from 'react'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
 import LoadIndicator from '../../../../common/LoadIndicator'
 import FetchResult from '../../../../common/Interfaces'
-import { fetchCustomersGroups, CustomersGroup } from '../../../network_resource_fetcher/FetchCustomersGroups'
 import { useAppDispatch, useAppSelector, AppStore } from '../../../../common/AppStore'
 import { changeSelectedCustomersGroups } from '../../../store/Actions'
+import { fetchCustomersGroups, CustomersGroup } from '../../../network_resource_fetcher/FetchCustomersGroups'
 
 
 function CustomersGroupsSelector({ title }: { title: string }) {
     const renderCount = useRef(0)
     console.log(title,' CustomersGroupsSelector render ', renderCount.current++)
-
 
     const [groups, setGroups] = useState<Array<CustomersGroup>>([])
     const selectedGroups = useAppSelector((store: AppStore) => store.customersActivitySets.find(x => x.title === title)?.selectedCustomersGroups || [])

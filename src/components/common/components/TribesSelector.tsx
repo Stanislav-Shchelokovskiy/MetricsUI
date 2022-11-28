@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { PayloadAction } from '@reduxjs/toolkit'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
-import { Tribe } from '../Interfaces'
+import FetchResult, { Tribe } from '../Interfaces'
 import LoadIndicator from '../LoadIndicator'
-import FetchResult from '../Interfaces'
-import { fetchTribes } from '../network_resource_fetcher/FetchAvailableTribes'
 import { useAppDispatch, useAppSelector, AppStore } from '../AppStore'
+import { fetchTribes } from '../network_resource_fetcher/FetchAvailableTribes'
+
 
 export default function TribesSelector(
     {
@@ -18,7 +18,6 @@ export default function TribesSelector(
         }) {
     const renderCount = useRef(0)
     console.log(' TribesSelector render ', renderCount.current++)
-
 
     const [tribes, setTribes] = useState<Array<Tribe>>([])
     const selectedTribes = useAppSelector(stateSelector)

@@ -5,9 +5,7 @@ import MetricSelector from './MetricSelector'
 import ComparisonMethodSelector from './ComparisonMethodSelector'
 
 
-
 function CommonSettingsPanel() {
-
     return (
         <div className='CustomersActivity_CommonSettingsPanel'>
             <PeriodSelector />

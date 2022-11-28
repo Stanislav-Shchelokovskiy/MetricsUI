@@ -3,9 +3,9 @@ import { AnyAction } from '@reduxjs/toolkit'
 import LoadIndicator from '../../../common/LoadIndicator'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import FetchResult from '../../../common/Interfaces'
-import { fetchForecastHorizons } from '../../network_resource_fetcher/FetchForecastSettingsValues'
 import { useAppDispatch } from '../../../common/AppStore'
 import { changeForecastHorizon } from '../../store/Actions'
+import { fetchForecastHorizons } from '../../network_resource_fetcher/FetchForecastSettingsValues'
 
 
 interface ForecastSelectorState {

@@ -3,12 +3,15 @@ import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import { changeMetric } from '../store/Actions'
 import { useAppDispatch, useAppSelector, AppStore } from '../../common/AppStore'
 
+
 const TICKETS = 'Tickets'
 const ITERATIONS = 'Iterations'
+
 
 export const isTicketsMetricSelected: (metric: string) => boolean = (metric: string) => {
     return metric === TICKETS
 }
+
 
 export default function MetricSelector() {
     const renderCount = useRef(0)

@@ -49,6 +49,7 @@ export const INITIAL_FORECAST_ITEMS_EXPANDED_STATE = {
     expandedItems: Array<string>()
 }
 
+
 export const ForecasterItemsReducer = (state: Array<ForecasterItemsState> = Array<ForecasterItemsState>(), action: AnyAction): Array<ForecasterItemsState> => {
     switch (action.type) {
         case CHANGE_SELECTED_TRIBES:
@@ -72,6 +73,7 @@ export const TacticalForecastReducer = (state: Array<TacticalForecastState> = Ar
             return state
     }
 }
+
 
 export const StrategicForecastReducer = (state: Array<StrategicForecastState> = Array<StrategicForecastState>(), action: AnyAction): Array<StrategicForecastState> => {
     switch (action.type) {

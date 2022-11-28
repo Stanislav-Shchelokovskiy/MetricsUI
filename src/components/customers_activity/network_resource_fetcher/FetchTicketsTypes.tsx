@@ -1,10 +1,12 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 
+
 export interface TicketsType {
     id: number
     name: string
 }
+
 
 export const fetchTicketsTypes: () => Promise<FetchResult<Array<TicketsType>>> = async function () {
     try {

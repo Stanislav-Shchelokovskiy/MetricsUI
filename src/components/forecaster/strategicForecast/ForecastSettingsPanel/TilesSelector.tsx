@@ -64,11 +64,10 @@ export default function TilesSelector(
     }, [])
 
     const dispatch = useAppDispatch()
-
-
     const onTileChange = useCallback((tile: number) => {
         dispatch(changeTile(tribeId, tile))
     }, [tribeId, dispatch])
+
     if (tilesSelectorState.tiles.length > 0) {
         return (
             <SelectBox

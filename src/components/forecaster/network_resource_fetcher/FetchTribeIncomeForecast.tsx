@@ -1,6 +1,7 @@
 import FORECASTER_END_POINT from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 
+
 interface RawIncomeForecast {
     ds: string
     y: number
@@ -17,6 +18,7 @@ export interface IncomeForecast {
     yhat_rmse_lower: Array<number>
 }
 
+
 export const EMPTY_INCOME_FORECAST: FetchResult<IncomeForecast> =
 {
     success: false,
@@ -28,6 +30,7 @@ export const EMPTY_INCOME_FORECAST: FetchResult<IncomeForecast> =
         yhat_rmse_lower: Array<number>()
     }
 }
+
 
 export const FetchTribeIncomeForecast: (tribeId: string, forecastHorizon: string, incomeType: string) => Promise<FetchResult<IncomeForecast>> =
     async function (tribeId: string, forecastHorizon: string, incomeType: string) {

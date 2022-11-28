@@ -1,10 +1,12 @@
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 
+
 export interface Period {
     period_start: string
     period_end: string
 }
+
 
 export const fetchPeriod: () => Promise<FetchResult<Period>> = async function () {
     try {

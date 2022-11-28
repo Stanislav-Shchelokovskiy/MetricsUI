@@ -13,6 +13,7 @@ export interface ForecasterState {
     lastUpdated: number
 }
 
+
 const INITIAL_FORECASTER_STATE: ForecasterState = {
     incomeType: '',
     selectedTribes: Array<Tribe>(),

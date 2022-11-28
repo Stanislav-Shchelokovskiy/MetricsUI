@@ -3,6 +3,7 @@ import Title from './Title'
 import CloneButton from './CloneButton'
 import RemoveButton from './RemoveButton'
 
+
 export default function SetHeader({ title }: { title: string }) {
     const renderCount = useRef(0)
     console.log(title, ' SetHeader render ', renderCount.current++)

@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from 'react'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
 import LoadIndicator from '../../../../common/LoadIndicator'
 import FetchResult from '../../../../common/Interfaces'
-import { fetchTicketsTypes, TicketsType } from '../../../network_resource_fetcher/FetchTicketsTypes'
 import { useAppDispatch, useAppSelector, AppStore } from '../../../../common/AppStore'
 import { changeSelectedTicketsTypes } from '../../../store/Actions'
+import { fetchTicketsTypes, TicketsType } from '../../../network_resource_fetcher/FetchTicketsTypes'
+
 
 export default function TicketsTypesSelector({ title }: { title: string }) {
     const renderCount = useRef(0)
