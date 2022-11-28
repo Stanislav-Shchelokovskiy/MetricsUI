@@ -18,7 +18,6 @@ export default function Sets() {
             showScrollbar='onHover'
             scrollByThumb={true}
             scrollByContent={false}
-            // height={'80vh'}
         >
             <div className='CustomersActivity_Sets'>
                 {sets?.map((set) => {

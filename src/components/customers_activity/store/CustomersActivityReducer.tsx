@@ -3,6 +3,7 @@ import {
     CHANGE_PERIOD,
     CHANGE_GROUP_BY_PERIOD,
     CHANGE_METRIC,
+    CHANGE_COMPARISON_METHOD,
     ADD_SET,
     REMOVE_SET,
 } from './Actions'
@@ -14,6 +15,7 @@ export interface CustomersActivityState {
     range: Array<string>
     groupByPeriod: string
     metric: string
+    comparisonMethod: string
     sets: Array<string>
 }
 
@@ -21,6 +23,7 @@ const INITIAL_CUSTOMERS_ACTIVITY_STATE: CustomersActivityState = {
     range: Array<string>(),
     groupByPeriod: '',
     metric: '',
+    comparisonMethod: '',
     sets: [INITIAL_SET_STATE.title]
 }
 
@@ -45,13 +48,18 @@ export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL
                 ...state,
                 metric: action.payload
             }
+        case CHANGE_COMPARISON_METHOD:
+            return {
+                ...state,
+                comparisonMethod: action.payload
+            }
 
         case ADD_SET:
             return {
                 ...state,
                 sets: [...state.sets, GenerateNewSetTitle(state.sets)]
             }
-            
+
         case REMOVE_SET:
             return {
                 ...state,

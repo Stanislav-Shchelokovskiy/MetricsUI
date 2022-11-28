@@ -39,12 +39,6 @@ export const fetchTicketsWithIterationsAggregates: (
         tribes: Array<string>,
     ) {
         try {
-            console.log(JSON.stringify({
-                customers_groups: customersGroups,
-                tickets_types: ticketsTypes,
-                tickets_tags: ticketsTags,
-                tribes: tribes
-            }))
             const aggregates: Array<TicketsWithIterationsAggregate> = await fetch(
                 `${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_aggregates?` +
                 new URLSearchParams({

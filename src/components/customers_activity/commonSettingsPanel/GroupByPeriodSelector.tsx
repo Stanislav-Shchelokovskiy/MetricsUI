@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
-import { changeGroupByPeriod } from '../../store/Actions'
-import { useAppDispatch, useAppSelector, AppStore } from '../../../common/AppStore'
+import { changeGroupByPeriod } from '../store/Actions'
+import { useAppDispatch, useAppSelector, AppStore } from '../../common/AppStore'
 
 interface GroupByPeriod {
     name: string
@@ -23,11 +23,15 @@ export default function GroupByPeriodSelector() {
     const renderCount = useRef(0)
     console.log('GroupByPeriodSelector render ', renderCount.current++)
 
-    const selectedGroupByPeriod = useAppSelector((store: AppStore) => store.customersActivity.groupByPeriod) || groupByPeriods[0].format
+    const selectedGroupByPeriod = useAppSelector((store: AppStore) => store.customersActivity.groupByPeriod)
 
     const appDispatch = useAppDispatch()
     const onGroupByPeriodChange: (groupByPeriod: string) => void = (groupByPeriod: string) => {
         appDispatch(changeGroupByPeriod(groupByPeriod))
+    }
+
+    if(!selectedGroupByPeriod){
+        appDispatch(changeGroupByPeriod(groupByPeriods[0].format))
     }
 
     return (

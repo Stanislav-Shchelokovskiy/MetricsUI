@@ -21,18 +21,18 @@
     /* background-color: rgba(240, 240, 240, 0.5); */
 }
 
-.CustomersActivity_CustomersGroupsSelector{
-    flex:1;
-    flex-grow: 2;
+.CustomersActivity_CustomersGroupsSelector {
+    flex: 2;
 }
+
 .CustomersActivity_TicketsTypesSelector,
-.CustomersActivity_TicketsTagsSelector{
-    flex:1;
+.CustomersActivity_TicketsTagsSelector {
+    flex: 1;
     flex-grow: 1;
 }
+
 .CustomersActivity_TribesSelector {
-    flex:1;
-    flex-grow: 2;
+    flex: 2;
 }
 
 .SetHeaderButton .dx-button-content {

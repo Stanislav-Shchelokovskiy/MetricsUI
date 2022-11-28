@@ -1,20 +1,19 @@
 import './styles/CustomersActivityContainer.css'
-import './styles/Menu.css'
+import './styles/CommonSettingsPanel.css'
 import './styles/Set.css'
-import './styles/SetsComparisonPanel.css'
 
 import React from 'react'
-import Menu from './menu/Menu'
+import CommonSettingsPanel from './commonSettingsPanel/CommonSettingsPanel'
 import Sets from './content/Sets'
-import SetsComparisonPanel from './sets_comparison_panel/SetsComparisonPanel'
+import ComparisonGraph from './ComparisonGraph'
 
 
 export default function CustomersActivityContainer() {
     return (
         <div className='CustomersActivityContainer'>
             <Sets />
-            <Menu />
-            <SetsComparisonPanel />
+            <CommonSettingsPanel />
+            <ComparisonGraph />
         </div>
     )
 }

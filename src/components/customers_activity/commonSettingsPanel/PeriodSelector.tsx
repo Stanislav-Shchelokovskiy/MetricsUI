@@ -1,11 +1,11 @@
 import React, { useReducer, useEffect, useCallback, useRef } from 'react'
 import { AnyAction } from '@reduxjs/toolkit'
 import { RangeSelector as DxRangeSelector, Margin, Scale, MinorTick, SliderMarker } from 'devextreme-react/range-selector'
-import LoadIndicator from '../../../common/LoadIndicator'
-import { fetchPeriod, Period } from '../../network_resource_fetcher/FetchPeriod'
-import FetchResult from '../../../common/Interfaces'
-import { changePeriod } from '../../store/Actions'
-import { useAppDispatch, useAppSelector, AppStore } from '../../../common/AppStore'
+import LoadIndicator from '../../common/LoadIndicator'
+import { fetchPeriod, Period } from '../network_resource_fetcher/FetchPeriod'
+import FetchResult from '../../common/Interfaces'
+import { changePeriod } from '../store/Actions'
+import { useAppDispatch, useAppSelector, AppStore } from '../../common/AppStore'
 
 interface PeriodSelectorState {
     periodStart: string
@@ -52,6 +52,10 @@ export default function PeriodSelector() {
             const periodFetchResult: FetchResult<Period> = await fetchPeriod()
             if (periodFetchResult.success) {
                 periodSelectorStateDispatch({ type: CHANGE_PERIOD, payload: periodFetchResult.data })
+                dispatch(changePeriod([
+                    new Date(periodFetchResult.data.period_start), 
+                    new Date(periodFetchResult.data.period_end),
+                ]))
             }
         })()
     }, [])

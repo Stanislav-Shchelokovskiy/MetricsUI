@@ -36,6 +36,14 @@ export const changeMetric = (metric: string): PayloadAction<string> => {
     }
 }
 
+export const CHANGE_COMPARISON_METHOD = 'customers_activity/change_comparison_method'
+export const changeComparisonMethod = (comparisonMethod: string): PayloadAction<string> => {
+    return {
+        type: CHANGE_COMPARISON_METHOD,
+        payload: comparisonMethod
+    }
+}
+
 export const ADD_SET = 'customers_activity/add_set'
 export const addSet = (baseSetTitle: string): PayloadAction<string> => {
     return {
