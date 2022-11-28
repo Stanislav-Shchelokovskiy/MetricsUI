@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Plot from 'react-plotly.js'
 import { Data as GraphData } from 'plotly.js'
-import { useAppDispatch, useAppSelector, AppStore } from '../../common/AppStore'
-import { CustomersActivityState } from '../store/CustomersActivityReducer'
+import { useAppSelector, AppStore } from '../../common/AppStore'
 import FetchResult from '../../common/Interfaces'
 import {
     fetchTicketsWithIterationsAggregates,
     TicketsWithIterationsAggregates,
     EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES
 } from '../network_resource_fetcher/FetchTicketsWithIterationsAggregates'
-
+import { isTicketsMetricSelected } from '../menu/commonSettingsPanel/MetricSelector'
 
 interface SetAggregates {
     name: string
@@ -21,18 +20,17 @@ const INITIAL_STATE = {
     aggregates: EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES,
 }
 
-function getBars(setAggregates: Array<SetAggregates>): Array<GraphData> {
+function getBars(setAggregates: Array<SetAggregates>, metric: string): Array<GraphData> {
     if (setAggregates.length > 0) {
 
         const data: Array<GraphData> = []
         for (const set of setAggregates) {
-            // const visible = positionsFilter.length === 0 && hiddenLegends.includes(user.user_name) ? 'legendonly' : undefined
             data.push(
                 {
                     type: 'bar',
                     name: set.name,
                     x: set.aggregates.periods,
-                    y: set.aggregates.tickets,
+                    y: isTicketsMetricSelected(metric) ? set.aggregates.tickets : set.aggregates.iterations,
                     opacity: 0.6,
                     hovertext: set.name,
                     hovertemplate: `<b>${set.name}</b><br>Period: %{x}<br>Count: %{y}<br><extra></extra>`,
@@ -58,8 +56,6 @@ export default function ComparisonGraph() {
     const customersActivityState = useAppSelector((store: AppStore) => store.customersActivity)
     const customersActivitySets = useAppSelector((store: AppStore) => store.customersActivitySets)
 
-    //const [graphState, dispatch] = useReducer(graphStateReducer, initialGraphState)
-
     useEffect(() => {
         (async () => {
             let aggs: Array<SetAggregates> = []
@@ -73,8 +69,6 @@ export default function ComparisonGraph() {
                     set.selectedTicketsTags.map(tag => tag.id),
                     set.selectedTribes.map(tribe => tribe.id),
                 )
-
-                console.log('set', set.selectedCustomersGroups);
                 if (fetchedAggregates.success) {
                     aggs.push({
                         name: `Set ${set.title}`,
@@ -88,7 +82,6 @@ export default function ComparisonGraph() {
     },
         [
             customersActivityState.groupByPeriod,
-            customersActivityState.metric,
             customersActivityState.range,
             customersActivitySets,
         ])
@@ -97,7 +90,7 @@ export default function ComparisonGraph() {
     return (
         <div className='CustomersActivity_ComparisonGraph'>
             <Plot
-                data={getBars(aggregates)}
+                data={getBars(aggregates, customersActivityState.metric)}
                 style={{
                     width: '100%',
                     minHeight: 400,
