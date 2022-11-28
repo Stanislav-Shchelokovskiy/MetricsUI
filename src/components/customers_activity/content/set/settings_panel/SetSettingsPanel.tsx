@@ -3,7 +3,7 @@ import CustomersGroupsSelector from './CustomersGroupsSelector'
 import TicketsTypesSelector from './TicketsTypesSelector'
 import TicketsTagsSelector from './TicketsTagsSelector'
 import TribesSelector from '../../../../common/components/TribesSelector'
-import ApplyButton from './ApplyButton'
+import ApplyButton from '../../ApplyButton'
 import { AppStore } from '../../../../common/AppStore'
 import { changeSelectedTribes } from '../../../store/Actions'
 import { Tribe } from '../../../../common/Interfaces'
@@ -26,7 +26,7 @@ function SetSettingsPanel({ title }: { title: string }) {
             <TribesSelector
                 stateSelector={stateSelector}
                 changeSelectedTribesAction={changeSelectedTribesAction} />
-            <ApplyButton title={title} />
+            {/* <ApplyButton title={title} /> */}
         </div>
     )
 }

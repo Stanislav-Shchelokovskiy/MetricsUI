@@ -4,7 +4,6 @@
     justify-content: 'flex-start';
     align-items: center;
     max-height: min-content;
-
     padding: 1%;
     gap: 3%;
     background-color: rgba(240, 240, 240, 0.5);
@@ -27,12 +26,6 @@
 .CustomersActivity_TicketsTagsSelector,
 .CustomersActivity_TribesSelector {
     min-width: 20%
-}
-
-.CustomersActivity_ApplyButton {
-    flex-grow: 1;
-    flex-shrink: 0;
-    margin-top: 0.75%;
 }
 
 .CustomersActivity_Graph {

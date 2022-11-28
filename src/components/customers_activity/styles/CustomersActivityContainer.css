@@ -8,15 +8,15 @@
 }
 
 .CustomersActivityContainer {
-    width: 100%;
-    min-width: 100%;
-    height: 100vh;
+    /* width: 100%;
+    min-width: 100%; */
+    /* height: 100vh; */
     gap: 1%;
 }
 
 .CustomersActivity_Content {
-    display: flex;
-    flex-flow: row nowrap;
+    /* display: flex;
+    flex-flow: column nowrap;
     justify-content: 'flex-start';
     align-items: stretch;
     /* background-color: rgb(127, 255, 159); */
@@ -25,7 +25,16 @@
 
 .CustomersActivity_Sets_ScrollView,
 .CustomersActivity_Sets {
-    /* background-color: rgb(0, 217, 255); */
-    flex-basis: 3;
-    min-width: 70%
+    background-color: rgb(0, 217, 255);
+    min-width: 70%;
+    max-height: fit-content;
+}
+
+.CustomersActivity_Sets {}
+
+.CustomersActivity_ApplyButton {
+    align-self:flex-start;
+    flex-grow: 1;
+    flex-shrink: 0;
+    margin-top: 0.75%;
 }

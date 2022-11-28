@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'devextreme-react/button'
 
-export default function ApplyButton({ title }: { title: string }) {
+export default function ApplyButton() {
     return (
         <Button
             className='CustomersActivity_ApplyButton'

@@ -8,7 +8,7 @@ export default function Set({ title }: { title: string }) {
         <div className='CustomersActivity_Set'>
             <SetHeader title={title} />
             <SetSettingsPanel title={title} />
-            <SetGraph />
+            {/* <SetGraph /> */}
         </div>
     )
 }

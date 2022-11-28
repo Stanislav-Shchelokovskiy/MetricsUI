@@ -4,7 +4,7 @@
     justify-content: flex-start;
     align-items: stretch;
     background-color: rgba(246, 246, 246, 0.5);
-    flex-grow: 1;
+    /* flex-grow: 1; */
 }
 
 .CustomersActivity_SetsSelector,
