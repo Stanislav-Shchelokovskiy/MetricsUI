@@ -52,10 +52,12 @@ export default function PeriodSelector() {
             const periodFetchResult: FetchResult<Period> = await fetchPeriod()
             if (periodFetchResult.success) {
                 periodSelectorStateDispatch({ type: CHANGE_PERIOD, payload: periodFetchResult.data })
-                dispatch(changePeriod([
-                    new Date(periodFetchResult.data.period_start), 
-                    new Date(periodFetchResult.data.period_end),
-                ]))
+                if (selectedRange.length === 0) {
+                    dispatch(changePeriod([
+                        new Date(periodFetchResult.data.period_start),
+                        new Date(periodFetchResult.data.period_end),
+                    ]))
+                }
             }
         })()
     }, [])
