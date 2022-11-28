@@ -49,35 +49,48 @@ function getBars(setAggregates: Array<SetAggregates>): Array<GraphData> {
     return []
 }
 
+
 export default function ComparisonGraph() {
     const renderCount = useRef(0)
     console.log('ComparisonGraph render ', renderCount.current++)
 
     const [aggregates, setAggregates] = useState<Array<SetAggregates>>([INITIAL_STATE])
     const customersActivityState = useAppSelector((store: AppStore) => store.customersActivity)
+    const customersActivitySets = useAppSelector((store: AppStore) => store.customersActivitySets)
 
     //const [graphState, dispatch] = useReducer(graphStateReducer, initialGraphState)
 
     useEffect(() => {
         (async () => {
-            const fetchedAggregates: FetchResult<TicketsWithIterationsAggregates> = await fetchTicketsWithIterationsAggregates(
-                customersActivityState.groupByPeriod,
-                customersActivityState.range[0],
-                customersActivityState.range[1],
-            )
-            if (fetchedAggregates.success) {
-                setAggregates([{
-                    name: 'set 0',
-                    aggregates: fetchedAggregates.data
-                }])
+            let aggs: Array<SetAggregates> = []
+            for (const set of customersActivitySets) {
+                const fetchedAggregates: FetchResult<TicketsWithIterationsAggregates> = await fetchTicketsWithIterationsAggregates(
+                    customersActivityState.groupByPeriod,
+                    customersActivityState.range[0],
+                    customersActivityState.range[1],
+                    set.selectedCustomersGroups.map(group => group.id),
+                    set.selectedTicketsTypes.map(type => type.id),
+                    set.selectedTicketsTags.map(tag => tag.id),
+                    set.selectedTribes.map(tribe => tribe.id),
+                )
+
+                console.log('set', set.selectedCustomersGroups);
+                if (fetchedAggregates.success) {
+                    aggs.push({
+                        name: `Set ${set.title}`,
+                        aggregates: fetchedAggregates.data
+                    })
+
+                }
             }
+            setAggregates(aggs)
         })()
     },
         [
             customersActivityState.groupByPeriod,
             customersActivityState.metric,
             customersActivityState.range,
-            customersActivityState.sets,
+            customersActivitySets,
         ])
 
 
@@ -100,7 +113,7 @@ export default function ComparisonGraph() {
                     },
                     xaxis: { autorange: true, automargin: true, type: 'category' },
                     yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: true },
-                    barmode: 'stack',
+                    barmode: 'group',
                     paper_bgcolor: 'rgba(0,0,0,0)',
                     plot_bgcolor: 'rgba(0,0,0,0)',
                     autosize: true,

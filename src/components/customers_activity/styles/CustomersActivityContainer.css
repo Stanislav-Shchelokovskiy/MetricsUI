@@ -4,37 +4,13 @@
     flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: stretch;
+    flex: 1;
+    flex-grow: 1;
     /* background-color: rgb(127, 255, 185); */
-}
-
-.CustomersActivityContainer {
-    /* width: 100%;
-    min-width: 100%; */
-    /* height: 100vh; */
-    gap: 1%;
-}
-
-.CustomersActivity_Content {
-    /* display: flex;
-    flex-flow: column nowrap;
-    justify-content: 'flex-start';
-    align-items: stretch;
-    /* background-color: rgb(127, 255, 159); */
-    gap: 1%;
 }
 
 .CustomersActivity_Sets_ScrollView,
 .CustomersActivity_Sets {
-    background-color: rgb(0, 217, 255);
-    min-width: 70%;
-    max-height: fit-content;
-}
-
-.CustomersActivity_Sets {}
-
-.CustomersActivity_ApplyButton {
-    align-self:flex-start;
-    flex-grow: 1;
-    flex-shrink: 0;
-    margin-top: 0.75%;
+    background-color: rgba(240, 240, 240, 0.3);
+    max-height: 50vh;
 }

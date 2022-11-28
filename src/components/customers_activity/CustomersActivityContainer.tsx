@@ -5,14 +5,16 @@ import './styles/SetsComparisonPanel.css'
 
 import React from 'react'
 import Menu from './menu/Menu'
-import CustomersActivityContent from './content/CustomersActivityContent'
+import Sets from './content/Sets'
+import SetsComparisonPanel from './sets_comparison_panel/SetsComparisonPanel'
 
 
 export default function CustomersActivityContainer() {
     return (
         <div className='CustomersActivityContainer'>
+            <Sets />
             <Menu />
-            <CustomersActivityContent />
+            <SetsComparisonPanel />
         </div>
     )
 }

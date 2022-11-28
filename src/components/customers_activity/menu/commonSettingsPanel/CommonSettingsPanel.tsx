@@ -2,6 +2,7 @@ import React from 'react'
 import PeriodSelector from './PeriodSelector'
 import GroupByPeriodSelector from './GroupByPeriodSelector'
 import MetricSelector from './MetricSelector'
+import ComparisonMethodSelector from './ComparisonMethodSelector'
 
 
 
@@ -12,6 +13,7 @@ function CommonSettingsPanel() {
             <PeriodSelector />
             <GroupByPeriodSelector />
             <MetricSelector />
+            <ComparisonMethodSelector />
         </div>
     )
 }

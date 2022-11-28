@@ -3,21 +3,11 @@
     flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: stretch;
-    background-color: rgba(246, 246, 246, 0.5);
-    /* flex-grow: 1; */
-}
-
-.CustomersActivity_SetsSelector,
-.CustomersActivity_ComparisonMethodSelector {
-    margin-left: 25%;
-    margin-right: 25%;
-}
-
-.CustomersActivity_ComparisonMethodSelector {
-    min-height: 2.5rem;
+    /* background-color: rgba(246, 246, 246, 0.5); */
+    flex:1;
+    flex-grow: 1;
 }
 
 .CustomersActivity_ComparisonGraph {
-    background-color: rgba(246, 246, 246, 0.5);
-    flex-grow: 1;
+
 }

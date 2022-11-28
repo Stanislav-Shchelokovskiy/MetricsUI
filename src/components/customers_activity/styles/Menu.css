@@ -12,21 +12,30 @@
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    padding-left: 8px;
+    padding-left: 1%;
     gap: 1%;
     /* background-color: dodgerblue; */
-    min-width: 90%;
+    background-color: rgba(246, 246, 246, 0.5);
+    flex:1;
+    flex-grow: 1;
     height: 18vh;
 }
 
 .CustomersActivity_PeriodSelector {
     /* background-color: rgb(0, 255, 251); */
     margin-bottom: 0px;
-    min-width: 60%;
-    width: 60%;
+    flex:1;
+    flex-grow: 6;
 }
 
 .CustomersActivity_GroupByPeriodSelector,
-.CustomersActivity_MetricSelector {
+.CustomersActivity_MetricSelector,
+.CustomersActivity_ComparisonMethodSelector {
     height: 35%;
+    flex:1;
+    flex-grow: 1;
+}
+
+.CustomersActivity_ComparisonMethodSelector {
+    margin-right: 1%;
 }

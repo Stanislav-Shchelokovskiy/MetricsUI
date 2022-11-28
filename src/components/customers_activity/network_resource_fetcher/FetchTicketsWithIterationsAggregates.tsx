@@ -23,19 +23,46 @@ export const EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES = {
 export const fetchTicketsWithIterationsAggregates: (
     group_by_period: string,
     range_start: string,
-    range_end: string,) => Promise<FetchResult<TicketsWithIterationsAggregates>> =
+    range_end: string,
+    customersGroups: Array<string>,
+    ticketsTypes: Array<number>,
+    ticketsTags: Array<number>,
+    tribes: Array<string>,
+) => Promise<FetchResult<TicketsWithIterationsAggregates>> =
     async function (
         group_by_period: string,
         range_start: string,
-        range_end: string) {
+        range_end: string,
+        customersGroups: Array<string>,
+        ticketsTypes: Array<number>,
+        ticketsTags: Array<number>,
+        tribes: Array<string>,
+    ) {
         try {
+            console.log(JSON.stringify({
+                customers_groups: customersGroups,
+                tickets_types: ticketsTypes,
+                tickets_tags: ticketsTags,
+                tribes: tribes
+            }))
             const aggregates: Array<TicketsWithIterationsAggregate> = await fetch(
                 `${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_aggregates?` +
                 new URLSearchParams({
                     group_by_period: group_by_period,
                     range_start: range_start,
                     range_end: range_end,
-                })).then(response => response.json())
+                }),
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        customers_groups: customersGroups,
+                        tickets_types: ticketsTypes,
+                        tickets_tags: ticketsTags,
+                        tribes: tribes
+                    }),
+                },
+            ).then(response => response.json())
 
 
             const periods = aggregates.map(aggregate => aggregate.period)

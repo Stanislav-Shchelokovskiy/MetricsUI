@@ -4,7 +4,7 @@ import LoadIndicator from '../../../../common/LoadIndicator'
 import FetchResult from '../../../../common/Interfaces'
 import { fetchTicketsTypes, TicketsType } from '../../../network_resource_fetcher/FetchTicketsTypes'
 import { useAppDispatch, useAppSelector, AppStore } from '../../../../common/AppStore'
-import { changeSelectedTicketsTags } from '../../../store/Actions'
+import { changeSelectedTicketsTypes } from '../../../store/Actions'
 
 export default function TicketsTypesSelector({ title }: { title: string }) {
     const renderCount = useRef(0)
@@ -17,7 +17,7 @@ export default function TicketsTypesSelector({ title }: { title: string }) {
     const dispatch = useAppDispatch()
     const onTicketsTypeSelect: (typeIds: Array<number>) => void = (typeIds: Array<number>) => {
         const selectedTypes = (typeIds.map(typeId => ticketsTypes.find(ticketType => ticketType.id === typeId)) as Array<TicketsType>)
-        dispatch(changeSelectedTicketsTags({ title: title, data: selectedTypes }))
+        dispatch(changeSelectedTicketsTypes({ title: title, data: selectedTypes }))
     }
 
     useEffect(() => {

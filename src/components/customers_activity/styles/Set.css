@@ -4,9 +4,9 @@
     justify-content: 'flex-start';
     align-items: center;
     max-height: min-content;
-    padding: 1%;
+    padding: 0.5%;
     gap: 3%;
-    background-color: rgba(240, 240, 240, 0.5);
+    /* background-color: rgba(240, 240, 240, 0.3); */
 }
 
 .CustomersActivity_SetSettingsPanel {
@@ -18,18 +18,21 @@
     padding-right: 2%;
     padding-bottom: 1%;
     gap: 1%;
-    background-color: rgba(240, 240, 240, 0.5);
+    /* background-color: rgba(240, 240, 240, 0.5); */
 }
 
-.CustomersActivity_CustomersGroupsSelector,
+.CustomersActivity_CustomersGroupsSelector{
+    flex:1;
+    flex-grow: 2;
+}
 .CustomersActivity_TicketsTypesSelector,
-.CustomersActivity_TicketsTagsSelector,
-.CustomersActivity_TribesSelector {
-    min-width: 20%
-}
-
-.CustomersActivity_Graph {
+.CustomersActivity_TicketsTagsSelector{
+    flex:1;
     flex-grow: 1;
+}
+.CustomersActivity_TribesSelector {
+    flex:1;
+    flex-grow: 2;
 }
 
 .SetHeaderButton .dx-button-content {
@@ -37,6 +40,6 @@
     padding-top: 0px;
 }
 
-.SetHeaderTitle{
+.SetHeaderTitle {
     font-weight: bold;
 }
