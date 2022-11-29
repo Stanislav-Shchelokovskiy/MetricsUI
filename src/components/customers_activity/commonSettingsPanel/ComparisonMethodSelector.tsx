@@ -14,7 +14,7 @@ export const isAbsoluteComparisonMethodSelected: (method: string) => boolean = (
 
 export default function ComparisonMethodSelector() {
     const comparisonMethods = useMemo<Array<string>>(() => { return [ABSOLUTE, RELATIVE] }, [])
-    const selectedComparisonMethod = useAppSelector((store: AppStore) => store.customersActivity.comparisonMethod)
+    let selectedComparisonMethod = useAppSelector((store: AppStore) => store.customersActivity.comparisonMethod)
 
     const appDispatch = useAppDispatch()
     const onComparisonMethodChange: (comparisonMethod: string) => void = (comparisonMethod: string) => {
@@ -22,7 +22,8 @@ export default function ComparisonMethodSelector() {
     }
 
     if (!selectedComparisonMethod) {
-        appDispatch(changeComparisonMethod(ABSOLUTE))
+        selectedComparisonMethod = ABSOLUTE
+        appDispatch(changeComparisonMethod(selectedComparisonMethod))
     }
 
     return (
