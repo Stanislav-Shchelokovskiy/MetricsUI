@@ -22,7 +22,7 @@ const groupByPeriods: Array<GroupByPeriod> = [
 
 
 export default function GroupByPeriodSelector() {
-    const selectedGroupByPeriod = useAppSelector((store: AppStore) => store.customersActivity.groupByPeriod)
+    let selectedGroupByPeriod = useAppSelector((store: AppStore) => store.customersActivity.groupByPeriod)
 
     const appDispatch = useAppDispatch()
     const onGroupByPeriodChange: (groupByPeriod: string) => void = (groupByPeriod: string) => {
@@ -30,7 +30,8 @@ export default function GroupByPeriodSelector() {
     }
 
     if(!selectedGroupByPeriod){
-        appDispatch(changeGroupByPeriod(groupByPeriods[0].format))
+        selectedGroupByPeriod = groupByPeriods[0].format
+        appDispatch(changeGroupByPeriod(selectedGroupByPeriod))
     }
 
     return (

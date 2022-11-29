@@ -15,7 +15,7 @@ export const isTicketsMetricSelected: (metric: string) => boolean = (metric: str
 
 export default function MetricSelector() {
     const metrics = useMemo<Array<string>>(() => { return [TICKETS, ITERATIONS] }, [])
-    const selectedMetric = useAppSelector((store: AppStore) => store.customersActivity.metric)
+    let selectedMetric = useAppSelector((store: AppStore) => store.customersActivity.metric)
 
     const appDipatch = useAppDispatch()
     const onMetricChange: (metric: string) => void = (metric: string) => {
@@ -23,7 +23,8 @@ export default function MetricSelector() {
     }
 
     if (!selectedMetric) {
-        appDipatch(changeMetric(TICKETS))
+        selectedMetric = TICKETS
+        appDipatch(changeMetric(selectedMetric))
     }
 
     return (
