@@ -16,8 +16,8 @@ export default function TribesSelector(
             stateSelector: (store: AppStore) => Array<Tribe>,
             changeSelectedTribesAction: (selectedTribes: Array<Tribe>) => PayloadAction<any>
         }) {
-    const renderCount = useRef(0)
-    console.log(' TribesSelector render ', renderCount.current++)
+    // const renderCount = useRef(0)
+    // console.log(' TribesSelector render ', renderCount.current++)
 
     const [tribes, setTribes] = useState<Array<Tribe>>([])
     const selectedTribes = useAppSelector(stateSelector)

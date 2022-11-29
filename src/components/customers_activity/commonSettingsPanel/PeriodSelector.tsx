@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useCallback, useRef } from 'react'
+import React, { useReducer, useEffect, useCallback } from 'react'
 import { AnyAction } from '@reduxjs/toolkit'
 import { RangeSelector as DxRangeSelector, Margin, Scale, MinorTick, SliderMarker } from 'devextreme-react/range-selector'
 import LoadIndicator from '../../common/LoadIndicator'
@@ -44,9 +44,6 @@ function periodSelectorStateReducer(state: PeriodSelectorState, action: AnyActio
 }
 
 export default function PeriodSelector() {
-    const renderCount = useRef(0)
-    console.log('CustomersActivity PeriodSelector render: ', renderCount.current++)
-
     const [periodSelectorState, periodSelectorStateDispatch] = useReducer(periodSelectorStateReducer, INITIAL_STATE)
     const selectedRange = useAppSelector((store: AppStore) => store.customersActivity.range) || periodSelectorState.selectedRange
 

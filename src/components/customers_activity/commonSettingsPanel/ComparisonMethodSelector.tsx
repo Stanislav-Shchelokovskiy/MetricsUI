@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useMemo } from 'react'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import { useAppDispatch, useAppSelector, AppStore } from '../../common/AppStore'
 import { changeComparisonMethod } from '../store/Actions'
@@ -13,9 +13,6 @@ export const isAbsoluteComparisonMethodSelected: (method: string) => boolean = (
 
 
 export default function ComparisonMethodSelector() {
-    const renderCount = useRef(0)
-    console.log('ComparisonMethodSelector render ', renderCount.current++)
-
     const comparisonMethods = useMemo<Array<string>>(() => { return [ABSOLUTE, RELATIVE] }, [])
     const selectedComparisonMethod = useAppSelector((store: AppStore) => store.customersActivity.comparisonMethod)
 

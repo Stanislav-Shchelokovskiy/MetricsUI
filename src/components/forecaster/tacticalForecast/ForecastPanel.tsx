@@ -10,6 +10,47 @@ import {
 } from '../network_resource_fetcher/FetchTacticalForecast'
 
 
+const ForecastPanel = React.memo(
+    function ForecastPanel(
+        {
+            tribeId,
+            incomeType,
+            replyType,
+            lastUpdated,
+        }: {
+            tribeId: string
+            incomeType: string
+            replyType: string
+            lastUpdated: number
+        }) {
+        // const renderCount = useRef(0)
+        // console.log('Tactical ForecastPanel render: ', renderCount.current++)
+        
+        const [{ success: forecastLoaded, data: tacticalForecast }, setForecastLoaded] = useState<FetchResult<HourlyTacticalForecast>>(EMPTY_TACTICAL_FORECAST)
+
+        useEffect(() => {
+            (async () => {
+                if (replyType === '')
+                    return
+                const fetchResult: FetchResult<HourlyTacticalForecast> = await FetchTacticalForecast(incomeType, tribeId, replyType)
+                setForecastLoaded(fetchResult)
+            })();
+        }, [tribeId, incomeType, replyType, lastUpdated])
+
+        if (forecastLoaded) {
+            return (
+                <div className='ForecastBody'>
+                    <Graph tacticalForecast={tacticalForecast} />
+                    <Metric tacticalForecast={tacticalForecast} />
+                </div>
+            )
+        }
+        return <ForecastMissing />
+    })
+
+export default ForecastPanel
+
+
 function Metric({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast }) {
     const today = new Date().setUTCHours(23, 0, 0, 0)
     const idx = tacticalForecast.ds.map(Number).indexOf(today)
@@ -131,42 +172,3 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
         </div>
     )
 }
-
-const ForecastPanel = React.memo(
-    function ForecastPanel(
-        {
-            tribeId,
-            incomeType,
-            replyType,
-            lastUpdated,
-        }: {
-            tribeId: string
-            incomeType: string
-            replyType: string
-            lastUpdated: number
-        }) {
-        const renderCount = useRef(0)
-        console.log('Tactical ForecastPanel render: ', renderCount.current++)
-        const [{ success: forecastLoaded, data: tacticalForecast }, setForecastLoaded] = useState<FetchResult<HourlyTacticalForecast>>(EMPTY_TACTICAL_FORECAST)
-
-        useEffect(() => {
-            (async () => {
-                if (replyType === '')
-                    return
-                const fetchResult: FetchResult<HourlyTacticalForecast> = await FetchTacticalForecast(incomeType, tribeId, replyType)
-                setForecastLoaded(fetchResult)
-            })();
-        }, [tribeId, incomeType, replyType, lastUpdated])
-
-        if (forecastLoaded) {
-            return (
-                <div className='ForecastBody'>
-                    <Graph tacticalForecast={tacticalForecast} />
-                    <Metric tacticalForecast={tacticalForecast} />
-                </div>
-            )
-        }
-        return <ForecastMissing />
-    })
-
-export default ForecastPanel

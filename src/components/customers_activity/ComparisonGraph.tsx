@@ -25,9 +25,6 @@ const INITIAL_STATE = {
 
 
 export default function ComparisonGraph() {
-    const renderCount = useRef(0)
-    console.log('ComparisonGraph render ', renderCount.current++)
-
     const [aggregates, setAggregates] = useState<Array<SetAggregates>>([INITIAL_STATE])
     const customersActivityState = useAppSelector((store: AppStore) => store.customersActivity)
     const customersActivitySets = useAppSelector((store: AppStore) => store.customersActivitySets)
@@ -62,29 +59,47 @@ export default function ComparisonGraph() {
             customersActivitySets,
         ])
 
-
-    return (
-        <Plot
-            className='CustomersActivity_ComparisonGraph'
-            data={getPlots(aggregates, customersActivityState.metric, customersActivityState.comparisonMethod)}
-            useResizeHandler={true}
-            layout={{
-                margin: {
-                    t: 10,
-                    l: 30,
-                    r: 10,
-                    b: 30
-                },
-                xaxis: { autorange: true, automargin: true, type: 'category', categoryorder: 'category ascending' },
-                yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: true },
-                barmode: 'group',
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                autosize: true,
-            }}
-            config={{ displayModeBar: false, doubleClick: 'autosize', responsive: true }} />
-    )
+    return <GraphPlot
+        aggregates={aggregates}
+        metric={customersActivityState.metric}
+        comparisonMethod={customersActivityState.comparisonMethod}
+    />
 }
+
+const GraphPlot = React.memo(
+    function GraphPlotMemoized(
+        {
+            aggregates,
+            metric,
+            comparisonMethod }:
+            {
+                aggregates: Array<SetAggregates>,
+                metric: string,
+                comparisonMethod: string
+            }) {
+        return (
+            <Plot
+                className='CustomersActivity_ComparisonGraph'
+                data={getPlots(aggregates, metric, comparisonMethod)}
+                useResizeHandler={true}
+                layout={{
+                    margin: {
+                        t: 10,
+                        l: 30,
+                        r: 10,
+                        b: 30
+                    },
+                    xaxis: { autorange: true, automargin: true, type: 'category', categoryorder: 'category ascending' },
+                    yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: true },
+                    barmode: 'group',
+                    paper_bgcolor: 'rgba(0,0,0,0)',
+                    plot_bgcolor: 'rgba(0,0,0,0)',
+                    autosize: true,
+                }}
+                config={{ displayModeBar: false, doubleClick: 'autosize', responsive: true }} />
+        )
+    }
+)
 
 function getPlots(setAggregates: Array<SetAggregates>, metric: string, comparisonMethod: string): Array<GraphData> {
     if (setAggregates.length > 0) {

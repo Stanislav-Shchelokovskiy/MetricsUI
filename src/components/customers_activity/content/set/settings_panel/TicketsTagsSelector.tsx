@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
 import LoadIndicator from '../../../../common/LoadIndicator'
 import FetchResult from '../../../../common/Interfaces'
@@ -8,9 +8,6 @@ import { fetchTicketsTags, TicketsTag } from '../../../network_resource_fetcher/
 
 
 export default function TicketsTagsSelector({ title }: { title: string }) {
-    const renderCount = useRef(0)
-    console.log(title, ' TicketsTagsSelector render ', renderCount.current++)
-
     const [ticketsTags, setTags] = useState<Array<TicketsTag>>([])
     const selectedTicketsTags = useAppSelector((store: AppStore) => store.customersActivitySets.find(x => x.title === title)?.selectedTicketsTags || [])
     const defaultValue = selectedTicketsTags?.map(ticketTag => ticketTag.id)

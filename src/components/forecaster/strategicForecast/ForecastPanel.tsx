@@ -21,8 +21,9 @@ export interface ForecastPanelState {
 }
 
 function ForecastPanel({ state }: { state: ForecastPanelState }) {
-    const renderCount = useRef(0)
-    console.log('Strategic ForecastPanel render: ', renderCount.current++)
+    // const renderCount = useRef(0)
+    // console.log('Strategic ForecastPanel render: ', renderCount.current++)
+    
     return (
         <div className='ForecastBody'>
             <Graph state={state} />

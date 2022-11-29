@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
 import LoadIndicator from '../../../../common/LoadIndicator'
 import FetchResult from '../../../../common/Interfaces'
@@ -8,9 +8,6 @@ import { fetchCustomersGroups, CustomersGroup } from '../../../network_resource_
 
 
 function CustomersGroupsSelector({ title }: { title: string }) {
-    const renderCount = useRef(0)
-    console.log(title,' CustomersGroupsSelector render ', renderCount.current++)
-
     const [groups, setGroups] = useState<Array<CustomersGroup>>([])
     const selectedGroups = useAppSelector((store: AppStore) => store.customersActivitySets.find(x => x.title === title)?.selectedCustomersGroups || [])
     const defaultValue = selectedGroups?.map(group => group.id)
