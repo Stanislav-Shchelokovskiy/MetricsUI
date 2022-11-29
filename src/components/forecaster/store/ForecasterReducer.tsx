@@ -1,5 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { Tribe } from '../Tribe'
+import { Tribe } from '../../common/Interfaces'
 import {
     CHANGE_INCOME_TYPE,
     CHANGE_SELECTED_TRIBES,
@@ -12,6 +12,7 @@ export interface ForecasterState {
     selectedTribes: Array<Tribe>
     lastUpdated: number
 }
+
 
 const INITIAL_FORECASTER_STATE: ForecasterState = {
     incomeType: '',

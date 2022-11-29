@@ -1,14 +1,12 @@
 import React, { useCallback } from 'react'
 import Accordion, { Item } from 'devextreme-react/accordion'
+import { Tribe } from '../common/Interfaces'
+import { useAppSelector, AppStore, useAppDispatch } from '../common/AppStore'
+import { selectForecastItems } from './store/Actions'
+import { ForecasterItemsState, INITIAL_FORECAST_ITEMS_EXPANDED_STATE } from './store/TribeContainerReducer'
 import TacticalForecast from './tacticalForecast/TacticalForecast'
 import StrategicForecast from './strategicForecast/StrategicForecast'
-import { useForecasterSelector, ForecasterStore, useForecasterDispatch } from './store/ForecasterStore'
-import { selectForecastItems } from './store/Actions'
 
-export interface Tribe {
-    id: string
-    name: string
-}
 
 export interface ForecastMainParams {
     tribeID: string
@@ -28,17 +26,15 @@ export interface TribeContainerState {
     lastUpdate: number
 }
 
-function Header({ tribeName }: { tribeName: string }) {
-    return <h3 className='TribeHeader'> {tribeName}</h3 >
-}
 
 export default function TribeContainer({ tribe }: { tribe: Tribe }) {
-    const selectedItems: Array<string> = useForecasterSelector((state: ForecasterStore) => state.selectedForecastItems)
+    const forecasterItemsState: ForecasterItemsState = useAppSelector((state: AppStore) => state.selectedForecastItems.find(x => x.tribeId === tribe.id)) || INITIAL_FORECAST_ITEMS_EXPANDED_STATE
 
-    const dispatch = useForecasterDispatch()
+    const dispatch = useAppDispatch()
     const onSelectedItemsChange = useCallback((e: any) => {
-        dispatch(selectForecastItems(e))
-    }, [dispatch])
+        console.log(e)
+        dispatch(selectForecastItems(tribe.id, e))
+    }, [dispatch, tribe.id])
 
     return (
         <div className='Tribe'>
@@ -49,7 +45,7 @@ export default function TribeContainer({ tribe }: { tribe: Tribe }) {
                 multiple={true}
                 focusStateEnabled={false}
                 keyExpr='title'
-                defaultSelectedItemKeys={selectedItems}
+                defaultSelectedItemKeys={forecasterItemsState.expandedItems}
                 onSelectedItemKeysChange={onSelectedItemsChange}
             >
                 <Item title='Tactical forecast'>
@@ -61,4 +57,8 @@ export default function TribeContainer({ tribe }: { tribe: Tribe }) {
             </Accordion>
         </div>
     )
+}
+
+function Header({ tribeName }: { tribeName: string }) {
+    return <h3 className='TribeHeader'> {tribeName}</h3 >
 }

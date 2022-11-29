@@ -1,0 +1,21 @@
+.CustomersActivityContainer,
+.CustomersActivity_Sets {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    /* background-color: rgb(127, 255, 185); */
+}
+
+.CustomersActivity_Sets_ScrollView,
+.CustomersActivity_Sets {
+    background-color: rgba(240, 240, 240, 0.3);
+    max-height: 40vh;
+    flex: 3
+}
+
+.CustomersActivity_ComparisonGraph {
+    /* background-color: rgb(230, 9, 9); */
+    flex: 5
+}

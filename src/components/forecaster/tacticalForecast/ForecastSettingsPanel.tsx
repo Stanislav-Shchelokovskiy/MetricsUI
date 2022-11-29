@@ -1,9 +1,9 @@
 import React, { useReducer, useEffect, useCallback } from 'react'
 import { AnyAction } from '@reduxjs/toolkit'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
-import LoadIndicator from '../utils/LoadIndicator'
-import FetchResult from '../network_resource_fetcher/FetchResult'
-import { useForecasterDispatch, } from '../store/ForecasterStore'
+import LoadIndicator from '../../common/LoadIndicator'
+import FetchResult from '../../common/Interfaces'
+import { useAppDispatch } from '../../common/AppStore'
 import { changeReplyType } from '../store/Actions'
 import { fetchReplyTypes } from '../network_resource_fetcher/FetchForecastSettingsValues'
 
@@ -18,8 +18,10 @@ const INITIAL_STATE: ReplyTypeSelectorState = {
     replyType: ''
 }
 
+
 const CHANGE_REPLY_TYPES = 'change_reply_types'
 const CHANGE_REPLY_TYPE = 'change_reply_type'
+
 
 function replyTypeSelectorStateReducer(state: ReplyTypeSelectorState, action: AnyAction): ReplyTypeSelectorState {
     switch (action.type) {
@@ -53,7 +55,7 @@ function ReplyTypeSelector({ tribeId, defaultReplyType }: { tribeId: string, def
         })()
     }, [])
 
-    const dispatch = useForecasterDispatch()
+    const dispatch = useAppDispatch()
     const onReplyTypeChange = useCallback((replyType: string) => {
         dispatch(changeReplyType(tribeId, replyType))
     }, [tribeId, dispatch])

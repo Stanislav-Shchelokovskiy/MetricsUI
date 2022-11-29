@@ -1,11 +1,13 @@
 import 'devextreme/dist/css/dx.common.css'
 import 'devextreme/dist/css/dx.light.css'
-import './styles/App.css'
+import './components/common/styles/App.css'
 
 import React from 'react'
 import { RouterProvider, useRouteError, createBrowserRouter, isRouteErrorResponse, Link } from 'react-router-dom'
 import { Button } from 'devextreme-react/button'
+
 import Forecaster from './components/forecaster/Forecaster'
+import CustomersActivityContainer from './components/customers_activity/CustomersActivityContainer'
 
 function ErrorPage() {
   const error = useRouteError()
@@ -18,7 +20,6 @@ function ErrorPage() {
   )
 }
 
-
 function Root() {
   return (
     <div className='Root'>
@@ -26,6 +27,12 @@ function Root() {
         <Button
           className='NavElement'
           text='Forecaster'
+          focusStateEnabled={false} />
+      </Link>
+      <Link to={'CustomersActivity'}>
+        <Button
+          className='NavElement'
+          text='Customers Activity'
           focusStateEnabled={false} />
       </Link>
     </div>
@@ -41,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: '/forecaster',
     element: <Forecaster />,
+  },
+  {
+    path: '/CustomersActivity',
+    element: <CustomersActivityContainer />,
   },
 ])
 

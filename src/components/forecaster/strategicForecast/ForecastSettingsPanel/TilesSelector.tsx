@@ -1,10 +1,10 @@
 import React, { useReducer, useEffect, useCallback } from 'react'
 import { AnyAction } from '@reduxjs/toolkit'
-import LoadIndicator from '../../utils/LoadIndicator'
+import LoadIndicator from '../../../common/LoadIndicator'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
-import FetchResult from '../../network_resource_fetcher/FetchResult'
+import FetchResult from '../../../common/Interfaces'
 import { fetchTiles } from '../../network_resource_fetcher/FetchForecastSettingsValues'
-import { useForecasterDispatch } from '../../store/ForecasterStore'
+import { useAppDispatch } from '../../../common/AppStore'
 import { changeTile } from '../../store/Actions'
 
 
@@ -63,12 +63,11 @@ export default function TilesSelector(
         })()
     }, [])
 
-    const dispatch = useForecasterDispatch()
-
-
+    const dispatch = useAppDispatch()
     const onTileChange = useCallback((tile: number) => {
         dispatch(changeTile(tribeId, tile))
     }, [tribeId, dispatch])
+
     if (tilesSelectorState.tiles.length > 0) {
         return (
             <SelectBox

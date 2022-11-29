@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
 import { Button } from 'devextreme-react/button'
-import LoadIndicator from '../../utils/LoadIndicator'
-import FetchResult from '../../network_resource_fetcher/FetchResult'
+import LoadIndicator from '../../../common/LoadIndicator'
+import FetchResult from '../../../common/Interfaces'
+import { changeLastUpdated } from '../../store/Actions'
+import { useAppDispatch } from '../../../common/AppStore'
 import {
     FetchSyncTribeRepliesWithWfTasksStarted,
     SyncTribeRepliesWithWfTasks,
     FetchApplySyncTribeRepliesWithWfTask,
 } from '../../network_resource_fetcher/FetchSyncTribeRepliesWithWfTask'
-import { changeLastUpdated } from '../../store/Actions'
-import { useForecasterDispatch } from '../../store/ForecasterStore'
+
 
 export default function UpdateTribeRepliesButton() {
     const [taskStarted, setTaskStarted] = useState<boolean>(false);
-    const dispatch = useForecasterDispatch()
+    const dispatch = useAppDispatch()
 
     const onClick = () => {
         setTaskStarted(true);
@@ -42,8 +43,7 @@ export default function UpdateTribeRepliesButton() {
     }
     return (
         <Button
-            width={150}
-            height={40}
+            className='ForecasterUpdateTribeRepliesButton'
             render={renderButton}
             disabled={taskStarted}
             type='normal'

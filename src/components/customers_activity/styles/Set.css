@@ -1,0 +1,45 @@
+.CustomerActivity_SetHeader {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: 'flex-start';
+    align-items: center;
+    max-height: min-content;
+    padding: 0.5%;
+    gap: 3%;
+    /* background-color: rgba(240, 240, 240, 0.3); */
+}
+
+.CustomersActivity_SetSettingsPanel {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding-left: 1%;
+    padding-right: 2%;
+    padding-bottom: 1%;
+    gap: 1%;
+    /* background-color: rgba(240, 240, 240, 0.5); */
+}
+
+.CustomersActivity_CustomersGroupsSelector {
+    flex: 2;
+}
+
+.CustomersActivity_TicketsTypesSelector,
+.CustomersActivity_TicketsTagsSelector {
+    flex: 1;
+    flex-grow: 1;
+}
+
+.CustomersActivity_TribesSelector {
+    flex: 2;
+}
+
+.SetHeaderButton .dx-button-content {
+    padding: 3px;
+    padding-top: 0px;
+}
+
+.SetHeaderTitle {
+    font-weight: bold;
+}

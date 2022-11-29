@@ -1,6 +1,7 @@
-import FORECASTER_END_POINT from './EndPoint'
-import FetchResult from './FetchResult'
-import { Tribe } from '../Tribe'
+import FORECASTER_END_POINT from '../../common/EndPoint'
+import FetchResult from '../../common/Interfaces'
+import { Tribe } from '../../common/Interfaces'
+
 
 export interface ForecasterSettingsValues {
     incomeTypes: Array<string>
@@ -21,6 +22,7 @@ export const EMPTY_FORECATER_SETTINGS_VALUES: FetchResult<ForecasterSettingsValu
     }
 }
 
+
 export const fetchIncomeTypes: () => Promise<FetchResult<Array<string>>> = async function () {
     try {
         const incomeTypes = await fetch(`${FORECASTER_END_POINT}/get_income_types`).then(response => response.json())
@@ -33,22 +35,6 @@ export const fetchIncomeTypes: () => Promise<FetchResult<Array<string>>> = async
         return {
             success: false,
             data: Array<string>()
-        }
-    }
-}
-
-export const fetchTribes: () => Promise<FetchResult<Array<Tribe>>> = async function () {
-    try {
-        const tribes = await fetch(`${FORECASTER_END_POINT}/get_available_tribes`).then(response => response.json())
-        return {
-            success: true,
-            data: (tribes as Array<Tribe>)
-        }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: Array<Tribe>()
         }
     }
 }

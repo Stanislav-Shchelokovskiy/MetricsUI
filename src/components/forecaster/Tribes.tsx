@@ -1,12 +1,9 @@
 import React from 'react'
-
 import ScrollView from 'devextreme-react/scroll-view'
-import TribeContainer, { Tribe } from './Tribe'
+import { Tribe } from '../common/Interfaces'
+import { useAppSelector, AppStore } from '../common/AppStore'
+import TribeContainer from './Tribe'
 
-import {
-    useForecasterSelector,
-    ForecasterStore
-} from './store/ForecasterStore'
 
 interface TribeContainerState {
     incomeType: string
@@ -23,8 +20,9 @@ export interface TribesTribeContainerState extends TribeContainerState {
     tribes: Array<Tribe>
 }
 
+
 export default function TribesContainer() {
-    const selectedTribes = useForecasterSelector((state: ForecasterStore) => state.forecaster.selectedTribes)
+    const selectedTribes = useAppSelector((state: AppStore) => state.forecaster.selectedTribes)
 
     if (selectedTribes?.length > 0) {
         return (

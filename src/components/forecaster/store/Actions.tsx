@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { Tribe } from '../Tribe'
+import { Tribe } from '../../common/Interfaces'
 
 interface Payload<T> {
     tribeId: string
@@ -70,10 +70,10 @@ export const legendClick = (tribeId: string, legendsOnlyLegends: Array<string>):
     }
 }
 
-export const SELECT_FORECAST_ITEMS = 'tribes_container/select_forecast_items'
-export const selectForecastItems = (selectedItems: Array<string>): PayloadAction<Array<string>> => {
+export const EXPAND_FORECAST_ITEMS = 'tribes_container/expand_forecast_items'
+export const selectForecastItems = (tribeId: string, expandedItems: Array<string>): PayloadAction<Payload<Array<string>>> => {
     return {
-        type: SELECT_FORECAST_ITEMS,
-        payload: selectedItems
+        type: EXPAND_FORECAST_ITEMS,
+        payload: { tribeId: tribeId, data: expandedItems }
     }
 }

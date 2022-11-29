@@ -3,11 +3,46 @@ import Plot from 'react-plotly.js'
 import { Data as GraphData } from 'plotly.js'
 import ForecastMissing from '../utils/ForecastMissing'
 import GetColor from '../utils/ColorPalette'
-import FetchResult from '../network_resource_fetcher/FetchResult'
+import FetchResult from '../../common/Interfaces'
 import { IncomeForecast, FetchTribeIncomeForecast, EMPTY_INCOME_FORECAST } from '../network_resource_fetcher/FetchTribeIncomeForecast'
 import { DailyTribeReplies, FetchDailyTribeReplies, EMPTY_DAILY_TRIBE_REPLIES } from '../network_resource_fetcher/FetchTribeDailyReplies'
-import { useForecasterDispatch } from '../store/ForecasterStore'
+import { useAppDispatch } from '../../common/AppStore'
 import { legendClick } from '../store/Actions'
+
+
+export interface ForecastPanelState {
+    tribeId: string
+    forecastHorizon: string
+    incomeType: string
+    tile: number
+    positionsFilter: Array<string>
+    hiddenLegends: Array<string>
+    lastUpdated: number
+}
+
+function ForecastPanel({ state }: { state: ForecastPanelState }) {
+    // const renderCount = useRef(0)
+    // console.log('Strategic ForecastPanel render: ', renderCount.current++)
+    
+    return (
+        <div className='ForecastBody'>
+            <Graph state={state} />
+        </div>
+    )
+}
+
+function areEqual(prevProps: { state: ForecastPanelState }, nextProps: { state: ForecastPanelState }) {
+    const res = (prevProps.state.tribeId === nextProps.state.tribeId) &&
+        (prevProps.state.forecastHorizon === nextProps.state.forecastHorizon) &&
+        (prevProps.state.incomeType === nextProps.state.incomeType) &&
+        (prevProps.state.tile === nextProps.state.tile) &&
+        (prevProps.state.lastUpdated === nextProps.state.lastUpdated) &&
+        (prevProps.state.hiddenLegends.sort().join(',') === nextProps.state.hiddenLegends.sort().join(',')) &&
+        (prevProps.state.positionsFilter.sort().join(',') === nextProps.state.positionsFilter.sort().join(','))
+    return res
+}
+
+export default React.memo(ForecastPanel, areEqual)
 
 
 function getScatters(state: GraphState): Array<GraphData> {
@@ -59,23 +94,6 @@ function getScatters(state: GraphState): Array<GraphData> {
     return []
 }
 
-function getBarVisibility(
-    belonging: number,
-    positionName: string,
-    positionsFilter: Array<string>
-): boolean | 'legendonly' | undefined {
-    if (!positionsFilter.length) {
-        const differentTribe = 3
-        return belonging === differentTribe ? 'legendonly' : undefined
-    }
-
-    for (const posName of positionsFilter) {
-        if (posName === positionName || (posName !== 'Developer' && positionName.includes(posName))) {
-            return undefined
-        }
-    }
-    return 'legendonly'
-}
 
 function getBars(state: GraphState, positionsFilter: Array<string>, hiddenLegends: Array<string>): Array<GraphData> {
     if (state.tribeRepliesLoaded) {
@@ -103,6 +121,24 @@ function getBars(state: GraphState, positionsFilter: Array<string>, hiddenLegend
         return data
     }
     return []
+}
+
+function getBarVisibility(
+    belonging: number,
+    positionName: string,
+    positionsFilter: Array<string>
+): boolean | 'legendonly' | undefined {
+    if (!positionsFilter.length) {
+        const differentTribe = 3
+        return belonging === differentTribe ? 'legendonly' : undefined
+    }
+
+    for (const posName of positionsFilter) {
+        if (posName === positionName || (posName !== 'Developer' && positionName.includes(posName))) {
+            return undefined
+        }
+    }
+    return 'legendonly'
 }
 
 
@@ -190,7 +226,7 @@ function Graph({ state }: { state: ForecastPanelState }) {
         })()
     }, [state.tribeId, state.forecastHorizon, state.incomeType, state.tile, state.lastUpdated])
 
-    const forecasterDispatch = useForecasterDispatch()
+    const forecasterDispatch = useAppDispatch()
     const onLegendClick = useCallback(({ data }: LegendClickObject) => {
         setTimeout(() => {
             const legendsToStore = (data.filter(legend => legend.type === 'bar' && legend.visible === 'legendonly').map(legend => legend.hovertext) as Array<string>)
@@ -209,21 +245,27 @@ function Graph({ state }: { state: ForecastPanelState }) {
             <div className='ForecastGraph'>
                 <Plot
                     data={data}
+                    style={{
+                        width: '100%',
+                        minHeight: 400,
+                        height: '100%'
+                    }}
+                    useResizeHandler={true}
                     layout={{
-                        height: 400, width: 1510, margin: {
+                        margin: {
                             t: 10,
                             l: 30,
                             r: 10,
                             b: 30
                         },
-                        xaxis: { autorange: true, automargin: false },
-                        yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: false },
+                        xaxis: { autorange: true, automargin: true },
+                        yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: true },
                         barmode: 'stack',
                         paper_bgcolor: 'rgba(0,0,0,0)',
                         plot_bgcolor: 'rgba(0,0,0,0)',
                         autosize: true
                     }}
-                    config={{ displayModeBar: false, doubleClick: 'autosize' }}
+                    config={{ displayModeBar: false, doubleClick: 'autosize', responsive: true }}
                     onLegendClick={onLegendClick}
                 />
             </div>
@@ -231,36 +273,3 @@ function Graph({ state }: { state: ForecastPanelState }) {
     }
     return <ForecastMissing />
 }
-
-function ForecastPanel({ state }: { state: ForecastPanelState }) {
-    const renderCount = useRef(0)
-    console.log('Strategic ForecastPanel render: ', renderCount.current++)
-    return (
-        <div className='ForecastBody'>
-            <Graph state={state} />
-        </div>
-    )
-}
-
-export interface ForecastPanelState {
-    tribeId: string
-    forecastHorizon: string
-    incomeType: string
-    tile: number
-    positionsFilter: Array<string>
-    hiddenLegends: Array<string>
-    lastUpdated: number
-}
-
-function areEqual(prevProps: { state: ForecastPanelState }, nextProps: { state: ForecastPanelState }) {
-    const res = (prevProps.state.tribeId === nextProps.state.tribeId) &&
-        (prevProps.state.forecastHorizon === nextProps.state.forecastHorizon) &&
-        (prevProps.state.incomeType === nextProps.state.incomeType) &&
-        (prevProps.state.tile === nextProps.state.tile) &&
-        (prevProps.state.lastUpdated === nextProps.state.lastUpdated) &&
-        (prevProps.state.hiddenLegends.sort().join(',') === nextProps.state.hiddenLegends.sort().join(',')) &&
-        (prevProps.state.positionsFilter.sort().join(',') === nextProps.state.positionsFilter.sort().join(','))
-    return res
-}
-
-export default React.memo(ForecastPanel, areEqual)

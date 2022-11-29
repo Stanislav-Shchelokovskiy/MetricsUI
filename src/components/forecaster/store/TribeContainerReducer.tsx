@@ -5,9 +5,10 @@ import {
     CHANGE_FORECAST_HORIZON,
     CHANGE_TILE,
     CHANGE_POSITIONS_FILTER,
-    CHANGE_LEGENDS
+    CHANGE_LEGENDS,
+    EXPAND_FORECAST_ITEMS
 } from './Actions'
-import { Tribe } from '../Tribe'
+import { Tribe } from '../../common/Interfaces'
 
 
 export interface TacticalForecastState extends TribeContainerState {
@@ -19,6 +20,10 @@ export interface StrategicForecastState extends TribeContainerState {
     tile: number
     positionsFilter: Array<string>
     legendsOnlyLegends: Array<string>
+}
+
+export interface ForecasterItemsState extends TribeContainerState {
+    expandedItems: Array<string>
 }
 
 interface TribeContainerState {
@@ -39,6 +44,23 @@ export const INITIAL_STRATEGIC_FORECAST_STATE: StrategicForecastState = {
     legendsOnlyLegends: Array<string>()
 }
 
+export const INITIAL_FORECAST_ITEMS_EXPANDED_STATE = {
+    tribeId: '',
+    expandedItems: Array<string>()
+}
+
+
+export const ForecasterItemsReducer = (state: Array<ForecasterItemsState> = Array<ForecasterItemsState>(), action: AnyAction): Array<ForecasterItemsState> => {
+    switch (action.type) {
+        case CHANGE_SELECTED_TRIBES:
+            return filterTribes(state, action, INITIAL_FORECAST_ITEMS_EXPANDED_STATE)
+        case EXPAND_FORECAST_ITEMS:
+            return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, expandedItems: action.payload.data } })
+        default:
+            return state
+    }
+}
+
 
 export const TacticalForecastReducer = (state: Array<TacticalForecastState> = Array<TacticalForecastState>(), action: AnyAction): Array<TacticalForecastState> => {
     switch (action.type) {
@@ -51,6 +73,7 @@ export const TacticalForecastReducer = (state: Array<TacticalForecastState> = Ar
             return state
     }
 }
+
 
 export const StrategicForecastReducer = (state: Array<StrategicForecastState> = Array<StrategicForecastState>(), action: AnyAction): Array<StrategicForecastState> => {
     switch (action.type) {
