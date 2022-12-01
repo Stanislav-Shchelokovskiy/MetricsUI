@@ -3,19 +3,19 @@ import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-rea
 import LoadIndicator from '../../../../common/LoadIndicator'
 import FetchResult from '../../../../common/Interfaces'
 import { useAppDispatch, useAppSelector, AppStore } from '../../../../common/AppStore'
-import { changeSelectedTicketsTypes } from '../../../store/Actions'
+import { changeTicketsTypes } from '../../../store/Actions'
 import { fetchTicketsTypes, TicketsType } from '../../../network_resource_fetcher/FetchTicketsTypes'
 
 
 export default function TicketsTypesSelector({ title }: { title: string }) {
     const [ticketsTypes, setTypes] = useState<Array<TicketsType>>([])
-    const selectedTicketsTypes = useAppSelector((store: AppStore) => store.customersActivitySets.find(x => x.title === title)?.selectedTicketsTypes || [])
+    const selectedTicketsTypes = useAppSelector((store: AppStore) => store.customersActivitySets.find(x => x.title === title)?.ticketsTypes || [])
     const defaultValue = selectedTicketsTypes?.map(ticketType => ticketType.id)
 
     const dispatch = useAppDispatch()
     const onTicketsTypeSelect: (typeIds: Array<number>) => void = (typeIds: Array<number>) => {
         const selectedTypes = (typeIds.map(typeId => ticketsTypes.find(ticketType => ticketType.id === typeId)) as Array<TicketsType>)
-        dispatch(changeSelectedTicketsTypes({ title: title, data: selectedTypes }))
+        dispatch(changeTicketsTypes({ title: title, data: selectedTypes }))
     }
 
     useEffect(() => {

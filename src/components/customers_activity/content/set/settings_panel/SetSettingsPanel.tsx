@@ -4,22 +4,22 @@ import TicketsTypesSelector from './TicketsTypesSelector'
 import TicketsTagsSelector from './TicketsTagsSelector'
 import TribesSelector from '../../../../common/components/TribesSelector'
 import { AppStore } from '../../../../common/AppStore'
-import { changeSelectedTribes } from '../../../store/Actions'
+import { changeTribes } from '../../../store/Actions'
 import { Tribe } from '../../../../common/Interfaces'
 
 
 function SetSettingsPanel({ title }: { title: string }) {
-    const stateSelector = (store: AppStore) => store.customersActivitySets.find(x => x.title === title)?.selectedTribes || []
-    const changeSelectedTribesAction = (selectedTribes: Array<Tribe>) => changeSelectedTribes({ title: title, data: selectedTribes })
+    const stateSelector = (store: AppStore) => store.customersActivitySets.find(x => x.title === title)?.tribes || []
+    const changeSelectedTribesAction = (selectedTribes: Array<Tribe>) => changeTribes({ title: title, data: selectedTribes })
 
     return (
         <div className='CustomersActivity_SetSettingsPanel'>
-            <CustomersGroupsSelector title={title} />
-            <TicketsTypesSelector title={title} />
-            <TicketsTagsSelector title={title} />
             <TribesSelector
                 stateSelector={stateSelector}
                 changeSelectedTribesAction={changeSelectedTribesAction} />
+            <CustomersGroupsSelector title={title} />
+            <TicketsTagsSelector title={title} />
+            <TicketsTypesSelector title={title} />
         </div>
     )
 }

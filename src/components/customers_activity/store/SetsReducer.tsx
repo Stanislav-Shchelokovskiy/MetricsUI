@@ -3,31 +3,35 @@ import { Tribe } from '../../common/Interfaces'
 import { CustomersGroup } from '../network_resource_fetcher/FetchCustomersGroups'
 import { TicketsType } from '../network_resource_fetcher/FetchTicketsTypes'
 import { TicketsTag } from '../network_resource_fetcher/FetchTicketsTags'
+import { ReplyType } from '../network_resource_fetcher/FetchRepliesTypes'
 import {
     ADD_SET,
     REMOVE_SET,
-    CHANGE_SELECTED_TRIBES,
-    CHANGE_SELECTED_CUSTOMERS_GROUPS,
-    CHANGE_SELECTED_TICKETS_TYPES,
-    CHANGE_SELECTED_TICKETS_TAGS,
+    CHANGE_TRIBES,
+    CHANGE_CUSTOMERS_GROUPS,
+    CHANGE_TICKETS_TYPES,
+    CHANGE_TICKETS_TAGS,
+    CHANGE_REPLIES_TYPES,
 } from './Actions'
 
 
 export interface SetState {
     title: string
-    selectedCustomersGroups: Array<CustomersGroup>
-    selectedTicketsTypes: Array<TicketsType>
-    selectedTicketsTags: Array<TicketsTag>
-    selectedTribes: Array<Tribe>
+    tribes: Array<Tribe>
+    customersGroups: Array<CustomersGroup>
+    ticketsTags: Array<TicketsTag>
+    ticketsTypes: Array<TicketsType>
+    repliesTypes: Array<ReplyType>
 }
 
 
 export const INITIAL_SET_STATE: SetState = {
     title: '0',
-    selectedCustomersGroups: Array<CustomersGroup>(),
-    selectedTicketsTypes: Array<TicketsType>(),
-    selectedTicketsTags: Array<TicketsTag>(),
-    selectedTribes: Array<Tribe>()
+    tribes: Array<Tribe>(),
+    customersGroups: Array<CustomersGroup>(),
+    ticketsTags: Array<TicketsTag>(),
+    ticketsTypes: Array<TicketsType>(),
+    repliesTypes: Array<ReplyType>(),
 }
 
 const INTIAL_SETS_STATE: Array<SetState> = [INITIAL_SET_STATE]
@@ -43,17 +47,20 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
         case REMOVE_SET:
             return state.filter(set => set.title !== action.payload)
 
-        case CHANGE_SELECTED_TRIBES:
-            return updateSetState(action.payload.title, state, (x) => { return { ...x, selectedTribes: action.payload.data } })
+        case CHANGE_TRIBES:
+            return updateSetState(action.payload.title, state, (x) => { return { ...x, tribes: action.payload.data } })
 
-        case CHANGE_SELECTED_CUSTOMERS_GROUPS:
-            return updateSetState(action.payload.title, state, (x) => { return { ...x, selectedCustomersGroups: action.payload.data } })
+        case CHANGE_CUSTOMERS_GROUPS:
+            return updateSetState(action.payload.title, state, (x) => { return { ...x, customersGroups: action.payload.data } })
 
-        case CHANGE_SELECTED_TICKETS_TYPES:
-            return updateSetState(action.payload.title, state, (x) => { return { ...x, selectedTicketsTypes: action.payload.data } })
+        case CHANGE_TICKETS_TAGS:
+            return updateSetState(action.payload.title, state, (x) => { return { ...x, ticketsTags: action.payload.data } })
 
-        case CHANGE_SELECTED_TICKETS_TAGS:
-            return updateSetState(action.payload.title, state, (x) => { return { ...x, selectedTicketsTags: action.payload.data } })
+        case CHANGE_TICKETS_TYPES:
+            return updateSetState(action.payload.title, state, (x) => { return { ...x, ticketsTypes: action.payload.data } })
+
+        case CHANGE_REPLIES_TYPES:
+            return updateSetState(action.payload.title, state, (x) => { return { ...x, repliesTypes: action.payload.data } })
 
         default:
             return state
