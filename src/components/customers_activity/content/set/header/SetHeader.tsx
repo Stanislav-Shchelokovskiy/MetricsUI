@@ -11,7 +11,7 @@ export default function SetHeader({ title }: { title: string }) {
             <Title title={title} />
             <CloneButton title={title} />
             <RemoveButton title={title} />
-            {/* <CatPanel title={title} /> */}
+            <CatPanel title={title} />
         </div>
     )
 }
