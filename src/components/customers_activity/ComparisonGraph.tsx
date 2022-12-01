@@ -37,10 +37,10 @@ export default function ComparisonGraph() {
                     customersActivityState.groupByPeriod,
                     customersActivityState.range[0],
                     customersActivityState.range[1],
-                    set.selectedCustomersGroups.map(group => group.id),
-                    set.selectedTicketsTypes.map(type => type.id),
-                    set.selectedTicketsTags.map(tag => tag.id),
-                    set.selectedTribes.map(tribe => tribe.id),
+                    set.customersGroups.map(group => group.id),
+                    set.ticketsTypes.map(type => type.id),
+                    set.ticketsTags.map(tag => tag.id),
+                    set.tribes.map(tribe => tribe.id),
                 )
                 if (fetchedAggregates.success) {
                     aggs.push({

@@ -9,7 +9,8 @@
     /* background-color: rgba(240, 240, 240, 0.3); */
 }
 
-.CustomersActivity_SetSettingsPanel {
+.CustomersActivity_SetSettingsPanel,
+.CustomersActivity_CatPanel {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
@@ -19,6 +20,22 @@
     padding-bottom: 1%;
     gap: 1%;
     /* background-color: rgba(240, 240, 240, 0.5); */
+}
+
+.CustomersActivity_CatPanel {
+    background-color: bisque;
+    margin-left: 10%;
+    /* align-self: stretch;
+    justify-self: flex-end; */
+    flex-grow: 1;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding-bottom: 0px;
+}
+
+.CustomersActivity_ReplyTypesSelector{
+    margin-bottom: 0px;
+     flex: 1;
 }
 
 .CustomersActivity_CustomersGroupsSelector {

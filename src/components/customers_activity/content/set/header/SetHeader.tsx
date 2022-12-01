@@ -2,6 +2,7 @@ import React from 'react'
 import Title from './Title'
 import CloneButton from './CloneButton'
 import RemoveButton from './RemoveButton'
+import CatPanel from '../cat_panel/CatPanel'
 
 
 export default function SetHeader({ title }: { title: string }) {
@@ -10,6 +11,7 @@ export default function SetHeader({ title }: { title: string }) {
             <Title title={title} />
             <CloneButton title={title} />
             <RemoveButton title={title} />
+            <CatPanel title={title} />
         </div>
     )
 }

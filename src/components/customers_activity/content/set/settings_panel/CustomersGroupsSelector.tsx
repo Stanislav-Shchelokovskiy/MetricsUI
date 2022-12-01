@@ -3,19 +3,19 @@ import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-rea
 import LoadIndicator from '../../../../common/LoadIndicator'
 import FetchResult from '../../../../common/Interfaces'
 import { useAppDispatch, useAppSelector, AppStore } from '../../../../common/AppStore'
-import { changeSelectedCustomersGroups } from '../../../store/Actions'
+import { changeCustomersGroups } from '../../../store/Actions'
 import { fetchCustomersGroups, CustomersGroup } from '../../../network_resource_fetcher/FetchCustomersGroups'
 
 
 function CustomersGroupsSelector({ title }: { title: string }) {
     const [groups, setGroups] = useState<Array<CustomersGroup>>([])
-    const selectedGroups = useAppSelector((store: AppStore) => store.customersActivitySets.find(x => x.title === title)?.selectedCustomersGroups || [])
+    const selectedGroups = useAppSelector((store: AppStore) => store.customersActivitySets.find(x => x.title === title)?.customersGroups || [])
     const defaultValue = selectedGroups?.map(group => group.id)
 
     const dispatch = useAppDispatch()
     const onGroupSelect: (groupIds: Array<string>) => void = (groupIds: Array<string>) => {
         const selectedGroups = (groupIds.map(groupId => groups.find(group => group.id === groupId)) as Array<CustomersGroup>)
-        dispatch(changeSelectedCustomersGroups({ title: title, data: selectedGroups }))
+        dispatch(changeCustomersGroups({ title: title, data: selectedGroups }))
     }
 
     useEffect(() => {
