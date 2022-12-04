@@ -1,8 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { Payload } from '../../common/Interfaces'
-import { useAppDispatch } from '../../common/AppStore'
+import { Payload } from '../Interfaces'
+import { useAppDispatch } from '../AppStore'
 
-export default function useSelectValueDispatch<DataSourceT, DataSourceKeyT>(
+export default function useMultiSelectValueDispatch<DataSourceT, DataSourceKeyT>(
     actionKey: string,
     action: (values: Payload<string, Array<DataSourceT>>) => PayloadAction<Payload<string, Array<DataSourceT>>>,
     dataSource: Array<DataSourceT>,

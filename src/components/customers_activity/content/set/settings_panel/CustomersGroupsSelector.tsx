@@ -4,7 +4,7 @@ import { AppStore } from '../../../../common/AppStore'
 import { changeCustomersGroups } from '../../../store/Actions'
 import { fetchCustomersGroups, CustomersGroup } from '../../../network_resource_fetcher/FetchCustomersGroups'
 import useDataSource from '../../../../common/hooks/UseDataSource'
-import useSelectValueDispatch from '../../../../common/hooks/UseSelectValueDispatch'
+import useMultiSelectValueDispatch from '../../../../common/hooks/UseMultiSelectValueDispatch'
 import useSelectedValues from '../../../../common/hooks/UseSelectedValues'
 
 
@@ -18,7 +18,7 @@ function CustomersGroupsSelector({ setTitle }: { setTitle: string }) {
         (store: AppStore) => store.customersActivitySets.find(x => x.title === setTitle)?.customersGroups || [],
         (value: CustomersGroup) => value.id)
 
-    const onGroupSelect = useSelectValueDispatch<CustomersGroup, string>(
+    const onGroupSelect = useMultiSelectValueDispatch<CustomersGroup, string>(
         setTitle,
         changeCustomersGroups,
         groups,
