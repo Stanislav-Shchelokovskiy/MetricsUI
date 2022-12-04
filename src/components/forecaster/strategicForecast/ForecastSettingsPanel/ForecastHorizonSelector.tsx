@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect, useCallback } from 'react'
 import { AnyAction } from '@reduxjs/toolkit'
-import LoadIndicator from '../../../common/LoadIndicator'
+import LoadIndicator from '../../../common/components/LoadIndicator'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import FetchResult from '../../../common/Interfaces'
 import { useAppDispatch } from '../../../common/AppStore'

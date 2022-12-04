@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
-import LoadIndicator from '../../../../common/LoadIndicator'
+import LoadIndicator from '../../../../common/components/LoadIndicator'
 import FetchResult from '../../../../common/Interfaces'
 import { useAppDispatch, useAppSelector, AppStore } from '../../../../common/AppStore'
 import { changeRepliesTypes } from '../../../store/Actions'
@@ -15,7 +15,7 @@ export default function ReplyTypesSelector({ title }: { title: string }) {
     const dispatch = useAppDispatch()
     const onRepliesTypeSelect: (typeIds: Array<number>) => void = (typeIds: Array<number>) => {
         const selectedTypes = (typeIds.map(typeId => repliesTypes.find(replyType => replyType.id === typeId)) as Array<ReplyType>)
-        dispatch(changeRepliesTypes({ title: title, data: selectedTypes }))
+        dispatch(changeRepliesTypes({ stateId: title, data: selectedTypes }))
     }
 
     useEffect(() => {

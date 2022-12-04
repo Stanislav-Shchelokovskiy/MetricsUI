@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
-import LoadIndicator from '../../../../common/LoadIndicator'
+import LoadIndicator from '../../../../common/components/LoadIndicator'
 import FetchResult from '../../../../common/Interfaces'
 import { useAppDispatch, useAppSelector, AppStore } from '../../../../common/AppStore'
 import { changeTicketsTypes } from '../../../store/Actions'
@@ -15,7 +15,7 @@ export default function TicketsTypesSelector({ title }: { title: string }) {
     const dispatch = useAppDispatch()
     const onTicketsTypeSelect: (typeIds: Array<number>) => void = (typeIds: Array<number>) => {
         const selectedTypes = (typeIds.map(typeId => ticketsTypes.find(ticketType => ticketType.id === typeId)) as Array<TicketsType>)
-        dispatch(changeTicketsTypes({ title: title, data: selectedTypes }))
+        dispatch(changeTicketsTypes({ stateId: title, data: selectedTypes }))
     }
 
     useEffect(() => {

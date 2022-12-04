@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button } from 'devextreme-react/button'
-import LoadIndicator from '../../../common/LoadIndicator'
+import LoadIndicator from '../../../common/components/LoadIndicator'
 import FetchResult from '../../../common/Interfaces'
 import { changeLastUpdated } from '../../store/Actions'
 import { useAppDispatch } from '../../../common/AppStore'

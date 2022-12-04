@@ -1,5 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { Tribe } from '../../common/Interfaces'
+import { Tribe, Payload } from '../../common/Interfaces'
 import { CustomersGroup } from '../network_resource_fetcher/FetchCustomersGroups'
 import { TicketsType } from '../network_resource_fetcher/FetchTicketsTypes'
 import { TicketsTag } from '../network_resource_fetcher/FetchTicketsTags'
@@ -13,7 +13,6 @@ import {
     CHANGE_TICKETS_TAGS,
     CHANGE_REPLIES_TYPES,
 } from './Actions'
-
 
 export interface SetState {
     title: string
@@ -48,19 +47,19 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
             return state.filter(set => set.title !== action.payload)
 
         case CHANGE_TRIBES:
-            return updateSetState(action.payload.title, state, (x) => { return { ...x, tribes: action.payload.data } })
+            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, tribes: action.payload.data } })
 
         case CHANGE_CUSTOMERS_GROUPS:
-            return updateSetState(action.payload.title, state, (x) => { return { ...x, customersGroups: action.payload.data } })
+            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, customersGroups: action.payload.data } })
 
         case CHANGE_TICKETS_TAGS:
-            return updateSetState(action.payload.title, state, (x) => { return { ...x, ticketsTags: action.payload.data } })
+            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, ticketsTags: action.payload.data } })
 
         case CHANGE_TICKETS_TYPES:
-            return updateSetState(action.payload.title, state, (x) => { return { ...x, ticketsTypes: action.payload.data } })
+            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, ticketsTypes: action.payload.data } })
 
         case CHANGE_REPLIES_TYPES:
-            return updateSetState(action.payload.title, state, (x) => { return { ...x, repliesTypes: action.payload.data } })
+            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, repliesTypes: action.payload.data } })
 
         default:
             return state

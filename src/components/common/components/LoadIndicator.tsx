@@ -1,4 +1,4 @@
-import './styles/LoadIndicator.css'
+import '../styles/LoadIndicator.css'
 
 import React from 'react'
 import { LoadIndicator as DxLoadIndicator } from 'devextreme-react/load-indicator'
