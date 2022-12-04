@@ -4,11 +4,11 @@ import { useAppDispatch } from '../../../../common/AppStore'
 import { addSet } from '../../../store/Actions'
 
 
-export default function CloneButton({ title }: { title: string }) {
+export default function CloneButton({ setTitle }: { setTitle: string }) {
     const dispatch = useAppDispatch()
     const onClick = useCallback(() => {
-        dispatch(addSet(title))
-    }, [title, dispatch])
+        dispatch(addSet(setTitle))
+    }, [setTitle, dispatch])
 
     return (
         <Button

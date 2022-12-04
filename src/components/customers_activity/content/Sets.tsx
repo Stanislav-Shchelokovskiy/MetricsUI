@@ -8,7 +8,7 @@ import {
 
 
 export default function Sets() {
-        const sets = useAppSelector((state: AppStore) => state.customersActivity.sets)
+    const sets = useAppSelector((state: AppStore) => state.customersActivity.sets)
     return (
         <ScrollView
             className='CustomersActivity_Sets_ScrollView'
@@ -21,7 +21,7 @@ export default function Sets() {
                 {sets?.map((set) => {
                     return <Set
                         key={set}
-                        title={set} />
+                        setTitle={set} />
                 })}
             </div>
         </ScrollView>

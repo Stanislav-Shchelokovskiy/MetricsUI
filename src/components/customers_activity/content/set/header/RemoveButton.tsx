@@ -4,11 +4,11 @@ import { AppStore, useAppDispatch, useAppSelector } from '../../../../common/App
 import { removeSet } from '../../../store/Actions'
 
 
-export default function RemoveButton({ title }: { title: string }) {
+export default function RemoveButton({ setTitle }: { setTitle: string }) {
     const dispatch = useAppDispatch()
     const onClick = useCallback(() => {
-        dispatch(removeSet(title))
-    }, [title, dispatch])
+        dispatch(removeSet(setTitle))
+    }, [setTitle, dispatch])
 
     const disabled: boolean = useAppSelector((state: AppStore) => state.customersActivity.sets).length === 1
     return (

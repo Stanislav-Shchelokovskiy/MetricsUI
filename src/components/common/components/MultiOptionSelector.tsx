@@ -1,17 +1,26 @@
 import React from 'react'
 import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
 import LoadIndicator from './LoadIndicator'
+import useDataSource from '../../common/hooks/UseDataSource'
+import useMultiSelectValueDispatch from '../../common/hooks/UseMultiSelectValueDispatch'
+import useSelectedValues from '../../common/hooks/UseSelectedValues'
+import FetchResult from '../Interfaces'
+import { AppStore } from '../AppStore'
+import { PayloadAction } from '@reduxjs/toolkit'
+import { Payload } from '../Interfaces'
 
 
-export default function MultiOptionSelector<dataSourceT, valueExprT>(
+export default function MultiOptionSelector<DataSourceT, ValueExprT>(
     {
         className,
         displayExpr,
         valueExpr,
         placeholder,
         label,
-        dataSource,
-        selectedValues,
+        fetchDataSourceValues,
+        stateSelector,
+        dataSourceObjectKeySelector,
+        dataSourceObjectByKeySelector,
         onValueChange,
         showSelectionControls,
     }: {
@@ -20,12 +29,27 @@ export default function MultiOptionSelector<dataSourceT, valueExprT>(
         valueExpr: string
         placeholder: string
         label: string
-        dataSource: Array<dataSourceT>
-        selectedValues: Array<valueExprT>
-        onValueChange: (values: Array<valueExprT>) => void
+        fetchDataSourceValues: () => Promise<FetchResult<Array<DataSourceT>>>
+        stateSelector: (store: AppStore) => Array<DataSourceT>
+        dataSourceObjectKeySelector: (value: DataSourceT) => ValueExprT
+        dataSourceObjectByKeySelector: (value: DataSourceT, targetKeyValue: ValueExprT) => boolean
+        onValueChange: (values: Array<DataSourceT>) => PayloadAction<Payload<string, Array<DataSourceT>>>
         showSelectionControls: boolean
     }) {
-    if (dataSource.length > 0) {
+
+    const values = useDataSource<DataSourceT>(fetchDataSourceValues)
+
+    const selectedValues = useSelectedValues<DataSourceT, ValueExprT>(
+        stateSelector,
+        dataSourceObjectKeySelector
+    )
+
+    const onValueChangeHandler = useMultiSelectValueDispatch<DataSourceT, ValueExprT>(
+        onValueChange,
+        values,
+        dataSourceObjectByKeySelector)
+
+    if (values.length > 0) {
         return (
             <TagBox
                 className={className}
@@ -33,10 +57,9 @@ export default function MultiOptionSelector<dataSourceT, valueExprT>(
                 valueExpr={valueExpr}
                 placeholder={placeholder}
                 label={label}
-                dataSource={dataSource}
+                dataSource={values}
                 defaultValue={selectedValues}
-                onValueChange={onValueChange}
-
+                onValueChange={onValueChangeHandler}
                 showSelectionControls={showSelectionControls}
                 multiline={true}
                 searchEnabled={true}

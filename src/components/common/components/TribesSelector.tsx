@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { PayloadAction } from '@reduxjs/toolkit'
-import FetchResult, { Tribe } from '../Interfaces'
-import { useAppDispatch, useAppSelector, AppStore } from '../AppStore'
+import { Tribe } from '../Interfaces'
+import { AppStore } from '../AppStore'
 import { fetchTribes } from '../network_resource_fetcher/FetchAvailableTribes'
 import MultiOptionSelector from './MultiOptionSelector'
 
@@ -19,9 +19,9 @@ export default function TribesSelector(
     // const renderCount = useRef(0)
     // console.log(' TribesSelector render ', renderCount.current++)
 
-    const tribes = useTribes()
-    const defaultValue = useSelectedTribes(stateSelector)
-    const onTribeSelect = useSelectTribeDispatch(tribes, changeSelectedTribesAction)
+    const dataSourceObjectKeySelector = (value: Tribe) => value.id
+    const dataSourceObjectByKeySelector = (value: Tribe, targetKeyValue: string) => value.id === targetKeyValue
+    const onValueChange = (values: Array<Tribe>) => changeSelectedTribesAction(values)
 
     return <MultiOptionSelector<Tribe, string>
         className='TribesSelector'
@@ -29,36 +29,11 @@ export default function TribesSelector(
         valueExpr='id'
         placeholder='Select tribes to display...'
         label='Tribes'
-        dataSource={tribes}
-        selectedValues={defaultValue}
-        onValueChange={onTribeSelect}
+        fetchDataSourceValues={fetchTribes}
+        stateSelector={stateSelector}
+        dataSourceObjectKeySelector={dataSourceObjectKeySelector}
+        dataSourceObjectByKeySelector={dataSourceObjectByKeySelector}
+        onValueChange={onValueChange}
         showSelectionControls={true}
     />
-}
-
-
-function useTribes() {
-    const [tribes, setTribes] = useState<Array<Tribe>>([])
-    useEffect(() => {
-        (async () => {
-            const fetchResult: FetchResult<Array<Tribe>> = await fetchTribes()
-            if (fetchResult.success) {
-                setTribes(fetchResult.data)
-            }
-        })()
-    }, [])
-    return tribes
-}
-
-function useSelectedTribes(stateSelector: (store: AppStore) => Array<Tribe>,) {
-    const selectedTribes = useAppSelector(stateSelector)
-    return selectedTribes?.map(tribe => tribe.id)
-}
-
-function useSelectTribeDispatch(tribes: Array<Tribe>, changeSelectedTribesAction: (selectedTribes: Array<Tribe>) => PayloadAction<any>) {
-    const dispatch = useAppDispatch()
-    return (values: Array<string>) => {
-        const selectedTribes = (values.map(tribeId => tribes.find(tribe => tribe.id === tribeId)) as Array<Tribe>)
-        dispatch(changeSelectedTribesAction(selectedTribes))
-    }
 }

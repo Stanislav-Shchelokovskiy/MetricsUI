@@ -3,26 +3,13 @@ import MultiOptionSelector from '../../../../common/components/MultiOptionSelect
 import { AppStore } from '../../../../common/AppStore'
 import { changeCustomersGroups } from '../../../store/Actions'
 import { fetchCustomersGroups, CustomersGroup } from '../../../network_resource_fetcher/FetchCustomersGroups'
-import useDataSource from '../../../../common/hooks/UseDataSource'
-import useMultiSelectValueDispatch from '../../../../common/hooks/UseMultiSelectValueDispatch'
-import useSelectedValues from '../../../../common/hooks/UseSelectedValues'
 
 
 function CustomersGroupsSelector({ setTitle }: { setTitle: string }) {
-    const renderCount = useRef(0)
-    console.log('CustomersGroupsSelector render: ', renderCount.current++)
-
-    const groups = useDataSource<CustomersGroup>(fetchCustomersGroups)
-
-    const selectedGroups = useSelectedValues<CustomersGroup, string>(
-        (store: AppStore) => store.customersActivitySets.find(x => x.title === setTitle)?.customersGroups || [],
-        (value: CustomersGroup) => value.id)
-
-    const onGroupSelect = useMultiSelectValueDispatch<CustomersGroup, string>(
-        setTitle,
-        changeCustomersGroups,
-        groups,
-        (value: CustomersGroup, targetValue: string) => value.id === targetValue)
+    const stateSelector = (store: AppStore) => store.customersActivitySets.find(x => x.title === setTitle)?.customersGroups || []
+    const dataSourceObjectKeySelector = (value: CustomersGroup) => value.id
+    const dataSourceObjectByKeySelector = (value: CustomersGroup, targetKeyValue: string) => value.id === targetKeyValue
+    const onValueChange = (values: Array<CustomersGroup>) => changeCustomersGroups({ stateId: setTitle, data: values })
 
     return <MultiOptionSelector<CustomersGroup, string>
         className='CustomersActivity_CustomersGroupsSelector'
@@ -30,9 +17,11 @@ function CustomersGroupsSelector({ setTitle }: { setTitle: string }) {
         valueExpr='id'
         placeholder='Select user groups'
         label='User groups'
-        dataSource={groups}
-        selectedValues={selectedGroups}
-        onValueChange={onGroupSelect} />
+        fetchDataSourceValues={fetchCustomersGroups}
+        stateSelector={stateSelector}
+        dataSourceObjectKeySelector={dataSourceObjectKeySelector}
+        dataSourceObjectByKeySelector={dataSourceObjectByKeySelector}
+        onValueChange={onValueChange} />
 }
 
 export default React.memo(CustomersGroupsSelector)

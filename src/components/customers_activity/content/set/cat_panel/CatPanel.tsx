@@ -2,10 +2,10 @@ import React from 'react'
 import ReplyTypesSelector from './ReplyTypesSelector'
 
 
-function CatPanel({ title }: { title: string }) {
+function CatPanel({ setTitle }: { setTitle: string }) {
     return (
         <div className='CustomersActivity_CatPanel'>
-            <ReplyTypesSelector title={title} />
+            <ReplyTypesSelector setTitle={setTitle} />
         </div>
     )
 }
