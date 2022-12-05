@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import MultiOptionSelectorWithFetch from '../../../../common/components/MultiOptionSelector'
 import { AppStore } from '../../../../common/AppStore'
 import { changeTicketsTags } from '../../../store/Actions'

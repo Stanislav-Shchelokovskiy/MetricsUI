@@ -1,4 +1,4 @@
-import React, { useMemo,useRef } from 'react'
+import React, { useMemo } from 'react'
 import { MultiOptionSelector } from '../../../common/components/MultiOptionSelector'
 import { changePositionsFilter } from '../../store/Actions'
 import { AppStore } from '../../../common/AppStore'

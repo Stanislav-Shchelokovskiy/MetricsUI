@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useCallback, useRef } from 'react'
+import React, { useReducer, useEffect, useCallback } from 'react'
 import Plot from 'react-plotly.js'
 import { Data as GraphData } from 'plotly.js'
 import ForecastMissing from '../utils/ForecastMissing'
@@ -23,7 +23,7 @@ export interface ForecastPanelState {
 function ForecastPanel({ state }: { state: ForecastPanelState }) {
     // const renderCount = useRef(0)
     // console.log('Strategic ForecastPanel render: ', renderCount.current++)
-    
+
     return (
         <div className='ForecastBody'>
             <Graph state={state} />

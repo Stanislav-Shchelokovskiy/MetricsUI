@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import OptionSelector from '../../../common/components/OptionSelector'
 import { AppStore } from '../../../common/AppStore'
 import { changeForecastHorizon } from '../../store/Actions'
