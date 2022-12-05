@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
+import MultiOptionSelectorWithFetch from '../../../../common/components/MultiOptionSelector'
 import { AppStore } from '../../../../common/AppStore'
 import { changeTicketsTypes } from '../../../store/Actions'
 import { fetchTicketsTypes, TicketsType } from '../../../network_resource_fetcher/FetchTicketsTypes'
@@ -9,7 +9,7 @@ export default function TicketsTypesSelector({ setTitle }: { setTitle: string })
     const stateSelector = (store: AppStore) => store.customersActivitySets.find(x => x.title === setTitle)?.ticketsTypes || []
     const onValueChange = (allValues: Array<TicketsType>, values: Array<number>) => changeTicketsTypes({ stateId: setTitle, data: values })
 
-    return <MultiOptionSelector<TicketsType, number>
+    return <MultiOptionSelectorWithFetch<TicketsType, number>
         className='CustomersActivity_TicketsTypesSelector'
         displayExpr='name'
         valueExpr='id'

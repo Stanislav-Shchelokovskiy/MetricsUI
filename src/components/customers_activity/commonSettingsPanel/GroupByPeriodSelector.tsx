@@ -7,7 +7,7 @@ import { fetchGroupByPeriods, GroupByPeriod } from '../network_resource_fetcher/
 
 export default function GroupByPeriodSelector() {
     const stateSelector = (store: AppStore) => store.customersActivity.groupByPeriod
-    const defaultValueSelector = (values: Array<GroupByPeriod>) => values[0].format
+    const defaultValueSelector = (values: Array<GroupByPeriod>) => values[0]?.format
 
     return (
         <OptionSelector<GroupByPeriod, string>

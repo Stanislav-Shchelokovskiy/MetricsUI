@@ -3,7 +3,7 @@ import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 
 
 export interface ReplyType {
-    id: number
+    id: string
     name: string
 }
 

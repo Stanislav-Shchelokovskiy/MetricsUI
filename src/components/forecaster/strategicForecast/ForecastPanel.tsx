@@ -21,9 +21,8 @@ export interface ForecastPanelState {
 }
 
 function ForecastPanel({ state }: { state: ForecastPanelState }) {
-    const renderCount = useRef(0)
-    console.log('Strategic ForecastPanel render: ', renderCount.current++)
-    console.log(state)
+    // const renderCount = useRef(0)
+    // console.log('Strategic ForecastPanel render: ', renderCount.current++)
     
     return (
         <div className='ForecastBody'>
@@ -233,7 +232,7 @@ function Graph({ state }: { state: ForecastPanelState }) {
         setTimeout(() => {
             console.log('click')
             forecasterDispatch(legendClick(state.tribeId, legendsToStore))
-        }, 700)
+        }, 500)
         return true
     }, [state.tribeId, forecasterDispatch])
 

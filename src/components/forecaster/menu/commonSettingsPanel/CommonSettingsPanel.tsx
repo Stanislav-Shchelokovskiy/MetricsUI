@@ -20,7 +20,7 @@ function CommonSettingsPanel() {
             <IncomeSelector />
             <TribesSelector
                 stateSelector={stateSelector}
-                changeSelectedTribesAction={changeSelectedTribesAction} />
+                changeSelectedTribesAction={changeSelectedTribesAction}/>
         </div>
     )
 }

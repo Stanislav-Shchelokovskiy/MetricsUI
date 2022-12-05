@@ -41,6 +41,7 @@ export default function ComparisonGraph() {
                     set.ticketsTypes,
                     set.ticketsTags,
                     set.tribes,
+                    set.repliesTypes,
                 )
                 if (fetchedAggregates.success) {
                     aggs.push({

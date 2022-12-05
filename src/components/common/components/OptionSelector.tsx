@@ -43,6 +43,7 @@ export default function OptionSelector<DataSourceT, ValueExprT>(
         stateSelector,
         defaultValueSelector,
         onValueChange,
+        container,
     }: {
         className: string
         displayExpr: string
@@ -53,6 +54,7 @@ export default function OptionSelector<DataSourceT, ValueExprT>(
         stateSelector: (store: AppStore) => ValueExprT | undefined
         defaultValueSelector: (values: Array<DataSourceT>) => ValueExprT
         onValueChange: (value: ValueExprT) => PayloadAction<any>
+        container: string
     }) {
 
     const storedDefaultValue = useAppSelector(stateSelector)
@@ -70,7 +72,6 @@ export default function OptionSelector<DataSourceT, ValueExprT>(
 
                 const defaultValue = storedDefaultValue || defaultValueSelector(fetchResult.data)
                 componentDispatch({ type: CHANGE_DEFAULT_VALUE, payload: defaultValue })
-                console.log(defaultValue)
                 appDispatch(onValueChange(defaultValue))
             }
         })()
@@ -89,7 +90,8 @@ export default function OptionSelector<DataSourceT, ValueExprT>(
             labelMode='static'>
             <DropDownOptions
                 hideOnOutsideClick={true}
-                hideOnParentScroll={true} />
+                hideOnParentScroll={true}
+                container={container} />
         </SelectBox >
     }
     return <LoadIndicator width={undefined} height={25} />
@@ -99,4 +101,5 @@ OptionSelector.defaultProps = {
     displayExpr: undefined,
     valueExpr: undefined,
     placeholder: undefined,
+    container: undefined,
 }

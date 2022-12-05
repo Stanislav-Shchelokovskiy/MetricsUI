@@ -3,23 +3,20 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { Tribe } from '../Interfaces'
 import { AppStore } from '../AppStore'
 import { fetchTribes } from '../network_resource_fetcher/FetchAvailableTribes'
-import MultiOptionSelector from './MultiOptionSelector'
+import MultiOptionSelectorWithFetch from './MultiOptionSelector'
 
 
 export default function TribesSelector(
     {
         stateSelector,
-        changeSelectedTribesAction
+        changeSelectedTribesAction,
     }:
         {
             stateSelector: (store: AppStore) => Array<string>,
             changeSelectedTribesAction: (allTribes: Array<Tribe>, selectedTribes: Array<string>) => PayloadAction<any>
         }
 ) {
-    // const renderCount = useRef(0)
-    // console.log(' TribesSelector render ', renderCount.current++)
-
-    return <MultiOptionSelector<Tribe, string>
+    return <MultiOptionSelectorWithFetch<Tribe, string>
         className='TribesSelector'
         displayExpr='name'
         valueExpr='id'

@@ -1,5 +1,5 @@
 import React from 'react'
-import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
+import MultiOptionSelectorWithFetch from '../../../../common/components/MultiOptionSelector'
 import { AppStore } from '../../../../common/AppStore'
 import { changeRepliesTypes } from '../../../store/Actions'
 import { fetchRepliesTypes, ReplyType } from '../../../network_resource_fetcher/FetchRepliesTypes'
@@ -7,9 +7,9 @@ import { fetchRepliesTypes, ReplyType } from '../../../network_resource_fetcher/
 
 export default function ReplyTypesSelector({ setTitle }: { setTitle: string }) {
     const stateSelector = (store: AppStore) => store.customersActivitySets.find(x => x.title === setTitle)?.repliesTypes || []
-    const onValueChange = (allValues: Array<ReplyType>, values: Array<number>) => changeRepliesTypes({ stateId: setTitle, data: values })
+    const onValueChange = (allValues: Array<ReplyType>, values: Array<string>) => changeRepliesTypes({ stateId: setTitle, data: values })
 
-    return <MultiOptionSelector<ReplyType, number>
+    return <MultiOptionSelectorWithFetch<ReplyType, string>
         className='CustomersActivity_ReplyTypesSelector'
         displayExpr='name'
         valueExpr='id'

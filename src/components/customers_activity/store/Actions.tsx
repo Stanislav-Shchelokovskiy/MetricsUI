@@ -82,7 +82,7 @@ export const changeTicketsTypes = (ticketsTypes: Payload<string, Array<number>>)
 }
 
 export const CHANGE_REPLIES_TYPES = 'customers_activity/change_replies_types'
-export const changeRepliesTypes = (repliesTypes: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
+export const changeRepliesTypes = (repliesTypes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
         type: CHANGE_REPLIES_TYPES,
         payload: repliesTypes

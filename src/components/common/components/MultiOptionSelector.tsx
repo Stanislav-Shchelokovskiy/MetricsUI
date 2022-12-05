@@ -7,7 +7,7 @@ import { AppStore, useAppSelector, useAppDispatch } from '../AppStore'
 import { PayloadAction } from '@reduxjs/toolkit'
 
 
-export default function MultiOptionSelector<DataSourceT, ValueExprT>(
+export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(
     {
         className,
         displayExpr,
@@ -18,6 +18,7 @@ export default function MultiOptionSelector<DataSourceT, ValueExprT>(
         stateSelector,
         onValueChange,
         showSelectionControls,
+        container,
     }: {
         className: string
         displayExpr: string
@@ -28,10 +29,49 @@ export default function MultiOptionSelector<DataSourceT, ValueExprT>(
         stateSelector: (store: AppStore) => Array<ValueExprT>
         onValueChange: (allValues: Array<DataSourceT>, selectedValues: Array<ValueExprT>) => PayloadAction<any>
         showSelectionControls: boolean
+        container: string
     }) {
 
     const dataSource = useDataSource<DataSourceT>(fetchDataSourceValues)
 
+    return (
+        <MultiOptionSelector
+            className={className}
+            displayExpr={displayExpr}
+            valueExpr={valueExpr}
+            placeholder={placeholder}
+            label={label}
+            dataSource={dataSource}
+            stateSelector={stateSelector}
+            onValueChange={onValueChange}
+            showSelectionControls={showSelectionControls} />
+    )
+}
+
+export function MultiOptionSelector<DataSourceT, ValueExprT>(
+    {
+        className,
+        displayExpr,
+        valueExpr,
+        placeholder,
+        label,
+        dataSource,
+        stateSelector,
+        onValueChange,
+        showSelectionControls,
+        container,
+    }: {
+        className: string
+        displayExpr: string
+        valueExpr: string
+        placeholder: string
+        label: string
+        dataSource: Array<DataSourceT>
+        stateSelector: (store: AppStore) => Array<ValueExprT>
+        onValueChange: (allValues: Array<DataSourceT>, selectedValues: Array<ValueExprT>) => PayloadAction<any>
+        showSelectionControls: boolean
+        container: string
+    }) {
     const selectedValues = useAppSelector(stateSelector)
 
     const dispatch = useAppDispatch()
@@ -57,7 +97,8 @@ export default function MultiOptionSelector<DataSourceT, ValueExprT>(
                 labelMode='static'>
                 <DropDownOptionsTagBox
                     hideOnOutsideClick={true}
-                    hideOnParentScroll={true} />
+                    hideOnParentScroll={true}
+                    container={container} />
             </TagBox>
         )
     }
@@ -65,6 +106,16 @@ export default function MultiOptionSelector<DataSourceT, ValueExprT>(
 }
 
 
+MultiOptionSelectorWithFetch.defaultProps = {
+    displayExpr: undefined,
+    valueExpr: undefined,
+    showSelectionControls: false,
+    container: undefined,
+}
+
 MultiOptionSelector.defaultProps = {
-    showSelectionControls: false
+    displayExpr: undefined,
+    valueExpr: undefined,
+    showSelectionControls: false,
+    container: undefined,
 }

@@ -1,87 +1,21 @@
-import React, { useReducer, useEffect, useCallback } from 'react'
-import { AnyAction } from '@reduxjs/toolkit'
-import LoadIndicator from '../../../common/components/LoadIndicator'
-import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
-import FetchResult from '../../../common/Interfaces'
+import React, {useRef} from 'react'
+import OptionSelector from '../../../common/components/OptionSelector'
+import { AppStore } from '../../../common/AppStore'
 import { fetchTiles } from '../../network_resource_fetcher/FetchForecastSettingsValues'
-import { useAppDispatch } from '../../../common/AppStore'
 import { changeTile } from '../../store/Actions'
 
 
-interface TileSelectorState {
-    tiles: Array<number>
-    tile: number
-}
+export default function TilesSelector({ tribeId, }: { tribeId: string }) {
+    const stateSelector = (store: AppStore) => store.strategicForecast.find(x => x.tribeId === tribeId)?.tile
+    const defaultValueSelector = (values: Array<number>) => values[values.length % 2]
+    const onValueChange = (value: number) => changeTile(tribeId, value)
 
-const INITIAL_STATE: TileSelectorState = {
-    tiles: Array<number>(),
-    tile: 0
-}
-
-const CHANGE_TILES = 'change_tiles'
-const CHANGE_TILE = 'change_tile'
-
-function tileSelectorStateReducer(state: TileSelectorState, action: AnyAction): TileSelectorState {
-    switch (action.type) {
-        case CHANGE_TILES:
-            return {
-                ...state,
-                tiles: action.payload
-            }
-        case CHANGE_TILE:
-            return {
-                ...state,
-                tile: action.payload
-            }
-        default:
-            return state
-    }
-}
-
-
-export default function TilesSelector(
-    {
-        tribeId,
-        defaultTile,
-    }:
-        {
-            tribeId: string
-            defaultTile: number
-        }
-) {
-    const [tilesSelectorState, tilesSelectorDispatch] = useReducer(tileSelectorStateReducer, INITIAL_STATE)
-
-    useEffect(() => {
-        (async () => {
-            const tilesFetchResult: FetchResult<Array<number>> = await fetchTiles()
-            if (tilesFetchResult.success) {
-                tilesSelectorDispatch({ type: CHANGE_TILES, payload: tilesFetchResult.data })
-                const tile = defaultTile || tilesFetchResult.data[0]
-                tilesSelectorDispatch({ type: CHANGE_TILE, payload: tile })
-                dispatch(changeTile(tribeId, tile))
-            }
-        })()
-    }, [])
-
-    const dispatch = useAppDispatch()
-    const onTileChange = useCallback((tile: number) => {
-        dispatch(changeTile(tribeId, tile))
-    }, [tribeId, dispatch])
-
-    if (tilesSelectorState.tiles.length > 0) {
-        return (
-            <SelectBox
-                dataSource={tilesSelectorState.tiles}
-                defaultValue={tilesSelectorState.tile}
-                onValueChange={onTileChange}
-                label='Performance Level'
-                labelMode='static'>
-                <DropDownOptions
-                    hideOnOutsideClick={true}
-                    hideOnParentScroll={true}
-                    container='#tribe_accordion' />
-            </SelectBox>
-        )
-    }
-    return <LoadIndicator width={undefined} height={25} />
+    return <OptionSelector<number, number>
+        className=''
+        fetchDataSourceValues={fetchTiles}
+        stateSelector={stateSelector}
+        defaultValueSelector={defaultValueSelector}
+        onValueChange={onValueChange}
+        label='Performance Level'
+        container='#tribe_accordion' />
 }

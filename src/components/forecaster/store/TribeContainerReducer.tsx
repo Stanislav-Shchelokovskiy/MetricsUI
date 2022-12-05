@@ -55,7 +55,7 @@ export const ForecasterItemsReducer = (state: Array<ForecasterItemsState> = Arra
         case CHANGE_SELECTED_TRIBES:
             return filterTribes(state, action, INITIAL_FORECAST_ITEMS_EXPANDED_STATE)
         case EXPAND_FORECAST_ITEMS:
-            return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, expandedItems: action.payload.data } })
+            return updateTribeContainersStates(action.payload.stateId, state, (x) => { return { ...x, expandedItems: action.payload.data } })
         default:
             return state
     }
@@ -68,7 +68,8 @@ export const TacticalForecastReducer = (state: Array<TacticalForecastState> = Ar
             return filterTribes(state, action, INITIAL_TACTICAL_FORECAST_STATE)
 
         case CHANGE_REPLY_TYPE:
-            return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, replyType: action.payload.data } })
+            console.log(action)
+            return updateTribeContainersStates(action.payload.stateId, state, (x) => { return { ...x, replyType: action.payload.data } })
         default:
             return state
     }
@@ -81,16 +82,16 @@ export const StrategicForecastReducer = (state: Array<StrategicForecastState> = 
             return filterTribes(state, action, INITIAL_STRATEGIC_FORECAST_STATE)
 
         case CHANGE_FORECAST_HORIZON:
-            return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, forecastHorizon: action.payload.data } })
+            return updateTribeContainersStates(action.payload.stateId, state, (x) => { return { ...x, forecastHorizon: action.payload.data } })
 
         case CHANGE_TILE:
-            return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, tile: action.payload.data } })
+            return updateTribeContainersStates(action.payload.stateId, state, (x) => { return { ...x, tile: action.payload.data } })
 
         case CHANGE_POSITIONS_FILTER:
-            return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, positionsFilter: action.payload.data } })
+            return updateTribeContainersStates(action.payload.stateId, state, (x) => { return { ...x, positionsFilter: action.payload.data } })
 
         case CHANGE_LEGENDS:
-            return updateTribeContainersStates(action.payload.tribeId, state, (x) => { return { ...x, legendsOnlyLegends: action.payload.data } })
+            return updateTribeContainersStates(action.payload.stateId, state, (x) => { return { ...x, legendsOnlyLegends: action.payload.data } })
         default:
             return state
     }

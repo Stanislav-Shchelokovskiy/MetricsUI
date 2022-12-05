@@ -25,7 +25,7 @@ const ForecastPanel = React.memo(
         }) {
         // const renderCount = useRef(0)
         // console.log('Tactical ForecastPanel render: ', renderCount.current++)
-        
+
         const [{ success: forecastLoaded, data: tacticalForecast }, setForecastLoaded] = useState<FetchResult<HourlyTacticalForecast>>(EMPTY_TACTICAL_FORECAST)
 
         useEffect(() => {

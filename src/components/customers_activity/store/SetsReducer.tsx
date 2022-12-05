@@ -20,7 +20,7 @@ export interface SetState {
     customersGroups: Array<string>
     ticketsTags: Array<number>
     ticketsTypes: Array<number>
-    repliesTypes: Array<number>
+    repliesTypes: Array<string>
 }
 
 
@@ -30,7 +30,7 @@ export const INITIAL_SET_STATE: SetState = {
     customersGroups: Array<string>(),
     ticketsTags: Array<number>(),
     ticketsTypes: Array<number>(),
-    repliesTypes: Array<number>(),
+    repliesTypes: Array<string>(),
 }
 
 const INTIAL_SETS_STATE: Array<SetState> = [INITIAL_SET_STATE]

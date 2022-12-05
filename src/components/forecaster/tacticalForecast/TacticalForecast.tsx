@@ -11,9 +11,7 @@ export default function TacticalForecast({ tribeId }: { tribeId: string }) {
     const forecasterState: ForecasterState = useAppSelector((state: AppStore) => state.forecaster)
     return (
         <div className='ForecastContainer'>
-            <ForecastSettingsPanel
-                tribeId={tribeId}
-                replyType={tacticalForecastState.replyType} />
+            <ForecastSettingsPanel tribeId={tribeId}/>
             <ForecastPanel
                 tribeId={tribeId}
                 incomeType={forecasterState.incomeType}
