@@ -21,8 +21,9 @@ export interface ForecastPanelState {
 }
 
 function ForecastPanel({ state }: { state: ForecastPanelState }) {
-    // const renderCount = useRef(0)
-    // console.log('Strategic ForecastPanel render: ', renderCount.current++)
+    const renderCount = useRef(0)
+    console.log('Strategic ForecastPanel render: ', renderCount.current++)
+    console.log(state)
     
     return (
         <div className='ForecastBody'>
@@ -228,10 +229,11 @@ function Graph({ state }: { state: ForecastPanelState }) {
 
     const forecasterDispatch = useAppDispatch()
     const onLegendClick = useCallback(({ data }: LegendClickObject) => {
+        const legendsToStore = (data.filter(legend => legend.type === 'bar' && legend.visible === 'legendonly').map(legend => legend.hovertext) as Array<string>)
         setTimeout(() => {
-            const legendsToStore = (data.filter(legend => legend.type === 'bar' && legend.visible === 'legendonly').map(legend => legend.hovertext) as Array<string>)
+            console.log('click')
             forecasterDispatch(legendClick(state.tribeId, legendsToStore))
-        }, 500)
+        }, 700)
         return true
     }, [state.tribeId, forecasterDispatch])
 

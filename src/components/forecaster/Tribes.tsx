@@ -22,7 +22,7 @@ export interface TribesTribeContainerState extends TribeContainerState {
 
 
 export default function TribesContainer() {
-    const selectedTribes = useAppSelector((state: AppStore) => state.forecaster.selectedTribes)
+    const selectedTribes = useAppSelector((state: AppStore) => state.forecaster.tribes)
 
     if (selectedTribes?.length > 0) {
         return (

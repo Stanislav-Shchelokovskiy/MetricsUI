@@ -1,7 +1,6 @@
 import React, { useReducer, useEffect } from 'react'
 import { AnyAction } from '@reduxjs/toolkit'
-import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
-import LoadIndicator from '../../../common/components/LoadIndicator'
+import OptionSelector from '../../../common/components/OptionSelector'
 import FetchResult from '../../../common/Interfaces'
 import { fetchIncomeTypes } from '../../network_resource_fetcher/FetchForecastSettingsValues'
 import { changeIncomeType } from '../../store/Actions'
@@ -39,40 +38,14 @@ function incomeSelectorStateReducer(state: IncomeSelectorState, action: AnyActio
 }
 
 export default function IncomeSelector() {
-    const [incomeSelectorState, incomeSelectorDispatch] = useReducer(incomeSelectorStateReducer, INITIAL_STATE)
-    const incomeType = useAppSelector((store: AppStore) => store.forecaster.incomeType) || incomeSelectorState.incomeType
+    const stateSelector = (store: AppStore) => store.forecaster.incomeType
+    const defaultValueSelector = (values: Array<string>) => values[0]
 
-
-    const forecasterDispatch = useAppDispatch()
-    const onIncomeTypeChange: (incomeType: string) => void = (incomeType: string) => {
-        forecasterDispatch(changeIncomeType(incomeType))
-    }
-
-    useEffect(() => {
-        (async () => {
-            const fetchResult: FetchResult<Array<string>> = await fetchIncomeTypes()
-            if (fetchResult.success) {
-                incomeSelectorDispatch({ type: CHANGE_INCOME_TYPES, payload: fetchResult.data })
-                const defaultIncomeType = fetchResult.data[0]
-                incomeSelectorDispatch({ type: CHANGE_INCOME_TYPE, payload: defaultIncomeType })
-                forecasterDispatch(changeIncomeType(defaultIncomeType))
-            }
-        })()
-    }, [])
-
-    if (incomeSelectorState.incomeTypes.length > 0) {
-        return (
-            <SelectBox
-                dataSource={incomeSelectorState.incomeTypes}
-                defaultValue={incomeType}
-                onValueChange={onIncomeTypeChange}
-                label='Income type'
-                labelMode='static'>
-                <DropDownOptions
-                    hideOnOutsideClick={true}
-                    hideOnParentScroll={true} />
-            </SelectBox >
-        )
-    }
-    return <LoadIndicator width={undefined} height={25} />
+    return <OptionSelector<string, string>
+        className=''
+        fetchDataSourceValues={fetchIncomeTypes}
+        stateSelector={stateSelector}
+        defaultValueSelector={defaultValueSelector}
+        onValueChange={changeIncomeType}
+        label='Income type' />
 }

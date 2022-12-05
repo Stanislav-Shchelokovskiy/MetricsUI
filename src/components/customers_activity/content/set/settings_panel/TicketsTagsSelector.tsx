@@ -7,9 +7,7 @@ import { fetchTicketsTags, TicketsTag } from '../../../network_resource_fetcher/
 
 export default function TicketsTagsSelector({ setTitle }: { setTitle: string }) {
     const stateSelector = (store: AppStore) => store.customersActivitySets.find(x => x.title === setTitle)?.ticketsTags || []
-    const dataSourceObjectKeySelector = (value: TicketsTag) => value.id
-    const dataSourceObjectByKeySelector = (value: TicketsTag, targetKeyValue: number) => value.id === targetKeyValue
-    const onValueChange = (values: Array<TicketsTag>) => changeTicketsTags({ stateId: setTitle, data: values })
+    const onValueChange = (allValues: Array<TicketsTag>, values: Array<number>) => changeTicketsTags({ stateId: setTitle, data: values })
 
     return <MultiOptionSelector<TicketsTag, number>
         className='CustomersActivity_TicketsTagsSelector'
@@ -19,7 +17,5 @@ export default function TicketsTagsSelector({ setTitle }: { setTitle: string }) 
         label='Tickets tags'
         fetchDataSourceValues={fetchTicketsTags}
         stateSelector={stateSelector}
-        dataSourceObjectKeySelector={dataSourceObjectKeySelector}
-        dataSourceObjectByKeySelector={dataSourceObjectByKeySelector}
         onValueChange={onValueChange} />
 } 

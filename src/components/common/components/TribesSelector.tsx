@@ -12,16 +12,12 @@ export default function TribesSelector(
         changeSelectedTribesAction
     }:
         {
-            stateSelector: (store: AppStore) => Array<Tribe>,
-            changeSelectedTribesAction: (selectedTribes: Array<Tribe>) => PayloadAction<any>
+            stateSelector: (store: AppStore) => Array<string>,
+            changeSelectedTribesAction: (allTribes: Array<Tribe>, selectedTribes: Array<string>) => PayloadAction<any>
         }
 ) {
     // const renderCount = useRef(0)
     // console.log(' TribesSelector render ', renderCount.current++)
-
-    const dataSourceObjectKeySelector = (value: Tribe) => value.id
-    const dataSourceObjectByKeySelector = (value: Tribe, targetKeyValue: string) => value.id === targetKeyValue
-    const onValueChange = (values: Array<Tribe>) => changeSelectedTribesAction(values)
 
     return <MultiOptionSelector<Tribe, string>
         className='TribesSelector'
@@ -31,9 +27,7 @@ export default function TribesSelector(
         label='Tribes'
         fetchDataSourceValues={fetchTribes}
         stateSelector={stateSelector}
-        dataSourceObjectKeySelector={dataSourceObjectKeySelector}
-        dataSourceObjectByKeySelector={dataSourceObjectByKeySelector}
-        onValueChange={onValueChange}
+        onValueChange={changeSelectedTribesAction}
         showSelectionControls={true}
     />
 }

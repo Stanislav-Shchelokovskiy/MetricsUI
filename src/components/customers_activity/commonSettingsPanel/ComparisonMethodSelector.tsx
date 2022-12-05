@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import OptionSelector from '../../common/components/OptionSelector'
+import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import { useAppDispatch, useAppSelector, AppStore } from '../../common/AppStore'
 import { changeComparisonMethod } from '../store/Actions'
 
@@ -21,16 +21,22 @@ export default function ComparisonMethodSelector() {
         appDispatch(changeComparisonMethod(comparisonMethod))
     }
 
-
     if (!selectedComparisonMethod) {
         selectedComparisonMethod = ABSOLUTE
         appDispatch(changeComparisonMethod(selectedComparisonMethod))
     }
 
-    return <OptionSelector<string, string>
-        className='CustomersActivity_ComparisonMethodSelector'
-        dataSource={comparisonMethods}
-        selectedValue={selectedComparisonMethod}
-        onValueChange={onComparisonMethodChange}
-        label='Comparison method' />
+    return (
+        <SelectBox
+            className='CustomersActivity_ComparisonMethodSelector'
+            dataSource={comparisonMethods}
+            defaultValue={selectedComparisonMethod}
+            onValueChange={onComparisonMethodChange}
+            label='Comparison method'
+            labelMode='static'>
+            <DropDownOptions
+                hideOnOutsideClick={true}
+                hideOnParentScroll={true} />
+        </SelectBox >
+    )
 } 

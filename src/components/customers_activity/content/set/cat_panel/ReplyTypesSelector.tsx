@@ -7,9 +7,7 @@ import { fetchRepliesTypes, ReplyType } from '../../../network_resource_fetcher/
 
 export default function ReplyTypesSelector({ setTitle }: { setTitle: string }) {
     const stateSelector = (store: AppStore) => store.customersActivitySets.find(x => x.title === setTitle)?.repliesTypes || []
-    const dataSourceObjectKeySelector = (value: ReplyType) => value.id
-    const dataSourceObjectByKeySelector = (value: ReplyType, targetKeyValue: number) => value.id === targetKeyValue
-    const onValueChange = (values: Array<ReplyType>) => changeRepliesTypes({ stateId: setTitle, data: values })
+    const onValueChange = (allValues: Array<ReplyType>, values: Array<number>) => changeRepliesTypes({ stateId: setTitle, data: values })
 
     return <MultiOptionSelector<ReplyType, number>
         className='CustomersActivity_ReplyTypesSelector'
@@ -19,7 +17,5 @@ export default function ReplyTypesSelector({ setTitle }: { setTitle: string }) {
         label='CAT replies types'
         fetchDataSourceValues={fetchRepliesTypes}
         stateSelector={stateSelector}
-        dataSourceObjectKeySelector={dataSourceObjectKeySelector}
-        dataSourceObjectByKeySelector={dataSourceObjectByKeySelector}
         onValueChange={onValueChange} />
 } 

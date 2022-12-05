@@ -9,14 +9,14 @@ import {
 
 export interface ForecasterState {
     incomeType: string
-    selectedTribes: Array<Tribe>
+    tribes: Array<Tribe>
     lastUpdated: number
 }
 
 
 const INITIAL_FORECASTER_STATE: ForecasterState = {
     incomeType: '',
-    selectedTribes: Array<Tribe>(),
+    tribes: Array<Tribe>(),
     lastUpdated: Date.now()
 }
 
@@ -31,7 +31,7 @@ export const ForecasterReducer = (state: ForecasterState = INITIAL_FORECASTER_ST
         case CHANGE_SELECTED_TRIBES:
             return {
                 ...state,
-                selectedTribes: action.payload
+                tribes: action.payload
             }
         case CHANGE_LAST_UPDATED:
             return {

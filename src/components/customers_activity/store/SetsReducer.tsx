@@ -16,21 +16,21 @@ import {
 
 export interface SetState {
     title: string
-    tribes: Array<Tribe>
-    customersGroups: Array<CustomersGroup>
-    ticketsTags: Array<TicketsTag>
-    ticketsTypes: Array<TicketsType>
-    repliesTypes: Array<ReplyType>
+    tribes: Array<string>
+    customersGroups: Array<string>
+    ticketsTags: Array<number>
+    ticketsTypes: Array<number>
+    repliesTypes: Array<number>
 }
 
 
 export const INITIAL_SET_STATE: SetState = {
     title: '0',
-    tribes: Array<Tribe>(),
-    customersGroups: Array<CustomersGroup>(),
-    ticketsTags: Array<TicketsTag>(),
-    ticketsTypes: Array<TicketsType>(),
-    repliesTypes: Array<ReplyType>(),
+    tribes: Array<string>(),
+    customersGroups: Array<string>(),
+    ticketsTags: Array<number>(),
+    ticketsTypes: Array<number>(),
+    repliesTypes: Array<number>(),
 }
 
 const INTIAL_SETS_STATE: Array<SetState> = [INITIAL_SET_STATE]

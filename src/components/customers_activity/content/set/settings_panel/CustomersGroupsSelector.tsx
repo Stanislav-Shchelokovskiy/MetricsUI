@@ -7,9 +7,7 @@ import { fetchCustomersGroups, CustomersGroup } from '../../../network_resource_
 
 function CustomersGroupsSelector({ setTitle }: { setTitle: string }) {
     const stateSelector = (store: AppStore) => store.customersActivitySets.find(x => x.title === setTitle)?.customersGroups || []
-    const dataSourceObjectKeySelector = (value: CustomersGroup) => value.id
-    const dataSourceObjectByKeySelector = (value: CustomersGroup, targetKeyValue: string) => value.id === targetKeyValue
-    const onValueChange = (values: Array<CustomersGroup>) => changeCustomersGroups({ stateId: setTitle, data: values })
+    const onValueChange = (allValues: Array<CustomersGroup>, values: Array<string>) => changeCustomersGroups({ stateId: setTitle, data: values })
 
     return <MultiOptionSelector<CustomersGroup, string>
         className='CustomersActivity_CustomersGroupsSelector'
@@ -19,8 +17,6 @@ function CustomersGroupsSelector({ setTitle }: { setTitle: string }) {
         label='User groups'
         fetchDataSourceValues={fetchCustomersGroups}
         stateSelector={stateSelector}
-        dataSourceObjectKeySelector={dataSourceObjectKeySelector}
-        dataSourceObjectByKeySelector={dataSourceObjectByKeySelector}
         onValueChange={onValueChange} />
 }
 

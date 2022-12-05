@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import OptionSelector from '../../common/components/OptionSelector'
+import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import { changeMetric } from '../store/Actions'
 import { useAppDispatch, useAppSelector, AppStore } from '../../common/AppStore'
 
@@ -27,10 +27,17 @@ export default function MetricSelector() {
         appDipatch(changeMetric(selectedMetric))
     }
 
-    return <OptionSelector<string, string>
-        className='CustomersActivity_MetricSelector'
-        dataSource={metrics}
-        selectedValue={selectedMetric}
-        onValueChange={onMetricChange}
-        label='Metric' />
+    return (
+        <SelectBox
+            className='CustomersActivity_MetricSelector'
+            dataSource={metrics}
+            defaultValue={selectedMetric}
+            onValueChange={onMetricChange}
+            label='Metric'
+            labelMode='static'>
+            <DropDownOptions
+                hideOnOutsideClick={true}
+                hideOnParentScroll={true} />
+        </SelectBox >
+    )
 } 
