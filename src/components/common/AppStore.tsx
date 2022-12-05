@@ -8,7 +8,7 @@ import { CustomersActivityReducer } from '../customers_activity/store/CustomersA
 import { SetsReducer } from '../customers_activity/store/SetsReducer'
 
 
-const currentStateKey = 'stat_app_current_state'
+const currentStateKey = 'stat_app_current_state_v1'
 
 
 export const store = configureStore({
