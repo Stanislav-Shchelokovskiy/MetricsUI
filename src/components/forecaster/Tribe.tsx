@@ -32,7 +32,6 @@ export default function TribeContainer({ tribe }: { tribe: Tribe }) {
 
     const dispatch = useAppDispatch()
     const onSelectedItemsChange = useCallback((e: any) => {
-        console.log(e)
         dispatch(selectForecastItems(tribe.id, e))
     }, [dispatch, tribe.id])
 

@@ -19,6 +19,7 @@ export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(
         onValueChange,
         showSelectionControls,
         container,
+        disabled,
     }: {
         className: string
         displayExpr: string
@@ -30,6 +31,7 @@ export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(
         onValueChange: (allValues: Array<DataSourceT>, selectedValues: Array<ValueExprT>) => PayloadAction<any>
         showSelectionControls: boolean
         container: string
+        disabled: boolean
     }) {
 
     const dataSource = useDataSource<DataSourceT>(fetchDataSourceValues)
@@ -47,6 +49,7 @@ export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(
                 onValueChange={onValueChange}
                 container={container}
                 showSelectionControls={showSelectionControls}
+                disabled={disabled}
             />
         )
     }
@@ -65,6 +68,7 @@ export function MultiOptionSelector<DataSourceT, ValueExprT>(
         onValueChange,
         showSelectionControls,
         container,
+        disabled,
     }: {
         className: string
         displayExpr: string
@@ -76,6 +80,7 @@ export function MultiOptionSelector<DataSourceT, ValueExprT>(
         onValueChange: (allValues: Array<DataSourceT>, selectedValues: Array<ValueExprT>) => PayloadAction<any>
         showSelectionControls: boolean
         container: string
+        disabled: boolean
     }) {
     const selectedValues = useAppSelector(stateSelector)
 
@@ -91,12 +96,13 @@ export function MultiOptionSelector<DataSourceT, ValueExprT>(
         placeholder={placeholder}
         label={label}
         dataSource={dataSource}
-        defaultValue={selectedValues}
+        value={selectedValues}
         onValueChange={onValueChangeHandler}
         showSelectionControls={showSelectionControls}
         multiline={true}
         searchEnabled={true}
         showDropDownButton={false}
+        disabled={disabled}
         labelMode='static'>
         <DropDownOptionsTagBox
             hideOnOutsideClick={true}
@@ -110,6 +116,7 @@ MultiOptionSelectorWithFetch.defaultProps = {
     valueExpr: undefined,
     showSelectionControls: false,
     container: undefined,
+    disabled: false,
 }
 
 MultiOptionSelector.defaultProps = {
@@ -117,4 +124,5 @@ MultiOptionSelector.defaultProps = {
     valueExpr: undefined,
     showSelectionControls: false,
     container: undefined,
+    disabled: false,
 }

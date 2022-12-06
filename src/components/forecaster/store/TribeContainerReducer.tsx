@@ -68,7 +68,6 @@ export const TacticalForecastReducer = (state: Array<TacticalForecastState> = Ar
             return filterTribes(state, action, INITIAL_TACTICAL_FORECAST_STATE)
 
         case CHANGE_REPLY_TYPE:
-            console.log(action)
             return updateTribeContainersStates(action.payload.stateId, state, (x) => { return { ...x, replyType: action.payload.data } })
         default:
             return state

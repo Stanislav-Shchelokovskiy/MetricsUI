@@ -230,7 +230,6 @@ function Graph({ state }: { state: ForecastPanelState }) {
     const onLegendClick = useCallback(({ data }: LegendClickObject) => {
         const legendsToStore = (data.filter(legend => legend.type === 'bar' && legend.visible === 'legendonly').map(legend => legend.hovertext) as Array<string>)
         setTimeout(() => {
-            console.log('click')
             forecasterDispatch(legendClick(state.tribeId, legendsToStore))
         }, 500)
         return true

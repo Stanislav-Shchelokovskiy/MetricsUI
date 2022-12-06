@@ -23,10 +23,8 @@
 }
 
 .CustomersActivity_CatPanel {
-    background-color: bisque;
+    /* background-color: bisque; */
     margin-left: 10%;
-    /* align-self: stretch;
-    justify-self: flex-end; */
     flex-grow: 1;
     align-items: flex-end;
     justify-content: flex-end;
