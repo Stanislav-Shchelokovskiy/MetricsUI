@@ -34,18 +34,23 @@ export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(
 
     const dataSource = useDataSource<DataSourceT>(fetchDataSourceValues)
 
-    return (
-        <MultiOptionSelector
-            className={className}
-            displayExpr={displayExpr}
-            valueExpr={valueExpr}
-            placeholder={placeholder}
-            label={label}
-            dataSource={dataSource}
-            stateSelector={stateSelector}
-            onValueChange={onValueChange}
-            showSelectionControls={showSelectionControls} />
-    )
+    if (dataSource.length > 0) {
+        return (
+            <MultiOptionSelector
+                className={className}
+                displayExpr={displayExpr}
+                valueExpr={valueExpr}
+                placeholder={placeholder}
+                label={label}
+                dataSource={dataSource}
+                stateSelector={stateSelector}
+                onValueChange={onValueChange}
+                container={container}
+                showSelectionControls={showSelectionControls}
+            />
+        )
+    }
+    return <LoadIndicator width={undefined} height={25} />
 }
 
 export function MultiOptionSelector<DataSourceT, ValueExprT>(
@@ -79,32 +84,26 @@ export function MultiOptionSelector<DataSourceT, ValueExprT>(
         dispatch(onValueChange(dataSource, values))
     }
 
-    if (dataSource.length > 0) {
-        return (
-            <TagBox
-                className={className}
-                displayExpr={displayExpr}
-                valueExpr={valueExpr}
-                placeholder={placeholder}
-                label={label}
-                dataSource={dataSource}
-                defaultValue={selectedValues}
-                onValueChange={onValueChangeHandler}
-                showSelectionControls={showSelectionControls}
-                multiline={true}
-                searchEnabled={true}
-                showDropDownButton={false}
-                labelMode='static'>
-                <DropDownOptionsTagBox
-                    hideOnOutsideClick={true}
-                    hideOnParentScroll={true}
-                    container={container} />
-            </TagBox>
-        )
-    }
-    return <LoadIndicator width={undefined} height={25} />
+    return <TagBox
+        className={className}
+        displayExpr={displayExpr}
+        valueExpr={valueExpr}
+        placeholder={placeholder}
+        label={label}
+        dataSource={dataSource}
+        defaultValue={selectedValues}
+        onValueChange={onValueChangeHandler}
+        showSelectionControls={showSelectionControls}
+        multiline={true}
+        searchEnabled={true}
+        showDropDownButton={false}
+        labelMode='static'>
+        <DropDownOptionsTagBox
+            hideOnOutsideClick={true}
+            hideOnParentScroll={true}
+            container={container} />
+    </TagBox>
 }
-
 
 MultiOptionSelectorWithFetch.defaultProps = {
     displayExpr: undefined,

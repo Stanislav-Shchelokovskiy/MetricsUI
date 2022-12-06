@@ -12,6 +12,8 @@ import {
     CHANGE_TICKETS_TYPES,
     CHANGE_TICKETS_TAGS,
     CHANGE_REPLIES_TYPES,
+    CHANGE_CONTROLS,
+    CHANGE_FEATURES,
 } from './Actions'
 
 export interface SetState {
@@ -21,6 +23,8 @@ export interface SetState {
     ticketsTags: Array<number>
     ticketsTypes: Array<number>
     repliesTypes: Array<string>
+    controls: Array<string>
+    features: Array<string>
 }
 
 
@@ -31,6 +35,8 @@ export const INITIAL_SET_STATE: SetState = {
     ticketsTags: Array<number>(),
     ticketsTypes: Array<number>(),
     repliesTypes: Array<string>(),
+    controls: Array<string>(),
+    features: Array<string>(),
 }
 
 const INTIAL_SETS_STATE: Array<SetState> = [INITIAL_SET_STATE]
@@ -60,6 +66,12 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
 
         case CHANGE_REPLIES_TYPES:
             return updateSetState(action.payload.stateId, state, (x) => { return { ...x, repliesTypes: action.payload.data } })
+
+        case CHANGE_CONTROLS:
+            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, controls: action.payload.data } })
+
+        case CHANGE_FEATURES:
+            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, features: action.payload.data } })
 
         default:
             return state

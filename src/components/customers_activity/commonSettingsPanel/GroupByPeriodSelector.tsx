@@ -1,5 +1,5 @@
 import React from 'react'
-import OptionSelector from '../../common/components/OptionSelector'
+import OptionSelectorWithFetch from '../../common/components/OptionSelector'
 import { changeGroupByPeriod } from '../store/Actions'
 import { AppStore } from '../../common/AppStore'
 import { fetchGroupByPeriods, GroupByPeriod } from '../network_resource_fetcher/FetchGroupByPeriods'
@@ -10,7 +10,7 @@ export default function GroupByPeriodSelector() {
     const defaultValueSelector = (values: Array<GroupByPeriod>) => values[0]?.format
 
     return (
-        <OptionSelector<GroupByPeriod, string>
+        <OptionSelectorWithFetch<GroupByPeriod, string>
             className='CustomersActivity_GroupByPeriodSelector'
             displayExpr='name'
             valueExpr='format'

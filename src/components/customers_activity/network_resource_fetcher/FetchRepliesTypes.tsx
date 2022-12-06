@@ -10,10 +10,10 @@ export interface ReplyType {
 
 export const fetchRepliesTypes: () => Promise<FetchResult<Array<ReplyType>>> = async function () {
     try {
-        const tribes = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_replies_types`).then(response => response.json())
+        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_replies_types`).then(response => response.json())
         return {
             success: true,
-            data: (tribes as Array<ReplyType>)
+            data: (values as Array<ReplyType>)
         }
     } catch (error) {
         console.log(error)

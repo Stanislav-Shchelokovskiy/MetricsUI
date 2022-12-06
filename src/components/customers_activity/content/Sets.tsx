@@ -1,10 +1,7 @@
 import React from 'react'
 import ScrollView from 'devextreme-react/scroll-view'
 import Set from './set/Set'
-import {
-    useAppSelector,
-    AppStore
-} from '../../common/AppStore'
+import { useAppSelector, AppStore } from '../../common/AppStore'
 
 
 export default function Sets() {

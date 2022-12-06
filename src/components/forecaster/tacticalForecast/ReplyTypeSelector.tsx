@@ -1,5 +1,5 @@
 import React from 'react'
-import OptionSelector from '../../common/components/OptionSelector'
+import OptionSelectorWithFetch from '../../common/components/OptionSelector'
 import { AppStore } from '../../common/AppStore'
 import { changeReplyType } from '../store/Actions'
 import { fetchReplyTypes } from '../network_resource_fetcher/FetchForecastSettingsValues'
@@ -11,7 +11,7 @@ export default function ReplyTypeSelector({ tribeId }: { tribeId: string }) {
     const defaultValueSelector = (values: Array<string>) => values[0]
     const onValueChange = (value: string) => changeReplyType(tribeId, value)
 
-    return <OptionSelector<string, string>
+    return <OptionSelectorWithFetch<string, string>
         className=''
         fetchDataSourceValues={fetchReplyTypes}
         stateSelector={stateSelector}

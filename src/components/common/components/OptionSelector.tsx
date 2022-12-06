@@ -10,7 +10,6 @@ interface State {
     defaultValue: any
 }
 
-
 const CHANGE_DATA_SOURCE = 'change_data_source'
 const CHANGE_DEFAULT_VALUE = 'change_default_value'
 
@@ -31,8 +30,7 @@ function stateReducer(state: State, action: AnyAction): State {
     }
 }
 
-
-export default function OptionSelector<DataSourceT, ValueExprT>(
+export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(
     {
         className,
         displayExpr,
@@ -78,23 +76,65 @@ export default function OptionSelector<DataSourceT, ValueExprT>(
     }, [])
 
     if (state.dataSource.length > 0) {
-        return <SelectBox
+        return <OptionSelector
             className={className}
             displayExpr={displayExpr}
             valueExpr={valueExpr}
             placeholder={placeholder}
             label={label}
+            container={container}
             dataSource={state.dataSource}
             defaultValue={state.defaultValue}
-            onValueChange={onValueChangeHandler}
-            labelMode='static'>
-            <DropDownOptions
-                hideOnOutsideClick={true}
-                hideOnParentScroll={true}
-                container={container} />
-        </SelectBox >
+            onValueChange={onValueChangeHandler} />
     }
     return <LoadIndicator width={undefined} height={25} />
+}
+
+export function OptionSelector<DataSourceT, ValueExprT>(
+    {
+        className,
+        displayExpr,
+        valueExpr,
+        placeholder,
+        label,
+        dataSource,
+        defaultValue,
+        onValueChange,
+        container,
+    }: {
+        className: string
+        displayExpr: string
+        valueExpr: string
+        placeholder: string
+        label: string
+        dataSource: Array<DataSourceT>
+        defaultValue: ValueExprT
+        onValueChange: (value: ValueExprT) => void
+        container: string
+    }
+) {
+    return <SelectBox
+        className={className}
+        displayExpr={displayExpr}
+        valueExpr={valueExpr}
+        placeholder={placeholder}
+        label={label}
+        dataSource={dataSource}
+        defaultValue={defaultValue}
+        onValueChange={onValueChange}
+        labelMode='static'>
+        <DropDownOptions
+            hideOnOutsideClick={true}
+            hideOnParentScroll={true}
+            container={container} />
+    </SelectBox >
+}
+
+OptionSelectorWithFetch.defaultProps = {
+    displayExpr: undefined,
+    valueExpr: undefined,
+    placeholder: undefined,
+    container: undefined,
 }
 
 OptionSelector.defaultProps = {

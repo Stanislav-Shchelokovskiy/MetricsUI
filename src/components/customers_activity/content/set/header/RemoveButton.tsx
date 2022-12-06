@@ -15,7 +15,6 @@ export default function RemoveButton({ setTitle }: { setTitle: string }) {
         <Button
             className='SetHeaderButton'
             text='Remove set'
-            // render={}
             disabled={disabled}
             type='normal'
             stylingMode='outlined'

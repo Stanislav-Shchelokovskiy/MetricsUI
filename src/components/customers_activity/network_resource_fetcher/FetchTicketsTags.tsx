@@ -10,10 +10,10 @@ export interface TicketsTag {
 
 export const fetchTicketsTags: () => Promise<FetchResult<Array<TicketsTag>>> = async function () {
     try {
-        const tribes = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_tickets_tags`).then(response => response.json())
+        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_tickets_tags`).then(response => response.json())
         return {
             success: true,
-            data: (tribes as Array<TicketsTag>)
+            data: (values as Array<TicketsTag>)
         }
     } catch (error) {
         console.log(error)

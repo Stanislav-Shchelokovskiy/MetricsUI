@@ -33,10 +33,13 @@
     padding-bottom: 0px;
 }
 
-.CustomersActivity_ReplyTypesSelector{
+.CustomersActivity_ReplyTypesSelector,
+.CustomersActivity_ControlsSelector,
+.CustomersActivity_FeaturesSelector {
     margin-bottom: 0px;
-     flex: 1;
+    flex: 1;
 }
+
 
 .CustomersActivity_CustomersGroupsSelector {
     flex: 2;

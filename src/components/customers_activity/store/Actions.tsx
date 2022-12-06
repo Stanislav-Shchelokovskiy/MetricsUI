@@ -81,6 +81,14 @@ export const changeTicketsTypes = (ticketsTypes: Payload<string, Array<number>>)
     }
 }
 
+export const CHANGE_TICKETS_TAGS = 'customers_activity/change_tickets_tags'
+export const changeTicketsTags = (ticketsTags: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
+    return {
+        type: CHANGE_TICKETS_TAGS,
+        payload: ticketsTags
+    }
+}
+
 export const CHANGE_REPLIES_TYPES = 'customers_activity/change_replies_types'
 export const changeRepliesTypes = (repliesTypes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
@@ -89,10 +97,18 @@ export const changeRepliesTypes = (repliesTypes: Payload<string, Array<string>>)
     }
 }
 
-export const CHANGE_TICKETS_TAGS = 'customers_activity/change_tickets_tags'
-export const changeTicketsTags = (ticketsTags: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
+export const CHANGE_CONTROLS = 'customers_activity/change_controls'
+export const changeControls = (repliesTypes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
-        type: CHANGE_TICKETS_TAGS,
-        payload: ticketsTags
+        type: CHANGE_CONTROLS,
+        payload: repliesTypes
+    }
+}
+
+export const CHANGE_FEATURES = 'customers_activity/change_features'
+export const changeFeatures = (repliesTypes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_FEATURES,
+        payload: repliesTypes
     }
 }
