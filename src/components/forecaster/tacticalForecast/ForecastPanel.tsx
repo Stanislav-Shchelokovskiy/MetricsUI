@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import Plot from 'react-plotly.js'
 import ForecastMissing from '../utils/ForecastMissing'
 import GetColor from '../utils/ColorPalette'
@@ -25,7 +25,7 @@ const ForecastPanel = React.memo(
         }) {
         // const renderCount = useRef(0)
         // console.log('Tactical ForecastPanel render: ', renderCount.current++)
-        
+
         const [{ success: forecastLoaded, data: tacticalForecast }, setForecastLoaded] = useState<FetchResult<HourlyTacticalForecast>>(EMPTY_TACTICAL_FORECAST)
 
         useEffect(() => {

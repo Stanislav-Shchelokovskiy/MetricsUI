@@ -5,13 +5,13 @@ import RemoveButton from './RemoveButton'
 import CatPanel from '../cat_panel/CatPanel'
 
 
-export default function SetHeader({ title }: { title: string }) {
+export default function SetHeader({ setTitle }: { setTitle: string }) {
     return (
         <div className='CustomerActivity_SetHeader'>
-            <Title title={title} />
-            <CloneButton title={title} />
-            <RemoveButton title={title} />
-            {/* <CatPanel title={title} /> */}
+            <Title setTitle={setTitle} />
+            <CloneButton setTitle={setTitle} />
+            <RemoveButton setTitle={setTitle} />
+            <CatPanel setTitle={setTitle} />
         </div>
     )
 }

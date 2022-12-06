@@ -1,9 +1,4 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { Tribe } from '../../common/Interfaces'
-import { CustomersGroup } from '../network_resource_fetcher/FetchCustomersGroups'
-import { TicketsType } from '../network_resource_fetcher/FetchTicketsTypes'
-import { TicketsTag } from '../network_resource_fetcher/FetchTicketsTags'
-import { ReplyType } from '../network_resource_fetcher/FetchRepliesTypes'
 import {
     ADD_SET,
     REMOVE_SET,
@@ -12,30 +7,34 @@ import {
     CHANGE_TICKETS_TYPES,
     CHANGE_TICKETS_TAGS,
     CHANGE_REPLIES_TYPES,
+    CHANGE_CONTROLS,
+    CHANGE_FEATURES,
 } from './Actions'
-
 
 export interface SetState {
     title: string
-    tribes: Array<Tribe>
-    customersGroups: Array<CustomersGroup>
-    ticketsTags: Array<TicketsTag>
-    ticketsTypes: Array<TicketsType>
-    repliesTypes: Array<ReplyType>
+    tribes: Array<string>
+    customersGroups: Array<string>
+    ticketsTags: Array<number>
+    ticketsTypes: Array<number>
+    repliesTypes: Array<string>
+    controls: Array<string>
+    features: Array<string>
 }
 
 
 export const INITIAL_SET_STATE: SetState = {
     title: '0',
-    tribes: Array<Tribe>(),
-    customersGroups: Array<CustomersGroup>(),
-    ticketsTags: Array<TicketsTag>(),
-    ticketsTypes: Array<TicketsType>(),
-    repliesTypes: Array<ReplyType>(),
+    tribes: Array<string>(),
+    customersGroups: Array<string>(),
+    ticketsTags: Array<number>(),
+    ticketsTypes: Array<number>(),
+    repliesTypes: Array<string>(),
+    controls: Array<string>(),
+    features: Array<string>(),
 }
 
 const INTIAL_SETS_STATE: Array<SetState> = [INITIAL_SET_STATE]
-
 
 export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: AnyAction): Array<SetState> => {
     switch (action.type) {
@@ -48,19 +47,38 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
             return state.filter(set => set.title !== action.payload)
 
         case CHANGE_TRIBES:
-            return updateSetState(action.payload.title, state, (x) => { return { ...x, tribes: action.payload.data } })
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    tribes: action.payload.data,
+                    controls: [],
+                    features: [],
+                }
+            })
 
         case CHANGE_CUSTOMERS_GROUPS:
-            return updateSetState(action.payload.title, state, (x) => { return { ...x, customersGroups: action.payload.data } })
+            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, customersGroups: action.payload.data } })
 
         case CHANGE_TICKETS_TAGS:
-            return updateSetState(action.payload.title, state, (x) => { return { ...x, ticketsTags: action.payload.data } })
+            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, ticketsTags: action.payload.data } })
 
         case CHANGE_TICKETS_TYPES:
-            return updateSetState(action.payload.title, state, (x) => { return { ...x, ticketsTypes: action.payload.data } })
+            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, ticketsTypes: action.payload.data } })
 
         case CHANGE_REPLIES_TYPES:
-            return updateSetState(action.payload.title, state, (x) => { return { ...x, repliesTypes: action.payload.data } })
+            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, repliesTypes: action.payload.data } })
+
+        case CHANGE_CONTROLS:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    controls: action.payload.data,
+                    features: []
+                }
+            })
+
+        case CHANGE_FEATURES:
+            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, features: action.payload.data } })
 
         default:
             return state

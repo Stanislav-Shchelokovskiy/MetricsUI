@@ -1,14 +1,10 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { Tribe } from '../../common/Interfaces'
+import { Tribe, Payload } from '../../common/Interfaces'
 import { CustomersGroup } from '../network_resource_fetcher/FetchCustomersGroups'
 import { TicketsType } from '../network_resource_fetcher/FetchTicketsTypes'
 import { TicketsTag } from '../network_resource_fetcher/FetchTicketsTags'
 import { ReplyType } from '../network_resource_fetcher/FetchRepliesTypes'
 
-interface Payload<T> {
-    title: string
-    data: T
-}
 
 export const CHANGE_PERIOD = 'customers_activity/change_period'
 export const changePeriod = (period: Array<Date>): PayloadAction<Array<string>> => {
@@ -62,7 +58,7 @@ export const removeSet = (title: string): PayloadAction<string> => {
 }
 
 export const CHANGE_TRIBES = 'customers_activity/change_tribes'
-export const changeTribes = (tribes: Payload<Array<Tribe>>): PayloadAction<Payload<Array<Tribe>>> => {
+export const changeTribes = (tribes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
         type: CHANGE_TRIBES,
         payload: tribes
@@ -70,7 +66,7 @@ export const changeTribes = (tribes: Payload<Array<Tribe>>): PayloadAction<Paylo
 }
 
 export const CHANGE_CUSTOMERS_GROUPS = 'customers_activity/change_customers_groups'
-export const changeCustomersGroups = (customersGroups: Payload<Array<CustomersGroup>>): PayloadAction<Payload<Array<CustomersGroup>>> => {
+export const changeCustomersGroups = (customersGroups: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
         type: CHANGE_CUSTOMERS_GROUPS,
         payload: customersGroups
@@ -78,25 +74,41 @@ export const changeCustomersGroups = (customersGroups: Payload<Array<CustomersGr
 }
 
 export const CHANGE_TICKETS_TYPES = 'customers_activity/change_tickets_types'
-export const changeTicketsTypes = (ticketsTypes: Payload<Array<TicketsType>>): PayloadAction<Payload<Array<TicketsType>>> => {
+export const changeTicketsTypes = (ticketsTypes: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
     return {
         type: CHANGE_TICKETS_TYPES,
         payload: ticketsTypes
     }
 }
 
+export const CHANGE_TICKETS_TAGS = 'customers_activity/change_tickets_tags'
+export const changeTicketsTags = (ticketsTags: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
+    return {
+        type: CHANGE_TICKETS_TAGS,
+        payload: ticketsTags
+    }
+}
+
 export const CHANGE_REPLIES_TYPES = 'customers_activity/change_replies_types'
-export const changeRepliesTypes = (repliesTypes: Payload<Array<ReplyType>>): PayloadAction<Payload<Array<ReplyType>>> => {
+export const changeRepliesTypes = (repliesTypes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
         type: CHANGE_REPLIES_TYPES,
         payload: repliesTypes
     }
 }
 
-export const CHANGE_TICKETS_TAGS = 'customers_activity/change_tickets_tags'
-export const changeTicketsTags = (ticketsTags: Payload<Array<TicketsTag>>): PayloadAction<Payload<Array<TicketsTag>>> => {
+export const CHANGE_CONTROLS = 'customers_activity/change_controls'
+export const changeControls = (repliesTypes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
-        type: CHANGE_TICKETS_TAGS,
-        payload: ticketsTags
+        type: CHANGE_CONTROLS,
+        payload: repliesTypes
+    }
+}
+
+export const CHANGE_FEATURES = 'customers_activity/change_features'
+export const changeFeatures = (repliesTypes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_FEATURES,
+        payload: repliesTypes
     }
 }

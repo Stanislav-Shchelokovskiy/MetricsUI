@@ -22,11 +22,7 @@ export default function StrategicForecast({ tribeId }: { tribeId: string }) {
 
     return (
         <div className='ForforecastHorizonecastContainer'>
-            <ForecastSettingsPanel
-                tribeId={tribeId}
-                forecastHorizon={strategicForecastState.forecastHorizon}
-                tile={strategicForecastState.tile}
-                positionsFilter={strategicForecastState.positionsFilter} />
+            <ForecastSettingsPanel tribeId={tribeId} />
             <ForecastPanel state={forecastPanelState} />
         </div>
     )

@@ -1,33 +1,23 @@
-import React, { useCallback, useMemo } from 'react'
-import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
-import { useAppDispatch } from '../../../common/AppStore'
+import React, { useMemo } from 'react'
+import { MultiOptionSelector } from '../../../common/components/MultiOptionSelector'
 import { changePositionsFilter } from '../../store/Actions'
+import { AppStore } from '../../../common/AppStore'
 
 
-export default function PositionsSelector({ tribeId, defaultPositions }: { tribeId: string, defaultPositions: Array<string> }) {
+export default function PositionsSelector({ tribeId }: { tribeId: string }) {
     const positions = useMemo<Array<string>>(() => { return ['Support', 'Developer', 'EM', 'PM', 'Technical Writer'] }, [])
+    const stateSelector = (store: AppStore) => store.strategicForecast.find(x => x.tribeId === tribeId)?.positionsFilter || []
+    const onPositionsChange = (allValues: Array<string>, selectedValues: Array<string>) => {
+        return changePositionsFilter(tribeId, selectedValues)
+    }
 
-    const dispatch = useAppDispatch()
-    const onPositionsChange = useCallback((positions: Array<string>) => {
-        dispatch(changePositionsFilter(tribeId, positions))
-    }, [tribeId, dispatch])
-
-    return (
-        <TagBox className='PositionsSelector'
-            placeholder='Select positions to filter by...'
-            dataSource={positions}
-            defaultValue={defaultPositions}
-            multiline={true}
-            selectAllMode='allPages'
-            showSelectionControls={true}
-            showDropDownButton={false}
-            label='Display only positions'
-            labelMode='static'
-            onValueChange={onPositionsChange}>
-            <DropDownOptionsTagBox
-                hideOnOutsideClick={true}
-                hideOnParentScroll={true}
-                container='#tribe_accordion' />
-        </TagBox>
-    )
+    return <MultiOptionSelector<string, string>
+        className='PositionsSelector'
+        placeholder='Select positions to filter by...'
+        label='Display only positions'
+        showSelectionControls={true}
+        container='#tribe_accordion'
+        dataSource={positions}
+        stateSelector={stateSelector}
+        onValueChange={onPositionsChange} />
 }

@@ -10,10 +10,10 @@ export interface CustomersGroup{
 
 export const fetchCustomersGroups: () => Promise<FetchResult<Array<CustomersGroup>>> = async function () {
     try {
-        const tribes = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_customers_groups`).then(response => response.json())
+        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_customers_groups`).then(response => response.json())
         return {
             success: true,
-            data: (tribes as Array<CustomersGroup>)
+            data: (values as Array<CustomersGroup>)
         }
     } catch (error) {
         console.log(error)

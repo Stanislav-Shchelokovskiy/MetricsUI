@@ -7,3 +7,8 @@ export interface Tribe {
     id: string
     name: string
 }
+
+export interface Payload<StateIdT, DataT> {
+    stateId: StateIdT
+    data: DataT
+}

@@ -8,18 +8,18 @@ import { changeTribes } from '../../../store/Actions'
 import { Tribe } from '../../../../common/Interfaces'
 
 
-function SetSettingsPanel({ title }: { title: string }) {
-    const stateSelector = (store: AppStore) => store.customersActivitySets.find(x => x.title === title)?.tribes || []
-    const changeSelectedTribesAction = (selectedTribes: Array<Tribe>) => changeTribes({ title: title, data: selectedTribes })
+function SetSettingsPanel({ setTitle }: { setTitle: string }) {
+    const stateSelector = (store: AppStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tribes || []
+    const changeSelectedTribesAction = (allValues: Array<Tribe>, selectedTribes: Array<string>) => changeTribes({ stateId: setTitle, data: selectedTribes })
 
     return (
         <div className='CustomersActivity_SetSettingsPanel'>
             <TribesSelector
                 stateSelector={stateSelector}
                 changeSelectedTribesAction={changeSelectedTribesAction} />
-            <CustomersGroupsSelector title={title} />
-            <TicketsTagsSelector title={title} />
-            <TicketsTypesSelector title={title} />
+            <CustomersGroupsSelector setTitle={setTitle} />
+            <TicketsTagsSelector setTitle={setTitle} />
+            <TicketsTypesSelector setTitle={setTitle} />
         </div>
     )
 }

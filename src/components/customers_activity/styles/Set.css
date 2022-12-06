@@ -23,20 +23,21 @@
 }
 
 .CustomersActivity_CatPanel {
-    background-color: bisque;
+    /* background-color: bisque; */
     margin-left: 10%;
-    /* align-self: stretch;
-    justify-self: flex-end; */
     flex-grow: 1;
     align-items: flex-end;
     justify-content: flex-end;
     padding-bottom: 0px;
 }
 
-.CustomersActivity_ReplyTypesSelector{
+.CustomersActivity_ReplyTypesSelector,
+.CustomersActivity_ControlsSelector,
+.CustomersActivity_FeaturesSelector {
     margin-bottom: 0px;
-     flex: 1;
+    flex: 1;
 }
+
 
 .CustomersActivity_CustomersGroupsSelector {
     flex: 2;

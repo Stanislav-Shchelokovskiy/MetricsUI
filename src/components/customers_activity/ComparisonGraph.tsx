@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import Plot from 'react-plotly.js'
 import { Data as GraphData } from 'plotly.js'
 import { useAppSelector, AppStore } from '../common/AppStore'
@@ -37,10 +37,13 @@ export default function ComparisonGraph() {
                     customersActivityState.groupByPeriod,
                     customersActivityState.range[0],
                     customersActivityState.range[1],
-                    set.customersGroups?.map(group => group.id) || [],
-                    set.ticketsTypes?.map(type => type.id) || [],
-                    set.ticketsTags?.map(tag => tag.id) || [],
-                    set.tribes?.map(tribe => tribe.id) || [],
+                    set.customersGroups,
+                    set.ticketsTypes,
+                    set.ticketsTags,
+                    set.tribes,
+                    set.repliesTypes,
+                    set.controls,
+                    set.features,
                 )
                 if (fetchedAggregates.success) {
                     aggs.push({
