@@ -1,15 +1,13 @@
 import React, { useMemo } from 'react'
 import { MultiOptionSelector } from '../../../common/components/MultiOptionSelector'
 import { changePositionsFilter } from '../../store/Actions'
-import { AppStore } from '../../../common/AppStore'
+import { AppStore, useAppSelector } from '../../../common/AppStore'
 
 
 export default function PositionsSelector({ tribeId }: { tribeId: string }) {
     const positions = useMemo<Array<string>>(() => { return ['Support', 'Developer', 'EM', 'PM', 'Technical Writer'] }, [])
-    const stateSelector = (store: AppStore) => store.strategicForecast.find(x => x.tribeId === tribeId)?.positionsFilter || []
-    const onPositionsChange = (allValues: Array<string>, selectedValues: Array<string>) => {
-        return changePositionsFilter(tribeId, selectedValues)
-    }
+    const selectedPositions = useAppSelector((store: AppStore) => store.strategicForecast.find(x => x.tribeId === tribeId)?.positionsFilter || [])
+    const onPositionsChange = (allValues: Array<string>, selectedValues: Array<string>) => changePositionsFilter(tribeId, selectedValues)
 
     return <MultiOptionSelector<string, string>
         className='PositionsSelector'
@@ -18,6 +16,6 @@ export default function PositionsSelector({ tribeId }: { tribeId: string }) {
         showSelectionControls={true}
         container='#tribe_accordion'
         dataSource={positions}
-        stateSelector={stateSelector}
+        defaultValue={selectedPositions}
         onValueChange={onPositionsChange} />
 }

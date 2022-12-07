@@ -1,34 +1,12 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useEffect } from 'react'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import LoadIndicator from './LoadIndicator'
-import { PayloadAction, AnyAction } from '@reduxjs/toolkit'
+import { PayloadAction } from '@reduxjs/toolkit'
 import { AppStore, useAppSelector, useAppDispatch } from '../AppStore'
 import FetchResult from '../Interfaces'
+import useComponentReducer, { changeDataSource, changeDefaultValue } from '../hooks/UseComponentReducer'
 
-interface State {
-    dataSource: Array<any>
-    defaultValue: any
-}
 
-const CHANGE_DATA_SOURCE = 'change_data_source'
-const CHANGE_DEFAULT_VALUE = 'change_default_value'
-
-function stateReducer(state: State, action: AnyAction): State {
-    switch (action.type) {
-        case CHANGE_DATA_SOURCE:
-            return {
-                ...state,
-                dataSource: action.payload
-            }
-        case CHANGE_DEFAULT_VALUE:
-            return {
-                ...state,
-                defaultValue: action.payload
-            }
-        default:
-            return state
-    }
-}
 
 interface BaseProps {
     className: string
@@ -55,7 +33,7 @@ interface FetchProps<DataSourceT, ValueExprT> extends BaseProps {
 export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: FetchProps<DataSourceT, ValueExprT>) {
 
     const storedDefaultValue = useAppSelector(props.stateSelector)
-    const [state, componentDispatch] = useReducer(stateReducer, { dataSource: [], defaultValue: storedDefaultValue })
+    const [state, componentDispatch] = useComponentReducer([], storedDefaultValue)
     const appDispatch = useAppDispatch()
     const onValueChangeHandler = (value: ValueExprT) => {
         appDispatch(props.onValueChange(value))
@@ -65,10 +43,10 @@ export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: 
         (async () => {
             const fetchResult: FetchResult<Array<DataSourceT>> = await props.fetchDataSourceValues()
             if (fetchResult.success) {
-                componentDispatch({ type: CHANGE_DATA_SOURCE, payload: fetchResult.data })
+                componentDispatch(changeDataSource(fetchResult.data))
 
                 const defaultValue = storedDefaultValue || props.defaultValueSelector(fetchResult.data)
-                componentDispatch({ type: CHANGE_DEFAULT_VALUE, payload: defaultValue })
+                componentDispatch(changeDefaultValue(defaultValue))
                 appDispatch(props.onValueChange(defaultValue))
             }
         })()

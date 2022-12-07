@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useCallback } from 'react'
+import React, { useReducer, useEffect, useCallback, useRef } from 'react'
 import Plot from 'react-plotly.js'
 import { Data as GraphData } from 'plotly.js'
 import ForecastMissing from '../utils/ForecastMissing'
@@ -21,9 +21,6 @@ export interface ForecastPanelState {
 }
 
 function ForecastPanel({ state }: { state: ForecastPanelState }) {
-    // const renderCount = useRef(0)
-    // console.log('Strategic ForecastPanel render: ', renderCount.current++)
-
     return (
         <div className='ForecastBody'>
             <Graph state={state} />
@@ -97,7 +94,6 @@ function getScatters(state: GraphState): Array<GraphData> {
 
 function getBars(state: GraphState, positionsFilter: Array<string>, hiddenLegends: Array<string>): Array<GraphData> {
     if (state.tribeRepliesLoaded) {
-
         const data: Array<GraphData> = []
         for (const user of state.tribeReplies) {
             const visible = positionsFilter.length === 0 && hiddenLegends.includes(user.user_name) ? 'legendonly' : undefined
@@ -203,34 +199,38 @@ interface LegendClickObject {
 }
 
 function Graph({ state }: { state: ForecastPanelState }) {
+    const renderCount = useRef(0)
+    console.log('Graph render: ', renderCount.current++)
+
     const [graphState, dispatch] = useReducer(graphStateReducer, initialGraphState)
 
     useEffect(() => {
-        (async () => {
-            if (state.forecastHorizon === '')
-                return
-            const fetchedIncomeForecast: FetchResult<IncomeForecast> = await FetchTribeIncomeForecast(state.tribeId, state.forecastHorizon, state.incomeType)
-            dispatch({
-                type: FETCH_INCOME_FORECAST,
-                ...initialGraphState,
-                incomeForecastLoaded: fetchedIncomeForecast.success,
-                incomeForecast: fetchedIncomeForecast.data,
-            })
-            const fetchedDailyTribeReplies: FetchResult<Array<DailyTribeReplies>> = await FetchDailyTribeReplies(state.tile, state.tribeId, state.forecastHorizon)
-            dispatch({
-                type: FETCH_DAILY_TRIBE_REPLIES,
-                ...initialGraphState,
-                tribeRepliesLoaded: fetchedDailyTribeReplies.success,
-                tribeReplies: fetchedDailyTribeReplies.data,
-            })
-        })()
+            (async () => {
+                if (state.forecastHorizon === '')
+                    return
+                const fetchedIncomeForecast: FetchResult<IncomeForecast> = await FetchTribeIncomeForecast(state.tribeId, state.forecastHorizon, state.incomeType)
+                dispatch({
+                    type: FETCH_INCOME_FORECAST,
+                    ...initialGraphState,
+                    incomeForecastLoaded: fetchedIncomeForecast.success,
+                    incomeForecast: fetchedIncomeForecast.data,
+                })
+                const fetchedDailyTribeReplies: FetchResult<Array<DailyTribeReplies>> = await FetchDailyTribeReplies(state.tile, state.tribeId, state.forecastHorizon)
+                dispatch({
+                    type: FETCH_DAILY_TRIBE_REPLIES,
+                    ...initialGraphState,
+                    tribeRepliesLoaded: fetchedDailyTribeReplies.success,
+                    tribeReplies: fetchedDailyTribeReplies.data,
+                })
+            })()
     }, [state.tribeId, state.forecastHorizon, state.incomeType, state.tile, state.lastUpdated])
 
     const forecasterDispatch = useAppDispatch()
-    const onLegendClick = useCallback(({ data }: LegendClickObject) => {
-        const legendsToStore = (data.filter(legend => legend.type === 'bar' && legend.visible === 'legendonly').map(legend => legend.hovertext) as Array<string>)
-        setTimeout(() => {
+    const onLegendClick = useCallback(({ data }: LegendClickObject) => {    
+        const timerId = setTimeout(() => {
+            const legendsToStore = (data.filter(legend => legend.type === 'bar' && legend.visible === 'legendonly').map(legend => legend.hovertext) as Array<string>)
             forecasterDispatch(legendClick(state.tribeId, legendsToStore))
+            clearTimeout(timerId)
         }, 500)
         return true
     }, [state.tribeId, forecasterDispatch])
