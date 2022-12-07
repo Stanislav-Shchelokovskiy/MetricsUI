@@ -1,128 +1,112 @@
 import React from 'react'
-import TagBox, { DropDownOptions as DropDownOptionsTagBox } from 'devextreme-react/tag-box'
+import TagBox, { DropDownOptions, Button } from 'devextreme-react/tag-box'
 import LoadIndicator from './LoadIndicator'
 import useDataSource from '../../common/hooks/UseDataSource'
 import FetchResult from '../Interfaces'
 import { AppStore, useAppSelector, useAppDispatch } from '../AppStore'
 import { PayloadAction } from '@reduxjs/toolkit'
+import * as includeIcon from './assets/include.svg'
+import * as excludeIcon from './assets/exclude.svg'
 
 
-export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(
-    {
-        className,
-        displayExpr,
-        valueExpr,
-        placeholder,
-        label,
-        fetchDataSourceValues,
-        stateSelector,
-        onValueChange,
-        showSelectionControls,
-        container,
-        disabled,
-    }: {
-        className: string
-        displayExpr: string
-        valueExpr: string
-        placeholder: string
-        label: string
-        fetchDataSourceValues: () => Promise<FetchResult<Array<DataSourceT>>>
-        stateSelector: (store: AppStore) => Array<ValueExprT>
-        onValueChange: (allValues: Array<DataSourceT>, selectedValues: Array<ValueExprT>) => PayloadAction<any>
-        showSelectionControls: boolean
-        container: string
-        disabled: boolean
-    }) {
+interface BaseProps<DataSourceT, ValueExprT> {
+    className: string
+    displayExpr: string
+    valueExpr: string
+    placeholder: string
+    label: string
+    stateSelector: (store: AppStore) => Array<ValueExprT>
+    onValueChange: (allValues: Array<DataSourceT>, selectedValues: Array<ValueExprT>) => PayloadAction<any>
+    showSelectionControls: boolean
+    container: string
+    disabled: boolean
+    onIncludeButtonClick: ((include: boolean) => void) | undefined
+}
 
-    const dataSource = useDataSource<DataSourceT>(fetchDataSourceValues)
+interface DataSourceProps<DataSourceT, ValueExprT> extends BaseProps<DataSourceT, ValueExprT> {
+    dataSource: Array<DataSourceT>
+}
+
+interface FetchProps<DataSourceT, ValueExprT> extends BaseProps<DataSourceT, ValueExprT> {
+    fetchDataSourceValues: () => Promise<FetchResult<Array<DataSourceT>>>
+}
+
+
+export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(props: FetchProps<DataSourceT, ValueExprT>) {
+    const dataSource = useDataSource<DataSourceT>(props.fetchDataSourceValues)
 
     if (dataSource.length > 0) {
         return (
             <MultiOptionSelector
-                className={className}
-                displayExpr={displayExpr}
-                valueExpr={valueExpr}
-                placeholder={placeholder}
-                label={label}
+                {...props}
                 dataSource={dataSource}
-                stateSelector={stateSelector}
-                onValueChange={onValueChange}
-                container={container}
-                showSelectionControls={showSelectionControls}
-                disabled={disabled}
             />
         )
     }
     return <LoadIndicator width={undefined} height={25} />
 }
 
-export function MultiOptionSelector<DataSourceT, ValueExprT>(
-    {
-        className,
-        displayExpr,
-        valueExpr,
-        placeholder,
-        label,
-        dataSource,
-        stateSelector,
-        onValueChange,
-        showSelectionControls,
-        container,
-        disabled,
-    }: {
-        className: string
-        displayExpr: string
-        valueExpr: string
-        placeholder: string
-        label: string
-        dataSource: Array<DataSourceT>
-        stateSelector: (store: AppStore) => Array<ValueExprT>
-        onValueChange: (allValues: Array<DataSourceT>, selectedValues: Array<ValueExprT>) => PayloadAction<any>
-        showSelectionControls: boolean
-        container: string
-        disabled: boolean
-    }) {
-    const selectedValues = useAppSelector(stateSelector)
+export function MultiOptionSelector<DataSourceT, ValueExprT>(props: DataSourceProps<DataSourceT, ValueExprT>) {
+    const selectedValues = useAppSelector(props.stateSelector)
 
     const dispatch = useAppDispatch()
     const onValueChangeHandler = (values: Array<ValueExprT>) => {
-        dispatch(onValueChange(dataSource, values))
+        dispatch(props.onValueChange(props.dataSource, values))
     }
 
     return <TagBox
-        className={className}
-        displayExpr={displayExpr}
-        valueExpr={valueExpr}
-        placeholder={placeholder}
-        label={label}
-        dataSource={dataSource}
+        {...props}
         value={selectedValues}
         onValueChange={onValueChangeHandler}
-        showSelectionControls={showSelectionControls}
         multiline={true}
         searchEnabled={true}
         showDropDownButton={false}
-        disabled={disabled}
+        hideSelectedItems={true}
+        //grouped={true}
         labelMode='static'>
-        <DropDownOptionsTagBox
+        < DropDownOptions
             hideOnOutsideClick={true}
             hideOnParentScroll={true}
-            container={container} />
-    </TagBox>
+            container={props.container} />
+        {getIncludeButton(props.onIncludeButtonClick)}
+    </TagBox >
 }
 
-MultiOptionSelectorWithFetch.defaultProps = {
+function getIncludeButton(onIncludeButtonClick: ((include: boolean) => void) | undefined) {
+    const buttonOptions = {
+        text: '',
+        stylingMode: 'text',
+        type: 'success',
+        icon: includeIcon.default,
+        onClick: (e: any) => {
+            if (e.component.option('type') === 'danger') {
+                e.component.option('type', 'success')
+                e.component.option('icon', includeIcon.default)
+                onIncludeButtonClick?.(true)
+            } else {
+                e.component.option('type', 'danger')
+                e.component.option('icon', excludeIcon.default)
+                onIncludeButtonClick?.(false)
+            }
+        }
+    }
+    if (onIncludeButtonClick) {
+        return <Button
+            name=''
+            location='before'
+            options={buttonOptions}
+        />
+    }
+}
+
+const defaultProps = {
     displayExpr: undefined,
     valueExpr: undefined,
     showSelectionControls: false,
     container: undefined,
     disabled: false,
+    onIncludeButtonClick: undefined
 }
 
-MultiOptionSelector.defaultProps = {
-    displayExpr: undefined,
-    valueExpr: undefined,
-    showSelectionControls: false,
-    container: undefined,
-    disabled: false,
-}
+MultiOptionSelectorWithFetch.defaultProps = defaultProps
+MultiOptionSelector.defaultProps = defaultProps

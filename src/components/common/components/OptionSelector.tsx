@@ -30,59 +30,53 @@ function stateReducer(state: State, action: AnyAction): State {
     }
 }
 
-export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(
-    {
-        className,
-        displayExpr,
-        valueExpr,
-        placeholder,
-        label,
-        fetchDataSourceValues,
-        stateSelector,
-        defaultValueSelector,
-        onValueChange,
-        container,
-    }: {
-        className: string
-        displayExpr: string
-        valueExpr: string
-        placeholder: string
-        label: string
-        fetchDataSourceValues: () => Promise<FetchResult<Array<DataSourceT>>>
-        stateSelector: (store: AppStore) => ValueExprT | undefined
-        defaultValueSelector: (values: Array<DataSourceT>) => ValueExprT
-        onValueChange: (value: ValueExprT) => PayloadAction<any>
-        container: string
-    }) {
+interface BaseProps {
+    className: string
+    displayExpr: string
+    valueExpr: string
+    placeholder: string
+    label: string
+    container: string
+}
 
-    const storedDefaultValue = useAppSelector(stateSelector)
+interface DataSourceProps<DataSourceT, ValueExprT> extends BaseProps {
+    dataSource: Array<DataSourceT>
+    defaultValue: ValueExprT
+    onValueChange: (value: ValueExprT) => void
+}
+
+interface FetchProps<DataSourceT, ValueExprT> extends BaseProps {
+    fetchDataSourceValues: () => Promise<FetchResult<Array<DataSourceT>>>
+    stateSelector: (store: AppStore) => ValueExprT | undefined
+    defaultValueSelector: (value: Array<DataSourceT>) => ValueExprT
+    onValueChange: (value: ValueExprT) => PayloadAction<any>
+}
+
+export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: FetchProps<DataSourceT, ValueExprT>) {
+
+    const storedDefaultValue = useAppSelector(props.stateSelector)
     const [state, componentDispatch] = useReducer(stateReducer, { dataSource: [], defaultValue: storedDefaultValue })
     const appDispatch = useAppDispatch()
     const onValueChangeHandler = (value: ValueExprT) => {
-        appDispatch(onValueChange(value))
+        appDispatch(props.onValueChange(value))
     }
 
     useEffect(() => {
         (async () => {
-            const fetchResult: FetchResult<Array<DataSourceT>> = await fetchDataSourceValues()
+            const fetchResult: FetchResult<Array<DataSourceT>> = await props.fetchDataSourceValues()
             if (fetchResult.success) {
                 componentDispatch({ type: CHANGE_DATA_SOURCE, payload: fetchResult.data })
 
-                const defaultValue = storedDefaultValue || defaultValueSelector(fetchResult.data)
+                const defaultValue = storedDefaultValue || props.defaultValueSelector(fetchResult.data)
                 componentDispatch({ type: CHANGE_DEFAULT_VALUE, payload: defaultValue })
-                appDispatch(onValueChange(defaultValue))
+                appDispatch(props.onValueChange(defaultValue))
             }
         })()
     }, [])
 
     if (state.dataSource.length > 0) {
         return <OptionSelector
-            className={className}
-            displayExpr={displayExpr}
-            valueExpr={valueExpr}
-            placeholder={placeholder}
-            label={label}
-            container={container}
+            {...props}
             dataSource={state.dataSource}
             defaultValue={state.defaultValue}
             onValueChange={onValueChangeHandler} />
@@ -90,56 +84,23 @@ export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(
     return <LoadIndicator width={undefined} height={25} />
 }
 
-export function OptionSelector<DataSourceT, ValueExprT>(
-    {
-        className,
-        displayExpr,
-        valueExpr,
-        placeholder,
-        label,
-        dataSource,
-        defaultValue,
-        onValueChange,
-        container,
-    }: {
-        className: string
-        displayExpr: string
-        valueExpr: string
-        placeholder: string
-        label: string
-        dataSource: Array<DataSourceT>
-        defaultValue: ValueExprT
-        onValueChange: (value: ValueExprT) => void
-        container: string
-    }
-) {
+export function OptionSelector<DataSourceT, ValueExprT>(props: DataSourceProps<DataSourceT, ValueExprT>) {
     return <SelectBox
-        className={className}
-        displayExpr={displayExpr}
-        valueExpr={valueExpr}
-        placeholder={placeholder}
-        label={label}
-        dataSource={dataSource}
-        defaultValue={defaultValue}
-        onValueChange={onValueChange}
+        {...props}
         labelMode='static'>
         <DropDownOptions
             hideOnOutsideClick={true}
             hideOnParentScroll={true}
-            container={container} />
+            container={props.container} />
     </SelectBox >
 }
 
-OptionSelectorWithFetch.defaultProps = {
+const defaultProps = {
     displayExpr: undefined,
     valueExpr: undefined,
     placeholder: undefined,
     container: undefined,
 }
 
-OptionSelector.defaultProps = {
-    displayExpr: undefined,
-    valueExpr: undefined,
-    placeholder: undefined,
-    container: undefined,
-}
+OptionSelectorWithFetch.defaultProps = defaultProps
+OptionSelector.defaultProps = defaultProps
