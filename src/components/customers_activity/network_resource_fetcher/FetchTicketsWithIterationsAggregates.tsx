@@ -1,5 +1,6 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
+import { FilterParametersNode } from '../store/SetsReducer'
 
 
 interface TicketsWithIterationsAggregate {
@@ -26,25 +27,25 @@ export const fetchTicketsWithIterationsAggregates: (
     group_by_period: string,
     range_start: string,
     range_end: string,
-    customersGroups: Array<string>,
-    ticketsTypes: Array<number>,
-    ticketsTags: Array<number>,
-    tribes: Array<string>,
-    repliesTypes: Array<string>,
-    controls: Array<string>,
-    features: Array<string>,
+    customersGroups: FilterParametersNode<string>,
+    ticketsTypes: FilterParametersNode<number>,
+    ticketsTags: FilterParametersNode<number>,
+    tribes: FilterParametersNode<string>,
+    repliesTypes: FilterParametersNode<string>,
+    controls: FilterParametersNode<string>,
+    features: FilterParametersNode<string>,
 ) => Promise<FetchResult<TicketsWithIterationsAggregates>> =
     async function (
         group_by_period: string,
         range_start: string,
         range_end: string,
-        customersGroups: Array<string>,
-        ticketsTypes: Array<number>,
-        ticketsTags: Array<number>,
-        tribes: Array<string>,
-        repliesTypes: Array<string>,
-        controls: Array<string>,
-        features: Array<string>,
+        customersGroups: FilterParametersNode<string>,
+        ticketsTypes: FilterParametersNode<number>,
+        ticketsTags: FilterParametersNode<number>,
+        tribes: FilterParametersNode<string>,
+        repliesTypes: FilterParametersNode<string>,
+        controls: FilterParametersNode<string>,
+        features: FilterParametersNode<string>,
     ) {
         try {
             const aggregates: Array<TicketsWithIterationsAggregate> = await fetch(

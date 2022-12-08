@@ -9,29 +9,48 @@ import {
     CHANGE_REPLIES_TYPES,
     CHANGE_CONTROLS,
     CHANGE_FEATURES,
+    CHANGE_TRIBES_INCLUDE,
+    CHANGE_CUSTOMERS_GROUPS_INCLUDE,
+    CHANGE_TICKETS_TYPES_INCLUDE,
+    CHANGE_TICKETS_TAGS_INCLUDE,
+    CHANGE_REPLIES_TYPES_INCLUDE,
+    CHANGE_CONTROLS_INCLUDE,
+    CHANGE_FEATURES_INCLUDE,
 } from './Actions'
+
+export interface FilterParametersNode<T> {
+    include: boolean
+    values: Array<T>
+}
+
+function getDefaultFilterParametersNode<T>(): FilterParametersNode<T> {
+    return {
+        include: true,
+        values: Array<T>()
+    }
+}
 
 export interface SetState {
     title: string
-    tribes: Array<string>
-    customersGroups: Array<string>
-    ticketsTags: Array<number>
-    ticketsTypes: Array<number>
-    repliesTypes: Array<string>
-    controls: Array<string>
-    features: Array<string>
+    tribes: FilterParametersNode<string>
+    customersGroups: FilterParametersNode<string>
+    ticketsTags: FilterParametersNode<number>
+    ticketsTypes: FilterParametersNode<number>
+    repliesTypes: FilterParametersNode<string>
+    controls: FilterParametersNode<string>
+    features: FilterParametersNode<string>
 }
 
 
 export const INITIAL_SET_STATE: SetState = {
     title: '0',
-    tribes: Array<string>(),
-    customersGroups: Array<string>(),
-    ticketsTags: Array<number>(),
-    ticketsTypes: Array<number>(),
-    repliesTypes: Array<string>(),
-    controls: Array<string>(),
-    features: Array<string>(),
+    tribes: getDefaultFilterParametersNode<string>(),
+    customersGroups: getDefaultFilterParametersNode<string>(),
+    ticketsTags: getDefaultFilterParametersNode<number>(),
+    ticketsTypes: getDefaultFilterParametersNode<number>(),
+    repliesTypes: getDefaultFilterParametersNode<string>(),
+    controls: getDefaultFilterParametersNode<string>(),
+    features: getDefaultFilterParametersNode<string>(),
 }
 
 const INTIAL_SETS_STATE: Array<SetState> = [INITIAL_SET_STATE]
@@ -50,35 +69,158 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
             return updateSetState(action.payload.stateId, state, (x) => {
                 return {
                     ...x,
-                    tribes: action.payload.data,
-                    controls: [],
-                    features: [],
+                    tribes: {
+                        ...x.tribes,
+                        values: action.payload.data,
+                    },
+                    controls: INITIAL_SET_STATE.controls,
+                    features: INITIAL_SET_STATE.features,
+                }
+            })
+        case CHANGE_TRIBES_INCLUDE:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    tribes: {
+                        ...x.tribes,
+                        include: action.payload.data,
+                    },
+                    controls: INITIAL_SET_STATE.controls,
+                    features: INITIAL_SET_STATE.features,
                 }
             })
 
         case CHANGE_CUSTOMERS_GROUPS:
-            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, customersGroups: action.payload.data } })
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    customersGroups: {
+                        ...x.customersGroups,
+                        values: action.payload.data,
+                    }
+                }
+            })
+
+        case CHANGE_CUSTOMERS_GROUPS_INCLUDE:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    customersGroups: {
+                        ...x.customersGroups,
+                        include: action.payload.data,
+                    }
+                }
+            })
 
         case CHANGE_TICKETS_TAGS:
-            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, ticketsTags: action.payload.data } })
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    ticketsTags: {
+                        ...x.ticketsTags,
+                        values: action.payload.data,
+                    }
+                }
+            })
+
+        case CHANGE_TICKETS_TAGS_INCLUDE:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    ticketsTags: {
+                        ...x.ticketsTags,
+                        include: action.payload.data,
+                    }
+                }
+            })
 
         case CHANGE_TICKETS_TYPES:
-            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, ticketsTypes: action.payload.data } })
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    ticketsTypes: {
+                        ...x.ticketsTypes,
+                        values: action.payload.data
+                    }
+                }
+            })
+        case CHANGE_TICKETS_TYPES_INCLUDE:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    ticketsTypes: {
+                        ...x.ticketsTypes,
+                        include: action.payload.data
+                    }
+                }
+            })
 
         case CHANGE_REPLIES_TYPES:
-            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, repliesTypes: action.payload.data } })
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    repliesTypes: {
+                        ...x.repliesTypes,
+                        values: action.payload.data
+                    }
+                }
+            })
+
+        case CHANGE_REPLIES_TYPES_INCLUDE:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    repliesTypes: {
+                        ...x.repliesTypes,
+                        include: action.payload.data
+                    }
+                }
+            })
 
         case CHANGE_CONTROLS:
             return updateSetState(action.payload.stateId, state, (x) => {
                 return {
                     ...x,
-                    controls: action.payload.data,
-                    features: []
+                    controls: {
+                        ...x.controls,
+                        values: action.payload.data,
+                    },
+                    features: INITIAL_SET_STATE.features
+                }
+            })
+
+        case CHANGE_CONTROLS_INCLUDE:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    controls: {
+                        ...x.controls,
+                        include: action.payload.data,
+                    },
+                    features: INITIAL_SET_STATE.features
                 }
             })
 
         case CHANGE_FEATURES:
-            return updateSetState(action.payload.stateId, state, (x) => { return { ...x, features: action.payload.data } })
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    features: {
+                        ...x.features,
+                        values: action.payload.data
+                    },
+                }
+            })
+        case CHANGE_FEATURES_INCLUDE:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    features: {
+                        ...x.features,
+                        include: action.payload.data
+                    },
+                }
+            })
 
         default:
             return state

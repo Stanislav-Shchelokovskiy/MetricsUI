@@ -4,7 +4,7 @@ import { Data as GraphData } from 'plotly.js'
 import { useAppSelector, AppStore } from '../common/AppStore'
 import FetchResult from '../common/Interfaces'
 import { isTicketsMetricSelected } from './commonSettingsPanel/MetricSelector'
-import { isAbsoluteComparisonMethodSelected } from './commonSettingsPanel/ComparisonMethodSelector'
+import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './commonSettingsPanel/ComparisonMethodSelector'
 import {
     fetchTicketsWithIterationsAggregates,
     TicketsWithIterationsAggregates,
@@ -74,12 +74,13 @@ const GraphPlot = React.memo(
         {
             aggregates,
             metric,
-            comparisonMethod }:
-            {
-                aggregates: Array<SetAggregates>,
-                metric: string,
-                comparisonMethod: string
-            }) {
+            comparisonMethod
+        }: {
+            aggregates: Array<SetAggregates>,
+            metric: string,
+            comparisonMethod: string
+        }
+    ) {
         return (
             <Plot
                 className='CustomersActivity_ComparisonGraph'
@@ -109,27 +110,45 @@ function getPlots(setAggregates: Array<SetAggregates>, metric: string, compariso
         const data: Array<GraphData> = []
         for (const set of setAggregates) {
             data.push(
-                isAbsoluteComparisonMethodSelected(comparisonMethod) ?
-                    createBar(set, metric) :
-                    createChart(set, metric)
+                getPlot(set, metric,)
             )
         }
         return data
     }
     return []
+
+    function getPlot(set: SetAggregates, metric: string): GraphData {
+        if (isAbsoluteBarSelected(comparisonMethod)) {
+            return createAbsoluteBar(set, metric)
+        }
+        if (isAbsoluteAreaSelected(comparisonMethod)) {
+            return createAbsoluteArea(set, metric)
+        }
+        return createNormalizedStackedArea(set, metric)
+    }
 }
 
 
-function createBar(set: SetAggregates, metric: string): GraphData {
+function createAbsoluteBar(set: SetAggregates, metric: string): GraphData {
     return {
         ...getCommonGraphSettings(set, metric),
+        ...getAbsoluteGraphSettings(set, metric),
         type: 'bar',
-        hovertemplate: `<b>${set.name}</b><br>Period: %{x}<br>${metric}: %{y}<br><extra></extra>`,
+    }
+}
+
+function createAbsoluteArea(set: SetAggregates, metric: string): GraphData {
+    return {
+        ...getCommonGraphSettings(set, metric),
+        ...getAbsoluteGraphSettings(set, metric),
+        type: 'scatter',
+        fill: 'tonexty',
+        mode: 'none',
     }
 }
 
 //NormalizedStackedAreaChart
-function createChart(set: SetAggregates, metric: string): GraphData {
+function createNormalizedStackedArea(set: SetAggregates, metric: string): GraphData {
     return {
         ...getCommonGraphSettings(set, metric),
         type: 'scatter',
@@ -137,6 +156,12 @@ function createChart(set: SetAggregates, metric: string): GraphData {
         connectgaps: true,
         stackgroup: 'one',
         groupnorm: 'percent'
+    }
+}
+
+function getAbsoluteGraphSettings(set: SetAggregates, metric: string) {
+    return {
+        hovertemplate: `<b>${set.name}</b><br>Period: %{x}<br>${metric}: %{y}<br><extra></extra>`,
     }
 }
 

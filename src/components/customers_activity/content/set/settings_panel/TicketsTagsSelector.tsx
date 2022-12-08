@@ -1,13 +1,17 @@
 import React from 'react'
 import MultiOptionSelectorWithFetch from '../../../../common/components/MultiOptionSelector'
-import { AppStore } from '../../../../common/AppStore'
-import { changeTicketsTags } from '../../../store/Actions'
+import { AppStore, useAppSelector } from '../../../../common/AppStore'
+import { changeTicketsTags, changeTicketsTagsInclude } from '../../../store/Actions'
 import { fetchTicketsTags, TicketsTag } from '../../../network_resource_fetcher/FetchTicketsTags'
+import { FilterParametersNode } from '../../../store/SetsReducer'
 
 
 export default function TicketsTagsSelector({ setTitle }: { setTitle: string }) {
-    const stateSelector = (store: AppStore) => store.customersActivitySets.find(x => x.title === setTitle)?.ticketsTags || []
+    const state = useAppSelector((store: AppStore) =>
+        store.customersActivitySets.find(x => x.title === setTitle)?.ticketsTags as FilterParametersNode<number>
+    )
     const onValueChange = (allValues: Array<TicketsTag>, values: Array<number>) => changeTicketsTags({ stateId: setTitle, data: values })
+    const onIncludeChange = (include: boolean) => changeTicketsTagsInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelectorWithFetch<TicketsTag, number>
         className='CustomersActivity_TicketsTagsSelector'
@@ -16,6 +20,8 @@ export default function TicketsTagsSelector({ setTitle }: { setTitle: string }) 
         placeholder='Select tickets tags'
         label='Tickets tags'
         fetchDataSourceValues={fetchTicketsTags}
-        stateSelector={stateSelector}
-        onValueChange={onValueChange} />
+        defaultValue={state.values}
+        includeButtonState={state.include}
+        onValueChange={onValueChange}
+        onIncludeChange={onIncludeChange} />
 } 

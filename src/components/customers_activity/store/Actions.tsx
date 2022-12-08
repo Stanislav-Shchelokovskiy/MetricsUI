@@ -1,9 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { Tribe, Payload } from '../../common/Interfaces'
-import { CustomersGroup } from '../network_resource_fetcher/FetchCustomersGroups'
-import { TicketsType } from '../network_resource_fetcher/FetchTicketsTypes'
-import { TicketsTag } from '../network_resource_fetcher/FetchTicketsTags'
-import { ReplyType } from '../network_resource_fetcher/FetchRepliesTypes'
+import { Payload } from '../../common/Interfaces'
 
 
 export const CHANGE_PERIOD = 'customers_activity/change_period'
@@ -65,11 +61,27 @@ export const changeTribes = (tribes: Payload<string, Array<string>>): PayloadAct
     }
 }
 
+export const CHANGE_TRIBES_INCLUDE = 'customers_activity/change_tribes_include'
+export const changeTribesInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_TRIBES_INCLUDE,
+        payload: include
+    }
+}
+
 export const CHANGE_CUSTOMERS_GROUPS = 'customers_activity/change_customers_groups'
 export const changeCustomersGroups = (customersGroups: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
         type: CHANGE_CUSTOMERS_GROUPS,
         payload: customersGroups
+    }
+}
+
+export const CHANGE_CUSTOMERS_GROUPS_INCLUDE = 'customers_activity/change_customers_groups_include'
+export const changeCustomersGroupsInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_CUSTOMERS_GROUPS_INCLUDE,
+        payload: include
     }
 }
 
@@ -81,11 +93,27 @@ export const changeTicketsTypes = (ticketsTypes: Payload<string, Array<number>>)
     }
 }
 
+export const CHANGE_TICKETS_TYPES_INCLUDE = 'customers_activity/change_tickets_types_include'
+export const changeTicketsTypesInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_TICKETS_TYPES_INCLUDE,
+        payload: include
+    }
+}
+
 export const CHANGE_TICKETS_TAGS = 'customers_activity/change_tickets_tags'
 export const changeTicketsTags = (ticketsTags: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
     return {
         type: CHANGE_TICKETS_TAGS,
         payload: ticketsTags
+    }
+}
+
+export const CHANGE_TICKETS_TAGS_INCLUDE = 'customers_activity/change_tickets_tags_include'
+export const changeTicketsTagsInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_TICKETS_TAGS_INCLUDE,
+        payload: include
     }
 }
 
@@ -97,6 +125,14 @@ export const changeRepliesTypes = (repliesTypes: Payload<string, Array<string>>)
     }
 }
 
+export const CHANGE_REPLIES_TYPES_INCLUDE = 'customers_activity/change_replies_types_include'
+export const changeRepliesTypesInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_REPLIES_TYPES_INCLUDE,
+        payload: include
+    }
+}
+
 export const CHANGE_CONTROLS = 'customers_activity/change_controls'
 export const changeControls = (repliesTypes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
@@ -105,10 +141,26 @@ export const changeControls = (repliesTypes: Payload<string, Array<string>>): Pa
     }
 }
 
+export const CHANGE_CONTROLS_INCLUDE = 'customers_activity/change_controls_include'
+export const changeControlsInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_CONTROLS_INCLUDE,
+        payload: include
+    }
+}
+
 export const CHANGE_FEATURES = 'customers_activity/change_features'
 export const changeFeatures = (repliesTypes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
         type: CHANGE_FEATURES,
         payload: repliesTypes
+    }
+}
+
+export const CHANGE_FEATURES_INCLUDE = 'customers_activity/change_features_include'
+export const changeFeaturesInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_FEATURES_INCLUDE,
+        payload: include
     }
 }

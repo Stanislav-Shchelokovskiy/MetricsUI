@@ -4,16 +4,21 @@ import { useAppDispatch, useAppSelector, AppStore } from '../../common/AppStore'
 import { changeComparisonMethod } from '../store/Actions'
 
 
-const ABSOLUTE = 'Absolute'
+const ABSOLUTE_BAR = 'Absolute (Bar)'
+const ABSOLUTE_AREA = 'Absolute (Area)'
 const RELATIVE = 'Relative'
 
-export const isAbsoluteComparisonMethodSelected: (method: string) => boolean = (metric: string) => {
-    return metric === ABSOLUTE
+export const isAbsoluteBarSelected: (method: string) => boolean = (metric: string) => {
+    return metric === ABSOLUTE_BAR
+}
+
+export const isAbsoluteAreaSelected: (method: string) => boolean = (metric: string) => {
+    return metric === ABSOLUTE_AREA
 }
 
 
 export default function ComparisonMethodSelector() {
-    const comparisonMethods = useMemo<Array<string>>(() => { return [ABSOLUTE, RELATIVE] }, [])
+    const comparisonMethods = useMemo<Array<string>>(() => { return [ABSOLUTE_AREA, ABSOLUTE_BAR, RELATIVE] }, [])
     let selectedComparisonMethod = useAppSelector((store: AppStore) => store.customersActivity.comparisonMethod)
 
     const appDispatch = useAppDispatch()
@@ -22,7 +27,7 @@ export default function ComparisonMethodSelector() {
     }
 
     if (!selectedComparisonMethod) {
-        selectedComparisonMethod = ABSOLUTE
+        selectedComparisonMethod = ABSOLUTE_AREA
         appDispatch(changeComparisonMethod(selectedComparisonMethod))
     }
 

@@ -7,7 +7,9 @@ import ForecastPanel, { ForecastPanelState } from './ForecastPanel'
 
 
 export default function StrategicForecast({ tribeId }: { tribeId: string }) {
-    const strategicForecastState: StrategicForecastState = useAppSelector((state: AppStore) => state.strategicForecast.find(x => x.tribeId === tribeId) || INITIAL_STRATEGIC_FORECAST_STATE)
+    const strategicForecastState: StrategicForecastState = useAppSelector((state: AppStore) =>
+        state.strategicForecast.find(x => x.tribeId === tribeId) || INITIAL_STRATEGIC_FORECAST_STATE
+    )
     const forecasterState: ForecasterState = useAppSelector((state: AppStore) => state.forecaster)
 
     const forecastPanelState: ForecastPanelState = {
@@ -15,8 +17,8 @@ export default function StrategicForecast({ tribeId }: { tribeId: string }) {
         forecastHorizon: strategicForecastState.forecastHorizon,
         incomeType: forecasterState.incomeType,
         tile: strategicForecastState.tile,
-        positionsFilter: strategicForecastState.positionsFilter,
-        hiddenLegends: strategicForecastState.legendsOnlyLegends,
+        positionsFilter: [...strategicForecastState.positionsFilter],
+        hiddenLegends: [...strategicForecastState.legendsOnlyLegends],
         lastUpdated: forecasterState.lastUpdated
     }
 
