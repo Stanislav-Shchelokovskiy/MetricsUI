@@ -140,7 +140,7 @@ function createAbsoluteArea(set: SetAggregates, metric: string): GraphData {
         ...getCommonGraphSettings(set, metric),
         ...getAbsoluteGraphSettings(set, metric),
         type: 'scatter',
-        fill: 'tonexty',
+        fill: 'tozeroy',
         mode: 'none',
         line: { shape: 'spline' },
     }
