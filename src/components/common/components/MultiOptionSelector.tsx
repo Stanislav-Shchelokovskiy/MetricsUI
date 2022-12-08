@@ -25,6 +25,10 @@ interface Props<DataSourceT, ValueExprT> {
     onIncludeChange: ((include: boolean) => PayloadAction<any>) | undefined
 }
 
+interface PropsWithValue<DataSourceT, ValueExprT> extends Props<DataSourceT, ValueExprT> {
+    value: Array<ValueExprT>
+}
+
 
 interface FetchProps<DataSourceT, ValueExprT> extends Props<DataSourceT, ValueExprT> {
     fetchDataSourceValues: () => Promise<FetchResult<Array<DataSourceT>>>
@@ -46,7 +50,7 @@ export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(pr
 }
 
 
-export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT>) {
+export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT> | PropsWithValue<DataSourceT, ValueExprT>) {
     const dispatch = useAppDispatch()
     const onValueChangeHandler = (values: Array<ValueExprT>) => {
         dispatch(props.onValueChange(props.dataSource || [], values))
@@ -64,7 +68,6 @@ export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSo
         searchEnabled={true}
         showDropDownButton={false}
         hideSelectedItems={true}
-        //grouped={true}
         labelMode='static'>
         < DropDownOptions
             hideOnOutsideClick={true}
@@ -103,8 +106,6 @@ function IncludeButton(isInIncludeState: boolean, onIncludeChange: ((include: bo
 const defaultProps = {
     displayExpr: undefined,
     valueExpr: undefined,
-    dataSource: undefined,
-    // defaultValue: undefined,
     //value: undefined,
     onIncludeChange: undefined,
     includeButtonState: undefined,
@@ -113,5 +114,5 @@ const defaultProps = {
     container: undefined,
 }
 
-MultiOptionSelectorWithFetch.defaultProps = defaultProps
+MultiOptionSelectorWithFetch.defaultProps = { ...defaultProps, dataSource: undefined, }
 MultiOptionSelector.defaultProps = defaultProps

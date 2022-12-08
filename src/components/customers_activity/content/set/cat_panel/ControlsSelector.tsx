@@ -30,6 +30,7 @@ export default function ControlsSelector({ setTitle }: { setTitle: string }) {
         disabled={tribes.length === 0}
         dataSource={dataSource}
         defaultValue={state.values}
+        value={state.values}
         includeButtonState={state.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange} />
