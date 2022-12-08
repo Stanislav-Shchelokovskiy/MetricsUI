@@ -109,9 +109,7 @@ function getPlots(setAggregates: Array<SetAggregates>, metric: string, compariso
     if (setAggregates.length > 0) {
         const data: Array<GraphData> = []
         for (const set of setAggregates) {
-            data.push(
-                getPlot(set, metric,)
-            )
+            data.push(getPlot(set, metric,))
         }
         return data
     }
@@ -144,6 +142,7 @@ function createAbsoluteArea(set: SetAggregates, metric: string): GraphData {
         type: 'scatter',
         fill: 'tonexty',
         mode: 'none',
+        line: { shape: 'spline' },
     }
 }
 
