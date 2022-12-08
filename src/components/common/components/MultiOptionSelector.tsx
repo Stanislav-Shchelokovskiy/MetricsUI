@@ -23,6 +23,7 @@ interface Props<DataSourceT, ValueExprT> {
     disabled: boolean
     includeButtonState: boolean | undefined
     onIncludeChange: ((include: boolean) => PayloadAction<any>) | undefined
+    hideSelectedItems: boolean
 }
 
 interface PropsWithValue<DataSourceT, ValueExprT> extends Props<DataSourceT, ValueExprT> {
@@ -67,7 +68,6 @@ export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSo
         multiline={true}
         searchEnabled={true}
         showDropDownButton={false}
-        hideSelectedItems={true}
         labelMode='static'>
         < DropDownOptions
             hideOnOutsideClick={true}
@@ -112,6 +112,7 @@ const defaultProps = {
     disabled: false,
     showSelectionControls: false,
     container: undefined,
+    hideSelectedItems: true,
 }
 
 MultiOptionSelectorWithFetch.defaultProps = { ...defaultProps, dataSource: undefined, }
