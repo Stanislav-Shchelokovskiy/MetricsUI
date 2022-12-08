@@ -20,8 +20,8 @@ function CustomersGroupsSelector({ setTitle }: { setTitle: string }) {
         placeholder='Select user groups'
         label='User groups'
         fetchDataSourceValues={fetchCustomersGroups}
-        defaultValue={state.values}
-        includeButtonState={state.include}
+        defaultValue={state?.values}
+        includeButtonState={state?.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange} />
 }

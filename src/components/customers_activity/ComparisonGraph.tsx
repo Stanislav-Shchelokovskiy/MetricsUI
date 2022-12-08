@@ -50,7 +50,6 @@ export default function ComparisonGraph() {
                         name: `Set ${set.title}`,
                         aggregates: fetchedAggregates.data
                     })
-
                 }
             }
             setAggregates(aggs)
@@ -87,12 +86,7 @@ const GraphPlot = React.memo(
                 data={getPlots(aggregates, metric, comparisonMethod)}
                 useResizeHandler={true}
                 layout={{
-                    margin: {
-                        t: 10,
-                        l: 30,
-                        r: 10,
-                        b: 30
-                    },
+                    margin: { t: 10, l: 30, r: 10, b: 30 },
                     xaxis: { autorange: true, automargin: true, type: 'category', categoryorder: 'category ascending' },
                     yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: true },
                     barmode: 'group',

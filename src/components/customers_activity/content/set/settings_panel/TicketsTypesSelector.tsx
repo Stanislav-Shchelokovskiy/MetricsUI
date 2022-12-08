@@ -20,8 +20,8 @@ export default function TicketsTypesSelector({ setTitle }: { setTitle: string })
         placeholder='Select tickets types'
         label='Tickets types'
         fetchDataSourceValues={fetchTicketsTypes}
-        defaultValue={state.values}
-        includeButtonState={state.include}
+        defaultValue={state?.values}
+        includeButtonState={state?.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange} />
 } 

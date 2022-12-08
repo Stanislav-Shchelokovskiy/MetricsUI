@@ -29,9 +29,9 @@ export default function ControlsSelector({ setTitle }: { setTitle: string }) {
         label='CAT controls'
         disabled={tribes.length === 0}
         dataSource={dataSource}
-        defaultValue={state.values}
-        value={state.values}
-        includeButtonState={state.include}
+        defaultValue={state?.values}
+        value={state?.values}
+        includeButtonState={state?.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange} />
 } 

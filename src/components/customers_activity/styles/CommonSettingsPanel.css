@@ -5,18 +5,25 @@
     align-items: center;
     padding-left: 1%;
     gap: 1%;
-    /* background-color: dodgerblue; */
-    background-color: rgba(246, 246, 246, 0.5);
     flex: 1;
     height: 18vh;
     gap: 10px;
+    /* background-color: dodgerblue; */
+}
+
+.CustomersActivity_CommonSettingsPanel,
+.CustomersActivityToolbar {
+    background-color: rgba(246, 246, 246, 0.5);
+}
+.CustomersActivityToolbar {
+    padding-top: 0.5%;
+    padding-left: 0.5%;
 }
 
 .CustomersActivity_PeriodSelector {
     /* background-color: rgb(0, 255, 251); */
     margin-bottom: 0px;
-    flex: 5;
-
+    flex: 3;
 }
 
 .CustomersActivity_GroupByPeriodSelector,
