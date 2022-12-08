@@ -34,7 +34,9 @@ function areEqual(prevProps: { state: ForecastPanelState }, nextProps: { state: 
         (prevProps.state.incomeType === nextProps.state.incomeType) &&
         (prevProps.state.tile === nextProps.state.tile) &&
         (prevProps.state.lastUpdated === nextProps.state.lastUpdated) &&
-        (prevProps.state.hiddenLegends.sort().join(',') === nextProps.state.hiddenLegends.sort().join(',')) &&
+        // Never enable rendering on hiddenLegends change as this will break working with legends because
+        // all initial legends filtering logic (like in the getBarVisibility function) will be executed on each legend click.
+        // (prevProps.state.hiddenLegends.sort().join(',') === nextProps.state.hiddenLegends.sort().join(',')) &&
         (prevProps.state.positionsFilter.sort().join(',') === nextProps.state.positionsFilter.sort().join(','))
     return res
 }
