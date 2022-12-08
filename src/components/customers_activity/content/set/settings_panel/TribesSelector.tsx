@@ -26,5 +26,6 @@ export default function TribesSelector({ setTitle }: { setTitle: string }) {
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
         showSelectionControls={true}
+        hideSelectedItems={false}
     />
 }
