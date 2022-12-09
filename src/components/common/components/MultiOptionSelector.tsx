@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import TagBox, { DropDownOptions, Button } from 'devextreme-react/tag-box'
+import DataSource from 'devextreme/data/data_source'
 import LoadIndicator from './LoadIndicator'
 import useDataSource from '../../common/hooks/UseDataSource'
 import FetchResult from '../Interfaces'
@@ -61,9 +62,14 @@ export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSo
             dispatch(props.onIncludeChange(include))
         }
     }
-
+    const ds = new DataSource({
+        store: props.dataSource,
+        paginate: true,
+        pageSize: 10
+    });
     return <TagBox
         {...props}
+        dataSource={ds}
         onValueChange={onValueChangeHandler}
         multiline={true}
         searchEnabled={true}

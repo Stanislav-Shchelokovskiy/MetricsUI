@@ -10,8 +10,6 @@
 
 .CustomersActivity_Sets_ScrollView {
     /* background-color: rgba(240, 240, 240, 0.3); */
-    min-height: 50vh;
-    flex: 3
 }
 
 .CustomersActivity_ComparisonGraph {
@@ -25,5 +23,5 @@
 }
 
 .CustomersActivity_Sets_Accordion {
-    min-height: min-content;
+    
 }
