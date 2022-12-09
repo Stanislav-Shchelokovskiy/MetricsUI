@@ -3,12 +3,6 @@ import ScrollView from 'devextreme-react/scroll-view'
 import Accordion, { Item } from 'devextreme-react/accordion'
 import Set from './set/Set'
 import { useAppSelector, AppStore } from '../../common/AppStore'
-import SetHeader from './set/header/SetHeader'
-
-
-const renderSetHeader = ({ title }: { title: string }) => {
-    return <SetHeader setTitle={title} />
-}
 
 export default function Sets() {
     const sets = useAppSelector((state: AppStore) => state.customersActivity.sets)
@@ -27,13 +21,10 @@ export default function Sets() {
                 multiple={true}
                 focusStateEnabled={false}
                 keyExpr='title'
-                itemTitleRender={renderSetHeader}
-            // defaultSelectedItemKeys={forecasterItemsState.expandedItems}
-            // onSelectedItemKeysChange={onSelectedItemsChange}
             >
                 {sets?.map((set) => {
                     return (
-                        <Item title={set} key={set} >
+                        <Item title={`Set ${set}`} key={set} >
                             <Set
                                 key={set}
                                 setTitle={set} />

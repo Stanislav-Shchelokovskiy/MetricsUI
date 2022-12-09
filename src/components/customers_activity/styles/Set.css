@@ -1,40 +1,21 @@
-.CustomerActivity_SetHeader {
+.CustomersActivity_Set,
+.CustomersActivity_SetSettingsPanel {
     display: flex;
-    flex-flow: row nowrap;
-    justify-content: 'flex-start';
-    align-items: center;
-    min-height: max-content;
-    padding: 0.5%;
-    gap: 3%;
-    /* background-color: rgba(240, 240, 240, 0.3); */
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 3px;
 }
 
+.CustomerActivity_SetHeader,
 .CustomersActivity_SetSettingsChildPanel,
 .CustomersActivity_CatPanel {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: stretch;
-    padding-left: 1%;
-    padding-right: 2%;
-    padding-bottom: 1%;
     gap: 1%;
     /* background-color: rgba(240, 240, 240, 0.5); */
-}
-
-.CustomersActivity_SetSettingsPanel {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-start;
-    align-items: stretch;
-}
-
-.CustomersActivity_CatPanel {
-    /* background-color: bisque; */
-    flex-grow: 1;
-    align-items: stretch;
-    justify-content: flex-start;
-    padding-bottom: 0px;
 }
 
 .CustomersActivity_ReplyTypesSelector,
