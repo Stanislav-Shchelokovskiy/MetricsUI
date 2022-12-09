@@ -1,5 +1,5 @@
 .CustomersActivityContainer,
-.CustomersActivity_Sets {
+.CustomersActivityContent {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
@@ -8,14 +8,22 @@
     /* background-color: rgb(127, 255, 185); */
 }
 
-.CustomersActivity_Sets_ScrollView,
-.CustomersActivity_Sets {
-    background-color: rgba(240, 240, 240, 0.3);
-    max-height: 40vh;
+.CustomersActivity_Sets_ScrollView {
+    /* background-color: rgba(240, 240, 240, 0.3); */
+    min-height: 50vh;
     flex: 3
 }
 
 .CustomersActivity_ComparisonGraph {
     /* background-color: rgb(230, 9, 9); */
-    flex: 5
+    flex: 1
+}
+
+.CustomersActivity_ContentDrawer {
+    width: 100vw;
+    height: 90vh;
+}
+
+.CustomersActivity_Sets_Accordion {
+    min-height: min-content;
 }

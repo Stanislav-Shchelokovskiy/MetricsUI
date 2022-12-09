@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react'
+import React from 'react'
 import MultiOptionSelectorWithFetch from '../../../../common/components/MultiOptionSelector'
 import { AppStore, useAppSelector } from '../../../../common/AppStore'
 import { changeRepliesTypes, changeRepliesTypesInclude } from '../../../store/Actions'
@@ -7,7 +7,6 @@ import { FilterParametersNode } from '../../../store/SetsReducer'
 
 
 export default function ReplyTypesSelector({ setTitle }: { setTitle: string }) {
-    const empty = useMemo(()=>[],[])
     const state = useAppSelector((store: AppStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.repliesTypes as FilterParametersNode<string>
     )
@@ -22,8 +21,8 @@ export default function ReplyTypesSelector({ setTitle }: { setTitle: string }) {
         placeholder='Select replies type'
         label='CAT replies types'
         fetchDataSourceValues={fetchRepliesTypes}
-        defaultValue={state.values}
-        includeButtonState={state.include}
+        defaultValue={state?.values}
+        includeButtonState={state?.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange} />
 } 

@@ -21,8 +21,8 @@ export default function TribesSelector({ setTitle }: { setTitle: string }) {
         placeholder='Select tribes to display...'
         label='Tribes'
         fetchDataSourceValues={fetchTribes}
-        defaultValue={state.values}
-        includeButtonState={state.include}
+        defaultValue={state?.values}
+        includeButtonState={state?.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
         showSelectionControls={true}

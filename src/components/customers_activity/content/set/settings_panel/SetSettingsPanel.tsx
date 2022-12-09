@@ -8,11 +8,15 @@ import TribesSelector from './TribesSelector'
 function SetSettingsPanel({ setTitle }: { setTitle: string }) {
     return (
         <div className='CustomersActivity_SetSettingsPanel'>
-            <TribesSelector setTitle={setTitle} />
-            <CustomersGroupsSelector setTitle={setTitle} />
-            <TicketsTagsSelector setTitle={setTitle} />
-            <TicketsTypesSelector setTitle={setTitle} />
-        </div>
+            <div className='CustomersActivity_SetSettingsChildPanel'>
+                <TribesSelector setTitle={setTitle} />
+                <CustomersGroupsSelector setTitle={setTitle} />
+            </div>
+            <div className='CustomersActivity_SetSettingsChildPanel'>
+                <TicketsTagsSelector setTitle={setTitle} />
+                <TicketsTypesSelector setTitle={setTitle} />
+            </div>
+        </div >
     )
 }
 
