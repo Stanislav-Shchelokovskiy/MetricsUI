@@ -1,6 +1,5 @@
 import React from 'react'
 import ScrollView from 'devextreme-react/scroll-view'
-import Accordion, { Item } from 'devextreme-react/accordion'
 import Set from './set/Set'
 import { useAppSelector, AppStore } from '../../common/AppStore'
 
@@ -14,24 +13,10 @@ export default function Sets() {
             scrollByThumb={true}
             scrollByContent={false}
         >
-            <Accordion
-                className='CustomersActivity_Sets_Accordion'
-                id='CustomersActivity_Sets_Accordion'
-                collapsible={true}
-                multiple={true}
-                focusStateEnabled={false}
-                keyExpr='title'
-            >
-                {sets?.map((set) => {
-                    return (
-                        <Item title={`Set ${set}`} key={set} >
-                            <Set
-                                key={set}
-                                setTitle={set} />
-                        </Item>
-                    )
-                })}
-            </Accordion>
+            <div id='CustomersActivity_Sets_ScrollView_div'>
+                {sets?.map((set) => <Set setTitle={set} key={set} />)}
+            </div>
+
         </ScrollView >
     )
 }

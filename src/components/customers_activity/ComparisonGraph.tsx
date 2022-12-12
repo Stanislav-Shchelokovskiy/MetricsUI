@@ -82,6 +82,7 @@ const GraphPlot = React.memo(
     ) {
         return (
             <Plot
+                divId='CustomersActivity_ComparisonGraph'
                 className='CustomersActivity_ComparisonGraph'
                 data={getPlots(aggregates, metric, comparisonMethod)}
                 useResizeHandler={true}

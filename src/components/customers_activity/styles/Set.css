@@ -1,5 +1,7 @@
 .CustomersActivity_Set,
-.CustomersActivity_SetSettingsPanel {
+.CustomersActivity_SetSettingsPanel,
+.CustomersActivity_SetSettingsChildPanel,
+.CustomersActivity_CatPanel {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
@@ -7,15 +9,23 @@
     gap: 3px;
 }
 
-.CustomerActivity_SetHeader,
-.CustomersActivity_SetSettingsChildPanel,
-.CustomersActivity_CatPanel {
+.CustomerActivity_SetHeader {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: stretch;
     gap: 1%;
     /* background-color: rgba(240, 240, 240, 0.5); */
+}
+
+.CustomersActivity_CatPanel {
+    padding-bottom: 3%;
+}
+
+.CustomerActivity_SetHeader {
+    background-color: rgba(240, 240, 240, 0.7);
+    padding: 3%;
+    gap: 7%;
 }
 
 .CustomersActivity_ReplyTypesSelector,
@@ -46,4 +56,5 @@
 
 .SetHeaderTitle {
     font-weight: bold;
+    font-size: large;
 }
