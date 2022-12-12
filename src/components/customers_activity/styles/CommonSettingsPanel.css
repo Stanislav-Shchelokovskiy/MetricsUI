@@ -16,9 +16,11 @@
 .CustomersActivityToolbar {
     background-color: rgba(246, 246, 246, 0.5);
 }
+
 .CustomersActivityToolbar {
     padding-top: 0.5%;
     padding-left: 0.5%;
+    padding-right: 0.5%;
 }
 
 .CustomersActivity_PeriodSelector {
