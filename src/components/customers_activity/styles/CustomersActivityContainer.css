@@ -10,6 +10,7 @@
 
 .CustomersActivity_Sets_ScrollView {
     /* background-color: rgba(240, 240, 240, 0.3); */
+    width: 30vw;
 }
 
 .CustomersActivity_ComparisonGraph {
@@ -18,10 +19,8 @@
 }
 
 .CustomersActivity_ContentDrawer {
-    width: 100vw;
+    display: flex;
+    flex-flow: column nowrap;
+    min-width: 70vw;
     height: 90vh;
-}
-
-.CustomersActivity_Sets_Accordion {
-    
 }
