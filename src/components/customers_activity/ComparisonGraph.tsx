@@ -42,7 +42,7 @@ export default function ComparisonGraph() {
                     set.ticketsTags,
                     set.tribes,
                     set.repliesTypes,
-                    set.controls,
+                    set.components,
                     set.features,
                 )
                 if (fetchedAggregates.success) {

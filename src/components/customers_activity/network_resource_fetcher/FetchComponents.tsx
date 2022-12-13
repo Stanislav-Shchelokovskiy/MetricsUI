@@ -2,16 +2,16 @@ import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 
 
-export interface Control {
+export interface Component {
     tribeId: string
-    control_id: string
-    control_name: string
+    component_id: string
+    component_name: string
 }
 
 
-export const fetchControls: (tribe_ids: Array<string>) => Promise<FetchResult<Array<Control>>> = async function (tribe_ids: Array<string>) {
+export const fetchComponents: (tribe_ids: Array<string>) => Promise<FetchResult<Array<Component>>> = async function (tribe_ids: Array<string>) {
     try {
-        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_controls`, {
+        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_components`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -20,13 +20,13 @@ export const fetchControls: (tribe_ids: Array<string>) => Promise<FetchResult<Ar
         }).then(response => response.json())
         return {
             success: true,
-            data: (values as Array<Control>)
+            data: (values as Array<Component>)
         }
     } catch (error) {
         console.log(error)
         return {
             success: false,
-            data: Array<Control>()
+            data: Array<Component>()
         }
     }
 }

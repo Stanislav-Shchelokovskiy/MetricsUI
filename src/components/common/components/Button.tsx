@@ -6,7 +6,7 @@ interface Props {
     text: string
     icon: string
     disabled: boolean
-    render: (() => any) | undefined
+    render: ((button: any) => any) | undefined
     onClick: () => void
 }
 

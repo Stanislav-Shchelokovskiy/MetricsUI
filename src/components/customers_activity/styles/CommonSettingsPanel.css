@@ -17,7 +17,22 @@
     background-color: rgba(246, 246, 246, 0.5);
 }
 
+
+.CustomersActivityToolbar,
+.CustomersActivityToolbarCommands {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 1%;
+}
+
+.CustomersActivityToolbarCommands {
+    justify-content: flex-end;
+    flex: 1;
+}
+
 .CustomersActivityToolbar {
+    justify-content: flex-start;
     padding-top: 0.5%;
     padding-left: 0.5%;
     padding-right: 0.5%;

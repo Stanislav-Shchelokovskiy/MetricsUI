@@ -32,7 +32,7 @@ export const fetchTicketsWithIterationsAggregates: (
     ticketsTags: FilterParametersNode<number>,
     tribes: FilterParametersNode<string>,
     repliesTypes: FilterParametersNode<string>,
-    controls: FilterParametersNode<string>,
+    components: FilterParametersNode<string>,
     features: FilterParametersNode<string>,
 ) => Promise<FetchResult<TicketsWithIterationsAggregates>> =
     async function (
@@ -44,7 +44,7 @@ export const fetchTicketsWithIterationsAggregates: (
         ticketsTags: FilterParametersNode<number>,
         tribes: FilterParametersNode<string>,
         repliesTypes: FilterParametersNode<string>,
-        controls: FilterParametersNode<string>,
+        components: FilterParametersNode<string>,
         features: FilterParametersNode<string>,
     ) {
         try {
@@ -64,7 +64,7 @@ export const fetchTicketsWithIterationsAggregates: (
                         tickets_tags: ticketsTags,
                         tribes: tribes,
                         replies_types: repliesTypes,
-                        controls: controls,
+                        components: components,
                         features: features,
                     }),
                 },

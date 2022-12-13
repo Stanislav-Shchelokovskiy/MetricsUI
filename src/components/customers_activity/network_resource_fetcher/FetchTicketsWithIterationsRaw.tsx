@@ -10,11 +10,9 @@ export interface TicketsWithIterationsRaw {
     ticket_type: number
     creation_date: string
     iterations: number
-    user_groups: string
-    ticket_tags: string
-    reply_id: string
-    control_id: string
-    feature_id: string
+    reply: string
+    component: string
+    feature: string
 }
 
 
@@ -25,11 +23,9 @@ export const EMPTY_TICKETS_WITH_ITERATIONS_RAW = {
     ticket_type: 0,
     creation_date: '',
     iterations: 0,
-    user_groups: '',
-    ticket_tags: '',
-    reply_id: '',
-    control_id: '',
-    feature_id: '',
+    reply: '',
+    component: '',
+    feature: '',
 }
 
 
@@ -41,7 +37,7 @@ export const fetchTicketsWithIterationsRaw: (
     ticketsTags: FilterParametersNode<number>,
     tribes: FilterParametersNode<string>,
     repliesTypes: FilterParametersNode<string>,
-    controls: FilterParametersNode<string>,
+    components: FilterParametersNode<string>,
     features: FilterParametersNode<string>,
 ) => Promise<FetchResult<Array<TicketsWithIterationsRaw>>> =
     async function (
@@ -52,7 +48,7 @@ export const fetchTicketsWithIterationsRaw: (
         ticketsTags: FilterParametersNode<number>,
         tribes: FilterParametersNode<string>,
         repliesTypes: FilterParametersNode<string>,
-        controls: FilterParametersNode<string>,
+        components: FilterParametersNode<string>,
         features: FilterParametersNode<string>,
     ) {
         try {
@@ -71,7 +67,7 @@ export const fetchTicketsWithIterationsRaw: (
                         tickets_tags: ticketsTags,
                         tribes: tribes,
                         replies_types: repliesTypes,
-                        controls: controls,
+                        components: components,
                         features: features,
                     }),
                 },

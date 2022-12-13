@@ -7,14 +7,14 @@ import {
     CHANGE_TICKETS_TYPES,
     CHANGE_TICKETS_TAGS,
     CHANGE_REPLIES_TYPES,
-    CHANGE_CONTROLS,
+    CHANGE_COMPONENTS,
     CHANGE_FEATURES,
     CHANGE_TRIBES_INCLUDE,
     CHANGE_CUSTOMERS_GROUPS_INCLUDE,
     CHANGE_TICKETS_TYPES_INCLUDE,
     CHANGE_TICKETS_TAGS_INCLUDE,
     CHANGE_REPLIES_TYPES_INCLUDE,
-    CHANGE_CONTROLS_INCLUDE,
+    CHANGE_COMPONENTS_INCLUDE,
     CHANGE_FEATURES_INCLUDE,
 } from './Actions'
 
@@ -37,7 +37,7 @@ export interface SetState {
     ticketsTags: FilterParametersNode<number>
     ticketsTypes: FilterParametersNode<number>
     repliesTypes: FilterParametersNode<string>
-    controls: FilterParametersNode<string>
+    components: FilterParametersNode<string>
     features: FilterParametersNode<string>
 }
 
@@ -49,7 +49,7 @@ export const INITIAL_SET_STATE: SetState = {
     ticketsTags: getDefaultFilterParametersNode<number>(),
     ticketsTypes: getDefaultFilterParametersNode<number>(),
     repliesTypes: getDefaultFilterParametersNode<string>(),
-    controls: getDefaultFilterParametersNode<string>(),
+    components: getDefaultFilterParametersNode<string>(),
     features: getDefaultFilterParametersNode<string>(),
 }
 
@@ -73,7 +73,7 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
                         ...x.tribes,
                         values: action.payload.data,
                     },
-                    controls: INITIAL_SET_STATE.controls,
+                    components: INITIAL_SET_STATE.components,
                     features: INITIAL_SET_STATE.features,
                 }
             })
@@ -85,7 +85,7 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
                         ...x.tribes,
                         include: action.payload.data,
                     },
-                    controls: INITIAL_SET_STATE.controls,
+                    components: INITIAL_SET_STATE.components,
                     features: INITIAL_SET_STATE.features,
                 }
             })
@@ -177,24 +177,24 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
                 }
             })
 
-        case CHANGE_CONTROLS:
+        case CHANGE_COMPONENTS:
             return updateSetState(action.payload.stateId, state, (x) => {
                 return {
                     ...x,
-                    controls: {
-                        ...x.controls,
+                    components: {
+                        ...x.components,
                         values: action.payload.data,
                     },
                     features: INITIAL_SET_STATE.features
                 }
             })
 
-        case CHANGE_CONTROLS_INCLUDE:
+        case CHANGE_COMPONENTS_INCLUDE:
             return updateSetState(action.payload.stateId, state, (x) => {
                 return {
                     ...x,
-                    controls: {
-                        ...x.controls,
+                    components: {
+                        ...x.components,
                         include: action.payload.data,
                     },
                     features: INITIAL_SET_STATE.features
