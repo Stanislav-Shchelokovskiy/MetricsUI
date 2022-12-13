@@ -16,15 +16,32 @@
 .CustomersActivityToolbar {
     background-color: rgba(246, 246, 246, 0.5);
 }
+
+
+.CustomersActivityToolbar,
+.CustomersActivityToolbarCommands {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 1%;
+}
+
+.CustomersActivityToolbarCommands {
+    justify-content: flex-end;
+    flex: 1;
+}
+
 .CustomersActivityToolbar {
+    justify-content: flex-start;
     padding-top: 0.5%;
     padding-left: 0.5%;
+    padding-right: 0.5%;
 }
 
 .CustomersActivity_PeriodSelector {
     /* background-color: rgb(0, 255, 251); */
     margin-bottom: 0px;
-    flex: 1.7;
+    flex: 2;
 }
 
 .CustomersActivity_GroupByPeriodSelector,
@@ -33,6 +50,11 @@
     min-height: 3rem;
     height: 3rem;
     flex: 1;
+}
+
+.CustomersActivity_GroupByPeriodSelector,
+.CustomersActivity_MetricSelector {
+    flex: 0.8;
 }
 
 .CustomersActivity_ComparisonMethodSelector {

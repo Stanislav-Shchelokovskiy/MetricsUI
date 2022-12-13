@@ -10,17 +10,17 @@ export interface Feature {
 }
 
 
-export const fetchFeatures: (tribe_ids: Array<string>, control_ids: Array<string>) => Promise<FetchResult<Array<Feature>>> =
-    async function (tribe_ids: Array<string>, control_ids: Array<string>,) {
+export const fetchFeatures: (tribe_ids: Array<string>, component_ids: Array<string>) => Promise<FetchResult<Array<Feature>>> =
+    async function (tribe_ids: Array<string>, component_ids: Array<string>,) {
         try {
-            if (tribe_ids.length > 0 && control_ids.length > 0) {
+            if (tribe_ids.length > 0 && component_ids.length > 0) {
                 const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_features`,
                     {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             tribes: tribe_ids,
-                            controls: control_ids,
+                            components: component_ids,
                         }),
                     }).then(response => response.json())
                 return {

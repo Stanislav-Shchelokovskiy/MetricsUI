@@ -3,28 +3,33 @@ import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 import { FilterParametersNode } from '../store/SetsReducer'
 
 
-interface TicketsWithIterationsAggregate {
-    period: string
-    tickets: number
+export interface TicketsWithIterationsRaw {
+    user_id: string
+    tribe_id: string
+    scid: string
+    ticket_type: number
+    creation_date: string
     iterations: number
-}
-
-export interface TicketsWithIterationsAggregates {
-    periods: Array<string>
-    tickets: Array<number>
-    iterations: Array<number>
+    reply: string
+    component: string
+    feature: string
 }
 
 
-export const EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES = {
-    periods: [],
-    tickets: [],
-    iterations: [],
+export const EMPTY_TICKETS_WITH_ITERATIONS_RAW = {
+    user_id: '',
+    tribe_id: '',
+    scid: '',
+    ticket_type: 0,
+    creation_date: '',
+    iterations: 0,
+    reply: '',
+    component: '',
+    feature: '',
 }
 
 
-export const fetchTicketsWithIterationsAggregates: (
-    group_by_period: string,
+export const fetchTicketsWithIterationsRaw: (
     range_start: string,
     range_end: string,
     customersGroups: FilterParametersNode<string>,
@@ -34,9 +39,8 @@ export const fetchTicketsWithIterationsAggregates: (
     repliesTypes: FilterParametersNode<string>,
     components: FilterParametersNode<string>,
     features: FilterParametersNode<string>,
-) => Promise<FetchResult<TicketsWithIterationsAggregates>> =
+) => Promise<FetchResult<Array<TicketsWithIterationsRaw>>> =
     async function (
-        group_by_period: string,
         range_start: string,
         range_end: string,
         customersGroups: FilterParametersNode<string>,
@@ -48,10 +52,9 @@ export const fetchTicketsWithIterationsAggregates: (
         features: FilterParametersNode<string>,
     ) {
         try {
-            const aggregates: Array<TicketsWithIterationsAggregate> = await fetch(
-                `${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_aggregates?` +
+            const raw_data: Array<TicketsWithIterationsRaw> = await fetch(
+                `${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_raw?` +
                 new URLSearchParams({
-                    group_by_period: group_by_period,
                     range_start: range_start,
                     range_end: range_end,
                 }),
@@ -69,24 +72,15 @@ export const fetchTicketsWithIterationsAggregates: (
                     }),
                 },
             ).then(response => response.json())
-
-
-            const periods = aggregates.map(aggregate => aggregate.period)
-            const tickets = aggregates.map(aggregate => aggregate.tickets)
-            const iterations = aggregates.map(aggregate => aggregate.iterations)
             return {
                 success: true,
-                data: {
-                    periods: periods,
-                    tickets: tickets,
-                    iterations: iterations,
-                }
+                data: raw_data
             }
         } catch (error) {
             console.log(error)
             return {
                 success: false,
-                data: EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES
+                data: [EMPTY_TICKETS_WITH_ITERATIONS_RAW]
             }
         }
     }

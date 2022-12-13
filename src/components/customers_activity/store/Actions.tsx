@@ -133,18 +133,18 @@ export const changeRepliesTypesInclude = (include: Payload<string, boolean>): Pa
     }
 }
 
-export const CHANGE_CONTROLS = 'customers_activity/change_controls'
-export const changeControls = (repliesTypes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+export const CHANGE_COMPONENTS = 'customers_activity/change_components'
+export const changeComponents = (repliesTypes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
-        type: CHANGE_CONTROLS,
+        type: CHANGE_COMPONENTS,
         payload: repliesTypes
     }
 }
 
-export const CHANGE_CONTROLS_INCLUDE = 'customers_activity/change_controls_include'
-export const changeControlsInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+export const CHANGE_COMPONENTS_INCLUDE = 'customers_activity/change_components_include'
+export const changeComponentsInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
     return {
-        type: CHANGE_CONTROLS_INCLUDE,
+        type: CHANGE_COMPONENTS_INCLUDE,
         payload: include
     }
 }

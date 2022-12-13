@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button } from 'devextreme-react/button'
+import Button from '../../../common/components/Button'
 import LoadIndicator from '../../../common/components/LoadIndicator'
 import FetchResult from '../../../common/Interfaces'
 import { changeLastUpdated } from '../../store/Actions'
@@ -41,14 +41,9 @@ export default function UpdateTribeRepliesButton() {
             return 'Update Tribe Replies';
         return <LoadIndicator width={undefined} height={25} />;
     }
-    return (
-        <Button
-            className='ForecasterUpdateTribeRepliesButton'
-            render={renderButton}
-            disabled={taskStarted}
-            type='normal'
-            stylingMode='outlined'
-            focusStateEnabled={false}
-            onClick={onClick} />
-    )
+    return <Button
+        className='ForecasterUpdateTribeRepliesButton'
+        render={renderButton}
+        disabled={taskStarted}
+        onClick={onClick} />
 }

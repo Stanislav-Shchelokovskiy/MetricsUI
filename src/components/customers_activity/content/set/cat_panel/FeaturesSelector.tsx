@@ -12,9 +12,9 @@ export default function FeaturesSelector({ setTitle }: { setTitle: string }) {
 
     const tribesNode = useAppSelector((store: AppStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tribes)
     const tribes = tribesNode?.values || emptyArray
-    const constrolsNode = useAppSelector((store: AppStore) => store.customersActivitySets.find(x => x.title === setTitle)?.controls)
-    const controls = constrolsNode?.values || emptyArray
-    const dataSource = useCascadeDataSource(() => fetchFeatures(tribes, controls), tribes, controls)
+    const componentsNode = useAppSelector((store: AppStore) => store.customersActivitySets.find(x => x.title === setTitle)?.components)
+    const components = componentsNode?.values || emptyArray
+    const dataSource = useCascadeDataSource(() => fetchFeatures(tribes, components), tribes, components)
 
     const state = useAppSelector((store: AppStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.features as FilterParametersNode<string>
@@ -28,7 +28,7 @@ export default function FeaturesSelector({ setTitle }: { setTitle: string }) {
         valueExpr='feature_id'
         placeholder='Select features'
         label='CAT features'
-        disabled={tribes.length === 0 || controls.length === 0}
+        disabled={tribes.length === 0 || components.length === 0}
         dataSource={dataSource}
         defaultValue={state?.values}
         value={state?.values}
