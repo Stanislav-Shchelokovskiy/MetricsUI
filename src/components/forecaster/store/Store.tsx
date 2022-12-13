@@ -5,7 +5,7 @@ import { ForecasterReducer } from './ForecasterReducer'
 import { ForecasterItemsReducer, TacticalForecastReducer, StrategicForecastReducer } from './TribeContainerReducer'
 
 
-const forecasterStateKey = 'current_forecaster_state_v1.0.1'
+const forecasterStateKey = 'current_forecaster_state_v1'
 
 export const forecasterStore = configureStore({
     reducer: {

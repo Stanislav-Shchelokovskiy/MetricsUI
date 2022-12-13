@@ -5,7 +5,7 @@ import { CustomersActivityReducer } from './CustomersActivityReducer'
 import { SetsReducer } from './SetsReducer'
 
 
-const currentStateKey = 'current_customers_activity_state_v1.0.1'
+const currentStateKey = 'current_customers_activity_state_v1'
 
 
 export const customersActivityStore = configureStore({
