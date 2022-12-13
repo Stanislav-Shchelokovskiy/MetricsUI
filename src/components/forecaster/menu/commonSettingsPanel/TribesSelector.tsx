@@ -1,16 +1,16 @@
 import React from 'react'
 import { Tribe } from '../../../common/Interfaces'
-import { AppStore, useAppSelector } from '../../../common/AppStore'
 import { fetchTribes } from '../../../common/network_resource_fetcher/FetchAvailableTribes'
 import MultiOptionSelectorWithFetch from '../../../common/components/MultiOptionSelector'
 import { changeSelectedTribes } from '../../store/Actions'
+import { ForecasterStore, useForecasterSelector } from '../../store/Store'
 
 function areEqual(prevState: Array<string>, newState: Array<string>) {
     return prevState.sort().join(',') === newState.sort().join(',')
 }
 
 export default function TribesSelector() {
-    const selectedTribes = useAppSelector((store: AppStore) => store.forecaster.tribes.map(tribe => tribe.id), areEqual)
+    const selectedTribes = useForecasterSelector((store: ForecasterStore) => store.forecaster.tribes.map(tribe => tribe.id), areEqual)
     const changeSelectedTribesAction = (allValues: Array<Tribe>, selectedValues: Array<string>) => {
         let tribes: Array<Tribe> = []
         for (const tribe_id of selectedValues) {

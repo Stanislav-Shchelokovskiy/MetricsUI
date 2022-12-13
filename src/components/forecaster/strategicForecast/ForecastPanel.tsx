@@ -6,7 +6,7 @@ import GetColor from '../utils/ColorPalette'
 import FetchResult from '../../common/Interfaces'
 import { IncomeForecast, FetchTribeIncomeForecast, EMPTY_INCOME_FORECAST } from '../network_resource_fetcher/FetchTribeIncomeForecast'
 import { DailyTribeReplies, FetchDailyTribeReplies, EMPTY_DAILY_TRIBE_REPLIES } from '../network_resource_fetcher/FetchTribeDailyReplies'
-import { useAppDispatch } from '../../common/AppStore'
+import { useForecasterDispatch } from '../store/Store'
 import { legendClick } from '../store/Actions'
 
 
@@ -227,7 +227,7 @@ function Graph({ state }: { state: ForecastPanelState }) {
             })()
     }, [state.tribeId, state.forecastHorizon, state.incomeType, state.tile, state.lastUpdated])
 
-    const forecasterDispatch = useAppDispatch()
+    const forecasterDispatch = useForecasterDispatch()
     const onLegendClick = useCallback(({ data }: LegendClickObject) => {    
         const timerId = setTimeout(() => {
             const legendsToStore = (data.filter(legend => legend.type === 'bar' && legend.visible === 'legendonly').map(legend => legend.hovertext) as Array<string>)

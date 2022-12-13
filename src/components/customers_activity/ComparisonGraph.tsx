@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Plot from 'react-plotly.js'
 import { Data as GraphData } from 'plotly.js'
-import { useAppSelector, AppStore } from '../common/AppStore'
+import { useCustomersActivitySelector, CustomersActivityStore } from './store/Store'
 import FetchResult from '../common/Interfaces'
 import { isTicketsMetricSelected } from './commonSettingsPanel/MetricSelector'
 import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './commonSettingsPanel/ComparisonMethodSelector'
@@ -26,8 +26,8 @@ const INITIAL_STATE = {
 
 export default function ComparisonGraph() {
     const [aggregates, setAggregates] = useState<Array<SetAggregates>>([INITIAL_STATE])
-    const customersActivityState = useAppSelector((store: AppStore) => store.customersActivity)
-    const customersActivitySets = useAppSelector((store: AppStore) => store.customersActivitySets)
+    const customersActivityState = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivity)
+    const customersActivitySets = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivitySets)
 
     useEffect(() => {
         (async () => {

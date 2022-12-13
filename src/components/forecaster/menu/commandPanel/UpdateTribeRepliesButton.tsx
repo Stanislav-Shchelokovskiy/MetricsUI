@@ -3,7 +3,7 @@ import Button from '../../../common/components/Button'
 import LoadIndicator from '../../../common/components/LoadIndicator'
 import FetchResult from '../../../common/Interfaces'
 import { changeLastUpdated } from '../../store/Actions'
-import { useAppDispatch } from '../../../common/AppStore'
+import { useForecasterDispatch } from '../../store/Store'
 import {
     FetchSyncTribeRepliesWithWfTasksStarted,
     SyncTribeRepliesWithWfTasks,
@@ -13,7 +13,7 @@ import {
 
 export default function UpdateTribeRepliesButton() {
     const [taskStarted, setTaskStarted] = useState<boolean>(false);
-    const dispatch = useAppDispatch()
+    const dispatch = useForecasterDispatch()
 
     const onClick = () => {
         setTaskStarted(true);

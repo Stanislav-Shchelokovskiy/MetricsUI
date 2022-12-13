@@ -2,10 +2,9 @@ import React, { useEffect } from 'react'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import LoadIndicator from './LoadIndicator'
 import { PayloadAction } from '@reduxjs/toolkit'
-import { AppStore, useAppSelector, useAppDispatch } from '../AppStore'
+import { useDispatch, useSelector } from 'react-redux'
 import FetchResult from '../Interfaces'
 import useComponentReducer, { changeDataSource, changeDefaultValue } from '../hooks/UseComponentReducer'
-
 
 
 interface BaseProps {
@@ -25,16 +24,15 @@ interface DataSourceProps<DataSourceT, ValueExprT> extends BaseProps {
 
 interface FetchProps<DataSourceT, ValueExprT> extends BaseProps {
     fetchDataSourceValues: () => Promise<FetchResult<Array<DataSourceT>>>
-    stateSelector: (store: AppStore) => ValueExprT | undefined
+    stateSelector: (store: any) => ValueExprT | undefined
     defaultValueSelector: (value: Array<DataSourceT>) => ValueExprT
     onValueChange: (value: ValueExprT) => PayloadAction<any>
 }
 
 export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: FetchProps<DataSourceT, ValueExprT>) {
-
-    const storedDefaultValue = useAppSelector(props.stateSelector)
+    const storedDefaultValue = useSelector(props.stateSelector)
     const [state, componentDispatch] = useComponentReducer([], storedDefaultValue)
-    const appDispatch = useAppDispatch()
+    const appDispatch = useDispatch()
     const onValueChangeHandler = (value: ValueExprT) => {
         appDispatch(props.onValueChange(value))
     }

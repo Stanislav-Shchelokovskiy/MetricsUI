@@ -1,13 +1,13 @@
 import React from 'react'
 import MultiOptionSelectorWithFetch from '../../../../common/components/MultiOptionSelector'
-import { AppStore, useAppSelector } from '../../../../common/AppStore'
+import { CustomersActivityStore, useCustomersActivitySelector } from '../../../store/Store'
 import { changeRepliesTypes, changeRepliesTypesInclude } from '../../../store/Actions'
 import { fetchRepliesTypes, ReplyType } from '../../../network_resource_fetcher/FetchRepliesTypes'
 import { FilterParametersNode } from '../../../store/SetsReducer'
 
 
 export default function ReplyTypesSelector({ setTitle }: { setTitle: string }) {
-    const state = useAppSelector((store: AppStore) =>
+    const state = useCustomersActivitySelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.repliesTypes as FilterParametersNode<string>
     )
 

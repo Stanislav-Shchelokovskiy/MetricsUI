@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { useStore } from 'react-redux'
 import * as XLSX from 'xlsx'
 import LoadIndicator from '../../common/components/LoadIndicator'
-import { AppStore } from '../../common/AppStore'
+import { CustomersActivityStore } from '../store/Store'
 import Button from '../../common/components/Button'
 import FetchResult from '../../common/Interfaces'
 import { fetchTicketsWithIterationsRaw, TicketsWithIterationsRaw } from '../network_resource_fetcher/FetchTicketsWithIterationsRaw'
@@ -10,7 +10,7 @@ import { fetchTicketsWithIterationsRaw, TicketsWithIterationsRaw } from '../netw
 function DownloadButton({ onError }: { onError: (message: string) => void }) {
     const [taskStarted, setTaskStarted] = useState<boolean>(false);
 
-    const store = useStore<AppStore>()
+    const store = useStore<CustomersActivityStore>()
     const downloadSetRawData = useCallback(() => {
         (async () => {
             await tryDownloadExcelData(setTaskStarted, store, onError)
@@ -49,7 +49,7 @@ async function downloadExcelData(store: any) {
     saveDataAsExcel(rawData)
 }
 
-async function downloadRawData(state: AppStore) {
+async function downloadRawData(state: CustomersActivityStore) {
     const customersActivityState = state.customersActivity
     const customersActivitySets = state.customersActivitySets
     let rawData: Array<TicketsWithIterationsRaw> = []

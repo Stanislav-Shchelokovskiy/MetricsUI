@@ -1,16 +1,16 @@
 import React, { useCallback } from 'react'
 import Button from '../../../../common/components/Button'
-import { AppStore, useAppDispatch, useAppSelector } from '../../../../common/AppStore'
+import { CustomersActivityStore, useCustomersActivityDispatch, useCustomersActivitySelector } from '../../../store/Store'
 import { removeSet } from '../../../store/Actions'
 
 
 export default function RemoveButton({ setTitle }: { setTitle: string }) {
-    const dispatch = useAppDispatch()
+    const dispatch = useCustomersActivityDispatch()
     const onClick = useCallback(() => {
         dispatch(removeSet(setTitle))
     }, [setTitle, dispatch])
 
-    const disabled: boolean = useAppSelector((state: AppStore) => state.customersActivity.sets).length === 1
+    const disabled: boolean = useCustomersActivitySelector((state: CustomersActivityStore) => state.customersActivity.sets).length === 1
     return <Button
         className='SetHeaderButton'
         text='Remove set'
