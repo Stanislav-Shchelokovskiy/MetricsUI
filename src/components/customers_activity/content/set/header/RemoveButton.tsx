@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { Button } from 'devextreme-react/button'
+import Button from '../../../../common/components/Button'
 import { AppStore, useAppDispatch, useAppSelector } from '../../../../common/AppStore'
 import { removeSet } from '../../../store/Actions'
 
@@ -11,15 +11,10 @@ export default function RemoveButton({ setTitle }: { setTitle: string }) {
     }, [setTitle, dispatch])
 
     const disabled: boolean = useAppSelector((state: AppStore) => state.customersActivity.sets).length === 1
-    return (
-        <Button
-            className='SetHeaderButton'
-            text='Remove set'
-            disabled={disabled}
-            type='normal'
-            stylingMode='outlined'
-            focusStateEnabled={false}
-            onClick={onClick}
-        />
-    )
+    return <Button
+        className='SetHeaderButton'
+        text='Remove set'
+        disabled={disabled}
+        onClick={onClick}
+    />
 }

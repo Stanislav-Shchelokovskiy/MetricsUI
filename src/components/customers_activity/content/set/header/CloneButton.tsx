@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'devextreme-react/button'
+import Button from '../../../../common/components/Button'
 import { useAppDispatch } from '../../../../common/AppStore'
 import { addSet } from '../../../store/Actions'
 
@@ -10,14 +10,9 @@ export default function CloneButton({ setTitle }: { setTitle: string }) {
         dispatch(addSet(setTitle))
     }
 
-    return (
-        <Button
-            className='SetHeaderButton'
-            text='Clone set'
-            type='normal'
-            stylingMode='outlined'
-            focusStateEnabled={false}
-            onClick={onClick}
-        />
-    )
+    return <Button
+        className='SetHeaderButton'
+        text='Clone set'
+        onClick={onClick}
+    />
 }

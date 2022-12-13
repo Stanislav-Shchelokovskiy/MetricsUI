@@ -4,7 +4,7 @@ import './styles/Set.css'
 
 import React, { useState, useEffect, useCallback } from 'react'
 import Drawer from 'devextreme-react/drawer'
-import Toolbar from './Toolbar'
+import Toolbar from './toolbar/Toolbar'
 import Plotly from 'plotly.js-basic-dist-min'
 import CommonSettingsPanel from './commonSettingsPanel/CommonSettingsPanel'
 import Sets from './content/Sets'
