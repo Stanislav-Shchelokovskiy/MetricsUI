@@ -111,7 +111,6 @@ function IncludeButton(isInIncludeState: boolean, onIncludeChange: ((include: bo
 const defaultProps = {
     displayExpr: undefined,
     valueExpr: undefined,
-    //value: undefined,
     onIncludeChange: undefined,
     includeButtonState: undefined,
     disabled: false,

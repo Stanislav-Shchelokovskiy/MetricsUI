@@ -7,7 +7,6 @@ import FetchResult from '../Interfaces'
 import useComponentReducer, { changeDataSource, changeDefaultValue } from '../hooks/UseComponentReducer'
 
 
-
 interface BaseProps {
     className: string
     displayExpr: string
