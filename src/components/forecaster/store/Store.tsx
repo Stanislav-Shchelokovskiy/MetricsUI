@@ -5,7 +5,7 @@ import { ForecasterReducer } from './ForecasterReducer'
 import { ForecasterItemsReducer, TacticalForecastReducer, StrategicForecastReducer } from './TribeContainerReducer'
 
 
-const forecasterStateKey = 'current_forecaster_state_v1'
+const currentStateKey = 'current_forecaster_state_v1'
 
 export const forecasterStore = configureStore({
     reducer: {
@@ -14,12 +14,12 @@ export const forecasterStore = configureStore({
         strategicForecast: StrategicForecastReducer,
         selectedForecastItems: ForecasterItemsReducer,
     },
-    preloadedState: loadState(forecasterStateKey)
+    preloadedState: loadState(currentStateKey)
 })
 
 
 forecasterStore.subscribe(() => {
-    saveState(forecasterStore.getState(), forecasterStateKey);
+    saveState(forecasterStore.getState(), currentStateKey);
 });
 
 
