@@ -4,7 +4,7 @@ import { RangeSelector as DxRangeSelector, Margin, Scale, MinorTick, SliderMarke
 import LoadIndicator from '../../common/components/LoadIndicator'
 import FetchResult from '../../common/Interfaces'
 import { changePeriod } from '../store/Actions'
-import { useAppDispatch, useAppSelector, AppStore } from '../../common/AppStore'
+import { useCustomersActivityDispatch, useCustomersActivitySelector, CustomersActivityStore } from '../store/Store'
 import { fetchPeriod, Period } from '../network_resource_fetcher/FetchPeriod'
 
 
@@ -45,7 +45,7 @@ function periodSelectorStateReducer(state: PeriodSelectorState, action: AnyActio
 
 export default function PeriodSelector() {
     const [periodSelectorState, periodSelectorStateDispatch] = useReducer(periodSelectorStateReducer, INITIAL_STATE)
-    const selectedRange = useAppSelector((store: AppStore) => store.customersActivity.range) || periodSelectorState.selectedRange
+    const selectedRange = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivity.range) || periodSelectorState.selectedRange
 
     useEffect(() => {
         (async () => {
@@ -62,7 +62,7 @@ export default function PeriodSelector() {
         })()
     }, [])
 
-    const dispatch = useAppDispatch()
+    const dispatch = useCustomersActivityDispatch()
     const onRangeChange = useCallback((selectedRange: Array<Date>) => {
         dispatch(changePeriod(selectedRange))
     }, [dispatch])

@@ -1,12 +1,12 @@
 import React from 'react'
 import OptionSelectorWithFetch from '../../../common/components/OptionSelector'
-import { AppStore } from '../../../common/AppStore'
+import { ForecasterStore } from '../../store/Store'
 import { changeForecastHorizon } from '../../store/Actions'
 import { fetchForecastHorizons } from '../../network_resource_fetcher/FetchForecastSettingsValues'
 
 
 export default function ForecastHorizonSelector({ tribeId, }: { tribeId: string }) {
-    const stateSelector = (store: AppStore) => store.strategicForecast.find(x => x.tribeId === tribeId)?.forecastHorizon
+    const stateSelector = (store: ForecasterStore) => store.strategicForecast.find(x => x.tribeId === tribeId)?.forecastHorizon
     const defaultValueSelector = (values: Array<string>) => values[0]
     const onValueChange = (value: string) => changeForecastHorizon(tribeId, value)
 

@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react'
 import { MultiOptionSelector } from '../../../common/components/MultiOptionSelector'
 import { changePositionsFilter } from '../../store/Actions'
-import { AppStore, useAppSelector } from '../../../common/AppStore'
+import { ForecasterStore, useForecasterSelector } from '../../store/Store'
 
 
 export default function PositionsSelector({ tribeId }: { tribeId: string }) {
     const positions = useMemo<Array<string>>(() => { return ['Support', 'Developer', 'EM', 'PM', 'Technical Writer'] }, [])
-    const selectedPositions = useAppSelector((store: AppStore) => store.strategicForecast.find(x => x.tribeId === tribeId)?.positionsFilter || [])
+    const selectedPositions = useForecasterSelector((store: ForecasterStore) => store.strategicForecast.find(x => x.tribeId === tribeId)?.positionsFilter || [])
     const onPositionsChange = (allValues: Array<string>, selectedValues: Array<string>) => changePositionsFilter(tribeId, selectedValues)
 
     return <MultiOptionSelector<string, string>

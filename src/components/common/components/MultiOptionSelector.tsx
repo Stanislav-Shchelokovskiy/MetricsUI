@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import TagBox, { DropDownOptions, Button } from 'devextreme-react/tag-box'
 import DataSource from 'devextreme/data/data_source'
 import LoadIndicator from './LoadIndicator'
 import useDataSource from '../../common/hooks/UseDataSource'
 import FetchResult from '../Interfaces'
-import { useAppDispatch } from '../AppStore'
+import { useDispatch } from 'react-redux'
 import { PayloadAction } from '@reduxjs/toolkit'
 import * as includeIcon from './assets/include.svg'
 import * as excludeIcon from './assets/exclude.svg'
@@ -16,7 +16,6 @@ interface Props<DataSourceT, ValueExprT> {
     placeholder: string
     label: string
     dataSource: Array<DataSourceT> | undefined
-    //value: Array<ValueExprT>
     defaultValue: Array<ValueExprT> | undefined
     onValueChange: (allValues: Array<DataSourceT>, selectedValues: Array<ValueExprT>) => PayloadAction<any>
     showSelectionControls: boolean
@@ -53,7 +52,7 @@ export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(pr
 
 
 export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT> | PropsWithValue<DataSourceT, ValueExprT>) {
-    const dispatch = useAppDispatch()
+    const dispatch = useDispatch()
     const onValueChangeHandler = (values: Array<ValueExprT>) => {
         dispatch(props.onValueChange(props.dataSource || [], values))
     }

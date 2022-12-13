@@ -1,13 +1,13 @@
 import React from 'react'
 import MultiOptionSelectorWithFetch from '../../../../common/components/MultiOptionSelector'
-import { AppStore, useAppSelector } from '../../../../common/AppStore'
+import { CustomersActivityStore, useCustomersActivitySelector } from '../../../store/Store'
 import { changeCustomersGroups, changeCustomersGroupsInclude } from '../../../store/Actions'
 import { fetchCustomersGroups, CustomersGroup } from '../../../network_resource_fetcher/FetchCustomersGroups'
 import { FilterParametersNode } from '../../../store/SetsReducer'
 
 
 function CustomersGroupsSelector({ setTitle }: { setTitle: string }) {
-    const state = useAppSelector((store: AppStore) =>
+    const state = useCustomersActivitySelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.customersGroups as FilterParametersNode<string>
     )
     const onValueChange = (allValues: Array<CustomersGroup>, values: Array<string>) => changeCustomersGroups({ stateId: setTitle, data: values })

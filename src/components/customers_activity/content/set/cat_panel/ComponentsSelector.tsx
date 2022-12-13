@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { MultiOptionSelector, } from '../../../../common/components/MultiOptionSelector'
-import { AppStore, useAppSelector } from '../../../../common/AppStore'
+import { CustomersActivityStore, useCustomersActivitySelector } from '../../../store/Store'
 import { changeComponents, changeComponentsInclude } from '../../../store/Actions'
 import { fetchComponents, Component } from '../../../network_resource_fetcher/FetchComponents'
 import { useCascadeDataSource } from '../../../../common/hooks/UseDataSource'
@@ -10,11 +10,11 @@ import { FilterParametersNode } from '../../../store/SetsReducer'
 export default function ComponentsSelector({ setTitle }: { setTitle: string }) {
     const emptyArray = useMemo(() => [], [])
 
-    const tribesNode = useAppSelector((store: AppStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tribes)
+    const tribesNode = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tribes)
     const tribes = tribesNode?.values || emptyArray
     const dataSource = useCascadeDataSource(() => fetchComponents(tribes), tribes)
 
-    const state = useAppSelector((store: AppStore) =>
+    const state = useCustomersActivitySelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.components as FilterParametersNode<string>
     )
 

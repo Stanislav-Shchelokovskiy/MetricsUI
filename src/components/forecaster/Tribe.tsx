@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import Accordion, { Item } from 'devextreme-react/accordion'
 import { Tribe } from '../common/Interfaces'
-import { useAppSelector, AppStore, useAppDispatch } from '../common/AppStore'
+import { useForecasterSelector, ForecasterStore, useForecasterDispatch } from './store/Store'
 import { selectForecastItems } from './store/Actions'
 import { ForecasterItemsState, INITIAL_FORECAST_ITEMS_EXPANDED_STATE } from './store/TribeContainerReducer'
 import TacticalForecast from './tacticalForecast/TacticalForecast'
@@ -28,9 +28,9 @@ export interface TribeContainerState {
 
 
 export default function TribeContainer({ tribe }: { tribe: Tribe }) {
-    const forecasterItemsState: ForecasterItemsState = useAppSelector((state: AppStore) => state.selectedForecastItems.find(x => x.tribeId === tribe.id)) || INITIAL_FORECAST_ITEMS_EXPANDED_STATE
+    const forecasterItemsState: ForecasterItemsState = useForecasterSelector((state: ForecasterStore) => state.selectedForecastItems.find(x => x.tribeId === tribe.id)) || INITIAL_FORECAST_ITEMS_EXPANDED_STATE
 
-    const dispatch = useAppDispatch()
+    const dispatch = useForecasterDispatch()
     const onSelectedItemsChange = useCallback((e: any) => {
         dispatch(selectForecastItems(tribe.id, e))
     }, [dispatch, tribe.id])

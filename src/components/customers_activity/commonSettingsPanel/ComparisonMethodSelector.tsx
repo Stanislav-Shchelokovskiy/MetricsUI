@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { OptionSelector } from '../../common/components/OptionSelector'
-import { useAppDispatch, useAppSelector, AppStore } from '../../common/AppStore'
+import { useCustomersActivityDispatch, useCustomersActivitySelector, CustomersActivityStore } from '../store/Store'
 import { changeComparisonMethod } from '../store/Actions'
 
 
@@ -19,9 +19,9 @@ export const isAbsoluteAreaSelected: (method: string) => boolean = (metric: stri
 
 export default function ComparisonMethodSelector() {
     const comparisonMethods = useMemo<Array<string>>(() => { return [ABSOLUTE_AREA, ABSOLUTE_BAR, RELATIVE] }, [])
-    let selectedComparisonMethod = useAppSelector((store: AppStore) => store.customersActivity.comparisonMethod)
+    let selectedComparisonMethod = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivity.comparisonMethod)
 
-    const appDispatch = useAppDispatch()
+    const appDispatch = useCustomersActivityDispatch()
     const onComparisonMethodChange: (comparisonMethod: string) => void = (comparisonMethod: string) => {
         appDispatch(changeComparisonMethod(comparisonMethod))
     }

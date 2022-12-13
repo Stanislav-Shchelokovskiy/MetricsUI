@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAppSelector, AppStore } from '../../common/AppStore'
+import { useForecasterSelector, ForecasterStore } from '../store/Store'
 import { ForecasterState } from '../store/ForecasterReducer'
 import { INITIAL_STRATEGIC_FORECAST_STATE, StrategicForecastState } from '../store/TribeContainerReducer'
 import ForecastSettingsPanel from './ForecastSettingsPanel/ForecastSettingsPanel'
@@ -7,10 +7,10 @@ import ForecastPanel, { ForecastPanelState } from './ForecastPanel'
 
 
 export default function StrategicForecast({ tribeId }: { tribeId: string }) {
-    const strategicForecastState: StrategicForecastState = useAppSelector((state: AppStore) =>
+    const strategicForecastState: StrategicForecastState = useForecasterSelector((state: ForecasterStore) =>
         state.strategicForecast.find(x => x.tribeId === tribeId) || INITIAL_STRATEGIC_FORECAST_STATE
     )
-    const forecasterState: ForecasterState = useAppSelector((state: AppStore) => state.forecaster)
+    const forecasterState: ForecasterState = useForecasterSelector((state: ForecasterStore) => state.forecaster)
 
     const forecastPanelState: ForecastPanelState = {
         tribeId: tribeId,

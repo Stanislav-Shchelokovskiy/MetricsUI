@@ -9,6 +9,10 @@ import { Button } from 'devextreme-react/button'
 import Forecaster from './components/forecaster/Forecaster'
 import CustomersActivityContainer from './components/customers_activity/CustomersActivityContainer'
 
+import { Provider } from 'react-redux';
+import { customers_activity_store } from './components/customers_activity/store/Store'
+import { forecasterStore } from './components/forecaster/store/Store'
+
 function ErrorPage() {
   const error = useRouteError()
   console.error(error)
@@ -47,11 +51,19 @@ const router = createBrowserRouter([
   },
   {
     path: '/forecaster',
-    element: <Forecaster />,
+    element: (
+      <Provider store={forecasterStore}>
+        <Forecaster />
+      </Provider>
+    ),
   },
   {
     path: '/CustomersActivity',
-    element: <CustomersActivityContainer />,
+    element: (
+      <Provider store={customers_activity_store}>
+        <CustomersActivityContainer />
+      </Provider>
+    ),
   },
 ])
 
