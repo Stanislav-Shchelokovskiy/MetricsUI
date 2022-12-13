@@ -10,7 +10,7 @@ import Forecaster from './components/forecaster/Forecaster'
 import CustomersActivityContainer from './components/customers_activity/CustomersActivityContainer'
 
 import { Provider } from 'react-redux';
-import { customers_activity_store } from './components/customers_activity/store/Store'
+import { customersActivityStore } from './components/customers_activity/store/Store'
 import { forecasterStore } from './components/forecaster/store/Store'
 
 function ErrorPage() {
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
   {
     path: '/CustomersActivity',
     element: (
-      <Provider store={customers_activity_store}>
+      <Provider store={customersActivityStore}>
         <CustomersActivityContainer />
       </Provider>
     ),

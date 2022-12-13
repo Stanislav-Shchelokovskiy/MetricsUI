@@ -8,7 +8,7 @@ import { SetsReducer } from './SetsReducer'
 const currentStateKey = 'current_customers_activity_state_v1.0.1'
 
 
-export const customers_activity_store = configureStore({
+export const customersActivityStore = configureStore({
     reducer: {
         customersActivity: CustomersActivityReducer,
         customersActivitySets: SetsReducer,
@@ -17,13 +17,13 @@ export const customers_activity_store = configureStore({
 })
 
 
-customers_activity_store.subscribe(() => {
-    saveState(customers_activity_store.getState(), currentStateKey);
+customersActivityStore.subscribe(() => {
+    saveState(customersActivityStore.getState(), currentStateKey);
 });
 
 
-export type CustomersActivityStore = ReturnType<typeof customers_activity_store.getState>
-export type CustomersActivityDispatch = typeof customers_activity_store.dispatch
+export type CustomersActivityStore = ReturnType<typeof customersActivityStore.getState>
+export type CustomersActivityDispatch = typeof customersActivityStore.dispatch
 
 
 export const useCustomersActivityDispatch: () => CustomersActivityDispatch = useDispatch
