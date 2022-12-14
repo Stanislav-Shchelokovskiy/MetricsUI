@@ -22,8 +22,13 @@
 .CustomersActivityToolbarCommands {
     display: flex;
     flex-flow: row nowrap;
-    align-items: center;
+    align-items: stretch;
     gap: 1%;
+}
+
+.CustomersActivityViewStatesSelector {
+    margin-top: 0px;
+    margin-bottom: 0%;
 }
 
 .CustomersActivityToolbarCommands {
@@ -31,12 +36,29 @@
     flex: 1;
 }
 
+.CustomersActivityMenuButton,
+.CustomersActivityDownloadButton,
+.CustomersActivitySaveStateButton {
+    margin-top: 7px;
+}
+
+.CustomersActivityToolbarSeparator {
+    background-color: rgb(221, 221, 221);
+    width: 2px;
+    margin-top: 7px;
+    border-radius: 25px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+
 .CustomersActivityToolbar {
     justify-content: flex-start;
-    padding-top: 0.5%;
     padding-left: 0.5%;
-    padding-right: 0.5%;
+    padding-right: 2%;
 }
+
+
 
 .CustomersActivity_PeriodSelector {
     /* background-color: rgb(0, 255, 251); */

@@ -63,10 +63,12 @@ export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: 
 export function OptionSelector<DataSourceT, ValueExprT>(props: DataSourceProps<DataSourceT, ValueExprT>) {
     return <SelectBox
         {...props}
-        labelMode='static'>
+        labelMode='static'
+        focusStateEnabled={false}>
         <DropDownOptions
             hideOnOutsideClick={true}
             hideOnParentScroll={true}
+            focusStateEnabled={false}
             container={props.container} />
     </SelectBox >
 }

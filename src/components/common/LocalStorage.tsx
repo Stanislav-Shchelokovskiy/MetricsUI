@@ -17,3 +17,11 @@ export const saveState = (state: any, key: string) => {
         console.log(err)
     }
 }
+
+export const dropState = (key: string) => {
+    try {
+        localStorage.removeItem(key)
+    } catch (err) {
+        console.log(err)
+    }
+}

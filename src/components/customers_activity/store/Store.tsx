@@ -3,6 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { loadState, saveState } from '../../common/LocalStorage'
 import { CustomersActivityReducer } from './CustomersActivityReducer'
 import { SetsReducer } from './SetsReducer'
+import { ViewStateReducer } from './StatesReducer';
 
 
 const currentStateKey = 'current_customers_activity_state_v1'
@@ -12,6 +13,7 @@ export const customersActivityStore = configureStore({
     reducer: {
         customersActivity: CustomersActivityReducer,
         customersActivitySets: SetsReducer,
+        viewState: ViewStateReducer,
     },
     preloadedState: loadState(currentStateKey)
 })
