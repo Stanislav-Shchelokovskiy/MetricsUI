@@ -28,10 +28,10 @@ export default function ComparisonGraph() {
     const customersActivityState = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivity)
     const customersActivitySets = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivitySets)
 
-    const lockObject = useRef<Token>({ cancel: undefined })
+    const cancellationToken = useRef<Token>({ cancel: undefined })
 
     useEffect(() => {
-        lockObject.current.cancel?.();
+        cancellationToken.current.cancel?.();
 
         (async (token: Token) => {
             let cancelled = false
@@ -62,7 +62,7 @@ export default function ComparisonGraph() {
             }
             if (!cancelled)
                 setAggregates(aggs)
-        })(lockObject.current)
+        })(cancellationToken.current)
     },
         [
             customersActivityState.groupByPeriod,
