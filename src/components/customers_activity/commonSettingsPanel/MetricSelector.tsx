@@ -32,6 +32,7 @@ export default function MetricSelector() {
             className='CustomersActivity_MetricSelector'
             dataSource={metrics}
             defaultValue={selectedMetric}
+            value={selectedMetric}
             onValueChange={onMetricChange}
             label='Metric'/>
     )

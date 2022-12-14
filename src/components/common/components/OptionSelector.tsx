@@ -22,12 +22,18 @@ interface DataSourceProps<DataSourceT, ValueExprT> extends BaseProps {
     onValueChange: (value: ValueExprT) => void
 }
 
+interface DataSourceWithValue<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT, ValueExprT> {
+    value: any
+}
+
 interface FetchProps<DataSourceT, ValueExprT> extends BaseProps {
     fetchDataSourceValues: () => Promise<FetchResult<Array<DataSourceT>>>
     stateSelector: (store: any) => ValueExprT | undefined
     defaultValueSelector: (value: Array<DataSourceT>) => ValueExprT
     onValueChange: (value: ValueExprT) => PayloadAction<any>
 }
+
+
 
 export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: FetchProps<DataSourceT, ValueExprT>) {
     const storedDefaultValue = useSelector(props.stateSelector)
@@ -53,6 +59,7 @@ export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: 
     if (state.dataSource.length > 0) {
         return <OptionSelector
             {...props}
+            value={storedDefaultValue || state.defaultValue}
             dataSource={state.dataSource}
             defaultValue={state.defaultValue}
             onValueChange={onValueChangeHandler} />
@@ -60,13 +67,15 @@ export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: 
     return <LoadIndicator width={undefined} height={25} />
 }
 
-export function OptionSelector<DataSourceT, ValueExprT>(props: DataSourceProps<DataSourceT, ValueExprT>) {
+export function OptionSelector<DataSourceT, ValueExprT>(props: DataSourceProps<DataSourceT, ValueExprT> | DataSourceWithValue<DataSourceT, ValueExprT>) {
     return <SelectBox
         {...props}
-        labelMode='static'>
+        labelMode='static'
+        focusStateEnabled={false}>
         <DropDownOptions
             hideOnOutsideClick={true}
             hideOnParentScroll={true}
+            focusStateEnabled={false}
             container={props.container} />
     </SelectBox >
 }

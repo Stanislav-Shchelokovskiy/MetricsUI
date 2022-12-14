@@ -36,6 +36,7 @@ export default function ComparisonMethodSelector() {
             className='CustomersActivity_ComparisonMethodSelector'
             dataSource={comparisonMethods}
             defaultValue={selectedComparisonMethod}
+            value={selectedComparisonMethod}
             onValueChange={onComparisonMethodChange}
             label='Comparison method' />
     )

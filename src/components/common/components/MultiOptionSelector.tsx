@@ -44,6 +44,7 @@ export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(pr
                 {...props}
                 dataSource={dataSource}
                 defaultValue={props.defaultValue}
+                value={props.defaultValue}
             />
         )
     }
@@ -73,6 +74,7 @@ export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSo
         multiline={true}
         searchEnabled={true}
         showDropDownButton={false}
+        selectAllMode='page'
         labelMode='static'>
         < DropDownOptions
             hideOnOutsideClick={true}

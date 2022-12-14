@@ -16,6 +16,7 @@ import {
     CHANGE_REPLIES_TYPES_INCLUDE,
     CHANGE_COMPONENTS_INCLUDE,
     CHANGE_FEATURES_INCLUDE,
+    APPLY_STATE,
 } from './Actions'
 
 export interface FilterParametersNode<T> {
@@ -221,6 +222,9 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
                     },
                 }
             })
+
+        case APPLY_STATE:
+            return action.payload.customersActivitySets
 
         default:
             return state

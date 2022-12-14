@@ -23,5 +23,8 @@ export default function TicketsTagsSelector({ setTitle }: { setTitle: string }) 
         defaultValue={state?.values}
         includeButtonState={state?.include}
         onValueChange={onValueChange}
-        onIncludeChange={onIncludeChange} />
+        onIncludeChange={onIncludeChange}
+        container='#CustomersActivity_Sets_ScrollView_div'
+        showSelectionControls={true}
+    />
 } 

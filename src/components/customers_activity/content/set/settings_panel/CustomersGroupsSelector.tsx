@@ -23,7 +23,10 @@ function CustomersGroupsSelector({ setTitle }: { setTitle: string }) {
         defaultValue={state?.values}
         includeButtonState={state?.include}
         onValueChange={onValueChange}
-        onIncludeChange={onIncludeChange} />
+        onIncludeChange={onIncludeChange}
+        container='#CustomersActivity_Sets_ScrollView_div'
+        showSelectionControls={true}
+    />
 }
 
 export default React.memo(CustomersGroupsSelector)

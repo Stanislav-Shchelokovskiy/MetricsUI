@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Plot from 'react-plotly.js'
 import { Data as GraphData } from 'plotly.js'
 import { useCustomersActivitySelector, CustomersActivityStore } from './store/Store'
-import FetchResult from '../common/Interfaces'
+import FetchResult, { Token } from '../common/Interfaces'
 import { isTicketsMetricSelected } from './commonSettingsPanel/MetricSelector'
 import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './commonSettingsPanel/ComparisonMethodSelector'
 import {
@@ -23,14 +23,22 @@ const INITIAL_STATE = {
     aggregates: EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES,
 }
 
-
 export default function ComparisonGraph() {
     const [aggregates, setAggregates] = useState<Array<SetAggregates>>([INITIAL_STATE])
     const customersActivityState = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivity)
     const customersActivitySets = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivitySets)
 
+    const lockObject = useRef<Token>({ cancel: undefined })
+
     useEffect(() => {
-        (async () => {
+        lockObject.current.cancel?.();
+
+        (async (token: Token) => {
+            let cancelled = false
+            token.cancel = () => {
+                cancelled = true
+            }
+            
             let aggs: Array<SetAggregates> = []
             for (const set of customersActivitySets) {
                 const fetchedAggregates: FetchResult<TicketsWithIterationsAggregates> = await fetchTicketsWithIterationsAggregates(
@@ -52,8 +60,9 @@ export default function ComparisonGraph() {
                     })
                 }
             }
-            setAggregates(aggs)
-        })()
+            if (!cancelled)
+                setAggregates(aggs)
+        })(lockObject.current)
     },
         [
             customersActivityState.groupByPeriod,

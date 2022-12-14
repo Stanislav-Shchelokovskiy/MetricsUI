@@ -8,6 +8,7 @@ import {
     CHANGE_COMPARISON_METHOD,
     ADD_SET,
     REMOVE_SET,
+    APPLY_STATE,
 } from './Actions'
 
 
@@ -49,7 +50,7 @@ export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL
                 ...state,
                 metric: action.payload
             }
-            
+
         case CHANGE_COMPARISON_METHOD:
             return {
                 ...state,
@@ -67,6 +68,9 @@ export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL
                 ...state,
                 sets: state.sets.filter(set => set !== action.payload)
             }
+
+        case APPLY_STATE:
+            return action.payload.customersActivity
 
         default:
             if (state.sets.length === 0) {

@@ -12,7 +12,7 @@ export default function ReplyTypeSelector({ tribeId }: { tribeId: string }) {
     const onValueChange = (value: string) => changeReplyType(tribeId, value)
 
     return <OptionSelectorWithFetch<string, string>
-        className=''
+        className='ForecasterReplyTypeSelector'
         fetchDataSourceValues={fetchReplyTypes}
         stateSelector={stateSelector}
         defaultValueSelector={defaultValueSelector}

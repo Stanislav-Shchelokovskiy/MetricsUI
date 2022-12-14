@@ -1,5 +1,7 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useReducer } from 'react'
+import { AnyAction } from '@reduxjs/toolkit'
 import { useStore } from 'react-redux'
+import { Toast } from 'devextreme-react/toast';
 import * as XLSX from 'xlsx'
 import LoadIndicator from '../../common/components/LoadIndicator'
 import { CustomersActivityStore } from '../store/Store'
@@ -7,30 +9,105 @@ import Button from '../../common/components/Button'
 import FetchResult from '../../common/Interfaces'
 import { fetchTicketsWithIterationsRaw, TicketsWithIterationsRaw } from '../network_resource_fetcher/FetchTicketsWithIterationsRaw'
 
-function DownloadButton({ onError }: { onError: (message: string) => void }) {
-    const [taskStarted, setTaskStarted] = useState<boolean>(false);
+interface ToastConfig {
+    message: string
+    isVisible: boolean
+}
+
+const emptyToastConfig = {
+    isVisible: false,
+    message: '',
+}
+
+interface State {
+    downloadStarted: boolean
+    toastConfig: ToastConfig
+}
+
+const INITIAL_STATE: State = {
+    downloadStarted: false,
+    toastConfig: emptyToastConfig
+}
+
+const CHANGE_DOWNLOAD_STARTED = 'download_started'
+const CHANGE_TOAST_CONFIG = 'toast_config'
+
+
+function stateReducer(state: State, action: AnyAction): State {
+    switch (action.type) {
+        case CHANGE_DOWNLOAD_STARTED:
+            return {
+                ...state,
+                downloadStarted: action.payload,
+            }
+        case CHANGE_TOAST_CONFIG:
+            return {
+                ...state,
+                toastConfig: action.payload
+            }
+        default:
+            return state
+    }
+}
+
+const changeDownloadStarted = (started: boolean): AnyAction => {
+    return {
+        type: CHANGE_DOWNLOAD_STARTED,
+        payload: started
+    }
+}
+
+const changeToastConfig = (next: ToastConfig): AnyAction => {
+    return {
+        type: CHANGE_TOAST_CONFIG,
+        payload: next
+    }
+}
+
+
+function DownloadButton() {
+    const [state, stateDispatch] = useReducer(stateReducer, INITIAL_STATE)
+
+    const onError = useCallback(
+        (message: string) => {
+            stateDispatch(changeToastConfig({
+                message: message,
+                isVisible: true,
+            }));
+        }, [])
+
+    const onHiding = useCallback(() => stateDispatch(changeToastConfig(emptyToastConfig)), [])
+    const dispatchDownloadStarted = useCallback((started: boolean) => stateDispatch(changeDownloadStarted(started)), [])
 
     const store = useStore<CustomersActivityStore>()
     const downloadSetRawData = useCallback(() => {
         (async () => {
-            await tryDownloadExcelData(setTaskStarted, store, onError)
+            await tryDownloadExcelData(dispatchDownloadStarted, store, onError)
         })();
-    }, [onError, store])
+    }, [dispatchDownloadStarted, onError, store])
 
     return <div className='CustomersActivityDownloadButton'>
-        {taskStarted === true ?
+        {state.downloadStarted === true ?
             <LoadIndicator width={undefined} height={25} /> :
             <Button
                 key='downloadButton'
-                icon='download'
+                icon='exportxlsx'
+                hint='Download excel'
                 onClick={downloadSetRawData} />}
+        <Toast
+            visible={state.toastConfig.isVisible}
+            message={state.toastConfig.message}
+            type='error'
+            onHiding={onHiding}
+            displayTime={3000}
+        />
     </div>
 }
 
 export default React.memo(DownloadButton)
 
 
-async function tryDownloadExcelData(setTaskStarted: React.Dispatch<React.SetStateAction<boolean>>, store: any, onError: (message: string) => void) {
+async function tryDownloadExcelData(setTaskStarted: (started: boolean) => void, store: any, onError: (message: string) => void) {
     try {
         setTaskStarted(true)
         await downloadExcelData(store)

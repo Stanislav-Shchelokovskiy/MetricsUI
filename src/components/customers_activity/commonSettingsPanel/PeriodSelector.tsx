@@ -72,6 +72,7 @@ export default function PeriodSelector() {
             <DxRangeSelector
                 id='range-selector'
                 defaultValue={selectedRange}
+                value={selectedRange}
                 className='CustomersActivity_PeriodSelector'
                 size={{ height: 125 }}
                 onValueChange={onRangeChange}
@@ -81,7 +82,6 @@ export default function PeriodSelector() {
                     startValue={new Date(periodSelectorState.periodStart)}
                     endValue={new Date(periodSelectorState.periodEnd)}
                     endOnTick={true}
-                    //workdaysOnly={true}
                     minorTickInterval='week'
                     tickInterval='month'
                     minRange='week'
