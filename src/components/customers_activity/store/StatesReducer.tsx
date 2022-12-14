@@ -21,6 +21,8 @@ export const ViewStateReducer = (state: ViewState = INITIAL_VIEW_STATE, action: 
             }
 
         case ADD_STATE_KEY:
+            if (state.stateKeys.find(x => x === action.payload) !== undefined)
+                return state
             return {
                 ...state,
                 stateKeys: [...state.stateKeys, action.payload]

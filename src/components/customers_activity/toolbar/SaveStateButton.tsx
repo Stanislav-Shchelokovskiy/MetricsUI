@@ -4,7 +4,7 @@ import { Popup, ToolbarItem } from 'devextreme-react/popup'
 import TextBox from 'devextreme-react/text-box'
 import Button from '../../common/components/Button'
 import { saveState } from '../../common/LocalStorage'
-import { useCustomersActivityDispatch, CustomersActivityStore } from '../store/Store'
+import { useCustomersActivityDispatch, CustomersActivityStore, useCustomersActivitySelector } from '../store/Store'
 import { addStateKey } from '../store/Actions'
 
 
@@ -13,8 +13,7 @@ function SaveStateButton() {
 
     const onClick = () => setPopupVisible(true)
 
-    const onHiding = useCallback((e: any) => {
-        console.log(e)
+    const onHiding = useCallback(() => {
         setPopupVisible(false)
     }, [])
 
@@ -23,6 +22,7 @@ function SaveStateButton() {
             <Button
                 key='saveStateButton'
                 icon='save'
+                hint='Save state'
                 onClick={onClick} />
             <SaveStatePopup
                 visible={popupVisible}
@@ -35,14 +35,20 @@ export default React.memo(SaveStateButton)
 
 
 function SaveStatePopup({ visible, onHiding }: SaveStatePopupProps) {
-    const store = useStore<CustomersActivityStore>()
+    let key = useCustomersActivitySelector((state)=> state.viewState.key)
 
+    const store = useStore<CustomersActivityStore>()
     const dispatch = useCustomersActivityDispatch()
     const onValueChange = (value: string) => {
         if (value === '')
             return
-        saveState(store.getState(), value)
-        dispatch(addStateKey(value))
+        key = value
+    }
+
+    const onClick = ()=>{
+        saveState(store.getState(), key)
+        dispatch(addStateKey(key))
+        onHiding(key)
     }
 
     const closeButtonOptions = {
@@ -50,7 +56,7 @@ function SaveStatePopup({ visible, onHiding }: SaveStatePopupProps) {
         type: 'normal',
         stylingMode: 'outlined',
         focusStateEnabled: false,
-        onClick: onHiding,
+        onClick: onClick,
     }
 
     return (
@@ -61,11 +67,11 @@ function SaveStatePopup({ visible, onHiding }: SaveStatePopupProps) {
             hideOnOutsideClick={true}
             showCloseButton={true}
             showTitle={true}
-            title='Enter view name'
+            title='Enter state name'
             maxWidth='30vw'
             maxHeight='30vh'
         >
-            <TextBox value='' valueChangeEvent='focusout' onValueChange={onValueChange} />
+            <TextBox value={key} valueChangeEvent='focusout' onValueChange={onValueChange} />
             <ToolbarItem
                 widget='dxButton'
                 toolbar='bottom'

@@ -12,3 +12,7 @@ export interface Payload<StateIdT, DataT> {
     stateId: StateIdT
     data: DataT
 }
+
+export interface Token {
+    cancel: (() => void) | undefined
+}

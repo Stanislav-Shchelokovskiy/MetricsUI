@@ -26,10 +26,6 @@
     gap: 1%;
 }
 
-.CustomersActivityViewStatesSelector {
-    margin-top: 0px;
-    margin-bottom: 0%;
-}
 
 .CustomersActivityToolbarCommands {
     justify-content: flex-end;
@@ -38,7 +34,8 @@
 
 .CustomersActivityMenuButton,
 .CustomersActivityDownloadButton,
-.CustomersActivitySaveStateButton {
+.CustomersActivitySaveStateButton,
+.CustomersActivityViewStatesSelector {
     margin-top: 7px;
 }
 

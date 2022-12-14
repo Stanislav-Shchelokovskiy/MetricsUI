@@ -91,7 +91,8 @@ function DownloadButton() {
             <LoadIndicator width={undefined} height={25} /> :
             <Button
                 key='downloadButton'
-                icon='download'
+                icon='exportxlsx'
+                hint='Download excel'
                 onClick={downloadSetRawData} />}
         <Toast
             visible={state.toastConfig.isVisible}

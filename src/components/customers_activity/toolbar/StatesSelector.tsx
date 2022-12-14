@@ -1,19 +1,27 @@
 import React from 'react'
-import { OptionSelector } from '../../common/components/OptionSelector'
+import DropDownButton from 'devextreme-react/drop-down-button'
+import { applyState, changeStateKey } from '../store/Actions'
+import { loadState } from '../../common/LocalStorage'
 import { useCustomersActivityDispatch, useCustomersActivitySelector, CustomersActivityStore } from '../store/Store'
 
 
 export default function StatesSelector() {
     const viewState = useCustomersActivitySelector((state: CustomersActivityStore) => state.viewState)
-    //   const stateSelector = (store: ForecasterStore) => store.strategicForecast.find(x => x.tribeId === tribeId)?.tile
-    //  const defaultValueSelector = (values: Array<number>) => values[values.length % 2]
-    const onValueChange = (value: string) => { }
+    const dispatch = useCustomersActivityDispatch()
+    const onValueChange = ({ itemData }: { itemData: string } | any) => {
+        const state = loadState(itemData)
+        if (!state)
+            return
+        dispatch(applyState(state))
+        dispatch(changeStateKey(itemData))
+    }
 
-    return <OptionSelector<string, string>
+    return <DropDownButton
         className='CustomersActivityViewStatesSelector'
         dataSource={viewState.stateKeys}
-        defaultValue={viewState.key || viewState.stateKeys[0]}
-        onValueChange={onValueChange}
-        label='View'
+        onItemClick={onValueChange}
+        focusStateEnabled={false}
+        text='Apply state'
+        icon='preferences'
     />
 }

@@ -1,5 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { Payload } from '../../common/Interfaces'
+import { CustomersActivityStore } from './Store'
 
 export const CHANGE_PERIOD = 'customers_activity/change_period'
 export const changePeriod = (period: Array<Date>): PayloadAction<Array<string>> => {
@@ -177,5 +178,13 @@ export const changeStateKey = (state_key: string): PayloadAction<string> => {
     return {
         type: CHANGE_STATE_KEY,
         payload: state_key
+    }
+}
+
+export const APPLY_STATE = 'customers_activity/apply_state'
+export const applyState = (state: CustomersActivityStore): PayloadAction<CustomersActivityStore> => {
+    return {
+        type: APPLY_STATE,
+        payload: state
     }
 }

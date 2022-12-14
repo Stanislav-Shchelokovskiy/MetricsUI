@@ -21,6 +21,10 @@
     padding-bottom: 8px;
 }
 
+.ForecasterReplyTypeSelector{
+    min-width: 320px;
+}
+
 .PositionsSelector {
     min-width: 20%;
     /* background-color: orange; */
