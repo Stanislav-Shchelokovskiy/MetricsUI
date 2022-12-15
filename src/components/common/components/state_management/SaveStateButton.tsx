@@ -1,14 +1,14 @@
-import React, { useCallback, useReducer, useState } from 'react'
-import { useStore } from 'react-redux'
+import React, { useCallback, useState } from 'react'
+import { useStore, useDispatch, useSelector } from 'react-redux'
+import { saveState } from '../../LocalStorage'
 import { Popup, ToolbarItem } from 'devextreme-react/popup'
 import TextBox from 'devextreme-react/text-box'
-import Button from '../../common/components/Button'
-import { saveState } from '../../common/LocalStorage'
-import { useCustomersActivityDispatch, CustomersActivityStore, useCustomersActivitySelector } from '../store/Store'
-import { addStateKey } from '../store/Actions'
+import Button from '../Button'
+import { registerState } from '../../store/state/Actions'
+import getStorageItemKey from './Utils'
+import { KeyProps, KeyPopupProps } from './Interfaces'
 
-
-function SaveStateButton() {
+function SaveStateButton(props: KeyProps) {
     const [popupVisible, setPopupVisible] = useState(false)
 
     const onClick = () => setPopupVisible(true)
@@ -18,13 +18,14 @@ function SaveStateButton() {
     }, [])
 
     return (
-        <div className='CustomersActivitySaveStateButton'>
+        <div className={props.className}>
             <Button
                 key='saveStateButton'
                 icon='save'
                 hint='Save state'
                 onClick={onClick} />
             <SaveStatePopup
+                {...props}
                 visible={popupVisible}
                 onHiding={onHiding} />
         </div>
@@ -34,21 +35,21 @@ function SaveStateButton() {
 export default React.memo(SaveStateButton)
 
 
-function SaveStatePopup({ visible, onHiding }: SaveStatePopupProps) {
-    let key = useCustomersActivitySelector((state)=> state.viewState.key)
+function SaveStatePopup(props: KeyPopupProps) {
+    let key = useSelector(props.keySelector)
 
-    const store = useStore<CustomersActivityStore>()
-    const dispatch = useCustomersActivityDispatch()
+    const store = useStore()
+    const dispatch = useDispatch()
     const onValueChange = (value: string) => {
         if (value === '')
             return
         key = value
     }
 
-    const onClick = ()=>{
-        saveState(store.getState(), key)
-        dispatch(addStateKey(key))
-        onHiding(key)
+    const onClick = () => {
+        saveState(store.getState(), getStorageItemKey(props.state_salt, key))
+        dispatch(registerState(key))
+        props.onHiding()
     }
 
     const closeButtonOptions = {
@@ -61,8 +62,8 @@ function SaveStatePopup({ visible, onHiding }: SaveStatePopupProps) {
 
     return (
         <Popup
-            visible={visible}
-            onHiding={onHiding}
+            visible={props.visible}
+            onHiding={props.onHiding}
             dragEnabled={false}
             hideOnOutsideClick={true}
             showCloseButton={true}
@@ -80,9 +81,4 @@ function SaveStatePopup({ visible, onHiding }: SaveStatePopupProps) {
             />
         </Popup>
     )
-}
-
-interface SaveStatePopupProps {
-    visible: boolean
-    onHiding: (e: any) => void
 }
