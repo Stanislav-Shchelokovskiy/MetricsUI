@@ -1,4 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
+import { APPLY_STATE } from '../../common/store/state/Actions'
 import {
     ADD_SET,
     REMOVE_SET,
@@ -16,8 +17,8 @@ import {
     CHANGE_REPLIES_TYPES_INCLUDE,
     CHANGE_COMPONENTS_INCLUDE,
     CHANGE_FEATURES_INCLUDE,
-    APPLY_STATE,
 } from './Actions'
+
 
 export interface FilterParametersNode<T> {
     include: boolean

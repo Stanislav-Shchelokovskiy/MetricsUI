@@ -1,5 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { ADD_STATE_KEY, CHANGE_STATE_KEY } from './Actions'
+import { REGISTER_STATE, DROP_STATE, CHANGE_STATE } from './Actions'
 
 export interface ViewState {
     key: string
@@ -14,18 +14,24 @@ const INITIAL_VIEW_STATE: ViewState = {
 export const ViewStateReducer = (state: ViewState = INITIAL_VIEW_STATE, action: AnyAction): ViewState => {
     switch (action.type) {
 
-        case CHANGE_STATE_KEY:
+        case CHANGE_STATE:
             return {
                 ...state,
                 key: action.payload
             }
 
-        case ADD_STATE_KEY:
+        case REGISTER_STATE:
             if (state.stateKeys.find(x => x === action.payload) !== undefined)
                 return state
             return {
                 ...state,
                 stateKeys: [...state.stateKeys, action.payload]
+            }
+
+        case DROP_STATE:
+            return {
+                key: state.key === action.payload ? '' : state.key,
+                stateKeys: state.stateKeys.filter(x => x !== action.payload)
             }
 
         default:

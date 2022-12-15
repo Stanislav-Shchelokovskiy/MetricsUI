@@ -35,7 +35,8 @@
 .CustomersActivityMenuButton,
 .CustomersActivityDownloadButton,
 .CustomersActivitySaveStateButton,
-.CustomersActivityViewStatesSelector {
+.CustomersActivityDropStateButton,
+.CustomersActivityViewStateSelector {
     margin-top: 7px;
 }
 

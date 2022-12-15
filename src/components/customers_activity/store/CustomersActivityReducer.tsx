@@ -1,6 +1,7 @@
 import { AnyAction } from '@reduxjs/toolkit'
 import { GenerateNewSetTitle } from './SetsReducer'
 import { INITIAL_SET_STATE } from '../store/SetsReducer'
+import { APPLY_STATE } from '../../common/store/state/Actions'
 import {
     CHANGE_PERIOD,
     CHANGE_GROUP_BY_PERIOD,
@@ -8,7 +9,6 @@ import {
     CHANGE_COMPARISON_METHOD,
     ADD_SET,
     REMOVE_SET,
-    APPLY_STATE,
 } from './Actions'
 
 
