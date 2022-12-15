@@ -21,7 +21,6 @@ function DropStateButton(props: ValuesProps) {
     return (
         <div className={props.className}>
             <Button
-                key='dropStateButton'
                 icon='remove'
                 hint='Drop state'
                 onClick={onClick} />

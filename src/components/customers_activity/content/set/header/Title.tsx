@@ -30,10 +30,8 @@ function RenameButton({ setTitle }: { setTitle: string }) {
 
     const dispatch = useDispatch()
     const onPopupOkClick = (value: string | undefined) => {
-        if (value !== undefined && value !== '') {
-            console.log('onPopupOkClick ', value)
+        if (value !== undefined && value !== '')
             dispatch(changeSetTitle({ stateId: setTitle, data: value }))
-        }
         onHiding()
     }
     return (

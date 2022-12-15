@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import FetchResult from '../Interfaces'
 import useComponentReducer, { changeDataSource, changeDefaultValue } from '../hooks/UseComponentReducer'
 
-
 interface BaseProps {
     className: string
     displayExpr: string
@@ -32,7 +31,6 @@ interface FetchProps<DataSourceT, ValueExprT> extends BaseProps {
     defaultValueSelector: (value: Array<DataSourceT>) => ValueExprT
     onValueChange: (value: ValueExprT) => PayloadAction<any>
 }
-
 
 
 export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: FetchProps<DataSourceT, ValueExprT>) {

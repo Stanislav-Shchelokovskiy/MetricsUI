@@ -36,6 +36,7 @@
 .CustomersActivityDownloadButton,
 .CustomersActivitySaveStateButton,
 .CustomersActivityDropStateButton,
+.CustomersActivityShareStateButton,
 .CustomersActivityViewStateSelector {
     margin-top: 7px;
 }

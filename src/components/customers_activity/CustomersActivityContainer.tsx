@@ -3,18 +3,39 @@ import './styles/CommonSettingsPanel.css'
 import './styles/Set.css'
 
 import React, { useState, useEffect, useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 import Drawer from 'devextreme-react/drawer'
 import Toolbar from './toolbar/Toolbar'
 import Plotly from 'plotly.js-basic-dist-min'
 import CommonSettingsPanel from './commonSettingsPanel/CommonSettingsPanel'
 import Sets from './content/Sets'
 import ComparisonGraph from './ComparisonGraph'
+import useQueryParams from '../common/hooks/UseQueryParams'
+import { applyState, changeState } from '../common/store/state/Actions'
+import { PullState } from '../common/network_resource_fetcher/FetchState'
 
+export default function CustomersActivity() {
+    const queryParams = useQueryParams()
+    const stateId = queryParams.get('stateId')
+    const dispatch = useDispatch()
+    useEffect(() => {
+        (async () => {
+            if (stateId === null)
+                return
+            const state = await PullState(stateId)
+            if (!state)
+                return
+            dispatch(applyState(state))
+            dispatch(changeState(stateId))
+        })()
+    }, [stateId, dispatch])
 
+    return <CustomersActivityContainer />
+}
 
-export default function CustomersActivityContainer() {
+function CustomersActivityContainer() {
     const [opened, setOpened] = useState(false)
-    
+
     useEffect(() => {
         const timerId = setTimeout(() => {
             Plotly.Plots.resize('CustomersActivity_ComparisonGraph')
