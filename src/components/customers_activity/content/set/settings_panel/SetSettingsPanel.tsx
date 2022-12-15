@@ -5,7 +5,7 @@ import TicketsTagsSelector from './TicketsTagsSelector'
 import TribesSelector from './TribesSelector'
 
 
-function SetSettingsPanel({ setTitle }: { setTitle: string }) {
+export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
     return (
         <div className='CustomersActivity_SetSettingsPanel'>
             <div className='CustomersActivity_SetSettingsChildPanel'>
@@ -19,5 +19,3 @@ function SetSettingsPanel({ setTitle }: { setTitle: string }) {
         </div >
     )
 }
-
-export default React.memo(SetSettingsPanel)

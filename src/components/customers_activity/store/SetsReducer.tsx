@@ -17,6 +17,7 @@ import {
     CHANGE_REPLIES_TYPES_INCLUDE,
     CHANGE_COMPONENTS_INCLUDE,
     CHANGE_FEATURES_INCLUDE,
+    CHANGE_SET_TITLE,
 } from './Actions'
 
 
@@ -226,6 +227,14 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
 
         case APPLY_STATE:
             return action.payload.customersActivitySets
+
+        case CHANGE_SET_TITLE:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    title: action.payload.data,
+                }
+            })
 
         default:
             return state

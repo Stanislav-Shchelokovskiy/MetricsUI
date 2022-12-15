@@ -1,21 +1,30 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useRef } from 'react'
 import { useStore, useDispatch, useSelector } from 'react-redux'
 import { saveState } from '../../LocalStorage'
-import { Popup, ToolbarItem } from 'devextreme-react/popup'
-import TextBox from 'devextreme-react/text-box'
+import InputBox from '../InputBox'
 import Button from '../Button'
 import { registerState } from '../../store/state/Actions'
 import getStorageItemKey from './Utils'
-import { KeyProps, KeyPopupProps } from './Interfaces'
+import { KeyProps } from './Interfaces'
 
 function SaveStateButton(props: KeyProps) {
-    const [popupVisible, setPopupVisible] = useState(false)
+    const [inputBoxVisible, setInputBoxVisible] = useState(false)
+    const currentStateName = useSelector(props.keySelector)
 
-    const onClick = () => setPopupVisible(true)
-
+    const onClick = () => setInputBoxVisible(true)
     const onHiding = useCallback(() => {
-        setPopupVisible(false)
+        setInputBoxVisible(false)
     }, [])
+
+    const store = useStore()
+    const dispatch = useDispatch()
+    const onPopupOkClick = (value: string | undefined) => {
+        if (value !== undefined && value !== '') {
+            saveState(store.getState(), getStorageItemKey(props.state_salt, value))
+            dispatch(registerState(value))
+        }
+        onHiding()
+    }
 
     return (
         <div className={props.className}>
@@ -24,61 +33,14 @@ function SaveStateButton(props: KeyProps) {
                 icon='save'
                 hint='Save state'
                 onClick={onClick} />
-            <SaveStatePopup
-                {...props}
-                visible={popupVisible}
-                onHiding={onHiding} />
+            <InputBox
+                title='Save as'
+                visible={inputBoxVisible}
+                value={currentStateName}
+                onHiding={onHiding}
+                onOkClick={onPopupOkClick} />
         </div>
     )
 }
 
 export default React.memo(SaveStateButton)
-
-
-function SaveStatePopup(props: KeyPopupProps) {
-    let key = useSelector(props.keySelector)
-
-    const store = useStore()
-    const dispatch = useDispatch()
-    const onValueChange = (value: string) => {
-        if (value === '')
-            return
-        key = value
-    }
-
-    const onClick = () => {
-        saveState(store.getState(), getStorageItemKey(props.state_salt, key))
-        dispatch(registerState(key))
-        props.onHiding()
-    }
-
-    const closeButtonOptions = {
-        text: 'Ok',
-        type: 'normal',
-        stylingMode: 'outlined',
-        focusStateEnabled: false,
-        onClick: onClick,
-    }
-
-    return (
-        <Popup
-            visible={props.visible}
-            onHiding={props.onHiding}
-            dragEnabled={false}
-            hideOnOutsideClick={true}
-            showCloseButton={true}
-            showTitle={true}
-            title='Enter state name'
-            maxWidth='30vw'
-            maxHeight='30vh'
-        >
-            <TextBox value={key} valueChangeEvent='focusout' onValueChange={onValueChange} />
-            <ToolbarItem
-                widget='dxButton'
-                toolbar='bottom'
-                location='after'
-                options={closeButtonOptions}
-            />
-        </Popup>
-    )
-}

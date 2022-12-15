@@ -12,7 +12,9 @@ export default function CloneButton({ setTitle }: { setTitle: string }) {
 
     return <Button
         className='SetHeaderButton'
-        text='Clone set'
+        icon='copy'
+        hint='Clone'
+        stylingMode='text'
         onClick={onClick}
     />
 }

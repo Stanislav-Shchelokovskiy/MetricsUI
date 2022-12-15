@@ -19,5 +19,4 @@ export interface PopupProps{
     onHiding: () => void
 }
 
-export type KeyPopupProps = PopupProps & KeyProps
 export type ValuesPopupProps = PopupProps & ValuesProps

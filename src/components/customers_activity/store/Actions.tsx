@@ -54,113 +54,121 @@ export const removeSet = (title: string): PayloadAction<string> => {
 }
 
 export const CHANGE_TRIBES = 'customers_activity/change_tribes'
-export const changeTribes = (tribes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+export const changeTribes = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
         type: CHANGE_TRIBES,
-        payload: tribes
+        payload: payload
     }
 }
 
 export const CHANGE_TRIBES_INCLUDE = 'customers_activity/change_tribes_include'
-export const changeTribesInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+export const changeTribesInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
     return {
         type: CHANGE_TRIBES_INCLUDE,
-        payload: include
+        payload: payload
     }
 }
 
 export const CHANGE_CUSTOMERS_GROUPS = 'customers_activity/change_customers_groups'
-export const changeCustomersGroups = (customersGroups: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+export const changeCustomersGroups = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
         type: CHANGE_CUSTOMERS_GROUPS,
-        payload: customersGroups
+        payload: payload
     }
 }
 
 export const CHANGE_CUSTOMERS_GROUPS_INCLUDE = 'customers_activity/change_customers_groups_include'
-export const changeCustomersGroupsInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+export const changeCustomersGroupsInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
     return {
         type: CHANGE_CUSTOMERS_GROUPS_INCLUDE,
-        payload: include
+        payload: payload
     }
 }
 
 export const CHANGE_TICKETS_TYPES = 'customers_activity/change_tickets_types'
-export const changeTicketsTypes = (ticketsTypes: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
+export const changeTicketsTypes = (payload: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
     return {
         type: CHANGE_TICKETS_TYPES,
-        payload: ticketsTypes
+        payload: payload
     }
 }
 
 export const CHANGE_TICKETS_TYPES_INCLUDE = 'customers_activity/change_tickets_types_include'
-export const changeTicketsTypesInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+export const changeTicketsTypesInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
     return {
         type: CHANGE_TICKETS_TYPES_INCLUDE,
-        payload: include
+        payload: payload
     }
 }
 
 export const CHANGE_TICKETS_TAGS = 'customers_activity/change_tickets_tags'
-export const changeTicketsTags = (ticketsTags: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
+export const changeTicketsTags = (payload: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
     return {
         type: CHANGE_TICKETS_TAGS,
-        payload: ticketsTags
+        payload: payload
     }
 }
 
 export const CHANGE_TICKETS_TAGS_INCLUDE = 'customers_activity/change_tickets_tags_include'
-export const changeTicketsTagsInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+export const changeTicketsTagsInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
     return {
         type: CHANGE_TICKETS_TAGS_INCLUDE,
-        payload: include
+        payload: payload
     }
 }
 
 export const CHANGE_REPLIES_TYPES = 'customers_activity/change_replies_types'
-export const changeRepliesTypes = (repliesTypes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+export const changeRepliesTypes = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
         type: CHANGE_REPLIES_TYPES,
-        payload: repliesTypes
+        payload: payload
     }
 }
 
 export const CHANGE_REPLIES_TYPES_INCLUDE = 'customers_activity/change_replies_types_include'
-export const changeRepliesTypesInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+export const changeRepliesTypesInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
     return {
         type: CHANGE_REPLIES_TYPES_INCLUDE,
-        payload: include
+        payload: payload
     }
 }
 
 export const CHANGE_COMPONENTS = 'customers_activity/change_components'
-export const changeComponents = (repliesTypes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+export const changeComponents = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
         type: CHANGE_COMPONENTS,
-        payload: repliesTypes
+        payload: payload
     }
 }
 
 export const CHANGE_COMPONENTS_INCLUDE = 'customers_activity/change_components_include'
-export const changeComponentsInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+export const changeComponentsInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
     return {
         type: CHANGE_COMPONENTS_INCLUDE,
-        payload: include
+        payload: payload
     }
 }
 
 export const CHANGE_FEATURES = 'customers_activity/change_features'
-export const changeFeatures = (repliesTypes: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+export const changeFeatures = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
         type: CHANGE_FEATURES,
-        payload: repliesTypes
+        payload: payload
     }
 }
 
 export const CHANGE_FEATURES_INCLUDE = 'customers_activity/change_features_include'
-export const changeFeaturesInclude = (include: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+export const changeFeaturesInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
     return {
         type: CHANGE_FEATURES_INCLUDE,
-        payload: include
+        payload: payload
+    }
+}
+
+export const CHANGE_SET_TITLE = 'customers_activity/change_set_title'
+export const changeSetTitle = (payload: Payload<string, string>): PayloadAction<Payload<string, string>> => {
+    return {
+        type: CHANGE_SET_TITLE,
+        payload: payload
     }
 }
