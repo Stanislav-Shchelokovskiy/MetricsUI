@@ -10,6 +10,7 @@ import {
     TicketsWithIterationsAggregates,
     EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES
 } from './network_resource_fetcher/FetchTicketsWithIterationsAggregates'
+import { toFriendlyTitle } from './content/set/header/Title'
 
 
 interface SetAggregates {
@@ -38,7 +39,7 @@ export default function ComparisonGraph() {
             token.cancel = () => {
                 cancelled = true
             }
-            
+
             let aggs: Array<SetAggregates> = []
             for (const set of customersActivitySets) {
                 const fetchedAggregates: FetchResult<TicketsWithIterationsAggregates> = await fetchTicketsWithIterationsAggregates(
@@ -55,7 +56,7 @@ export default function ComparisonGraph() {
                 )
                 if (fetchedAggregates.success) {
                     aggs.push({
-                        name: `Set ${set.title}`,
+                        name: toFriendlyTitle(set.title),
                         aggregates: fetchedAggregates.data
                     })
                 }

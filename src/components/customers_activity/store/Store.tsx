@@ -3,7 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { loadState, saveState } from '../../common/LocalStorage'
 import { CustomersActivityReducer } from './CustomersActivityReducer'
 import { SetsReducer } from './SetsReducer'
-import { ViewStateReducer } from '../../common/store/state/Reducer'
+import { ViewStateReducer } from '../../common/store/state/Reducers'
 
 
 const currentStateKey = 'current_customers_activity_state_v1'

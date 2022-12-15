@@ -11,7 +11,7 @@ const INITIAL_VIEW_STATE: ViewState = {
     stateKeys: []
 }
 
-export const ViewStateReducer = (state: ViewState = INITIAL_VIEW_STATE, action: AnyAction): ViewState => {
+export function ViewStateReducer(state: ViewState = INITIAL_VIEW_STATE, action: AnyAction): ViewState {
     switch (action.type) {
 
         case CHANGE_STATE:

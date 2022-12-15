@@ -9,6 +9,7 @@ import {
     CHANGE_COMPARISON_METHOD,
     ADD_SET,
     REMOVE_SET,
+    CHANGE_SET_TITLE,
 } from './Actions'
 
 
@@ -71,6 +72,12 @@ export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL
 
         case APPLY_STATE:
             return action.payload.customersActivity
+
+        case CHANGE_SET_TITLE:
+            return {
+                ...state,
+                sets: state.sets.map(set => set !== action.payload.stateId ? set : action.payload.data)
+            }
 
         default:
             if (state.sets.length === 0) {

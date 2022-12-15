@@ -4,7 +4,7 @@ import { CustomersActivityStore, useCustomersActivityDispatch, useCustomersActiv
 import { removeSet } from '../../../store/Actions'
 
 
-export default function RemoveButton({ setTitle }: { setTitle: string }) {
+export default function DropButton({ setTitle }: { setTitle: string }) {
     const dispatch = useCustomersActivityDispatch()
     const onClick = useCallback(() => {
         dispatch(removeSet(setTitle))
@@ -13,7 +13,9 @@ export default function RemoveButton({ setTitle }: { setTitle: string }) {
     const disabled: boolean = useCustomersActivitySelector((state: CustomersActivityStore) => state.customersActivity.sets).length === 1
     return <Button
         className='SetHeaderButton'
-        text='Remove set'
+        hint='Drop'
+        icon='remove'
+        stylingMode='text'
         disabled={disabled}
         onClick={onClick}
     />
