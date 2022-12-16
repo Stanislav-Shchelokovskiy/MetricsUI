@@ -16,10 +16,11 @@ function ShareStateButton(props: KeyProps) {
         onError: (message: string) => void,
     ) => {
         const fetchedStateId: FetchResult<string> = await PushState(store.getState())
-        if(fetchedStateId.success){
+        if (fetchedStateId.success) {
+            await navigator.clipboard.writeText(`${window.location.href}/${fetchedStateId.data}`)
             onSuccess('Link to state copied to clipboard')
         }
-        else{
+        else {
             onError("Couldn't share state. Try again.")
         }
     }
