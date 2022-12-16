@@ -22,11 +22,11 @@ export default function CustomersActivity() {
         (async () => {
             if (stateId === null)
                 return
-            const state = await PullState(stateId)
-            if (!state)
-                return
-            dispatch(applyState(state))
-            dispatch(changeState(stateId))
+            const fetchedState = await PullState(stateId)
+            if (fetchedState.success) {
+                dispatch(applyState(fetchedState.data))
+                dispatch(changeState(stateId))
+            }
         })()
     }, [stateId, dispatch])
 
