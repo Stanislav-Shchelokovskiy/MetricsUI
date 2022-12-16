@@ -1,25 +1,34 @@
-import React, { useCallback, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Popup } from 'devextreme-react/popup'
-import List from 'devextreme-react/list'
-import Button from '../Button'
-import { dropState } from '../../LocalStorage'
-import { dropState as dropStateAction } from '../../store/state/Actions'
-import { KeyProps, ValuesPopupProps } from './Interfaces'
-import getStorageItemKey from './Utils'
+import React from 'react'
+import { useStore } from 'react-redux'
+import TaskButton from '../../../common/components/TaskButton'
+import { PushState } from '../../network_resource_fetcher/FetchState'
+import FetchResult from '../../Interfaces'
+import { KeyProps } from './Interfaces'
 
 
 function ShareStateButton(props: KeyProps) {
-    const onClick = () => { }
 
-    return (
-        <div className={props.className}>
-            <Button
-                icon='export'
-                hint='Share state'
-                onClick={onClick} />
-        </div>
-    )
+    const store = useStore()
+
+    const shareState = async (
+        dispatchTaskState: (started: boolean) => void,
+        onSuccess: (message: string) => void,
+        onError: (message: string) => void,
+    ) => {
+        const fetchedStateId: FetchResult<string> = await PushState(store.getState())
+        if(fetchedStateId.success){
+            onSuccess('Link to state copied to clipboard')
+        }
+        else{
+            onError("Couldn't share state. Try again.")
+        }
+    }
+
+    return <TaskButton
+        className='CustomersActivityShareStateButton'
+        icon='export'
+        hint='Share state'
+        task={shareState} />
 }
 
 export default React.memo(ShareStateButton)

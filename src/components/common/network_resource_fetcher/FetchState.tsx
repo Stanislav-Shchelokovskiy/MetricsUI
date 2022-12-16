@@ -6,7 +6,7 @@ export async function PushState(state: any) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ state: JSON.stringify(state) }),
-        }).then(response => response.json())
+        }).then(response => response.text())
         return {
             success: true,
             data: stateId
