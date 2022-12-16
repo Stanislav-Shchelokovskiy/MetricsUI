@@ -1,4 +1,5 @@
 import React from 'react'
+import copy from 'copy-to-clipboard'
 import { useStore } from 'react-redux'
 import TaskButton from '../../../common/components/TaskButton'
 import { PushState } from '../../network_resource_fetcher/FetchState'
@@ -17,7 +18,7 @@ function ShareStateButton(props: KeyProps) {
     ) => {
         const fetchedStateId: FetchResult<string> = await PushState(store.getState())
         if (fetchedStateId.success) {
-            await navigator.clipboard.writeText(`${window.location.href}/${fetchedStateId.data}`)
+            copy(`${window.location.href}/${fetchedStateId.data}`)
             onSuccess('Link to state copied to clipboard')
         }
         else {
