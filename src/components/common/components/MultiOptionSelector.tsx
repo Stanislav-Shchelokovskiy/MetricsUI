@@ -30,7 +30,6 @@ interface PropsWithValue<DataSourceT, ValueExprT> extends Props<DataSourceT, Val
     value: Array<ValueExprT>
 }
 
-
 interface FetchProps<DataSourceT, ValueExprT> extends Props<DataSourceT, ValueExprT> {
     fetchDataSourceValues: () => Promise<FetchResult<Array<DataSourceT>>>
 }

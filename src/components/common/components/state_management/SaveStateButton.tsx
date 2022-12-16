@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useStore, useDispatch, useSelector } from 'react-redux'
 import { saveState } from '../../LocalStorage'
 import InputBox from '../InputBox'
@@ -29,7 +29,6 @@ function SaveStateButton(props: KeyProps) {
     return (
         <div className={props.className}>
             <Button
-                key='saveStateButton'
                 icon='save'
                 hint='Save state'
                 onClick={onClick} />

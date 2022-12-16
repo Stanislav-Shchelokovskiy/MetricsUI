@@ -7,11 +7,12 @@ import { RouterProvider, useRouteError, createBrowserRouter, isRouteErrorRespons
 import { Button } from 'devextreme-react/button'
 
 import Forecaster from './components/forecaster/Forecaster'
-import CustomersActivityContainer from './components/customers_activity/CustomersActivityContainer'
+import CustomersActivity, { CustomersActivityApplySharedState } from './components/customers_activity/CustomersActivityContainer'
 
 import { Provider } from 'react-redux';
 import { customersActivityStore } from './components/customers_activity/store/Store'
 import { forecasterStore } from './components/forecaster/store/Store'
+
 
 function ErrorPage() {
   const error = useRouteError()
@@ -61,7 +62,15 @@ const router = createBrowserRouter([
     path: '/CustomersActivity',
     element: (
       <Provider store={customersActivityStore}>
-        <CustomersActivityContainer />
+        <CustomersActivity />
+      </Provider>
+    ),
+  },
+  {
+    path: '/CustomersActivity/:stateId',
+    element: (
+      <Provider store={customersActivityStore}>
+        <CustomersActivityApplySharedState />
       </Provider>
     ),
   },

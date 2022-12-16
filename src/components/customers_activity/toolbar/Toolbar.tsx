@@ -4,6 +4,7 @@ import DownloadButton from './DownloadButton'
 import SaveStateButton from '../../common/components/state_management/SaveStateButton'
 import StateSelector from '../../common/components/state_management/StateSelector'
 import DropStateButton from '../../common/components/state_management/DropStateButton'
+import ShareStateButton from '../../common/components/state_management/ShareStateButton'
 import { CustomersActivityStore } from '../store/Store'
 
 function Toolbar({ onShowChange }: { onShowChange: () => void }) {
@@ -30,6 +31,11 @@ function Toolbar({ onShowChange }: { onShowChange: () => void }) {
                     className='CustomersActivityDropStateButton'
                     valuesSelector={valuesSelector}
                     state_salt={state_salt} />
+                <div className='CustomersActivityToolbarSeparator'></div>
+                <ShareStateButton 
+                    className='CustomersActivityShareStateButton'
+                    keySelector={keySelector}
+                    state_salt={state_salt}/>
                 <div className='CustomersActivityToolbarSeparator'></div>
                 <DownloadButton />
             </div>
