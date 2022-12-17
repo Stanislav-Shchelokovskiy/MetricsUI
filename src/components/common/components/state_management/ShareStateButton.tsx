@@ -18,12 +18,15 @@ function ShareStateButton(props: KeyProps) {
     ) => {
         const fetchedStateId: FetchResult<string> = await PushState(store.getState())
         if (fetchedStateId.success) {
-            copy(`${window.location.href}/${fetchedStateId.data}`)
-            onSuccess('Link to state copied to clipboard')
+            const successfullyCopied = copy(`${window.location.href}/${fetchedStateId.data}`)
+            if (successfullyCopied) {
+                onSuccess('Link to state copied to clipboard.')
+                return
+            }
+            onError("Couldn't copy link to clipboard. Clipboard API didn't work in this browser.")
+            return
         }
-        else {
-            onError("Couldn't share state. Try again.")
-        }
+        onError("Couldn't copy link to clipboard. State is not available.")
     }
 
     return <TaskButton
