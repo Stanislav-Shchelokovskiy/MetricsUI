@@ -11,7 +11,7 @@ import Plotly from 'plotly.js-basic-dist-min'
 import CommonSettingsPanel from './commonSettingsPanel/CommonSettingsPanel'
 import Sets from './content/Sets'
 import ComparisonGraph from './ComparisonGraph'
-import { applyState, changeState } from '../common/store/state/Actions'
+import { applyState } from '../common/store/state/Actions'
 import { PullState } from '../common/network_resource_fetcher/FetchState'
 
 export function CustomersActivityApplySharedState() {
@@ -21,10 +21,8 @@ export function CustomersActivityApplySharedState() {
         if (stateId === undefined)
             return
         const fetchedState = await PullState(stateId)
-        if (fetchedState.success) {
+        if (fetchedState.success)
             dispatch(applyState(fetchedState.data))
-            dispatch(changeState(stateId))
-        }
     })()
     return <Navigate to='/CustomersActivity' />
 }
