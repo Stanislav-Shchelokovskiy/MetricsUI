@@ -1,10 +1,9 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import LoadIndicator from './LoadIndicator'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 import FetchResult from '../Interfaces'
-import useComponentReducer, { changeDataSource, changeDefaultValue } from '../hooks/UseComponentReducer'
 
 interface BaseProps {
     className: string
@@ -17,7 +16,7 @@ interface BaseProps {
 
 interface DataSourceProps<DataSourceT, ValueExprT> extends BaseProps {
     dataSource: Array<DataSourceT>
-    defaultValue: ValueExprT
+    defaultValue: ValueExprT | undefined
     onValueChange: (value: ValueExprT) => void
 }
 
@@ -37,7 +36,7 @@ export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: 
     const storedDefaultValue = useRef<ValueExprT>()
     storedDefaultValue.current = useSelector(props.stateSelector)
 
-    const [state, componentDispatch] = useComponentReducer([], storedDefaultValue.current)
+    const [dataSource, setDataSource] = useState<Array<DataSourceT>>([])
     const appDispatch = useDispatch()
     const onValueChangeHandler = (value: ValueExprT) => {
         appDispatch(props.onValueChange(value))
@@ -47,20 +46,19 @@ export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: 
         (async () => {
             const fetchResult: FetchResult<Array<DataSourceT>> = await props.fetchDataSourceValues()
             if (fetchResult.success) {
-                componentDispatch(changeDataSource(fetchResult.data))
-                const defaultValue = storedDefaultValue.current || props.defaultValueSelector(fetchResult.data)
-                componentDispatch(changeDefaultValue(defaultValue))
-                appDispatch(props.onValueChange(defaultValue))
+                setDataSource(fetchResult.data)
+                if (storedDefaultValue.current === undefined || String(storedDefaultValue.current).length === 0) {
+                    appDispatch(props.onValueChange(props.defaultValueSelector(fetchResult.data)))
+                }
             }
         })()
     }, [])
 
-    if (state.dataSource.length > 0) {
-        return <OptionSelector
+    if (dataSource.length > 0) {
+        return <OptionSelector<DataSourceT, ValueExprT>
             {...props}
-            value={storedDefaultValue.current || state.defaultValue}
-            dataSource={state.dataSource}
-            defaultValue={state.defaultValue}
+            value={(storedDefaultValue.current as ValueExprT)}
+            dataSource={dataSource}
             onValueChange={onValueChangeHandler} />
     }
     return <LoadIndicator width={undefined} height={25} />
@@ -84,6 +82,7 @@ const defaultProps = {
     valueExpr: undefined,
     placeholder: undefined,
     container: undefined,
+    defaultValue: undefined,
 }
 
 OptionSelectorWithFetch.defaultProps = defaultProps

@@ -23,7 +23,6 @@ export interface TribesTribeContainerState extends TribeContainerState {
 
 export default function TribesContainer() {
     const selectedTribes = useForecasterSelector((state: ForecasterStore) => {
-        console.log(state)
         return state.forecaster.tribes
     })
 
