@@ -114,7 +114,7 @@ const defaultProps = {
     onIncludeChange: undefined,
     includeButtonState: undefined,
     disabled: false,
-    showSelectionControls: false,
+    showSelectionControls: true,
     container: undefined,
     hideSelectedItems: true,
 }
