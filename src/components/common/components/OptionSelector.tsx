@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import LoadIndicator from './LoadIndicator'
 import { PayloadAction } from '@reduxjs/toolkit'
@@ -34,8 +34,10 @@ interface FetchProps<DataSourceT, ValueExprT> extends BaseProps {
 
 
 export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: FetchProps<DataSourceT, ValueExprT>) {
-    const storedDefaultValue = useSelector(props.stateSelector)
-    const [state, componentDispatch] = useComponentReducer([], storedDefaultValue)
+    const storedDefaultValue = useRef<ValueExprT>()
+    storedDefaultValue.current = useSelector(props.stateSelector)
+
+    const [state, componentDispatch] = useComponentReducer([], storedDefaultValue.current)
     const appDispatch = useDispatch()
     const onValueChangeHandler = (value: ValueExprT) => {
         appDispatch(props.onValueChange(value))
@@ -46,8 +48,7 @@ export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: 
             const fetchResult: FetchResult<Array<DataSourceT>> = await props.fetchDataSourceValues()
             if (fetchResult.success) {
                 componentDispatch(changeDataSource(fetchResult.data))
-
-                const defaultValue = storedDefaultValue || props.defaultValueSelector(fetchResult.data)
+                const defaultValue = storedDefaultValue.current || props.defaultValueSelector(fetchResult.data)
                 componentDispatch(changeDefaultValue(defaultValue))
                 appDispatch(props.onValueChange(defaultValue))
             }
@@ -57,7 +58,7 @@ export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: 
     if (state.dataSource.length > 0) {
         return <OptionSelector
             {...props}
-            value={storedDefaultValue || state.defaultValue}
+            value={storedDefaultValue.current || state.defaultValue}
             dataSource={state.dataSource}
             defaultValue={state.defaultValue}
             onValueChange={onValueChangeHandler} />
