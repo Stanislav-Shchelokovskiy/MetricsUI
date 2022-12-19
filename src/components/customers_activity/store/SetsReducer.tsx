@@ -18,6 +18,8 @@ import {
     CHANGE_COMPONENTS_INCLUDE,
     CHANGE_FEATURES_INCLUDE,
     CHANGE_SET_TITLE,
+    CHANGE_CUSTOMERS_TYPES,
+    CHANGE_CUSTOMERS_TYPES_INCLUDE,
 } from './Actions'
 
 
@@ -39,6 +41,7 @@ export interface SetState {
     customersGroups: FilterParametersNode<string>
     ticketsTags: FilterParametersNode<number>
     ticketsTypes: FilterParametersNode<number>
+    customersTypes: FilterParametersNode<number>
     repliesTypes: FilterParametersNode<string>
     components: FilterParametersNode<string>
     features: FilterParametersNode<string>
@@ -51,6 +54,7 @@ export const INITIAL_SET_STATE: SetState = {
     customersGroups: getDefaultFilterParametersNode<string>(),
     ticketsTags: getDefaultFilterParametersNode<number>(),
     ticketsTypes: getDefaultFilterParametersNode<number>(),
+    customersTypes: getDefaultFilterParametersNode<number>(),
     repliesTypes: getDefaultFilterParametersNode<string>(),
     components: getDefaultFilterParametersNode<string>(),
     features: getDefaultFilterParametersNode<string>(),
@@ -220,6 +224,28 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
                     ...x,
                     features: {
                         ...x.features,
+                        include: action.payload.data
+                    },
+                }
+            })
+
+        case CHANGE_CUSTOMERS_TYPES:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    customersTypes: {
+                        ...x.customersTypes,
+                        values: action.payload.data
+                    },
+                }
+            })
+
+        case CHANGE_CUSTOMERS_TYPES_INCLUDE:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    customersTypes: {
+                        ...x.customersTypes,
                         include: action.payload.data
                     },
                 }
