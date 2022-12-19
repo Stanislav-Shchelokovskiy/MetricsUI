@@ -47,13 +47,17 @@ export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: 
             const fetchResult: FetchResult<Array<DataSourceT>> = await props.fetchDataSourceValues()
             if (fetchResult.success) {
                 setDataSource(fetchResult.data)
+                console.log('useEffect before appDispatch ',storedDefaultValue.current)
                 if (storedDefaultValue.current === undefined || String(storedDefaultValue.current).length === 0) {
-                    appDispatch(props.onValueChange(props.defaultValueSelector(fetchResult.data)))
+                    const defaultValue = props.defaultValueSelector(fetchResult.data)
+                    appDispatch(props.onValueChange(defaultValue))
+                    console.log('appDispatch ',defaultValue)
                 }
+                console.log('useEffect after appDispatch ',storedDefaultValue.current)
             }
         })()
     }, [])
-
+    console.log('OptionSelectorWithFetch ', storedDefaultValue.current)
     if (dataSource.length > 0) {
         return <OptionSelector<DataSourceT, ValueExprT>
             {...props}
