@@ -42,7 +42,6 @@ export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(pr
             <MultiOptionSelector
                 {...props}
                 dataSource={dataSource}
-                defaultValue={props.defaultValue}
                 value={props.defaultValue}
             />
         )
@@ -120,5 +119,5 @@ const defaultProps = {
     hideSelectedItems: true,
 }
 
-MultiOptionSelectorWithFetch.defaultProps = { ...defaultProps, dataSource: undefined, }
+MultiOptionSelectorWithFetch.defaultProps = { ...defaultProps, dataSource: undefined, defaultValue: undefined }
 MultiOptionSelector.defaultProps = defaultProps
