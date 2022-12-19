@@ -172,3 +172,19 @@ export const changeSetTitle = (payload: Payload<string, string>): PayloadAction<
         payload: payload
     }
 }
+
+export const CHANGE_CUSTOMERS_TYPES = 'customers_activity/change_customers_types'
+export const changeCustomersTypes = (payload: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
+    return {
+        type: CHANGE_CUSTOMERS_TYPES,
+        payload: payload
+    }
+}
+
+export const CHANGE_CUSTOMERS_TYPES_INCLUDE = 'customers_activity/change_customers_types_include'
+export const changeCustomersTypesInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_CUSTOMERS_TYPES_INCLUDE,
+        payload: payload
+    }
+}

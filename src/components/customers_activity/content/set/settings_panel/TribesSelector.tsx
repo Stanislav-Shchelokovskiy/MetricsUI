@@ -25,8 +25,6 @@ export default function TribesSelector({ setTitle }: { setTitle: string }) {
         includeButtonState={state?.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
-        showSelectionControls={true}
-        hideSelectedItems={false}
         container='#CustomersActivity_Sets_ScrollView_div'
     />
 }
