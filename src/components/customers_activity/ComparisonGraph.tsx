@@ -53,6 +53,7 @@ export default function ComparisonGraph() {
                     set.repliesTypes,
                     set.components,
                     set.features,
+                    set.customersTypes,
                 )
                 if (fetchedAggregates.success) {
                     aggs.push({

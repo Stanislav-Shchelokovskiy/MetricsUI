@@ -20,6 +20,7 @@ import {
     CHANGE_SET_TITLE,
     CHANGE_CUSTOMERS_TYPES,
     CHANGE_CUSTOMERS_TYPES_INCLUDE,
+    APPLY_CUSTOMERS_TYPES_STATE,
 } from './Actions'
 
 
@@ -28,7 +29,7 @@ export interface FilterParametersNode<T> {
     values: Array<T>
 }
 
-function getDefaultFilterParametersNode<T>(): FilterParametersNode<T> {
+export function getDefaultFilterParametersNode<T>(): FilterParametersNode<T> {
     return {
         include: true,
         values: Array<T>()
@@ -226,6 +227,14 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
                         ...x.features,
                         include: action.payload.data
                     },
+                }
+            })
+
+        case APPLY_CUSTOMERS_TYPES_STATE:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    customersTypes: action.payload.data,
                 }
             })
 

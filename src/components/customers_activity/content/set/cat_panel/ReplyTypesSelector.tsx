@@ -21,7 +21,7 @@ export default function ReplyTypesSelector({ setTitle }: { setTitle: string }) {
         placeholder='Select replies type'
         label='CAT replies types'
         fetchDataSourceValues={fetchRepliesTypes}
-        defaultValue={state?.values}
+        value={state?.values}
         includeButtonState={state?.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}

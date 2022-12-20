@@ -60,7 +60,8 @@ async function downloadRawData(state: CustomersActivityStore) {
             set.tribes,
             set.repliesTypes,
             set.components,
-            set.features
+            set.features,
+            set.customersTypes,
         )
         if (fetchResult.success) {
             rawData = rawData.concat(fetchResult.data)

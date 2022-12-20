@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useRef } from 'react'
 import TagBox, { DropDownOptions, Button } from 'devextreme-react/tag-box'
 import DataSource from 'devextreme/data/data_source'
 import LoadIndicator from './LoadIndicator'
@@ -17,7 +17,7 @@ interface Props<DataSourceT, ValueExprT> {
     placeholder: string
     label: string
     dataSource: Array<DataSourceT> | undefined
-    defaultValue: Array<ValueExprT> | undefined
+    value: Array<ValueExprT> | undefined
     onValueChange: (allValues: Array<DataSourceT>, selectedValues: Array<ValueExprT>) => PayloadAction<any>
     showSelectionControls: boolean
     container: string
@@ -25,10 +25,6 @@ interface Props<DataSourceT, ValueExprT> {
     includeButtonState: boolean | undefined
     onIncludeChange: ((include: boolean) => PayloadAction<any>) | undefined
     hideSelectedItems: boolean
-}
-
-interface PropsWithValue<DataSourceT, ValueExprT> extends Props<DataSourceT, ValueExprT> {
-    value: Array<ValueExprT>
 }
 
 interface FetchProps<DataSourceT, ValueExprT> extends Props<DataSourceT, ValueExprT> {
@@ -43,7 +39,7 @@ export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(pr
             <MultiOptionSelector
                 {...props}
                 dataSource={dataSource}
-                value={props.defaultValue}
+                value={props.value}
             />
         )
     }
@@ -51,7 +47,7 @@ export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(pr
 }
 
 
-export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT> | PropsWithValue<DataSourceT, ValueExprT>) {
+export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT>) {
     const dispatch = useDispatch()
     const onValueChangeHandler = (values: Array<ValueExprT>) => {
         dispatch(props.onValueChange(props.dataSource || [], values))

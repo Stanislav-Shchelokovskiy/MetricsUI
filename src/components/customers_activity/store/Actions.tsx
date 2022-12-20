@@ -1,6 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { Payload } from '../../common/Interfaces'
-import { CustomersActivityStore } from './Store'
 
 export const CHANGE_PERIOD = 'customers_activity/change_period'
 export const changePeriod = (period: Array<Date>): PayloadAction<Array<string>> => {
@@ -169,6 +168,14 @@ export const CHANGE_SET_TITLE = 'customers_activity/change_set_title'
 export const changeSetTitle = (payload: Payload<string, string>): PayloadAction<Payload<string, string>> => {
     return {
         type: CHANGE_SET_TITLE,
+        payload: payload
+    }
+}
+
+export const APPLY_CUSTOMERS_TYPES_STATE = 'customers_activity/apply_customers_types'
+export const applyCustomersTypesState = (payload: Payload<string, any>): PayloadAction<Payload<string, any>> => {
+    return {
+        type: APPLY_CUSTOMERS_TYPES_STATE,
         payload: payload
     }
 }

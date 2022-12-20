@@ -30,7 +30,6 @@ export default function FeaturesSelector({ setTitle }: { setTitle: string }) {
         label='CAT features'
         disabled={tribes.length === 0 || components.length === 0}
         dataSource={dataSource}
-        defaultValue={state?.values}
         value={state?.values}
         includeButtonState={state?.include}
         onValueChange={onValueChange}
