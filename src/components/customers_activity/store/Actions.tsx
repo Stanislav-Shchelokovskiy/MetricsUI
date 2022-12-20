@@ -172,14 +172,6 @@ export const changeSetTitle = (payload: Payload<string, string>): PayloadAction<
     }
 }
 
-export const APPLY_CUSTOMERS_TYPES_STATE = 'customers_activity/apply_customers_types'
-export const applyCustomersTypesState = (payload: Payload<string, any>): PayloadAction<Payload<string, any>> => {
-    return {
-        type: APPLY_CUSTOMERS_TYPES_STATE,
-        payload: payload
-    }
-}
-
 export const CHANGE_CUSTOMERS_TYPES = 'customers_activity/change_customers_types'
 export const changeCustomersTypes = (payload: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
     return {
