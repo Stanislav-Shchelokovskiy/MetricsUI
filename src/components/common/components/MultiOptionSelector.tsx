@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useRef } from 'react'
 import TagBox, { DropDownOptions, Button } from 'devextreme-react/tag-box'
 import DataSource from 'devextreme/data/data_source'
 import LoadIndicator from './LoadIndicator'
@@ -9,6 +9,7 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import * as includeIcon from './assets/include.svg'
 import * as excludeIcon from './assets/exclude.svg'
 
+
 interface Props<DataSourceT, ValueExprT> {
     className: string
     displayExpr: string
@@ -16,7 +17,7 @@ interface Props<DataSourceT, ValueExprT> {
     placeholder: string
     label: string
     dataSource: Array<DataSourceT> | undefined
-    defaultValue: Array<ValueExprT> | undefined
+    value: Array<ValueExprT> | undefined
     onValueChange: (allValues: Array<DataSourceT>, selectedValues: Array<ValueExprT>) => PayloadAction<any>
     showSelectionControls: boolean
     container: string
@@ -24,10 +25,6 @@ interface Props<DataSourceT, ValueExprT> {
     includeButtonState: boolean | undefined
     onIncludeChange: ((include: boolean) => PayloadAction<any>) | undefined
     hideSelectedItems: boolean
-}
-
-interface PropsWithValue<DataSourceT, ValueExprT> extends Props<DataSourceT, ValueExprT> {
-    value: Array<ValueExprT>
 }
 
 interface FetchProps<DataSourceT, ValueExprT> extends Props<DataSourceT, ValueExprT> {
@@ -42,7 +39,7 @@ export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(pr
             <MultiOptionSelector
                 {...props}
                 dataSource={dataSource}
-                value={props.defaultValue}
+                value={props.value}
             />
         )
     }
@@ -50,7 +47,7 @@ export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(pr
 }
 
 
-export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT> | PropsWithValue<DataSourceT, ValueExprT>) {
+export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT>) {
     const dispatch = useDispatch()
     const onValueChangeHandler = (values: Array<ValueExprT>) => {
         dispatch(props.onValueChange(props.dataSource || [], values))
@@ -65,6 +62,14 @@ export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSo
         paginate: true,
         pageSize: 10
     });
+
+    const clearButtonOptions = {
+        text: '',
+        stylingMode: 'text',
+        icon: 'clear',
+        type: 'danger',
+    }
+
     return <TagBox
         {...props}
         dataSource={ds}
@@ -73,12 +78,18 @@ export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSo
         searchEnabled={true}
         showDropDownButton={false}
         selectAllMode='page'
+        applyValueMode='useButtons'
+        showClearButton={true}
         labelMode='static'>
         < DropDownOptions
             hideOnOutsideClick={true}
             hideOnParentScroll={true}
             container={props.container} />
         {props.includeButtonState !== undefined ? IncludeButton(props.includeButtonState, onIncludeChangeHandler) : null}
+        <Button
+            name='clear'
+            location='after'
+            options={clearButtonOptions} />
     </TagBox >
 }
 
@@ -102,7 +113,7 @@ function IncludeButton(isInIncludeState: boolean, onIncludeChange: ((include: bo
         }
     }
     return <Button
-        name=''
+        name='include'
         location='before'
         options={buttonOptions}
     />

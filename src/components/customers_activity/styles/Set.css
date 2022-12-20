@@ -48,15 +48,18 @@
     min-width: 50%;
 }
 
-.SetHeaderButton .dx-button-content {
-
+.dx-overlay-content .dx-toolbar {
+    padding: 5px;
+    margin: 0px;
 }
 
-.SetHeaderRenameButton .dx-button-content{
+.SetHeaderButton .dx-button-content {}
+
+.SetHeaderRenameButton .dx-button-content {
     /* padding: 0px; */
 }
 
-.SetHeaderRenameButton{
+.SetHeaderRenameButton {
     margin-bottom: 0px;
     margin-left: 7px;
 }

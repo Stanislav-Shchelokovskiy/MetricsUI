@@ -26,7 +26,7 @@ export default function TribesSelector() {
         placeholder='Select tribes to display...'
         label='Tribes'
         fetchDataSourceValues={fetchTribes}
-        defaultValue={selectedTribes}
+        value={selectedTribes}
         onValueChange={changeSelectedTribesAction}
         showSelectionControls={true}
     />

@@ -29,7 +29,6 @@ export default function ComponentsSelector({ setTitle }: { setTitle: string }) {
         label='CAT components'
         disabled={tribes.length === 0}
         dataSource={dataSource}
-        defaultValue={state?.values}
         value={state?.values}
         includeButtonState={state?.include}
         onValueChange={onValueChange}

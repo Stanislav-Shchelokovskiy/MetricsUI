@@ -16,6 +16,6 @@ export default function PositionsSelector({ tribeId }: { tribeId: string }) {
         showSelectionControls={true}
         container='#tribe_accordion'
         dataSource={positions}
-        defaultValue={selectedPositions}
+        value={selectedPositions}
         onValueChange={onPositionsChange} />
 }
