@@ -1,5 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit'
 import { APPLY_STATE } from '../../common/store/state/Actions'
+import { initMissingCustomersActivitySetsProperties } from './StoreStateMissingPropertiesInitializator'
 import {
     ADD_SET,
     REMOVE_SET,
@@ -20,7 +21,6 @@ import {
     CHANGE_SET_TITLE,
     CHANGE_CUSTOMERS_TYPES,
     CHANGE_CUSTOMERS_TYPES_INCLUDE,
-    APPLY_CUSTOMERS_TYPES_STATE,
 } from './Actions'
 
 
@@ -230,14 +230,6 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
                 }
             })
 
-        case APPLY_CUSTOMERS_TYPES_STATE:
-            return updateSetState(action.payload.stateId, state, (x) => {
-                return {
-                    ...x,
-                    customersTypes: action.payload.data,
-                }
-            })
-
         case CHANGE_CUSTOMERS_TYPES:
             return updateSetState(action.payload.stateId, state, (x) => {
                 return {
@@ -261,7 +253,7 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
             })
 
         case APPLY_STATE:
-            return action.payload.customersActivitySets
+            return initMissingCustomersActivitySetsProperties(action.payload.customersActivitySets)
 
         case CHANGE_SET_TITLE:
             return updateSetState(action.payload.stateId, state, (x) => {
