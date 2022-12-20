@@ -9,6 +9,7 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import * as includeIcon from './assets/include.svg'
 import * as excludeIcon from './assets/exclude.svg'
 
+
 interface Props<DataSourceT, ValueExprT> {
     className: string
     displayExpr: string
@@ -65,6 +66,14 @@ export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSo
         paginate: true,
         pageSize: 10
     });
+
+    const clearButtonOptions = {
+        text: '',
+        stylingMode: 'text',
+        icon: 'clear',
+        type: 'danger',
+    }
+
     return <TagBox
         {...props}
         dataSource={ds}
@@ -73,12 +82,18 @@ export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSo
         searchEnabled={true}
         showDropDownButton={false}
         selectAllMode='page'
+        applyValueMode='useButtons'
+        showClearButton={true}
         labelMode='static'>
         < DropDownOptions
             hideOnOutsideClick={true}
             hideOnParentScroll={true}
             container={props.container} />
         {props.includeButtonState !== undefined ? IncludeButton(props.includeButtonState, onIncludeChangeHandler) : null}
+        <Button
+            name='clear'
+            location='after'
+            options={clearButtonOptions} />
     </TagBox >
 }
 
@@ -102,7 +117,7 @@ function IncludeButton(isInIncludeState: boolean, onIncludeChange: ((include: bo
         }
     }
     return <Button
-        name=''
+        name='include'
         location='before'
         options={buttonOptions}
     />
