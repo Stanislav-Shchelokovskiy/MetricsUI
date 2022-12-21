@@ -35,9 +35,3 @@ customersActivityStore.subscribe(() => {
 
 export type CustomersActivityStore = ReturnType<typeof customersActivityStore.getState>
 export type CustomersActivityDispatch = typeof customersActivityStore.dispatch
-
-
-export const useCustomersActivityDispatch: () => CustomersActivityDispatch = useDispatch
-export const useCustomersActivitySelector: TypedUseSelectorHook<CustomersActivityStore> = useSelector
-
-

@@ -187,3 +187,19 @@ export const changeCustomersTypesInclude = (payload: Payload<string, boolean>): 
         payload: payload
     }
 }
+
+export const CHANGE_CONVERSIONS_TYPES = 'customers_activity/change_conversions_types'
+export const changeConversionsTypes = (payload: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
+    return {
+        type: CHANGE_CONVERSIONS_TYPES,
+        payload: payload
+    }
+}
+
+export const CHANGE_CONVERSIONS_TYPES_INCLUDE = 'customers_activity/change_conversions_types_include'
+export const changeConversionsTypesInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_CONVERSIONS_TYPES_INCLUDE,
+        payload: payload
+    }
+}

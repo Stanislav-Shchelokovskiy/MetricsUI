@@ -1,10 +1,11 @@
 import React, { useReducer, useEffect, useCallback, useRef } from 'react'
 import { AnyAction } from '@reduxjs/toolkit'
+import { useDispatch, useSelector } from 'react-redux'
 import { RangeSelector as DxRangeSelector, Margin, Scale, MinorTick, SliderMarker } from 'devextreme-react/range-selector'
 import LoadIndicator from '../../common/components/LoadIndicator'
 import FetchResult from '../../common/Interfaces'
 import { changePeriod } from '../store/Actions'
-import { useCustomersActivityDispatch, useCustomersActivitySelector, CustomersActivityStore } from '../store/Store'
+import { CustomersActivityStore } from '../store/Store'
 import { fetchPeriod, Period } from '../network_resource_fetcher/FetchPeriod'
 
 
@@ -46,7 +47,7 @@ function periodSelectorStateReducer(state: PeriodSelectorState, action: AnyActio
 export default function PeriodSelector() {
     const selectedRange = useRef<Array<string>>([])
     const [periodSelectorState, periodSelectorStateDispatch] = useReducer(periodSelectorStateReducer, INITIAL_STATE)
-    selectedRange.current = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivity.range) || periodSelectorState.selectedRange
+    selectedRange.current = useSelector((store: CustomersActivityStore) => store.customersActivity.range) || periodSelectorState.selectedRange
 
     useEffect(() => {
         (async () => {
@@ -63,7 +64,7 @@ export default function PeriodSelector() {
         })()
     }, [])
 
-    const dispatch = useCustomersActivityDispatch()
+    const dispatch = useDispatch()
     const onRangeChange = useCallback((selectedRange: Array<Date>) => {
         dispatch(changePeriod(selectedRange))
     }, [dispatch])

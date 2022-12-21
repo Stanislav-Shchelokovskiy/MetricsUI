@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { Popup, ToolbarItem } from 'devextreme-react/popup'
 import TextBox from 'devextreme-react/text-box'
 
@@ -18,7 +18,16 @@ export default function InputBox(props: InputBoxProps) {
         props.onOkClick(inputRef.current?.instance.option('value'))
     }, [])
 
-    const closeButtonOptions = {
+    useEffect(() => {
+        if (props.visible) {
+            const timerId = setTimeout(() => {
+                inputRef.current?.instance.focus()
+                clearTimeout(timerId)
+            }, 500)
+        }
+    }, [props.visible])
+
+    const okButtonOptions = {
         text: 'Ok',
         type: 'normal',
         stylingMode: 'outlined',
@@ -43,7 +52,7 @@ export default function InputBox(props: InputBoxProps) {
                 widget='dxButton'
                 toolbar='bottom'
                 location='after'
-                options={closeButtonOptions}
+                options={okButtonOptions}
             />
         </Popup>
     )

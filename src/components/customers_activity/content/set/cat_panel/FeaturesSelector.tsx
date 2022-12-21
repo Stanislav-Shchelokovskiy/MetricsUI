@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
+import { useSelector } from 'react-redux'
 import { MultiOptionSelector } from '../../../../common/components/MultiOptionSelector'
-import { CustomersActivityStore, useCustomersActivitySelector } from '../../../store/Store'
+import { CustomersActivityStore } from '../../../store/Store'
 import { changeFeatures, changeFeaturesInclude } from '../../../store/Actions'
 import { fetchFeatures, Feature } from '../../../network_resource_fetcher/FetchFeatures'
 import { useCascadeDataSource } from '../../../../common/hooks/UseDataSource'
@@ -10,13 +11,13 @@ import { FilterParametersNode } from '../../../store/SetsReducer'
 export default function FeaturesSelector({ setTitle }: { setTitle: string }) {
     const emptyArray = useMemo(() => [], [])
 
-    const tribesNode = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tribes)
+    const tribesNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tribes)
     const tribes = tribesNode?.values || emptyArray
-    const componentsNode = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.components)
+    const componentsNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.components)
     const components = componentsNode?.values || emptyArray
     const dataSource = useCascadeDataSource(() => fetchFeatures(tribes, components), tribes, components)
 
-    const state = useCustomersActivitySelector((store: CustomersActivityStore) =>
+    const state = useSelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.features as FilterParametersNode<string>
     )
     const onValueChange = (allValues: Array<Feature>, values: Array<string>) => changeFeatures({ stateId: setTitle, data: values })

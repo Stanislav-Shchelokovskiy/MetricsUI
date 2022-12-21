@@ -1,13 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import MultiOptionSelectorWithFetch from '../../../../common/components/MultiOptionSelector'
-import { CustomersActivityStore, useCustomersActivitySelector } from '../../../store/Store'
+import { CustomersActivityStore } from '../../../store/Store'
 import { changeTicketsTypes, changeTicketsTypesInclude } from '../../../store/Actions'
 import { fetchTicketsTypes, TicketsType } from '../../../network_resource_fetcher/FetchTicketsTypes'
 import { FilterParametersNode } from '../../../store/SetsReducer'
 
 
 export default function TicketsTypesSelector({ setTitle }: { setTitle: string }) {
-    const state = useCustomersActivitySelector((store: CustomersActivityStore) =>
+    const state = useSelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.ticketsTypes as FilterParametersNode<number>
     )
     const onValueChange = (allValues: Array<TicketsType>, values: Array<number>) => changeTicketsTypes({ stateId: setTitle, data: values })

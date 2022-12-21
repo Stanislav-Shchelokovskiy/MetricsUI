@@ -4,6 +4,7 @@ import TicketsTypesSelector from './TicketsTypesSelector'
 import TicketsTagsSelector from './TicketsTagsSelector'
 import TribesSelector from './TribesSelector'
 import CustomersTypesSelector from './CustomersTypesSelector'
+import ConversionsTypesSelector from './ConversionsTypesSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
@@ -11,9 +12,10 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
         <div className='CustomersActivity_SetSettingsPanel'>
             <div className='CustomersActivity_SetSettingsChildPanel'>
                 <TribesSelector setTitle={setTitle} />
-                <CustomersTypesSelector setTitle={setTitle} />
                 <CustomersGroupsSelector setTitle={setTitle} />
                 <TicketsTagsSelector setTitle={setTitle} />
+                <CustomersTypesSelector setTitle={setTitle} />
+                <ConversionsTypesSelector setTitle={setTitle} />
                 <TicketsTypesSelector setTitle={setTitle} />
             </div>
         </div >

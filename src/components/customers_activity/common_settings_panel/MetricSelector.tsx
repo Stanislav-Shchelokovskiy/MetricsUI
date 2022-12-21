@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { OptionSelector } from '../../common/components/OptionSelector'
 import { changeMetric } from '../store/Actions'
-import { useCustomersActivityDispatch, useCustomersActivitySelector, CustomersActivityStore } from '../store/Store'
+import { CustomersActivityStore } from '../store/Store'
 
 
 const TICKETS = 'Tickets'
@@ -20,16 +21,16 @@ export const isIterationsMetricSelected: (metric: string) => boolean = (metric: 
 
 export default function MetricSelector() {
     const metrics = useMemo<Array<string>>(() => { return [TICKETS, ITERATIONS, PEOPLE] }, [])
-    let selectedMetric = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivity.metric)
+    let selectedMetric = useSelector((store: CustomersActivityStore) => store.customersActivity.metric)
 
-    const appDipatch = useCustomersActivityDispatch()
+    const dipatch = useDispatch()
     const onMetricChange: (metric: string) => void = (metric: string) => {
-        appDipatch(changeMetric(metric))
+        dipatch(changeMetric(metric))
     }
 
     if (!selectedMetric) {
         selectedMetric = TICKETS
-        appDipatch(changeMetric(selectedMetric))
+        dipatch(changeMetric(selectedMetric))
     }
 
     return (

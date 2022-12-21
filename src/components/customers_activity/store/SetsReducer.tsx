@@ -21,6 +21,8 @@ import {
     CHANGE_SET_TITLE,
     CHANGE_CUSTOMERS_TYPES,
     CHANGE_CUSTOMERS_TYPES_INCLUDE,
+    CHANGE_CONVERSIONS_TYPES,
+    CHANGE_CONVERSIONS_TYPES_INCLUDE,
 } from './Actions'
 
 
@@ -43,6 +45,7 @@ export interface SetState {
     ticketsTags: FilterParametersNode<number>
     ticketsTypes: FilterParametersNode<number>
     customersTypes: FilterParametersNode<number>
+    conversionsTypes: FilterParametersNode<number>
     repliesTypes: FilterParametersNode<string>
     components: FilterParametersNode<string>
     features: FilterParametersNode<string>
@@ -56,6 +59,7 @@ export const INITIAL_SET_STATE: SetState = {
     ticketsTags: getDefaultFilterParametersNode<number>(),
     ticketsTypes: getDefaultFilterParametersNode<number>(),
     customersTypes: getDefaultFilterParametersNode<number>(),
+    conversionsTypes: getDefaultFilterParametersNode<number>(),
     repliesTypes: getDefaultFilterParametersNode<string>(),
     components: getDefaultFilterParametersNode<string>(),
     features: getDefaultFilterParametersNode<string>(),
@@ -238,6 +242,7 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
                         ...x.customersTypes,
                         values: action.payload.data
                     },
+                    conversionsTypes: INITIAL_SET_STATE.conversionsTypes,
                 }
             })
 
@@ -247,6 +252,29 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
                     ...x,
                     customersTypes: {
                         ...x.customersTypes,
+                        include: action.payload.data
+                    },
+                    conversionsTypes: INITIAL_SET_STATE.conversionsTypes,
+                }
+            })
+
+        case CHANGE_CONVERSIONS_TYPES:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    conversionsTypes: {
+                        ...x.conversionsTypes,
+                        values: action.payload.data
+                    },
+                }
+            })
+
+        case CHANGE_CONVERSIONS_TYPES_INCLUDE:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    conversionsTypes: {
+                        ...x.conversionsTypes,
                         include: action.payload.data
                     },
                 }

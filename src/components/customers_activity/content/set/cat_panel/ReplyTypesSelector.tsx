@@ -1,13 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import MultiOptionSelectorWithFetch from '../../../../common/components/MultiOptionSelector'
-import { CustomersActivityStore, useCustomersActivitySelector } from '../../../store/Store'
+import { CustomersActivityStore } from '../../../store/Store'
 import { changeRepliesTypes, changeRepliesTypesInclude } from '../../../store/Actions'
 import { fetchRepliesTypes, ReplyType } from '../../../network_resource_fetcher/FetchRepliesTypes'
 import { FilterParametersNode } from '../../../store/SetsReducer'
 
 
 export default function ReplyTypesSelector({ setTitle }: { setTitle: string }) {
-    const state = useCustomersActivitySelector((store: CustomersActivityStore) =>
+    const state = useSelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.repliesTypes as FilterParametersNode<string>
     )
 
