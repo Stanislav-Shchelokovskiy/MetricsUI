@@ -3,8 +3,8 @@ import Plot from 'react-plotly.js'
 import { Data as GraphData } from 'plotly.js'
 import { useCustomersActivitySelector, CustomersActivityStore } from './store/Store'
 import FetchResult, { Token } from '../common/Interfaces'
-import { isTicketsMetricSelected } from './commonSettingsPanel/MetricSelector'
-import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './commonSettingsPanel/ComparisonMethodSelector'
+import { isTicketsMetricSelected } from './common_settings_panel/MetricSelector'
+import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './common_settings_panel/ComparisonMethodSelector'
 import {
     fetchTicketsWithIterationsAggregates,
     TicketsWithIterationsAggregates,
