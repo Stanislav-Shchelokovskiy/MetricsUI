@@ -6,15 +6,20 @@ import { useCustomersActivityDispatch, useCustomersActivitySelector, CustomersAc
 
 const TICKETS = 'Tickets'
 const ITERATIONS = 'Iterations'
+const PEOPLE = 'People'
 
 
 export const isTicketsMetricSelected: (metric: string) => boolean = (metric: string) => {
     return metric === TICKETS
 }
 
+export const isIterationsMetricSelected: (metric: string) => boolean = (metric: string) => {
+    return metric === ITERATIONS
+}
+
 
 export default function MetricSelector() {
-    const metrics = useMemo<Array<string>>(() => { return [TICKETS, ITERATIONS] }, [])
+    const metrics = useMemo<Array<string>>(() => { return [TICKETS, ITERATIONS, PEOPLE] }, [])
     let selectedMetric = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivity.metric)
 
     const appDipatch = useCustomersActivityDispatch()

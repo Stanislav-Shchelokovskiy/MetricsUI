@@ -3,7 +3,7 @@ import Plot from 'react-plotly.js'
 import { Data as GraphData } from 'plotly.js'
 import { useCustomersActivitySelector, CustomersActivityStore } from './store/Store'
 import FetchResult, { Token } from '../common/Interfaces'
-import { isTicketsMetricSelected } from './common_settings_panel/MetricSelector'
+import { isTicketsMetricSelected, isIterationsMetricSelected } from './common_settings_panel/MetricSelector'
 import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './common_settings_panel/ComparisonMethodSelector'
 import {
     fetchTicketsWithIterationsAggregates,
@@ -174,7 +174,8 @@ function getCommonGraphSettings(set: SetAggregates, metric: string) {
     return {
         name: set.name,
         x: set.aggregates.periods,
-        y: isTicketsMetricSelected(metric) ? set.aggregates.tickets : set.aggregates.iterations,
+        y: isTicketsMetricSelected(metric) ? set.aggregates.tickets : 
+            isIterationsMetricSelected(metric) ? set.aggregates.iterations : set.aggregates.people,
         opacity: 0.6,
         hovertext: set.name
     }
