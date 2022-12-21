@@ -1,6 +1,7 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import TagBox, { DropDownOptions, Button } from 'devextreme-react/tag-box'
 import DataSource from 'devextreme/data/data_source'
+import { trigger } from 'devextreme/events'
 import LoadIndicator from './LoadIndicator'
 import useDataSource from '../../common/hooks/UseDataSource'
 import FetchResult from '../Interfaces'
@@ -70,6 +71,15 @@ export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSo
         type: 'danger',
     }
 
+    const wrapperAttr = useMemo(() => { return { id: 'MultiOptionSelectorPopup' } }, [])
+    const acceptSelectedValuesOnEndKey = useCallback((e: any) => {
+        if (e.event.code === 'End') {
+            const element = document.querySelector(`#${wrapperAttr.id} .dx-toolbar [aria-label='OK']`)
+            if (element)
+                trigger(element, 'dxclick')
+        }
+    }, [wrapperAttr])
+
     return <TagBox
         {...props}
         dataSource={ds}
@@ -80,11 +90,15 @@ export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSo
         selectAllMode='page'
         applyValueMode='useButtons'
         showClearButton={true}
-        labelMode='static'>
+        labelMode='static'
+        onKeyDown={acceptSelectedValuesOnEndKey}
+    >
         < DropDownOptions
             hideOnOutsideClick={true}
             hideOnParentScroll={true}
-            container={props.container} />
+            container={props.container}
+            wrapperAttr={wrapperAttr}
+        />
         {props.includeButtonState !== undefined ? IncludeButton(props.includeButtonState, onIncludeChangeHandler) : null}
         <Button
             name='clear'
