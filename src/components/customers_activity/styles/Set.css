@@ -9,6 +9,10 @@
     gap: 3px;
 }
 
+.CustomersActivity_Set{
+    padding-right: 6px;
+}
+
 .CustomerActivity_SetHeader {
     display: flex;
     flex-flow: row nowrap;
