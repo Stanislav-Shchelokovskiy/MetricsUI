@@ -1,6 +1,7 @@
 import 'devextreme/dist/css/dx.common.css'
 import 'devextreme/dist/css/dx.light.css'
 import './components/common/styles/App.css'
+import './components/common/styles/Components.css'
 
 import React from 'react'
 import { RouterProvider, useRouteError, createBrowserRouter, isRouteErrorResponse, Link } from 'react-router-dom'

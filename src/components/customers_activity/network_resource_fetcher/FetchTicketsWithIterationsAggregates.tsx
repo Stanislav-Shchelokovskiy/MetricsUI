@@ -7,12 +7,14 @@ interface TicketsWithIterationsAggregate {
     period: string
     tickets: number
     iterations: number
+    people: number
 }
 
 export interface TicketsWithIterationsAggregates {
     periods: Array<string>
     tickets: Array<number>
     iterations: Array<number>
+    people: Array<number>
 }
 
 
@@ -20,6 +22,7 @@ export const EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES = {
     periods: [],
     tickets: [],
     iterations: [],
+    people: [],
 }
 
 
@@ -35,6 +38,7 @@ export const fetchTicketsWithIterationsAggregates: (
     components: FilterParametersNode<string>,
     features: FilterParametersNode<string>,
     customersTypes: FilterParametersNode<number>,
+    conversionsTypes: FilterParametersNode<number>,
 ) => Promise<FetchResult<TicketsWithIterationsAggregates>> =
     async function (
         group_by_period: string,
@@ -48,6 +52,7 @@ export const fetchTicketsWithIterationsAggregates: (
         components: FilterParametersNode<string>,
         features: FilterParametersNode<string>,
         customersTypes: FilterParametersNode<number>,
+        conversionsTypes: FilterParametersNode<number>,
     ) {
         try {
             const aggregates: Array<TicketsWithIterationsAggregate> = await fetch(
@@ -69,20 +74,29 @@ export const fetchTicketsWithIterationsAggregates: (
                         components: components,
                         features: features,
                         license_statuses: customersTypes,
+                        conversion_statuses: conversionsTypes,
                     }),
                 },
             ).then(response => response.json())
 
+            const periods = []
+            const tickets = []
+            const iterations = []
+            const people = []
+            for (const agg of aggregates) {
+                periods.push(agg.period)
+                tickets.push(agg.tickets)
+                iterations.push(agg.iterations)
+                people.push(agg.people)
+            }
 
-            const periods = aggregates.map(aggregate => aggregate.period)
-            const tickets = aggregates.map(aggregate => aggregate.tickets)
-            const iterations = aggregates.map(aggregate => aggregate.iterations)
             return {
                 success: true,
                 data: {
                     periods: periods,
                     tickets: tickets,
                     iterations: iterations,
+                    people: people,
                 }
             }
         } catch (error) {

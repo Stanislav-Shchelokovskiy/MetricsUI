@@ -1,10 +1,11 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import ScrollView from 'devextreme-react/scroll-view'
 import Set from './set/Set'
-import { useCustomersActivitySelector, CustomersActivityStore } from '../store/Store'
+import { CustomersActivityStore } from '../store/Store'
 
 export default function Sets() {
-    const sets = useCustomersActivitySelector((state: CustomersActivityStore) => state.customersActivity.sets)
+    const sets = useSelector((state: CustomersActivityStore) => state.customersActivity.sets)
     return (
         <ScrollView
             className='CustomersActivity_Sets_ScrollView'

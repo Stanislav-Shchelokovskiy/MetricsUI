@@ -1,13 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import MultiOptionSelectorWithFetch from '../../../../common/components/MultiOptionSelector'
-import { CustomersActivityStore, useCustomersActivitySelector } from '../../../store/Store'
+import { CustomersActivityStore } from '../../../store/Store'
 import { changeCustomersTypes, changeCustomersTypesInclude } from '../../../store/Actions'
-import { fetchgetLicenseStatuses, LicenseStatus } from '../../../network_resource_fetcher/FetchgetLicenseStatuses'
+import { fetchLicenseStatuses, LicenseStatus } from '../../../network_resource_fetcher/FetchLicenseStatuses'
 import { FilterParametersNode } from '../../../store/SetsReducer'
 
 
 export default function CustomersTypesSelector({ setTitle }: { setTitle: string }) {
-    const state = useCustomersActivitySelector((store: CustomersActivityStore) =>
+    const state = useSelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.customersTypes as FilterParametersNode<number>
     )
 
@@ -20,7 +21,7 @@ export default function CustomersTypesSelector({ setTitle }: { setTitle: string 
         valueExpr='id'
         placeholder='Select user types'
         label='User types'
-        fetchDataSourceValues={fetchgetLicenseStatuses}
+        fetchDataSourceValues={fetchLicenseStatuses}
         value={state?.values}
         includeButtonState={state?.include}
         onValueChange={onValueChange}

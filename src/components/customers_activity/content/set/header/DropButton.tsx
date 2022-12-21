@@ -1,16 +1,17 @@
 import React, { useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Button from '../../../../common/components/Button'
-import { CustomersActivityStore, useCustomersActivityDispatch, useCustomersActivitySelector } from '../../../store/Store'
+import { CustomersActivityStore } from '../../../store/Store'
 import { removeSet } from '../../../store/Actions'
 
 
 export default function DropButton({ setTitle }: { setTitle: string }) {
-    const dispatch = useCustomersActivityDispatch()
+    const dispatch = useDispatch()
     const onClick = useCallback(() => {
         dispatch(removeSet(setTitle))
     }, [setTitle, dispatch])
 
-    const disabled: boolean = useCustomersActivitySelector((state: CustomersActivityStore) => state.customersActivity.sets).length === 1
+    const disabled = useSelector((state: CustomersActivityStore) => state.customersActivity.sets).length === 1
     return <Button
         className='SetHeaderButton'
         hint='Drop'

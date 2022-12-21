@@ -8,7 +8,7 @@ export interface LicenseStatus {
 }
 
 
-export const fetchgetLicenseStatuses: () => Promise<FetchResult<Array<LicenseStatus>>> = async function () {
+export const fetchLicenseStatuses: () => Promise<FetchResult<Array<LicenseStatus>>> = async function () {
     try {
         const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_license_statuses`).then(response => response.json())
         return {

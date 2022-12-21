@@ -6,6 +6,9 @@ export function initMissingCustomersActivitySetsProperties(customersActivitySets
         if (set.customersTypes === undefined) {
             set.customersTypes = getDefaultFilterParametersNode<number>();
         }
+        if (set.conversionsTypes === undefined) {
+            set.conversionsTypes = getDefaultFilterParametersNode<number>();
+        }
     }
     return customersActivitySets
 }

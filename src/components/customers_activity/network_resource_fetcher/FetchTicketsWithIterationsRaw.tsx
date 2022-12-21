@@ -40,7 +40,8 @@ export const fetchTicketsWithIterationsRaw: (
     components: FilterParametersNode<string>,
     features: FilterParametersNode<string>,
     customersTypes: FilterParametersNode<number>,
-    
+    conversionsTypes: FilterParametersNode<number>,
+
 ) => Promise<FetchResult<Array<TicketsWithIterationsRaw>>> =
     async function (
         range_start: string,
@@ -53,6 +54,7 @@ export const fetchTicketsWithIterationsRaw: (
         components: FilterParametersNode<string>,
         features: FilterParametersNode<string>,
         customersTypes: FilterParametersNode<number>,
+        conversionsTypes: FilterParametersNode<number>,
     ) {
         try {
             const raw_data: Array<TicketsWithIterationsRaw> = await fetch(
@@ -73,6 +75,7 @@ export const fetchTicketsWithIterationsRaw: (
                         components: components,
                         features: features,
                         license_statuses: customersTypes,
+                        conversion_statuses: conversionsTypes,
                     }),
                 },
             ).then(response => response.json())

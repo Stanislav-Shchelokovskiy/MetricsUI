@@ -71,7 +71,7 @@ export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSo
         type: 'danger',
     }
 
-    const wrapperAttr = useMemo(() => { return { id: 'MultiOptionSelectorPopup' } }, [])
+    const wrapperAttr = useMemo(() => { return { id: 'MultiOptionSelectorPopup', class: 'MultiOptionSelectorPopup' } }, [])
     const acceptSelectedValuesOnEndKey = useCallback((e: any) => {
         if (e.event.code === 'End') {
             const element = document.querySelector(`#${wrapperAttr.id} .dx-toolbar [aria-label='OK']`)

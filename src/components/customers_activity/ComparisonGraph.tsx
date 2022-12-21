@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Plot from 'react-plotly.js'
 import { Data as GraphData } from 'plotly.js'
-import { useCustomersActivitySelector, CustomersActivityStore } from './store/Store'
+import { useSelector } from 'react-redux'
+import { CustomersActivityStore } from './store/Store'
 import FetchResult, { Token } from '../common/Interfaces'
-import { isTicketsMetricSelected } from './common_settings_panel/MetricSelector'
+import { isTicketsMetricSelected, isIterationsMetricSelected } from './common_settings_panel/MetricSelector'
 import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './common_settings_panel/ComparisonMethodSelector'
 import {
     fetchTicketsWithIterationsAggregates,
@@ -26,8 +27,8 @@ const INITIAL_STATE = {
 
 export default function ComparisonGraph() {
     const [aggregates, setAggregates] = useState<Array<SetAggregates>>([INITIAL_STATE])
-    const customersActivityState = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivity)
-    const customersActivitySets = useCustomersActivitySelector((store: CustomersActivityStore) => store.customersActivitySets)
+    const customersActivityState = useSelector((store: CustomersActivityStore) => store.customersActivity)
+    const customersActivitySets = useSelector((store: CustomersActivityStore) => store.customersActivitySets)
 
     const cancellationToken = useRef<Token>({ cancel: undefined })
 
@@ -54,6 +55,7 @@ export default function ComparisonGraph() {
                     set.components,
                     set.features,
                     set.customersTypes,
+                    set.conversionsTypes,
                 )
                 if (fetchedAggregates.success) {
                     aggs.push({
@@ -174,7 +176,8 @@ function getCommonGraphSettings(set: SetAggregates, metric: string) {
     return {
         name: set.name,
         x: set.aggregates.periods,
-        y: isTicketsMetricSelected(metric) ? set.aggregates.tickets : set.aggregates.iterations,
+        y: isTicketsMetricSelected(metric) ? set.aggregates.tickets : 
+            isIterationsMetricSelected(metric) ? set.aggregates.iterations : set.aggregates.people,
         opacity: 0.6,
         hovertext: set.name
     }
