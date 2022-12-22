@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { MultiOptionSelector } from '../../../../common/components/MultiOptionSelector'
+import { dependenciesAreEmpty } from '../../../../common/components/Utils'
 import { CustomersActivityStore } from '../../../store/Store'
 import { changeFeatures, changeFeaturesInclude } from '../../../store/Actions'
 import { fetchFeatures, Feature } from '../../../network_resource_fetcher/FetchFeatures'
@@ -23,13 +24,14 @@ export default function FeaturesSelector({ setTitle }: { setTitle: string }) {
     const onValueChange = (allValues: Array<Feature>, values: Array<string>) => changeFeatures({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeFeaturesInclude({ stateId: setTitle, data: include })
 
+    if (dependenciesAreEmpty(tribes, components, dataSource))
+        return null
     return <MultiOptionSelector<Feature, string>
-        className='CustomersActivity_ControlsSelector'
+        className='CustomersActivity_FeaturesSelector'
         displayExpr='feature_name'
         valueExpr='feature_id'
         placeholder='Select features'
         label='CAT features'
-        disabled={tribes.length === 0 || components.length === 0}
         dataSource={dataSource}
         value={state?.values}
         includeButtonState={state?.include}

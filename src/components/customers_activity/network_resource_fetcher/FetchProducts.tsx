@@ -2,37 +2,37 @@ import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 import { dependenciesAreEmpty } from '../../common/components/Utils'
 
-
-export interface Component {
-    component_id: string
-    component_name: string
+export interface Product {
+    product_id: string
+    pproduct_name: string
 }
 
 
-export const fetchComponents: (tribe_ids: Array<string>) => Promise<FetchResult<Array<Component>>> = async function (tribe_ids: Array<string>) {
-    if (dependenciesAreEmpty(tribe_ids)) {
+export const fetchProducts: (tribe_ids: Array<string>, platform_ids: Array<string>) => Promise<FetchResult<Array<Product>>> = async function (tribe_ids: Array<string>, platform_ids: Array<string>) {
+    if (dependenciesAreEmpty(tribe_ids, platform_ids)) {
         return {
             success: true,
-            data: Array<Component>()
+            data: Array<Product>()
         }
     }
     try {
-        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_components`, {
+        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_products`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 tribes: tribe_ids,
+                platforms: platform_ids
             }),
         }).then(response => response.json())
         return {
             success: true,
-            data: (values as Array<Component>)
+            data: (values as Array<Product>)
         }
     } catch (error) {
         console.log(error)
         return {
             success: false,
-            data: Array<Component>()
+            data: Array<Product>()
         }
     }
 }

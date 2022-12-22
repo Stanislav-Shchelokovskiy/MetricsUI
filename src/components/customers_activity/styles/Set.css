@@ -9,6 +9,10 @@
     gap: 3px;
 }
 
+.CustomersActivity_Set {
+    padding-right: 6px;
+}
+
 .CustomerActivity_SetHeader {
     display: flex;
     flex-flow: row nowrap;
@@ -28,24 +32,14 @@
 }
 
 .CustomersActivity_ReplyTypesSelector,
-.CustomersActivity_ControlsSelector,
-.CustomersActivity_FeaturesSelector {
-    flex: 1;
-}
-
-.CustomersActivity_TicketsTagsSelector {
-    flex: 2;
-}
-
+.CustomersActivity_ComponentsSelector,
+.CustomersActivity_FeaturesSelector,
+.CustomersActivity_TribesSelector,
+.CustomersActivity_PlatformSelector,
+.CustomersActivity_CustomersGroupsSelector,
+.CustomersActivity_TicketsTagsSelector,
 .CustomersActivity_TicketsTypesSelector {
     flex: 1;
-    min-width: 30%;
-}
-
-.CustomersActivity_TribesSelector,
-.CustomersActivity_CustomersGroupsSelector {
-    flex: 1;
-    min-width: 50%;
 }
 
 .SetHeaderRenameButton {
