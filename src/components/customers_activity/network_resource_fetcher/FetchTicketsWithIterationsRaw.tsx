@@ -41,6 +41,8 @@ export const fetchTicketsWithIterationsRaw: (
     features: FilterParametersNode<string>,
     customersTypes: FilterParametersNode<number>,
     conversionsTypes: FilterParametersNode<number>,
+    platforms: FilterParametersNode<string>,
+    products: FilterParametersNode<string>,
 
 ) => Promise<FetchResult<Array<TicketsWithIterationsRaw>>> =
     async function (
@@ -55,6 +57,8 @@ export const fetchTicketsWithIterationsRaw: (
         features: FilterParametersNode<string>,
         customersTypes: FilterParametersNode<number>,
         conversionsTypes: FilterParametersNode<number>,
+        platforms: FilterParametersNode<string>,
+        products: FilterParametersNode<string>,
     ) {
         try {
             const raw_data: Array<TicketsWithIterationsRaw> = await fetch(
@@ -76,6 +80,8 @@ export const fetchTicketsWithIterationsRaw: (
                         features: features,
                         license_statuses: customersTypes,
                         conversion_statuses: conversionsTypes,
+                        platforms: platforms,
+                        products: products,
                     }),
                 },
             ).then(response => response.json())

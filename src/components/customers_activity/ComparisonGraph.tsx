@@ -56,6 +56,8 @@ export default function ComparisonGraph() {
                     set.features,
                     set.customersTypes,
                     set.conversionsTypes,
+                    set.platforms,
+                    set.products,
                 )
                 if (fetchedAggregates.success) {
                     aggs.push({
@@ -176,7 +178,7 @@ function getCommonGraphSettings(set: SetAggregates, metric: string) {
     return {
         name: set.name,
         x: set.aggregates.periods,
-        y: isTicketsMetricSelected(metric) ? set.aggregates.tickets : 
+        y: isTicketsMetricSelected(metric) ? set.aggregates.tickets :
             isIterationsMetricSelected(metric) ? set.aggregates.iterations : set.aggregates.people,
         opacity: 0.6,
         hovertext: set.name

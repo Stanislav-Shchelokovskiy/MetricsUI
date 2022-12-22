@@ -26,7 +26,7 @@ export default function ComponentsSelector({ setTitle }: { setTitle: string }) {
     if(dependenciesAreEmpty(tribes, dataSource))
         return null
     return <MultiOptionSelector<Component, string>
-        className='CustomersActivity_ControlsSelector'
+        className='CustomersActivity_ComponentsSelector'
         displayExpr='component_name'
         valueExpr='component_id'
         placeholder='Select components'

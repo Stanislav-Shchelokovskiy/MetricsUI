@@ -3,21 +3,21 @@ import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 import { dependenciesAreEmpty } from '../../common/components/Utils'
 
 
-export interface Component {
-    component_id: string
-    component_name: string
+export interface Platform {
+    platform_id: string
+    platform_name: string
 }
 
 
-export const fetchComponents: (tribe_ids: Array<string>) => Promise<FetchResult<Array<Component>>> = async function (tribe_ids: Array<string>) {
+export const fetchPlatforms: (tribe_ids: Array<string>) => Promise<FetchResult<Array<Platform>>> = async function (tribe_ids: Array<string>) {
     if (dependenciesAreEmpty(tribe_ids)) {
         return {
             success: true,
-            data: Array<Component>()
+            data: Array<Platform>()
         }
     }
     try {
-        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_components`, {
+        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_platforms`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -26,13 +26,13 @@ export const fetchComponents: (tribe_ids: Array<string>) => Promise<FetchResult<
         }).then(response => response.json())
         return {
             success: true,
-            data: (values as Array<Component>)
+            data: (values as Array<Platform>)
         }
     } catch (error) {
         console.log(error)
         return {
             success: false,
-            data: Array<Component>()
+            data: Array<Platform>()
         }
     }
 }

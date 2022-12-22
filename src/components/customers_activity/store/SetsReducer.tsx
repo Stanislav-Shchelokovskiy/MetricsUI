@@ -23,6 +23,10 @@ import {
     CHANGE_CUSTOMERS_TYPES_INCLUDE,
     CHANGE_CONVERSIONS_TYPES,
     CHANGE_CONVERSIONS_TYPES_INCLUDE,
+    CHANGE_PLATFORMS,
+    CHANGE_PLATFORMS_INCLUDE,
+    CHANGE_PRODUCTS,
+    CHANGE_PRODUCTS_INCLUDE,
 } from './Actions'
 
 
@@ -41,6 +45,8 @@ export function getDefaultFilterParametersNode<T>(): FilterParametersNode<T> {
 export interface SetState {
     title: string
     tribes: FilterParametersNode<string>
+    platforms: FilterParametersNode<string>
+    products: FilterParametersNode<string>
     customersGroups: FilterParametersNode<string>
     ticketsTags: FilterParametersNode<number>
     ticketsTypes: FilterParametersNode<number>
@@ -55,6 +61,8 @@ export interface SetState {
 export const INITIAL_SET_STATE: SetState = {
     title: '0',
     tribes: getDefaultFilterParametersNode<string>(),
+    platforms: getDefaultFilterParametersNode<string>(),
+    products: getDefaultFilterParametersNode<string>(),
     customersGroups: getDefaultFilterParametersNode<string>(),
     ticketsTags: getDefaultFilterParametersNode<number>(),
     ticketsTypes: getDefaultFilterParametersNode<number>(),
@@ -87,6 +95,8 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
                     },
                     components: INITIAL_SET_STATE.components,
                     features: INITIAL_SET_STATE.features,
+                    platforms: INITIAL_SET_STATE.platforms,
+                    products: INITIAL_SET_STATE.products,
                 }
             })
         case CHANGE_TRIBES_INCLUDE:
@@ -99,6 +109,8 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
                     },
                     components: INITIAL_SET_STATE.components,
                     features: INITIAL_SET_STATE.features,
+                    platforms: INITIAL_SET_STATE.platforms,
+                    products: INITIAL_SET_STATE.products,
                 }
             })
 
@@ -275,6 +287,52 @@ export const SetsReducer = (state: Array<SetState> = INTIAL_SETS_STATE, action: 
                     ...x,
                     conversionsTypes: {
                         ...x.conversionsTypes,
+                        include: action.payload.data
+                    },
+                }
+            })
+
+        case CHANGE_PLATFORMS:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    platforms: {
+                        ...x.platforms,
+                        values: action.payload.data
+                    },
+                    products: INITIAL_SET_STATE.products,
+                }
+            })
+
+        case CHANGE_PLATFORMS_INCLUDE:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    platforms: {
+                        ...x.platforms,
+                        include: action.payload.data
+                    },
+                    products: INITIAL_SET_STATE.products,
+                }
+            })
+
+        case CHANGE_PRODUCTS:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    products: {
+                        ...x.products,
+                        values: action.payload.data
+                    },
+                }
+            })
+
+        case CHANGE_PRODUCTS_INCLUDE:
+            return updateSetState(action.payload.stateId, state, (x) => {
+                return {
+                    ...x,
+                    products: {
+                        ...x.products,
                         include: action.payload.data
                     },
                 }

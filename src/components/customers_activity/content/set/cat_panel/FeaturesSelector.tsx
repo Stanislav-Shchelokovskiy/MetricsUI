@@ -27,7 +27,7 @@ export default function FeaturesSelector({ setTitle }: { setTitle: string }) {
     if (dependenciesAreEmpty(tribes, components, dataSource))
         return null
     return <MultiOptionSelector<Feature, string>
-        className='CustomersActivity_ControlsSelector'
+        className='CustomersActivity_FeaturesSelector'
         displayExpr='feature_name'
         valueExpr='feature_id'
         placeholder='Select features'

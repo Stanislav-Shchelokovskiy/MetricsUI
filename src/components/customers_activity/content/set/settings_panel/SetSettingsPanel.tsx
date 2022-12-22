@@ -5,6 +5,8 @@ import TicketsTagsSelector from './TicketsTagsSelector'
 import TribesSelector from './TribesSelector'
 import CustomersTypesSelector from './CustomersTypesSelector'
 import ConversionsTypesSelector from './ConversionsTypesSelector'
+import PlatformsSelector from './PlatformsSelector'
+import ProductsSelector from './ProductsSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
@@ -12,6 +14,8 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
         <div className='CustomersActivity_SetSettingsPanel'>
             <div className='CustomersActivity_SetSettingsChildPanel'>
                 <TribesSelector setTitle={setTitle} />
+                <PlatformsSelector setTitle={setTitle} />
+                <ProductsSelector setTitle={setTitle} />
                 <CustomersGroupsSelector setTitle={setTitle} />
                 <TicketsTagsSelector setTitle={setTitle} />
                 <CustomersTypesSelector setTitle={setTitle} />
