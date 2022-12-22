@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { MultiOptionSelector, } from '../../../../common/components/MultiOptionSelector'
+import { dependenciesAreEmpty } from '../../../../common/components/Utils'
 import { CustomersActivityStore} from '../../../store/Store'
 import { changeComponents, changeComponentsInclude } from '../../../store/Actions'
 import { fetchComponents, Component } from '../../../network_resource_fetcher/FetchComponents'
@@ -22,13 +23,14 @@ export default function ComponentsSelector({ setTitle }: { setTitle: string }) {
     const onValueChange = (allValues: Array<Component>, values: Array<string>) => changeComponents({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeComponentsInclude({ stateId: setTitle, data: include })
 
+    if(dependenciesAreEmpty(tribes, dataSource))
+        return null
     return <MultiOptionSelector<Component, string>
         className='CustomersActivity_ControlsSelector'
         displayExpr='component_name'
         valueExpr='component_id'
         placeholder='Select components'
         label='CAT components'
-        disabled={tribes.length === 0}
         dataSource={dataSource}
         value={state?.values}
         includeButtonState={state?.include}
