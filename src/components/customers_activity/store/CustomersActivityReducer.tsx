@@ -1,6 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit'
 import { GenerateNewSetTitle } from './SetsReducer'
-import { INITIAL_SET_STATE } from '../store/SetsReducer'
+import { INITIAL_SET } from '../store/SetsReducer'
 import { APPLY_STATE } from '../../common/store/state/Actions'
 import {
     CHANGE_PERIOD,
@@ -27,7 +27,7 @@ const INITIAL_CUSTOMERS_ACTIVITY_STATE: CustomersActivityState = {
     groupByPeriod: '',
     metric: '',
     comparisonMethod: '',
-    sets: [INITIAL_SET_STATE.title]
+    sets: [INITIAL_SET.title]
 }
 
 
@@ -67,7 +67,7 @@ export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL
         case REMOVE_SET:
             return {
                 ...state,
-                sets: state.sets.filter(set => set !== action.payload)
+                sets: state.sets.length < 2 ? [INITIAL_SET.title] : state.sets.filter(set => set !== action.payload)
             }
 
         case APPLY_STATE:

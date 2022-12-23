@@ -9,14 +9,11 @@
     height: 18vh;
     gap: 10px;
     min-width: 70vw;
-    /* background-color: dodgerblue; */
 }
 
-.CustomersActivity_CommonSettingsPanel,
 .CustomersActivityToolbar {
     background-color: rgba(246, 246, 246, 0.5);
 }
-
 
 .CustomersActivityToolbar,
 .CustomersActivityToolbarCommands {
@@ -25,7 +22,6 @@
     align-items: stretch;
     gap: 1%;
 }
-
 
 .CustomersActivityToolbarCommands {
     justify-content: flex-end;
@@ -37,19 +33,19 @@
 .CustomersActivitySaveStateButton,
 .CustomersActivityDropStateButton,
 .CustomersActivityShareStateButton,
-.CustomersActivityViewStateSelector {
+.CustomersActivityViewStateSelector,
+.CustomersActivityToolbarSeparator {
     margin-top: 7px;
+    margin-bottom: 7px;
 }
 
 .CustomersActivityToolbarSeparator {
     background-color: rgb(221, 221, 221);
     width: 2px;
-    margin-top: 7px;
     border-radius: 25px;
     margin-left: 2px;
     margin-right: 2px;
 }
-
 
 .CustomersActivityToolbar {
     justify-content: flex-start;
@@ -57,10 +53,7 @@
     padding-right: 2%;
 }
 
-
-
 .CustomersActivity_PeriodSelector {
-    /* background-color: rgb(0, 255, 251); */
     margin-bottom: 0px;
     flex: 2;
 }

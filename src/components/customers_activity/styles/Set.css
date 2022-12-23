@@ -11,6 +11,7 @@
 
 .CustomersActivity_Set {
     padding-right: 6px;
+    padding-bottom: 3%;
 }
 
 .CustomerActivity_SetHeader {
@@ -19,11 +20,6 @@
     justify-content: flex-start;
     align-items: center;
     gap: 1%;
-    /* background-color: rgba(240, 240, 240, 0.5); */
-}
-
-.CustomersActivity_CatPanel {
-    padding-bottom: 3%;
 }
 
 .CustomerActivity_SetHeader {
@@ -43,7 +39,6 @@
 }
 
 .SetHeaderRenameButton {
-    margin-bottom: 0px;
     margin-left: 7px;
 }
 
