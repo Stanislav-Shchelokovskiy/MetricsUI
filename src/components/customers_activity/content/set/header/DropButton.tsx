@@ -11,13 +11,12 @@ export default function DropButton({ setTitle }: { setTitle: string }) {
         dispatch(removeSet(setTitle))
     }, [setTitle, dispatch])
 
-    const disabled = useSelector((state: CustomersActivityStore) => state.customersActivity.sets).length === 1
+    const lastSet = useSelector((state: CustomersActivityStore) => state.customersActivity.sets).length === 1
     return <Button
         className='SetHeaderButton'
-        hint='Drop'
+        hint={lastSet ? 'Reset' : 'Drop'}
         icon='remove'
         stylingMode='text'
-        disabled={disabled}
         onClick={onClick}
     />
 }
