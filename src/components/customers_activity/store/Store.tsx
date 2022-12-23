@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { loadState, saveState } from '../../common/LocalStorage'
 import { CustomersActivityReducer } from './CustomersActivityReducer'
 import { SetsReducer } from './SetsReducer'

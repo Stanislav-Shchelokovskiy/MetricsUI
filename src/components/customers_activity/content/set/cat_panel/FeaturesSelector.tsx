@@ -4,6 +4,7 @@ import { MultiOptionSelector } from '../../../../common/components/MultiOptionSe
 import { dependenciesAreEmpty } from '../../../../common/components/Utils'
 import { CustomersActivityStore } from '../../../store/Store'
 import { changeFeatures, changeFeaturesInclude } from '../../../store/Actions'
+import { getFilterParametersNodeValuesOrDefault } from '../../../store/Utils'
 import { fetchFeatures, Feature } from '../../../network_resource_fetcher/FetchFeatures'
 import { useCascadeDataSource } from '../../../../common/hooks/UseDataSource'
 import { FilterParametersNode } from '../../../store/SetsReducer'
@@ -13,9 +14,9 @@ export default function FeaturesSelector({ setTitle }: { setTitle: string }) {
     const emptyArray = useMemo(() => [], [])
 
     const tribesNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tribes)
-    const tribes = tribesNode?.values || emptyArray
+    const tribes = getFilterParametersNodeValuesOrDefault(tribesNode, emptyArray)
     const componentsNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.components)
-    const components = componentsNode?.values || emptyArray
+    const components =  getFilterParametersNodeValuesOrDefault(componentsNode, emptyArray)
     const dataSource = useCascadeDataSource(() => fetchFeatures(tribes, components), tribes, components)
 
     const state = useSelector((store: CustomersActivityStore) =>
@@ -24,7 +25,7 @@ export default function FeaturesSelector({ setTitle }: { setTitle: string }) {
     const onValueChange = (allValues: Array<Feature>, values: Array<string>) => changeFeatures({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeFeaturesInclude({ stateId: setTitle, data: include })
 
-    if (dependenciesAreEmpty(tribes, components, dataSource))
+    if (dependenciesAreEmpty(dataSource))
         return null
     return <MultiOptionSelector<Feature, string>
         className='CustomersActivity_FeaturesSelector'
