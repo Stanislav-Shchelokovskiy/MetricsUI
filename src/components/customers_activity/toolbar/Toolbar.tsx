@@ -31,7 +31,6 @@ function Toolbar({ onShowChange }: { onShowChange: () => void }) {
                     className='CustomersActivityDropStateButton'
                     valuesSelector={valuesSelector}
                     state_salt={state_salt} />
-                <div className='CustomersActivityToolbarSeparator'></div>
                 <ShareStateButton 
                     className='CustomersActivityShareStateButton'
                     keySelector={keySelector}
