@@ -33,7 +33,7 @@ export default function ConversionsTypesSelector({ setTitle }: { setTitle: strin
         displayExpr='name'
         valueExpr='id'
         placeholder='Select conversion types'
-        label='Conversion types'
+        label='User conversion types'
         dataSource={dataSource}
         value={state?.values}
         includeButtonState={state?.include}
