@@ -11,6 +11,8 @@ export function initMissingCustomersActivitySetsProperties(customersActivitySets
             set.platforms = getDefaultFilterParametersNode<string>();
         if (set.products === undefined)
             set.products = getDefaultFilterParametersNode<string>();
+        if (set.positions === undefined)
+            set.positions = getDefaultFilterParametersNode<string>();
     }
     return customersActivitySets
 }

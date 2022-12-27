@@ -235,3 +235,19 @@ export const changeProductsInclude = (payload: Payload<string, boolean>): Payloa
         payload: payload
     }
 }
+
+export const CHANGE_POSITIONS = 'customers_activity/change_positions'
+export const changePositions = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_POSITIONS,
+        payload: payload
+    }
+}
+
+export const CHANGE_POSITIONS_INCLUDE = 'customers_activity/changePositions_include'
+export const changePositionsInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_POSITIONS_INCLUDE,
+        payload: payload
+    }
+}
