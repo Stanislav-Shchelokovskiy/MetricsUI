@@ -17,8 +17,8 @@ export default function PositionsSelector({ setTitle }: { setTitle: string }) {
 
     return <MultiOptionSelectorWithFetch<Position, string>
         className='CustomersActivity_PositionsSelector'
-        displayExpr='pos_name'
-        valueExpr='pos_id'
+        displayExpr='name'
+        valueExpr='id'
         placeholder='Select employee positions'
         label='Employee positions'
         fetchDataSourceValues={fetchPositions}

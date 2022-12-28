@@ -3,8 +3,8 @@ import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 
 
 export interface Position {
-    pos_id: string
-    pos_name: string
+    id: string
+    name: string
 }
 
 
