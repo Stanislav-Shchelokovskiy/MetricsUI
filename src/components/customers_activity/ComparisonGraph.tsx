@@ -58,6 +58,7 @@ export default function ComparisonGraph() {
                     set.conversionsTypes,
                     set.platforms,
                     set.products,
+                    set.positions,
                 )
                 if (fetchedAggregates.success) {
                     aggs.push({

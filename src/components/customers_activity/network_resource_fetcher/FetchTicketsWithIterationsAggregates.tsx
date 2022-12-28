@@ -41,6 +41,7 @@ export const fetchTicketsWithIterationsAggregates: (
     conversionsTypes: FilterParametersNode<number>,
     platforms: FilterParametersNode<string>,
     products: FilterParametersNode<string>,
+    positions: FilterParametersNode<string>,
 ) => Promise<FetchResult<TicketsWithIterationsAggregates>> =
     async function (
         group_by_period: string,
@@ -57,6 +58,7 @@ export const fetchTicketsWithIterationsAggregates: (
         conversionsTypes: FilterParametersNode<number>,
         platforms: FilterParametersNode<string>,
         products: FilterParametersNode<string>,
+        positions: FilterParametersNode<string>,
     ) {
         try {
             const aggregates: Array<TicketsWithIterationsAggregate> = await fetch(
@@ -81,6 +83,7 @@ export const fetchTicketsWithIterationsAggregates: (
                         conversion_statuses: conversionsTypes,
                         platforms: platforms,
                         products: products,
+                        positions: positions,
                     }),
                 },
             ).then(response => response.json())
