@@ -35,7 +35,8 @@
 .CustomersActivity_CustomersGroupsSelector,
 .CustomersActivity_TicketsTagsSelector,
 .CustomersActivity_TicketsTypesSelector,
-.CustomersActivity_PositionsSelector {
+.CustomersActivity_PositionsSelector,
+.CustomersActivity_EmpTribesSelector {
     flex: 1;
 }
 

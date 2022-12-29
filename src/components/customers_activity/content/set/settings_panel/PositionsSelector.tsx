@@ -19,8 +19,8 @@ export default function PositionsSelector({ setTitle }: { setTitle: string }) {
         className='CustomersActivity_PositionsSelector'
         displayExpr='name'
         valueExpr='id'
-        placeholder='Select employee positions'
-        label='Employee positions'
+        placeholder='Select employees positions'
+        label='Employees positions'
         fetchDataSourceValues={fetchPositions}
         value={state?.values}
         includeButtonState={state?.include}

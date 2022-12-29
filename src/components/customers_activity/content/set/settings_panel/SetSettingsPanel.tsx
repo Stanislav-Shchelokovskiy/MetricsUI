@@ -8,6 +8,7 @@ import ConversionsTypesSelector from './ConversionsTypesSelector'
 import PlatformsSelector from './PlatformsSelector'
 import ProductsSelector from './ProductsSelector'
 import PositionsSelector from './PositionsSelector'
+import EmpTribesSelector from './EmpTribesSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
@@ -16,6 +17,7 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <div className='CustomersActivity_SetSettingsChildPanel'>
                 <TribesSelector setTitle={setTitle} />
                 <PositionsSelector setTitle={setTitle} />
+                <EmpTribesSelector setTitle={setTitle} />
                 <PlatformsSelector setTitle={setTitle} />
                 <ProductsSelector setTitle={setTitle} />
                 <CustomersGroupsSelector setTitle={setTitle} />

@@ -244,10 +244,26 @@ export const changePositions = (payload: Payload<string, Array<string>>): Payloa
     }
 }
 
-export const CHANGE_POSITIONS_INCLUDE = 'customers_activity/changePositions_include'
+export const CHANGE_POSITIONS_INCLUDE = 'customers_activity/change_positions_include'
 export const changePositionsInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
     return {
         type: CHANGE_POSITIONS_INCLUDE,
+        payload: payload
+    }
+}
+
+export const CHANGE_EMP_TRIBES = 'customers_activity/change_emp_tribes'
+export const changeEmpTribes = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_EMP_TRIBES,
+        payload: payload
+    }
+}
+
+export const CHANGE_EMP_TRIBES_INCLUDE = 'customers_activity/change_emp_tribes_include'
+export const changeEmpTribesInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_EMP_TRIBES_INCLUDE,
         payload: payload
     }
 }

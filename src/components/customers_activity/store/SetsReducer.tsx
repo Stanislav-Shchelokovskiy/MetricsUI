@@ -29,6 +29,8 @@ import {
     CHANGE_PRODUCTS_INCLUDE,
     CHANGE_POSITIONS,
     CHANGE_POSITIONS_INCLUDE,
+    CHANGE_EMP_TRIBES,
+    CHANGE_EMP_TRIBES_INCLUDE,
 } from './Actions'
 
 
@@ -48,6 +50,7 @@ export interface SetState {
     title: string
     tribes: FilterParametersNode<string>
     positions: FilterParametersNode<string>
+    empTribes: FilterParametersNode<string>
     platforms: FilterParametersNode<string>
     products: FilterParametersNode<string>
     customersGroups: FilterParametersNode<string>
@@ -65,6 +68,7 @@ export const INITIAL_SET: SetState = {
     title: '0',
     tribes: getDefaultFilterParametersNode<string>(),
     positions: getDefaultFilterParametersNode<string>(),
+    empTribes: getDefaultFilterParametersNode<string>(),
     platforms: getDefaultFilterParametersNode<string>(),
     products: getDefaultFilterParametersNode<string>(),
     customersGroups: getDefaultFilterParametersNode<string>(),
@@ -359,6 +363,28 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                     ...x,
                     positions: {
                         ...x.positions,
+                        include: action.payload.data
+                    },
+                }
+            })
+
+        case CHANGE_EMP_TRIBES:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    empTribes: {
+                        ...x.empTribes,
+                        values: action.payload.data
+                    },
+                }
+            })
+
+        case CHANGE_EMP_TRIBES_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    empTribes: {
+                        ...x.empTribes,
                         include: action.payload.data
                     },
                 }
