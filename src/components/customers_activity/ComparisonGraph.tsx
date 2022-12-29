@@ -60,6 +60,7 @@ export default function ComparisonGraph() {
                     set.products,
                     set.positions,
                     set.empTribes,
+                    set.employees,
                 )
                 if (fetchedAggregates.success) {
                     aggs.push({

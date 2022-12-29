@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { MultiOptionSelector, } from '../../../../common/components/MultiOptionSelector'
-import { dependenciesAreEmpty } from '../../../../common/components/Utils'
+import { anyDependencyIsEmpty } from '../../../../common/components/Utils'
 import { CustomersActivityStore } from '../../../store/Store'
 import { changePlatforms, changePlatformsInclude } from '../../../store/Actions'
 import { getFilterParametersNodeValuesOrDefault } from '../../../store/Utils'
@@ -24,7 +24,7 @@ export default function PlatformsSelector({ setTitle }: { setTitle: string }) {
     const onValueChange = (allValues: Array<Platform>, values: Array<string>) => changePlatforms({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changePlatformsInclude({ stateId: setTitle, data: include })
 
-    if (dependenciesAreEmpty(dataSource))
+    if (anyDependencyIsEmpty(dataSource))
         return null
     return <MultiOptionSelector<Platform, string>
         className='CustomersActivity_PlatformSelector'

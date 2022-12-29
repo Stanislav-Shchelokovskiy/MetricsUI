@@ -1,6 +1,6 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { dependenciesAreEmpty } from '../../common/components/Utils'
+import { anyDependencyIsEmpty } from '../../common/components/Utils'
 
 
 export interface Platform {
@@ -10,7 +10,7 @@ export interface Platform {
 
 
 export const fetchPlatforms: (tribe_ids: Array<string>) => Promise<FetchResult<Array<Platform>>> = async function (tribe_ids: Array<string>) {
-    if (dependenciesAreEmpty(tribe_ids)) {
+    if (anyDependencyIsEmpty(tribe_ids)) {
         return {
             success: true,
             data: Array<Platform>()

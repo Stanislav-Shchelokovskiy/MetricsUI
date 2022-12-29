@@ -267,3 +267,19 @@ export const changeEmpTribesInclude = (payload: Payload<string, boolean>): Paylo
         payload: payload
     }
 }
+
+export const CHANGE_EMPLOYEES = 'customers_activity/change_employees'
+export const changeEmployees = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_EMPLOYEES,
+        payload: payload
+    }
+}
+
+export const CHANGE_EMPLOYEES_INCLUDE = 'customers_activity/change_employees_include'
+export const changeEmployeesInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_EMPLOYEES_INCLUDE,
+        payload: payload
+    }
+}

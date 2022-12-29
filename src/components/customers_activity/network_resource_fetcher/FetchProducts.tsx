@@ -1,6 +1,6 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { dependenciesAreEmpty } from '../../common/components/Utils'
+import { anyDependencyIsEmpty } from '../../common/components/Utils'
 
 export interface Product {
     product_id: string
@@ -9,7 +9,7 @@ export interface Product {
 
 
 export const fetchProducts: (tribe_ids: Array<string>, platform_ids: Array<string>) => Promise<FetchResult<Array<Product>>> = async function (tribe_ids: Array<string>, platform_ids: Array<string>) {
-    if (dependenciesAreEmpty(tribe_ids, platform_ids)) {
+    if (anyDependencyIsEmpty(tribe_ids, platform_ids)) {
         return {
             success: true,
             data: Array<Product>()

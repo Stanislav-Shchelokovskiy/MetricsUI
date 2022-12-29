@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { MultiOptionSelector } from '../../../../common/components/MultiOptionSelector'
-import { dependenciesAreEmpty } from '../../../../common/components/Utils'
+import { anyDependencyIsEmpty } from '../../../../common/components/Utils'
 import { CustomersActivityStore } from '../../../store/Store'
 import { changeFeatures, changeFeaturesInclude } from '../../../store/Actions'
 import { getFilterParametersNodeValuesOrDefault } from '../../../store/Utils'
@@ -25,7 +25,7 @@ export default function FeaturesSelector({ setTitle }: { setTitle: string }) {
     const onValueChange = (allValues: Array<Feature>, values: Array<string>) => changeFeatures({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeFeaturesInclude({ stateId: setTitle, data: include })
 
-    if (dependenciesAreEmpty(dataSource))
+    if (anyDependencyIsEmpty(dataSource))
         return null
     return <MultiOptionSelector<Feature, string>
         className='CustomersActivity_FeaturesSelector'

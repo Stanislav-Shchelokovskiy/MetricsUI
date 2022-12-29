@@ -9,6 +9,7 @@ import PlatformsSelector from './PlatformsSelector'
 import ProductsSelector from './ProductsSelector'
 import EmpPositionsSelector from './EmpPositionsSelector'
 import EmpTribesSelector from './EmpTribesSelector'
+import EmployeesSelector from './EmployeesSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
@@ -25,6 +26,7 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
                 <CustomersConversionsTypesSelector setTitle={setTitle} />
                 <EmpPositionsSelector setTitle={setTitle} />
                 <EmpTribesSelector setTitle={setTitle} />
+                <EmployeesSelector setTitle={setTitle} />
             </div>
         </div >
     )
