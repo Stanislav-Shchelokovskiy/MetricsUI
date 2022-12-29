@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { MultiOptionSelector } from '../../../../common/components/MultiOptionSelector'
-import { dependenciesAreEmpty } from '../../../../common/components/Utils'
+import { anyDependencyIsEmpty } from '../../../../common/components/Utils'
 import { CustomersActivityStore } from '../../../store/Store'
 import { changeConversionsTypes, changeConversionsTypesInclude } from '../../../store/Actions'
 import { getFilterParametersNodeValuesOrDefault } from '../../../store/Utils'
@@ -10,7 +10,7 @@ import { FilterParametersNode } from '../../../store/SetsReducer'
 import { useCascadeDataSource } from '../../../../common/hooks/UseDataSource'
 
 
-export default function ConversionsTypesSelector({ setTitle }: { setTitle: string }) {
+export default function CustomersConversionsTypesSelector({ setTitle }: { setTitle: string }) {
     const emptyArray = useMemo(() => [], [])
 
     const customersTypeNode = useSelector((store: CustomersActivityStore) =>
@@ -26,7 +26,7 @@ export default function ConversionsTypesSelector({ setTitle }: { setTitle: strin
     const onValueChange = (allValues: Array<ConversionStatus>, values: Array<number>) => changeConversionsTypes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeConversionsTypesInclude({ stateId: setTitle, data: include })
 
-    if (dependenciesAreEmpty(dataSource))
+    if (anyDependencyIsEmpty(dataSource))
         return null
     return <MultiOptionSelector<ConversionStatus, number>
         className='CustomersActivity_ConversionsTypesSelector'

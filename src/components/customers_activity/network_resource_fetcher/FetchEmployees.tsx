@@ -1,41 +1,41 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { anyDependencyIsEmpty } from '../../common/components/Utils'
+import { allDependenciesAreEmpty } from '../../common/components/Utils'
 
 
-export interface Feature {
-    feature_id: string
-    feature_name: string
+export interface Employee {
+    crmid: string
+    name: string
 }
 
 
-export const fetchFeatures: (tribe_ids: Array<string>, component_ids: Array<string>) => Promise<FetchResult<Array<Feature>>> =
-    async function (tribe_ids: Array<string>, component_ids: Array<string>,) {
-        if (anyDependencyIsEmpty(tribe_ids, component_ids)) {
+export const fetchEmployees: (position_ids: Array<string>, tribe_ids: Array<string>) => Promise<FetchResult<Array<Employee>>> =
+    async function (position_ids: Array<string>, tribe_ids: Array<string>,) {
+        if (allDependenciesAreEmpty(position_ids, tribe_ids)) {
             return {
                 success: true,
-                data: Array<Feature>()
+                data: Array<Employee>()
             }
         }
         try {
-            const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_features`,
+            const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_employees`,
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
+                        positions: position_ids,
                         tribes: tribe_ids,
-                        components: component_ids,
                     }),
                 }).then(response => response.json())
             return {
                 success: true,
-                data: (values as Array<Feature>)
+                data: (values as Array<Employee>)
             }
         } catch (error) {
             console.log(error)
             return {
                 success: false,
-                data: Array<Feature>()
+                data: Array<Employee>()
             }
         }
     }

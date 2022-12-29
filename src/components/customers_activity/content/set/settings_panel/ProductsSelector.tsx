@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { MultiOptionSelector } from '../../../../common/components/MultiOptionSelector'
-import { dependenciesAreEmpty } from '../../../../common/components/Utils'
+import { anyDependencyIsEmpty } from '../../../../common/components/Utils'
 import { CustomersActivityStore } from '../../../store/Store'
 import { getFilterParametersNodeValuesOrDefault } from '../../../store/Utils'
 import { changeProducts, changeProductsInclude } from '../../../store/Actions'
@@ -25,7 +25,7 @@ export default function ProductsSelector({ setTitle }: { setTitle: string }) {
     const onValueChange = (allValues: Array<Product>, values: Array<string>) => changeProducts({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeProductsInclude({ stateId: setTitle, data: include })
 
-    if (dependenciesAreEmpty(dataSource))
+    if (anyDependencyIsEmpty(dataSource))
         return null
     return <MultiOptionSelector<Product, string>
         className='CustomersActivity_ProductsSelector'

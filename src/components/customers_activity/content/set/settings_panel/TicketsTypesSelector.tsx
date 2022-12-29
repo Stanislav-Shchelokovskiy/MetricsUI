@@ -18,8 +18,8 @@ export default function TicketsTypesSelector({ setTitle }: { setTitle: string })
         className='CustomersActivity_TicketsTypesSelector'
         displayExpr='name'
         valueExpr='id'
-        placeholder='Select tickets types'
-        label='Tickets types'
+        placeholder='Select ticket types'
+        label='Ticket types'
         fetchDataSourceValues={fetchTicketsTypes}
         value={state?.values}
         includeButtonState={state?.include}

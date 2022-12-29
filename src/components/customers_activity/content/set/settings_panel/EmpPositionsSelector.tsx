@@ -7,7 +7,7 @@ import { fetchPositions, Position } from '../../../network_resource_fetcher/Fetc
 import { FilterParametersNode } from '../../../store/SetsReducer'
 
 
-export default function PositionsSelector({ setTitle }: { setTitle: string }) {
+export default function EmpPositionsSelector({ setTitle }: { setTitle: string }) {
     const state = useSelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.positions as FilterParametersNode<string>
     )
@@ -19,8 +19,8 @@ export default function PositionsSelector({ setTitle }: { setTitle: string }) {
         className='CustomersActivity_PositionsSelector'
         displayExpr='name'
         valueExpr='id'
-        placeholder='Select employee positions'
-        label='Employee positions'
+        placeholder='Select employees positions'
+        label='Employees positions'
         fetchDataSourceValues={fetchPositions}
         value={state?.values}
         includeButtonState={state?.include}

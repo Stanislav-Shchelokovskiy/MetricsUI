@@ -18,8 +18,8 @@ export default function TicketsTagsSelector({ setTitle }: { setTitle: string }) 
         className='CustomersActivity_TicketsTagsSelector'
         displayExpr='name'
         valueExpr='id'
-        placeholder='Select tickets tags'
-        label='Tickets tags'
+        placeholder='Select ticket tags'
+        label='Ticket tags'
         fetchDataSourceValues={fetchTicketsTags}
         value={state?.values}
         includeButtonState={state?.include}

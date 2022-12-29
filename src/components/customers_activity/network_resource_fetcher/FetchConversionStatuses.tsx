@@ -1,6 +1,6 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { dependenciesAreEmpty } from '../../common/components/Utils'
+import { anyDependencyIsEmpty } from '../../common/components/Utils'
 
 
 export interface ConversionStatus {
@@ -10,7 +10,7 @@ export interface ConversionStatus {
 
 
 export const fetchConversionStatuses: (license_status_ids: Array<number>) => Promise<FetchResult<Array<ConversionStatus>>> = async function (license_status_ids: Array<number>) {
-    if (dependenciesAreEmpty(license_status_ids)) {
+    if (anyDependencyIsEmpty(license_status_ids)) {
         return {
             success: true,
             data: Array<ConversionStatus>()
