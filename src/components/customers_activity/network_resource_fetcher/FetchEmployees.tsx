@@ -1,6 +1,7 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 import { allDependenciesAreEmpty } from '../../common/components/Utils'
+import { FilterParametersNode } from '../store/SetsReducer'
 
 
 export interface Employee {
@@ -9,8 +10,13 @@ export interface Employee {
 }
 
 
-export const fetchEmployees: (position_ids: Array<string>, tribe_ids: Array<string>) => Promise<FetchResult<Array<Employee>>> =
-    async function (position_ids: Array<string>, tribe_ids: Array<string>,) {
+export const fetchEmployees: (
+    position_ids: FilterParametersNode<string>,
+    tribe_ids: FilterParametersNode<string>) => Promise<FetchResult<Array<Employee>>> =
+    async function (
+        position_ids: FilterParametersNode<string>,
+        tribe_ids: FilterParametersNode<string>
+    ) {
         if (allDependenciesAreEmpty(position_ids, tribe_ids)) {
             return {
                 success: true,
