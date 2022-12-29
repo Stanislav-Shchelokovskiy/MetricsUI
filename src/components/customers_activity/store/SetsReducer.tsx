@@ -358,6 +358,7 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.positions,
                         values: action.payload.data
                     },
+                    employees: INITIAL_SET.employees,
                 }
             })
 
@@ -369,6 +370,7 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.positions,
                         include: action.payload.data
                     },
+                    employees: INITIAL_SET.employees,
                 }
             })
 
@@ -380,6 +382,7 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.empTribes,
                         values: action.payload.data
                     },
+                    employees: INITIAL_SET.employees,
                 }
             })
 
@@ -391,6 +394,7 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.empTribes,
                         include: action.payload.data
                     },
+                    employees: INITIAL_SET.employees,
                 }
             })
 
