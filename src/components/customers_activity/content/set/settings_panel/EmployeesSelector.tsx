@@ -13,13 +13,17 @@ import { FilterParametersNode } from '../../../store/SetsReducer'
 export default function EmployeesSelector({ setTitle }: { setTitle: string }) {
     const emptyArray = useMemo(() => [], [])
 
-    const positionsNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.positions)
-    const positions =  getFilterParametersNodeValuesOrDefault(positionsNode, emptyArray)
+    const positionsNode = useSelector((store: CustomersActivityStore) =>
+        store.customersActivitySets.find(x => x.title === setTitle)?.positions as FilterParametersNode<string>
+    )
+    const positions = getFilterParametersNodeValuesOrDefault(positionsNode, emptyArray)
 
-    const tribesNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.empTribes)
+    const tribesNode = useSelector((store: CustomersActivityStore) =>
+        store.customersActivitySets.find(x => x.title === setTitle)?.empTribes as FilterParametersNode<string>
+    )
     const tribes = getFilterParametersNodeValuesOrDefault(tribesNode, emptyArray)
-    
-    const dataSource = useCascadeDataSource(() => fetchEmployees(positions, tribes), positions, tribes)
+
+    const dataSource = useCascadeDataSource(() => fetchEmployees(positionsNode, tribesNode), positions, tribes)
 
     const state = useSelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.employees as FilterParametersNode<string>
