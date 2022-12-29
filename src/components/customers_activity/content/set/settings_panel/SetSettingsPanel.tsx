@@ -4,10 +4,10 @@ import TicketsTypesSelector from './TicketsTypesSelector'
 import TicketsTagsSelector from './TicketsTagsSelector'
 import TribesSelector from './TribesSelector'
 import CustomersTypesSelector from './CustomersTypesSelector'
-import ConversionsTypesSelector from './ConversionsTypesSelector'
+import CustomersConversionsTypesSelector from './CustomersConversionsTypesSelector'
 import PlatformsSelector from './PlatformsSelector'
 import ProductsSelector from './ProductsSelector'
-import PositionsSelector from './PositionsSelector'
+import EmpPositionsSelector from './EmpPositionsSelector'
 import EmpTribesSelector from './EmpTribesSelector'
 
 
@@ -16,15 +16,15 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
         <div className='CustomersActivity_SetSettingsPanel'>
             <div className='CustomersActivity_SetSettingsChildPanel'>
                 <TribesSelector setTitle={setTitle} />
-                <PositionsSelector setTitle={setTitle} />
-                <EmpTribesSelector setTitle={setTitle} />
                 <PlatformsSelector setTitle={setTitle} />
                 <ProductsSelector setTitle={setTitle} />
-                <CustomersGroupsSelector setTitle={setTitle} />
                 <TicketsTagsSelector setTitle={setTitle} />
-                <CustomersTypesSelector setTitle={setTitle} />
-                <ConversionsTypesSelector setTitle={setTitle} />
                 <TicketsTypesSelector setTitle={setTitle} />
+                <CustomersGroupsSelector setTitle={setTitle} />
+                <CustomersTypesSelector setTitle={setTitle} />
+                <CustomersConversionsTypesSelector setTitle={setTitle} />
+                <EmpPositionsSelector setTitle={setTitle} />
+                <EmpTribesSelector setTitle={setTitle} />
             </div>
         </div >
     )

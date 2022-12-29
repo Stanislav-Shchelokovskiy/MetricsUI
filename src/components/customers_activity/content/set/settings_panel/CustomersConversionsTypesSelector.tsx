@@ -10,7 +10,7 @@ import { FilterParametersNode } from '../../../store/SetsReducer'
 import { useCascadeDataSource } from '../../../../common/hooks/UseDataSource'
 
 
-export default function ConversionsTypesSelector({ setTitle }: { setTitle: string }) {
+export default function CustomersConversionsTypesSelector({ setTitle }: { setTitle: string }) {
     const emptyArray = useMemo(() => [], [])
 
     const customersTypeNode = useSelector((store: CustomersActivityStore) =>
