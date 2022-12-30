@@ -1,9 +1,8 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../store/Store'
 import { changeFeatures, changeFeaturesInclude } from '../../../store/Actions'
-import { getFilterParametersNodeValuesOrDefault } from '../../../store/Utils'
 import { fetchFeatures, Feature } from '../../../network_resource_fetcher/FetchFeatures'
 import { FilterParametersNode } from '../../../store/SetsReducer'
 
@@ -11,10 +10,7 @@ import { FilterParametersNode } from '../../../store/SetsReducer'
 export default function FeaturesSelector({ setTitle }: { setTitle: string }) {
     const tribesNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tribes)
     const componentsNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.components)
-    const emptyArray = useMemo(() => [], [])
-    const tribes = getFilterParametersNodeValuesOrDefault(tribesNode, emptyArray)
-    const components = getFilterParametersNodeValuesOrDefault(componentsNode, emptyArray)
-    const fetchArgs = useMemo(() => [tribes, components], [tribes, components])
+    const fetchArgs = [tribesNode, componentsNode]
 
     const value = useSelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.features as FilterParametersNode<string>

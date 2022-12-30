@@ -8,7 +8,7 @@ export interface TicketsType {
 }
 
 
-export const fetchTicketsTypes: () => Promise<FetchResult<Array<TicketsType>>> = async function () {
+export async function fetchTicketsTypes(): Promise<FetchResult<Array<TicketsType>>> {
     try {
         const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_tickets_types`).then(response => response.json())
         return {

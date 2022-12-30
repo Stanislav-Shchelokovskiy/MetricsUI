@@ -8,7 +8,7 @@ export interface GroupByPeriod {
 }
 
 
-export const fetchGroupByPeriods: () => Promise<FetchResult<Array<GroupByPeriod>>> = async function () {
+export async function fetchGroupByPeriods(): Promise<FetchResult<Array<GroupByPeriod>>> {
     try {
         const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_group_by_periods`).then(response => response.json())
         return {

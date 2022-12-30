@@ -8,7 +8,7 @@ export interface Period {
 }
 
 
-export const fetchPeriod: () => Promise<FetchResult<Period>> = async function () {
+export async function fetchPeriod(): Promise<FetchResult<Period>> {
     try {
         const period = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_period`).then(response => response.json())
         return {

@@ -2,13 +2,13 @@ import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 
 
-export interface CustomersGroup{
+export interface CustomersGroup {
     id: string
     name: string
 }
 
 
-export const fetchCustomersGroups: () => Promise<FetchResult<Array<CustomersGroup>>> = async function () {
+export async function fetchCustomersGroups(): Promise<FetchResult<Array<CustomersGroup>>> {
     try {
         const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_customers_groups`).then(response => response.json())
         return {

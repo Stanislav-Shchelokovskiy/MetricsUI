@@ -1,18 +1,15 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../store/Store'
 import { changePlatforms, changePlatformsInclude } from '../../../store/Actions'
-import { getFilterParametersNodeValuesOrDefault } from '../../../store/Utils'
 import { fetchPlatforms, Platform } from '../../../network_resource_fetcher/FetchPlatforms'
 import { FilterParametersNode } from '../../../store/SetsReducer'
 
 
 export default function PlatformsSelector({ setTitle }: { setTitle: string }) {
     const tribesNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tribes)
-    const emptyArray = useMemo(() => [], [])
-    const tribes = getFilterParametersNodeValuesOrDefault(tribesNode, emptyArray)
-    const fetchArgs = useMemo(() => [tribes], [tribes])
+    const fetchArgs = [tribesNode]
 
     const state = useSelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.platforms as FilterParametersNode<string>

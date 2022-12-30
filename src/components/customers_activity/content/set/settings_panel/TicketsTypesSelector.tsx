@@ -8,7 +8,7 @@ import { FilterParametersNode } from '../../../store/SetsReducer'
 
 
 export default function TicketsTypesSelector({ setTitle }: { setTitle: string }) {
-    const state = useSelector((store: CustomersActivityStore) =>
+    const value = useSelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.ticketsTypes as FilterParametersNode<number>
     )
     const onValueChange = (allValues: Array<TicketsType>, values: Array<number>) => changeTicketsTypes({ stateId: setTitle, data: values })
@@ -21,8 +21,8 @@ export default function TicketsTypesSelector({ setTitle }: { setTitle: string })
         placeholder='Select ticket types'
         label='Ticket types'
         fetchDataSource={fetchTicketsTypes}
-        value={state?.values}
-        includeButtonState={state?.include}
+        value={value.values}
+        includeButtonState={value.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
         container='#CustomersActivity_Sets_ScrollView_div'
