@@ -201,8 +201,8 @@ interface LegendClickObject {
 }
 
 function Graph({ state }: { state: ForecastPanelState }) {
-    const renderCount = useRef(0)
-    console.log('Graph render: ', renderCount.current++)
+    // const renderCount = useRef(0)
+    // console.log('Graph render: ', renderCount.current++)
 
     const [graphState, dispatch] = useReducer(graphStateReducer, initialGraphState)
 
