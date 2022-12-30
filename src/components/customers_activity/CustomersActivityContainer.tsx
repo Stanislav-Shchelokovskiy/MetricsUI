@@ -24,7 +24,7 @@ export function CustomersActivityApplySharedState() {
         if (fetchedState.success)
             dispatch(applyState(fetchedState.data))
     })()
-    return <Navigate to='/CustomersActivity' />
+    return <Navigate to='/CustomersActivity' replace={true} />
 }
 
 export default function CustomersActivity() {
