@@ -8,7 +8,7 @@ import { FilterParametersNode } from '../../../store/SetsReducer'
 
 
 export default function CustomersTypesSelector({ setTitle }: { setTitle: string }) {
-    const state = useSelector((store: CustomersActivityStore) =>
+    const value = useSelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.customersTypes as FilterParametersNode<number>
     )
 
@@ -22,8 +22,8 @@ export default function CustomersTypesSelector({ setTitle }: { setTitle: string 
         placeholder='Select user types'
         label='User types'
         fetchDataSource={fetchLicenseStatuses}
-        value={state?.values}
-        includeButtonState={state?.include}
+        value={value.values}
+        includeButtonState={value.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
         container='#CustomersActivity_Sets_ScrollView_div'

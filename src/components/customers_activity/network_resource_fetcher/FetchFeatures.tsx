@@ -1,6 +1,7 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { anyDependencyIsEmpty } from '../../common/components/Utils'
+import { FilterParametersNode } from '../store/SetsReducer'
+import { anyNodeIsConsideredEmpty } from '../store/Utils'
 
 
 export interface Feature {
@@ -9,33 +10,35 @@ export interface Feature {
 }
 
 
-export const fetchFeatures: (tribe_ids: Array<string>, component_ids: Array<string>) => Promise<FetchResult<Array<Feature>>> =
-    async function (tribe_ids: Array<string>, component_ids: Array<string>,) {
-        if (anyDependencyIsEmpty(tribe_ids, component_ids)) {
-            return {
-                success: true,
-                data: Array<Feature>()
-            }
-        }
-        try {
-            const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_features`,
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        tribes: tribe_ids,
-                        components: component_ids,
-                    }),
-                }).then(response => response.json())
-            return {
-                success: true,
-                data: (values as Array<Feature>)
-            }
-        } catch (error) {
-            console.log(error)
-            return {
-                success: false,
-                data: Array<Feature>()
-            }
+export async function fetchFeatures(
+    tribes: FilterParametersNode<string>,
+    components: FilterParametersNode<string>
+): Promise<FetchResult<Array<Feature>>> {
+    if (anyNodeIsConsideredEmpty(tribes, components)) {
+        return {
+            success: true,
+            data: Array<Feature>()
         }
     }
+    try {
+        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_features`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    tribes: tribes,
+                    components: components,
+                }),
+            }).then(response => response.json())
+        return {
+            success: true,
+            data: (values as Array<Feature>)
+        }
+    } catch (error) {
+        console.log(error)
+        return {
+            success: false,
+            data: Array<Feature>()
+        }
+    }
+}

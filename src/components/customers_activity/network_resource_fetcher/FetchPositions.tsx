@@ -8,7 +8,7 @@ export interface Position {
 }
 
 
-export const fetchPositions: () => Promise<FetchResult<Array<Position>>> = async function () {
+export async function fetchPositions(): Promise<FetchResult<Array<Position>>> {
     try {
         const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_positions`).then(response => response.json())
         return {

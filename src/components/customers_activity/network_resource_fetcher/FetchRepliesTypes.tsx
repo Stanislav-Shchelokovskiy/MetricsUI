@@ -8,7 +8,7 @@ export interface ReplyType {
 }
 
 
-export const fetchRepliesTypes: () => Promise<FetchResult<Array<ReplyType>>> = async function () {
+export async function fetchRepliesTypes(): Promise<FetchResult<Array<ReplyType>>> {
     try {
         const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_replies_types`).then(response => response.json())
         return {
