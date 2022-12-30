@@ -7,7 +7,6 @@ export default function useDataSource<DataSourceT>(
     fetchArgs: Array<any>,
     onDataSourceFetch?: (dataSource: Array<DataSourceT>) => void
 ) {
-    console.log(fetchArgs)
     const [ds, setDataSource] = useState<Array<DataSourceT>>(dataSource)
     useEffect(() => {
         if (fetchDataSource !== undefined) {
