@@ -13,6 +13,9 @@
 
 .CustomersActivityToolbar {
     background-color: rgba(246, 246, 246, 0.5);
+    justify-content: flex-start;
+    padding-left: 0.5%;
+    padding-right: 2%;
 }
 
 .CustomersActivityToolbar,
@@ -45,12 +48,6 @@
     border-radius: 25px;
     margin-left: 2px;
     margin-right: 2px;
-}
-
-.CustomersActivityToolbar {
-    justify-content: flex-start;
-    padding-left: 0.5%;
-    padding-right: 2%;
 }
 
 .CustomersActivity_PeriodSelector {

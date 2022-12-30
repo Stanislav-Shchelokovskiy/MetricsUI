@@ -12,18 +12,15 @@ import { fetchPeriod, Period } from '../network_resource_fetcher/FetchPeriod'
 interface PeriodSelectorState {
     periodStart: string
     periodEnd: string
-    selectedRange: Array<Date>
 }
 
 
 const INITIAL_STATE: PeriodSelectorState = {
     periodStart: '',
     periodEnd: '',
-    selectedRange: Array<Date>()
 }
 
 const CHANGE_PERIOD = 'change_period'
-const CHANGE_SELECTED_RANGE = 'change_selected_range'
 
 
 function periodSelectorStateReducer(state: PeriodSelectorState, action: AnyAction): PeriodSelectorState {
@@ -34,27 +31,36 @@ function periodSelectorStateReducer(state: PeriodSelectorState, action: AnyActio
                 periodStart: action.payload.period_start,
                 periodEnd: action.payload.period_end
             }
-        case CHANGE_SELECTED_RANGE:
-            return {
-                ...state,
-                selectedRange: action.payload
-            }
         default:
             return state
     }
 }
 
+function periodIsInvalid(period: Array<string>, possiblePeriod: Array<string>) {
+    if (period.length > 0) {
+        const periodStart = new Date(period[0])
+        const periodEnd = new Date(period[1])
+        const possiblePeriodStart = new Date(possiblePeriod[0])
+        const possiblePeriodEnd = new Date(possiblePeriod[1])
+
+        if (possiblePeriodStart <= periodStart && periodEnd <= possiblePeriodEnd)
+            return false
+    }
+    return true
+}
+
 export default function PeriodSelector() {
-    const selectedRange = useRef<Array<string>>([])
     const [periodSelectorState, periodSelectorStateDispatch] = useReducer(periodSelectorStateReducer, INITIAL_STATE)
-    selectedRange.current = useSelector((store: CustomersActivityStore) => store.customersActivity.range) || periodSelectorState.selectedRange
+    
+    const selectedRange = useRef<Array<string>>([])
+    selectedRange.current = useSelector((store: CustomersActivityStore) => store.customersActivity.range) || []
 
     useEffect(() => {
         (async () => {
             const periodFetchResult: FetchResult<Period> = await fetchPeriod()
             if (periodFetchResult.success) {
                 periodSelectorStateDispatch({ type: CHANGE_PERIOD, payload: periodFetchResult.data })
-                if (selectedRange.current.length === 0) {
+                if (periodIsInvalid(selectedRange.current, [periodFetchResult.data.period_start, periodFetchResult.data.period_end])) {
                     dispatch(changePeriod([
                         new Date(periodFetchResult.data.period_start),
                         new Date(periodFetchResult.data.period_end),

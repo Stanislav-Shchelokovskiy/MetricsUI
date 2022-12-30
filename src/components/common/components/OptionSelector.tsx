@@ -33,8 +33,8 @@ interface FetchProps<DataSourceT, ValueExprT> extends BaseProps {
 
 
 export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: FetchProps<DataSourceT, ValueExprT>) {
-    const storedDefaultValue = useRef<ValueExprT>()
-    storedDefaultValue.current = useSelector(props.stateSelector)
+    const value = useRef<ValueExprT>()
+    value.current = useSelector(props.stateSelector)
 
     const [dataSource, setDataSource] = useState<Array<DataSourceT>>([])
     const appDispatch = useDispatch()
@@ -48,7 +48,7 @@ export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: 
             if (fetchResult.success) {
                 setDataSource(fetchResult.data)
                 
-                if (storedDefaultValue.current === undefined || String(storedDefaultValue.current).length === 0) {
+                if (value.current === undefined || String(value.current).length === 0) {
                     const defaultValue = props.defaultValueSelector(fetchResult.data)
                     appDispatch(props.onValueChange(defaultValue))
                 }
@@ -59,7 +59,7 @@ export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: 
     if (dataSource.length > 0) {
         return <OptionSelector<DataSourceT, ValueExprT>
             {...props}
-            value={(storedDefaultValue.current as ValueExprT)}
+            value={(value.current as ValueExprT)}
             dataSource={dataSource}
             onValueChange={onValueChangeHandler} />
     }

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { MultiOptionSelector } from '../../../common/components/MultiOptionSelector'
+import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { changePositionsFilter } from '../../store/Actions'
 import { ForecasterStore, useForecasterSelector } from '../../store/Store'
 

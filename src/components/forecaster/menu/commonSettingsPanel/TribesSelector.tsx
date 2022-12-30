@@ -1,7 +1,7 @@
 import React from 'react'
 import { Tribe } from '../../../common/Interfaces'
 import { fetchTribes } from '../../../common/network_resource_fetcher/FetchAvailableTribes'
-import MultiOptionSelectorWithFetch from '../../../common/components/MultiOptionSelector'
+import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { changeSelectedTribes } from '../../store/Actions'
 import { ForecasterStore, useForecasterSelector } from '../../store/Store'
 
@@ -19,13 +19,13 @@ export default function TribesSelector() {
         return changeSelectedTribes(tribes)
     }
 
-    return <MultiOptionSelectorWithFetch<Tribe, string>
+    return <MultiOptionSelector<Tribe, string>
         className='TribesSelector'
         displayExpr='name'
         valueExpr='id'
         placeholder='Select tribes to display...'
         label='Tribes'
-        fetchDataSourceValues={fetchTribes}
+        fetchDataSource={fetchTribes}
         value={selectedTribes}
         onValueChange={changeSelectedTribesAction}
         showSelectionControls={true}

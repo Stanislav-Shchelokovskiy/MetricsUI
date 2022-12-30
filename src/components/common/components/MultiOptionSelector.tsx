@@ -17,7 +17,11 @@ interface Props<DataSourceT, ValueExprT> {
     valueExpr: string
     placeholder: string
     label: string
-    dataSource: Array<DataSourceT> | undefined
+    dataSource: Array<DataSourceT>
+    fetchDataSource: ((...args: any) => Promise<FetchResult<Array<DataSourceT>>>) | undefined
+    fetchArgs: Array<any>
+    onDataSourceFetch: ((dataSource: Array<DataSourceT>) => void) | undefined
+    hideIfDataSourceEmpty: boolean
     value: Array<ValueExprT> | undefined
     onValueChange: (allValues: Array<DataSourceT>, selectedValues: Array<ValueExprT>) => PayloadAction<any>
     showSelectionControls: boolean
@@ -28,27 +32,24 @@ interface Props<DataSourceT, ValueExprT> {
     hideSelectedItems: boolean
 }
 
-interface FetchProps<DataSourceT, ValueExprT> extends Props<DataSourceT, ValueExprT> {
-    fetchDataSourceValues: () => Promise<FetchResult<Array<DataSourceT>>>
-}
 
-
-export default function MultiOptionSelectorWithFetch<DataSourceT, ValueExprT>(props: FetchProps<DataSourceT, ValueExprT>) {
-    const dataSource = useDataSource(props.fetchDataSourceValues)
+export default function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT>) {
+    const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, props.onDataSourceFetch)
     if (dataSource.length > 0) {
         return (
-            <MultiOptionSelector
+            <MultiOptionSelectorInner
                 {...props}
                 dataSource={dataSource}
-                value={props.value}
             />
         )
     }
+    if (props.hideIfDataSourceEmpty)
+        return null
     return <LoadIndicator width={undefined} height={25} />
 }
 
 
-export function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT>) {
+function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT>) {
     const dispatch = useDispatch()
     const onValueChangeHandler = (values: Array<ValueExprT>) => {
         dispatch(props.onValueChange(props.dataSource || [], values))
@@ -138,11 +139,15 @@ const defaultProps = {
     valueExpr: undefined,
     onIncludeChange: undefined,
     includeButtonState: undefined,
+    dataSource: [],
+    fetchDataSource: undefined,
+    fetchArgs: [],
+    onDataSourceFetch: undefined,
+    hideIfDataSourceEmpty: false,
     disabled: false,
     showSelectionControls: true,
     container: undefined,
     hideSelectedItems: true,
 }
 
-MultiOptionSelectorWithFetch.defaultProps = { ...defaultProps, dataSource: undefined, defaultValue: undefined }
 MultiOptionSelector.defaultProps = defaultProps
