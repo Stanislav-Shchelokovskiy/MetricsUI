@@ -1,7 +1,7 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { allDependenciesAreEmpty } from '../../common/components/Utils'
 import { FilterParametersNode } from '../store/SetsReducer'
+import { areNodesConsideredEmpty } from '../store/Utils'
 
 
 export interface Employee {
@@ -11,26 +11,25 @@ export interface Employee {
 
 
 export const fetchEmployees: (
-    position_ids: FilterParametersNode<string>,
-    tribe_ids: FilterParametersNode<string>) => Promise<FetchResult<Array<Employee>>> =
+    positions: FilterParametersNode<string>,
+    tribes: FilterParametersNode<string>) => Promise<FetchResult<Array<Employee>>> =
     async function (
-        position_ids: FilterParametersNode<string>,
-        tribe_ids: FilterParametersNode<string>
+        positions: FilterParametersNode<string>,
+        tribes: FilterParametersNode<string>
     ) {
-        if (allDependenciesAreEmpty(position_ids, tribe_ids)) {
+        if (areNodesConsideredEmpty(positions, tribes))
             return {
                 success: true,
                 data: Array<Employee>()
             }
-        }
         try {
             const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_employees`,
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        positions: position_ids,
-                        tribes: tribe_ids,
+                        positions: positions,
+                        tribes: tribes,
                     }),
                 }).then(response => response.json())
             return {

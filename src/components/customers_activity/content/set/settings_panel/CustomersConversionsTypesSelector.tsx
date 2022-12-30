@@ -1,9 +1,8 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../store/Store'
 import { changeConversionsTypes, changeConversionsTypesInclude } from '../../../store/Actions'
-import { getFilterParametersNodeValuesOrDefault } from '../../../store/Utils'
 import { fetchConversionStatuses, ConversionStatus } from '../../../network_resource_fetcher/FetchConversionStatuses'
 import { FilterParametersNode } from '../../../store/SetsReducer'
 
@@ -12,9 +11,7 @@ export default function CustomersConversionsTypesSelector({ setTitle }: { setTit
     const customersTypeNode = useSelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.customersTypes
     )
-    const emptyArray = useMemo(() => [], [])
-    const customersTypes = getFilterParametersNodeValuesOrDefault(customersTypeNode, emptyArray)
-    const fetchArgs = useMemo(() => [customersTypes], [customersTypes])
+    const fetchArgs = [customersTypeNode]
 
     const value = useSelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.conversionsTypes as FilterParametersNode<number>
