@@ -2,6 +2,9 @@ import { AnyAction } from '@reduxjs/toolkit'
 import { GenerateNewSetTitle } from './SetsReducer'
 import { INITIAL_SET } from '../store/SetsReducer'
 import { APPLY_STATE } from '../../common/store/state/Actions'
+import { initMissingCustomersActivityProperties } from './StoreStateMissingPropertiesInitializator'
+import { getValidComparisonMethodOrDefault } from '../common_settings_panel/ComparisonMethodSelector'
+import { getValidMetricOrDefault } from '../common_settings_panel/MetricSelector'
 import {
     CHANGE_PERIOD,
     CHANGE_GROUP_BY_PERIOD,
@@ -25,8 +28,8 @@ export interface CustomersActivityState {
 const INITIAL_CUSTOMERS_ACTIVITY_STATE: CustomersActivityState = {
     range: Array<string>(),
     groupByPeriod: '',
-    metric: '',
-    comparisonMethod: '',
+    metric: getValidMetricOrDefault(undefined),
+    comparisonMethod: getValidComparisonMethodOrDefault(undefined),
     sets: [INITIAL_SET.title]
 }
 
@@ -71,7 +74,7 @@ export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL
             }
 
         case APPLY_STATE:
-            return action.payload.customersActivity
+            return initMissingCustomersActivityProperties(action.payload.customersActivity)
 
         case CHANGE_SET_TITLE:
             return {

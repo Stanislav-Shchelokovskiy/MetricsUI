@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import FetchResult from '../../common/Interfaces'
 
-export default function useDataSource<DataSourceT>(fetchDataSource: () => Promise<FetchResult<Array<DataSourceT>>>) {
-    return useDS(fetchDataSource, null)
-}
-
-export function useCascadeDataSource<DataSourceT>(fetchDataSource: () => Promise<FetchResult<Array<DataSourceT>>>, ...dependency: any[]) {
-    return useDS(() => fetchDataSource(), ...dependency)
-}
-
-function useDS<DataSourceT>(fetchDataSource: () => Promise<FetchResult<Array<DataSourceT>>>, ...dependency: any) {
-    const [dataSource, setDataSource] = useState<Array<DataSourceT>>([])
+export default function useDataSource<DataSourceT>(
+    dataSource: Array<DataSourceT>,
+    fetchDataSource: ((...args: any[]) => Promise<FetchResult<Array<DataSourceT>>>) | undefined,
+    fetchArgs: Array<any>,
+    onDataSourceFetch?: (dataSource: Array<DataSourceT>) => void
+) {
+    console.log(fetchArgs)
+    const [ds, setDataSource] = useState<Array<DataSourceT>>(dataSource)
     useEffect(() => {
-        (async () => {
-            const fetchResult: FetchResult<Array<DataSourceT>> = await fetchDataSource()
-            if (fetchResult.success) {
-                setDataSource(fetchResult.data)
-            }
-        })()
-    }, [...dependency])
-    return dataSource
+        if (fetchDataSource !== undefined) {
+            (async () => {
+                const fetchResult: FetchResult<Array<DataSourceT>> = await fetchDataSource(...fetchArgs)
+                if (fetchResult.success) {
+                    const ds = fetchResult.data
+                    setDataSource(ds)
+                    onDataSourceFetch?.(ds)
+                }
+            })()
+        }
+    }, [...fetchArgs])
+    return ds
 }

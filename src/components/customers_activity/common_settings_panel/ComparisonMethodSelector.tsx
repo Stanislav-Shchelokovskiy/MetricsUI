@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { OptionSelector } from '../../common/components/OptionSelector'
 import { CustomersActivityStore } from '../store/Store'
@@ -8,6 +8,13 @@ import { changeComparisonMethod } from '../store/Actions'
 const ABSOLUTE_BAR = 'Absolute (Bar)'
 const ABSOLUTE_AREA = 'Absolute (Area)'
 const RELATIVE = 'Relative'
+const comparisonMethods = [ABSOLUTE_AREA, ABSOLUTE_BAR, RELATIVE]
+
+export function getValidComparisonMethodOrDefault(currentValue: string | undefined) {
+    if (currentValue !== undefined && comparisonMethods.includes(currentValue))
+        return currentValue
+    return ABSOLUTE_AREA
+}
 
 export const isAbsoluteBarSelected: (method: string) => boolean = (metric: string) => {
     return metric === ABSOLUTE_BAR
@@ -19,17 +26,11 @@ export const isAbsoluteAreaSelected: (method: string) => boolean = (metric: stri
 
 
 export default function ComparisonMethodSelector() {
-    const comparisonMethods = useMemo<Array<string>>(() => { return [ABSOLUTE_AREA, ABSOLUTE_BAR, RELATIVE] }, [])
-    let selectedComparisonMethod = useSelector((store: CustomersActivityStore) => store.customersActivity.comparisonMethod)
+    const selectedComparisonMethod = useSelector((store: CustomersActivityStore) => store.customersActivity.comparisonMethod)
 
     const dispatch = useDispatch()
     const onComparisonMethodChange: (comparisonMethod: string) => void = (comparisonMethod: string) => {
         dispatch(changeComparisonMethod(comparisonMethod))
-    }
-
-    if (!selectedComparisonMethod) {
-        selectedComparisonMethod = ABSOLUTE_AREA
-        dispatch(changeComparisonMethod(selectedComparisonMethod))
     }
 
     return (

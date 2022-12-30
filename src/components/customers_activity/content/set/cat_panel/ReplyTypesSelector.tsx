@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import MultiOptionSelectorWithFetch from '../../../../common/components/MultiOptionSelector'
+import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../store/Store'
 import { changeRepliesTypes, changeRepliesTypesInclude } from '../../../store/Actions'
 import { fetchRepliesTypes, ReplyType } from '../../../network_resource_fetcher/FetchRepliesTypes'
@@ -15,13 +15,13 @@ export default function ReplyTypesSelector({ setTitle }: { setTitle: string }) {
     const onValueChange = (allValues: Array<ReplyType>, values: Array<string>) => changeRepliesTypes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeRepliesTypesInclude({ stateId: setTitle, data: include })
 
-    return <MultiOptionSelectorWithFetch<ReplyType, string>
+    return <MultiOptionSelector<ReplyType, string>
         className='CustomersActivity_ReplyTypesSelector'
         displayExpr='name'
         valueExpr='id'
         placeholder='Select replies type'
         label='CAT replies types'
-        fetchDataSourceValues={fetchRepliesTypes}
+        fetchDataSource={fetchRepliesTypes}
         value={state?.values}
         includeButtonState={state?.include}
         onValueChange={onValueChange}

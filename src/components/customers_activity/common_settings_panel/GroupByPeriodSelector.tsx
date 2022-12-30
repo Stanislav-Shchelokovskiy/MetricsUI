@@ -9,15 +9,14 @@ export default function GroupByPeriodSelector() {
     const stateSelector = (store: CustomersActivityStore) => store.customersActivity.groupByPeriod
     const defaultValueSelector = (values: Array<GroupByPeriod>) => values[0]?.format
 
-    return (
-        <OptionSelectorWithFetch<GroupByPeriod, string>
-            className='CustomersActivity_GroupByPeriodSelector'
-            displayExpr='name'
-            valueExpr='format'
-            fetchDataSourceValues={fetchGroupByPeriods}
-            stateSelector={stateSelector}
-            defaultValueSelector={defaultValueSelector}
-            onValueChange={changeGroupByPeriod}
-            label='Group by' />
-    )
+    return <OptionSelectorWithFetch<GroupByPeriod, string>
+        className='CustomersActivity_GroupByPeriodSelector'
+        displayExpr='name'
+        valueExpr='format'
+        fetchDataSourceValues={fetchGroupByPeriods}
+        stateSelector={stateSelector}
+        defaultValueSelector={defaultValueSelector}
+        onValueChange={changeGroupByPeriod}
+        label='Group by'
+    />
 } 
