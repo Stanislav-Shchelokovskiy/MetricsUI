@@ -27,7 +27,7 @@ export default function OptionSelector<DataSourceT, ValueExprT>(props: Props<Dat
     const value = useRef<ValueExprT>()
     value.current = useSelector(props.valueSelector)
     const onDataSourceFetch = (dataSource: Array<DataSourceT>) => {
-        if (props.defaultValueSelector !== undefined && (value.current === undefined || String(value.current).length === 0)) {
+        if (isEmpty(value.current) && props.defaultValueSelector !== undefined) {
             const defaultValue = props.defaultValueSelector(dataSource)
             onValueChangeHandler(defaultValue)
         }
@@ -61,7 +61,11 @@ const defaultProps = {
     dataSource: [],
     fetchDataSource: undefined,
     fetchArgs: [],
-    onDataSourceFetch: undefined,
 }
 
 OptionSelector.defaultProps = defaultProps
+
+
+function isEmpty<ValueExprT>(value: ValueExprT | undefined) {
+    return value === undefined || String(value).length === 0
+}

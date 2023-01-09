@@ -105,10 +105,6 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.tribes,
                         values: action.payload.data,
                     },
-                    components: INITIAL_SET.components,
-                    features: INITIAL_SET.features,
-                    platforms: INITIAL_SET.platforms,
-                    products: INITIAL_SET.products,
                 }
             })
         case CHANGE_TRIBES_INCLUDE:
@@ -119,10 +115,6 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.tribes,
                         include: action.payload.data,
                     },
-                    components: INITIAL_SET.components,
-                    features: INITIAL_SET.features,
-                    platforms: INITIAL_SET.platforms,
-                    products: INITIAL_SET.products,
                 }
             })
 
@@ -221,7 +213,6 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.components,
                         values: action.payload.data,
                     },
-                    features: INITIAL_SET.features
                 }
             })
 
@@ -233,7 +224,6 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.components,
                         include: action.payload.data,
                     },
-                    features: INITIAL_SET.features
                 }
             })
 
@@ -266,7 +256,6 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.customersTypes,
                         values: action.payload.data
                     },
-                    conversionsTypes: INITIAL_SET.conversionsTypes,
                 }
             })
 
@@ -278,7 +267,6 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.customersTypes,
                         include: action.payload.data
                     },
-                    conversionsTypes: INITIAL_SET.conversionsTypes,
                 }
             })
 
@@ -312,7 +300,6 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.platforms,
                         values: action.payload.data
                     },
-                    products: INITIAL_SET.products,
                 }
             })
 
@@ -324,7 +311,6 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.platforms,
                         include: action.payload.data
                     },
-                    products: INITIAL_SET.products,
                 }
             })
 
@@ -358,7 +344,6 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.positions,
                         values: action.payload.data
                     },
-                    employees: INITIAL_SET.employees,
                 }
             })
 
@@ -370,7 +355,6 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.positions,
                         include: action.payload.data
                     },
-                    employees: INITIAL_SET.employees,
                 }
             })
 
@@ -382,7 +366,6 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.empTribes,
                         values: action.payload.data
                     },
-                    employees: INITIAL_SET.employees,
                 }
             })
 
@@ -394,7 +377,6 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                         ...x.empTribes,
                         include: action.payload.data
                     },
-                    employees: INITIAL_SET.employees,
                 }
             })
 

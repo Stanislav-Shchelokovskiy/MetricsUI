@@ -6,7 +6,6 @@ export interface DataSourceProps<DataSourceT> {
     dataSource: Array<DataSourceT>
     fetchDataSource: ((...args: any) => Promise<FetchResult<Array<DataSourceT>>>) | undefined
     fetchArgs: Array<any>
-    onDataSourceFetch: ((dataSource: Array<DataSourceT>) => void) | undefined
 }
 
 

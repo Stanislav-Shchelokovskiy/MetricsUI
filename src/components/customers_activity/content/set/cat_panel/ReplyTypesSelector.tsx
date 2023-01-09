@@ -8,7 +8,7 @@ import { FilterParametersNode } from '../../../store/SetsReducer'
 
 
 export default function ReplyTypesSelector({ setTitle }: { setTitle: string }) {
-    const state = useSelector((store: CustomersActivityStore) =>
+    const node = useSelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.repliesTypes as FilterParametersNode<string>
     )
 
@@ -22,8 +22,8 @@ export default function ReplyTypesSelector({ setTitle }: { setTitle: string }) {
         placeholder='Select replies type'
         label='CAT replies types'
         fetchDataSource={fetchRepliesTypes}
-        value={state?.values}
-        includeButtonState={state?.include}
+        value={node?.values}
+        includeButtonState={node?.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
         container='#CustomersActivity_Sets_ScrollView_div'
