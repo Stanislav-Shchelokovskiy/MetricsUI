@@ -3,24 +3,18 @@ import TagBox, { DropDownOptions, Button } from 'devextreme-react/tag-box'
 import DataSource from 'devextreme/data/data_source'
 import { trigger } from 'devextreme/events'
 import LoadIndicator from './LoadIndicator'
-import useDataSource from '../../common/hooks/UseDataSource'
-import FetchResult from '../Interfaces'
+import useDataSource, { DataSourceProps } from '../../common/hooks/UseDataSource'
 import { useDispatch } from 'react-redux'
 import { PayloadAction } from '@reduxjs/toolkit'
 import * as includeIcon from './assets/include.svg'
 import * as excludeIcon from './assets/exclude.svg'
 
-
-interface Props<DataSourceT, ValueExprT> {
+interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     className: string
     displayExpr: string
     valueExpr: string
     placeholder: string
     label: string
-    dataSource: Array<DataSourceT>
-    fetchDataSource: ((...args: any) => Promise<FetchResult<Array<DataSourceT>>>) | undefined
-    fetchArgs: Array<any>
-    onDataSourceFetch: ((dataSource: Array<DataSourceT>) => void) | undefined
     hideIfDataSourceEmpty: boolean
     value: Array<ValueExprT> | undefined
     onValueChange: (allValues: Array<DataSourceT>, selectedValues: Array<ValueExprT>) => PayloadAction<any>

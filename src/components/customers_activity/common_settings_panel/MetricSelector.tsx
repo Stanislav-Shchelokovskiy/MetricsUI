@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { OptionSelector } from '../../common/components/OptionSelector'
+import React from 'react'
+import OptionSelector from '../../common/components/OptionSelector'
 import { changeMetric } from '../store/Actions'
 import { CustomersActivityStore } from '../store/Store'
 
@@ -27,19 +26,13 @@ export const isIterationsMetricSelected: (metric: string) => boolean = (metric: 
 
 
 export default function MetricSelector() {
-    const selectedMetric = useSelector((store: CustomersActivityStore) => store.customersActivity.metric)
-
-    const dipatch = useDispatch()
-    const onMetricChange: (metric: string) => void = (metric: string) => {
-        dipatch(changeMetric(metric))
-    }
+    const valueSelector = (store: CustomersActivityStore) => store.customersActivity.metric
 
     return <OptionSelector
         className='CustomersActivity_MetricSelector'
         dataSource={metrics}
-        defaultValue={selectedMetric}
-        value={selectedMetric}
-        onValueChange={onMetricChange}
+        valueSelector={valueSelector}
+        onValueChange={changeMetric}
         label='Metric'
     />
 } 
