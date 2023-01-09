@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import FetchResult from '../../common/Interfaces'
 
+
+export interface DataSourceProps<DataSourceT> {
+    dataSource: Array<DataSourceT>
+    fetchDataSource: ((...args: any) => Promise<FetchResult<Array<DataSourceT>>>) | undefined
+    fetchArgs: Array<any>
+}
+
+
 export default function useDataSource<DataSourceT>(
     dataSource: Array<DataSourceT>,
     fetchDataSource: ((...args: any[]) => Promise<FetchResult<Array<DataSourceT>>>) | undefined,

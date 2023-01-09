@@ -1,6 +1,5 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { OptionSelector } from '../../common/components/OptionSelector'
+import OptionSelector from '../../common/components/OptionSelector'
 import { CustomersActivityStore } from '../store/Store'
 import { changeComparisonMethod } from '../store/Actions'
 
@@ -26,20 +25,13 @@ export const isAbsoluteAreaSelected: (method: string) => boolean = (metric: stri
 
 
 export default function ComparisonMethodSelector() {
-    const selectedComparisonMethod = useSelector((store: CustomersActivityStore) => store.customersActivity.comparisonMethod)
-
-    const dispatch = useDispatch()
-    const onComparisonMethodChange: (comparisonMethod: string) => void = (comparisonMethod: string) => {
-        dispatch(changeComparisonMethod(comparisonMethod))
-    }
-
+    const valueSelector = (store: CustomersActivityStore) => store.customersActivity.comparisonMethod
     return (
         <OptionSelector
             className='CustomersActivity_ComparisonMethodSelector'
             dataSource={comparisonMethods}
-            defaultValue={selectedComparisonMethod}
-            value={selectedComparisonMethod}
-            onValueChange={onComparisonMethodChange}
+            valueSelector={valueSelector}
+            onValueChange={changeComparisonMethod}
             label='Comparison method' />
     )
 } 

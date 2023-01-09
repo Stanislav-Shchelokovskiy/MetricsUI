@@ -3,24 +3,19 @@ import TagBox, { DropDownOptions, Button } from 'devextreme-react/tag-box'
 import DataSource from 'devextreme/data/data_source'
 import { trigger } from 'devextreme/events'
 import LoadIndicator from './LoadIndicator'
-import useDataSource from '../../common/hooks/UseDataSource'
-import FetchResult from '../Interfaces'
+import useDataSource, { DataSourceProps } from '../../common/hooks/UseDataSource'
 import { useDispatch } from 'react-redux'
 import { PayloadAction } from '@reduxjs/toolkit'
+import { validateValues } from './Utils'
 import * as includeIcon from './assets/include.svg'
 import * as excludeIcon from './assets/exclude.svg'
 
-
-interface Props<DataSourceT, ValueExprT> {
+interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     className: string
     displayExpr: string
     valueExpr: string
     placeholder: string
     label: string
-    dataSource: Array<DataSourceT>
-    fetchDataSource: ((...args: any) => Promise<FetchResult<Array<DataSourceT>>>) | undefined
-    fetchArgs: Array<any>
-    onDataSourceFetch: ((dataSource: Array<DataSourceT>) => void) | undefined
     hideIfDataSourceEmpty: boolean
     value: Array<ValueExprT> | undefined
     onValueChange: (allValues: Array<DataSourceT>, selectedValues: Array<ValueExprT>) => PayloadAction<any>
@@ -34,7 +29,17 @@ interface Props<DataSourceT, ValueExprT> {
 
 
 export default function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT>) {
-    const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, props.onDataSourceFetch)
+    const dispatch = useDispatch()
+    const onDataSourceFetch = (dataSource: Array<DataSourceT>) => {
+        if (props.value === undefined)
+            return
+        const [validValues, valuesAreValid] = validateValues(dataSource, props.value, props.valueExpr)
+        if (valuesAreValid)
+            return
+        dispatch(props.onValueChange(dataSource, validValues))
+    }
+    const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, onDataSourceFetch)
+    
     if (dataSource.length > 0) {
         return (
             <MultiOptionSelectorInner
@@ -142,7 +147,6 @@ const defaultProps = {
     dataSource: [],
     fetchDataSource: undefined,
     fetchArgs: [],
-    onDataSourceFetch: undefined,
     hideIfDataSourceEmpty: false,
     disabled: false,
     showSelectionControls: true,

@@ -1,82 +1,55 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import LoadIndicator from './LoadIndicator'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
-import FetchResult from '../Interfaces'
+import useDataSource, { DataSourceProps } from '../../common/hooks/UseDataSource'
 
-interface BaseProps {
+interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     className: string
     displayExpr: string
     valueExpr: string
     placeholder: string
     label: string
     container: string
-}
-
-interface DataSourceProps<DataSourceT, ValueExprT> extends BaseProps {
-    dataSource: Array<DataSourceT>
-    defaultValue: ValueExprT | undefined
-    onValueChange: (value: ValueExprT) => void
-}
-
-interface DataSourceWithValue<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT, ValueExprT> {
-    value: any
-}
-
-interface FetchProps<DataSourceT, ValueExprT> extends BaseProps {
-    fetchDataSourceValues: () => Promise<FetchResult<Array<DataSourceT>>>
-    stateSelector: (store: any) => ValueExprT | undefined
+    valueSelector: (store: any) => ValueExprT | undefined
     defaultValueSelector: (value: Array<DataSourceT>) => ValueExprT
     onValueChange: (value: ValueExprT) => PayloadAction<any>
 }
 
 
-export default function OptionSelectorWithFetch<DataSourceT, ValueExprT>(props: FetchProps<DataSourceT, ValueExprT>) {
-    const value = useRef<ValueExprT>()
-    value.current = useSelector(props.stateSelector)
-
-    const [dataSource, setDataSource] = useState<Array<DataSourceT>>([])
+export default function OptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT>) {
     const appDispatch = useDispatch()
     const onValueChangeHandler = (value: ValueExprT) => {
         appDispatch(props.onValueChange(value))
     }
 
-    useEffect(() => {
-        (async () => {
-            const fetchResult: FetchResult<Array<DataSourceT>> = await props.fetchDataSourceValues()
-            if (fetchResult.success) {
-                setDataSource(fetchResult.data)
-                
-                if (value.current === undefined || String(value.current).length === 0) {
-                    const defaultValue = props.defaultValueSelector(fetchResult.data)
-                    appDispatch(props.onValueChange(defaultValue))
-                }
-            }
-        })()
-    }, [])
+    const value = useRef<ValueExprT>()
+    value.current = useSelector(props.valueSelector)
+    const onDataSourceFetch = (dataSource: Array<DataSourceT>) => {
+        if (isEmpty(value.current) && props.defaultValueSelector !== undefined) {
+            const defaultValue = props.defaultValueSelector(dataSource)
+            onValueChangeHandler(defaultValue)
+        }
+    }
+    const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, onDataSourceFetch)
 
     if (dataSource.length > 0) {
-        return <OptionSelector<DataSourceT, ValueExprT>
+        return <SelectBox
             {...props}
-            value={(value.current as ValueExprT)}
             dataSource={dataSource}
-            onValueChange={onValueChangeHandler} />
+            value={value.current}
+            onValueChange={onValueChangeHandler}
+            labelMode='static'
+            focusStateEnabled={false}>
+            <DropDownOptions
+                hideOnOutsideClick={true}
+                hideOnParentScroll={true}
+                focusStateEnabled={false}
+                container={props.container} />
+        </SelectBox >
     }
     return <LoadIndicator width={undefined} height={25} />
-}
-
-export function OptionSelector<DataSourceT, ValueExprT>(props: DataSourceProps<DataSourceT, ValueExprT> | DataSourceWithValue<DataSourceT, ValueExprT>) {
-    return <SelectBox
-        {...props}
-        labelMode='static'
-        focusStateEnabled={false}>
-        <DropDownOptions
-            hideOnOutsideClick={true}
-            hideOnParentScroll={true}
-            focusStateEnabled={false}
-            container={props.container} />
-    </SelectBox >
 }
 
 const defaultProps = {
@@ -84,8 +57,15 @@ const defaultProps = {
     valueExpr: undefined,
     placeholder: undefined,
     container: undefined,
-    defaultValue: undefined,
+    defaultValueSelector: undefined,
+    dataSource: [],
+    fetchDataSource: undefined,
+    fetchArgs: [],
 }
 
-OptionSelectorWithFetch.defaultProps = defaultProps
 OptionSelector.defaultProps = defaultProps
+
+
+function isEmpty<ValueExprT>(value: ValueExprT | undefined) {
+    return value === undefined || String(value).length === 0
+}
