@@ -29,13 +29,13 @@ function ErrorPage() {
 function Root() {
   return (
     <div className='Root'>
-      <Link to={'forecaster'}>
+      <Link to={'forecaster'} className='NavigationButton'>
         <Button
           className='NavElement'
           text='Forecaster'
           focusStateEnabled={false} />
       </Link>
-      <Link to={'CustomersActivity'}>
+      <Link to={'CustomersActivity'} className='NavigationButton'>
         <Button
           className='NavElement'
           text='Customers Activity'
