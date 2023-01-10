@@ -7,7 +7,8 @@ import { CustomersActivityStore } from '../store/Store'
 const TICKETS = 'Tickets'
 const ITERATIONS = 'Iterations'
 const PEOPLE = 'People'
-const metrics = [TICKETS, ITERATIONS, PEOPLE]
+const ITERATIONS_TO_TICKETS = 'Iterations / Tickets'
+const metrics = [TICKETS, ITERATIONS, ITERATIONS_TO_TICKETS, PEOPLE]
 
 export function getValidMetricOrDefault(currentValue: string | undefined) {
     if (currentValue !== undefined && metrics.includes(currentValue))
@@ -22,6 +23,10 @@ export const isTicketsMetricSelected: (metric: string) => boolean = (metric: str
 
 export const isIterationsMetricSelected: (metric: string) => boolean = (metric: string) => {
     return metric === ITERATIONS
+}
+
+export const isIterationsToTicketsMetricSelected: (metric: string) => boolean = (metric: string) => {
+    return metric === ITERATIONS_TO_TICKETS
 }
 
 
