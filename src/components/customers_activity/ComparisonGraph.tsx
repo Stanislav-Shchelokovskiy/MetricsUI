@@ -4,14 +4,18 @@ import { Data as GraphData } from 'plotly.js'
 import { useSelector } from 'react-redux'
 import { CustomersActivityStore } from './store/Store'
 import FetchResult, { Token } from '../common/Interfaces'
-import { isTicketsMetricSelected, isIterationsMetricSelected } from './common_settings_panel/MetricSelector'
+import { toFriendlyTitle } from './content/set/header/Title'
 import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './common_settings_panel/ComparisonMethodSelector'
 import {
     fetchTicketsWithIterationsAggregates,
     TicketsWithIterationsAggregates,
     EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES
 } from './network_resource_fetcher/FetchTicketsWithIterationsAggregates'
-import { toFriendlyTitle } from './content/set/header/Title'
+import {
+    isTicketsMetricSelected,
+    isIterationsMetricSelected,
+    isIterationsToTicketsMetricSelected
+} from './common_settings_panel/MetricSelector'
 
 
 interface SetAggregates {
@@ -182,7 +186,8 @@ function getCommonGraphSettings(set: SetAggregates, metric: string) {
         name: set.name,
         x: set.aggregates.periods,
         y: isTicketsMetricSelected(metric) ? set.aggregates.tickets :
-            isIterationsMetricSelected(metric) ? set.aggregates.iterations : set.aggregates.people,
+            isIterationsMetricSelected(metric) ? set.aggregates.iterations :
+                isIterationsToTicketsMetricSelected(metric) ? set.aggregates.iterations_to_tickets : set.aggregates.people,
         opacity: 0.6,
         hovertext: set.name
     }
