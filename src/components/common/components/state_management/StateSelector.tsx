@@ -23,6 +23,6 @@ export default function StateSelector(props: ValuesProps) {
         onItemClick={onValueChange}
         focusStateEnabled={false}
         text='Apply state'
-        icon='preferences'
+        icon='favorites'
     />
 }

@@ -37,11 +37,11 @@ export default function CustomersActivity() {
         }, 500)
     }, [opened])
 
-    const onShowChange = useCallback(() => setOpened(!opened), [opened])
+    const showHideMenuCallback = useCallback(() => setOpened(!opened), [opened])
 
     return (
         <div className='CustomersActivityContainer'>
-            <Toolbar onShowChange={onShowChange} />
+            <Toolbar showHideMenu={showHideMenuCallback} menuOpened={opened} />
             <Drawer
                 className='CustomersActivity_ContentDrawer'
                 opened={opened}

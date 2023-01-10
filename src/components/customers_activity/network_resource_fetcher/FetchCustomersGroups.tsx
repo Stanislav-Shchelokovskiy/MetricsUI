@@ -8,9 +8,11 @@ export interface CustomersGroup {
 }
 
 
-export async function fetchCustomersGroups(): Promise<FetchResult<Array<CustomersGroup>>> {
+export async function fetchCustomersGroups(tracked: boolean): Promise<FetchResult<Array<CustomersGroup>>> {
     try {
-        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_customers_groups`).then(response => response.json())
+        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_customers_groups?` + new URLSearchParams({
+            tracked: tracked.toString()
+        })).then(response => response.json())
         return {
             success: true,
             data: (values as Array<CustomersGroup>)

@@ -14,6 +14,9 @@ export default function CustomersGroupsSelector({ setTitle }: { setTitle: string
     const onValueChange = (allValues: Array<CustomersGroup>, values: Array<string>) => changeCustomersGroups({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeCustomersGroupsInclude({ stateId: setTitle, data: include })
 
+    const trackedCustomersGroupsModeEnabled = useSelector((store: CustomersActivityStore) => store.customersActivity.trackedCustomersGroupsModeEnabled)
+    const fetchArgs = [trackedCustomersGroupsModeEnabled]
+
     return <MultiOptionSelector<CustomersGroup, string>
         className='CustomersActivity_CustomersGroupsSelector'
         displayExpr='name'
@@ -21,6 +24,7 @@ export default function CustomersGroupsSelector({ setTitle }: { setTitle: string
         placeholder='Select user groups'
         label='User groups'
         fetchDataSource={fetchCustomersGroups}
+        fetchArgs={fetchArgs}
         value={value.values}
         includeButtonState={value.include}
         onValueChange={onValueChange}

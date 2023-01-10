@@ -6,40 +6,55 @@ import StateSelector from '../../common/components/state_management/StateSelecto
 import DropStateButton from '../../common/components/state_management/DropStateButton'
 import ShareStateButton from '../../common/components/state_management/ShareStateButton'
 import { CustomersActivityStore } from '../store/Store'
+import TrackedGroupsModeSwitcher from './TrackedGroupsModeSwitcher'
 
-function Toolbar({ onShowChange }: { onShowChange: () => void }) {
-    const valuesSelector = (state: CustomersActivityStore) => state.viewState.stateKeys
-    const keySelector = (state: CustomersActivityStore) => state.viewState.key
-    const state_salt = 'CustomersActivity_'
+interface Props {
+    showHideMenu: () => void
+    menuOpened: boolean
+}
+
+export default function Toolbar(props: Props) {
     return (
         < div className='CustomersActivityToolbar'>
-            <Button
-                className='CustomersActivityMenuButton'
-                icon='menu'
-                onClick={onShowChange}
-            />
-            <div className='CustomersActivityToolbarCommands'>
-                <StateSelector
-                    className='CustomersActivityViewStateSelector'
-                    valuesSelector={valuesSelector}
-                    state_salt={state_salt} />
-                <SaveStateButton
-                    className='CustomersActivitySaveStateButton'
-                    keySelector={keySelector}
-                    state_salt={state_salt} />
-                <DropStateButton
-                    className='CustomersActivityDropStateButton'
-                    valuesSelector={valuesSelector}
-                    state_salt={state_salt} />
-                <ShareStateButton 
-                    className='CustomersActivityShareStateButton'
-                    keySelector={keySelector}
-                    state_salt={state_salt}/>
-                <div className='CustomersActivityToolbarSeparator'></div>
-                <DownloadButton />
-            </div>
+            <ToolbarMenu {...props} />
+            <ToolbarCommands />
         </div>
     )
 }
 
-export default React.memo(Toolbar)
+function ToolbarMenu(props: Props) {
+    return <div className='CustomersActivityToolbarMenu'>
+        <Button
+            className='CustomersActivityMenuButton'
+            icon='menu'
+            onClick={props.showHideMenu}
+        />
+        <TrackedGroupsModeSwitcher visible={props.menuOpened} />
+    </div>
+}
+
+const ToolbarCommands = React.memo(() => {
+    const valuesSelector = (state: CustomersActivityStore) => state.viewState.stateKeys
+    const keySelector = (state: CustomersActivityStore) => state.viewState.key
+    const state_salt = 'CustomersActivity_'
+    return <div className='CustomersActivityToolbarCommands'>
+        <StateSelector
+            className='CustomersActivityViewStateSelector'
+            valuesSelector={valuesSelector}
+            state_salt={state_salt} />
+        <SaveStateButton
+            className='CustomersActivitySaveStateButton'
+            keySelector={keySelector}
+            state_salt={state_salt} />
+        <DropStateButton
+            className='CustomersActivityDropStateButton'
+            valuesSelector={valuesSelector}
+            state_salt={state_salt} />
+        <ShareStateButton
+            className='CustomersActivityShareStateButton'
+            keySelector={keySelector}
+            state_salt={state_salt} />
+        <div className='CustomersActivityToolbarSeparator'></div>
+        <DownloadButton />
+    </div>
+})

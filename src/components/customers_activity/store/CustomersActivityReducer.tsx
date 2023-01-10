@@ -13,6 +13,7 @@ import {
     ADD_SET,
     REMOVE_SET,
     CHANGE_SET_TITLE,
+    CHANGE_TRACKED_CUSTOMERS_GROUPS_MODE,
 } from './Actions'
 
 
@@ -21,6 +22,7 @@ export interface CustomersActivityState {
     groupByPeriod: string
     metric: string
     comparisonMethod: string
+    trackedCustomersGroupsModeEnabled: boolean
     sets: Array<string>
 }
 
@@ -30,6 +32,7 @@ const INITIAL_CUSTOMERS_ACTIVITY_STATE: CustomersActivityState = {
     groupByPeriod: '',
     metric: getValidMetricOrDefault(undefined),
     comparisonMethod: getValidComparisonMethodOrDefault(undefined),
+    trackedCustomersGroupsModeEnabled: false,
     sets: [INITIAL_SET.title]
 }
 
@@ -80,6 +83,12 @@ export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL
             return {
                 ...state,
                 sets: state.sets.map(set => set !== action.payload.stateId ? set : action.payload.data)
+            }
+
+        case CHANGE_TRACKED_CUSTOMERS_GROUPS_MODE:
+            return {
+                ...state,
+                trackedCustomersGroupsModeEnabled: action.payload
             }
 
         default:
