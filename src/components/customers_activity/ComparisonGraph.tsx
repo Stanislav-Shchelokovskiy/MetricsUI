@@ -51,6 +51,7 @@ export default function ComparisonGraph() {
                     customersActivityState.groupByPeriod,
                     customersActivityState.range[0],
                     customersActivityState.range[1],
+                    customersActivityState.trackedCustomersGroupsModeEnabled,
                     set.customersGroups,
                     set.ticketsTypes,
                     set.ticketsTags,
@@ -80,6 +81,7 @@ export default function ComparisonGraph() {
         [
             customersActivityState.groupByPeriod,
             customersActivityState.range,
+            customersActivityState.trackedCustomersGroupsModeEnabled,
             customersActivitySets,
         ])
 

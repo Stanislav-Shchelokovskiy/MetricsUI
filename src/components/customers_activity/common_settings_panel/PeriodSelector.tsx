@@ -29,7 +29,7 @@ function periodSelectorStateReducer(state: PeriodSelectorState, action: AnyActio
             return {
                 ...state,
                 periodStart: action.payload.period_start,
-                periodEnd: action.payload.period_end
+                periodEnd: action.payload.period_end,
             }
         default:
             return state
@@ -51,7 +51,7 @@ function periodIsInvalid(period: Array<string>, possiblePeriod: Array<string>) {
 
 export default function PeriodSelector() {
     const [periodSelectorState, periodSelectorStateDispatch] = useReducer(periodSelectorStateReducer, INITIAL_STATE)
-    
+
     const selectedRange = useRef<Array<string>>([])
     selectedRange.current = useSelector((store: CustomersActivityStore) => store.customersActivity.range) || []
 

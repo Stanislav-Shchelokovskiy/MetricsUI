@@ -3,31 +3,42 @@
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    padding-left: 1%;
-    gap: 1%;
+    padding-left: 10px;
+    gap: 10px;
     flex: 1;
     height: 18vh;
-    gap: 10px;
     min-width: 70vw;
 }
 
 .CustomersActivityToolbar {
     background-color: rgba(246, 246, 246, 0.5);
     justify-content: flex-start;
-    padding-left: 0.5%;
-    padding-right: 2%;
 }
 
 .CustomersActivityToolbar,
+.CustomersActivityToolbarMenu,
 .CustomersActivityToolbarCommands {
     display: flex;
     flex-flow: row nowrap;
     align-items: stretch;
-    gap: 1%;
+
+}
+
+.CustomersActivityToolbarMenu,
+.CustomersActivityToolbarCommands {
+    gap: 12px;
+}
+
+.CustomersActivityToolbarMenu {
+    padding-left: 1%;
+    padding-right: 1%;
+    width: 27vw;
+    gap: 12px;
 }
 
 .CustomersActivityToolbarCommands {
     justify-content: flex-end;
+    padding-right: 2%;
     flex: 1;
 }
 
@@ -36,6 +47,7 @@
 .CustomersActivitySaveStateButton,
 .CustomersActivityDropStateButton,
 .CustomersActivityShareStateButton,
+.CustomersActivity_AdvancedSettingsButton,
 .CustomersActivityViewStateSelector,
 .CustomersActivityToolbarSeparator {
     margin-top: 7px;
@@ -52,6 +64,8 @@
 
 .CustomersActivity_PeriodSelector {
     margin-bottom: 0px;
+    padding-right: 0px;
+    margin-right: 0px;
     flex: 2;
 }
 
@@ -69,5 +83,5 @@
 }
 
 .CustomersActivity_ComparisonMethodSelector {
-    margin-right: 1%;
+    margin-right: 10px;
 }

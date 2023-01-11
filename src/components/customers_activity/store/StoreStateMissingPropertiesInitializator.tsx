@@ -7,6 +7,8 @@ import { getValidMetricOrDefault } from '../common_settings_panel/MetricSelector
 export function initMissingCustomersActivityProperties(customersActivity: CustomersActivityState): CustomersActivityState {
     customersActivity.comparisonMethod = getValidComparisonMethodOrDefault(customersActivity.comparisonMethod)
     customersActivity.metric = getValidMetricOrDefault(customersActivity.metric)
+    if (customersActivity.trackedCustomersGroupsModeEnabled === undefined)
+        customersActivity.trackedCustomersGroupsModeEnabled = false
     return customersActivity
 }
 
