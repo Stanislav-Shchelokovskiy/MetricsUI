@@ -36,17 +36,21 @@ function periodSelectorStateReducer(state: PeriodSelectorState, action: AnyActio
     }
 }
 
-function periodIsInvalid(period: Array<string>, possiblePeriod: Array<string>) {
+function validatePeriod(period: Array<string>, possiblePeriod: Array<string>): [Array<Date>, boolean] {
+    const possiblePeriodStart = new Date(possiblePeriod[0])
+    const possiblePeriodEnd = new Date(possiblePeriod[1])
     if (period.length > 0) {
         const periodStart = new Date(period[0])
         const periodEnd = new Date(period[1])
-        const possiblePeriodStart = new Date(possiblePeriod[0])
-        const possiblePeriodEnd = new Date(possiblePeriod[1])
 
         if (possiblePeriodStart <= periodStart && periodEnd <= possiblePeriodEnd)
-            return false
+            return [[periodStart, periodEnd], false]
+        else if (periodStart < possiblePeriodStart && periodEnd <= possiblePeriodEnd)
+            return [[possiblePeriodStart, periodEnd], true]
+        else if (possiblePeriodStart <= periodStart && possiblePeriodEnd < periodEnd)
+            return [[periodStart, possiblePeriodEnd], true]
     }
-    return true
+    return [[possiblePeriodStart, possiblePeriodEnd], true]
 }
 
 export default function PeriodSelector() {
@@ -60,20 +64,23 @@ export default function PeriodSelector() {
             const periodFetchResult: FetchResult<Period> = await fetchPeriod()
             if (periodFetchResult.success) {
                 periodSelectorStateDispatch({ type: CHANGE_PERIOD, payload: periodFetchResult.data })
-                if (periodIsInvalid(selectedRange.current, [periodFetchResult.data.period_start, periodFetchResult.data.period_end])) {
-                    dispatch(changePeriod([
-                        new Date(periodFetchResult.data.period_start),
-                        new Date(periodFetchResult.data.period_end),
-                    ]))
-                }
+                const [validPeriod, periodIsInvalid] = validatePeriod(selectedRange.current, [periodFetchResult.data.period_start, periodFetchResult.data.period_end])
+                if (periodIsInvalid)
+                    dispatch(changePeriod(validPeriod))
             }
         })()
     }, [])
 
     const dispatch = useDispatch()
-    const onRangeChange = useCallback((selectedRange: Array<Date>) => {
+    const changeRange = useCallback((selectedRange: Array<Date>) => {
         dispatch(changePeriod(selectedRange))
     }, [dispatch])
+
+    const onIncidentOccurred = useCallback((e: any) => {
+        const [validPeriod, periodIsInvalid] = validatePeriod(selectedRange.current, [periodSelectorState.periodStart, periodSelectorState.periodEnd])
+        if (periodIsInvalid)
+            changeRange(validPeriod)
+    }, [changeRange, periodSelectorState])
 
     if (periodSelectorState.periodStart) {
         return (
@@ -82,7 +89,8 @@ export default function PeriodSelector() {
                 value={selectedRange.current}
                 className='CustomersActivity_PeriodSelector'
                 size={{ height: 125 }}
-                onValueChange={onRangeChange}
+                onValueChange={changeRange}
+                onIncidentOccurred={onIncidentOccurred}
             >
                 <Margin top={10} />
                 <Scale
