@@ -54,6 +54,7 @@ async function downloadRawData(state: CustomersActivityStore) {
         const fetchResult: FetchResult<Array<TicketsWithIterationsRaw>> = await fetchTicketsWithIterationsRaw(
             customersActivityState.range[0],
             customersActivityState.range[1],
+            customersActivityState.trackedCustomersGroupsModeEnabled,
             set.customersGroups,
             set.ticketsTypes,
             set.ticketsTags,

@@ -32,6 +32,7 @@ export const EMPTY_TICKETS_WITH_ITERATIONS_RAW = {
 export async function fetchTicketsWithIterationsRaw(
     range_start: string,
     range_end: string,
+    trackedCustomersGroupsModeEnabled: boolean,
     customersGroups: FilterParametersNode<string>,
     ticketsTypes: FilterParametersNode<number>,
     ticketsTags: FilterParametersNode<number>,
@@ -53,6 +54,7 @@ export async function fetchTicketsWithIterationsRaw(
             new URLSearchParams({
                 range_start: range_start,
                 range_end: range_end,
+                tracked_customer_groups_mode_enabled: trackedCustomersGroupsModeEnabled.toString(),
             }),
             {
                 method: 'POST',

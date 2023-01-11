@@ -33,6 +33,7 @@ export async function fetchTicketsWithIterationsAggregates(
     group_by_period: string,
     range_start: string,
     range_end: string,
+    trackedCustomersGroupsModeEnabled: boolean,
     customersGroups: FilterParametersNode<string>,
     ticketsTypes: FilterParametersNode<number>,
     ticketsTags: FilterParametersNode<number>,
@@ -55,6 +56,7 @@ export async function fetchTicketsWithIterationsAggregates(
                 group_by_period: group_by_period,
                 range_start: range_start,
                 range_end: range_end,
+                tracked_customer_groups_mode_enabled: trackedCustomersGroupsModeEnabled.toString(),
             }),
             {
                 method: 'POST',

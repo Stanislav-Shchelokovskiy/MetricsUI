@@ -12,14 +12,12 @@ import { fetchPeriod, Period } from '../network_resource_fetcher/FetchPeriod'
 interface PeriodSelectorState {
     periodStart: string
     periodEnd: string
-    range: Array<string>
 }
 
 
 const INITIAL_STATE: PeriodSelectorState = {
     periodStart: '',
     periodEnd: '',
-    range: []
 }
 
 const CHANGE_PERIOD = 'change_period'
@@ -32,7 +30,6 @@ function periodSelectorStateReducer(state: PeriodSelectorState, action: AnyActio
                 ...state,
                 periodStart: action.payload.period_start,
                 periodEnd: action.payload.period_end,
-                range: [action.payload.period_start, action.payload.period_end]
             }
         default:
             return state
@@ -78,17 +75,14 @@ export default function PeriodSelector() {
         dispatch(changePeriod(selectedRange))
     }, [dispatch])
 
-    const trackedCustomersGroupsModeEnabled = useSelector((store: CustomersActivityStore) => store.customersActivity.trackedCustomersGroupsModeEnabled)
-
     if (periodSelectorState.periodStart) {
         return (
             <DxRangeSelector
                 id='range-selector'
-                value={trackedCustomersGroupsModeEnabled ? periodSelectorState.range : selectedRange.current}
+                value={selectedRange.current}
                 className='CustomersActivity_PeriodSelector'
                 size={{ height: 125 }}
                 onValueChange={onRangeChange}
-                disabled={trackedCustomersGroupsModeEnabled}
             >
                 <Margin top={10} />
                 <Scale
