@@ -12,12 +12,14 @@ import { fetchPeriod, Period } from '../network_resource_fetcher/FetchPeriod'
 interface PeriodSelectorState {
     periodStart: string
     periodEnd: string
+    range: Array<string>
 }
 
 
 const INITIAL_STATE: PeriodSelectorState = {
     periodStart: '',
     periodEnd: '',
+    range: []
 }
 
 const CHANGE_PERIOD = 'change_period'
@@ -29,7 +31,8 @@ function periodSelectorStateReducer(state: PeriodSelectorState, action: AnyActio
             return {
                 ...state,
                 periodStart: action.payload.period_start,
-                periodEnd: action.payload.period_end
+                periodEnd: action.payload.period_end,
+                range: [action.payload.period_start, action.payload.period_end]
             }
         default:
             return state
@@ -51,7 +54,7 @@ function periodIsInvalid(period: Array<string>, possiblePeriod: Array<string>) {
 
 export default function PeriodSelector() {
     const [periodSelectorState, periodSelectorStateDispatch] = useReducer(periodSelectorStateReducer, INITIAL_STATE)
-    
+
     const selectedRange = useRef<Array<string>>([])
     selectedRange.current = useSelector((store: CustomersActivityStore) => store.customersActivity.range) || []
 
@@ -75,14 +78,17 @@ export default function PeriodSelector() {
         dispatch(changePeriod(selectedRange))
     }, [dispatch])
 
+    const trackedCustomersGroupsModeEnabled = useSelector((store: CustomersActivityStore) => store.customersActivity.trackedCustomersGroupsModeEnabled)
+
     if (periodSelectorState.periodStart) {
         return (
             <DxRangeSelector
                 id='range-selector'
-                value={selectedRange.current}
+                value={trackedCustomersGroupsModeEnabled ? periodSelectorState.range : selectedRange.current}
                 className='CustomersActivity_PeriodSelector'
                 size={{ height: 125 }}
                 onValueChange={onRangeChange}
+                disabled={trackedCustomersGroupsModeEnabled}
             >
                 <Margin top={10} />
                 <Scale
