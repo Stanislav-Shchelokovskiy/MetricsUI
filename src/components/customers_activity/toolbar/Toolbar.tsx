@@ -6,7 +6,7 @@ import StateSelector from '../../common/components/state_management/StateSelecto
 import DropStateButton from '../../common/components/state_management/DropStateButton'
 import ShareStateButton from '../../common/components/state_management/ShareStateButton'
 import { CustomersActivityStore } from '../store/Store'
-import TrackedGroupsModeSwitcher from './TrackedGroupsModeSwitcher'
+import AdvancedSettingButton from './AdvancedSettingButton'
 
 interface Props {
     showHideMenu: () => void
@@ -27,9 +27,10 @@ function ToolbarMenu(props: Props) {
         <Button
             className='CustomersActivityMenuButton'
             icon='menu'
+            hint={props.menuOpened ? 'Hide Sets' : 'Show sets'}
             onClick={props.showHideMenu}
         />
-        <TrackedGroupsModeSwitcher visible={props.menuOpened} />
+        <AdvancedSettingButton visible={props.menuOpened} />
     </div>
 }
 

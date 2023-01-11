@@ -1,9 +1,11 @@
+import { PopupProps } from '../../Interfaces'
+
 interface StorageProps {
     state_salt: string
 }
 
-interface ComponentProps{
-    className:string
+interface ComponentProps {
+    className: string
 }
 
 export interface ValuesProps extends StorageProps, ComponentProps {
@@ -12,11 +14,6 @@ export interface ValuesProps extends StorageProps, ComponentProps {
 
 export interface KeyProps extends StorageProps, ComponentProps {
     keySelector: (state: any) => string
-}
-
-export interface PopupProps{
-    visible: boolean
-    onHiding: () => void
 }
 
 export type ValuesPopupProps = PopupProps & ValuesProps

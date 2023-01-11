@@ -16,3 +16,8 @@ export interface Payload<StateIdT, DataT> {
 export interface Token {
     cancel: (() => void) | undefined
 }
+
+export interface PopupProps {
+    visible: boolean
+    onHiding: () => void
+}
