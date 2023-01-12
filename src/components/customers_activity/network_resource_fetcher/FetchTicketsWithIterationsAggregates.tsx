@@ -30,10 +30,11 @@ export const EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES = {
 
 
 export async function fetchTicketsWithIterationsAggregates(
-    group_by_period: string,
-    range_start: string,
-    range_end: string,
+    groupByPeriod: string,
+    rangeStart: string,
+    rangeEnd: string,
     trackedCustomersGroupsModeEnabled: boolean,
+    isTicketsMetricSelected: boolean,
     customersGroups: FilterParametersNode<string>,
     ticketsTypes: FilterParametersNode<number>,
     ticketsTags: FilterParametersNode<number>,
@@ -48,16 +49,16 @@ export async function fetchTicketsWithIterationsAggregates(
     positions: FilterParametersNode<string>,
     empTribes: FilterParametersNode<string>,
     employees: FilterParametersNode<string>,
+    selectTop: number,
 ): Promise<FetchResult<TicketsWithIterationsAggregates>> {
     try {
         const aggregates: Array<TicketsWithIterationsAggregate> = await fetch(
             `${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_aggregates?` +
-            new URLSearchParams({
-                group_by_period: group_by_period,
-                range_start: range_start,
-                range_end: range_end,
-                tracked_customer_groups_mode_enabled: trackedCustomersGroupsModeEnabled.toString(),
-            }),
+                `group_by_period=${groupByPeriod}` +
+                `&range_start=${rangeStart}` +
+                `&range_end=${rangeEnd}` +
+                `&tracked_customer_groups_mode_enabled=${trackedCustomersGroupsModeEnabled}` +
+                (isTicketsMetricSelected ? `&tickets_rank=${selectTop}` : `&iterations_rank=${selectTop}`),
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -89,7 +90,7 @@ export async function fetchTicketsWithIterationsAggregates(
             periods.push(agg.period)
             tickets.push(agg.tickets)
             iterations.push(agg.iterations)
-            iterations_to_tickets.push(agg.iterations/agg.tickets)
+            iterations_to_tickets.push(agg.iterations / agg.tickets)
             people.push(agg.people)
         }
 

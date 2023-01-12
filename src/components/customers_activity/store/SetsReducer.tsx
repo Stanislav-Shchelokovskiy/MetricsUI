@@ -33,6 +33,7 @@ import {
     CHANGE_EMP_TRIBES_INCLUDE,
     CHANGE_EMPLOYEES,
     CHANGE_EMPLOYEES_INCLUDE,
+    CHANGE_SELECT_TOP,
 } from './Actions'
 
 
@@ -64,6 +65,7 @@ export interface SetState {
     repliesTypes: FilterParametersNode<string>
     components: FilterParametersNode<string>
     features: FilterParametersNode<string>
+    selectTop: number
 }
 
 
@@ -83,6 +85,7 @@ export const INITIAL_SET: SetState = {
     repliesTypes: getDefaultFilterParametersNode<string>(),
     components: getDefaultFilterParametersNode<string>(),
     features: getDefaultFilterParametersNode<string>(),
+    selectTop: 100,
 }
 
 const INTIAL_SETS: Array<SetState> = [INITIAL_SET]
@@ -410,6 +413,14 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                 return {
                     ...x,
                     title: action.payload.data,
+                }
+            })
+
+        case CHANGE_SELECT_TOP:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    selectTop: action.payload.data,
                 }
             })
 

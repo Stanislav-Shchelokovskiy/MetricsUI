@@ -10,12 +10,14 @@ import ProductsSelector from './ProductsSelector'
 import EmpPositionsSelector from './EmpPositionsSelector'
 import EmpTribesSelector from './EmpTribesSelector'
 import EmployeesSelector from './EmployeesSelector'
+import RankSelector from './RankSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
     return (
         <div className='CustomersActivity_SetSettingsPanel'>
             <div className='CustomersActivity_SetSettingsChildPanel'>
+                <RankSelector setTitle={setTitle} />
                 <TribesSelector setTitle={setTitle} />
                 <PlatformsSelector setTitle={setTitle} />
                 <ProductsSelector setTitle={setTitle} />

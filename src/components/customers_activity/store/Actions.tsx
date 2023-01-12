@@ -291,3 +291,11 @@ export const changeTrackedCustomersGroupsMode = (payload: boolean): PayloadActio
         payload: payload
     }
 }
+
+export const CHANGE_SELECT_TOP = 'customers_activity/change_select_top'
+export const changeSelectTop = (payload: Payload<string, number>): PayloadAction<Payload<string, number>> => {
+    return {
+        type: CHANGE_SELECT_TOP,
+        payload: payload
+    }
+}
