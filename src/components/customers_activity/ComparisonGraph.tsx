@@ -115,7 +115,7 @@ const GraphPlot = React.memo(
                 useResizeHandler={true}
                 layout={{
                     margin: { t: 10, l: 30, r: 10, b: 30 },
-                    xaxis: { autorange: true, automargin: true, type: 'category', categoryorder: 'array' },
+                    xaxis: { autorange: true, automargin: true, type: 'category', categoryorder: 'trace' },
                     yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: true },
                     barmode: 'group',
                     paper_bgcolor: 'rgba(0,0,0,0)',
