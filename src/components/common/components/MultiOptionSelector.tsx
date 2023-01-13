@@ -64,10 +64,12 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
             dispatch(props.onIncludeChange(include))
         }
     }
+    const pageSize = 20
+
     const ds = new DataSource({
         store: props.dataSource,
         paginate: true,
-        pageSize: 10
+        pageSize: pageSize
     });
 
     const clearButtonOptions = {
@@ -94,6 +96,8 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
         searchEnabled={true}
         showDropDownButton={false}
         selectAllMode='page'
+        maxDisplayedTags={pageSize}
+        showMultiTagOnly={false}
         applyValueMode='useButtons'
         showClearButton={true}
         labelMode='static'
