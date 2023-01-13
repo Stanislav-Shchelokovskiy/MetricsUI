@@ -7,6 +7,12 @@ import { CustomersActivityStore } from '../store/Store'
 import { changeTrackedCustomersGroupsMode } from '../store/Actions'
 import { PopupProps } from '../../common/Interfaces'
 
+interface AdvancedSettings {
+    trackedCustomersGroupsModeEnabled: boolean
+}
+
+type SettingsPopupProps = AdvancedSettings & PopupProps
+
 
 export default function AdvancedSettingsButton({ visible }: { visible: boolean }) {
     const [popupVisible, setPopupVisible] = useState(false)
@@ -15,15 +21,19 @@ export default function AdvancedSettingsButton({ visible }: { visible: boolean }
     const onHiding = useCallback(() => {
         setPopupVisible(false)
     }, [])
-    
+
+    const trackedCustomersGroupsModeEnabled = useSelector((store: CustomersActivityStore) => store.customersActivity.trackedCustomersGroupsModeEnabled)
+    const settingsModified = isAnySettingModified({ trackedCustomersGroupsModeEnabled })
     if (visible) {
         return (
             <div className='CustomersActivity_AdvancedSettingsButton'>
                 <Button
                     icon='preferences'
-                    hint="Sets' advanced settings"
-                    onClick={onClick} />
+                    hint={"Sets' advanced settings" + (settingsModified ? ' (modified)' : '')}
+                    onClick={onClick}
+                    type={settingsModified ? 'default' : 'normal'} />
                 <AdvancedSettingsPopup
+                    trackedCustomersGroupsModeEnabled={trackedCustomersGroupsModeEnabled}
                     visible={popupVisible}
                     onHiding={onHiding} />
             </div>
@@ -32,19 +42,25 @@ export default function AdvancedSettingsButton({ visible }: { visible: boolean }
     return null
 }
 
+function isAnySettingModified(settings: AdvancedSettings) {
+    if (settings.trackedCustomersGroupsModeEnabled !== false)
+        return true
+    return false
+}
 
-function AdvancedSettingsPopup(props: PopupProps) {
-    const trackedCustomersGroupsModeEnabled = useSelector((store: CustomersActivityStore) => store.customersActivity.trackedCustomersGroupsModeEnabled)
+
+function AdvancedSettingsPopup(props: SettingsPopupProps) {
+
     const trackedCustomersGroupsModeCheckBoxRef = useRef<CheckBox>(null)
-    trackedCustomersGroupsModeCheckBoxRef.current?.instance.option('value', trackedCustomersGroupsModeEnabled)
+    trackedCustomersGroupsModeCheckBoxRef.current?.instance.option('value', props.trackedCustomersGroupsModeEnabled)
 
     const appDispatch = useDispatch()
     const onOkClick = useCallback(() => {
         const newTrackedCustomersGroupsModeEnabled = trackedCustomersGroupsModeCheckBoxRef.current?.instance.option('value')
-        if (newTrackedCustomersGroupsModeEnabled !== trackedCustomersGroupsModeEnabled)
+        if (newTrackedCustomersGroupsModeEnabled !== props.trackedCustomersGroupsModeEnabled)
             appDispatch(changeTrackedCustomersGroupsMode((newTrackedCustomersGroupsModeEnabled as boolean)))
         props.onHiding()
-    }, [trackedCustomersGroupsModeEnabled])
+    }, [props.trackedCustomersGroupsModeEnabled])
 
     const okButtonOptions = {
         text: 'Ok',
@@ -69,7 +85,7 @@ function AdvancedSettingsPopup(props: PopupProps) {
                 ref={trackedCustomersGroupsModeCheckBoxRef}
                 text='Tracked Users Groups Mode'
                 focusStateEnabled={false}
-                defaultValue={trackedCustomersGroupsModeEnabled}
+                defaultValue={props.trackedCustomersGroupsModeEnabled}
             />
             <ToolbarItem
                 widget='dxButton'

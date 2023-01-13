@@ -12,7 +12,7 @@ interface TicketsWithIterationsAggregate {
 }
 
 export interface TicketsWithIterationsAggregates {
-    periods: Array<string>
+    periods: Array<string | number>
     tickets: Array<number>
     iterations: Array<number>
     iterations_to_tickets: Array<number>
@@ -54,11 +54,11 @@ export async function fetchTicketsWithIterationsAggregates(
     try {
         const aggregates: Array<TicketsWithIterationsAggregate> = await fetch(
             `${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_aggregates?` +
-                `group_by_period=${groupByPeriod}` +
-                `&range_start=${rangeStart}` +
-                `&range_end=${rangeEnd}` +
-                `&tracked_customer_groups_mode_enabled=${trackedCustomersGroupsModeEnabled}` +
-                (isTicketsMetricSelected ? `&tickets_rank=${selectTop}` : `&iterations_rank=${selectTop}`),
+            `group_by_period=${groupByPeriod}` +
+            `&range_start=${rangeStart}` +
+            `&range_end=${rangeEnd}` +
+            `&tracked_customer_groups_mode_enabled=${trackedCustomersGroupsModeEnabled}` +
+            (isTicketsMetricSelected ? `&tickets_rank=${selectTop}` : `&iterations_rank=${selectTop}`),
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -86,8 +86,9 @@ export async function fetchTicketsWithIterationsAggregates(
         const iterations = []
         const iterations_to_tickets = []
         const people = []
+        let periodNumber = 1
         for (const agg of aggregates) {
-            periods.push(agg.period)
+            periods.push(trackedCustomersGroupsModeEnabled ? periodNumber++ : agg.period)
             tickets.push(agg.tickets)
             iterations.push(agg.iterations)
             iterations_to_tickets.push(agg.iterations / agg.tickets)
