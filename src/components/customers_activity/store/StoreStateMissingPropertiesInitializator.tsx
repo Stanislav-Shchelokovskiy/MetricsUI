@@ -28,6 +28,8 @@ export function initMissingCustomersActivitySetsProperties(customersActivitySets
             set.empTribes = getDefaultFilterParametersNode<string>();
         if (set.employees === undefined)
             set.employees = getDefaultFilterParametersNode<string>();
+        if (set.selectTop === undefined)
+            set.selectTop = 100
     }
     return customersActivitySets
 }

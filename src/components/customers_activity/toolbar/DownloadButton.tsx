@@ -5,6 +5,7 @@ import { CustomersActivityStore } from '../store/Store'
 import FetchResult from '../../common/Interfaces'
 import { fetchTicketsWithIterationsRaw, TicketsWithIterationsRaw } from '../network_resource_fetcher/FetchTicketsWithIterationsRaw'
 import TaskButton from '../../common/components/TaskButton'
+import { isTicketsMetricSelected } from '../common_settings_panel/MetricSelector'
 
 
 function DownloadButton() {
@@ -55,6 +56,7 @@ async function downloadRawData(state: CustomersActivityStore) {
             customersActivityState.range[0],
             customersActivityState.range[1],
             customersActivityState.trackedCustomersGroupsModeEnabled,
+            isTicketsMetricSelected(customersActivityState.metric),
             set.customersGroups,
             set.ticketsTypes,
             set.ticketsTags,
@@ -69,6 +71,7 @@ async function downloadRawData(state: CustomersActivityStore) {
             set.positions,
             set.empTribes,
             set.employees,
+            set.selectTop,
         )
         if (fetchResult.success) {
             rawData = rawData.concat(fetchResult.data)

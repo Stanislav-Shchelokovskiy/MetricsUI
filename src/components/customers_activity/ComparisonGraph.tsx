@@ -52,6 +52,7 @@ export default function ComparisonGraph() {
                     customersActivityState.range[0],
                     customersActivityState.range[1],
                     customersActivityState.trackedCustomersGroupsModeEnabled,
+                    isTicketsMetricSelected(customersActivityState.metric),
                     set.customersGroups,
                     set.ticketsTypes,
                     set.ticketsTags,
@@ -66,6 +67,7 @@ export default function ComparisonGraph() {
                     set.positions,
                     set.empTribes,
                     set.employees,
+                    set.selectTop,
                 )
                 if (fetchedAggregates.success) {
                     aggs.push({
@@ -80,6 +82,7 @@ export default function ComparisonGraph() {
     },
         [
             customersActivityState.groupByPeriod,
+            customersActivityState.metric,
             customersActivityState.range,
             customersActivityState.trackedCustomersGroupsModeEnabled,
             customersActivitySets,

@@ -30,9 +30,10 @@ export const EMPTY_TICKETS_WITH_ITERATIONS_RAW = {
 
 
 export async function fetchTicketsWithIterationsRaw(
-    range_start: string,
-    range_end: string,
+    rangeStart: string,
+    rangeEnd: string,
     trackedCustomersGroupsModeEnabled: boolean,
+    isTicketsMetricSelected: boolean,
     customersGroups: FilterParametersNode<string>,
     ticketsTypes: FilterParametersNode<number>,
     ticketsTags: FilterParametersNode<number>,
@@ -47,15 +48,15 @@ export async function fetchTicketsWithIterationsRaw(
     positions: FilterParametersNode<string>,
     empTribes: FilterParametersNode<string>,
     employees: FilterParametersNode<string>,
+    selectTop: number,
 ): Promise<FetchResult<Array<TicketsWithIterationsRaw>>> {
     try {
         const raw_data: Array<TicketsWithIterationsRaw> = await fetch(
             `${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_raw?` +
-            new URLSearchParams({
-                range_start: range_start,
-                range_end: range_end,
-                tracked_customer_groups_mode_enabled: trackedCustomersGroupsModeEnabled.toString(),
-            }),
+                `&range_start=${rangeStart}` +
+                `&range_end=${rangeEnd}` +
+                `&tracked_customer_groups_mode_enabled=${trackedCustomersGroupsModeEnabled}` +
+                isTicketsMetricSelected ? `&tickets_rank=${selectTop}` : `&iterations_rank=${selectTop}`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
