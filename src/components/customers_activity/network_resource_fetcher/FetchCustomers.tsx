@@ -8,9 +8,14 @@ export interface Customer {
 }
 
 
-export async function fetchCustomers(): Promise<FetchResult<Array<Customer>>> {
+export async function fetchCustomers(searchValue: string | null, skip: number, take: number): Promise<FetchResult<Array<Customer>>> {
     try {
-        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_customers`).then(response => response.json())
+        const values = await fetch(
+            `${SUPPORT_ANALYTICS_END_POINT}/get_customers?` +
+            `search=${searchValue}` +
+            `&skip=${skip}` +
+            `&take=${take}`
+        ).then(response => response.json())
         return {
             success: true,
             data: (values as Array<Customer>)

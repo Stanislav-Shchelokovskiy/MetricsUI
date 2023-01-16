@@ -9,6 +9,8 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { validateValues } from './Utils'
 import * as includeIcon from './assets/include.svg'
 import * as excludeIcon from './assets/exclude.svg'
+import CustomStore from 'devextreme/data/custom_store'
+import { LoadOptions } from 'devextreme/data'
 
 interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     className: string
@@ -25,6 +27,7 @@ interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     includeButtonState: boolean | undefined
     onIncludeChange: ((include: boolean) => PayloadAction<any>) | undefined
     hideSelectedItems: boolean
+    store: CustomStore
 }
 
 
@@ -39,7 +42,7 @@ export default function MultiOptionSelector<DataSourceT, ValueExprT>(props: Prop
         dispatch(props.onValueChange(dataSource, validValues))
     }
     const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, onDataSourceFetch)
-    
+
     if (dataSource.length > 0) {
         return (
             <MultiOptionSelectorInner
@@ -51,6 +54,24 @@ export default function MultiOptionSelector<DataSourceT, ValueExprT>(props: Prop
     if (props.hideIfDataSourceEmpty)
         return null
     return <LoadIndicator width={undefined} height={25} />
+}
+
+export function SearchMultioptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT>) {
+    const store = useMemo(() => new CustomStore({
+        key: props.valueExpr,
+        loadMode: 'processed',
+        load: (loadOptions: LoadOptions) => {
+            if (props.fetchDataSource === undefined)
+                return []
+            return props.fetchDataSource(...props.fetchArgs, loadOptions.searchValue, loadOptions.skip, loadOptions.take)
+        },
+    }), [props.fetchArgs])
+    return (
+        <MultiOptionSelectorInner
+            {...props}
+            store={store}
+        />
+    )
 }
 
 
@@ -67,7 +88,7 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
     const pageSize = 20
 
     const ds = new DataSource({
-        store: props.dataSource,
+        store: props.store || props.dataSource,
         paginate: true,
         pageSize: pageSize
     });
@@ -156,6 +177,8 @@ const defaultProps = {
     showSelectionControls: true,
     container: undefined,
     hideSelectedItems: true,
+    store: undefined,
 }
 
 MultiOptionSelector.defaultProps = defaultProps
+SearchMultioptionSelector.defaultProps = defaultProps

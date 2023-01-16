@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
+import { SearchMultioptionSelector } from '../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../store/Store'
 import { changeCustomers, changeCustomersInclude } from '../../../store/Actions'
 import { fetchCustomers, Customer } from '../../../network_resource_fetcher/FetchCustomers'
@@ -16,14 +16,13 @@ export default function CustomersSelector({ setTitle }: { setTitle: string }) {
     const onIncludeChange = (include: boolean) => changeCustomersInclude({ stateId: setTitle, data: include })
 
 
-    return <MultiOptionSelector<Customer, string>
+    return <SearchMultioptionSelector<Customer, string>
         className='CustomersActivity_CustomersSelector'
         displayExpr='name'
         valueExpr='id'
-        placeholder='Select customers'
+        placeholder='Search by friendly id'
         label='Customers'
         fetchDataSource={fetchCustomers}
-        hideIfDataSourceEmpty={true}
         value={value.values}
         includeButtonState={value.include}
         onValueChange={onValueChange}
