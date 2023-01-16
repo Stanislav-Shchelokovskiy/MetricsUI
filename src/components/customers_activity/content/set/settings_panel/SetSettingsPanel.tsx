@@ -14,26 +14,28 @@ import RankSelector from './RankSelector'
 import ReplyTypesSelector from './ReplyTypesSelector'
 import ComponentsSelector from './ComponentsSelector'
 import FeaturesSelector from './FeaturesSelector'
+import CustomersSelector from './CustomersSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
     return (
         <div className='CustomersActivity_SetSettingsPanel'>
-                <RankSelector setTitle={setTitle} />
-                <TribesSelector setTitle={setTitle} />
-                <PlatformsSelector setTitle={setTitle} />
-                <ProductsSelector setTitle={setTitle} />
-                <TicketsTagsSelector setTitle={setTitle} />
-                <TicketsTypesSelector setTitle={setTitle} />
-                <CustomersGroupsSelector setTitle={setTitle} />
-                <CustomersTypesSelector setTitle={setTitle} />
-                <CustomersConversionsTypesSelector setTitle={setTitle} />
-                <EmpPositionsSelector setTitle={setTitle} />
-                <EmpTribesSelector setTitle={setTitle} />
-                <EmployeesSelector setTitle={setTitle} />
-                <ReplyTypesSelector setTitle={setTitle} />
-                <ComponentsSelector setTitle={setTitle} />
-                <FeaturesSelector setTitle={setTitle} />
+            <RankSelector setTitle={setTitle} />
+            <TribesSelector setTitle={setTitle} />
+            <PlatformsSelector setTitle={setTitle} />
+            <ProductsSelector setTitle={setTitle} />
+            <TicketsTagsSelector setTitle={setTitle} />
+            <TicketsTypesSelector setTitle={setTitle} />
+            <CustomersGroupsSelector setTitle={setTitle} />
+            <CustomersTypesSelector setTitle={setTitle} />
+            <CustomersConversionsTypesSelector setTitle={setTitle} />
+            <EmpPositionsSelector setTitle={setTitle} />
+            <EmpTribesSelector setTitle={setTitle} />
+            <EmployeesSelector setTitle={setTitle} />
+            <ReplyTypesSelector setTitle={setTitle} />
+            <ComponentsSelector setTitle={setTitle} />
+            <FeaturesSelector setTitle={setTitle} />
+            <CustomersSelector setTitle={setTitle} />
         </div >
     )
 }

@@ -299,3 +299,19 @@ export const changeSelectTop = (payload: Payload<string, number>): PayloadAction
         payload: payload
     }
 }
+
+export const CHANGE_CUSTOMERS = 'customers_activity/change_customers'
+export const changeCustomers = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_CUSTOMERS,
+        payload: payload
+    }
+}
+
+export const CHANGE_CUSTOMERS_INCLUDE = 'customers_activity/change_customers_include'
+export const changeCustomersInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_CUSTOMERS_INCLUDE,
+        payload: payload
+    }
+}
