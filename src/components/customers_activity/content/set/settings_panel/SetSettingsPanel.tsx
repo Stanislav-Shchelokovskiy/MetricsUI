@@ -11,12 +11,14 @@ import EmpPositionsSelector from './EmpPositionsSelector'
 import EmpTribesSelector from './EmpTribesSelector'
 import EmployeesSelector from './EmployeesSelector'
 import RankSelector from './RankSelector'
+import ReplyTypesSelector from './ReplyTypesSelector'
+import ComponentsSelector from './ComponentsSelector'
+import FeaturesSelector from './FeaturesSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
     return (
         <div className='CustomersActivity_SetSettingsPanel'>
-            <div className='CustomersActivity_SetSettingsChildPanel'>
                 <RankSelector setTitle={setTitle} />
                 <TribesSelector setTitle={setTitle} />
                 <PlatformsSelector setTitle={setTitle} />
@@ -29,7 +31,9 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
                 <EmpPositionsSelector setTitle={setTitle} />
                 <EmpTribesSelector setTitle={setTitle} />
                 <EmployeesSelector setTitle={setTitle} />
-            </div>
+                <ReplyTypesSelector setTitle={setTitle} />
+                <ComponentsSelector setTitle={setTitle} />
+                <FeaturesSelector setTitle={setTitle} />
         </div >
     )
 }

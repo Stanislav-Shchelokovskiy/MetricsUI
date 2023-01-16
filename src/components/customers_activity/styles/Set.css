@@ -1,12 +1,16 @@
 .CustomersActivity_Set,
 .CustomersActivity_SetSettingsPanel,
-.CustomersActivity_SetSettingsChildPanel,
-.CustomersActivity_CatPanel {
+.CustomersActivity_SetSettingsChildPanel {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: stretch;
     gap: 3px;
+}
+
+.CustomersActivity_SetSettingsPanel {
+    padding-left: 1px;
+    padding-right: 1px;
 }
 
 .CustomersActivity_Set {
@@ -25,20 +29,6 @@
 .CustomerActivity_SetHeader {
     background-color: rgba(240, 240, 240, 0.7);
     gap: 1%;
-}
-
-.CustomersActivity_ReplyTypesSelector,
-.CustomersActivity_ComponentsSelector,
-.CustomersActivity_FeaturesSelector,
-.CustomersActivity_TribesSelector,
-.CustomersActivity_PlatformSelector,
-.CustomersActivity_CustomersGroupsSelector,
-.CustomersActivity_TicketsTagsSelector,
-.CustomersActivity_TicketsTypesSelector,
-.CustomersActivity_PositionsSelector,
-.CustomersActivity_EmpTribesSelector,
-.CustomersActivity_EmployeesSelector {
-    flex: 1;
 }
 
 .SetHeaderRenameButton {
