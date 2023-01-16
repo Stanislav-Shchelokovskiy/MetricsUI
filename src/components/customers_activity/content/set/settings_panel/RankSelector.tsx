@@ -15,7 +15,7 @@ export default function RankSelector({ setTitle }: { setTitle: string }) {
         store.customersActivity.trackedCustomersGroupsModeEnabled
     )
 
-    const format = (value: number) => disabled ? 'Not applicable' : `Select top ${Math.round(value)}%`
+    const format = (value: number) => disabled ? 'Not applicable' : `Select top ${Math.round(value)} %`
 
     const dispatch = useDispatch()
     let timerId: NodeJS.Timeout | undefined = undefined
@@ -28,7 +28,7 @@ export default function RankSelector({ setTitle }: { setTitle: string }) {
         }, 1000)
     }
 
-    const buttonOptions = {
+    const resetButtonOptions = {
         text: '',
         stylingMode: 'text',
         icon: 'revert',
@@ -39,6 +39,7 @@ export default function RankSelector({ setTitle }: { setTitle: string }) {
     }
 
     return <NumberBox
+        className='CustomersActivity_RankSelector'
         ref={ref}
         defaultValue={value}
         step={5}
@@ -50,9 +51,9 @@ export default function RankSelector({ setTitle }: { setTitle: string }) {
         onValueChange={onValueChange}
         disabled={disabled}
         mode='number'>
-        <NumberBoxButton name="spins" />
+        <NumberBoxButton name='spins' />
         <NumberBoxButton
             name='reset'
-            options={buttonOptions} />
+            options={resetButtonOptions} />
     </NumberBox>
 }

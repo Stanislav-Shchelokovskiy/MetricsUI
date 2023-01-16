@@ -31,6 +31,11 @@
     gap: 1%;
 }
 
+.CustomersActivity_RankSelector .dx-texteditor-input {
+    font-size: medium;
+    padding-left: 13px;
+}
+
 .SetHeaderRenameButton {
     margin-left: 7px;
 }
