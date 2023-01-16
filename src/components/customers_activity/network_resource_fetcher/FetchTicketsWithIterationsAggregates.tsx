@@ -58,7 +58,7 @@ export async function fetchTicketsWithIterationsAggregates(
             `&range_start=${rangeStart}` +
             `&range_end=${rangeEnd}` +
             `&tracked_customer_groups_mode_enabled=${trackedCustomersGroupsModeEnabled}` +
-            (isTicketsMetricSelected ? `&tickets_rank=${selectTop}` : `&iterations_rank=${selectTop}`),
+            (isTicketsMetricSelected ? `&tickets_percentile=${selectTop}` : `&iterations_percentile=${selectTop}`),
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
