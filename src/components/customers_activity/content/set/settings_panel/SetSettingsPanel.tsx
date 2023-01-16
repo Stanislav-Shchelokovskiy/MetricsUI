@@ -17,7 +17,7 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
     return (
         <div className='CustomersActivity_SetSettingsPanel'>
             <div className='CustomersActivity_SetSettingsChildPanel'>
-                {/* <RankSelector setTitle={setTitle} /> */}
+                <RankSelector setTitle={setTitle} />
                 <TribesSelector setTitle={setTitle} />
                 <PlatformsSelector setTitle={setTitle} />
                 <ProductsSelector setTitle={setTitle} />
