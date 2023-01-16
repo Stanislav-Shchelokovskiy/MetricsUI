@@ -33,6 +33,9 @@ export default function RankSelector({ setTitle }: { setTitle: string }) {
         stylingMode: 'text',
         icon: 'revert',
         focusStateEnabled: false,
+        elementAttr: {
+            id: 'RankSelector_resetButton'
+        },
         onClick: (e: any) => {
             ref.current?.instance.option('value', 100)
         }
