@@ -49,6 +49,7 @@ export async function fetchTicketsWithIterationsAggregates(
     positions: FilterParametersNode<string>,
     empTribes: FilterParametersNode<string>,
     employees: FilterParametersNode<string>,
+    customers: FilterParametersNode<string>,
     selectTop: number,
 ): Promise<FetchResult<TicketsWithIterationsAggregates>> {
     try {
@@ -77,6 +78,7 @@ export async function fetchTicketsWithIterationsAggregates(
                     positions: positions,
                     emp_tribes: empTribes,
                     employees: employees,
+                    customers: customers,
                 }),
             },
         ).then(response => response.json())

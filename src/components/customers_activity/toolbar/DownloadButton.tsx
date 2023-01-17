@@ -71,6 +71,7 @@ async function downloadRawData(state: CustomersActivityStore) {
             set.positions,
             set.empTribes,
             set.employees,
+            set.customers,
             set.selectTop,
         )
         if (fetchResult.success) {

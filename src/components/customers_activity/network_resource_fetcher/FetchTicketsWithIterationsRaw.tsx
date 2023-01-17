@@ -48,15 +48,16 @@ export async function fetchTicketsWithIterationsRaw(
     positions: FilterParametersNode<string>,
     empTribes: FilterParametersNode<string>,
     employees: FilterParametersNode<string>,
+    customers: FilterParametersNode<string>,
     selectTop: number,
 ): Promise<FetchResult<Array<TicketsWithIterationsRaw>>> {
     try {
         const raw_data: Array<TicketsWithIterationsRaw> = await fetch(
             `${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_raw?` +
-                `&range_start=${rangeStart}` +
-                `&range_end=${rangeEnd}` +
-                `&tracked_customer_groups_mode_enabled=${trackedCustomersGroupsModeEnabled}` +
-                (isTicketsMetricSelected ? `&tickets_percentile=${selectTop}` : `&iterations_percentile=${selectTop}`),
+            `&range_start=${rangeStart}` +
+            `&range_end=${rangeEnd}` +
+            `&tracked_customer_groups_mode_enabled=${trackedCustomersGroupsModeEnabled}` +
+            (isTicketsMetricSelected ? `&tickets_percentile=${selectTop}` : `&iterations_percentile=${selectTop}`),
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -75,6 +76,7 @@ export async function fetchTicketsWithIterationsRaw(
                     positions: positions,
                     emp_tribes: empTribes,
                     employees: employees,
+                    customers: customers,
                 }),
             },
         ).then(response => response.json())

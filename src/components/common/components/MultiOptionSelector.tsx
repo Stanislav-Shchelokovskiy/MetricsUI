@@ -28,6 +28,7 @@ interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     onIncludeChange: ((include: boolean) => PayloadAction<any>) | undefined
     hideSelectedItems: boolean
     store: CustomStore
+    openOnFieldClick: boolean
 }
 
 
@@ -63,12 +64,25 @@ export function SearchMultioptionSelector<DataSourceT, ValueExprT>(props: Props<
         load: (loadOptions: LoadOptions) => {
             if (props.fetchDataSource === undefined)
                 return []
-            return props.fetchDataSource(...props.fetchArgs, loadOptions.searchValue, loadOptions.skip, loadOptions.take)
+            const filter_values = []
+            if (loadOptions.filter !== undefined && loadOptions.filter !== null) {
+                const filter_descriptor = loadOptions.filter[0]
+                if (typeof (filter_descriptor) === 'string' && filter_descriptor !== '!') {
+                    filter_values.push(loadOptions.filter[2])
+                } else {
+                    for (const filter of loadOptions.filter) {
+                        if (Array.isArray(filter) && filter[0] !== '!')
+                            filter_values.push(filter[2])
+                    }
+                }
+            }
+            return props.fetchDataSource(...props.fetchArgs, filter_values, loadOptions.searchValue, loadOptions.skip, loadOptions.take)
         },
     }), [props.fetchArgs])
     return (
         <MultiOptionSelectorInner
             {...props}
+            openOnFieldClick={false}
             store={store}
         />
     )
@@ -178,6 +192,7 @@ const defaultProps = {
     container: undefined,
     hideSelectedItems: true,
     store: undefined,
+    openOnFieldClick: true,
 }
 
 MultiOptionSelector.defaultProps = defaultProps
