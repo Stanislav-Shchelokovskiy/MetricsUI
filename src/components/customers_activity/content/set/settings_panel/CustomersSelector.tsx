@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { SearchMultioptionSelector } from '../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../store/Store'
 import { changeCustomers, changeCustomersInclude } from '../../../store/Actions'
-import { fetchCustomers, Customer } from '../../../network_resource_fetcher/FetchCustomers'
+import { fetchCustomers, Customer, fetchValidateCustomers } from '../../../network_resource_fetcher/FetchCustomers'
 import { FilterParametersNode } from '../../../store/SetsReducer'
 
 
@@ -23,6 +23,8 @@ export default function CustomersSelector({ setTitle }: { setTitle: string }) {
         placeholder='Search by friendly id'
         label='Customers'
         fetchDataSource={fetchCustomers}
+        fetchValidValues={fetchValidateCustomers}
+        fetchValidValuesArgs={[value.values]}
         value={value.values}
         includeButtonState={value.include}
         onValueChange={onValueChange}

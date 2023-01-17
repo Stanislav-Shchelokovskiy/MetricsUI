@@ -11,6 +11,8 @@ import * as includeIcon from './assets/include.svg'
 import * as excludeIcon from './assets/exclude.svg'
 import CustomStore from 'devextreme/data/custom_store'
 import { LoadOptions } from 'devextreme/data'
+import useValidateValues, { ValidateProps } from '../hooks/UseValidateValues'
+
 
 interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     className: string
@@ -27,7 +29,7 @@ interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     includeButtonState: boolean | undefined
     onIncludeChange: ((include: boolean) => PayloadAction<any>) | undefined
     hideSelectedItems: boolean
-    store: CustomStore
+    dataStore: CustomStore
     openOnFieldClick: boolean
 }
 
@@ -57,8 +59,24 @@ export default function MultiOptionSelector<DataSourceT, ValueExprT>(props: Prop
     return <LoadIndicator width={undefined} height={25} />
 }
 
-export function SearchMultioptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT>) {
-    const store = useMemo(() => new CustomStore({
+
+type SearchProps<DataSourceT, ValueExprT> = Props<DataSourceT, ValueExprT> & ValidateProps
+
+export function SearchMultioptionSelector<DataSourceT, ValueExprT>(props: SearchProps<DataSourceT, ValueExprT>) {
+
+    const dispatch = useDispatch()
+    const onValidValuesFetch = (values: Array<ValueExprT>) => {
+        if (props.value === undefined)
+            return
+        const [validValues, valuesAreValid] = validateValues(values, props.value)
+        if (valuesAreValid)
+            return
+        dispatch(props.onValueChange([], validValues))
+    }
+
+    useValidateValues(props.fetchValidValues, props.fetchValidValuesArgs, onValidValuesFetch)
+
+    const dataStore = useMemo(() => new CustomStore({
         key: props.valueExpr,
         loadMode: 'processed',
         load: (loadOptions: LoadOptions) => {
@@ -83,7 +101,7 @@ export function SearchMultioptionSelector<DataSourceT, ValueExprT>(props: Props<
         <MultiOptionSelectorInner
             {...props}
             openOnFieldClick={false}
-            store={store}
+            dataStore={dataStore}
         />
     )
 }
@@ -102,7 +120,7 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
     const pageSize = 20
 
     const ds = new DataSource({
-        store: props.store || props.dataSource,
+        store: props.dataStore || props.dataSource,
         paginate: true,
         pageSize: pageSize
     });
@@ -191,7 +209,7 @@ const defaultProps = {
     showSelectionControls: true,
     container: undefined,
     hideSelectedItems: true,
-    store: undefined,
+    dataStore: undefined,
     openOnFieldClick: true,
 }
 

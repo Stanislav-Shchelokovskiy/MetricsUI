@@ -1,6 +1,7 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 import { anyValueIsEmpty } from '../store/Utils'
+import { ValidationResult } from '../../common/hooks/UseValidateValues'
 
 
 export interface Customer {
@@ -30,7 +31,7 @@ export async function fetchCustomers(
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ filter_values: filterValues }),
+                body: JSON.stringify({ customers: filterValues }),
             },
         ).then(response => response.json())
         return {
@@ -42,6 +43,37 @@ export async function fetchCustomers(
         return {
             success: false,
             data: Array<Customer>()
+        }
+    }
+}
+
+export async function fetchValidateCustomers(
+    customers: Array<string>
+): Promise<FetchResult<Array<ValidationResult>>> {
+    if (customers.length === 0) {
+        return {
+            success: true,
+            data: Array<ValidationResult>()
+        }
+    }
+    try {
+        const values = await fetch(
+            `${SUPPORT_ANALYTICS_END_POINT}/validate_customers`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ customers: customers }),
+            },
+        ).then(response => response.json())
+        return {
+            success: true,
+            data: (values as Array<ValidationResult>)
+        }
+    } catch (error) {
+        console.log(error)
+        return {
+            success: false,
+            data: Array<ValidationResult>()
         }
     }
 }
