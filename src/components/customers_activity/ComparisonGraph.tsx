@@ -67,6 +67,7 @@ export default function ComparisonGraph() {
                     set.positions,
                     set.empTribes,
                     set.employees,
+                    set.customers,
                     set.selectTop,
                 )
                 if (fetchedAggregates.success) {

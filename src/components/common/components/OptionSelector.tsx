@@ -18,7 +18,7 @@ interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
 }
 
 
-export default function OptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT>) {
+export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: Props<DataSourceT, ValueExprT>) {
     const appDispatch = useDispatch()
     const onValueChangeHandler = (value: ValueExprT) => {
         appDispatch(props.onValueChange(value))
@@ -26,7 +26,7 @@ export default function OptionSelector<DataSourceT, ValueExprT>(props: Props<Dat
 
     const value = useRef<ValueExprT>()
     value.current = useSelector(props.valueSelector)
-    const onDataSourceFetch = (dataSource: Array<DataSourceT>) => {
+    const onDataSourceFetch = (allValidValues: Array<DataSourceT> | Array<keyof DataSourceT>, dataSource: Array<DataSourceT>) => {
         if (isEmpty(value.current) && props.defaultValueSelector !== undefined) {
             const defaultValue = props.defaultValueSelector(dataSource)
             onValueChangeHandler(defaultValue)

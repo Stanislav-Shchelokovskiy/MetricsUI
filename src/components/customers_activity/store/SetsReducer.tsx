@@ -34,6 +34,8 @@ import {
     CHANGE_EMPLOYEES,
     CHANGE_EMPLOYEES_INCLUDE,
     CHANGE_SELECT_TOP,
+    CHANGE_CUSTOMERS,
+    CHANGE_CUSTOMERS_INCLUDE,
 } from './Actions'
 
 
@@ -66,6 +68,7 @@ export interface SetState {
     components: FilterParametersNode<string>
     features: FilterParametersNode<string>
     selectTop: number
+    customers: FilterParametersNode<string>
 }
 
 
@@ -86,6 +89,7 @@ export const INITIAL_SET: SetState = {
     components: getDefaultFilterParametersNode<string>(),
     features: getDefaultFilterParametersNode<string>(),
     selectTop: 100,
+    customers: getDefaultFilterParametersNode<string>(),
 }
 
 const INTIAL_SETS: Array<SetState> = [INITIAL_SET]
@@ -421,6 +425,28 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                 return {
                     ...x,
                     selectTop: action.payload.data,
+                }
+            })
+
+        case CHANGE_CUSTOMERS:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    customers: {
+                        ...x.customers,
+                        values: action.payload.data
+                    },
+                }
+            })
+
+        case CHANGE_CUSTOMERS_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    customers: {
+                        ...x.customers,
+                        include: action.payload.data
+                    },
                 }
             })
 

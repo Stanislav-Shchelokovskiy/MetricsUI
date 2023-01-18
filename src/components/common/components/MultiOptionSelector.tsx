@@ -6,9 +6,13 @@ import LoadIndicator from './LoadIndicator'
 import useDataSource, { DataSourceProps } from '../../common/hooks/UseDataSource'
 import { useDispatch } from 'react-redux'
 import { PayloadAction } from '@reduxjs/toolkit'
-import { validateValues } from './Utils'
+
 import * as includeIcon from './assets/include.svg'
 import * as excludeIcon from './assets/exclude.svg'
+import CustomStore from 'devextreme/data/custom_store'
+import { LoadOptions } from 'devextreme/data'
+import useServerValidate, { ValidateProps, useValidate } from '../hooks/UseValidate'
+
 
 interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     className: string
@@ -25,21 +29,15 @@ interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     includeButtonState: boolean | undefined
     onIncludeChange: ((include: boolean) => PayloadAction<any>) | undefined
     hideSelectedItems: boolean
+    dataStore: CustomStore
+    openOnFieldClick: boolean
 }
 
 
-export default function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT>) {
-    const dispatch = useDispatch()
-    const onDataSourceFetch = (dataSource: Array<DataSourceT>) => {
-        if (props.value === undefined)
-            return
-        const [validValues, valuesAreValid] = validateValues(dataSource, props.value, props.valueExpr)
-        if (valuesAreValid)
-            return
-        dispatch(props.onValueChange(dataSource, validValues))
-    }
-    const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, onDataSourceFetch)
-    
+export default function MultiOptionSelector<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: Props<DataSourceT, ValueExprT>) {
+    const validateSelectedValues = useValidate<DataSourceT, ValueExprT>(props.value, props.onValueChange, props.valueExpr)
+    const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, validateSelectedValues)
+
     if (dataSource.length > 0) {
         return (
             <MultiOptionSelectorInner
@@ -51,6 +49,42 @@ export default function MultiOptionSelector<DataSourceT, ValueExprT>(props: Prop
     if (props.hideIfDataSourceEmpty)
         return null
     return <LoadIndicator width={undefined} height={25} />
+}
+
+
+type SearchProps<DataSourceT, ValueExprT> = Props<DataSourceT, ValueExprT> & ValidateProps
+
+export function SearchMultioptionSelector<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: SearchProps<DataSourceT, ValueExprT>) {
+    useServerValidate(props.fetchValidValues, props.fetchValidValuesArgs, props.value, props.onValueChange)
+
+    const dataStore = useMemo(() => new CustomStore({
+        key: props.valueExpr,
+        loadMode: 'processed',
+        load: (loadOptions: LoadOptions) => {
+            if (props.fetchDataSource === undefined)
+                return []
+            const filter_values = []
+            if (loadOptions.filter !== undefined && loadOptions.filter !== null) {
+                const filter_descriptor = loadOptions.filter[0]
+                if (typeof (filter_descriptor) === 'string' && filter_descriptor !== '!') {
+                    filter_values.push(loadOptions.filter[2])
+                } else {
+                    for (const filter of loadOptions.filter) {
+                        if (Array.isArray(filter) && filter[0] !== '!')
+                            filter_values.push(filter[2])
+                    }
+                }
+            }
+            return props.fetchDataSource(...props.fetchArgs, filter_values, loadOptions.searchValue, loadOptions.skip, loadOptions.take)
+        },
+    }), [...props.fetchArgs])
+    return (
+        <MultiOptionSelectorInner
+            {...props}
+            openOnFieldClick={false}
+            dataStore={dataStore}
+        />
+    )
 }
 
 
@@ -67,7 +101,7 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
     const pageSize = 20
 
     const ds = new DataSource({
-        store: props.dataSource,
+        store: props.dataStore || props.dataSource,
         paginate: true,
         pageSize: pageSize
     });
@@ -156,6 +190,9 @@ const defaultProps = {
     showSelectionControls: true,
     container: undefined,
     hideSelectedItems: true,
+    dataStore: undefined,
+    openOnFieldClick: true,
 }
 
 MultiOptionSelector.defaultProps = defaultProps
+SearchMultioptionSelector.defaultProps = defaultProps

@@ -13,3 +13,10 @@ export function anyNodeIsConsideredEmpty<T>(...nodes: Array<FilterParametersNode
             return true
     return false
 }
+
+export function anyValueIsEmpty(...values: Array<any>): boolean {
+    for (const value of values)
+        if (value === undefined || value === null || value.toString() === '')
+            return true
+    return false
+}

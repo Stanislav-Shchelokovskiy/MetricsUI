@@ -13,6 +13,7 @@
 .CustomersActivityToolbar {
     background-color: rgba(246, 246, 246, 0.5);
     justify-content: flex-start;
+    min-height: 7vh;
 }
 
 .CustomersActivityToolbar,
