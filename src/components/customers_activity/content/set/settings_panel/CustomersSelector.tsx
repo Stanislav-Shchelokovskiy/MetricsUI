@@ -8,7 +8,7 @@ import { FilterParametersNode } from '../../../store/SetsReducer'
 
 
 export default function CustomersSelector({ setTitle }: { setTitle: string }) {
-    const value = useSelector((store: CustomersActivityStore) =>
+    const customers = useSelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.customers as FilterParametersNode<string>
     )
 
@@ -23,9 +23,9 @@ export default function CustomersSelector({ setTitle }: { setTitle: string }) {
         label='Customers'
         fetchDataSource={fetchCustomers}
         fetchValidValues={fetchValidateCustomers}
-        fetchValidValuesArgs={[value.values]}
-        value={value.values}
-        includeButtonState={value.include}
+        fetchValidValuesArgs={[customers.values]}
+        value={customers.values}
+        includeButtonState={customers.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
         container='#CustomersActivity_Sets_ScrollView_div'
