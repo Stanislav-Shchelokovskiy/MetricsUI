@@ -6,12 +6,12 @@ import LoadIndicator from './LoadIndicator'
 import useDataSource, { DataSourceProps } from '../../common/hooks/UseDataSource'
 import { useDispatch } from 'react-redux'
 import { PayloadAction } from '@reduxjs/toolkit'
-import { validateValues } from './Utils'
+
 import * as includeIcon from './assets/include.svg'
 import * as excludeIcon from './assets/exclude.svg'
 import CustomStore from 'devextreme/data/custom_store'
 import { LoadOptions } from 'devextreme/data'
-import useValidateValues, { ValidateProps } from '../hooks/UseValidateValues'
+import useServerValidate, { ValidateProps, useValidate } from '../hooks/UseValidate'
 
 
 interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
@@ -35,16 +35,8 @@ interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
 
 
 export default function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT>) {
-    const dispatch = useDispatch()
-    const onDataSourceFetch = (dataSource: Array<DataSourceT>) => {
-        if (props.value === undefined)
-            return
-        const [validValues, valuesAreValid] = validateValues(dataSource, props.value, props.valueExpr)
-        if (valuesAreValid)
-            return
-        dispatch(props.onValueChange(dataSource, validValues))
-    }
-    const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, onDataSourceFetch)
+    const validateSelectedValues = useValidate<DataSourceT, ValueExprT>(props.value, props.onValueChange, props.valueExpr)
+    const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, validateSelectedValues)
 
     if (dataSource.length > 0) {
         return (
@@ -63,18 +55,7 @@ export default function MultiOptionSelector<DataSourceT, ValueExprT>(props: Prop
 type SearchProps<DataSourceT, ValueExprT> = Props<DataSourceT, ValueExprT> & ValidateProps
 
 export function SearchMultioptionSelector<DataSourceT, ValueExprT>(props: SearchProps<DataSourceT, ValueExprT>) {
-
-    const dispatch = useDispatch()
-    const onValidValuesFetch = (values: Array<ValueExprT>) => {
-        if (props.value === undefined)
-            return
-        const [validValues, valuesAreValid] = validateValues(values, props.value)
-        if (valuesAreValid)
-            return
-        dispatch(props.onValueChange([], validValues))
-    }
-
-    useValidateValues(props.fetchValidValues, props.fetchValidValuesArgs, onValidValuesFetch)
+    useServerValidate(props.fetchValidValues, props.fetchValidValuesArgs, props.value, props.onValueChange)
 
     const dataStore = useMemo(() => new CustomStore({
         key: props.valueExpr,
