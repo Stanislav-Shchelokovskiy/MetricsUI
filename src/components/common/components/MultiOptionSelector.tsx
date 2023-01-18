@@ -31,6 +31,7 @@ interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     hideSelectedItems: boolean
     dataStore: CustomStore
     openOnFieldClick: boolean
+    applyValueMode: 'instantly' | 'useButtons'
 }
 
 
@@ -132,7 +133,6 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
         selectAllMode='page'
         maxDisplayedTags={pageSize}
         showMultiTagOnly={false}
-        applyValueMode='useButtons'
         showClearButton={true}
         labelMode='static'
         onKeyDown={acceptSelectedValuesOnEndKey}
@@ -192,6 +192,7 @@ const defaultProps = {
     hideSelectedItems: true,
     dataStore: undefined,
     openOnFieldClick: true,
+    applyValueMode: 'useButtons',
 }
 
 MultiOptionSelector.defaultProps = defaultProps

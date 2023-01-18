@@ -28,6 +28,8 @@ export default function CustomersSelector({ setTitle }: { setTitle: string }) {
         includeButtonState={customers.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
+        showSelectionControls={false}
+        applyValueMode='instantly'
         container='#CustomersActivity_Sets_ScrollView_div'
     />
 }
