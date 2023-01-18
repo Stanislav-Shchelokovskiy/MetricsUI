@@ -15,7 +15,6 @@ export default function CustomersSelector({ setTitle }: { setTitle: string }) {
     const onValueChange = (allValues: Array<Customer>, values: Array<string>) => changeCustomers({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeCustomersInclude({ stateId: setTitle, data: include })
 
-
     return <SearchMultioptionSelector<Customer, string>
         className='CustomersActivity_CustomersSelector'
         displayExpr='name'

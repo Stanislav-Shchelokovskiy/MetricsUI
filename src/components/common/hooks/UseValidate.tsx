@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import FetchResult, { ValidationResult } from '../Interfaces'
 import { PayloadAction } from '@reduxjs/toolkit'
@@ -11,18 +11,21 @@ export interface ValidateProps {
 
 export function useValidate<DataSourceT, ValueExprT>(
     valuesToValidate: Array<ValueExprT> | undefined,
-    dispatchValidValuesAction: (allValues: Array<DataSourceT>, validValues: Array<ValueExprT>) => PayloadAction<any>,
+    dispatchValidValuesAction: (allValidValues: Array<DataSourceT>, validValues: Array<ValueExprT>) => PayloadAction<any>,
     valueExpr: string | undefined = undefined
-): (availableValues: Array<DataSourceT>) => void {
+): (availableValues: Array<DataSourceT> | Array<keyof DataSourceT>, dataSource: Array<DataSourceT> | undefined) => void {
     const dispatch = useDispatch()
-    const validateSelectedValues = useCallback((availableValues: Array<DataSourceT>) => {
+    const emptyArray = useMemo(() => [], [])
+    const validateSelectedValues = useCallback((
+        allValidValues: Array<DataSourceT> | Array<keyof DataSourceT>,
+        dataSource: Array<DataSourceT> | undefined = undefined) => {
         if (valuesToValidate === undefined)
             return
-        const [validValues, valuesAreValid] = validateValues(availableValues, valuesToValidate, valueExpr)
+        const [validValues, valuesAreValid] = validateValues(allValidValues, valuesToValidate, valueExpr)
         if (valuesAreValid)
             return
-        dispatch(dispatchValidValuesAction(valueExpr ? availableValues : [], validValues))
-    }, [valuesToValidate, valueExpr, dispatchValidValuesAction, dispatch])
+        dispatch(dispatchValidValuesAction(dataSource === undefined ? emptyArray : dataSource, validValues))
+    }, [valuesToValidate])
     return validateSelectedValues
 }
 
@@ -39,25 +42,25 @@ export default function useServerValidate<ValueExprT>(
             (async () => {
                 const fetchResult: FetchResult<Array<ValidationResult>> = await fetchValidValues(...fetchValidValuesArgs)
                 if (fetchResult.success) {
-                    validateSelectedValues(fetchResult.data.filter(x => x.valid).map(x => x.value))
+                    validateSelectedValues(fetchResult.data.filter(x => x.valid).map(x => x.value), undefined)
                 }
             })()
         }
-    }, [...fetchValidValuesArgs, validateSelectedValues])
+    }, [])//[...fetchValidValuesArgs])
 }
 
 export function validateValues<DataSourceT, ValueExprT>(
-    dataSource: Array<DataSourceT>,
+    dataSource: Array<DataSourceT> | Array<keyof DataSourceT>,
     values: Array<ValueExprT>,
     valueExpr: string | undefined = undefined
 ): [Array<ValueExprT>, boolean] {
     const invalidValues = []
     const validValues = []
     const keySelector = valueExpr === undefined ?
-        (x: DataSourceT) => (x as unknown) as ValueExprT :
+        (x: keyof DataSourceT) => (x as unknown) as ValueExprT :
         (x: DataSourceT) => (x[valueExpr as keyof DataSourceT] as unknown) as ValueExprT
     for (const item of values) {
-        if (dataSource.find(x => keySelector(x) === item) === undefined) {
+        if ((dataSource as Array<any>).find(x => keySelector(x) === item) === undefined) {
             invalidValues.push(item)
             continue
         }

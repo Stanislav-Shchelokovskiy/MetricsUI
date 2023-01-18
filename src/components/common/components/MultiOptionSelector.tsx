@@ -34,7 +34,7 @@ interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
 }
 
 
-export default function MultiOptionSelector<DataSourceT, ValueExprT>(props: Props<DataSourceT, ValueExprT>) {
+export default function MultiOptionSelector<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: Props<DataSourceT, ValueExprT>) {
     const validateSelectedValues = useValidate<DataSourceT, ValueExprT>(props.value, props.onValueChange, props.valueExpr)
     const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, validateSelectedValues)
 
@@ -54,7 +54,7 @@ export default function MultiOptionSelector<DataSourceT, ValueExprT>(props: Prop
 
 type SearchProps<DataSourceT, ValueExprT> = Props<DataSourceT, ValueExprT> & ValidateProps
 
-export function SearchMultioptionSelector<DataSourceT, ValueExprT>(props: SearchProps<DataSourceT, ValueExprT>) {
+export function SearchMultioptionSelector<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: SearchProps<DataSourceT, ValueExprT>) {
     useServerValidate(props.fetchValidValues, props.fetchValidValuesArgs, props.value, props.onValueChange)
 
     const dataStore = useMemo(() => new CustomStore({
@@ -77,7 +77,7 @@ export function SearchMultioptionSelector<DataSourceT, ValueExprT>(props: Search
             }
             return props.fetchDataSource(...props.fetchArgs, filter_values, loadOptions.searchValue, loadOptions.skip, loadOptions.take)
         },
-    }), [props.fetchArgs])
+    }), [...props.fetchArgs])
     return (
         <MultiOptionSelectorInner
             {...props}
