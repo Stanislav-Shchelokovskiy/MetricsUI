@@ -94,7 +94,7 @@ function HelpPopup(props: HelpPopupProps) {
                         })}
                     </Accordion>
                 </ScrollView> :
-                <LoadIndicator width={undefined} height={50} />
+                <LoadIndicator width={100} height={100} />
             }
         </Popup >
 
