@@ -15,7 +15,7 @@ export default function Sets() {
             scrollByContent={false}
         >
             <div id='CustomersActivity_Sets_ScrollView_div'>
-                {sets?.map((set) => <Set setTitle={set} key={set} />)}
+                {sets?.map((set, index) => <Set setTitle={set} key={`${set}${index}`} />)}
             </div>
 
         </ScrollView >

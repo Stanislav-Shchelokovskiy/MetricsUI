@@ -22,6 +22,10 @@ export interface PopupProps {
     onHiding: () => void
 }
 
+export interface ComponentProps {
+    className: string
+}
+
 export interface ValidationResult {
     value: any
     valid: boolean
