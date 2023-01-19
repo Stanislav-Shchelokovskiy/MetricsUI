@@ -1,5 +1,4 @@
 import React from 'react'
-import Button from '../../common/components/Button'
 import DownloadButton from './DownloadButton'
 import SaveStateButton from '../../common/components/state_management/SaveStateButton'
 import StateSelector from '../../common/components/state_management/StateSelector'
@@ -9,6 +8,7 @@ import { CustomersActivityStore } from '../store/Store'
 import AdvancedSettingButton from './AdvancedSettingButton'
 import HelpButton from '../../common/components/help/HelpButton'
 import { fetchHelp } from '../network_resource_fetcher/FetchHelp'
+import MenuButton from './MenuButton'
 
 interface Props {
     showHideMenu: () => void
@@ -26,12 +26,7 @@ export default function Toolbar(props: Props) {
 
 function ToolbarMenu(props: Props) {
     return <div className='CustomersActivityToolbarMenu'>
-        <Button
-            className='CustomersActivityMenuButton'
-            icon='menu'
-            hint={props.menuOpened ? 'Hide Sets' : 'Show sets'}
-            onClick={props.showHideMenu}
-        />
+        <MenuButton {...props} />
         <AdvancedSettingButton visible={props.menuOpened} />
         <HelpButton
             visible={props.menuOpened}

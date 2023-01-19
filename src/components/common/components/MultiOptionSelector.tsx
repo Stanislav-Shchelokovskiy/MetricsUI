@@ -67,7 +67,7 @@ export function SearchMultioptionSelector<DataSourceT, ValueExprT = DataSourceT 
             const filter_values = []
             if (loadOptions.filter !== undefined && loadOptions.filter !== null) {
                 const filter_descriptor = loadOptions.filter[0]
-                if (typeof (filter_descriptor) === 'string' && filter_descriptor !== '!') {
+                if (typeof(filter_descriptor) === 'string' && filter_descriptor !== '!') {
                     filter_values.push(loadOptions.filter[2])
                 } else {
                     for (const filter of loadOptions.filter) {

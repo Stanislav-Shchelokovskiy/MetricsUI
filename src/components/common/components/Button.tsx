@@ -9,6 +9,7 @@ interface Props {
     render: ((button: any) => any) | undefined
     onClick: () => void
     hint: string
+    id: string
 }
 
 export default function Button(props: Props) {
@@ -28,5 +29,6 @@ Button.defaultProps = {
     stylingMode: 'outlined',
     focusStateEnabled: false,
     render: undefined,
-    hint: ''
+    hint: '',
+    id: '',
 }
