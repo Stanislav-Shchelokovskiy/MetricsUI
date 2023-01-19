@@ -1,11 +1,7 @@
-import { PopupProps } from '../../Interfaces'
+import { PopupProps, ComponentProps } from '../../Interfaces'
 
 interface StorageProps {
     state_salt: string
-}
-
-interface ComponentProps {
-    className: string
 }
 
 export interface ValuesProps extends StorageProps, ComponentProps {

@@ -48,9 +48,10 @@
 .CustomersActivitySaveStateButton,
 .CustomersActivityDropStateButton,
 .CustomersActivityShareStateButton,
-.CustomersActivity_AdvancedSettingsButton,
 .CustomersActivityViewStateSelector,
-.CustomersActivityToolbarSeparator {
+.CustomersActivityToolbarSeparator,
+.CustomersActivityAdvancedSettingsButton,
+.CustomersActivityHelpButton {
     margin-top: 7px;
     margin-bottom: 7px;
 }

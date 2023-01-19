@@ -26,7 +26,7 @@ export default function AdvancedSettingsButton({ visible }: { visible: boolean }
     const settingsModified = isAnySettingModified({ trackedCustomersGroupsModeEnabled })
     if (visible) {
         return (
-            <div className='CustomersActivity_AdvancedSettingsButton'>
+            <div className='CustomersActivityAdvancedSettingsButton'>
                 <Button
                     icon='preferences'
                     hint={"Sets' advanced settings" + (settingsModified ? ' (modified)' : '')}

@@ -7,6 +7,8 @@ import DropStateButton from '../../common/components/state_management/DropStateB
 import ShareStateButton from '../../common/components/state_management/ShareStateButton'
 import { CustomersActivityStore } from '../store/Store'
 import AdvancedSettingButton from './AdvancedSettingButton'
+import HelpButton from '../../common/components/help/HelpButton'
+import { fetchHelp } from '../network_resource_fetcher/FetchHelp'
 
 interface Props {
     showHideMenu: () => void
@@ -31,6 +33,11 @@ function ToolbarMenu(props: Props) {
             onClick={props.showHideMenu}
         />
         <AdvancedSettingButton visible={props.menuOpened} />
+        <HelpButton
+            visible={props.menuOpened}
+            className='CustomersActivityHelpButton'
+            fetchHelpItems={fetchHelp}
+        />
     </div>
 }
 
