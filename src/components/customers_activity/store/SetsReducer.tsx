@@ -33,14 +33,17 @@ import {
     CHANGE_EMP_TRIBES_INCLUDE,
     CHANGE_EMPLOYEES,
     CHANGE_EMPLOYEES_INCLUDE,
-    CHANGE_SELECT_TOP,
+    CHANGE_PERCENTILE,
+    CHANGE_PERCENTILE_INCLUDE,
     CHANGE_CUSTOMERS,
     CHANGE_CUSTOMERS_INCLUDE,
 } from './Actions'
 
-
-export interface FilterParametersNode<T> {
+interface FilterNode {
     include: boolean
+}
+
+export interface FilterParametersNode<T> extends FilterNode {
     values: Array<T>
 }
 
@@ -51,44 +54,55 @@ export function getDefaultFilterParametersNode<T>(): FilterParametersNode<T> {
     }
 }
 
+export interface FilterParameterNode<T> extends FilterNode {
+    value: T
+}
+
+export function getDefaultFilterParameterNode<T = string | number>(defaultValue: T): FilterParameterNode<T> {
+    return {
+        include: true,
+        value: defaultValue
+    }
+}
+
 export interface SetState {
     title: string
+    percentile: FilterParameterNode<number>
     tribes: FilterParametersNode<string>
+    platforms: FilterParametersNode<string>
+    products: FilterParametersNode<string>
+    ticketsTags: FilterParametersNode<number>
+    ticketsTypes: FilterParametersNode<number>
+    customersGroups: FilterParametersNode<string>
+    customersTypes: FilterParametersNode<number>
+    conversionsTypes: FilterParametersNode<number>
     positions: FilterParametersNode<string>
     empTribes: FilterParametersNode<string>
     employees: FilterParametersNode<string>
-    platforms: FilterParametersNode<string>
-    products: FilterParametersNode<string>
-    customersGroups: FilterParametersNode<string>
-    ticketsTags: FilterParametersNode<number>
-    ticketsTypes: FilterParametersNode<number>
-    customersTypes: FilterParametersNode<number>
-    conversionsTypes: FilterParametersNode<number>
     repliesTypes: FilterParametersNode<string>
     components: FilterParametersNode<string>
     features: FilterParametersNode<string>
-    selectTop: number
     customers: FilterParametersNode<string>
 }
 
 
 export const INITIAL_SET: SetState = {
     title: '0',
+    percentile: getDefaultFilterParameterNode<number>(100),
     tribes: getDefaultFilterParametersNode<string>(),
+    platforms: getDefaultFilterParametersNode<string>(),
+    products: getDefaultFilterParametersNode<string>(),
+    ticketsTags: getDefaultFilterParametersNode<number>(),
+    ticketsTypes: getDefaultFilterParametersNode<number>(),
+    customersGroups: getDefaultFilterParametersNode<string>(),
+    customersTypes: getDefaultFilterParametersNode<number>(),
+    conversionsTypes: getDefaultFilterParametersNode<number>(),
     positions: getDefaultFilterParametersNode<string>(),
     empTribes: getDefaultFilterParametersNode<string>(),
     employees: getDefaultFilterParametersNode<string>(),
-    platforms: getDefaultFilterParametersNode<string>(),
-    products: getDefaultFilterParametersNode<string>(),
-    customersGroups: getDefaultFilterParametersNode<string>(),
-    ticketsTags: getDefaultFilterParametersNode<number>(),
-    ticketsTypes: getDefaultFilterParametersNode<number>(),
-    customersTypes: getDefaultFilterParametersNode<number>(),
-    conversionsTypes: getDefaultFilterParametersNode<number>(),
     repliesTypes: getDefaultFilterParametersNode<string>(),
     components: getDefaultFilterParametersNode<string>(),
     features: getDefaultFilterParametersNode<string>(),
-    selectTop: 100,
     customers: getDefaultFilterParametersNode<string>(),
 }
 
@@ -420,11 +434,25 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                 }
             })
 
-        case CHANGE_SELECT_TOP:
+        case CHANGE_PERCENTILE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    selectTop: action.payload.data,
+                    percentile: {
+                        ...x.percentile,
+                        value: action.payload.data,
+                    }
+                }
+            })
+
+        case CHANGE_PERCENTILE_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    percentile: {
+                        ...x.percentile,
+                        include: action.payload.data,
+                    }
                 }
             })
 

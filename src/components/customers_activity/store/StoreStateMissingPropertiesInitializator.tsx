@@ -1,6 +1,6 @@
 import { SetState } from './SetsReducer'
 import { CustomersActivityState } from './CustomersActivityReducer'
-import { getDefaultFilterParametersNode } from './SetsReducer'
+import { getDefaultFilterParametersNode, getDefaultFilterParameterNode } from './SetsReducer'
 import { getValidComparisonMethodOrDefault } from '../common_settings_panel/ComparisonMethodSelector'
 import { getValidMetricOrDefault } from '../common_settings_panel/MetricSelector'
 
@@ -15,23 +15,23 @@ export function initMissingCustomersActivityProperties(customersActivity: Custom
 export function initMissingCustomersActivitySetsProperties(customersActivitySets: Array<SetState>): Array<SetState> {
     for (const set of customersActivitySets) {
         if (set.customersTypes === undefined)
-            set.customersTypes = getDefaultFilterParametersNode<number>();
+            set.customersTypes = getDefaultFilterParametersNode<number>()
         if (set.conversionsTypes === undefined)
-            set.conversionsTypes = getDefaultFilterParametersNode<number>();
+            set.conversionsTypes = getDefaultFilterParametersNode<number>()
         if (set.platforms === undefined)
-            set.platforms = getDefaultFilterParametersNode<string>();
+            set.platforms = getDefaultFilterParametersNode<string>()
         if (set.products === undefined)
-            set.products = getDefaultFilterParametersNode<string>();
+            set.products = getDefaultFilterParametersNode<string>()
         if (set.positions === undefined)
-            set.positions = getDefaultFilterParametersNode<string>();
+            set.positions = getDefaultFilterParametersNode<string>()
         if (set.empTribes === undefined)
-            set.empTribes = getDefaultFilterParametersNode<string>();
+            set.empTribes = getDefaultFilterParametersNode<string>()
         if (set.employees === undefined)
-            set.employees = getDefaultFilterParametersNode<string>();
-        if (set.selectTop === undefined)
-            set.selectTop = 100
+            set.employees = getDefaultFilterParametersNode<string>()
+        if (set.percentile === undefined)
+            set.percentile = getDefaultFilterParameterNode<number>(100)
         if (set.customers === undefined)
-            set.customers = getDefaultFilterParametersNode<string>();
+            set.customers = getDefaultFilterParametersNode<string>()
     }
     return customersActivitySets
 }

@@ -292,10 +292,19 @@ export const changeTrackedCustomersGroupsMode = (payload: boolean): PayloadActio
     }
 }
 
-export const CHANGE_SELECT_TOP = 'customers_activity/change_select_top'
-export const changeSelectTop = (payload: Payload<string, number>): PayloadAction<Payload<string, number>> => {
+export const CHANGE_PERCENTILE = 'customers_activity/change_percentile'
+export const changePercentile = (payload: Payload<string, number>): PayloadAction<Payload<string, number>> => {
     return {
-        type: CHANGE_SELECT_TOP,
+        type: CHANGE_PERCENTILE,
+        payload: payload
+    }
+}
+
+
+export const CHANGE_PERCENTILE_INCLUDE = 'customers_activity/change_percentile_include'
+export const changePercentileInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_PERCENTILE_INCLUDE,
         payload: payload
     }
 }

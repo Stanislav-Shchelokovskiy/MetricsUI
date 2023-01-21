@@ -1,6 +1,6 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { FilterParametersNode } from '../store/SetsReducer'
+import { SetState } from '../store/SetsReducer'
 
 
 interface TicketsWithIterationsAggregate {
@@ -35,22 +35,7 @@ export async function fetchTicketsWithIterationsAggregates(
     rangeEnd: string,
     trackedCustomersGroupsModeEnabled: boolean,
     isTicketsMetricSelected: boolean,
-    customersGroups: FilterParametersNode<string>,
-    ticketsTypes: FilterParametersNode<number>,
-    ticketsTags: FilterParametersNode<number>,
-    tribes: FilterParametersNode<string>,
-    repliesTypes: FilterParametersNode<string>,
-    components: FilterParametersNode<string>,
-    features: FilterParametersNode<string>,
-    customersTypes: FilterParametersNode<number>,
-    conversionsTypes: FilterParametersNode<number>,
-    platforms: FilterParametersNode<string>,
-    products: FilterParametersNode<string>,
-    positions: FilterParametersNode<string>,
-    empTribes: FilterParametersNode<string>,
-    employees: FilterParametersNode<string>,
-    customers: FilterParametersNode<string>,
-    selectTop: number,
+    set: SetState,
 ): Promise<FetchResult<TicketsWithIterationsAggregates>> {
     try {
         const aggregates: Array<TicketsWithIterationsAggregate> = await fetch(
@@ -58,27 +43,27 @@ export async function fetchTicketsWithIterationsAggregates(
             `group_by_period=${groupByPeriod}` +
             `&range_start=${rangeStart}` +
             `&range_end=${rangeEnd}` +
-            `&tracked_customer_groups_mode_enabled=${trackedCustomersGroupsModeEnabled}` +
-            (isTicketsMetricSelected ? `&tickets_percentile=${selectTop}` : `&iterations_percentile=${selectTop}`),
+            `&tracked_customer_groups_mode_enabled=${trackedCustomersGroupsModeEnabled}`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    Tribes: tribes,
-                    Platforms: platforms,
-                    Products: products,
-                    'Ticket tags': ticketsTags,
-                    'Ticket types': ticketsTypes,
-                    'User groups': customersGroups,
-                    'User types': customersTypes,
-                    'User conversion types': conversionsTypes,
-                    'Employees positions': positions,
-                    'Employees tribes': empTribes,
-                    'Employees': employees,
-                    'CAT replies types': repliesTypes,
-                    'CAT components': components,
-                    'CAT features': features,
-                    'Customers': customers,
+                    Percentile: { metric: (isTicketsMetricSelected ? 'tickets' : 'iterations'), value: set.percentile },
+                    Tribes: set.tribes,
+                    Platforms: set.platforms,
+                    Products: set.products,
+                    'Ticket tags': set.ticketsTags,
+                    'Ticket types': set.ticketsTypes,
+                    'User groups': set.customersGroups,
+                    'User types': set.customersTypes,
+                    'User conversion types': set.conversionsTypes,
+                    'Employees positions': set.positions,
+                    'Employees tribes': set.empTribes,
+                    'Employees': set.employees,
+                    'CAT replies types': set.repliesTypes,
+                    'CAT components': set.components,
+                    'CAT features': set.features,
+                    'Customers': set.customers,
                 }),
             },
         ).then(response => response.json())

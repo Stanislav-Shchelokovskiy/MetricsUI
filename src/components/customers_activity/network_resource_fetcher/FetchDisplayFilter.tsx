@@ -3,45 +3,17 @@ import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 import { SetState } from '../store/SetsReducer'
 
 
-export interface TicketsWithIterationsRaw {
-    user_id: string
-    tribe_id: string
-    scid: string
-    ticket_type: number
-    creation_date: string
-    iterations: number
-    reply: string
-    component: string
-    feature: string
-}
+type DisplayFilter = Array<any>
 
 
-export const EMPTY_TICKETS_WITH_ITERATIONS_RAW = {
-    user_id: '',
-    tribe_id: '',
-    scid: '',
-    ticket_type: 0,
-    creation_date: '',
-    iterations: 0,
-    reply: '',
-    component: '',
-    feature: '',
-}
 
-
-export async function fetchTicketsWithIterationsRaw(
-    rangeStart: string,
-    rangeEnd: string,
-    trackedCustomersGroupsModeEnabled: boolean,
+export async function fetchDisplayFilter(
     isTicketsMetricSelected: boolean,
     set: SetState,
-): Promise<FetchResult<Array<TicketsWithIterationsRaw>>> {
+): Promise<FetchResult<DisplayFilter>> {
     try {
-        const raw_data: Array<TicketsWithIterationsRaw> = await fetch(
-            `${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_raw?` +
-            `&range_start=${rangeStart}` +
-            `&range_end=${rangeEnd}` +
-            `&tracked_customer_groups_mode_enabled=${trackedCustomersGroupsModeEnabled}`,
+        const filters: Array<DisplayFilter> = await fetch(
+            `${SUPPORT_ANALYTICS_END_POINT}/get_customers_activity_display_filter`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -65,15 +37,16 @@ export async function fetchTicketsWithIterationsRaw(
                 }),
             },
         ).then(response => response.json())
+
         return {
             success: true,
-            data: raw_data
+            data: filters
         }
     } catch (error) {
         console.log(error)
         return {
             success: false,
-            data: [EMPTY_TICKETS_WITH_ITERATIONS_RAW]
+            data: []
         }
     }
 }
