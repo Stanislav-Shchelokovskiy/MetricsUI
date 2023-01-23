@@ -22,7 +22,6 @@
     display: flex;
     flex-flow: row nowrap;
     align-items: stretch;
-
 }
 
 .CustomersActivityToolbarMenu,
@@ -86,4 +85,17 @@
 
 .CustomersActivity_ComparisonMethodSelector {
     margin-right: 10px;
+}
+
+
+div.dx-filterbuilder-action-icon:before {
+    display: none;
+}
+
+div.dx-filterbuilder-text,
+div.dx-filterbuilder-group-item,
+div.dx-filterbuilder-group {
+    padding-top: 1px;
+    padding-bottom: 0px;
+    text-align: left;
 }

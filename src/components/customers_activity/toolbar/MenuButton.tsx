@@ -1,11 +1,12 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux'
+import FilterBuilder, { CustomOperation } from 'devextreme-react/filter-builder'
 import { CustomersActivityStore } from '../store/Store'
 import Button from '../../common/components/Button'
 import { Tooltip } from 'devextreme-react/tooltip'
 import { fetchDisplayFilter } from '../network_resource_fetcher/FetchDisplayFilter'
-import FetchResult from '../../common/Interfaces'
 import { isTicketsMetricSelected } from '../common_settings_panel/MetricSelector'
+import { getSetDataFields } from '../store/SetsReducer'
 
 
 interface Props {
@@ -27,21 +28,6 @@ export default function MenuButton(props: Props) {
         timerId.current = undefined
         setFilterTooltipVisible(false)
     }
-    const metric = useSelector((store: CustomersActivityStore) => store.customersActivity.metric)
-    const customersActivitySets = useSelector((store: CustomersActivityStore) => store.customersActivitySets)
-
-
-    useEffect(() => {
-        for (const set of customersActivitySets) {
-            (async () => {
-                const fetchResult: FetchResult<Array<any>> = await fetchDisplayFilter(isTicketsMetricSelected(metric), set)
-                if (fetchResult.success) {
-                    const ds = fetchResult.data
-                    console.log(ds)
-                }
-            })()
-        }
-    }, [metric, customersActivitySets])
 
     return <div
         onMouseEnter={onEnter}
@@ -51,13 +37,69 @@ export default function MenuButton(props: Props) {
             className='CustomersActivityMenuButton'
             id='CustomersActivityMenuButton'
             icon='menu'
-            // hint={props.menuOpened ? 'Hide Sets' : 'Show sets'}
             onClick={props.showHideMenu}
         />
-        <Tooltip
-            target="#CustomersActivityMenuButton"
-            visible={filterTooltipVisible}
-        >
-        </Tooltip>
-    </div>
+        <FilterTooltip visible={filterTooltipVisible && !props.menuOpened} />
+    </div >
 }
+
+const FilterTooltip = React.memo(({ visible }: { visible: boolean }) => {
+    return <Tooltip
+        className='CustomersActivityFilterTooltip'
+        target="#CustomersActivityMenuButton"
+        visible={visible}
+    >
+        <FilterLabel />
+    </Tooltip>
+})
+
+const FilterLabel = React.memo(() => {
+    const metric = useSelector((store: CustomersActivityStore) => store.customersActivity.metric)
+    const customersActivitySets = useSelector((store: CustomersActivityStore) => store.customersActivitySets)
+
+    const fields = useMemo(() => getSetDataFields(), [])
+
+    const [displayFilter, setDisplayFilter] = useState<Array<any>>([])
+
+    useEffect(() => {
+        (async () => {
+            Promise.all(customersActivitySets.map(set => fetchDisplayFilter(isTicketsMetricSelected(metric), set)))
+                .then(fetchResults => {
+                    const ds: Array<any> = []
+                    let fetchResult: any
+                    for (fetchResult of fetchResults) {
+                        if (fetchResult.success && fetchResult.data.length > 0)
+                            ds.push(fetchResult.data)
+                    }
+                    if (ds.length === 1)
+                        setDisplayFilter(ds[0])
+                    else if (ds.length > 1)
+                        setDisplayFilter(ds)
+                })
+        }
+        )()
+    }, [metric, customersActivitySets])
+
+    if (displayFilter.length < 1)
+        return <div>No filters</div>
+    return <FilterBuilder
+        className='CustomersActivityFilterBuilder'
+        fields={fields}
+        value={displayFilter}
+    >
+        <CustomOperation
+            name='in'
+            caption='IN' />
+        <CustomOperation
+            name='notin'
+            caption='NOT IN' />
+        <CustomOperation
+            name='<=' />
+        <CustomOperation
+            name='>' />
+        <CustomOperation
+            name='='
+            caption='IS' />
+    </FilterBuilder>
+})
+

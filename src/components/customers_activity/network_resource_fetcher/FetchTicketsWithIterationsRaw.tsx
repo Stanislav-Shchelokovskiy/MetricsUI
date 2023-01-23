@@ -1,6 +1,6 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { SetState } from '../store/SetsReducer'
+import { Set, getAliasedSet } from '../store/SetsReducer'
 
 
 export interface TicketsWithIterationsRaw {
@@ -34,7 +34,7 @@ export async function fetchTicketsWithIterationsRaw(
     rangeEnd: string,
     trackedCustomersGroupsModeEnabled: boolean,
     isTicketsMetricSelected: boolean,
-    set: SetState,
+    set: Set,
 ): Promise<FetchResult<Array<TicketsWithIterationsRaw>>> {
     try {
         const raw_data: Array<TicketsWithIterationsRaw> = await fetch(
@@ -46,22 +46,8 @@ export async function fetchTicketsWithIterationsRaw(
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    Percentile: { metric: (isTicketsMetricSelected ? 'tickets' : 'iterations'), value: set.percentile },
-                    Tribes: set.tribes,
-                    Platforms: set.platforms,
-                    Products: set.products,
-                    'Ticket tags': set.ticketsTags,
-                    'Ticket types': set.ticketsTypes,
-                    'User groups': set.customersGroups,
-                    'User types': set.customersTypes,
-                    'User conversion types': set.conversionsTypes,
-                    'Employees positions': set.positions,
-                    'Employees tribes': set.empTribes,
-                    'Employees': set.employees,
-                    'CAT replies types': set.repliesTypes,
-                    'CAT components': set.components,
-                    'CAT features': set.features,
-                    'Customers': set.customers,
+                    ...getAliasedSet(set),
+                    Percentile: { metric: (isTicketsMetricSelected ? 'tickets' : 'iterations'), value: set.percentile }
                 }),
             },
         ).then(response => response.json())

@@ -65,7 +65,7 @@ export function getDefaultFilterParameterNode<T = string | number>(defaultValue:
     }
 }
 
-export interface SetState {
+export interface Set {
     title: string
     percentile: FilterParameterNode<number>
     tribes: FilterParametersNode<string>
@@ -85,8 +85,38 @@ export interface SetState {
     customers: FilterParametersNode<string>
 }
 
+export function getAliasedSet(set: Set) {
+    return {
+        Percentile: set.percentile,
+        Tribes: set.tribes,
+        Platforms: set.platforms,
+        Products: set.products,
+        'Ticket tags': set.ticketsTags,
+        'Ticket types': set.ticketsTypes,
+        'User groups': set.customersGroups,
+        'User types': set.customersTypes,
+        'User conversion types': set.conversionsTypes,
+        'Employees positions': set.positions,
+        'Employees tribes': set.empTribes,
+        'Employees': set.employees,
+        'CAT replies types': set.repliesTypes,
+        'CAT components': set.components,
+        'CAT features': set.features,
+        'Customers': set.customers,
+    }
+}
 
-export const INITIAL_SET: SetState = {
+export function getSetDataFields() {
+    return Object.getOwnPropertyNames(getAliasedSet(INITIAL_SET)).map(x => {
+        return {
+            dataField: x,
+            filterOperations: ['<=', '=', '>', 'in', 'notin']
+        }
+    })
+}
+
+
+export const INITIAL_SET: Set = {
     title: '0',
     percentile: getDefaultFilterParameterNode<number>(100),
     tribes: getDefaultFilterParametersNode<string>(),
@@ -106,9 +136,9 @@ export const INITIAL_SET: SetState = {
     customers: getDefaultFilterParametersNode<string>(),
 }
 
-const INTIAL_SETS: Array<SetState> = [INITIAL_SET]
+const INTIAL_SETS: Array<Set> = [INITIAL_SET]
 
-export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyAction): Array<SetState> => {
+export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): Array<Set> => {
     switch (action.type) {
 
         case ADD_SET:
@@ -494,6 +524,6 @@ export function GenerateNewSetTitle(existingSetsTitles: Array<string>): string {
     return setsLength.toString()
 }
 
-function updateSetState<T extends SetState>(title: string, state: Array<T>, replaceState: (currState: T) => T): Array<T> {
+function updateSetState<T extends Set>(title: string, state: Array<T>, replaceState: (currState: T) => T): Array<T> {
     return state.map((x) => { return x.title === title ? replaceState(x) : x })
 }

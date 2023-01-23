@@ -1,4 +1,4 @@
-import { SetState } from './SetsReducer'
+import { Set } from './SetsReducer'
 import { CustomersActivityState } from './CustomersActivityReducer'
 import { getDefaultFilterParametersNode, getDefaultFilterParameterNode } from './SetsReducer'
 import { getValidComparisonMethodOrDefault } from '../common_settings_panel/ComparisonMethodSelector'
@@ -12,7 +12,7 @@ export function initMissingCustomersActivityProperties(customersActivity: Custom
     return customersActivity
 }
 
-export function initMissingCustomersActivitySetsProperties(customersActivitySets: Array<SetState>): Array<SetState> {
+export function initMissingCustomersActivitySetsProperties(customersActivitySets: Array<Set>): Array<Set> {
     for (const set of customersActivitySets) {
         if (set.customersTypes === undefined)
             set.customersTypes = getDefaultFilterParametersNode<number>()
