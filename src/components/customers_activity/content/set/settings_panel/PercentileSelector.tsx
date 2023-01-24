@@ -1,12 +1,13 @@
-import React, { useRef } from 'react'
+import React, { useRef, useMemo } from 'react'
 import { NumberBox, Button as NumberBoxButton } from 'devextreme-react/number-box'
 import { useSelector, useDispatch } from 'react-redux'
 import { CustomersActivityStore } from '../../../store/Store'
-import { changePercentile } from '../../../store/Actions'
+import { changePercentile, changePercentileInclude } from '../../../store/Actions'
 import { FilterParameterNode } from '../../../store/SetsReducer'
+import { getIncludeButtonOptions } from '../../../../common/components/Button'
 
 
-export default function RankSelector({ setTitle }: { setTitle: string }) {
+export default function PercentileSelector({ setTitle }: { setTitle: string }) {
     const ref = useRef<NumberBox>(null)
     const percentile = useSelector((store: CustomersActivityStore) =>
         store.customersActivitySets.find(x => x.title === setTitle)?.percentile as FilterParameterNode<number>
@@ -16,7 +17,11 @@ export default function RankSelector({ setTitle }: { setTitle: string }) {
         store.customersActivity.trackedCustomersGroupsModeEnabled
     )
 
-    const format = (value: number) => disabled ? 'Not applicable' : `Select top ${Math.round(value)} %`
+    const format = (value: number) => {
+        return disabled ?
+            'Not applicable' :
+            `Select ${percentile.include ? 'top' : 'bottom'} ${Math.round(value)} %`
+    }
 
     const dispatch = useDispatch()
     let timerId: NodeJS.Timeout | undefined = undefined
@@ -29,13 +34,24 @@ export default function RankSelector({ setTitle }: { setTitle: string }) {
         }, 1000)
     }
 
+    const onIncludeChange = (include: boolean) => {
+        dispatch(changePercentileInclude({ stateId: setTitle, data: include }))
+    }
+
+    const topBottomButtonOptions = useMemo(() => getIncludeButtonOptions(
+        percentile.include,
+        'verticalaligntop',
+        'verticalalignbottom',
+        onIncludeChange
+    ), [percentile.include])
+
     const resetButtonOptions = {
         text: '',
         stylingMode: 'text',
         icon: 'revert',
         focusStateEnabled: false,
         elementAttr: {
-            id: 'RankSelector_resetButton'
+            id: 'PercentileSelector_resetButton'
         },
         onClick: (e: any) => {
             ref.current?.instance.option('value', 100)
@@ -43,7 +59,7 @@ export default function RankSelector({ setTitle }: { setTitle: string }) {
     }
 
     return <NumberBox
-        className='CustomersActivity_RankSelector'
+        className='CustomersActivity_PercentileSelector'
         ref={ref}
         defaultValue={percentile.value}
         step={5}
@@ -55,6 +71,10 @@ export default function RankSelector({ setTitle }: { setTitle: string }) {
         onValueChange={onValueChange}
         disabled={disabled}
         mode='number'>
+        <NumberBoxButton
+            name='include'
+            location='before'
+            options={topBottomButtonOptions} />
         <NumberBoxButton name='spins' />
         <NumberBoxButton
             name='reset'

@@ -10,7 +10,7 @@ import ProductsSelector from './ProductsSelector'
 import EmpPositionsSelector from './EmpPositionsSelector'
 import EmpTribesSelector from './EmpTribesSelector'
 import EmployeesSelector from './EmployeesSelector'
-import RankSelector from './RankSelector'
+import PercentileSelector from './PercentileSelector'
 import ReplyTypesSelector from './ReplyTypesSelector'
 import ComponentsSelector from './ComponentsSelector'
 import FeaturesSelector from './FeaturesSelector'
@@ -20,7 +20,7 @@ import CustomersSelector from './CustomersSelector'
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
     return (
         <div className='CustomersActivity_SetSettingsPanel'>
-            <RankSelector setTitle={setTitle} />
+            <PercentileSelector setTitle={setTitle} />
             <TribesSelector setTitle={setTitle} />
             <PlatformsSelector setTitle={setTitle} />
             <ProductsSelector setTitle={setTitle} />

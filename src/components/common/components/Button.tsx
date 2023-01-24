@@ -32,3 +32,29 @@ Button.defaultProps = {
     hint: '',
     id: '',
 }
+
+
+export function getIncludeButtonOptions(
+    isInIncludeState: boolean,
+    includeIcon: string,
+    excludeIcon: string,
+    onIncludeChange: ((include: boolean) => void)
+) {
+    return {
+        text: '',
+        stylingMode: 'text',
+        type: isInIncludeState ? 'success' : 'danger',
+        icon: isInIncludeState ? includeIcon : excludeIcon,
+        onClick: (e: any) => {
+            if (e.component.option('type') === 'danger') {
+                e.component.option('type', 'success')
+                e.component.option('icon', includeIcon)
+                onIncludeChange(true)
+            } else {
+                e.component.option('type', 'danger')
+                e.component.option('icon', excludeIcon)
+                onIncludeChange(false)
+            }
+        }
+    }
+}

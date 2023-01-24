@@ -31,18 +31,18 @@
     gap: 1%;
 }
 
-.CustomersActivity_RankSelector.dx-texteditor-input {
+.CustomersActivity_PercentileSelector.dx-texteditor-input {
     font-size: medium;
     padding-left: 13px;
 }
 
-.CustomersActivity_RankSelector.dx-numberbox-spin-button {
+.CustomersActivity_PercentileSelector.dx-numberbox-spin-button {
     padding: 2px;
     padding-bottom: 3px;
     padding-right: 3px;
 }
 
-#RankSelector_resetButton.dx-state-hover {
+#PercentileSelector_resetButton.dx-state-hover {
     background-color: rgb(230, 230, 230);
 }
 
