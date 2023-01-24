@@ -87,8 +87,14 @@
     margin-right: 10px;
 }
 
+.dx-tooltip-wrapper .dx-overlay-content .dx-popup-content{
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-bottom: 7px;
+    padding-right: 7px;
+}
 
-.CustomersActivityFilterBuilder{
+.CustomersActivityFilterLabel {
     max-width: 90vw;
 }
 
@@ -96,8 +102,33 @@ div.dx-filterbuilder-action-icon:before {
     display: none;
 }
 
-div.dx-filterbuilder-text,
-div.dx-filterbuilder-group-item,
+
+.dx-filterbuilder .dx-filterbuilder-group .dx-filterbuilder-group-item .dx-filterbuilder-action.dx-filterbuilder-action-icon {
+    padding: 0px;
+    padding-right: 10px;
+}
+
+.dx-filterbuilder .dx-filterbuilder-group .dx-filterbuilder-group-content .dx-filterbuilder-group-content {
+    padding: 0px;
+    padding-left: 10px;
+}
+
+.dx-filterbuilder .dx-filterbuilder-group .dx-filterbuilder-group-item .dx-filterbuilder-text.dx-filterbuilder-group-operation,
+.dx-filterbuilder .dx-filterbuilder-group .dx-filterbuilder-group-item .dx-filterbuilder-text.dx-filterbuilder-item-field,
+.dx-filterbuilder .dx-filterbuilder-group .dx-filterbuilder-group-item .dx-filterbuilder-text.dx-filterbuilder-item-operation,
+.dx-filterbuilder .dx-filterbuilder-group .dx-filterbuilder-group-item .dx-filterbuilder-text .dx-filterbuilder-item-value-text {
+    padding: 0px 5px 1px 5px;
+    margin: 1px 0px 0px 1px;
+}
+
+div.dx-filterbuilder-group-operation,
+div.dx-filterbuilder-action.dx-filterbuilder-action-icon,
+div.dx-filterbuilder-text.dx-filterbuilder-item-field,
+div.dx-filterbuilder-text.dx-filterbuilder-item-operation,
+div.dx-filterbuilder-text.dx-filterbuilder-item-value {
+    margin: 0px;
+}
+
 div.dx-filterbuilder-group {
     text-align: left;
 }
