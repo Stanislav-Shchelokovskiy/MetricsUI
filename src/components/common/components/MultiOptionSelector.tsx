@@ -12,7 +12,7 @@ import * as excludeIcon from './assets/exclude.svg'
 import CustomStore from 'devextreme/data/custom_store'
 import { LoadOptions } from 'devextreme/data'
 import useServerValidate, { ValidateProps, useValidate } from '../hooks/UseValidate'
-
+import { getIncludeButtonOptions } from './Button'
 
 interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     className: string
@@ -67,7 +67,7 @@ export function SearchMultioptionSelector<DataSourceT, ValueExprT = DataSourceT 
             const filter_values = []
             if (loadOptions.filter !== undefined && loadOptions.filter !== null) {
                 const filter_descriptor = loadOptions.filter[0]
-                if (typeof(filter_descriptor) === 'string' && filter_descriptor !== '!') {
+                if (typeof (filter_descriptor) === 'string' && filter_descriptor !== '!') {
                     filter_values.push(loadOptions.filter[2])
                 } else {
                     for (const filter of loadOptions.filter) {
@@ -94,11 +94,12 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
     const onValueChangeHandler = (values: Array<ValueExprT>) => {
         dispatch(props.onValueChange(props.dataSource || [], values))
     }
-    const onIncludeChangeHandler = (include: boolean) => {
+    const onIncludeChangeHandler = useCallback((include: boolean) => {
         if (props.onIncludeChange !== undefined) {
             dispatch(props.onIncludeChange(include))
         }
-    }
+    }, [])
+
     const pageSize = 20
 
     const ds = new DataSource({
@@ -106,6 +107,13 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
         paginate: true,
         pageSize: pageSize
     });
+
+    const includeButtonOptions = useMemo(() => getIncludeButtonOptions(
+        props.includeButtonState === undefined ? true : props.includeButtonState,
+        includeIcon.default,
+        excludeIcon.default,
+        onIncludeChangeHandler
+    ), [props.includeButtonState])
 
     const clearButtonOptions = {
         text: '',
@@ -143,7 +151,14 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
             container={props.container}
             wrapperAttr={wrapperAttr}
         />
-        {props.includeButtonState !== undefined ? IncludeButton(props.includeButtonState, onIncludeChangeHandler) : null}
+        {
+            props.includeButtonState !== undefined ?
+                <Button
+                    name='include'
+                    location='before'
+                    options={includeButtonOptions} />
+                : null
+        }
         <Button
             name='clear'
             location='after'
@@ -152,30 +167,7 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
 }
 
 
-function IncludeButton(isInIncludeState: boolean, onIncludeChange: ((include: boolean) => void)) {
-    const buttonOptions = {
-        text: '',
-        stylingMode: 'text',
-        type: isInIncludeState ? 'success' : 'danger',
-        icon: isInIncludeState ? includeIcon.default : excludeIcon.default,
-        onClick: (e: any) => {
-            if (e.component.option('type') === 'danger') {
-                e.component.option('type', 'success')
-                e.component.option('icon', includeIcon.default)
-                onIncludeChange?.(true)
-            } else {
-                e.component.option('type', 'danger')
-                e.component.option('icon', excludeIcon.default)
-                onIncludeChange?.(false)
-            }
-        }
-    }
-    return <Button
-        name='include'
-        location='before'
-        options={buttonOptions}
-    />
-}
+
 
 const defaultProps = {
     displayExpr: undefined,
