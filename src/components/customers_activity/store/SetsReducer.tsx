@@ -33,14 +33,17 @@ import {
     CHANGE_EMP_TRIBES_INCLUDE,
     CHANGE_EMPLOYEES,
     CHANGE_EMPLOYEES_INCLUDE,
-    CHANGE_SELECT_TOP,
+    CHANGE_PERCENTILE,
+    CHANGE_PERCENTILE_INCLUDE,
     CHANGE_CUSTOMERS,
     CHANGE_CUSTOMERS_INCLUDE,
 } from './Actions'
 
-
-export interface FilterParametersNode<T> {
+interface FilterNode {
     include: boolean
+}
+
+export interface FilterParametersNode<T> extends FilterNode {
     values: Array<T>
 }
 
@@ -51,50 +54,91 @@ export function getDefaultFilterParametersNode<T>(): FilterParametersNode<T> {
     }
 }
 
-export interface SetState {
+export interface FilterParameterNode<T> extends FilterNode {
+    value: T
+}
+
+export function getDefaultFilterParameterNode<T = string | number>(defaultValue: T): FilterParameterNode<T> {
+    return {
+        include: true,
+        value: defaultValue
+    }
+}
+
+export interface Set {
     title: string
+    percentile: FilterParameterNode<number>
     tribes: FilterParametersNode<string>
+    platforms: FilterParametersNode<string>
+    products: FilterParametersNode<string>
+    ticketsTags: FilterParametersNode<number>
+    ticketsTypes: FilterParametersNode<number>
+    customersGroups: FilterParametersNode<string>
+    customersTypes: FilterParametersNode<number>
+    conversionsTypes: FilterParametersNode<number>
     positions: FilterParametersNode<string>
     empTribes: FilterParametersNode<string>
     employees: FilterParametersNode<string>
-    platforms: FilterParametersNode<string>
-    products: FilterParametersNode<string>
-    customersGroups: FilterParametersNode<string>
-    ticketsTags: FilterParametersNode<number>
-    ticketsTypes: FilterParametersNode<number>
-    customersTypes: FilterParametersNode<number>
-    conversionsTypes: FilterParametersNode<number>
     repliesTypes: FilterParametersNode<string>
     components: FilterParametersNode<string>
     features: FilterParametersNode<string>
-    selectTop: number
     customers: FilterParametersNode<string>
 }
 
+export function getAliasedSet(set: Set) {
+    return {
+        Percentile: set.percentile,
+        Tribes: set.tribes,
+        Platforms: set.platforms,
+        Products: set.products,
+        'Ticket tags': set.ticketsTags,
+        'Ticket types': set.ticketsTypes,
+        'User groups': set.customersGroups,
+        'User types': set.customersTypes,
+        'User conversion types': set.conversionsTypes,
+        'Employees positions': set.positions,
+        'Employees tribes': set.empTribes,
+        'Employees': set.employees,
+        'CAT replies types': set.repliesTypes,
+        'CAT components': set.components,
+        'CAT features': set.features,
+        'Customers': set.customers,
+    }
+}
 
-export const INITIAL_SET: SetState = {
+export function getSetDataFields() {
+    return Object.getOwnPropertyNames(getAliasedSet(INITIAL_SET)).map(x => {
+        return {
+            dataField: x,
+            filterOperations: ['<=', '=', '>', 'in', 'notin']
+        }
+    })
+}
+
+
+export const INITIAL_SET: Set = {
     title: '0',
+    percentile: getDefaultFilterParameterNode<number>(100),
     tribes: getDefaultFilterParametersNode<string>(),
+    platforms: getDefaultFilterParametersNode<string>(),
+    products: getDefaultFilterParametersNode<string>(),
+    ticketsTags: getDefaultFilterParametersNode<number>(),
+    ticketsTypes: getDefaultFilterParametersNode<number>(),
+    customersGroups: getDefaultFilterParametersNode<string>(),
+    customersTypes: getDefaultFilterParametersNode<number>(),
+    conversionsTypes: getDefaultFilterParametersNode<number>(),
     positions: getDefaultFilterParametersNode<string>(),
     empTribes: getDefaultFilterParametersNode<string>(),
     employees: getDefaultFilterParametersNode<string>(),
-    platforms: getDefaultFilterParametersNode<string>(),
-    products: getDefaultFilterParametersNode<string>(),
-    customersGroups: getDefaultFilterParametersNode<string>(),
-    ticketsTags: getDefaultFilterParametersNode<number>(),
-    ticketsTypes: getDefaultFilterParametersNode<number>(),
-    customersTypes: getDefaultFilterParametersNode<number>(),
-    conversionsTypes: getDefaultFilterParametersNode<number>(),
     repliesTypes: getDefaultFilterParametersNode<string>(),
     components: getDefaultFilterParametersNode<string>(),
     features: getDefaultFilterParametersNode<string>(),
-    selectTop: 100,
     customers: getDefaultFilterParametersNode<string>(),
 }
 
-const INTIAL_SETS: Array<SetState> = [INITIAL_SET]
+const INTIAL_SETS: Array<Set> = [INITIAL_SET]
 
-export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyAction): Array<SetState> => {
+export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): Array<Set> => {
     switch (action.type) {
 
         case ADD_SET:
@@ -420,11 +464,25 @@ export const SetsReducer = (sets: Array<SetState> = INTIAL_SETS, action: AnyActi
                 }
             })
 
-        case CHANGE_SELECT_TOP:
+        case CHANGE_PERCENTILE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    selectTop: action.payload.data,
+                    percentile: {
+                        ...x.percentile,
+                        value: action.payload.data,
+                    }
+                }
+            })
+
+        case CHANGE_PERCENTILE_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    percentile: {
+                        ...x.percentile,
+                        include: action.payload.data,
+                    }
                 }
             })
 
@@ -466,6 +524,6 @@ export function GenerateNewSetTitle(existingSetsTitles: Array<string>): string {
     return setsLength.toString()
 }
 
-function updateSetState<T extends SetState>(title: string, state: Array<T>, replaceState: (currState: T) => T): Array<T> {
+function updateSetState<T extends Set>(title: string, state: Array<T>, replaceState: (currState: T) => T): Array<T> {
     return state.map((x) => { return x.title === title ? replaceState(x) : x })
 }

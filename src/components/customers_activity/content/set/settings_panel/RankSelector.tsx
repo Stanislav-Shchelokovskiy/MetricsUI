@@ -2,13 +2,14 @@ import React, { useRef } from 'react'
 import { NumberBox, Button as NumberBoxButton } from 'devextreme-react/number-box'
 import { useSelector, useDispatch } from 'react-redux'
 import { CustomersActivityStore } from '../../../store/Store'
-import { changeSelectTop } from '../../../store/Actions'
+import { changePercentile } from '../../../store/Actions'
+import { FilterParameterNode } from '../../../store/SetsReducer'
 
 
 export default function RankSelector({ setTitle }: { setTitle: string }) {
     const ref = useRef<NumberBox>(null)
-    const value = useSelector((store: CustomersActivityStore) =>
-        store.customersActivitySets.find(x => x.title === setTitle)?.selectTop as number
+    const percentile = useSelector((store: CustomersActivityStore) =>
+        store.customersActivitySets.find(x => x.title === setTitle)?.percentile as FilterParameterNode<number>
     )
 
     const disabled = useSelector((store: CustomersActivityStore) =>
@@ -23,7 +24,7 @@ export default function RankSelector({ setTitle }: { setTitle: string }) {
         if (timerId !== undefined)
             clearTimeout(timerId)
         timerId = setTimeout(() => {
-            dispatch(changeSelectTop({ stateId: setTitle, data: value }))
+            dispatch(changePercentile({ stateId: setTitle, data: value }))
             clearTimeout(timerId)
         }, 1000)
     }
@@ -44,7 +45,7 @@ export default function RankSelector({ setTitle }: { setTitle: string }) {
     return <NumberBox
         className='CustomersActivity_RankSelector'
         ref={ref}
-        defaultValue={value}
+        defaultValue={percentile.value}
         step={5}
         min={0}
         max={100}

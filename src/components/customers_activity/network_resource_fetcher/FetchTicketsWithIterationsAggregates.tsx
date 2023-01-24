@@ -1,6 +1,6 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { FilterParametersNode } from '../store/SetsReducer'
+import { Set, getAliasedSet } from '../store/SetsReducer'
 
 
 interface TicketsWithIterationsAggregate {
@@ -35,22 +35,7 @@ export async function fetchTicketsWithIterationsAggregates(
     rangeEnd: string,
     trackedCustomersGroupsModeEnabled: boolean,
     isTicketsMetricSelected: boolean,
-    customersGroups: FilterParametersNode<string>,
-    ticketsTypes: FilterParametersNode<number>,
-    ticketsTags: FilterParametersNode<number>,
-    tribes: FilterParametersNode<string>,
-    repliesTypes: FilterParametersNode<string>,
-    components: FilterParametersNode<string>,
-    features: FilterParametersNode<string>,
-    customersTypes: FilterParametersNode<number>,
-    conversionsTypes: FilterParametersNode<number>,
-    platforms: FilterParametersNode<string>,
-    products: FilterParametersNode<string>,
-    positions: FilterParametersNode<string>,
-    empTribes: FilterParametersNode<string>,
-    employees: FilterParametersNode<string>,
-    customers: FilterParametersNode<string>,
-    selectTop: number,
+    set: Set,
 ): Promise<FetchResult<TicketsWithIterationsAggregates>> {
     try {
         const aggregates: Array<TicketsWithIterationsAggregate> = await fetch(
@@ -58,27 +43,13 @@ export async function fetchTicketsWithIterationsAggregates(
             `group_by_period=${groupByPeriod}` +
             `&range_start=${rangeStart}` +
             `&range_end=${rangeEnd}` +
-            `&tracked_customer_groups_mode_enabled=${trackedCustomersGroupsModeEnabled}` +
-            (isTicketsMetricSelected ? `&tickets_percentile=${selectTop}` : `&iterations_percentile=${selectTop}`),
+            `&tracked_customer_groups_mode_enabled=${trackedCustomersGroupsModeEnabled}`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    customers_groups: customersGroups,
-                    tickets_types: ticketsTypes,
-                    tickets_tags: ticketsTags,
-                    tribes: tribes,
-                    replies_types: repliesTypes,
-                    components: components,
-                    features: features,
-                    license_statuses: customersTypes,
-                    conversion_statuses: conversionsTypes,
-                    platforms: platforms,
-                    products: products,
-                    positions: positions,
-                    emp_tribes: empTribes,
-                    employees: employees,
-                    customers: customers,
+                    ...getAliasedSet(set),
+                    Percentile: { metric: (isTicketsMetricSelected ? 'tickets' : 'iterations'), value: set.percentile }
                 }),
             },
         ).then(response => response.json())

@@ -57,22 +57,7 @@ async function downloadRawData(state: CustomersActivityStore) {
             customersActivityState.range[1],
             customersActivityState.trackedCustomersGroupsModeEnabled,
             isTicketsMetricSelected(customersActivityState.metric),
-            set.customersGroups,
-            set.ticketsTypes,
-            set.ticketsTags,
-            set.tribes,
-            set.repliesTypes,
-            set.components,
-            set.features,
-            set.customersTypes,
-            set.conversionsTypes,
-            set.platforms,
-            set.products,
-            set.positions,
-            set.empTribes,
-            set.employees,
-            set.customers,
-            set.selectTop,
+            set,
         )
         if (fetchResult.success) {
             rawData = rawData.concat(fetchResult.data)
