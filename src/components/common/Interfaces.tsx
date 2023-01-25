@@ -14,7 +14,7 @@ export interface Payload<StateIdT, DataT> {
 }
 
 export interface Token {
-    cancel: (() => void) | undefined
+    cancel: () => void
 }
 
 export interface PopupProps {

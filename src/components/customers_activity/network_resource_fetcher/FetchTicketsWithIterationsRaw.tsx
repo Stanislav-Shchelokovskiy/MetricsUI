@@ -32,7 +32,7 @@ export const EMPTY_TICKETS_WITH_ITERATIONS_RAW = {
 export async function fetchTicketsWithIterationsRaw(
     rangeStart: string,
     rangeEnd: string,
-    trackedCustomersGroupsModeEnabled: boolean,
+    baselineAlignedModeEnabled: boolean,
     isTicketsMetricSelected: boolean,
     set: Set,
 ): Promise<FetchResult<Array<TicketsWithIterationsRaw>>> {
@@ -41,7 +41,7 @@ export async function fetchTicketsWithIterationsRaw(
             `${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_raw?` +
             `&range_start=${rangeStart}` +
             `&range_end=${rangeEnd}` +
-            `&tracked_customer_groups_mode_enabled=${trackedCustomersGroupsModeEnabled}`,
+            `&baseline_aligned_mode_enabled=${baselineAlignedModeEnabled}`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

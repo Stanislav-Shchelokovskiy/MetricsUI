@@ -14,7 +14,7 @@ export default function PercentileSelector({ setTitle }: { setTitle: string }) {
     )
 
     const disabled = useSelector((store: CustomersActivityStore) =>
-        store.customersActivity.trackedCustomersGroupsModeEnabled
+        store.customersActivity.baselineAlignedModeEnabled
     )
 
     const format = (value: number) => {

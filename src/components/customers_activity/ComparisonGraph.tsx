@@ -16,6 +16,7 @@ import {
     isIterationsMetricSelected,
     isIterationsToTicketsMetricSelected
 } from './common_settings_panel/MetricSelector'
+import LoadIndicator from '../common/components/LoadIndicator'
 
 
 interface SetAggregates {
@@ -31,14 +32,16 @@ const INITIAL_STATE = {
 
 export default function ComparisonGraph() {
     const [aggregates, setAggregates] = useState<Array<SetAggregates>>([INITIAL_STATE])
+    const [dataLoading, setDataLoading] = useState<boolean>(false)
+
     const customersActivityState = useSelector((store: CustomersActivityStore) => store.customersActivity)
     const customersActivitySets = useSelector((store: CustomersActivityStore) => store.customersActivitySets)
 
-    const cancellationToken = useRef<Token>({ cancel: undefined })
+    const cancellationToken = useRef<Token>({ cancel: () => { } })
 
     useEffect(() => {
-        cancellationToken.current.cancel?.();
-
+        setDataLoading(true);
+        cancellationToken.current.cancel();
         (async (token: Token) => {
             let cancelled = false
             token.cancel = () => {
@@ -51,7 +54,7 @@ export default function ComparisonGraph() {
                     customersActivityState.groupByPeriod,
                     customersActivityState.range[0],
                     customersActivityState.range[1],
-                    customersActivityState.trackedCustomersGroupsModeEnabled,
+                    customersActivityState.baselineAlignedModeEnabled,
                     isTicketsMetricSelected(customersActivityState.metric),
                     set,
                 )
@@ -62,23 +65,30 @@ export default function ComparisonGraph() {
                     })
                 }
             }
-            if (!cancelled)
+            if (!cancelled) {
                 setAggregates(aggs)
+                setDataLoading(false);
+            }
         })(cancellationToken.current)
     },
         [
             customersActivityState.groupByPeriod,
             customersActivityState.metric,
             customersActivityState.range,
-            customersActivityState.trackedCustomersGroupsModeEnabled,
+            customersActivityState.baselineAlignedModeEnabled,
             customersActivitySets,
         ])
 
-    return <GraphPlot
-        aggregates={aggregates}
-        metric={customersActivityState.metric}
-        comparisonMethod={customersActivityState.comparisonMethod}
-    />
+    return (
+        <div className='CustomersActivityContent'>
+            {dataLoading ? <LoadIndicator className='ComparisonGraph_LoadingIndicator' width={100} height={100} /> : null}
+            <GraphPlot
+                aggregates={aggregates}
+                metric={customersActivityState.metric}
+                comparisonMethod={customersActivityState.comparisonMethod}
+            />
+        </div>
+    )
 }
 
 const GraphPlot = React.memo(

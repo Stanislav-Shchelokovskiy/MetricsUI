@@ -33,7 +33,7 @@ export async function fetchTicketsWithIterationsAggregates(
     groupByPeriod: string,
     rangeStart: string,
     rangeEnd: string,
-    trackedCustomersGroupsModeEnabled: boolean,
+    baselineAlignedModeEnabled: boolean,
     isTicketsMetricSelected: boolean,
     set: Set,
 ): Promise<FetchResult<TicketsWithIterationsAggregates>> {
@@ -43,7 +43,7 @@ export async function fetchTicketsWithIterationsAggregates(
             `group_by_period=${groupByPeriod}` +
             `&range_start=${rangeStart}` +
             `&range_end=${rangeEnd}` +
-            `&tracked_customer_groups_mode_enabled=${trackedCustomersGroupsModeEnabled}`,
+            `&baseline_aligned_mode_enabled=${baselineAlignedModeEnabled}`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -61,7 +61,7 @@ export async function fetchTicketsWithIterationsAggregates(
         const people = []
         let periodNumber = 1
         for (const agg of aggregates) {
-            periods.push(trackedCustomersGroupsModeEnabled ? periodNumber++ : agg.period)
+            periods.push(baselineAlignedModeEnabled ? periodNumber++ : agg.period)
             tickets.push(agg.tickets)
             iterations.push(agg.iterations)
             iterations_to_tickets.push(agg.iterations / agg.tickets)

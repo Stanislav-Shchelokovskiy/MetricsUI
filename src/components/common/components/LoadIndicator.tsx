@@ -7,17 +7,22 @@ import { LoadIndicator as DxLoadIndicator } from 'devextreme-react/load-indicato
 interface Size {
     width: number | undefined
     height: number | undefined
+    className: string
 }
 
 
-function LoadIndicator({ width, height }: Size) {
+function LoadIndicator({ width, height, className }: Size) {
     return (
-        <div data-testid='LoadIndicator' className='LoadIndicator'>
+        <div className={className} >
             <DxLoadIndicator
                 height={height}
                 width={width} />
         </div>
     )
+}
+
+LoadIndicator.defaultProps = {
+    className: 'LoadIndicator'
 }
 
 export default LoadIndicator
