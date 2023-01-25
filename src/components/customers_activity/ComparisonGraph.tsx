@@ -74,7 +74,8 @@ export default function ComparisonGraph() {
         [
             customersActivityState.groupByPeriod,
             customersActivityState.metric,
-            customersActivityState.range,
+            customersActivityState.range[0],
+            customersActivityState.range[1],
             customersActivityState.baselineAlignedModeEnabled,
             customersActivitySets,
         ])
