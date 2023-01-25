@@ -13,7 +13,7 @@ import {
     ADD_SET,
     REMOVE_SET,
     CHANGE_SET_TITLE,
-    CHANGE_TRACKED_CUSTOMERS_GROUPS_MODE,
+    CHANGE_BASELINE_ALIGNED_MODE,
 } from './Actions'
 
 
@@ -22,7 +22,7 @@ export interface CustomersActivityState {
     groupByPeriod: string
     metric: string
     comparisonMethod: string
-    trackedCustomersGroupsModeEnabled: boolean
+    baselineAlignedModeEnabled: boolean
     sets: Array<string>
 }
 
@@ -32,7 +32,7 @@ const INITIAL_CUSTOMERS_ACTIVITY_STATE: CustomersActivityState = {
     groupByPeriod: '',
     metric: getValidMetricOrDefault(undefined),
     comparisonMethod: getValidComparisonMethodOrDefault(undefined),
-    trackedCustomersGroupsModeEnabled: false,
+    baselineAlignedModeEnabled: false,
     sets: [INITIAL_SET.title]
 }
 
@@ -85,10 +85,10 @@ export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL
                 sets: state.sets.map(set => set !== action.payload.stateId ? set : action.payload.data)
             }
 
-        case CHANGE_TRACKED_CUSTOMERS_GROUPS_MODE:
+        case CHANGE_BASELINE_ALIGNED_MODE:
             return {
                 ...state,
-                trackedCustomersGroupsModeEnabled: action.payload
+                baselineAlignedModeEnabled: action.payload
             }
 
         default:

@@ -14,8 +14,8 @@ export default function CustomersGroupsSelector({ setTitle }: { setTitle: string
     const onValueChange = (allValues: Array<CustomersGroup>, values: Array<string>) => changeCustomersGroups({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeCustomersGroupsInclude({ stateId: setTitle, data: include })
 
-    const trackedCustomersGroupsModeEnabled = useSelector((store: CustomersActivityStore) => store.customersActivity.trackedCustomersGroupsModeEnabled)
-    const fetchArgs = [trackedCustomersGroupsModeEnabled]
+    const baselineAlignedModeEnabled = useSelector((store: CustomersActivityStore) => store.customersActivity.baselineAlignedModeEnabled)
+    const fetchArgs = [baselineAlignedModeEnabled]
 
     return <MultiOptionSelector<CustomersGroup, string>
         className='CustomersActivity_CustomersGroupsSelector'

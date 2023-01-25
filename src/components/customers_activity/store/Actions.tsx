@@ -284,10 +284,10 @@ export const changeEmployeesInclude = (payload: Payload<string, boolean>): Paylo
     }
 }
 
-export const CHANGE_TRACKED_CUSTOMERS_GROUPS_MODE = 'customers_activity/change_tracked_customers_groups_mode'
-export const changeTrackedCustomersGroupsMode = (payload: boolean): PayloadAction<boolean> => {
+export const CHANGE_BASELINE_ALIGNED_MODE = 'customers_activity/change_baseline_aligned_mode'
+export const changeBaselineAlignedMode = (payload: boolean): PayloadAction<boolean> => {
     return {
-        type: CHANGE_TRACKED_CUSTOMERS_GROUPS_MODE,
+        type: CHANGE_BASELINE_ALIGNED_MODE,
         payload: payload
     }
 }

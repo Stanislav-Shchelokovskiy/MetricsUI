@@ -4,11 +4,11 @@ import { Popup, ToolbarItem } from 'devextreme-react/popup'
 import Button from '../../common/components/Button'
 import { CheckBox } from 'devextreme-react/check-box'
 import { CustomersActivityStore } from '../store/Store'
-import { changeTrackedCustomersGroupsMode } from '../store/Actions'
+import { changeBaselineAlignedMode } from '../store/Actions'
 import { PopupProps } from '../../common/Interfaces'
 
 interface AdvancedSettings {
-    trackedCustomersGroupsModeEnabled: boolean
+    baselineAlignedMode: boolean
 }
 
 type SettingsPopupProps = AdvancedSettings & PopupProps
@@ -22,8 +22,8 @@ export default function AdvancedSettingsButton({ visible }: { visible: boolean }
         setPopupVisible(false)
     }, [])
 
-    const trackedCustomersGroupsModeEnabled = useSelector((store: CustomersActivityStore) => store.customersActivity.trackedCustomersGroupsModeEnabled)
-    const settingsModified = isAnySettingModified({ trackedCustomersGroupsModeEnabled })
+    const baselineAlignedModeEnabled = useSelector((store: CustomersActivityStore) => store.customersActivity.baselineAlignedModeEnabled)
+    const settingsModified = isAnySettingModified({ baselineAlignedMode: baselineAlignedModeEnabled })
     if (visible) {
         return (
             <div className='CustomersActivityAdvancedSettingsButton'>
@@ -33,7 +33,7 @@ export default function AdvancedSettingsButton({ visible }: { visible: boolean }
                     onClick={onClick}
                     type={settingsModified ? 'default' : 'normal'} />
                 <AdvancedSettingsPopup
-                    trackedCustomersGroupsModeEnabled={trackedCustomersGroupsModeEnabled}
+                    baselineAlignedMode={baselineAlignedModeEnabled}
                     visible={popupVisible}
                     onHiding={onHiding} />
             </div>
@@ -43,7 +43,7 @@ export default function AdvancedSettingsButton({ visible }: { visible: boolean }
 }
 
 function isAnySettingModified(settings: AdvancedSettings) {
-    if (settings.trackedCustomersGroupsModeEnabled !== false)
+    if (settings.baselineAlignedMode !== false)
         return true
     return false
 }
@@ -51,16 +51,16 @@ function isAnySettingModified(settings: AdvancedSettings) {
 
 function AdvancedSettingsPopup(props: SettingsPopupProps) {
 
-    const trackedCustomersGroupsModeCheckBoxRef = useRef<CheckBox>(null)
-    trackedCustomersGroupsModeCheckBoxRef.current?.instance.option('value', props.trackedCustomersGroupsModeEnabled)
+    const baselineAlignedModeCheckBoxRef = useRef<CheckBox>(null)
+    baselineAlignedModeCheckBoxRef.current?.instance.option('value', props.baselineAlignedMode)
 
     const appDispatch = useDispatch()
     const onOkClick = useCallback(() => {
-        const newTrackedCustomersGroupsModeEnabled = trackedCustomersGroupsModeCheckBoxRef.current?.instance.option('value')
-        if (newTrackedCustomersGroupsModeEnabled !== props.trackedCustomersGroupsModeEnabled)
-            appDispatch(changeTrackedCustomersGroupsMode((newTrackedCustomersGroupsModeEnabled as boolean)))
+        const newbaselineAlignedModeEnabled = baselineAlignedModeCheckBoxRef.current?.instance.option('value')
+        if (newbaselineAlignedModeEnabled !== props.baselineAlignedMode)
+            appDispatch(changeBaselineAlignedMode((newbaselineAlignedModeEnabled as boolean)))
         props.onHiding()
-    }, [props.trackedCustomersGroupsModeEnabled])
+    }, [props.baselineAlignedMode])
 
     const okButtonOptions = {
         text: 'Ok',
@@ -82,10 +82,10 @@ function AdvancedSettingsPopup(props: SettingsPopupProps) {
             maxHeight='40vh'
         >
             <CheckBox
-                ref={trackedCustomersGroupsModeCheckBoxRef}
-                text='Tracked Users Groups Mode'
+                ref={baselineAlignedModeCheckBoxRef}
+                text='Baseline Aligned Mode'
                 focusStateEnabled={false}
-                defaultValue={props.trackedCustomersGroupsModeEnabled}
+                defaultValue={props.baselineAlignedMode}
             />
             <ToolbarItem
                 widget='dxButton'
