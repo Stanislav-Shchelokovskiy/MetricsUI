@@ -66,6 +66,7 @@ export default function ComparisonGraph() {
                 }
             }
             if (!cancelled) {
+                aggs.sort(x=>-x.aggregates.periods.length)
                 setAggregates(aggs)
                 setDataLoading(false);
             }
