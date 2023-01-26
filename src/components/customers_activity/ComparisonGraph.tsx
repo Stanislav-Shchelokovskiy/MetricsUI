@@ -66,7 +66,13 @@ export default function ComparisonGraph() {
                 }
             }
             if (!cancelled) {
-                aggs.sort(x=>-x.aggregates.periods.length)
+                aggs.sort((a, b) => {
+                    if (a.aggregates.periods.length < b.aggregates.periods.length)
+                        return 1
+                    if (a.aggregates.periods.length > b.aggregates.periods.length)
+                        return -1
+                    return b.aggregates.iterations.reduce((a, b) => a + b) - a.aggregates.iterations.reduce((a, b) => a + b)
+                })
                 setAggregates(aggs)
                 setDataLoading(false);
             }
