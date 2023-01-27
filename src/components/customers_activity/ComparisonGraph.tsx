@@ -71,7 +71,7 @@ export default function ComparisonGraph() {
                         return 1
                     if (a.aggregates.periods.length > b.aggregates.periods.length)
                         return -1
-                    return b.aggregates.iterations.reduce((a, b) => a + b) - a.aggregates.iterations.reduce((a, b) => a + b)
+                    return b.aggregates.iterations.reduce((a, b) => a + b, 0) - a.aggregates.iterations.reduce((a, b) => a + b, 0)
                 })
                 setAggregates(aggs)
                 setDataLoading(false);
