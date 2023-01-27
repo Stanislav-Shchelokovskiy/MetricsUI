@@ -20,7 +20,7 @@ export default function PercentileSelector({ setTitle }: { setTitle: string }) {
     const format = (value: number) => {
         return disabled ?
             'Not applicable' :
-            `Select ${percentile.include ? 'top' : 'bottom'} ${Math.round(value)} %`
+            `Select ${percentile.include ? '' : 'skip'} top ${Math.round(value)} %`
     }
 
     const dispatch = useDispatch()
@@ -44,7 +44,8 @@ export default function PercentileSelector({ setTitle }: { setTitle: string }) {
         'verticalalignbottom',
         onIncludeChange
     ), [percentile.include])
-
+    
+    const maxValue = 100
     const resetButtonOptions = {
         text: '',
         stylingMode: 'text',
@@ -54,7 +55,7 @@ export default function PercentileSelector({ setTitle }: { setTitle: string }) {
             id: 'PercentileSelector_resetButton'
         },
         onClick: (e: any) => {
-            ref.current?.instance.option('value', 100)
+            ref.current?.instance.option('value', maxValue)
         }
     }
 
@@ -64,7 +65,7 @@ export default function PercentileSelector({ setTitle }: { setTitle: string }) {
         defaultValue={percentile.value}
         step={5}
         min={0}
-        max={100}
+        max={maxValue}
         format={format}
         showSpinButtons={true}
         useLargeSpinButtons={true}
