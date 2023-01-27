@@ -20,7 +20,7 @@ export default function PercentileSelector({ setTitle }: { setTitle: string }) {
     const format = (value: number) => {
         return disabled ?
             'Not applicable' :
-            `Select ${percentile.include ? '' : 'skip'} top ${Math.round(value)} %`
+            `Select ${percentile.include ? '' : 'skip '}top ${Math.round(value)} %`
     }
 
     const dispatch = useDispatch()
