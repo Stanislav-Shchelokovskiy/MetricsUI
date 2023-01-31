@@ -15,8 +15,7 @@ export interface TicketsWithIterationsRaw {
     feature: string
 }
 
-
-export const EMPTY_TICKETS_WITH_ITERATIONS_RAW = {
+const EMPTY_TICKETS_WITH_ITERATIONS_RAW = {
     user_id: '',
     tribe_id: '',
     scid: '',
@@ -28,6 +27,16 @@ export const EMPTY_TICKETS_WITH_ITERATIONS_RAW = {
     feature: '',
 }
 
+interface TicketsWithIterationsRawSet {
+    index: number
+    raw_data: Array<TicketsWithIterationsRaw>
+}
+
+const EMPTY_TICKETS_WITH_ITERATIONS_RAW_SET = {
+    index: 0,
+    raw_data: [EMPTY_TICKETS_WITH_ITERATIONS_RAW]
+}
+
 
 export async function fetchTicketsWithIterationsRaw(
     rangeStart: string,
@@ -35,7 +44,8 @@ export async function fetchTicketsWithIterationsRaw(
     baselineAlignedModeEnabled: boolean,
     isTicketsMetricSelected: boolean,
     set: Set,
-): Promise<FetchResult<Array<TicketsWithIterationsRaw>>> {
+    index: number,
+): Promise<FetchResult<TicketsWithIterationsRawSet>> {
     try {
         const raw_data: Array<TicketsWithIterationsRaw> = await fetch(
             `${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_raw?` +
@@ -53,13 +63,16 @@ export async function fetchTicketsWithIterationsRaw(
         ).then(response => response.json())
         return {
             success: true,
-            data: raw_data
+            data: {
+                index: index,
+                raw_data: raw_data,
+            }
         }
     } catch (error) {
         console.log(error)
         return {
             success: false,
-            data: [EMPTY_TICKETS_WITH_ITERATIONS_RAW]
+            data: EMPTY_TICKETS_WITH_ITERATIONS_RAW_SET
         }
     }
 }

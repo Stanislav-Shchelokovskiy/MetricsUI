@@ -2,7 +2,6 @@ import React from 'react'
 import { useStore } from 'react-redux'
 import * as XLSX from 'xlsx'
 import { CustomersActivityStore } from '../store/Store'
-import FetchResult from '../../common/Interfaces'
 import { fetchTicketsWithIterationsRaw, TicketsWithIterationsRaw } from '../network_resource_fetcher/FetchTicketsWithIterationsRaw'
 import TaskButton from '../../common/components/TaskButton'
 import { isTicketsMetricSelected } from '../common_settings_panel/MetricSelector'
@@ -13,7 +12,6 @@ function DownloadButton() {
 
     const downloadSetRawData = async (
         dispatchTaskState: (started: boolean) => void,
-        onSuccess: (message: string) => void,
         onError: (message: string) => void,
     ) => {
         await tryDownloadExcelData(dispatchTaskState, store, onError)
@@ -51,18 +49,18 @@ async function downloadRawData(state: CustomersActivityStore) {
     const customersActivityState = state.customersActivity
     const customersActivitySets = state.customersActivitySets
     let rawData: Array<TicketsWithIterationsRaw> = []
-    for (const set of customersActivitySets) {
-        const fetchResult: FetchResult<Array<TicketsWithIterationsRaw>> = await fetchTicketsWithIterationsRaw(
-            customersActivityState.range[0],
-            customersActivityState.range[1],
-            customersActivityState.baselineAlignedModeEnabled,
-            isTicketsMetricSelected(customersActivityState.metric),
-            set,
-        )
-        if (fetchResult.success) {
-            rawData = rawData.concat(fetchResult.data)
-        }
-    }
+    let fetchResults = await Promise.all(customersActivitySets.map((set, index) => fetchTicketsWithIterationsRaw(
+        customersActivityState.range[0],
+        customersActivityState.range[1],
+        customersActivityState.baselineAlignedModeEnabled,
+        isTicketsMetricSelected(customersActivityState.metric),
+        set,
+        index,
+    )))
+    fetchResults.sort((a, b) => a.data.index - b.data.index)
+    for (const fetchResult of fetchResults)
+        if (fetchResult.success)
+            rawData = rawData.concat(fetchResult.data.raw_data)
     return rawData
 }
 
