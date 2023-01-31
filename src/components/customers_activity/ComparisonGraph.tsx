@@ -8,9 +8,9 @@ import { toFriendlyTitle } from './content/set/header/Title'
 import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './common_settings_panel/ComparisonMethodSelector'
 import {
     fetchTicketsWithIterationsAggregates,
-    TicketsWithIterationsAggregates,
-    EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES
+    TicketsWithIterationsAggregates
 } from './network_resource_fetcher/FetchTicketsWithIterationsAggregates'
+import { fetchPeriodsArray } from './network_resource_fetcher/FetchPeriodsArray'
 import {
     isTicketsMetricSelected,
     isIterationsMetricSelected,
@@ -18,6 +18,10 @@ import {
 } from './common_settings_panel/MetricSelector'
 import LoadIndicator from '../common/components/LoadIndicator'
 
+interface Aggregates {
+    periods: Array<string>
+    setAggregates: Array<SetAggregates>
+}
 
 interface SetAggregates {
     name: string
@@ -26,12 +30,12 @@ interface SetAggregates {
 
 
 const INITIAL_STATE = {
-    name: '',
-    aggregates: EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES,
+    periods: [],
+    setAggregates: []
 }
 
 export default function ComparisonGraph() {
-    const [aggregates, setAggregates] = useState<Array<SetAggregates>>([INITIAL_STATE])
+    const [aggregates, setAggregates] = useState<Aggregates>(INITIAL_STATE)
     const [dataLoading, setDataLoading] = useState<boolean>(false)
 
     const customersActivityState = useSelector((store: CustomersActivityStore) => store.customersActivity)
@@ -48,7 +52,19 @@ export default function ComparisonGraph() {
                 cancelled = true
             }
 
-            let aggs: Array<SetAggregates> = []
+            const periods_array: FetchResult<Array<string>> = await fetchPeriodsArray(
+                customersActivityState.groupByPeriod,
+                customersActivityState.range[0],
+                customersActivityState.range[1])
+
+            let aggs: Aggregates = {
+                periods: [],
+                setAggregates: []
+            }
+            if (periods_array.success) {
+                aggs.periods = periods_array.data
+            }
+
             for (const set of customersActivitySets) {
                 const fetchedAggregates: FetchResult<TicketsWithIterationsAggregates> = await fetchTicketsWithIterationsAggregates(
                     customersActivityState.groupByPeriod,
@@ -59,20 +75,13 @@ export default function ComparisonGraph() {
                     set,
                 )
                 if (fetchedAggregates.success) {
-                    aggs.push({
+                    aggs.setAggregates.push({
                         name: toFriendlyTitle(set.title),
                         aggregates: fetchedAggregates.data
                     })
                 }
             }
             if (!cancelled) {
-                aggs.sort((a, b) => {
-                    if (a.aggregates.periods.length < b.aggregates.periods.length)
-                        return 1
-                    if (a.aggregates.periods.length > b.aggregates.periods.length)
-                        return -1
-                    return 0
-                })
                 setAggregates(aggs)
                 setDataLoading(false);
             }
@@ -91,7 +100,7 @@ export default function ComparisonGraph() {
         <div className='CustomersActivityContent'>
             {dataLoading ? <LoadIndicator className='ComparisonGraph_LoadingIndicator' width={100} height={100} /> : null}
             <GraphPlot
-                aggregates={aggregates}
+                aggs={aggregates}
                 metric={customersActivityState.metric}
                 comparisonMethod={customersActivityState.comparisonMethod}
             />
@@ -102,11 +111,11 @@ export default function ComparisonGraph() {
 const GraphPlot = React.memo(
     function GraphPlotMemoized(
         {
-            aggregates,
+            aggs,
             metric,
             comparisonMethod
         }: {
-            aggregates: Array<SetAggregates>,
+            aggs: Aggregates,
             metric: string,
             comparisonMethod: string
         }
@@ -115,11 +124,11 @@ const GraphPlot = React.memo(
             <Plot
                 divId='CustomersActivity_ComparisonGraph'
                 className='CustomersActivity_ComparisonGraph'
-                data={getPlots(aggregates, metric, comparisonMethod)}
+                data={getPlots(aggs.setAggregates, metric, comparisonMethod)}
                 useResizeHandler={true}
                 layout={{
                     margin: { t: 10, l: 30, r: 10, b: 30 },
-                    xaxis: { autorange: true, automargin: true, type: 'category', categoryorder: 'trace' },
+                    xaxis: { autorange: true, automargin: true, type: 'category', categoryorder: 'array', categoryarray: aggs.periods },
                     yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: true },
                     barmode: 'group',
                     paper_bgcolor: 'rgba(0,0,0,0)',
@@ -191,6 +200,7 @@ function getAbsoluteGraphSettings(set: SetAggregates, metric: string) {
 }
 
 function getCommonGraphSettings(set: SetAggregates, metric: string) {
+    console.log(set.aggregates.periods)
     return {
         name: set.name,
         x: set.aggregates.periods,
