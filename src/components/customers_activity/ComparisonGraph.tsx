@@ -51,39 +51,36 @@ export default function ComparisonGraph() {
             token.cancel = () => {
                 cancelled = true
             }
-
-            const periods_array: FetchResult<Array<string>> = await fetchPeriodsArray(
-                customersActivityState.groupByPeriod,
-                customersActivityState.range[0],
-                customersActivityState.range[1])
-
-            let aggs: Aggregates = {
-                periods: [],
-                setAggregates: []
-            }
-            if (periods_array.success) {
-                aggs.periods = periods_array.data
-            }
-
-            for (const set of customersActivitySets) {
-                const fetchedAggregates: FetchResult<TicketsWithIterationsAggregates> = await fetchTicketsWithIterationsAggregates(
+            const range_start = customersActivityState.range[0]
+            const range_end = customersActivityState.range[1]
+            const [periods_array, ...sets] = await Promise.all(
+                [fetchPeriodsArray(
                     customersActivityState.groupByPeriod,
-                    customersActivityState.range[0],
-                    customersActivityState.range[1],
+                    range_start,
+                    range_end
+                ),
+                ...customersActivitySets.map((set, index) => fetchTicketsWithIterationsAggregates(
+                    customersActivityState.groupByPeriod,
+                    range_start,
+                    range_end,
                     customersActivityState.baselineAlignedModeEnabled,
                     isTicketsMetricSelected(customersActivityState.metric),
                     set,
-                )
-                if (fetchedAggregates.success) {
-                    aggs.setAggregates.push({
-                        name: toFriendlyTitle(set.title),
-                        aggregates: fetchedAggregates.data
-                    })
+                    index,
+                ))])
+
+            let aggs: Aggregates = INITIAL_STATE
+            if (periods_array.success) {
+                aggs = {
+                    periods: periods_array.data,
+                    setAggregates: sets.map(x => {
+                        return { name: toFriendlyTitle(x.data.title), aggregates: x.data }
+                    }).sort((a, b) => a.aggregates.index - b.aggregates.index)
                 }
             }
             if (!cancelled) {
                 setAggregates(aggs)
-                setDataLoading(false);
+                setDataLoading(false)
             }
         })(cancellationToken.current)
     },
