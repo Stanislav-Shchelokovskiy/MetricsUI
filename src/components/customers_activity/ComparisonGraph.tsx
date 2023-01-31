@@ -53,8 +53,8 @@ export default function ComparisonGraph() {
             }
             const range_start = customersActivityState.range[0]
             const range_end = customersActivityState.range[1]
-            const [periods_array, ...sets] = await Promise.all(
-                [fetchPeriodsArray(
+            const [periods_array, ...sets] = await Promise.all([
+                fetchPeriodsArray(
                     customersActivityState.groupByPeriod,
                     range_start,
                     range_end
