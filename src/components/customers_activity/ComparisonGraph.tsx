@@ -200,7 +200,6 @@ function getAbsoluteGraphSettings(set: SetAggregates, metric: string) {
 }
 
 function getCommonGraphSettings(set: SetAggregates, metric: string) {
-    console.log(set.aggregates.periods)
     return {
         name: set.name,
         x: set.aggregates.periods,
