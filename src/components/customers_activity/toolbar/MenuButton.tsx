@@ -21,7 +21,7 @@ export default function MenuButton(props: Props) {
         timerId.current = setTimeout(() => {
             setFilterTooltipVisible(true)
             clearTimeout(timerId.current)
-        }, 500)
+        }, 600)
     }
     const onLeave = () => {
         clearTimeout(timerId.current)
