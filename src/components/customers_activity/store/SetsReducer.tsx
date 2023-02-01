@@ -37,6 +37,7 @@ import {
     CHANGE_PERCENTILE_INCLUDE,
     CHANGE_CUSTOMERS,
     CHANGE_CUSTOMERS_INCLUDE,
+    CHANGE_INCLUDE_DUPLICATES,
 } from './Actions'
 
 interface FilterNode {
@@ -73,6 +74,7 @@ export interface Set {
     products: FilterParametersNode<string>
     ticketsTags: FilterParametersNode<number>
     ticketsTypes: FilterParametersNode<number>
+    referredTicketsTypes: FilterParametersNode<number> | undefined
     customersGroups: FilterParametersNode<string>
     customersTypes: FilterParametersNode<number>
     conversionsTypes: FilterParametersNode<number>
@@ -92,7 +94,7 @@ export function getAliasedSet(set: Set) {
         Platforms: set.platforms,
         Products: set.products,
         'Ticket tags': set.ticketsTags,
-        'Ticket types': set.ticketsTypes,
+        'Ticket types': getAliasedTicketTypes(set),
         'User groups': set.customersGroups,
         'User types': set.customersTypes,
         'User conversion types': set.conversionsTypes,
@@ -106,8 +108,19 @@ export function getAliasedSet(set: Set) {
     }
 }
 
+function getAliasedTicketTypes(set: Set) {
+    return {
+        'Ticket types': set.ticketsTypes,
+        'Referred ticket types': set.referredTicketsTypes
+    }
+}
+
 export function getSetDataFields() {
-    return Object.getOwnPropertyNames(getAliasedSet(INITIAL_SET)).map(x => {
+    const flatSet = {
+        ...getAliasedSet(INITIAL_SET),
+        ...getAliasedTicketTypes(INITIAL_SET)
+    }
+    return Object.getOwnPropertyNames(flatSet).map(x => {
         return {
             dataField: x,
             filterOperations: ['<=', '=', '>', 'in', 'notin']
@@ -124,6 +137,7 @@ export const INITIAL_SET: Set = {
     products: getDefaultFilterParametersNode<string>(),
     ticketsTags: getDefaultFilterParametersNode<number>(),
     ticketsTypes: getDefaultFilterParametersNode<number>(),
+    referredTicketsTypes: undefined,
     customersGroups: getDefaultFilterParametersNode<string>(),
     customersTypes: getDefaultFilterParametersNode<number>(),
     conversionsTypes: getDefaultFilterParametersNode<number>(),
@@ -223,6 +237,7 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     }
                 }
             })
+
         case CHANGE_TICKETS_TYPES_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -231,6 +246,17 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                         ...x.ticketsTypes,
                         include: action.payload.data
                     }
+                }
+            })
+
+        case CHANGE_INCLUDE_DUPLICATES:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    referredTicketsTypes: action.payload.data ? {
+                        ...x.ticketsTypes,
+                        include: true
+                    } : undefined
                 }
             })
 

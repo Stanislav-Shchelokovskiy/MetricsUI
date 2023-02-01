@@ -324,3 +324,11 @@ export const changeCustomersInclude = (payload: Payload<string, boolean>): Paylo
         payload: payload
     }
 }
+
+export const CHANGE_INCLUDE_DUPLICATES = 'customers_activity/change_include_duplicates'
+export const changeIncludeDuplicates = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_INCLUDE_DUPLICATES,
+        payload: payload
+    }
+}

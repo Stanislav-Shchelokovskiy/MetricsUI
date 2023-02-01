@@ -39,6 +39,8 @@ export default function PercentileSelector({ setTitle }: { setTitle: string }) {
     }
 
     const topBottomButtonOptions = useMemo(() => getIncludeButtonOptions(
+        'include',
+        'before',
         percentile.include,
         'verticalaligntop',
         'verticalalignbottom',
@@ -73,8 +75,8 @@ export default function PercentileSelector({ setTitle }: { setTitle: string }) {
         disabled={disabled}
         mode='number'>
         <NumberBoxButton
-            name='include'
-            location='before'
+            name={topBottomButtonOptions.name}
+            location={topBottomButtonOptions.location}
             options={topBottomButtonOptions} />
         <NumberBoxButton name='spins' />
         <NumberBoxButton

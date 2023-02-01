@@ -12,7 +12,7 @@ import * as excludeIcon from './assets/exclude.svg'
 import CustomStore from 'devextreme/data/custom_store'
 import { LoadOptions } from 'devextreme/data'
 import useServerValidate, { ValidateProps, useValidate } from '../hooks/UseValidate'
-import { getIncludeButtonOptions } from './Button'
+import { getIncludeButtonOptions, ButtonOptions } from './Button'
 
 interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     className: string
@@ -32,6 +32,7 @@ interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     dataStore: CustomStore
     openOnFieldClick: boolean
     applyValueMode: 'instantly' | 'useButtons'
+    customButtons: Array<ButtonOptions> | undefined
 }
 
 
@@ -109,10 +110,12 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
     });
 
     const includeButtonOptions = useMemo(() => getIncludeButtonOptions(
+        'include',
+        'before',
         props.includeButtonState === undefined ? true : props.includeButtonState,
         includeIcon.default,
         excludeIcon.default,
-        onIncludeChangeHandler
+        onIncludeChangeHandler,
     ), [props.includeButtonState])
 
     const clearButtonOptions = {
@@ -154,10 +157,19 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
         {
             props.includeButtonState !== undefined ?
                 <Button
-                    name='include'
-                    location='before'
+                    name={includeButtonOptions.name}
+                    location={includeButtonOptions.location}
                     options={includeButtonOptions} />
                 : null
+        }
+        {
+            props.customButtons !== undefined ?
+                props.customButtons.map(o => <Button
+                    key={o.name}
+                    name={o.name}
+                    location={o.location}
+                    options={o} />) :
+                null
         }
         <Button
             name='clear'
@@ -185,6 +197,7 @@ const defaultProps = {
     dataStore: undefined,
     openOnFieldClick: true,
     applyValueMode: 'useButtons',
+    customButtons: undefined
 }
 
 MultiOptionSelector.defaultProps = defaultProps
