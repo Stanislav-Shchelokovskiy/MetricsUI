@@ -14,7 +14,7 @@ import {
     REMOVE_SET,
     CHANGE_SET_TITLE,
     CHANGE_BASELINE_ALIGNED_MODE,
-} from './Actions'
+} from './actions/Common'
 
 
 export interface CustomersActivityState {

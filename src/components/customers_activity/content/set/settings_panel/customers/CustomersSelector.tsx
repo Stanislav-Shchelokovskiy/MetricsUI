@@ -1,17 +1,13 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { SearchMultioptionSelector } from '../../../../common/components/MultiOptionSelector'
-import { CustomersActivityStore } from '../../../store/Store'
-import { changeCustomers, changeCustomersInclude } from '../../../store/Actions'
-import { fetchCustomers, Customer, fetchValidateCustomers } from '../../../network_resource_fetcher/FetchCustomers'
-import { FilterParametersNode } from '../../../store/SetsReducer'
+import { SearchMultioptionSelector } from '../../../../../common/components/MultiOptionSelector'
+import { CustomersActivityStore } from '../../../../store/Store'
+import { changeCustomers, changeCustomersInclude } from '../../../../store/actions/Customers'
+import { fetchCustomers, Customer, fetchValidateCustomers } from '../../../../network_resource_fetcher/FetchCustomers'
 
 
 export default function CustomersSelector({ setTitle }: { setTitle: string }) {
-    const customers = useSelector((store: CustomersActivityStore) =>
-        store.customersActivitySets.find(x => x.title === setTitle)?.customers as FilterParametersNode<string>
-    )
-
+    const value = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.customers)
     const onValueChange = (allValues: Array<Customer>, values: Array<string>) => changeCustomers({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeCustomersInclude({ stateId: setTitle, data: include })
 
@@ -23,9 +19,9 @@ export default function CustomersSelector({ setTitle }: { setTitle: string }) {
         label='Customers'
         fetchDataSource={fetchCustomers}
         fetchValidValues={fetchValidateCustomers}
-        fetchValidValuesArgs={[customers.values]}
-        value={customers.values}
-        includeButtonState={customers.include}
+        fetchValidValuesArgs={[value?.values]}
+        value={value?.values}
+        includeButtonState={value === undefined || value.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
         showSelectionControls={false}

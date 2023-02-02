@@ -1,6 +1,6 @@
 import React from 'react'
 import OptionSelector from '../../common/components/OptionSelector'
-import { changeGroupByPeriod } from '../store/Actions'
+import { changeGroupByPeriod } from '../store/actions/Common'
 import { CustomersActivityStore } from '../store/Store'
 import { fetchGroupByPeriods, GroupByPeriod } from '../network_resource_fetcher/FetchGroupByPeriods'
 

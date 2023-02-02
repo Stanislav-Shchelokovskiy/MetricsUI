@@ -14,24 +14,8 @@ export function initMissingCustomersActivityProperties(customersActivity: Custom
 
 export function initMissingCustomersActivitySetsProperties(customersActivitySets: Array<Set>): Array<Set> {
     for (const set of customersActivitySets) {
-        if (set.customersTypes === undefined)
-            set.customersTypes = getDefaultFilterParametersNode<number>()
-        if (set.conversionsTypes === undefined)
-            set.conversionsTypes = getDefaultFilterParametersNode<number>()
-        if (set.platforms === undefined)
-            set.platforms = getDefaultFilterParametersNode<string>()
-        if (set.products === undefined)
-            set.products = getDefaultFilterParametersNode<string>()
-        if (set.positions === undefined)
-            set.positions = getDefaultFilterParametersNode<string>()
-        if (set.empTribes === undefined)
-            set.empTribes = getDefaultFilterParametersNode<string>()
-        if (set.employees === undefined)
-            set.employees = getDefaultFilterParametersNode<string>()
         if (set.percentile === undefined)
             set.percentile = getDefaultFilterParameterNode<number>(100)
-        if (set.customers === undefined)
-            set.customers = getDefaultFilterParametersNode<string>()
     }
     return customersActivitySets
 }

@@ -2,7 +2,7 @@ import React, { useRef, useMemo } from 'react'
 import { NumberBox, Button as NumberBoxButton } from 'devextreme-react/number-box'
 import { useSelector, useDispatch } from 'react-redux'
 import { CustomersActivityStore } from '../../../store/Store'
-import { changePercentile, changePercentileInclude } from '../../../store/Actions'
+import { changePercentile, changePercentileInclude } from '../../../store/actions/SetCommon'
 import { FilterParameterNode } from '../../../store/SetsReducer'
 import { getIncludeButtonOptions } from '../../../../common/components/Button'
 

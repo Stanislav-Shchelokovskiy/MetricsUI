@@ -47,10 +47,8 @@ export async function fetchCustomers(
     }
 }
 
-export async function fetchValidateCustomers(
-    customers: Array<string>
-): Promise<FetchResult<Array<ValidationResult>>> {
-    if (customers.length === 0) {
+export async function fetchValidateCustomers(customers: Array<string> | undefined): Promise<FetchResult<Array<ValidationResult>>> {
+    if (customers === undefined || customers.length === 0) {
         return {
             success: true,
             data: Array<ValidationResult>()

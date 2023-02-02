@@ -1,7 +1,7 @@
 import React from 'react'
 import OptionSelector from '../../common/components/OptionSelector'
 import { CustomersActivityStore } from '../store/Store'
-import { changeComparisonMethod } from '../store/Actions'
+import { changeComparisonMethod } from '../store/actions/Common'
 
 
 const ABSOLUTE_BAR = 'Absolute (Bar)'

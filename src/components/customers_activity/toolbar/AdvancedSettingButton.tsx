@@ -4,7 +4,7 @@ import { Popup, ToolbarItem } from 'devextreme-react/popup'
 import Button from '../../common/components/Button'
 import { CheckBox } from 'devextreme-react/check-box'
 import { CustomersActivityStore } from '../store/Store'
-import { changeBaselineAlignedMode } from '../store/Actions'
+import { changeBaselineAlignedMode } from '../store/actions/Common'
 import { PopupProps } from '../../common/Interfaces'
 
 interface AdvancedSettings {

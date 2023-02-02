@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RangeSelector as DxRangeSelector, Margin, Scale, MinorTick, SliderMarker } from 'devextreme-react/range-selector'
 import LoadIndicator from '../../common/components/LoadIndicator'
 import FetchResult from '../../common/Interfaces'
-import { changePeriod } from '../store/Actions'
+import { changePeriod } from '../store/actions/Common'
 import { CustomersActivityStore } from '../store/Store'
 import { fetchPeriod, Period } from '../network_resource_fetcher/FetchPeriod'
 

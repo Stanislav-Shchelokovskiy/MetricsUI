@@ -1,6 +1,6 @@
 import React from 'react'
 import OptionSelector from '../../common/components/OptionSelector'
-import { changeMetric } from '../store/Actions'
+import { changeMetric } from '../store/actions/Common'
 import { CustomersActivityStore } from '../store/Store'
 
 

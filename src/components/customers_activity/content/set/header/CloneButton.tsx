@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import Button from '../../../../common/components/Button'
-import { addSet } from '../../../store/Actions'
+import { addSet } from '../../../store/actions/Common'
 
 
 export default function CloneButton({ setTitle }: { setTitle: string }) {

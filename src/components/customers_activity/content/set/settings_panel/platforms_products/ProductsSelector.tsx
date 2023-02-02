@@ -1,10 +1,9 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
-import { CustomersActivityStore } from '../../../store/Store'
-import { changeProducts, changeProductsInclude } from '../../../store/Actions'
-import { fetchProducts, Product } from '../../../network_resource_fetcher/FetchProducts'
-import { FilterParametersNode } from '../../../store/SetsReducer'
+import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
+import { CustomersActivityStore } from '../../../../store/Store'
+import { changeProducts, changeProductsInclude } from '../../../../store/actions/PlatformsProducts'
+import { fetchProducts, Product } from '../../../../network_resource_fetcher/FetchProducts'
 
 
 export default function ProductsSelector({ setTitle }: { setTitle: string }) {
@@ -12,9 +11,7 @@ export default function ProductsSelector({ setTitle }: { setTitle: string }) {
     const platformsNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.platforms)
     const fetchArgs = [tribesNode, platformsNode]
 
-    const state = useSelector((store: CustomersActivityStore) =>
-        store.customersActivitySets.find(x => x.title === setTitle)?.products as FilterParametersNode<string>
-    )
+    const value = useSelector((store: CustomersActivityStore) =>store.customersActivitySets.find(x => x.title === setTitle)?.products)
     const onValueChange = (allValues: Array<Product>, values: Array<string>) => changeProducts({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeProductsInclude({ stateId: setTitle, data: include })
 
@@ -27,8 +24,8 @@ export default function ProductsSelector({ setTitle }: { setTitle: string }) {
         fetchDataSource={fetchProducts}
         fetchArgs={fetchArgs}
         hideIfDataSourceEmpty={true}
-        value={state?.values}
-        includeButtonState={state?.include}
+        value={value?.values}
+        includeButtonState={value === undefined || value.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
         container='#CustomersActivity_Sets_ScrollView_div'

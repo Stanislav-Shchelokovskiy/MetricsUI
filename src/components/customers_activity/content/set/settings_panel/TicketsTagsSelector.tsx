@@ -2,15 +2,12 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../store/Store'
-import { changeTicketsTags, changeTicketsTagsInclude } from '../../../store/Actions'
+import { changeTicketsTags, changeTicketsTagsInclude } from '../../../store/actions/SetCommon'
 import { fetchTicketsTags, TicketsTag } from '../../../network_resource_fetcher/FetchTicketsTags'
-import { FilterParametersNode } from '../../../store/SetsReducer'
 
 
 export default function TicketsTagsSelector({ setTitle }: { setTitle: string }) {
-    const state = useSelector((store: CustomersActivityStore) =>
-        store.customersActivitySets.find(x => x.title === setTitle)?.ticketsTags as FilterParametersNode<number>
-    )
+    const value = useSelector((store: CustomersActivityStore) =>store.customersActivitySets.find(x => x.title === setTitle)?.ticketsTags)
     const onValueChange = (allValues: Array<TicketsTag>, values: Array<number>) => changeTicketsTags({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTicketsTagsInclude({ stateId: setTitle, data: include })
 
@@ -21,8 +18,8 @@ export default function TicketsTagsSelector({ setTitle }: { setTitle: string }) 
         placeholder='Select ticket tags'
         label='Ticket tags'
         fetchDataSource={fetchTicketsTags}
-        value={state?.values}
-        includeButtonState={state?.include}
+        value={value?.values}
+        includeButtonState={value === undefined || value.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
         container='#CustomersActivity_Sets_ScrollView_div'

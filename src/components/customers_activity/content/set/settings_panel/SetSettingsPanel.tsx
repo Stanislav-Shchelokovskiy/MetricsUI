@@ -1,20 +1,21 @@
 import React from 'react'
-import CustomersGroupsSelector from './CustomersGroupsSelector'
-import TicketsTypesSelector from './TicketsTypesSelector'
-import TicketsTagsSelector from './TicketsTagsSelector'
-import TribesSelector from './TribesSelector'
-import CustomersTypesSelector from './CustomersTypesSelector'
-import CustomersConversionsTypesSelector from './CustomersConversionsTypesSelector'
-import PlatformsSelector from './PlatformsSelector'
-import ProductsSelector from './ProductsSelector'
-import EmpPositionsSelector from './EmpPositionsSelector'
-import EmpTribesSelector from './EmpTribesSelector'
-import EmployeesSelector from './EmployeesSelector'
 import PercentileSelector from './PercentileSelector'
-import ReplyTypesSelector from './ReplyTypesSelector'
-import ComponentsSelector from './ComponentsSelector'
-import FeaturesSelector from './FeaturesSelector'
-import CustomersSelector from './CustomersSelector'
+import TribesSelector from './TribesSelector'
+import PlatformsSelector from './platforms_products/PlatformsSelector'
+import ProductsSelector from './platforms_products/ProductsSelector'
+import TicketsTagsSelector from './TicketsTagsSelector'
+import TicketsTypesSelector from './tickets_types/TicketsTypesSelector'
+import ReferredTicketsTypesSelector from './tickets_types/ReferredTicketsTypesSelector'
+import CustomersGroupsSelector from './customers/CustomersGroupsSelector'
+import CustomersTypesSelector from './customers/CustomersTypesSelector'
+import CustomersConversionsTypesSelector from './customers/CustomersConversionsTypesSelector'
+import EmpPositionsSelector from './employees/EmpPositionsSelector'
+import EmpTribesSelector from './employees/EmpTribesSelector'
+import EmployeesSelector from './employees/EmployeesSelector'
+import ReplyTypesSelector from './cat/ReplyTypesSelector'
+import ComponentsSelector from './cat/ComponentsSelector'
+import FeaturesSelector from './cat/FeaturesSelector'
+import CustomersSelector from './customers/CustomersSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
@@ -26,6 +27,7 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <ProductsSelector setTitle={setTitle} />
             <TicketsTagsSelector setTitle={setTitle} />
             <TicketsTypesSelector setTitle={setTitle} />
+            <ReferredTicketsTypesSelector setTitle={setTitle} />
             <CustomersGroupsSelector setTitle={setTitle} />
             <CustomersTypesSelector setTitle={setTitle} />
             <CustomersConversionsTypesSelector setTitle={setTitle} />
