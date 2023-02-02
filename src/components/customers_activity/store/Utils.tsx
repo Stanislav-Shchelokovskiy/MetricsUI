@@ -1,13 +1,13 @@
 import { FilterParametersNode } from './SetsReducer'
 
-export function allNodesAreConsideredEmpty<T>(...nodes: Array<FilterParametersNode<T>>): boolean {
+export function allNodesAreConsideredEmpty<T>(...nodes: Array<FilterParametersNode<T> | undefined>): boolean {
     for (const node of nodes)
         if (node !== undefined && (!node.include || node.values.length > 0))
             return false
     return true
 }
 
-export function anyNodeIsConsideredEmpty<T>(...nodes: Array<FilterParametersNode<T>>): boolean {
+export function anyNodeIsConsideredEmpty<T>(...nodes: Array<FilterParametersNode<T> | undefined>): boolean {
     for (const node of nodes)
         if (node === undefined || (node.include && node.values.length === 0))
             return true

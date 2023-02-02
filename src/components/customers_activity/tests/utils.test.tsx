@@ -27,6 +27,14 @@ describe('testing allNodesAreConsideredEmpty: nodes are empty if include of all 
         const nodes: Array<FilterParametersNode<number>> = [{ include: false, values: [1] }, { include: true, values: [] }]
         expect(allNodesAreConsideredEmpty(...nodes)).toBeFalsy()
     });
+    test('case 6', () => {
+        const nodes: Array<FilterParametersNode<number> | undefined> = [{ include: false, values: [1] }, undefined]
+        expect(allNodesAreConsideredEmpty(...nodes)).toBeFalsy()
+    });
+    test('case 7', () => {
+        const nodes: Array<FilterParametersNode<number> | undefined> = [undefined, undefined]
+        expect(allNodesAreConsideredEmpty(...nodes)).toBeTruthy()
+    });
 });
 
 describe('testing anyNodeIsConsideredEmpty: any node is empty if include of any nodes is true and the node does not contain a value ', () => {
@@ -57,5 +65,13 @@ describe('testing anyNodeIsConsideredEmpty: any node is empty if include of any 
     test('case 6', () => {
         const nodes: Array<FilterParametersNode<number>> = [{ include: true, values: [1] }, { include: true, values: [1] }]
         expect(anyNodeIsConsideredEmpty(...nodes)).toBeFalsy()
+    });
+    test('case 7', () => {
+        const nodes: Array<FilterParametersNode<number>| undefined> = [undefined, { include: true, values: [1] }]
+        expect(anyNodeIsConsideredEmpty(...nodes)).toBeTruthy()
+    });
+    test('case 7', () => {
+        const nodes: Array<FilterParametersNode<number>| undefined> = [undefined, undefined]
+        expect(anyNodeIsConsideredEmpty(...nodes)).toBeTruthy()
     });
 });
