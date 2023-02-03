@@ -57,7 +57,8 @@ export default function ComparisonGraph() {
                 fetchPeriodsArray(
                     customersActivityState.groupByPeriod,
                     range_start,
-                    range_end
+                    range_end,
+                    customersActivityState.baselineAlignedModeEnabled,
                 ),
                 ...customersActivitySets.map((set, index) => fetchTicketsWithIterationsAggregates(
                     customersActivityState.groupByPeriod,

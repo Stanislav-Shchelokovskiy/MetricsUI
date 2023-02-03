@@ -67,7 +67,7 @@
     margin-bottom: 0px;
     padding-right: 0px;
     margin-right: 0px;
-    flex: 2;
+    flex: 3;
 }
 
 .CustomersActivity_GroupByPeriodSelector,
@@ -78,16 +78,11 @@
     flex: 1;
 }
 
-.CustomersActivity_GroupByPeriodSelector,
-.CustomersActivity_MetricSelector {
-    flex: 0.8;
-}
-
 .CustomersActivity_ComparisonMethodSelector {
     margin-right: 10px;
 }
 
-.dx-tooltip-wrapper .dx-overlay-content .dx-popup-content{
+.dx-tooltip-wrapper .dx-overlay-content .dx-popup-content {
     padding-top: 5px;
     padding-left: 5px;
     padding-bottom: 7px;

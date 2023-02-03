@@ -98,9 +98,8 @@ export default function PeriodSelector() {
                     endValue={new Date(periodSelectorState.periodEnd)}
                     endOnTick={true}
                     minorTickInterval='week'
-                    tickInterval='month'
                     minRange='week'
-                    aggregationInterval='day'
+                    tickInterval='month'
                 >
                     <MinorTick visible={false} />
                 </Scale>

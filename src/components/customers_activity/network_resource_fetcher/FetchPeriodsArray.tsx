@@ -8,6 +8,7 @@ export async function fetchPeriodsArray(
     groupByPeriod: string,
     rangeStart: string,
     rangeEnd: string,
+    baselineAlignedModeEnabled: boolean,
 ): Promise<FetchResult<Array<string>>> {
     if (anyValueIsEmpty(groupByPeriod, rangeStart, rangeEnd))
         return {
@@ -15,11 +16,13 @@ export async function fetchPeriodsArray(
             data: []
         }
     try {
-        const periods = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_periods_array?` +
+        let periods = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_periods_array?` +
             `start=${rangeStart}` +
             `&end=${rangeEnd}` +
             `&format=${groupByPeriod}`
         ).then(response => response.json())
+        if(baselineAlignedModeEnabled)
+            periods = (periods as Array<string>).map((x,index)=>(index+1).toString())
         return {
             success: true,
             data: periods as Array<string>
