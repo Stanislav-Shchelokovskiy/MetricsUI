@@ -52,8 +52,8 @@ import {
 import {
     CHANGE_TICKETS_TYPES,
     CHANGE_TICKETS_TYPES_INCLUDE,
-    CHANGE_REFERRED_TICKETS_TYPES,
-    CHANGE_REFERRED_TICKETS_TYPES_INCLUDE,
+    CHANGE_DUPLICATED_TO_TICKETS_TYPES,
+    CHANGE_DUPLICATED_TO_TICKETS_TYPES_INCLUDE,
 } from './actions/TicketsTypes'
 
 interface FilterNode {
@@ -87,7 +87,7 @@ export interface Set {
     products: FilterParametersNode<string> | undefined
     ticketsTags: FilterParametersNode<number> | undefined
     ticketsTypes: FilterParametersNode<number> | undefined
-    referredTicketsTypes: FilterParametersNode<number> | undefined
+    duplicatedToTicketsTypes: FilterParametersNode<number> | undefined
     customersGroups: FilterParametersNode<string> | undefined
     customersTypes: FilterParametersNode<number> | undefined
     conversionsTypes: FilterParametersNode<number> | undefined
@@ -108,7 +108,7 @@ export function getAliasedSet(set: Set) {
         Products: set.products,
         'Ticket tags': set.ticketsTags,
         'Ticket types': set.ticketsTypes,
-        'Referred ticket types': set.referredTicketsTypes,
+        'Duplicated to ticket types': set.duplicatedToTicketsTypes,
         'User groups': set.customersGroups,
         'User types': set.customersTypes,
         'User conversion types': set.conversionsTypes,
@@ -140,7 +140,7 @@ export const INITIAL_SET: Set = {
     products: getDefaultFilterParametersNode<string>(),
     ticketsTags: getDefaultFilterParametersNode<number>(),
     ticketsTypes: getDefaultFilterParametersNode<number>(),
-    referredTicketsTypes: getDefaultFilterParametersNode<number>(),
+    duplicatedToTicketsTypes: getDefaultFilterParametersNode<number>(),
     customersGroups: getDefaultFilterParametersNode<string>(),
     customersTypes: getDefaultFilterParametersNode<number>(),
     conversionsTypes: getDefaultFilterParametersNode<number>(),
@@ -287,19 +287,19 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
             })
 
 
-        case CHANGE_REFERRED_TICKETS_TYPES:
+        case CHANGE_DUPLICATED_TO_TICKETS_TYPES:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    referredTicketsTypes: updateValues(x.referredTicketsTypes, action.payload.data)
+                    duplicatedToTicketsTypes: updateValues(x.duplicatedToTicketsTypes, action.payload.data)
                 }
             })
 
-        case CHANGE_REFERRED_TICKETS_TYPES_INCLUDE:
+        case CHANGE_DUPLICATED_TO_TICKETS_TYPES_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    referredTicketsTypes: updateInclude(x.referredTicketsTypes, action.payload.data)
+                    duplicatedToTicketsTypes: updateInclude(x.duplicatedToTicketsTypes, action.payload.data)
                 }
             })
 

@@ -1,7 +1,7 @@
-import React, { useReducer, useEffect, useCallback, useRef } from 'react'
+import React, { useReducer, useEffect, useCallback, useRef, useMemo } from 'react'
 import { AnyAction } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
-import { RangeSelector as DxRangeSelector, Margin, Scale, MinorTick, SliderMarker } from 'devextreme-react/range-selector'
+import { RangeSelector as DxRangeSelector, Margin, Scale, ScaleLabel, SliderMarker, Behavior } from 'devextreme-react/range-selector'
 import LoadIndicator from '../../common/components/LoadIndicator'
 import FetchResult from '../../common/Interfaces'
 import { changePeriod } from '../store/actions/Common'
@@ -59,6 +59,17 @@ export default function PeriodSelector() {
     const selectedRange = useRef<Array<string>>([])
     selectedRange.current = useSelector((store: CustomersActivityStore) => store.customersActivity.range) || []
 
+    const groupByPeriod = useSelector((store: CustomersActivityStore) => store.customersActivity.groupByPeriod)
+    const minorTickIntervals = useMemo(() => {
+        return {
+            '%Y-%m-%d': 'day',
+            '%Y-%W': 'week',
+            '%Y-%m': 'month',
+            '%Y': 'month',
+        }
+    }, [])
+    const minorTickInterval = minorTickIntervals[groupByPeriod as keyof typeof minorTickIntervals]
+
     useEffect(() => {
         (async () => {
             const periodFetchResult: FetchResult<Period> = await fetchPeriod()
@@ -82,6 +93,8 @@ export default function PeriodSelector() {
             changeRange(validPeriod)
     }, [changeRange, periodSelectorState])
 
+    const tick = useMemo(() => { return { visible: false } }, [])
+
     if (periodSelectorState.periodStart) {
         return (
             <DxRangeSelector
@@ -97,14 +110,19 @@ export default function PeriodSelector() {
                     startValue={new Date(periodSelectorState.periodStart)}
                     endValue={new Date(periodSelectorState.periodEnd)}
                     endOnTick={true}
-                    minorTickInterval='week'
-                    minRange='week'
+                    minorTickInterval={minorTickInterval}
                     tickInterval='month'
+                    minRange='day'
+                    tick={tick}
+                    minorTick={tick}
                 >
-                    <MinorTick visible={false} />
+                    <Behavior snapToTicks={false} animationEnabled={false} />
+                    <ScaleLabel format={'month'} />
+
                 </Scale>
+                <Behavior snapToTicks={minorTickInterval !== 'day'} animationEnabled={false} />
                 <SliderMarker format='monthAndDay' />
-            </DxRangeSelector>
+            </DxRangeSelector >
         )
     }
     return <LoadIndicator width={50} height={50} />
