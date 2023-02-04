@@ -113,12 +113,10 @@ export default function PeriodSelector() {
                     minorTickInterval={minorTickInterval}
                     tickInterval='month'
                     minRange='day'
-                    tick={tick}
                     minorTick={tick}
                 >
                     <Behavior snapToTicks={false} animationEnabled={false} />
                     <ScaleLabel format={'month'} />
-
                 </Scale>
                 <Behavior snapToTicks={minorTickInterval !== 'day'} animationEnabled={false} />
                 <SliderMarker format='monthAndDay' />
