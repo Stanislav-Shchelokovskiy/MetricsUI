@@ -64,9 +64,8 @@ export async function fetchTicketsWithIterationsAggregates(
         const iterations = []
         const iterations_to_tickets = []
         const people = []
-        let periodNumber = 1
         for (const agg of aggregates) {
-            periods.push(baselineAlignedModeEnabled ? periodNumber++ : agg.period)
+            periods.push(agg.period)
             tickets.push(agg.tickets)
             iterations.push(agg.iterations)
             iterations_to_tickets.push(agg.iterations / agg.tickets)
