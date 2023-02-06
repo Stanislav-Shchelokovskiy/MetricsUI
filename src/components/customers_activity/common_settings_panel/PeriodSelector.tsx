@@ -64,7 +64,7 @@ export default function PeriodSelector() {
         return {
             '%Y-%m-%d': 'day',
             '%Y-%W': 'week',
-            '%Y-%m': 'month',
+            '%Y-%m': 'week',
             '%Y': 'month',
         }
     }, [])
