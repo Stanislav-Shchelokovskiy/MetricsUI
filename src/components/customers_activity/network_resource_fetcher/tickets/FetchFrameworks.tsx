@@ -1,5 +1,5 @@
-import FetchResult from '../../common/Interfaces'
-import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
+import FetchResult from '../../../common/Interfaces'
+import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
 
 
 export interface Framework {

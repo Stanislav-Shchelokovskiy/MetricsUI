@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeEmployees, changeEmployeesInclude } from '../../../../store/actions/Employees'
-import { fetchEmployees, Employee } from '../../../../network_resource_fetcher/FetchEmployees'
+import { fetchEmployees, Employee } from '../../../../network_resource_fetcher/employees/FetchEmployees'
 
 
 export default function EmployeesSelector({ setTitle }: { setTitle: string }) {

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeCustomersGroups, changeCustomersGroupsInclude } from '../../../../store/actions/Customers'
-import { fetchCustomersGroups, CustomersGroup } from '../../../../network_resource_fetcher/FetchCustomersGroups'
+import { fetchCustomersGroups, CustomersGroup } from '../../../../network_resource_fetcher/customers/FetchCustomersGroups'
 
 
 export default function CustomersGroupsSelector({ setTitle }: { setTitle: string }) {

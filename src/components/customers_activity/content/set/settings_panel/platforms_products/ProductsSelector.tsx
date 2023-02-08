@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeProducts, changeProductsInclude } from '../../../../store/actions/PlatformsProducts'
-import { fetchProducts, Product } from '../../../../network_resource_fetcher/FetchProducts'
+import { fetchProducts, Product } from '../../../../network_resource_fetcher/platforms_products/FetchProducts'
 
 
 export default function ProductsSelector({ setTitle }: { setTitle: string }) {

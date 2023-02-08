@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeFeatures, changeFeaturesInclude } from '../../../../store/actions/CAT'
-import { fetchFeatures, Feature } from '../../../../network_resource_fetcher/FetchFeatures'
+import { fetchFeatures, Feature } from '../../../../network_resource_fetcher/cat/FetchFeatures'
 
 
 export default function FeaturesSelector({ setTitle }: { setTitle: string }) {

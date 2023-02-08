@@ -1,7 +1,7 @@
-import FetchResult from '../../common/Interfaces'
-import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { anyValueIsEmpty } from '../store/Utils'
-import { ValidationResult } from '../../common/Interfaces'
+import FetchResult from '../../../common/Interfaces'
+import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
+import { anyValueIsEmpty } from '../../store/Utils'
+import { ValidationResult } from '../../../common/Interfaces'
 
 
 export interface Customer {

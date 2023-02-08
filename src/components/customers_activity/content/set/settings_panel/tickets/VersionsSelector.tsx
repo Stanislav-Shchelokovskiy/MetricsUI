@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeVersions, changeVersionsInclude } from '../../../../store/actions/Tickets'
-import { fetchVersions, Version } from '../../../../network_resource_fetcher/FetchVersions'
+import { fetchVersions, Version } from '../../../../network_resource_fetcher/tickets/FetchVersions'
 
 
 export default function VersionsSelector({ setTitle }: { setTitle: string }) {

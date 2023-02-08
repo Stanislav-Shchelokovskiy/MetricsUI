@@ -1,7 +1,7 @@
-import FetchResult from '../../common/Interfaces'
-import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { FilterParametersNode } from '../store/SetsReducer'
-import { anyNodeIsConsideredEmpty } from '../store/Utils'
+import FetchResult from '../../../common/Interfaces'
+import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
+import { FilterParametersNode } from '../../store/SetsReducer'
+import { anyNodeIsConsideredEmpty } from '../../store/Utils'
 
 export interface Product {
     product_id: string

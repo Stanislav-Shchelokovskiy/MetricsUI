@@ -17,11 +17,12 @@ import ComponentsSelector from './cat/ComponentsSelector'
 import FeaturesSelector from './cat/FeaturesSelector'
 import CustomersSelector from './customers/CustomersSelector'
 import VersionsSelector from './tickets/VersionsSelector'
-import SeveritySelector from './tickets/SeveritySelector'
-import TicketStatusesSelector from './tickets/TicketStatusesSelector'
+import SeveritySelector from './bugs/SeveritySelector'
+import TicketStatusesSelector from './bugs/TicketStatusesSelector'
 import IDEsSelector from './tickets/IDEsSelector'
 import OsSelector from './tickets/OsSelector'
 import FrameworksSelector from './tickets/FrameworksSelector'
+import FixedInSelector from './bugs/FixedInSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
@@ -35,6 +36,7 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <TicketsTagsSelector setTitle={setTitle} />
             <TicketsTypesSelector setTitle={setTitle} />
             <DuplicatedToTicketsTypesSelector setTitle={setTitle} />
+            <FixedInSelector setTitle={setTitle} />
             <SeveritySelector setTitle={setTitle} />
             <TicketStatusesSelector setTitle={setTitle} />
             <FrameworksSelector setTitle={setTitle} />

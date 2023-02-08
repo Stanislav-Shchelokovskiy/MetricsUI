@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeFrameworks, changeFrameworksInclude } from '../../../../store/actions/Tickets'
-import { FetchFrameworks, Framework } from '../../../../network_resource_fetcher/FetchFrameworks'
+import { FetchFrameworks, Framework } from '../../../../network_resource_fetcher/tickets/FetchFrameworks'
 
 
 export default function FrameworksSelector({ setTitle }: { setTitle: string }) {

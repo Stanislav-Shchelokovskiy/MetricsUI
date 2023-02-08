@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeEmpTribes, changeEmpTribesInclude } from '../../../../store/actions/Employees'
-import { fetchEmpTribes, EmpTribe } from '../../../../network_resource_fetcher/FetchEmpTribes'
+import { fetchEmpTribes, EmpTribe } from '../../../../network_resource_fetcher/employees/FetchEmpTribes'
 
 
 export default function EmpTribesSelector({ setTitle }: { setTitle: string }) {

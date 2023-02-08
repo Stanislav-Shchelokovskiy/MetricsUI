@@ -6,7 +6,6 @@ import {
     REMOVE_SET,
     CHANGE_SET_TITLE,
 } from './actions/Common'
-
 import {
     CHANGE_PERCENTILE,
     CHANGE_PERCENTILE_INCLUDE,
@@ -39,7 +38,6 @@ import {
     CHANGE_CUSTOMERS,
     CHANGE_CUSTOMERS_INCLUDE,
 } from './actions/Customers'
-
 import {
     CHANGE_POSITIONS,
     CHANGE_POSITIONS_INCLUDE,
@@ -48,21 +46,15 @@ import {
     CHANGE_EMPLOYEES,
     CHANGE_EMPLOYEES_INCLUDE,
 } from './actions/Employees'
-
 import {
     CHANGE_TICKETS_TYPES,
     CHANGE_TICKETS_TYPES_INCLUDE,
     CHANGE_DUPLICATED_TO_TICKETS_TYPES,
     CHANGE_DUPLICATED_TO_TICKETS_TYPES_INCLUDE,
 } from './actions/TicketsTypes'
-
 import {
     CHANGE_VERSIONS,
     CHANGE_VERSIONS_INCLUDE,
-    CHANGE_SEVERITY,
-    CHANGE_SEVERITY_INCLUDE,
-    CHANGE_STATUSES,
-    CHANGE_TICKET_STATUSES_INCLUDE,
     CHANGE_IDEs,
     CHANGE_IDEs_INCLUDE,
     CHANGE_OPERATING_SYSTEMS,
@@ -70,6 +62,15 @@ import {
     CHANGE_FRAMEWORKS,
     CHANGE_FRAMEWORKS_INCLUDE,
 } from './actions/Tickets'
+import {
+    CHANGE_FIXED_IN,
+    CHANGE_FIXED_IN_INCLUDE,
+    CHANGE_SEVERITY,
+    CHANGE_SEVERITY_INCLUDE,
+    CHANGE_STATUSES,
+    CHANGE_TICKET_STATUSES_INCLUDE,
+} from './actions/Bugs'
+
 
 interface FilterNode {
     include: boolean
@@ -103,6 +104,7 @@ export interface Set {
     ticketsTags: FilterParametersNode<number> | undefined
     ticketsTypes: FilterParametersNode<number> | undefined
     versions: FilterParametersNode<string> | undefined
+    fixedIn: FilterParametersNode<string> | undefined
     severity: FilterParametersNode<string> | undefined
     ticketStatuses: FilterParametersNode<string> | undefined
     ides: FilterParametersNode<string> | undefined
@@ -130,11 +132,12 @@ export function getAliasedSet(set: Set) {
         'Versions': set.versions,
         'Ticket tags': set.ticketsTags,
         'Ticket types': set.ticketsTypes,
+        'Fixed In': set.fixedIn,
         'Severity': set.severity,
         'IDE': set.ides,
         'Operating systems': set.operatingSystems,
         'Frameworks/Specifics': set.frameworks,
-        'Ticket status': set.ticketStatuses,
+        'Ticket statuses': set.ticketStatuses,
         'Duplicated to ticket types': set.duplicatedToTicketsTypes,
         'User groups': set.customersGroups,
         'User types': set.customersTypes,
@@ -168,6 +171,7 @@ export const INITIAL_SET: Set = {
     ticketsTags: getDefaultFilterParametersNode<number>(),
     ticketsTypes: getDefaultFilterParametersNode<number>(),
     versions: getDefaultFilterParametersNode<string>(),
+    fixedIn: getDefaultFilterParametersNode<string>(),
     severity: getDefaultFilterParametersNode<string>(),
     ticketStatuses: getDefaultFilterParametersNode<string>(),
     ides: getDefaultFilterParametersNode<string>(),
@@ -341,6 +345,22 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                 return {
                     ...x,
                     versions: updateInclude(x.versions, action.payload.data)
+                }
+            })
+
+
+        case CHANGE_FIXED_IN:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    fixedIn: updateValues(x.fixedIn, action.payload.data)
+                }
+            })
+        case CHANGE_FIXED_IN_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    fixedIn: updateInclude(x.fixedIn, action.payload.data)
                 }
             })
 

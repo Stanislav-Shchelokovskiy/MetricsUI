@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeCustomersTypes, changeCustomersTypesInclude } from '../../../../store/actions/Customers'
-import { fetchLicenseStatuses, LicenseStatus } from '../../../../network_resource_fetcher/FetchLicenseStatuses'
+import { fetchLicenseStatuses, LicenseStatus } from '../../../../network_resource_fetcher/customers/FetchLicenseStatuses'
 
 
 export default function CustomersTypesSelector({ setTitle }: { setTitle: string }) {

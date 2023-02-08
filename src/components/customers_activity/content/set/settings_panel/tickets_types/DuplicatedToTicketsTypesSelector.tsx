@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeDuplicatedToTicketTypes, changeDuplicatedToTicketsTypesInclude,  } from '../../../../store/actions/TicketsTypes'
-import { fetchTicketsTypes, TicketsType } from '../../../../network_resource_fetcher/FetchTicketsTypes'
+import { fetchTicketsTypes, TicketsType } from '../../../../network_resource_fetcher/tickets/FetchTicketsTypes'
 
 
 export default function DuplicatedToTicketsTypesSelector({ setTitle }: { setTitle: string }) {

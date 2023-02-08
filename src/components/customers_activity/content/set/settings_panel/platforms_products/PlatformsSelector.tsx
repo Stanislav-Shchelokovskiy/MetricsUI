@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changePlatforms, changePlatformsInclude } from '../../../../store/actions/PlatformsProducts'
-import { fetchPlatforms, Platform } from '../../../../network_resource_fetcher/FetchPlatforms'
+import { fetchPlatforms, Platform } from '../../../../network_resource_fetcher/platforms_products/FetchPlatforms'
 
 
 export default function PlatformsSelector({ setTitle }: { setTitle: string }) {

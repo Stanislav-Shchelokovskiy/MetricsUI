@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeRepliesTypes, changeRepliesTypesInclude } from '../../../../store/actions/CAT'
-import { fetchRepliesTypes, ReplyType } from '../../../../network_resource_fetcher/FetchRepliesTypes'
+import { fetchRepliesTypes, ReplyType } from '../../../../network_resource_fetcher/cat/FetchRepliesTypes'
 
 
 export default function ReplyTypesSelector({ setTitle }: { setTitle: string }) {

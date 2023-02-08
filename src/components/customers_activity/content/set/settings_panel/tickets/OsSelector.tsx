@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeOperatingSystems, changeOperatingSystemsInclude } from '../../../../store/actions/Tickets'
-import { fetchOperatingSystems, OS } from '../../../../network_resource_fetcher/FetchOperatingSystems'
+import { fetchOperatingSystems, OS } from '../../../../network_resource_fetcher/tickets/FetchOperatingSystems'
 
 
 export default function OsSelector({ setTitle }: { setTitle: string }) {

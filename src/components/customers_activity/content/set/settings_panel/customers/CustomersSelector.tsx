@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { SearchMultioptionSelector } from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeCustomers, changeCustomersInclude } from '../../../../store/actions/Customers'
-import { fetchCustomers, Customer, fetchValidateCustomers } from '../../../../network_resource_fetcher/FetchCustomers'
+import { fetchCustomers, Customer, fetchValidateCustomers } from '../../../../network_resource_fetcher/customers/FetchCustomers'
 
 
 export default function CustomersSelector({ setTitle }: { setTitle: string }) {

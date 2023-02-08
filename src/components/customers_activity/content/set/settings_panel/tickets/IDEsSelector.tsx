@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeIDEs, changeIDEsInclude } from '../../../../store/actions/Tickets'
-import { fetchIDEs, IDE } from '../../../../network_resource_fetcher/FetchIDEs'
+import { fetchIDEs, IDE } from '../../../../network_resource_fetcher/tickets/FetchIDEs'
 
 
 export default function IDEsSelector({ setTitle }: { setTitle: string }) {

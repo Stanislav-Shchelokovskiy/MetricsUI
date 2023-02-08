@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeConversionsTypes, changeConversionsTypesInclude } from '../../../../store/actions/Customers'
-import { fetchConversionStatuses, ConversionStatus } from '../../../../network_resource_fetcher/FetchConversionStatuses'
+import { fetchConversionStatuses, ConversionStatus } from '../../../../network_resource_fetcher/customers/FetchConversionStatuses'
 
 
 export default function CustomersConversionsTypesSelector({ setTitle }: { setTitle: string }) {
