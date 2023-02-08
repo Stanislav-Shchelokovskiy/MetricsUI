@@ -61,6 +61,10 @@ import {
     CHANGE_VERSIONS_INCLUDE,
     CHANGE_SEVERITY,
     CHANGE_SEVERITY_INCLUDE,
+    CHANGE_STATUSES,
+    CHANGE_TICKET_STATUSES_INCLUDE,
+    CHANGE_IDEs,
+    CHANGE_IDEs_INCLUDE
 } from './actions/Tickets'
 
 interface FilterNode {
@@ -96,6 +100,8 @@ export interface Set {
     ticketsTypes: FilterParametersNode<number> | undefined
     versions: FilterParametersNode<string> | undefined
     severity: FilterParametersNode<string> | undefined
+    ticketStatuses: FilterParametersNode<string> | undefined
+    ides: FilterParametersNode<string> | undefined
     duplicatedToTicketsTypes: FilterParametersNode<number> | undefined
     customersGroups: FilterParametersNode<string> | undefined
     customersTypes: FilterParametersNode<number> | undefined
@@ -115,10 +121,12 @@ export function getAliasedSet(set: Set) {
         Tribes: set.tribes,
         Platforms: set.platforms,
         Products: set.products,
+        'Versions': set.versions,
         'Ticket tags': set.ticketsTags,
         'Ticket types': set.ticketsTypes,
-        'Versions': set.versions,
         'Severity': set.severity,
+        'IDE': set.ides,
+        'Ticket status': set.ticketStatuses,
         'Duplicated to ticket types': set.duplicatedToTicketsTypes,
         'User groups': set.customersGroups,
         'User types': set.customersTypes,
@@ -153,6 +161,8 @@ export const INITIAL_SET: Set = {
     ticketsTypes: getDefaultFilterParametersNode<number>(),
     versions: getDefaultFilterParametersNode<string>(),
     severity: getDefaultFilterParametersNode<string>(),
+    ticketStatuses: getDefaultFilterParametersNode<string>(),
+    ides: getDefaultFilterParametersNode<string>(),
     duplicatedToTicketsTypes: getDefaultFilterParametersNode<number>(),
     customersGroups: getDefaultFilterParametersNode<string>(),
     customersTypes: getDefaultFilterParametersNode<number>(),
@@ -340,6 +350,37 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                 }
             })
 
+
+        case CHANGE_STATUSES:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    ticketStatuses: updateValues(x.ticketStatuses, action.payload.data)
+                }
+            })
+        case CHANGE_TICKET_STATUSES_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    ticketStatuses: updateInclude(x.ticketStatuses, action.payload.data)
+                }
+            })
+
+
+        case CHANGE_IDEs:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    ides: updateValues(x.ides, action.payload.data)
+                }
+            })
+        case CHANGE_IDEs_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    ides: updateInclude(x.ides, action.payload.data)
+                }
+            })
 
 
         case CHANGE_CUSTOMERS_GROUPS:

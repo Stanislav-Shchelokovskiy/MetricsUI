@@ -32,3 +32,35 @@ export const changeSeverityInclude = (payload: Payload<string, boolean>): Payloa
         payload: payload
     }
 }
+
+export const CHANGE_STATUSES = 'customers_activity/change_ticket_statuses'
+export const changeTicketStatuses = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_STATUSES,
+        payload: payload
+    }
+}
+
+export const CHANGE_TICKET_STATUSES_INCLUDE = 'customers_activity/change_ticket_statuses_include'
+export const changeTicketStatusesInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_TICKET_STATUSES_INCLUDE,
+        payload: payload
+    }
+}
+
+export const CHANGE_IDEs = 'customers_activity/change_IDEs'
+export const changeIDEs = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_IDEs,
+        payload: payload
+    }
+}
+
+export const CHANGE_IDEs_INCLUDE = 'customers_activity/change_IDEs_include'
+export const changeIDEsInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_IDEs_INCLUDE,
+        payload: payload
+    }
+}

@@ -18,6 +18,8 @@ import FeaturesSelector from './cat/FeaturesSelector'
 import CustomersSelector from './customers/CustomersSelector'
 import VersionsSelector from './tickets/VersionsSelector'
 import SeveritySelector from './tickets/SeveritySelector'
+import TicketStatusesSelector from './tickets/TicketStatusesSelector'
+import IDEsSelector from './tickets/IDEsSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
@@ -27,11 +29,13 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <TribesSelector setTitle={setTitle} />
             <PlatformsSelector setTitle={setTitle} />
             <ProductsSelector setTitle={setTitle} />
+            <VersionsSelector setTitle={setTitle} />
             <TicketsTagsSelector setTitle={setTitle} />
             <TicketsTypesSelector setTitle={setTitle} />
             <DuplicatedToTicketsTypesSelector setTitle={setTitle} />
-            <VersionsSelector setTitle={setTitle} />
             <SeveritySelector setTitle={setTitle} />
+            <TicketStatusesSelector setTitle={setTitle} />
+            <IDEsSelector setTitle={setTitle} />
             <CustomersGroupsSelector setTitle={setTitle} />
             <CustomersTypesSelector setTitle={setTitle} />
             <CustomersConversionsTypesSelector setTitle={setTitle} />
