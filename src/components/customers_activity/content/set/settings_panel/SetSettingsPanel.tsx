@@ -20,6 +20,8 @@ import VersionsSelector from './tickets/VersionsSelector'
 import SeveritySelector from './tickets/SeveritySelector'
 import TicketStatusesSelector from './tickets/TicketStatusesSelector'
 import IDEsSelector from './tickets/IDEsSelector'
+import OsSelector from './tickets/OsSelector'
+import FrameworksSelector from './tickets/FrameworksSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
@@ -35,6 +37,8 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <DuplicatedToTicketsTypesSelector setTitle={setTitle} />
             <SeveritySelector setTitle={setTitle} />
             <TicketStatusesSelector setTitle={setTitle} />
+            <FrameworksSelector setTitle={setTitle} />
+            <OsSelector setTitle={setTitle} />
             <IDEsSelector setTitle={setTitle} />
             <CustomersGroupsSelector setTitle={setTitle} />
             <CustomersTypesSelector setTitle={setTitle} />

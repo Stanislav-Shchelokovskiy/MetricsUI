@@ -64,7 +64,11 @@ import {
     CHANGE_STATUSES,
     CHANGE_TICKET_STATUSES_INCLUDE,
     CHANGE_IDEs,
-    CHANGE_IDEs_INCLUDE
+    CHANGE_IDEs_INCLUDE,
+    CHANGE_OPERATING_SYSTEMS,
+    CHANGE_OPERATING_SYSTEMS_INCLUDE,
+    CHANGE_FRAMEWORKS,
+    CHANGE_FRAMEWORKS_INCLUDE,
 } from './actions/Tickets'
 
 interface FilterNode {
@@ -102,6 +106,8 @@ export interface Set {
     severity: FilterParametersNode<string> | undefined
     ticketStatuses: FilterParametersNode<string> | undefined
     ides: FilterParametersNode<string> | undefined
+    operatingSystems: FilterParametersNode<string> | undefined
+    frameworks: FilterParametersNode<string> | undefined
     duplicatedToTicketsTypes: FilterParametersNode<number> | undefined
     customersGroups: FilterParametersNode<string> | undefined
     customersTypes: FilterParametersNode<number> | undefined
@@ -126,6 +132,8 @@ export function getAliasedSet(set: Set) {
         'Ticket types': set.ticketsTypes,
         'Severity': set.severity,
         'IDE': set.ides,
+        'Operating systems': set.operatingSystems,
+        'Frameworks/Specifics': set.frameworks,
         'Ticket status': set.ticketStatuses,
         'Duplicated to ticket types': set.duplicatedToTicketsTypes,
         'User groups': set.customersGroups,
@@ -163,6 +171,8 @@ export const INITIAL_SET: Set = {
     severity: getDefaultFilterParametersNode<string>(),
     ticketStatuses: getDefaultFilterParametersNode<string>(),
     ides: getDefaultFilterParametersNode<string>(),
+    operatingSystems: getDefaultFilterParametersNode<string>(),
+    frameworks: getDefaultFilterParametersNode<string>(),
     duplicatedToTicketsTypes: getDefaultFilterParametersNode<number>(),
     customersGroups: getDefaultFilterParametersNode<string>(),
     customersTypes: getDefaultFilterParametersNode<number>(),
@@ -379,6 +389,38 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                 return {
                     ...x,
                     ides: updateInclude(x.ides, action.payload.data)
+                }
+            })
+
+
+        case CHANGE_OPERATING_SYSTEMS:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    operatingSystems: updateValues(x.operatingSystems, action.payload.data)
+                }
+            })
+        case CHANGE_OPERATING_SYSTEMS_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    operatingSystems: updateInclude(x.operatingSystems, action.payload.data)
+                }
+            })
+
+
+        case CHANGE_FRAMEWORKS:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    frameworks: updateValues(x.frameworks, action.payload.data)
+                }
+            })
+        case CHANGE_FRAMEWORKS_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    frameworks: updateInclude(x.frameworks, action.payload.data)
                 }
             })
 

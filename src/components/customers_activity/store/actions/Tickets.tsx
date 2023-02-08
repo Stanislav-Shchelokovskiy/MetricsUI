@@ -64,3 +64,35 @@ export const changeIDEsInclude = (payload: Payload<string, boolean>): PayloadAct
         payload: payload
     }
 }
+
+export const CHANGE_OPERATING_SYSTEMS = 'customers_activity/change_operating_systems'
+export const changeOperatingSystems = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_OPERATING_SYSTEMS,
+        payload: payload
+    }
+}
+
+export const CHANGE_OPERATING_SYSTEMS_INCLUDE = 'customers_activity/change_operating_systems_include'
+export const changeOperatingSystemsInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_OPERATING_SYSTEMS_INCLUDE,
+        payload: payload
+    }
+}
+
+export const CHANGE_FRAMEWORKS = 'customers_activity/change_frameworks'
+export const changeFrameworks = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_FRAMEWORKS,
+        payload: payload
+    }
+}
+
+export const CHANGE_FRAMEWORKS_INCLUDE = 'customers_activity/change_frameworks_include'
+export const changeFrameworksInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_FRAMEWORKS_INCLUDE,
+        payload: payload
+    }
+}
