@@ -56,6 +56,11 @@ import {
     CHANGE_DUPLICATED_TO_TICKETS_TYPES_INCLUDE,
 } from './actions/TicketsTypes'
 
+import {
+    CHANGE_VERSIONS,
+    CHANGE_VERSIONS_INCLUDE,
+} from './actions/Tickets'
+
 interface FilterNode {
     include: boolean
 }
@@ -87,6 +92,7 @@ export interface Set {
     products: FilterParametersNode<string> | undefined
     ticketsTags: FilterParametersNode<number> | undefined
     ticketsTypes: FilterParametersNode<number> | undefined
+    versions: FilterParametersNode<string> | undefined
     duplicatedToTicketsTypes: FilterParametersNode<number> | undefined
     customersGroups: FilterParametersNode<string> | undefined
     customersTypes: FilterParametersNode<number> | undefined
@@ -108,6 +114,7 @@ export function getAliasedSet(set: Set) {
         Products: set.products,
         'Ticket tags': set.ticketsTags,
         'Ticket types': set.ticketsTypes,
+        'Versions': set.versions,
         'Duplicated to ticket types': set.duplicatedToTicketsTypes,
         'User groups': set.customersGroups,
         'User types': set.customersTypes,
@@ -140,6 +147,7 @@ export const INITIAL_SET: Set = {
     products: getDefaultFilterParametersNode<string>(),
     ticketsTags: getDefaultFilterParametersNode<number>(),
     ticketsTypes: getDefaultFilterParametersNode<number>(),
+    versions: getDefaultFilterParametersNode<string>(),
     duplicatedToTicketsTypes: getDefaultFilterParametersNode<number>(),
     customersGroups: getDefaultFilterParametersNode<string>(),
     customersTypes: getDefaultFilterParametersNode<number>(),
@@ -165,7 +173,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
         case ADD_SET:
             const baseSet = sets.find(x => x.title === action.payload) || INITIAL_SET
             return [...sets, { ...baseSet, title: GenerateNewSetTitle(sets.map(x => x.title)) }]
-
         case REMOVE_SET:
             return sets.length < 2 ? INTIAL_SETS : sets.filter(set => set.title !== action.payload)
 
@@ -189,7 +196,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     }
                 }
             })
-
         case CHANGE_PERCENTILE_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -209,7 +215,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     tribes: updateValues(x.tribes, action.payload.data)
                 }
             })
-
         case CHANGE_TRIBES_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -226,7 +231,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     platforms: updateValues(x.platforms, action.payload.data)
                 }
             })
-
         case CHANGE_PLATFORMS_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -243,7 +247,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     products: updateValues(x.products, action.payload.data)
                 }
             })
-
         case CHANGE_PRODUCTS_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -260,7 +263,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     ticketsTags: updateValues(x.ticketsTags, action.payload.data)
                 }
             })
-
         case CHANGE_TICKETS_TAGS_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -277,7 +279,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     ticketsTypes: updateValues(x.ticketsTypes, action.payload.data)
                 }
             })
-
         case CHANGE_TICKETS_TYPES_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -294,12 +295,27 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     duplicatedToTicketsTypes: updateValues(x.duplicatedToTicketsTypes, action.payload.data)
                 }
             })
-
         case CHANGE_DUPLICATED_TO_TICKETS_TYPES_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
                     duplicatedToTicketsTypes: updateInclude(x.duplicatedToTicketsTypes, action.payload.data)
+                }
+            })
+
+
+        case CHANGE_VERSIONS:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    versions: updateValues(x.versions, action.payload.data)
+                }
+            })
+        case CHANGE_VERSIONS_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    versions: updateInclude(x.versions, action.payload.data)
                 }
             })
 
@@ -311,7 +327,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     customersGroups: updateValues(x.customersGroups, action.payload.data)
                 }
             })
-
         case CHANGE_CUSTOMERS_GROUPS_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -328,7 +343,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     customersTypes: updateValues(x.customersTypes, action.payload.data)
                 }
             })
-
         case CHANGE_CUSTOMERS_TYPES_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -345,7 +359,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     conversionsTypes: updateValues(x.conversionsTypes, action.payload.data)
                 }
             })
-
         case CHANGE_CONVERSIONS_TYPES_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -362,7 +375,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     positions: updateValues(x.positions, action.payload.data)
                 }
             })
-
         case CHANGE_POSITIONS_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -378,7 +390,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     empTribes: updateValues(x.empTribes, action.payload.data)
                 }
             })
-
         case CHANGE_EMP_TRIBES_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -394,7 +405,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     employees: updateValues(x.employees, action.payload.data)
                 }
             })
-
         case CHANGE_EMPLOYEES_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -411,7 +421,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     repliesTypes: updateValues(x.repliesTypes, action.payload.data)
                 }
             })
-
         case CHANGE_REPLIES_TYPES_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -428,7 +437,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     components: updateValues(x.components, action.payload.data)
                 }
             })
-
         case CHANGE_COMPONENTS_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -461,7 +469,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     customers: updateValues(x.customers, action.payload.data)
                 }
             })
-
         case CHANGE_CUSTOMERS_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {

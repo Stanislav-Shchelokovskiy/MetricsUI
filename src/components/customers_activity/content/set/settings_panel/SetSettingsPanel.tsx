@@ -16,6 +16,7 @@ import ReplyTypesSelector from './cat/ReplyTypesSelector'
 import ComponentsSelector from './cat/ComponentsSelector'
 import FeaturesSelector from './cat/FeaturesSelector'
 import CustomersSelector from './customers/CustomersSelector'
+import VersionsSelector from './tickets/VersionsSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
@@ -28,6 +29,7 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <TicketsTagsSelector setTitle={setTitle} />
             <TicketsTypesSelector setTitle={setTitle} />
             <DuplicatedToTicketsTypesSelector setTitle={setTitle} />
+            <VersionsSelector setTitle={setTitle} />
             <CustomersGroupsSelector setTitle={setTitle} />
             <CustomersTypesSelector setTitle={setTitle} />
             <CustomersConversionsTypesSelector setTitle={setTitle} />
