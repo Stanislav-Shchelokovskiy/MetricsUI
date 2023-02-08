@@ -16,3 +16,19 @@ export const changeVersionsInclude = (payload: Payload<string, boolean>): Payloa
         payload: payload
     }
 }
+
+export const CHANGE_SEVERITY = 'customers_activity/change_severity'
+export const changeSeverity = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_SEVERITY,
+        payload: payload
+    }
+}
+
+export const CHANGE_SEVERITY_INCLUDE = 'customers_activity/change_severity_include'
+export const changeSeverityInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_SEVERITY_INCLUDE,
+        payload: payload
+    }
+}

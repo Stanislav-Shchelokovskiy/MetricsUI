@@ -59,6 +59,8 @@ import {
 import {
     CHANGE_VERSIONS,
     CHANGE_VERSIONS_INCLUDE,
+    CHANGE_SEVERITY,
+    CHANGE_SEVERITY_INCLUDE,
 } from './actions/Tickets'
 
 interface FilterNode {
@@ -93,6 +95,7 @@ export interface Set {
     ticketsTags: FilterParametersNode<number> | undefined
     ticketsTypes: FilterParametersNode<number> | undefined
     versions: FilterParametersNode<string> | undefined
+    severity: FilterParametersNode<string> | undefined
     duplicatedToTicketsTypes: FilterParametersNode<number> | undefined
     customersGroups: FilterParametersNode<string> | undefined
     customersTypes: FilterParametersNode<number> | undefined
@@ -115,6 +118,7 @@ export function getAliasedSet(set: Set) {
         'Ticket tags': set.ticketsTags,
         'Ticket types': set.ticketsTypes,
         'Versions': set.versions,
+        'Severity': set.severity,
         'Duplicated to ticket types': set.duplicatedToTicketsTypes,
         'User groups': set.customersGroups,
         'User types': set.customersTypes,
@@ -148,6 +152,7 @@ export const INITIAL_SET: Set = {
     ticketsTags: getDefaultFilterParametersNode<number>(),
     ticketsTypes: getDefaultFilterParametersNode<number>(),
     versions: getDefaultFilterParametersNode<string>(),
+    severity: getDefaultFilterParametersNode<string>(),
     duplicatedToTicketsTypes: getDefaultFilterParametersNode<number>(),
     customersGroups: getDefaultFilterParametersNode<string>(),
     customersTypes: getDefaultFilterParametersNode<number>(),
@@ -318,6 +323,23 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                     versions: updateInclude(x.versions, action.payload.data)
                 }
             })
+
+
+        case CHANGE_SEVERITY:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    severity: updateValues(x.severity, action.payload.data)
+                }
+            })
+        case CHANGE_SEVERITY_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    severity: updateInclude(x.severity, action.payload.data)
+                }
+            })
+
 
 
         case CHANGE_CUSTOMERS_GROUPS:

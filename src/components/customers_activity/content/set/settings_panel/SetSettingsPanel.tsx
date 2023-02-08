@@ -17,6 +17,7 @@ import ComponentsSelector from './cat/ComponentsSelector'
 import FeaturesSelector from './cat/FeaturesSelector'
 import CustomersSelector from './customers/CustomersSelector'
 import VersionsSelector from './tickets/VersionsSelector'
+import SeveritySelector from './tickets/SeveritySelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
@@ -30,6 +31,7 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <TicketsTypesSelector setTitle={setTitle} />
             <DuplicatedToTicketsTypesSelector setTitle={setTitle} />
             <VersionsSelector setTitle={setTitle} />
+            <SeveritySelector setTitle={setTitle} />
             <CustomersGroupsSelector setTitle={setTitle} />
             <CustomersTypesSelector setTitle={setTitle} />
             <CustomersConversionsTypesSelector setTitle={setTitle} />

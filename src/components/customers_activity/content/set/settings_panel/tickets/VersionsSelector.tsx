@@ -12,7 +12,7 @@ export default function VersionsSelector({ setTitle }: { setTitle: string }) {
     const onIncludeChange = (include: boolean) => changeVersionsInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<Version, string>
-        className='CustomersActivity_BuildsSelector'
+        className='CustomersActivity_VersionsSelector'
         displayExpr='id'
         valueExpr='id'
         placeholder='Select versions'
