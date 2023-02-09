@@ -64,3 +64,11 @@ export const changeFrameworksInclude = (payload: Payload<string, boolean>): Payl
         payload: payload
     }
 }
+
+export const CHANGE_PRIVACY = 'customers_activity/change_privacy'
+export const changePrivacy = (payload: Payload<string, number | undefined>): PayloadAction<Payload<string, number | undefined>> => {
+    return {
+        type: CHANGE_PRIVACY,
+        payload: payload
+    }
+}

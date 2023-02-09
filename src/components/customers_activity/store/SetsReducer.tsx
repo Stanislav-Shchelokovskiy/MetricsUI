@@ -61,6 +61,7 @@ import {
     CHANGE_OPERATING_SYSTEMS_INCLUDE,
     CHANGE_FRAMEWORKS,
     CHANGE_FRAMEWORKS_INCLUDE,
+    CHANGE_PRIVACY,
 } from './actions/Tickets'
 import {
     CHANGE_FIXED_IN,
@@ -98,6 +99,7 @@ export function getDefaultFilterParameterNode<T = string | number>(defaultValue:
 export interface Set {
     title: string
     percentile: FilterParameterNode<number>
+    privacy: FilterParameterNode<number> | undefined
     tribes: FilterParametersNode<string> | undefined
     platforms: FilterParametersNode<string> | undefined
     products: FilterParametersNode<string> | undefined
@@ -126,6 +128,7 @@ export interface Set {
 export function getAliasedSet(set: Set) {
     return {
         Percentile: set.percentile,
+        Privacy: set.privacy,
         Tribes: set.tribes,
         Platforms: set.platforms,
         Products: set.products,
@@ -165,6 +168,7 @@ export function getSetDataFields() {
 export const INITIAL_SET: Set = {
     title: '0',
     percentile: getDefaultFilterParameterNode<number>(100),
+    privacy: getDefaultFilterParameterNode<number>(0),
     tribes: getDefaultFilterParametersNode<string>(),
     platforms: getDefaultFilterParametersNode<string>(),
     products: getDefaultFilterParametersNode<string>(),
@@ -233,6 +237,18 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                         ...x.percentile,
                         include: action.payload.data,
                     }
+                }
+            })
+
+
+        case CHANGE_PRIVACY:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    privacy: action.payload.data === undefined ? undefined : {
+                        include: true,
+                        value: action.payload.data,
+                    },
                 }
             })
 

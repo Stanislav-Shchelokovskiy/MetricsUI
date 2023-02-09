@@ -23,12 +23,14 @@ import IDEsSelector from './tickets/IDEsSelector'
 import OsSelector from './tickets/OsSelector'
 import FrameworksSelector from './tickets/FrameworksSelector'
 import FixedInSelector from './bugs/FixedInSelector'
+import PrivacySelector from './tickets/PrivacySelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
     return (
         <div className='CustomersActivity_SetSettingsPanel'>
             <PercentileSelector setTitle={setTitle} />
+            <PrivacySelector setTitle={setTitle} />
             <TribesSelector setTitle={setTitle} />
             <PlatformsSelector setTitle={setTitle} />
             <ProductsSelector setTitle={setTitle} />
