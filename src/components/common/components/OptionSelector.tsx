@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import SelectBox, { DropDownOptions, Button } from 'devextreme-react/select-box'
+import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
 import LoadIndicator from './LoadIndicator'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
@@ -48,8 +48,7 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
                 hideOnOutsideClick={true}
                 hideOnParentScroll={true}
                 focusStateEnabled={false}
-                container={props.container}
-            />
+                container={props.container} />
         </SelectBox >
     }
     return <LoadIndicator width={undefined} height={25} />
@@ -64,7 +63,6 @@ const defaultProps = {
     dataSource: [],
     fetchDataSource: undefined,
     fetchArgs: [],
-    customButtons: undefined,
     showDropDownButton: true,
     showClearButton: false,
 }
