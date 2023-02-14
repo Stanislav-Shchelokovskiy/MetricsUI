@@ -31,12 +31,12 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
         <div className='CustomersActivity_SetSettingsPanel'>
             <PercentileSelector setTitle={setTitle} />
             <PrivacySelector setTitle={setTitle} />
+            <TicketsTypesSelector setTitle={setTitle} />
             <TribesSelector setTitle={setTitle} />
             <PlatformsSelector setTitle={setTitle} />
             <ProductsSelector setTitle={setTitle} />
             <VersionsSelector setTitle={setTitle} />
             <TicketsTagsSelector setTitle={setTitle} />
-            <TicketsTypesSelector setTitle={setTitle} />
             <DuplicatedToTicketsTypesSelector setTitle={setTitle} />
             <FixedInSelector setTitle={setTitle} />
             <SeveritySelector setTitle={setTitle} />

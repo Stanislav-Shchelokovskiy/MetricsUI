@@ -81,8 +81,13 @@ export interface FilterParametersNode<T> extends FilterNode {
     values: Array<T>
 }
 
-export function getDefaultFilterParametersNode<T>(): FilterParametersNode<T> | undefined {
-    return undefined
+export function getDefaultFilterParametersNode<T>(defaultValue: Array<T> | undefined = undefined): FilterParametersNode<T> | undefined {
+    if (defaultValue === undefined)
+        return undefined
+    return {
+        include: true,
+        values: defaultValue
+    }
 }
 
 export interface FilterParameterNode<T> extends FilterNode {
@@ -156,7 +161,7 @@ export function getAliasedSet(set: Set) {
 }
 
 export function getSetDataFields() {
-    return Object.getOwnPropertyNames(getAliasedSet(INITIAL_SET)).map(x => {
+    return Object.getOwnPropertyNames(getAliasedSet(DEFAULT_SET)).map(x => {
         return {
             dataField: x,
             filterOperations: ['<=', '=', '>', 'in', 'notin']
@@ -165,15 +170,15 @@ export function getSetDataFields() {
 }
 
 
-export const INITIAL_SET: Set = {
+export const DEFAULT_SET: Set = {
     title: '0',
     percentile: getDefaultFilterParameterNode<number>(100),
+    ticketsTypes: getDefaultFilterParametersNode<number>([1]),
     privacy: getDefaultFilterParameterNode<number>(0),
     tribes: getDefaultFilterParametersNode<string>(),
     platforms: getDefaultFilterParametersNode<string>(),
     products: getDefaultFilterParametersNode<string>(),
     ticketsTags: getDefaultFilterParametersNode<number>(),
-    ticketsTypes: getDefaultFilterParametersNode<number>(),
     versions: getDefaultFilterParametersNode<string>(),
     fixedIn: getDefaultFilterParametersNode<string>(),
     severity: getDefaultFilterParametersNode<string>(),
@@ -194,7 +199,7 @@ export const INITIAL_SET: Set = {
     customers: getDefaultFilterParametersNode<string>(),
 }
 
-const INTIAL_SETS: Array<Set> = [INITIAL_SET]
+const INTIAL_SETS: Array<Set> = [DEFAULT_SET]
 
 export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): Array<Set> => {
     switch (action.type) {
@@ -204,7 +209,7 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
 
 
         case ADD_SET:
-            const baseSet = sets.find(x => x.title === action.payload) || INITIAL_SET
+            const baseSet = sets.find(x => x.title === action.payload) || DEFAULT_SET
             return [...sets, { ...baseSet, title: GenerateNewSetTitle(sets.map(x => x.title)) }]
         case REMOVE_SET:
             return sets.length < 2 ? INTIAL_SETS : sets.filter(set => set.title !== action.payload)
@@ -249,6 +254,27 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                         include: true,
                         value: action.payload.data,
                     },
+                }
+            })
+
+
+        case CHANGE_TICKETS_TYPES:
+            const new_values = action.payload.data === undefined || action.payload.data.length === 0 ? DEFAULT_SET.ticketsTypes?.values : action.payload.data
+            const target_set = sets.find(x => x.title === action.payload.stateId)
+            const values = target_set?.ticketsTypes?.values
+            if (JSON.stringify(values) === JSON.stringify(new_values))
+                return sets
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    ticketsTypes: updateValues(x.ticketsTypes, new_values)
+                }
+            })
+        case CHANGE_TICKETS_TYPES_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    ticketsTypes: updateInclude(x.ticketsTypes, action.payload.data)
                 }
             })
 
@@ -313,22 +339,6 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                 return {
                     ...x,
                     ticketsTags: updateInclude(x.ticketsTags, action.payload.data)
-                }
-            })
-
-
-        case CHANGE_TICKETS_TYPES:
-            return updateSetState(action.payload.stateId, sets, (x) => {
-                return {
-                    ...x,
-                    ticketsTypes: updateValues(x.ticketsTypes, action.payload.data)
-                }
-            })
-        case CHANGE_TICKETS_TYPES_INCLUDE:
-            return updateSetState(action.payload.stateId, sets, (x) => {
-                return {
-                    ...x,
-                    ticketsTypes: updateInclude(x.ticketsTypes, action.payload.data)
                 }
             })
 
@@ -647,7 +657,7 @@ function updateValues<T>(obj: FilterParametersNode<T> | undefined, values: Array
             }
         return obj
     }
-    if (obj.include && values.length === 0)
+    if (obj.include && (values === undefined || values.length === 0))
         return undefined
     return {
         ...obj,

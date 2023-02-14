@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
@@ -7,9 +7,10 @@ import { fetchTicketsTypes, TicketsType } from '../../../../network_resource_fet
 
 
 export default function TicketsTypesSelector({ setTitle }: { setTitle: string }) {
-    const value = useSelector((store: CustomersActivityStore) =>store.customersActivitySets.find(x => x.title === setTitle)?.ticketsTypes)
+    const value = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.ticketsTypes)
     const onValueChange = (allValues: Array<TicketsType>, values: Array<number>) => changeTicketsTypes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTicketsTypesInclude({ stateId: setTitle, data: include })
+    const defaultValue = useMemo(() => [1], [])
 
     return <MultiOptionSelector<TicketsType, number>
         className='CustomersActivity_TicketsTypesSelector'
@@ -19,6 +20,7 @@ export default function TicketsTypesSelector({ setTitle }: { setTitle: string })
         label='Ticket types'
         fetchDataSource={fetchTicketsTypes}
         value={value?.values}
+        defaultValue={defaultValue}
         includeButtonState={value === undefined || value.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}

@@ -56,3 +56,7 @@
 .SetHeaderRenameButton {
     margin-left: 7px;
 }
+
+.dx-button-content .dx-icon-clear {
+    color: rgba(153, 153, 153, 255);
+}

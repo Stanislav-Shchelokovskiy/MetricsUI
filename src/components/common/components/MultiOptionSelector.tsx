@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, useRef } from 'react'
 import TagBox, { DropDownOptions, Button } from 'devextreme-react/tag-box'
 import DataSource from 'devextreme/data/data_source'
 import { trigger } from 'devextreme/events'
@@ -6,7 +6,6 @@ import LoadIndicator from './LoadIndicator'
 import useDataSource, { DataSourceProps } from '../../common/hooks/UseDataSource'
 import { useDispatch } from 'react-redux'
 import { PayloadAction } from '@reduxjs/toolkit'
-
 import * as includeIcon from './assets/include.svg'
 import * as excludeIcon from './assets/exclude.svg'
 import CustomStore from 'devextreme/data/custom_store'
@@ -33,6 +32,7 @@ interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     openOnFieldClick: boolean
     applyValueMode: 'instantly' | 'useButtons'
     customButtons: Array<ButtonOptions> | undefined
+    defaultValue: Array<ValueExprT> | undefined
 }
 
 
@@ -118,12 +118,21 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
         onIncludeChangeHandler,
     ), [props.includeButtonState])
 
-    const clearButtonOptions = {
-        text: '',
-        stylingMode: 'text',
-        icon: 'clear',
-        type: 'danger',
-    }
+    const tagBoxRef = useRef<TagBox>(null)
+    const clearButtonOptions = useMemo(() => {
+        return {
+            text: '',
+            stylingMode: 'text',
+            icon: 'clear',
+            type: 'normal',
+            hoverStateEnabled: false,
+            focusStateEnabled: false,
+            activeStateEnabled: false,
+            onClick: (e: any) => {
+                    tagBoxRef.current?.instance.option('value', props.defaultValue)
+            }
+        }
+    }, [props.defaultValue])
 
     const wrapperAttr = useMemo(() => { return { id: 'MultiOptionSelectorPopup', class: 'MultiOptionSelectorPopup' } }, [])
     const acceptSelectedValuesOnEndKey = useCallback((e: any) => {
@@ -134,17 +143,29 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
         }
     }, [wrapperAttr])
 
+    const renderTag = useCallback((tag: any) => {
+        const keySelector = props.displayExpr === undefined ?
+            (x: keyof DataSourceT) => (x as unknown) as string :
+            (x: DataSourceT) => (x[props.displayExpr as keyof DataSourceT] as unknown) as string
+        return <div className='dx-tag-content'>
+            {keySelector(tag)}
+            {defaultValueIsSelected(props.value, props.defaultValue) ? null : <div className='dx-tag-remove-button'></div>}
+        </div>
+    }, [props.defaultValue, props.value])
+
     return <TagBox
         {...props}
+        ref={tagBoxRef}
         dataSource={ds}
         onValueChange={onValueChangeHandler}
         multiline={true}
         searchEnabled={true}
         showDropDownButton={false}
         selectAllMode='page'
+        tagRender={renderTag}
         maxDisplayedTags={pageSize}
         showMultiTagOnly={false}
-        showClearButton={true}
+        showClearButton={false}
         labelMode='static'
         onKeyDown={acceptSelectedValuesOnEndKey}
     >
@@ -171,14 +192,20 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
                     options={o} />) :
                 null
         }
-        <Button
-            name='clear'
-            location='after'
-            options={clearButtonOptions} />
+        {!defaultValueIsSelected(props.value, props.defaultValue) ?
+            <Button
+                name='customclear'
+                location='after'
+                options={clearButtonOptions} /> :
+             null}
     </TagBox >
 }
 
 
+function defaultValueIsSelected<ValueExprT>(value: ValueExprT, defaultValue: ValueExprT) {
+    console.log(JSON.stringify(value), JSON.stringify(defaultValue), JSON.stringify(value) === JSON.stringify(defaultValue))
+    return JSON.stringify(value) === JSON.stringify(defaultValue)
+}
 
 
 const defaultProps = {
@@ -197,7 +224,8 @@ const defaultProps = {
     dataStore: undefined,
     openOnFieldClick: true,
     applyValueMode: 'useButtons',
-    customButtons: undefined
+    customButtons: undefined,
+    defaultValue: undefined
 }
 
 MultiOptionSelector.defaultProps = defaultProps
