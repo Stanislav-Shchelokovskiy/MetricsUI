@@ -203,7 +203,6 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
 
 
 function defaultValueIsSelected<ValueExprT>(value: ValueExprT, defaultValue: ValueExprT) {
-    console.log(JSON.stringify(value), JSON.stringify(defaultValue), JSON.stringify(value) === JSON.stringify(defaultValue))
     return JSON.stringify(value) === JSON.stringify(defaultValue)
 }
 
