@@ -19,6 +19,16 @@ export function initMissingCustomersActivitySetsProperties(customersActivitySets
 
         if (set.ticketsTypes === undefined || set.ticketsTypes.values.length === 0)
             set.ticketsTypes = DEFAULT_SET.ticketsTypes
+
+        if (set.conversionsTypes !== undefined) {
+            set.conversionsTypes.values = set.conversionsTypes.values.map(x => {
+                if (x === 5)
+                    return 11
+                if (x === 6)
+                    return 12
+                return x
+            })
+        }
     }
     return customersActivitySets
 }
