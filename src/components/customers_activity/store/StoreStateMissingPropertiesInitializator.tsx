@@ -17,7 +17,7 @@ export function initMissingCustomersActivitySetsProperties(customersActivitySets
         if (set.percentile === undefined)
             set.percentile = DEFAULT_SET.percentile
 
-        if (set.ticketsTypes === undefined)
+        if (set.ticketsTypes === undefined || set.ticketsTypes.values.length === 0)
             set.ticketsTypes = DEFAULT_SET.ticketsTypes
     }
     return customersActivitySets
