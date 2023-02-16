@@ -661,7 +661,7 @@ function updateValues<T>(obj: FilterParametersNode<T> | undefined, values: Array
         return undefined
     return {
         ...obj,
-        values: values
+        values: values || []
     }
 }
 
