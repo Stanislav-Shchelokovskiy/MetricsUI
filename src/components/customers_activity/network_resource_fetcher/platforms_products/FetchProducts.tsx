@@ -1,7 +1,7 @@
 import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
 import { FilterParametersNode } from '../../store/SetsReducer'
-import { anyNodeIsConsideredEmpty } from '../../store/Utils'
+import { allNodesAreConsideredEmpty } from '../../store/Utils'
 
 export interface Product {
     product_id: string
@@ -10,10 +10,9 @@ export interface Product {
 
 
 export async function fetchProducts(
-    tribes: FilterParametersNode<string>,
-    platforms: FilterParametersNode<string>
+    tribes: FilterParametersNode<string>
 ): Promise<FetchResult<Array<Product>>> {
-    if (anyNodeIsConsideredEmpty(tribes, platforms)) {
+    if (allNodesAreConsideredEmpty(tribes)) {
         return {
             success: true,
             data: Array<Product>()
@@ -23,10 +22,7 @@ export async function fetchProducts(
         const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_products`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                tribes: tribes,
-                platforms: platforms
-            }),
+            body: JSON.stringify({tribes: tribes}),
         }).then(response => response.json())
         return {
             success: true,

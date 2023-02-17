@@ -21,9 +21,7 @@ export async function fetchPlatforms(tribes: FilterParametersNode<string>): Prom
         const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_platforms`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                tribes: tribes,
-            }),
+            body: JSON.stringify({tribes: tribes,}),
         }).then(response => response.json())
         return {
             success: true,

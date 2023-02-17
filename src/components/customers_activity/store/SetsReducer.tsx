@@ -648,14 +648,14 @@ function updateSetState<T extends Set>(title: string, state: Array<T>, replaceSt
     return state.map((x) => { return x.title === title ? replaceState(x) : x })
 }
 
-function updateValues<T>(obj: FilterParametersNode<T> | undefined, values: Array<T>): FilterParametersNode<T> | undefined {
+export function updateValues<T>(obj: FilterParametersNode<T> | undefined, values: Array<T> | undefined): FilterParametersNode<T> | undefined {
     if (obj === undefined) {
-        if (values.length > 0)
+        if (values !== undefined && values.length > 0)
             return {
                 include: true,
                 values: values
             }
-        return obj
+        return undefined
     }
     if (obj.include && (values === undefined || values.length === 0))
         return undefined
@@ -665,7 +665,7 @@ function updateValues<T>(obj: FilterParametersNode<T> | undefined, values: Array
     }
 }
 
-function updateInclude<T>(obj: FilterParametersNode<T> | undefined, include: boolean): FilterParametersNode<T> | undefined {
+export function updateInclude<T>(obj: FilterParametersNode<T> | undefined, include: boolean): FilterParametersNode<T> | undefined {
     if (obj === undefined) {
         if (!include)
             return {
