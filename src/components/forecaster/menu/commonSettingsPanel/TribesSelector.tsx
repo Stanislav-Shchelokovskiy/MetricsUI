@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Tribe } from '../../../common/Interfaces'
 import { fetchTribes } from '../../../common/network_resource_fetcher/FetchAvailableTribes'
 import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
@@ -19,6 +19,8 @@ export default function TribesSelector() {
         return changeSelectedTribes(tribes)
     }
 
+    const defaultValue = useMemo(() => [], [])
+
     return <MultiOptionSelector<Tribe, string>
         className='TribesSelector'
         displayExpr='name'
@@ -27,6 +29,7 @@ export default function TribesSelector() {
         label='Tribes'
         fetchDataSource={fetchTribes}
         value={selectedTribes}
+        defaultValue={defaultValue}
         onValueChange={changeSelectedTribesAction}
         showSelectionControls={true}
     />
