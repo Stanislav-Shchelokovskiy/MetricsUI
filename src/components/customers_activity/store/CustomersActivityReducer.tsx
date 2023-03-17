@@ -1,5 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { GenerateNewSetTitle } from './SetsReducer'
+import { generateNewSetTitle } from './SetsReducer'
 import { DEFAULT_SET } from '../store/SetsReducer'
 import { APPLY_STATE } from '../../common/store/state/Actions'
 import { initMissingCustomersActivityProperties } from './StoreStateMissingPropertiesInitializator'
@@ -67,7 +67,7 @@ export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL
         case ADD_SET:
             return {
                 ...state,
-                sets: [...state.sets, GenerateNewSetTitle(state.sets)]
+                sets: [...state.sets, generateNewSetTitle(state.sets)]
             }
 
         case REMOVE_SET:

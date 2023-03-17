@@ -210,7 +210,7 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
 
         case ADD_SET:
             const baseSet = sets.find(x => x.title === action.payload) || DEFAULT_SET
-            return [...sets, { ...baseSet, title: GenerateNewSetTitle(sets.map(x => x.title)) }]
+            return [...sets, { ...baseSet, title: generateNewSetTitle(sets.map(x => x.title)) }]
         case REMOVE_SET:
             return sets.length < 2 ? INTIAL_SETS : sets.filter(set => set.title !== action.payload)
 
@@ -633,7 +633,7 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
     }
 }
 
-export function GenerateNewSetTitle(existingSetsTitles: Array<string>): string {
+export function generateNewSetTitle(existingSetsTitles: Array<string>): string {
     let setsLength = existingSetsTitles.length
     let isNotUniqueTitle
     do {
