@@ -1,7 +1,6 @@
 import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
 import { FilterParametersNode } from '../../store/SetsReducer'
-import { allNodesAreConsideredEmpty } from '../../store/Utils'
 
 
 export interface Employee {
@@ -14,11 +13,6 @@ export async function fetchEmployees(
     positions: FilterParametersNode<string>,
     tribes: FilterParametersNode<string>
 ): Promise<FetchResult<Array<Employee>>> {
-    if (allNodesAreConsideredEmpty(positions, tribes))
-        return {
-            success: true,
-            data: Array<Employee>()
-        }
     try {
         const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_employees`,
             {
