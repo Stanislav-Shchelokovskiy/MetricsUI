@@ -1,5 +1,5 @@
-import { allNodesAreConsideredEmpty, anyNodeIsConsideredEmpty } from '../store/Utils'
-import { FilterParametersNode } from '../store/SetsReducer'
+import { allNodesAreConsideredEmpty, anyNodeIsConsideredEmpty } from '../Utils'
+import { FilterParametersNode } from '../SetsReducer'
 
 
 describe('testing allNodesAreConsideredEmpty: nodes are empty if include of all nodes is true and no one node contains a value ', () => {
