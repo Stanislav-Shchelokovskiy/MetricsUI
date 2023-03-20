@@ -36,7 +36,7 @@ export default React.memo(DropStateButton)
 
 
 function DropStatePopup(props: ValuesPopupProps) {
-    const values = useSelector(props.valuesSelector)
+    const stateNames = useSelector(props.stateNamesSelector)
     const dispatch = useDispatch()
     const onItemDeleted = (e: any) => {
         const key = e.itemData
@@ -57,7 +57,7 @@ function DropStatePopup(props: ValuesPopupProps) {
             maxHeight='50vh'
         >
             <List
-                dataSource={[...values]}
+                dataSource={[...stateNames]}
                 allowItemDeleting={true}
                 itemDeleteMode='toggle'
                 onItemDeleted={onItemDeleted}>

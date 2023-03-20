@@ -4,10 +4,10 @@ import { useStore } from 'react-redux'
 import TaskButton from '../../../common/components/TaskButton'
 import { PushState } from '../../network_resource_fetcher/FetchState'
 import FetchResult from '../../Interfaces'
-import { KeyProps } from './Interfaces'
+import { StateProps } from './Interfaces'
 
 
-function ShareStateButton(props: KeyProps) {
+function ShareStateButton(props: StateProps) {
 
     const store = useStore()
 
@@ -16,7 +16,7 @@ function ShareStateButton(props: KeyProps) {
         onSuccess: (message: string) => void,
         onError: (message: string) => void,
     ) => {
-        const fetchedStateId: FetchResult<string> = await PushState(store.getState())
+        const fetchedStateId: FetchResult<string> = await PushState(props.statePropsSelector(store.getState()))
         if (fetchedStateId.success) {
             const successfullyCopied = copy(`${window.location.href}/${fetchedStateId.data}`)
             if (successfullyCopied) {

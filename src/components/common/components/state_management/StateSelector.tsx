@@ -7,7 +7,7 @@ import getStorageItemKey from './Utils'
 import { ValuesProps } from './Interfaces'
 
 export default function StateSelector(props: ValuesProps) {
-    const values = useSelector(props.valuesSelector)
+    const stateNames = useSelector(props.stateNamesSelector)
     const dispatch = useDispatch()
     const onValueChange = ({ itemData }: { itemData: string } | any) => {
         const state = loadState(getStorageItemKey(props.state_salt, itemData))
@@ -19,7 +19,7 @@ export default function StateSelector(props: ValuesProps) {
 
     return <DropDownButton
         className={props.className}
-        dataSource={values}
+        dataSource={stateNames}
         onItemClick={onValueChange}
         focusStateEnabled={false}
         text='Apply state'

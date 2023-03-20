@@ -9,7 +9,7 @@ import { KeyProps } from './Interfaces'
 
 function SaveStateButton(props: KeyProps) {
     const [inputBoxVisible, setInputBoxVisible] = useState(false)
-    const currentStateName = useSelector(props.keySelector)
+    const currentStateName = useSelector(props.stateNameSelector)
 
     const onClick = () => setInputBoxVisible(true)
     const onHiding = useCallback(() => {

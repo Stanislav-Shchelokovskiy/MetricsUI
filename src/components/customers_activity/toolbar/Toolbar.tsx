@@ -37,25 +37,31 @@ function ToolbarMenu(props: Props) {
 }
 
 const ToolbarCommands = React.memo(() => {
-    const valuesSelector = (state: CustomersActivityStore) => state.viewState.stateKeys
-    const keySelector = (state: CustomersActivityStore) => state.viewState.key
+    const stateNamesSelector = (state: CustomersActivityStore) => state.viewState.stateKeys
+    const stateNameSelector = (state: CustomersActivityStore) => state.viewState.key
+    const statePropsSelector = (state: CustomersActivityStore) => {
+        return {
+            customersActivity: state.customersActivity,
+            customersActivitySets: state.customersActivitySets
+        }
+    }
     const state_salt = 'CustomersActivity_'
     return <div className='CustomersActivityToolbarCommands'>
         <StateSelector
             className='CustomersActivityViewStateSelector'
-            valuesSelector={valuesSelector}
+            stateNamesSelector={stateNamesSelector}
             state_salt={state_salt} />
         <SaveStateButton
             className='CustomersActivitySaveStateButton'
-            keySelector={keySelector}
+            stateNameSelector={stateNameSelector}
             state_salt={state_salt} />
         <DropStateButton
             className='CustomersActivityDropStateButton'
-            valuesSelector={valuesSelector}
+            stateNamesSelector={stateNamesSelector}
             state_salt={state_salt} />
         <ShareStateButton
             className='CustomersActivityShareStateButton'
-            keySelector={keySelector}
+            statePropsSelector={statePropsSelector}
             state_salt={state_salt} />
         <div className='CustomersActivityToolbarSeparator'></div>
         <DownloadButton />
