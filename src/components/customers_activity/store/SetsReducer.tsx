@@ -94,6 +94,12 @@ export interface FilterParameterNode<T> extends FilterNode {
     value: T
 }
 
+function getOptionalDefaultFilterParameterNode<T = string | number>(defaultValue: T | undefined = undefined): FilterParameterNode<T> | undefined {
+    if (defaultValue === undefined)
+        return undefined
+    return getDefaultFilterParameterNode(defaultValue)
+}
+
 export function getDefaultFilterParameterNode<T = string | number>(defaultValue: T): FilterParameterNode<T> {
     return {
         include: true,
@@ -174,7 +180,7 @@ export const DEFAULT_SET: Set = {
     title: '0',
     percentile: getDefaultFilterParameterNode<number>(100),
     ticketsTypes: getDefaultFilterParametersNode<number>([1]),
-    privacy: getDefaultFilterParameterNode<number>(0),
+    privacy: getOptionalDefaultFilterParameterNode<number>(),
     tribes: getDefaultFilterParametersNode<string>(),
     platforms: getDefaultFilterParametersNode<string>(),
     products: getDefaultFilterParametersNode<string>(),
