@@ -24,6 +24,7 @@ import OsSelector from './tickets/OsSelector'
 import FrameworksSelector from './tickets/FrameworksSelector'
 import FixedInSelector from './bugs/FixedInSelector'
 import PrivacySelector from './tickets/PrivacySelector'
+import AssignedToSelector from './bugs/AssignedToSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
@@ -50,6 +51,7 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <EmpPositionsSelector setTitle={setTitle} />
             <EmpTribesSelector setTitle={setTitle} />
             <EmployeesSelector setTitle={setTitle} />
+            <AssignedToSelector setTitle={setTitle} />
             <ReplyTypesSelector setTitle={setTitle} />
             <ComponentsSelector setTitle={setTitle} />
             <FeaturesSelector setTitle={setTitle} />

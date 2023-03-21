@@ -70,6 +70,8 @@ import {
     CHANGE_SEVERITY_INCLUDE,
     CHANGE_STATUSES,
     CHANGE_TICKET_STATUSES_INCLUDE,
+    CHANGE_ASSIGNED_TO,
+    CHANGE_ASSIGNED_TO_INCLUDE,
 } from './actions/Bugs'
 
 
@@ -120,6 +122,7 @@ export interface Set {
     fixedIn: FilterParametersNode<string> | undefined
     severity: FilterParametersNode<string> | undefined
     ticketStatuses: FilterParametersNode<string> | undefined
+    assigned_to: FilterParametersNode<string> | undefined
     ides: FilterParametersNode<string> | undefined
     operatingSystems: FilterParametersNode<string> | undefined
     frameworks: FilterParametersNode<string> | undefined
@@ -189,6 +192,7 @@ export const DEFAULT_SET: Set = {
     fixedIn: getDefaultFilterParametersNode<string>(),
     severity: getDefaultFilterParametersNode<string>(),
     ticketStatuses: getDefaultFilterParametersNode<string>(),
+    assigned_to: getDefaultFilterParametersNode<string>(),
     ides: getDefaultFilterParametersNode<string>(),
     operatingSystems: getDefaultFilterParametersNode<string>(),
     frameworks: getDefaultFilterParametersNode<string>(),
@@ -425,6 +429,21 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                 return {
                     ...x,
                     ticketStatuses: updateInclude(x.ticketStatuses, action.payload.data)
+                }
+            })
+
+        case CHANGE_ASSIGNED_TO:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    assigned_to: updateValues(x.assigned_to, action.payload.data)
+                }
+            })
+        case CHANGE_ASSIGNED_TO_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    assigned_to: updateInclude(x.assigned_to, action.payload.data)
                 }
             })
 

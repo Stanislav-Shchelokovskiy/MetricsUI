@@ -10,13 +10,7 @@ export interface TicketStatus {
 }
 
 
-export async function fetchTicketStatuses(ticketTypes: FilterParametersNode<number>): Promise<FetchResult<Array<TicketStatus>>> {
-    if (nodeIsEmpty(ticketTypes, 2))
-        return {
-            success: true,
-            data: Array<TicketStatus>()
-        }
-
+export async function fetchTicketStatuses(): Promise<FetchResult<Array<TicketStatus>>> {
     try {
         const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_ticket_statuses`).then(response => response.json())
         return {

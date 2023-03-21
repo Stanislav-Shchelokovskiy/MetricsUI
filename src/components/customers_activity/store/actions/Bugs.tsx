@@ -49,3 +49,19 @@ export const changeTicketStatusesInclude = (payload: Payload<string, boolean>): 
         payload: payload
     }
 }
+
+export const CHANGE_ASSIGNED_TO = 'customers_activity/change_assigned_to'
+export const changeAssignedTo = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_ASSIGNED_TO,
+        payload: payload
+    }
+}
+
+export const CHANGE_ASSIGNED_TO_INCLUDE = 'customers_activity/change_assigned_to_include'
+export const changeAssignedToInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_ASSIGNED_TO_INCLUDE,
+        payload: payload
+    }
+}
