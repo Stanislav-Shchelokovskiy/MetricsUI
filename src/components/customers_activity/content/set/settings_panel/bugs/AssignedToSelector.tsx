@@ -12,7 +12,7 @@ export default function AssignedToSelector({ setTitle }: { setTitle: string }) {
         Wrapped={EmpSelector}
         setTitle={setTitle}
         className='CustomersActivity_AssignedToSelector'
-        placeholder='Select assigned to'
+        placeholder='Select whom bugs assigned to'
         label='Bugs assigned to'
         valueSelector={valueSelector}
         changeSelection={changeAssignedTo}

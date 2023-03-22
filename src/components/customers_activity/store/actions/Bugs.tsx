@@ -65,3 +65,35 @@ export const changeAssignedToInclude = (payload: Payload<string, boolean>): Payl
         payload: payload
     }
 }
+
+export const CHANGE_CLOSED_BY = 'customers_activity/change_closed_by'
+export const changeClosedBy = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_CLOSED_BY,
+        payload: payload
+    }
+}
+
+export const CHANGE_CLOSED_BY_INCLUDE = 'customers_activity/change_closed_by_include'
+export const changeClosedByInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_CLOSED_BY_INCLUDE,
+        payload: payload
+    }
+}
+
+export const CHANGE_FIXED_BY = 'customers_activity/change_fixed_by'
+export const changeFixedBy = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_FIXED_BY,
+        payload: payload
+    }
+}
+
+export const CHANGE_FIXED_BY_INCLUDE = 'customers_activity/change_fixed_by_include'
+export const changeFixedByInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_FIXED_BY_INCLUDE,
+        payload: payload
+    }
+}

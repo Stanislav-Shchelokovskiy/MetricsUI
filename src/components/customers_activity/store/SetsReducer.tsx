@@ -72,6 +72,10 @@ import {
     CHANGE_TICKET_STATUSES_INCLUDE,
     CHANGE_ASSIGNED_TO,
     CHANGE_ASSIGNED_TO_INCLUDE,
+    CHANGE_CLOSED_BY,
+    CHANGE_CLOSED_BY_INCLUDE,
+    CHANGE_FIXED_BY,
+    CHANGE_FIXED_BY_INCLUDE,
 } from './actions/Bugs'
 
 
@@ -133,6 +137,8 @@ export interface Set {
     empTribes: FilterParametersNode<string> | undefined
     employees: FilterParametersNode<string> | undefined
     assignedTo: FilterParametersNode<string> | undefined
+    closedBy: FilterParametersNode<string> | undefined
+    fixedBy: FilterParametersNode<string> | undefined
     repliesTypes: FilterParametersNode<string> | undefined
     components: FilterParametersNode<string> | undefined
     features: FilterParametersNode<string> | undefined
@@ -163,6 +169,8 @@ export function getAliasedSet(set: Set) {
         'Employees tribes': set.empTribes,
         'Employees': set.employees,
         'Assigned to': set.assignedTo,
+        'Closed by': set.closedBy,
+        'Fixed by': set.fixedBy,
         'CAT replies types': set.repliesTypes,
         'CAT components': set.components,
         'CAT features': set.features,
@@ -204,6 +212,8 @@ export const DEFAULT_SET: Set = {
     empTribes: getDefaultFilterParametersNode<string>(),
     employees: getDefaultFilterParametersNode<string>(),
     assignedTo: getDefaultFilterParametersNode<string>(),
+    closedBy: getDefaultFilterParametersNode<string>(),
+    fixedBy: getDefaultFilterParametersNode<string>(),
     repliesTypes: getDefaultFilterParametersNode<string>(),
     components: getDefaultFilterParametersNode<string>(),
     features: getDefaultFilterParametersNode<string>(),
@@ -433,6 +443,7 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                 }
             })
 
+
         case CHANGE_ASSIGNED_TO:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
@@ -445,6 +456,38 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                 return {
                     ...x,
                     assignedTo: updateInclude(x.assignedTo, action.payload.data)
+                }
+            })
+
+
+        case CHANGE_CLOSED_BY:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    closedBy: updateValues(x.closedBy, action.payload.data)
+                }
+            })
+        case CHANGE_CLOSED_BY_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    closedBy: updateInclude(x.closedBy, action.payload.data)
+                }
+            })
+
+
+        case CHANGE_FIXED_BY:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    fixedBy: updateValues(x.fixedBy, action.payload.data)
+                }
+            })
+        case CHANGE_FIXED_BY_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    fixedBy: updateInclude(x.fixedBy, action.payload.data)
                 }
             })
 
