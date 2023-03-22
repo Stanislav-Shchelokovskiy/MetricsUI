@@ -122,7 +122,6 @@ export interface Set {
     fixedIn: FilterParametersNode<string> | undefined
     severity: FilterParametersNode<string> | undefined
     ticketStatuses: FilterParametersNode<string> | undefined
-    assigned_to: FilterParametersNode<string> | undefined
     ides: FilterParametersNode<string> | undefined
     operatingSystems: FilterParametersNode<string> | undefined
     frameworks: FilterParametersNode<string> | undefined
@@ -133,6 +132,7 @@ export interface Set {
     positions: FilterParametersNode<string> | undefined
     empTribes: FilterParametersNode<string> | undefined
     employees: FilterParametersNode<string> | undefined
+    assignedTo: FilterParametersNode<string> | undefined
     repliesTypes: FilterParametersNode<string> | undefined
     components: FilterParametersNode<string> | undefined
     features: FilterParametersNode<string> | undefined
@@ -162,6 +162,7 @@ export function getAliasedSet(set: Set) {
         'Employees positions': set.positions,
         'Employees tribes': set.empTribes,
         'Employees': set.employees,
+        'Assigned to': set.assignedTo,
         'CAT replies types': set.repliesTypes,
         'CAT components': set.components,
         'CAT features': set.features,
@@ -192,7 +193,6 @@ export const DEFAULT_SET: Set = {
     fixedIn: getDefaultFilterParametersNode<string>(),
     severity: getDefaultFilterParametersNode<string>(),
     ticketStatuses: getDefaultFilterParametersNode<string>(),
-    assigned_to: getDefaultFilterParametersNode<string>(),
     ides: getDefaultFilterParametersNode<string>(),
     operatingSystems: getDefaultFilterParametersNode<string>(),
     frameworks: getDefaultFilterParametersNode<string>(),
@@ -203,6 +203,7 @@ export const DEFAULT_SET: Set = {
     positions: getDefaultFilterParametersNode<string>(),
     empTribes: getDefaultFilterParametersNode<string>(),
     employees: getDefaultFilterParametersNode<string>(),
+    assignedTo: getDefaultFilterParametersNode<string>(),
     repliesTypes: getDefaultFilterParametersNode<string>(),
     components: getDefaultFilterParametersNode<string>(),
     features: getDefaultFilterParametersNode<string>(),
@@ -436,14 +437,14 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    assigned_to: updateValues(x.assigned_to, action.payload.data)
+                    assignedTo: updateValues(x.assignedTo, action.payload.data)
                 }
             })
         case CHANGE_ASSIGNED_TO_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    assigned_to: updateInclude(x.assigned_to, action.payload.data)
+                    assignedTo: updateInclude(x.assignedTo, action.payload.data)
                 }
             })
 

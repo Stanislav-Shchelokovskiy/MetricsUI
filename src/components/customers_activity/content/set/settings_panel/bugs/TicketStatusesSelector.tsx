@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeTicketStatuses, changeTicketStatusesInclude } from '../../../../store/actions/Bugs'
 import { fetchTicketStatuses, TicketStatus } from '../../../../network_resource_fetcher/bugs/FetchTicketStatuses'
-import BugsSelector from './BugsSelector'
+import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
+import BugsSelectorWrapper from './BugsSelector'
 
 
 export default function TicketStatusesSelector({ setTitle }: { setTitle: string }) {
@@ -11,7 +12,8 @@ export default function TicketStatusesSelector({ setTitle }: { setTitle: string 
     const onValueChange = (allValues: Array<TicketStatus>, values: Array<string>) => changeTicketStatuses({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTicketStatusesInclude({ stateId: setTitle, data: include })
 
-    return <BugsSelector<TicketStatus, string>
+    return <BugsSelectorWrapper<TicketStatus, string>
+        Wrapped={MultiOptionSelector}
         setTitle={setTitle}
         className='CustomersActivity_TicketStatusesSelector'
         displayExpr='name'

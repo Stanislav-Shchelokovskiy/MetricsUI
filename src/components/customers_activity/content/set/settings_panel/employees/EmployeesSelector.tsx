@@ -8,14 +8,14 @@ import { changeEmployees, changeEmployeesInclude } from '../../../../store/actio
 import { fetchEmployees, Employee } from '../../../../network_resource_fetcher/employees/FetchEmployees'
 import { FilterParametersNode, getDefaultFilterParametersNode, Set } from '../../../../store/SetsReducer'
 
-interface EmpSelectorProps {
+export interface EmpSelectorProps {
     setTitle: string
     className: string
     placeholder: string
     label: string
     valueSelector: (x: Set | undefined) => FilterParametersNode<string> | undefined
     changeSelection: (payload: Payload<string, Array<string>>) => PayloadAction<Payload<string, Array<string>>>
-    changeInclude: (payload: Payload<string, boolean>)=> PayloadAction<Payload<string, boolean>>
+    changeInclude: (payload: Payload<string, boolean>) => PayloadAction<Payload<string, boolean>>
 }
 
 
@@ -24,8 +24,8 @@ export default function EmployeesSelector({ setTitle }: { setTitle: string }) {
     return <EmpSelector
         setTitle={setTitle}
         className='CustomersActivity_EmployeesSelector'
-        placeholder='Select employees'
-        label='Employees'
+        placeholder='Select posts owners'
+        label='Employees (posts owners)'
         valueSelector={valueSelector}
         changeSelection={changeEmployees}
         changeInclude={changeEmployeesInclude}

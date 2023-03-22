@@ -4,7 +4,8 @@ import { CustomersActivityStore } from '../../../../store/Store'
 import { changeFixedIn, changeFixedInInclude } from '../../../../store/actions/Bugs'
 import { Version } from '../../../../network_resource_fetcher/tickets/FetchVersions'
 import { fetchFixedInVersions } from '../../../../network_resource_fetcher/bugs/FetchFixedInVersions'
-import BugsSelector from './BugsSelector'
+import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
+import BugsSelectorWrapper from './BugsSelector'
 
 
 export default function FixedInSelector({ setTitle }: { setTitle: string }) {
@@ -12,7 +13,8 @@ export default function FixedInSelector({ setTitle }: { setTitle: string }) {
     const onValueChange = (allValues: Array<Version>, values: Array<string>) => changeFixedIn({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeFixedInInclude({ stateId: setTitle, data: include })
 
-    return <BugsSelector<Version, string>
+    return <BugsSelectorWrapper<Version, string>
+        Wrapped={MultiOptionSelector}
         setTitle={setTitle}
         className='CustomersActivity_FixedInSelector'
         displayExpr='id'
