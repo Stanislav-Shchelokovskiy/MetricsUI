@@ -24,11 +24,7 @@
     justify-content: flex-start;
     align-items: center;
     gap: 1%;
-}
-
-.CustomerActivity_SetHeader {
     background-color: rgba(240, 240, 240, 0.7);
-    gap: 1%;
 }
 
 .CustomersActivity_PercentileSelector.dx-texteditor-input {
@@ -59,4 +55,22 @@
 
 .dx-button-content .dx-icon-clear {
     color: rgba(153, 153, 153, 255);
+}
+
+.CustomersActivity_BetweenPeriodSelectorContainer {
+    padding-left: 10px;
+    padding-right: 10px;
+    color: rgba(153, 153, 153, 255);
+    border: 1px solid rgba(221, 221, 221, 255);
+    border-radius: 5px;
+}
+
+.CustomersActivity_BetweenPeriodSelector {
+    padding-bottom: 1%;
+    padding-top: 1%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1%;
 }

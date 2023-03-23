@@ -4,7 +4,7 @@ import { CustomersActivityStore } from '../../../../store/Store'
 import { changeSeverity, changeSeverityInclude } from '../../../../store/actions/Bugs'
 import { fetchSeverityValues, Severity } from '../../../../network_resource_fetcher/bugs/FetchSeverityValues'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
-import BugsSelectorWrapper from './BugsSelector'
+import BugsSelectorWrapper from './BugsSelectors'
 
 
 export default function SeveritySelector({ setTitle }: { setTitle: string }) {

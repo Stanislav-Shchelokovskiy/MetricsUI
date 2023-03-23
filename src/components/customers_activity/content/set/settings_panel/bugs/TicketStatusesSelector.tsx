@@ -4,7 +4,7 @@ import { CustomersActivityStore } from '../../../../store/Store'
 import { changeTicketStatuses, changeTicketStatusesInclude } from '../../../../store/actions/Bugs'
 import { fetchTicketStatuses, TicketStatus } from '../../../../network_resource_fetcher/bugs/FetchTicketStatuses'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
-import BugsSelectorWrapper from './BugsSelector'
+import BugsSelectorWrapper from './BugsSelectors'
 
 
 export default function TicketStatusesSelector({ setTitle }: { setTitle: string }) {

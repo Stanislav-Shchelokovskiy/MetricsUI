@@ -5,7 +5,7 @@ import { changeFixedIn, changeFixedInInclude } from '../../../../store/actions/B
 import { Version } from '../../../../network_resource_fetcher/tickets/FetchVersions'
 import { fetchFixedInVersions } from '../../../../network_resource_fetcher/bugs/FetchFixedInVersions'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
-import BugsSelectorWrapper from './BugsSelector'
+import BugsSelectorWrapper from './BugsSelectors'
 
 
 export default function FixedInSelector({ setTitle }: { setTitle: string }) {

@@ -36,7 +36,6 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <PercentileSelector setTitle={setTitle} />
             <PrivacySelector setTitle={setTitle} />
             <TicketsTypesSelector setTitle={setTitle} />
-            {/* <ClosedOnSelector setTitle={setTitle} /> */}
             <TribesSelector setTitle={setTitle} />
             <PlatformsSelector setTitle={setTitle} />
             <ProductsSelector setTitle={setTitle} />
@@ -46,6 +45,7 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <FixedInSelector setTitle={setTitle} />
             <SeveritySelector setTitle={setTitle} />
             <TicketStatusesSelector setTitle={setTitle} />
+            <ClosedOnSelector setTitle={setTitle} />
             <FrameworksSelector setTitle={setTitle} />
             <OsSelector setTitle={setTitle} />
             <IDEsSelector setTitle={setTitle} />
