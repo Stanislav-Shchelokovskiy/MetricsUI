@@ -13,7 +13,7 @@ export default function FixedInSelector({ setTitle }: { setTitle: string }) {
     const onValueChange = (allValues: Array<Version>, values: Array<string>) => changeFixedIn({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeFixedInInclude({ stateId: setTitle, data: include })
 
-    return <BugsSelectorWrapper<Version, string>
+    return <BugsSelectorWrapper
         Wrapped={MultiOptionSelector}
         setTitle={setTitle}
         className='CustomersActivity_FixedInSelector'

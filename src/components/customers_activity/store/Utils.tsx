@@ -24,8 +24,3 @@ export function anyValueIsEmpty(...values: Array<any>): boolean {
             return true
     return false
 }
-
-export function dateToISOstr(date: Date): string {
-    const offset = date.getTimezoneOffset()
-    return new Date(date.getTime() - (offset * 60 * 1000)).toISOString().slice(0, 10)
-}

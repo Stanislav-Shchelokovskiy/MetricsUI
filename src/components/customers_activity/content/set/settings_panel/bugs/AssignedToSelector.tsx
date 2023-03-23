@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react'
 import { changeAssignedTo, changeAssignedToInclude } from '../../../../store/actions/Bugs'
-import { Employee } from '../../../../network_resource_fetcher/employees/FetchEmployees'
 import { Set } from '../../../../store/SetsReducer'
 import { EmpSelector } from '../employees/EmployeesSelector'
 import BugsSelectorWrapper from './BugsSelector'
@@ -8,7 +7,7 @@ import BugsSelectorWrapper from './BugsSelector'
 
 export default function AssignedToSelector({ setTitle }: { setTitle: string }) {
     const valueSelector = useCallback((x: Set | undefined) => x?.assignedTo, [])
-    return <BugsSelectorWrapper<Employee, string>
+    return <BugsSelectorWrapper
         Wrapped={EmpSelector}
         setTitle={setTitle}
         className='CustomersActivity_AssignedToSelector'

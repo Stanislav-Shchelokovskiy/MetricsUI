@@ -12,7 +12,7 @@ export default function TicketStatusesSelector({ setTitle }: { setTitle: string 
     const onValueChange = (allValues: Array<TicketStatus>, values: Array<string>) => changeTicketStatuses({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTicketStatusesInclude({ stateId: setTitle, data: include })
 
-    return <BugsSelectorWrapper<TicketStatus, string>
+    return <BugsSelectorWrapper
         Wrapped={MultiOptionSelector}
         setTitle={setTitle}
         className='CustomersActivity_TicketStatusesSelector'

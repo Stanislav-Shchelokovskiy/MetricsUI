@@ -1,12 +1,11 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { Payload } from '../../../common/Interfaces'
-import { dateToISOstr } from '../Utils'
 
 export const CHANGE_PERIOD = 'customers_activity/change_period'
-export const changePeriod = (period: Array<Date>): PayloadAction<Array<string>> => {
+export const changePeriod = (period: Array<string>): PayloadAction<Array<string>> => {
     return {
         type: CHANGE_PERIOD,
-        payload: period.map(dateToISOstr)
+        payload: period
     }
 }
 

@@ -27,6 +27,7 @@ import PrivacySelector from './tickets/PrivacySelector'
 import AssignedToSelector from './bugs/AssignedToSelector'
 import ClosedBySelector from './bugs/ClosedBySelector'
 import FixedBySelector from './bugs/FixedBySelector'
+import ClosedOnSelector from './bugs/ClosedOnSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
@@ -35,6 +36,7 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <PercentileSelector setTitle={setTitle} />
             <PrivacySelector setTitle={setTitle} />
             <TicketsTypesSelector setTitle={setTitle} />
+            {/* <ClosedOnSelector setTitle={setTitle} /> */}
             <TribesSelector setTitle={setTitle} />
             <PlatformsSelector setTitle={setTitle} />
             <ProductsSelector setTitle={setTitle} />

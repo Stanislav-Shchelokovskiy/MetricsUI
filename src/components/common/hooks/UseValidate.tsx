@@ -12,7 +12,12 @@ export interface ValidateProps {
 export function useValidate<DataSourceT, ValueExprT>(
     valuesToValidate: Array<ValueExprT> | undefined,
     dispatchValidValuesAction: (allValidValues: Array<DataSourceT>, validValues: Array<ValueExprT>) => PayloadAction<any>,
-    valueExpr: string | undefined = undefined
+    valueExpr: string | undefined = undefined,
+    validateValues: (
+        dataSource: Array<DataSourceT> | Array<keyof DataSourceT>,
+        values: Array<ValueExprT>,
+        valueExpr: string | undefined
+    ) => [Array<ValueExprT>, boolean] = defaultValidateValues
 ): (availableValues: Array<DataSourceT> | Array<keyof DataSourceT>, dataSource: Array<DataSourceT> | undefined) => void {
     const dispatch = useDispatch()
     const emptyArray = useMemo(() => [], [])
@@ -49,7 +54,7 @@ export default function useServerValidate<ValueExprT>(
     }, [])//[...fetchValidValuesArgs])
 }
 
-export function validateValues<DataSourceT, ValueExprT>(
+export function defaultValidateValues<DataSourceT, ValueExprT>(
     dataSource: Array<DataSourceT> | Array<keyof DataSourceT>,
     values: Array<ValueExprT>,
     valueExpr: string | undefined = undefined

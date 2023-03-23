@@ -11,7 +11,7 @@ export interface DataSourceProps<DataSourceT> {
 
 export default function useDataSource<DataSourceT>(
     dataSource: Array<DataSourceT>,
-    fetchDataSource: ((...args: any[]) => Promise<FetchResult<Array<DataSourceT>>>) | undefined,
+    fetchDataSource: ((...args: any) => Promise<FetchResult<Array<DataSourceT>>>) | undefined,
     fetchArgs: Array<any>,
     onDataSourceFetch?: (allValidValues: Array<DataSourceT> | Array<keyof DataSourceT>, dataSource: Array<DataSourceT>) => void
 ) {
