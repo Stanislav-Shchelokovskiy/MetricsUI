@@ -6,12 +6,10 @@ import LoadIndicator from './LoadIndicator'
 import useDataSource, { DataSourceProps } from '../../common/hooks/UseDataSource'
 import { useDispatch } from 'react-redux'
 import { PayloadAction } from '@reduxjs/toolkit'
-import * as includeIcon from './assets/include.svg'
-import * as excludeIcon from './assets/exclude.svg'
 import CustomStore from 'devextreme/data/custom_store'
 import { LoadOptions } from 'devextreme/data'
 import useServerValidate, { ValidateProps, useValidate } from '../hooks/UseValidate'
-import { getIncludeButtonOptions, ButtonOptions } from './Button'
+import { getIncludeButtonOptions, getClearButtonOptions, ButtonOptions } from './Button'
 
 interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     className: string
@@ -110,26 +108,16 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
     });
 
     const includeButtonOptions = useMemo(() => getIncludeButtonOptions(
-        'include',
-        'before',
         props.includeButtonState === undefined ? true : props.includeButtonState,
-        includeIcon.default,
-        excludeIcon.default,
         onIncludeChangeHandler,
     ), [props.includeButtonState])
 
     const tagBoxRef = useRef<TagBox>(null)
     const clearButtonOptions = useMemo(() => {
         return {
-            text: '',
-            stylingMode: 'text',
-            icon: 'clear',
-            type: 'normal',
-            hoverStateEnabled: false,
-            focusStateEnabled: false,
-            activeStateEnabled: false,
+            ...getClearButtonOptions(),
             onClick: (e: any) => {
-                    tagBoxRef.current?.instance.option('value', props.defaultValue)
+                tagBoxRef.current?.instance.option('value', props.defaultValue)
             }
         }
     }, [props.defaultValue])
@@ -197,7 +185,7 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
                 name='customclear'
                 location='after'
                 options={clearButtonOptions} /> :
-             null}
+            null}
     </TagBox >
 }
 

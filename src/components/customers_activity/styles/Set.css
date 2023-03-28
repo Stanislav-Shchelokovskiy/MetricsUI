@@ -58,16 +58,30 @@
 }
 
 .CustomersActivity_BetweenPeriodSelectorContainer {
-    padding-left: 10px;
-    padding-right: 10px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
     color: rgba(153, 153, 153, 255);
     border: 1px solid rgba(221, 221, 221, 255);
     border-radius: 5px;
+    padding-left: 0.5px;
+    font-size: small;
 }
 
-.CustomersActivity_BetweenPeriodSelector {
-    padding-bottom: 1%;
-    padding-top: 1%;
+.CustomersActivity_BetweenPeriodSelectorContainer .dx-button-content {
+    width: 30px;
+    height: 30px;
+}
+
+.CustomersActivity_BetweenPeriodSelectorContainer .Content {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+}
+
+.CustomersActivity_BetweenPeriodSelectorContainer .Selector {
+    padding: 4px;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;

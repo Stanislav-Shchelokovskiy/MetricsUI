@@ -39,14 +39,14 @@ export default function PercentileSelector({ setTitle }: { setTitle: string }) {
     }
 
     const topBottomButtonOptions = useMemo(() => getIncludeButtonOptions(
-        'include',
-        'before',
         percentile.include,
+        onIncludeChange,
+        undefined,
+        undefined,
         'verticalaligntop',
         'verticalalignbottom',
-        onIncludeChange
     ), [percentile.include])
-    
+
     const maxValue = 100
     const resetButtonOptions = {
         text: '',

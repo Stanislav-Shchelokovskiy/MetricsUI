@@ -39,22 +39,12 @@ interface Props extends DataSourceProps<string> {
     rangeSelector: (store: any) => PeriodStr | undefined
     groupBySelector: ((store: any) => PeriodGroupBy)
     onPeriodChange: (period: PeriodStr) => PayloadAction<PeriodStr>
+    CustomRangeSelector: React.FC<RangeSelectorProps>
 }
 
 export default function RangePeriodSelector(props: Props) {
     const selectedRange = useRef<PeriodStr>([])
     selectedRange.current = useSelector(props.rangeSelector) || []
-
-    const groupByPeriod = useSelector(props.groupBySelector)
-    const minorTickIntervals = useMemo(() => {
-        return {
-            '%Y-%m-%d': 'day',
-            '%Y-%W': 'week',
-            '%Y-%m': 'week',
-            '%Y': 'month',
-        }
-    }, [])
-    const minorTickInterval = minorTickIntervals[groupByPeriod as keyof typeof minorTickIntervals]
 
     const validateSelectedValues = useValidate(selectedRange.current, props.onPeriodChange, undefined, validatePeriod)
     const [periodStart, periodEnd] = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, validateSelectedValues)
@@ -67,48 +57,83 @@ export default function RangePeriodSelector(props: Props) {
     const onIncidentOccurred = useCallback((e: any) => {
         const [validPeriod, periodIsInvalid] = validatePeriod(selectedRange.current, [periodStart, periodEnd])
         if (periodIsInvalid)
-            changeRange(validPeriod.map(x=> new Date(x)) as Period)
+            changeRange(validPeriod.map(x => new Date(x)) as Period)
     }, [changeRange, periodStart, periodEnd])
 
-    const tick = useMemo(() => { return { visible: false } }, [])
+    const groupByPeriod = useSelector(props.groupBySelector)
 
     if (periodStart) {
-        return (
-            <DxRangeSelector
-                id={`range-selector${props.className}`}
-                value={selectedRange.current}
-                className={props.className}
-                size={{ height: 125 }}
-                onValueChange={changeRange}
-                onIncidentOccurred={onIncidentOccurred}
-            >
-                <Margin top={10} />
-                <Scale
-                    startValue={new Date(periodStart)}
-                    endValue={new Date(periodEnd)}
-                    endOnTick={true}
-                    minorTickInterval={minorTickInterval}
-                    tickInterval='month'
-                    minRange='day'
-                    minorTick={tick}
-                >
-                    <Behavior snapToTicks={false} animationEnabled={false} />
-                    <ScaleLabel format={'month'} />
-                </Scale>
-                <Behavior snapToTicks={minorTickInterval !== 'day'} animationEnabled={false} />
-                <SliderMarker format='monthAndDay' />
-            </DxRangeSelector >
-        )
+        return <props.CustomRangeSelector
+            selectedRange={selectedRange.current}
+            periodStart={periodStart}
+            periodEnd={periodEnd}
+            groupByPeriod={groupByPeriod}
+            changeRange={changeRange}
+            onIncidentOccurred={onIncidentOccurred}
+            {...props}
+        />
     }
     return <LoadIndicator width={50} height={50} />
 }
 
 
+export interface RangeSelectorProps {
+    className: string
+    selectedRange: PeriodStr
+    periodStart: string
+    periodEnd: string
+    groupByPeriod: PeriodGroupBy
+    changeRange: (newRange: Period) => void
+    onIncidentOccurred: (e: any) => void
+    [k: string]: any
+}
+
+function DefaultRangeSelector(props: RangeSelectorProps) {
+    const minorTickIntervals = useMemo(() => {
+        return {
+            '%Y-%m-%d': 'day',
+            '%Y-%W': 'week',
+            '%Y-%m': 'week',
+            '%Y': 'month',
+        }
+    }, [])
+    const minorTickInterval = minorTickIntervals[props.groupByPeriod as keyof typeof minorTickIntervals]
+    const tick = useMemo(() => { return { visible: false } }, [])
+    return (
+        <DxRangeSelector
+            id={`range-selector${props.className}`}
+            value={props.selectedRange}
+            className={props.className}
+            size={{ height: 125 }}
+            onValueChange={props.changeRange}
+            onIncidentOccurred={props.onIncidentOccurred}
+        >
+            <Margin top={10} />
+            <Scale
+                startValue={new Date(props.periodStart)}
+                endValue={new Date(props.periodEnd)}
+                endOnTick={true}
+                minorTickInterval={minorTickInterval}
+                tickInterval='month'
+                minRange='day'
+                minorTick={tick}
+            >
+                <Behavior snapToTicks={false} animationEnabled={false} />
+                <ScaleLabel format={'month'} />
+            </Scale>
+            <Behavior snapToTicks={minorTickInterval !== 'day'} animationEnabled={false} />
+            <SliderMarker format='monthAndDay' />
+        </DxRangeSelector >
+    )
+}
+
 const defaultProps = {
+    className: '',
     dataSource: ['', ''],
     fetchDataSource: undefined,
     fetchArgs: [],
-    groupBySelector: (store: any) => '%Y-%m-%d'
+    groupBySelector: (store: any) => '%Y-%m-%d',
+    CustomRangeSelector: DefaultRangeSelector
 }
 
 RangePeriodSelector.defaultProps = defaultProps

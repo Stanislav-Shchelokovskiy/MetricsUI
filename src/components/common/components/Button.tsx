@@ -1,5 +1,7 @@
 import React from 'react'
 import { Button as DxButton } from 'devextreme-react/button'
+import * as includeIconSvg from './assets/include.svg'
+import * as excludeIconSvg from './assets/exclude.svg'
 
 interface Props {
     className: string
@@ -7,7 +9,7 @@ interface Props {
     icon: string
     disabled: boolean
     render: ((button: any) => any) | undefined
-    onClick: () => void
+    onClick: (e: any) => void
     hint: string
     id: string
 }
@@ -44,12 +46,12 @@ export interface ButtonOptions {
 }
 
 export function getIncludeButtonOptions(
-    name: string,
-    location: string,
     isInIncludeState: boolean,
-    includeIcon: string,
-    excludeIcon: string,
     onIncludeChange: ((include: boolean) => void),
+    name: string = 'include',
+    location: string = 'before',
+    includeIcon: string = includeIconSvg.default,
+    excludeIcon: string = excludeIconSvg.default,
     includeHint: string = '',
     excludeHint: string = '',
     includeState: string = 'success',
@@ -57,6 +59,7 @@ export function getIncludeButtonOptions(
 ) {
     return {
         name: name,
+        className: name,
         location: location,
         text: '',
         stylingMode: 'text',
@@ -74,5 +77,18 @@ export function getIncludeButtonOptions(
                 onIncludeChange(false)
             }
         }
+    }
+}
+
+export function getClearButtonOptions() {
+    return {
+        text: '',
+        stylingMode: 'text',
+        icon: 'clear',
+        type: 'normal',
+        hoverStateEnabled: false,
+        focusStateEnabled: false,
+        activeStateEnabled: false,
+        onClick: undefined
     }
 }
