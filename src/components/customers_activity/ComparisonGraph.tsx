@@ -51,8 +51,7 @@ export default function ComparisonGraph() {
             token.cancel = () => {
                 cancelled = true
             }
-            const range_start = customersActivityState.range[0]
-            const range_end = customersActivityState.range[1]
+            const [range_start, range_end] = customersActivityState.range
             const [periods_array, ...sets] = await Promise.all([
                 fetchPeriodsArray(
                     customersActivityState.groupByPeriod,

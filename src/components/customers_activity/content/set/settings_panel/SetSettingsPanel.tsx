@@ -27,7 +27,7 @@ import PrivacySelector from './tickets/PrivacySelector'
 import AssignedToSelector from './bugs/AssignedToSelector'
 import ClosedBySelector from './bugs/ClosedBySelector'
 import FixedBySelector from './bugs/FixedBySelector'
-import ClosedOnSelector from './bugs/ClosedOnSelector'
+import ClosedBetweenSelector from './bugs/ClosedBetweenSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
@@ -45,7 +45,7 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <FixedInSelector setTitle={setTitle} />
             <SeveritySelector setTitle={setTitle} />
             <TicketStatusesSelector setTitle={setTitle} />
-            <ClosedOnSelector setTitle={setTitle} />
+            <ClosedBetweenSelector setTitle={setTitle} />
             <FrameworksSelector setTitle={setTitle} />
             <OsSelector setTitle={setTitle} />
             <IDEsSelector setTitle={setTitle} />

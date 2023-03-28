@@ -97,3 +97,19 @@ export const changeFixedByInclude = (payload: Payload<string, boolean>): Payload
         payload: payload
     }
 }
+
+export const CHANGE_CLOSED_BETWEEN = 'customers_activity/change_closed_between'
+export const changeClosedBetween = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_CLOSED_BETWEEN,
+        payload: payload
+    }
+}
+
+export const CHANGE_CLOSED_BETWEEN_INCLUDE = 'customers_activity/change_closed_between_include'
+export const changeClosedBetweenInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_CLOSED_BETWEEN_INCLUDE,
+        payload: payload
+    }
+}

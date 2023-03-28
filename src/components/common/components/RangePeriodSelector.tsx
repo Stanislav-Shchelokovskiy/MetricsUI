@@ -5,9 +5,11 @@ import { RangeSelector as DxRangeSelector, Margin, Scale, ScaleLabel, SliderMark
 import LoadIndicator from './LoadIndicator'
 import useDataSource, { DataSourceProps } from '../hooks/UseDataSource'
 import { useValidate } from '../hooks/UseValidate'
+import { Payload } from '../Interfaces'
 
 type Period = [Date, Date]
 type PeriodStr = Array<string>
+type PeriodContainer = { values: PeriodStr | undefined }
 export type PeriodGroupBy = '%Y-%m-%d' | '%Y-%W' | '%Y-%m' | '%Y'
 
 function dateToISOstr(date: Date): string {
@@ -34,28 +36,34 @@ function validatePeriod(period: PeriodStr | any, possiblePeriod: PeriodStr, _: a
     return [[possiblePeriodStartStr, possiblePeriodEndStr], true]
 }
 
+
+function getRange(val: PeriodContainer | PeriodStr | undefined): PeriodStr {
+    return (Array.isArray(val) ? val : (val && 'values' in val ? (val as PeriodContainer).values : undefined)) || []
+}
+
+
 interface Props extends DataSourceProps<string> {
     className: string
-    rangeSelector: (store: any) => PeriodStr | undefined
+    rangeSelector: (store: any) => PeriodContainer | PeriodStr | undefined
     groupBySelector: ((store: any) => PeriodGroupBy)
-    onPeriodChange: (period: PeriodStr) => PayloadAction<PeriodStr>
+    onPeriodChange: (period: PeriodStr) => PayloadAction<PeriodStr> | PayloadAction<Payload<string, Array<string>>>
     CustomRangeSelector: React.FC<RangeSelectorProps>
 }
 
 export default function RangePeriodSelector(props: Props) {
-    const selectedRange = useRef<PeriodStr>([])
-    selectedRange.current = useSelector(props.rangeSelector) || []
+    const selectedRange = useRef<PeriodStr | PeriodContainer | undefined>([])
+    selectedRange.current = useSelector(props.rangeSelector)
 
-    const validateSelectedValues = useValidate(selectedRange.current, props.onPeriodChange, undefined, validatePeriod)
+    const validateSelectedValues = useValidate(getRange(selectedRange.current), props.onPeriodChange, undefined, validatePeriod)
     const [periodStart, periodEnd] = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, validateSelectedValues)
 
     const dispatch = useDispatch()
-    const changeRange = useCallback((newRange: Period) => {
-        dispatch(props.onPeriodChange(newRange.map(dateToISOstr)))
+    const changeRange = useCallback((newRange: Period | undefined) => {
+        dispatch(props.onPeriodChange(newRange ? newRange.map(dateToISOstr) : []))
     }, [dispatch])
 
     const onIncidentOccurred = useCallback((e: any) => {
-        const [validPeriod, periodIsInvalid] = validatePeriod(selectedRange.current, [periodStart, periodEnd])
+        const [validPeriod, periodIsInvalid] = validatePeriod(getRange(selectedRange.current), [periodStart, periodEnd])
         if (periodIsInvalid)
             changeRange(validPeriod.map(x => new Date(x)) as Period)
     }, [changeRange, periodStart, periodEnd])
@@ -79,11 +87,11 @@ export default function RangePeriodSelector(props: Props) {
 
 export interface RangeSelectorProps {
     className: string
-    selectedRange: PeriodStr
+    selectedRange: PeriodContainer | PeriodStr | undefined
     periodStart: string
     periodEnd: string
     groupByPeriod: PeriodGroupBy
-    changeRange: (newRange: Period) => void
+    changeRange: (newRange: Period | undefined) => void
     onIncidentOccurred: (e: any) => void
     [k: string]: any
 }
@@ -102,7 +110,7 @@ function DefaultRangeSelector(props: RangeSelectorProps) {
     return (
         <DxRangeSelector
             id={`range-selector${props.className}`}
-            value={props.selectedRange}
+            value={getRange(props.selectedRange)}
             className={props.className}
             size={{ height: 125 }}
             onValueChange={props.changeRange}

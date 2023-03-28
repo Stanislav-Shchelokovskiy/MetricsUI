@@ -76,6 +76,8 @@ import {
     CHANGE_CLOSED_BY_INCLUDE,
     CHANGE_FIXED_BY,
     CHANGE_FIXED_BY_INCLUDE,
+    CHANGE_CLOSED_BETWEEN,
+    CHANGE_CLOSED_BETWEEN_INCLUDE,
 } from './actions/Bugs'
 
 
@@ -126,6 +128,7 @@ export interface Set {
     fixedIn: FilterParametersNode<string> | undefined
     severity: FilterParametersNode<string> | undefined
     ticketStatuses: FilterParametersNode<string> | undefined
+    closedBetween: FilterParametersNode<string> | undefined
     ides: FilterParametersNode<string> | undefined
     operatingSystems: FilterParametersNode<string> | undefined
     frameworks: FilterParametersNode<string> | undefined
@@ -201,6 +204,7 @@ export const DEFAULT_SET: Set = {
     fixedIn: getDefaultFilterParametersNode<string>(),
     severity: getDefaultFilterParametersNode<string>(),
     ticketStatuses: getDefaultFilterParametersNode<string>(),
+    closedBetween: getDefaultFilterParametersNode<string>(),
     ides: getDefaultFilterParametersNode<string>(),
     operatingSystems: getDefaultFilterParametersNode<string>(),
     frameworks: getDefaultFilterParametersNode<string>(),
@@ -440,6 +444,22 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                 return {
                     ...x,
                     ticketStatuses: updateInclude(x.ticketStatuses, action.payload.data)
+                }
+            })
+
+
+        case CHANGE_CLOSED_BETWEEN:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    closedBetween: updateValues(x.closedBetween, action.payload.data)
+                }
+            })
+        case CHANGE_CLOSED_BETWEEN_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    closedBetween: updateInclude(x.closedBetween, action.payload.data)
                 }
             })
 
