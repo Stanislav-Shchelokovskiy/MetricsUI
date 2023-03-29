@@ -1,6 +1,5 @@
+import { FilterParametersNode } from '../sets_reducer/Interfaces'
 import { allNodesAreConsideredEmpty, anyNodeIsConsideredEmpty } from '../Utils'
-import { FilterParametersNode } from '../SetsReducer'
-
 
 describe('testing allNodesAreConsideredEmpty: nodes are empty if include of all nodes is true and no one node contains a value ', () => {
     test('case 0', () => {
@@ -67,11 +66,11 @@ describe('testing anyNodeIsConsideredEmpty: any node is empty if include of any 
         expect(anyNodeIsConsideredEmpty(...nodes)).toBeFalsy()
     });
     test('case 7', () => {
-        const nodes: Array<FilterParametersNode<number>| undefined> = [undefined, { include: true, values: [1] }]
+        const nodes: Array<FilterParametersNode<number> | undefined> = [undefined, { include: true, values: [1] }]
         expect(anyNodeIsConsideredEmpty(...nodes)).toBeTruthy()
     });
     test('case 7', () => {
-        const nodes: Array<FilterParametersNode<number>| undefined> = [undefined, undefined]
+        const nodes: Array<FilterParametersNode<number> | undefined> = [undefined, undefined]
         expect(anyNodeIsConsideredEmpty(...nodes)).toBeTruthy()
     });
 });

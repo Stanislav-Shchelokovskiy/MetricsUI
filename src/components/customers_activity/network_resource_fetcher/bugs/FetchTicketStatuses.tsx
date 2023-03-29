@@ -1,14 +1,10 @@
 import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
-import { nodeIsEmpty } from '../../store/Utils'
-import { FilterParametersNode } from '../../store/SetsReducer'
-
 
 export interface TicketStatus {
     id: string
     name: string
 }
-
 
 export async function fetchTicketStatuses(): Promise<FetchResult<Array<TicketStatus>>> {
     try {

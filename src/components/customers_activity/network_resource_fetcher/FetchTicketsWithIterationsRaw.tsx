@@ -1,7 +1,7 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { Set, getAliasedSet } from '../store/SetsReducer'
-
+import { Set } from '../store/sets_reducer/Interfaces'
+import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
 
 export interface TicketsWithIterationsRaw {
     user_id: string
@@ -36,7 +36,6 @@ const EMPTY_TICKETS_WITH_ITERATIONS_RAW_SET = {
     index: 0,
     raw_data: [EMPTY_TICKETS_WITH_ITERATIONS_RAW]
 }
-
 
 export async function fetchTicketsWithIterationsRaw(
     rangeStart: string,

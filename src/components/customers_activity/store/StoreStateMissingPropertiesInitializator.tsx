@@ -1,6 +1,6 @@
-import { Set } from './SetsReducer'
+import { Set } from './sets_reducer/Interfaces'
+import { DEFAULT_SET } from './sets_reducer/Defaults'
 import { CustomersActivityState } from './CustomersActivityReducer'
-import { DEFAULT_SET } from './SetsReducer'
 import { getValidComparisonMethodOrDefault } from '../common_settings_panel/ComparisonMethodSelector'
 import { getValidMetricOrDefault } from '../common_settings_panel/MetricSelector'
 

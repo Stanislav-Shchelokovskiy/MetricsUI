@@ -1,12 +1,10 @@
 import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
 
-
 export interface Severity {
     id: string
     name: string
 }
-
 
 export async function fetchSeverityValues(): Promise<FetchResult<Array<Severity>>> {
     try {

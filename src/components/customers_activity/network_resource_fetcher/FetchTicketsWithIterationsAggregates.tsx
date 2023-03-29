@@ -1,7 +1,7 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { Set, getAliasedSet } from '../store/SetsReducer'
-
+import { Set } from '../store/sets_reducer/Interfaces'
+import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
 
 interface TicketsWithIterationsAggregate {
     period: string
@@ -21,7 +21,6 @@ export interface TicketsWithIterationsAggregates {
     people: Array<number>
 }
 
-
 export const EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES = {
     index: 0,
     title: '',
@@ -31,7 +30,6 @@ export const EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES = {
     iterations_to_tickets: [],
     people: [],
 }
-
 
 export async function fetchTicketsWithIterationsAggregates(
     groupByPeriod: string,

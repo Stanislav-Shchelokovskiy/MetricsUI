@@ -1,12 +1,10 @@
 import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
 
-
 export interface OS {
     id: string
     name: string
 }
-
 
 export async function fetchOperatingSystems(): Promise<FetchResult<Array<OS>>> {
     try {

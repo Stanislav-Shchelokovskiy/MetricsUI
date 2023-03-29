@@ -1,12 +1,10 @@
 import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
 
-
 export interface ReplyType {
     id: string
     name: string
 }
-
 
 export async function fetchRepliesTypes(): Promise<FetchResult<Array<ReplyType>>> {
     try {

@@ -1,7 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { Payload } from '../../../common/Interfaces'
 
-
 export const CHANGE_FIXED_IN = 'customers_activity/change_fixed_id'
 export const changeFixedIn = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
@@ -34,10 +33,10 @@ export const changeSeverityInclude = (payload: Payload<string, boolean>): Payloa
     }
 }
 
-export const CHANGE_STATUSES = 'customers_activity/change_ticket_statuses'
+export const CHANGE_TICKET_STATUSES = 'customers_activity/change_ticket_statuses'
 export const changeTicketStatuses = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
-        type: CHANGE_STATUSES,
+        type: CHANGE_TICKET_STATUSES,
         payload: payload
     }
 }

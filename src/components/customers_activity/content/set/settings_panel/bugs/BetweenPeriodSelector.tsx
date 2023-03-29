@@ -7,7 +7,7 @@ import { DataSourceProps } from '../../../../../common/hooks/UseDataSource'
 import RangePeriodSelector, { RangeSelectorProps } from '../../../../../common/components/RangePeriodSelector'
 import Button, { getClearButtonOptions, getIncludeButtonOptions } from '../../../../../common/components/Button'
 import { CustomersActivityStore } from '../../../../store/Store'
-import { FilterParametersNode, Set } from '../../../../store/SetsReducer'
+import { FilterParametersNode, Set } from '../../../../store/sets_reducer/Interfaces'
 
 interface Props extends DataSourceProps<string> {
     className: string

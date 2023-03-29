@@ -1,12 +1,10 @@
 import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
 
-
 export interface EmpTribe {
     id: string
     name: string
 }
-
 
 export async function fetchEmpTribes(): Promise<FetchResult<Array<EmpTribe>>> {
     try {

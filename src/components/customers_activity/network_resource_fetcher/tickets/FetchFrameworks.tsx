@@ -1,12 +1,10 @@
 import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
 
-
 export interface Framework {
     id: string
     name: string
 }
-
 
 export async function FetchFrameworks(): Promise<FetchResult<Array<Framework>>> {
     try {

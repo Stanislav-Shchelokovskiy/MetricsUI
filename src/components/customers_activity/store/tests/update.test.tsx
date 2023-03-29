@@ -1,4 +1,5 @@
-import { updateValues, updateInclude, FilterParametersNode } from '../SetsReducer'
+import { FilterParametersNode } from '../sets_reducer/Interfaces'
+import { updateValues, updateInclude } from '../sets_reducer/Utils'
 
 
 describe('testing updateValues', () => {

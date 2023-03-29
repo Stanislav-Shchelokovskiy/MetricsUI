@@ -1,11 +1,9 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { Set, getAliasedSet } from '../store/SetsReducer'
-
+import { Set } from '../store/sets_reducer/Interfaces'
+import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
 
 export type DisplayFilter = Array<any>
-
-
 
 export async function fetchDisplayFilter(
     isTicketsMetricSelected: boolean,

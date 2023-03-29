@@ -1,4 +1,4 @@
-import { FilterParametersNode } from './SetsReducer'
+import { FilterParametersNode } from './sets_reducer/Interfaces'
 
 export function allNodesAreConsideredEmpty<T>(...nodes: Array<FilterParametersNode<T> | undefined>): boolean {
     for (const node of nodes)
@@ -23,4 +23,15 @@ export function anyValueIsEmpty(...values: Array<any>): boolean {
         if (value === undefined || value === null || value.toString() === '')
             return true
     return false
+}
+
+
+export function bugIsNotSelected(node: FilterParametersNode<number> | undefined): boolean {
+    const BUG = 2
+    return nodeIsEmpty(node, BUG)
+}
+
+export function closedIsNotSelected(node: FilterParametersNode<string> | undefined): boolean {
+    const CLOSED = 'Closed'
+    return nodeIsEmpty(node, CLOSED)
 }

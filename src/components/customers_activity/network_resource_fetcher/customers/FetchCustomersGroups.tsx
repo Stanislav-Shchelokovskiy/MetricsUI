@@ -1,12 +1,10 @@
 import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
 
-
 export interface CustomersGroup {
     id: string
     name: string
 }
-
 
 export async function fetchCustomersGroups(baseLineAligned: boolean): Promise<FetchResult<Array<CustomersGroup>>> {
     try {

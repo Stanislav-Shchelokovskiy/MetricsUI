@@ -3,7 +3,7 @@ import PercentileSelector from './PercentileSelector'
 import TribesSelector from './TribesSelector'
 import PlatformsSelector from './platforms_products/PlatformsSelector'
 import ProductsSelector from './platforms_products/ProductsSelector'
-import TicketsTagsSelector from './TicketsTagsSelector'
+import TicketsTagsSelector from './tickets/TicketsTagsSelector'
 import TicketsTypesSelector from './tickets_types/TicketsTypesSelector'
 import DuplicatedToTicketsTypesSelector from './tickets_types/DuplicatedToTicketsTypesSelector'
 import CustomersGroupsSelector from './customers/CustomersGroupsSelector'
@@ -44,8 +44,12 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <TicketsTagsSelector setTitle={setTitle} />
             <DuplicatedToTicketsTypesSelector setTitle={setTitle} />
             <FixedInSelector setTitle={setTitle} />
+            <FixedBySelector setTitle={setTitle} />
+            <FixedBetweenSelector setTitle={setTitle} />
             <SeveritySelector setTitle={setTitle} />
             <TicketStatusesSelector setTitle={setTitle} />
+            <ClosedBySelector setTitle={setTitle} />
+            <ClosedBetweenSelector setTitle={setTitle} />
             <FrameworksSelector setTitle={setTitle} />
             <OsSelector setTitle={setTitle} />
             <IDEsSelector setTitle={setTitle} />
@@ -56,10 +60,6 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <EmpTribesSelector setTitle={setTitle} />
             <EmployeesSelector setTitle={setTitle} />
             <AssignedToSelector setTitle={setTitle} />
-            <ClosedBySelector setTitle={setTitle} />
-            <ClosedBetweenSelector setTitle={setTitle} />
-            <FixedBySelector setTitle={setTitle} />
-            <FixedBetweenSelector setTitle={setTitle} />
             <ReplyTypesSelector setTitle={setTitle} />
             <ComponentsSelector setTitle={setTitle} />
             <FeaturesSelector setTitle={setTitle} />

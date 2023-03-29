@@ -1,12 +1,10 @@
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 
-
 export interface GroupByPeriod {
     name: string
     format: string
 }
-
 
 export async function fetchGroupByPeriods(): Promise<FetchResult<Array<GroupByPeriod>>> {
     try {

@@ -32,19 +32,3 @@ export const changeTribesInclude = (payload: Payload<string, boolean>): PayloadA
         payload: payload
     }
 }
-
-export const CHANGE_TICKETS_TAGS = 'customers_activity/change_tickets_tags'
-export const changeTicketsTags = (payload: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
-    return {
-        type: CHANGE_TICKETS_TAGS,
-        payload: payload
-    }
-}
-
-export const CHANGE_TICKETS_TAGS_INCLUDE = 'customers_activity/change_tickets_tags_include'
-export const changeTicketsTagsInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
-    return {
-        type: CHANGE_TICKETS_TAGS_INCLUDE,
-        payload: payload
-    }
-}

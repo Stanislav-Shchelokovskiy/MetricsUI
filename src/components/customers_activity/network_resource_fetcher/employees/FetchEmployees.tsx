@@ -1,6 +1,6 @@
 import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
-import { FilterParametersNode } from '../../store/SetsReducer'
+import { FilterParametersNode } from '../../store/sets_reducer/Interfaces'
 
 
 export interface Employee {

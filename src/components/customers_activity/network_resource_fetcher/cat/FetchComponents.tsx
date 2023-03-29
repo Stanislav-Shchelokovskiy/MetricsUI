@@ -1,14 +1,12 @@
 import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
-import { FilterParametersNode } from '../../store/SetsReducer'
+import { FilterParametersNode } from '../../store/sets_reducer/Interfaces'
 import { allNodesAreConsideredEmpty } from '../../store/Utils'
-
 
 export interface Component {
     component_id: string
     component_name: string
 }
-
 
 export async function fetchComponents(tribes: FilterParametersNode<string>): Promise<FetchResult<Array<Component>>> {
     if (allNodesAreConsideredEmpty(tribes)) {

@@ -1,9 +1,9 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
-import { CustomersActivityStore } from '../../../store/Store'
-import { changeTicketsTags, changeTicketsTagsInclude } from '../../../store/actions/SetCommon'
-import { fetchTicketsTags, TicketsTag } from '../../../network_resource_fetcher/tickets/FetchTicketsTags'
+import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
+import { CustomersActivityStore } from '../../../../store/Store'
+import { changeTicketsTags, changeTicketsTagsInclude } from '../../../../store/actions/Tickets'
+import { fetchTicketsTags, TicketsTag } from '../../../../network_resource_fetcher/tickets/FetchTicketsTags'
 
 
 export default function TicketsTagsSelector({ setTitle }: { setTitle: string }) {

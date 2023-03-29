@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { changeAssignedTo, changeAssignedToInclude } from '../../../../store/actions/Bugs'
-import { Set } from '../../../../store/SetsReducer'
+import { Set } from '../../../../store/sets_reducer/Interfaces'
 import { EmpSelector } from '../employees/EmployeesSelector'
 import BugsSelectorWrapper from './BugsSelectors'
 

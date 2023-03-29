@@ -1,14 +1,12 @@
 import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
-import { FilterParametersNode } from '../../store/SetsReducer'
+import { FilterParametersNode } from '../../store/sets_reducer/Interfaces'
 import { anyNodeIsConsideredEmpty } from '../../store/Utils'
-
 
 export interface Feature {
     feature_id: string
     feature_name: string
 }
-
 
 export async function fetchFeatures(
     tribes: FilterParametersNode<string>,

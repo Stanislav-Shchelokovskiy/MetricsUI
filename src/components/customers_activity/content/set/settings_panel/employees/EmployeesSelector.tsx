@@ -6,7 +6,8 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeEmployees, changeEmployeesInclude } from '../../../../store/actions/Employees'
 import { fetchEmployees, Employee } from '../../../../network_resource_fetcher/employees/FetchEmployees'
-import { FilterParametersNode, getDefaultFilterParametersNode, Set } from '../../../../store/SetsReducer'
+import { Set, FilterParametersNode } from '../../../../store/sets_reducer/Interfaces'
+import { getDefaultFilterParametersNode } from '../../../../store/sets_reducer/Defaults'
 
 export interface EmpSelectorProps {
     setTitle: string

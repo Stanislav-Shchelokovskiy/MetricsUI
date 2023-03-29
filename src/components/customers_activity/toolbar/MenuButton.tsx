@@ -6,7 +6,7 @@ import Button from '../../common/components/Button'
 import { Tooltip } from 'devextreme-react/tooltip'
 import { fetchDisplayFilter } from '../network_resource_fetcher/FetchDisplayFilter'
 import { isTicketsMetricSelected } from '../common_settings_panel/MetricSelector'
-import { getSetDataFields } from '../store/SetsReducer'
+import { getSetDataFields } from '../store/sets_reducer/SetDescriptor'
 
 
 interface Props {

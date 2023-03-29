@@ -3,7 +3,7 @@ import { ClosedBugsSelectorWrapper } from './BugsSelectors'
 import BetweenPeriodSelectorWrapper from './BetweenPeriodSelector'
 import { fetchPeriod } from '../../../../network_resource_fetcher/FetchPeriod'
 import { changeClosedBetween, changeClosedBetweenInclude } from '../../../../store/actions/Bugs'
-import { Set } from '../../../../store/SetsReducer'
+import { Set } from '../../../../store/sets_reducer/Interfaces'
 
 
 export default function ClosedBetweenSelector({ setTitle }: { setTitle: string }) {

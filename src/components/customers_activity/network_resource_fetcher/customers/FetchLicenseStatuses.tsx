@@ -1,12 +1,10 @@
 import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
 
-
 export interface LicenseStatus {
     id: number
     name: string
 }
-
 
 export async function fetchLicenseStatuses(): Promise<FetchResult<Array<LicenseStatus>>> {
     try {

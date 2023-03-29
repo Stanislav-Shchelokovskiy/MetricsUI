@@ -1,6 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { generateNewSetTitle } from './SetsReducer'
-import { DEFAULT_SET } from '../store/SetsReducer'
+import { generateNewSetTitle } from './sets_reducer/GeneralReducer'
+import { getDefaultTitle } from './sets_reducer/Defaults'
 import { APPLY_STATE } from '../../common/store/state/Actions'
 import { initMissingCustomersActivityProperties } from './StoreStateMissingPropertiesInitializator'
 import { getValidComparisonMethodOrDefault } from '../common_settings_panel/ComparisonMethodSelector'
@@ -33,7 +33,7 @@ const INITIAL_CUSTOMERS_ACTIVITY_STATE: CustomersActivityState = {
     metric: getValidMetricOrDefault(undefined),
     comparisonMethod: getValidComparisonMethodOrDefault(undefined),
     baselineAlignedModeEnabled: false,
-    sets: [DEFAULT_SET.title]
+    sets: [getDefaultTitle()]
 }
 
 
@@ -73,7 +73,7 @@ export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL
         case REMOVE_SET:
             return {
                 ...state,
-                sets: state.sets.length < 2 ? [DEFAULT_SET.title] : state.sets.filter(set => set !== action.payload)
+                sets: state.sets.length < 2 ? [getDefaultTitle()] : state.sets.filter(set => set !== action.payload)
             }
 
         case APPLY_STATE:
