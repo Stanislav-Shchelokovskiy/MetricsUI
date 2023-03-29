@@ -3,7 +3,7 @@ import Plot from 'react-plotly.js'
 import { Data as GraphData } from 'plotly.js'
 import { useSelector } from 'react-redux'
 import { CustomersActivityStore } from './store/Store'
-import FetchResult, { Token } from '../common/Interfaces'
+import { Token } from '../common/Interfaces'
 import { toFriendlyTitle } from './content/set/header/Title'
 import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './common_settings_panel/ComparisonMethodSelector'
 import {
