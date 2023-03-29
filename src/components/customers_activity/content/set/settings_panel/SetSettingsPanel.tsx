@@ -28,6 +28,7 @@ import AssignedToSelector from './bugs/AssignedToSelector'
 import ClosedBySelector from './bugs/ClosedBySelector'
 import FixedBySelector from './bugs/FixedBySelector'
 import ClosedBetweenSelector from './bugs/ClosedBetweenSelector'
+import FixedBetweenSelector from './bugs/FixedBetweenSelector'
 
 
 export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
@@ -45,7 +46,6 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <FixedInSelector setTitle={setTitle} />
             <SeveritySelector setTitle={setTitle} />
             <TicketStatusesSelector setTitle={setTitle} />
-            <ClosedBetweenSelector setTitle={setTitle} />
             <FrameworksSelector setTitle={setTitle} />
             <OsSelector setTitle={setTitle} />
             <IDEsSelector setTitle={setTitle} />
@@ -57,7 +57,9 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <EmployeesSelector setTitle={setTitle} />
             <AssignedToSelector setTitle={setTitle} />
             <ClosedBySelector setTitle={setTitle} />
+            <ClosedBetweenSelector setTitle={setTitle} />
             <FixedBySelector setTitle={setTitle} />
+            <FixedBetweenSelector setTitle={setTitle} />
             <ReplyTypesSelector setTitle={setTitle} />
             <ComponentsSelector setTitle={setTitle} />
             <FeaturesSelector setTitle={setTitle} />

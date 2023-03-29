@@ -78,6 +78,8 @@ import {
     CHANGE_FIXED_BY_INCLUDE,
     CHANGE_CLOSED_BETWEEN,
     CHANGE_CLOSED_BETWEEN_INCLUDE,
+    CHANGE_FIXED_BETWEEN,
+    CHANGE_FIXED_BETWEEN_INCLUDE,
 } from './actions/Bugs'
 
 
@@ -126,6 +128,7 @@ export interface Set {
     ticketsTypes: FilterParametersNode<number> | undefined
     versions: FilterParametersNode<string> | undefined
     fixedIn: FilterParametersNode<string> | undefined
+    fixedBetween: FilterParametersNode<string> | undefined
     severity: FilterParametersNode<string> | undefined
     ticketStatuses: FilterParametersNode<string> | undefined
     closedBetween: FilterParametersNode<string> | undefined
@@ -159,6 +162,7 @@ export function getAliasedSet(set: Set) {
         'Ticket tags': set.ticketsTags,
         'Ticket types': set.ticketsTypes,
         'Fixed In': set.fixedIn,
+        'Fixed': set.fixedBetween,
         'Severity': set.severity,
         'IDE': set.ides,
         'Operating systems': set.operatingSystems,
@@ -203,6 +207,7 @@ export const DEFAULT_SET: Set = {
     ticketsTags: getDefaultFilterParametersNode<number>(),
     versions: getDefaultFilterParametersNode<string>(),
     fixedIn: getDefaultFilterParametersNode<string>(),
+    fixedBetween: getDefaultFilterParametersNode<string>(),
     severity: getDefaultFilterParametersNode<string>(),
     ticketStatuses: getDefaultFilterParametersNode<string>(),
     closedBetween: getDefaultFilterParametersNode<string>(),
@@ -461,6 +466,22 @@ export const SetsReducer = (sets: Array<Set> = INTIAL_SETS, action: AnyAction): 
                 return {
                     ...x,
                     closedBetween: updateInclude(x.closedBetween, action.payload.data)
+                }
+            })
+
+
+        case CHANGE_FIXED_BETWEEN:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    fixedBetween: updateValues(x.fixedBetween, action.payload.data)
+                }
+            })
+        case CHANGE_FIXED_BETWEEN_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    fixedBetween: updateInclude(x.fixedBetween, action.payload.data)
                 }
             })
 
