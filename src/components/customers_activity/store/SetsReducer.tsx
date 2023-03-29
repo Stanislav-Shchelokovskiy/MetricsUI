@@ -164,6 +164,7 @@ export function getAliasedSet(set: Set) {
         'Operating systems': set.operatingSystems,
         'Frameworks/Specifics': set.frameworks,
         'Ticket statuses': set.ticketStatuses,
+        'Bugs closed between': set.closedBetween,
         'Duplicated to ticket types': set.duplicatedToTicketsTypes,
         'User groups': set.customersGroups,
         'User types': set.customersTypes,
