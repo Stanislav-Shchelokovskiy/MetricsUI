@@ -164,7 +164,7 @@ export function getAliasedSet(set: Set) {
         'Operating systems': set.operatingSystems,
         'Frameworks/Specifics': set.frameworks,
         'Ticket statuses': set.ticketStatuses,
-        'Bugs closed between': set.closedBetween,
+        'Closed': set.closedBetween,
         'Duplicated to ticket types': set.duplicatedToTicketsTypes,
         'User groups': set.customersGroups,
         'User types': set.customersTypes,
@@ -186,7 +186,7 @@ export function getSetDataFields() {
     return Object.getOwnPropertyNames(getAliasedSet(DEFAULT_SET)).map(x => {
         return {
             dataField: x,
-            filterOperations: ['<=', '=', '>', 'in', 'notin']
+            filterOperations: ['<=', '=', '>', 'in', 'notin', 'between', 'notbetween']
         }
     })
 }

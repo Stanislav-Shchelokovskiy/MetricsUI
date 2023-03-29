@@ -94,6 +94,12 @@ const FilterLabel = React.memo(() => {
             name='notin'
             caption='NOT IN' />
         <CustomOperation
+            name='between'
+            caption='BETWEEN' />
+        <CustomOperation
+            name='notbetween'
+            caption='NOT BETWEEN' />
+        <CustomOperation
             name='<=' />
         <CustomOperation
             name='>' />
