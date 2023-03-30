@@ -1,5 +1,10 @@
 import { FilterParametersNode } from '../sets_reducer/Interfaces'
-import { allNodesAreConsideredEmpty, anyNodeIsConsideredEmpty } from '../Utils'
+import {
+    allNodesAreConsideredEmpty,
+    anyNodeIsConsideredEmpty,
+    anyValueIsEmpty,
+    nodeIsEmpty,
+} from '../Utils'
 
 describe('testing allNodesAreConsideredEmpty: nodes are empty if include of all nodes is true and no one node contains a value ', () => {
     test('case 0', () => {
@@ -74,3 +79,49 @@ describe('testing anyNodeIsConsideredEmpty: any node is empty if include of any 
         expect(anyNodeIsConsideredEmpty(...nodes)).toBeTruthy()
     });
 });
+
+describe(`testing nodeIsEmpty: 
+* node is empty if it is either undefined
+* [include=true and values=empty array]
+* its values dont include must have value
+* its include=false and values include must have value `, () => {
+    test('case 0', () => {
+        expect(nodeIsEmpty(undefined)).toBeTruthy()
+    });
+    test('case 1', () => {
+        expect(nodeIsEmpty({ include: true, values: [] })).toBeTruthy()
+    });
+    test('case 2', () => {
+        expect(nodeIsEmpty({ include: true, values: [1,3] }, 2)).toBeTruthy()
+    });
+    test('case 3', () => {
+        expect(nodeIsEmpty({ include: true, values: [1,3] }, 3)).toBeFalsy()
+    });
+    test('case 4', () => {
+        expect(nodeIsEmpty({ include: false, values: [1,3] }, 2)).toBeFalsy()
+    });
+    test('case 5', () => {
+        expect(nodeIsEmpty({ include: false, values: [1,3] }, 3)).toBeTruthy()
+    });
+});
+
+describe('testing anyValueIsEmpty: any value is empty if it is either undefined, null or empty string ', () => {
+    test('case 0', () => {
+        const nodes: Array<any> = [1, undefined]
+        expect(anyValueIsEmpty(...nodes)).toBeTruthy()
+    });
+    test('case 1', () => {
+        const nodes: Array<any> = [null, 1]
+        expect(anyValueIsEmpty(...nodes)).toBeTruthy()
+    });
+    test('case 2', () => {
+        const nodes: Array<any> = [1, '']
+        expect(anyValueIsEmpty(...nodes)).toBeTruthy()
+    });
+    test('case 3', () => {
+        const nodes: Array<any> = [1, 'qwe']
+        expect(anyValueIsEmpty(...nodes)).toBeFalsy()
+    });
+});
+
+
