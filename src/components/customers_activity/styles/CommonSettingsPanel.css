@@ -38,7 +38,7 @@
 
 .CustomersActivityToolbarCommands {
     justify-content: flex-end;
-    padding-right: 2%;
+    padding-right: 12px;
     flex: 1;
 }
 
@@ -50,7 +50,8 @@
 .CustomersActivityViewStateSelector,
 .CustomersActivityToolbarSeparator,
 .CustomersActivityAdvancedSettingsButton,
-.CustomersActivityHelpButton {
+.CustomersActivityHelpButton,
+.CustomersActivityGoHomeButton {
     margin-top: 7px;
     margin-bottom: 7px;
 }

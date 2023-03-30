@@ -9,7 +9,7 @@ interface Props {
     icon: string
     disabled: boolean
     render: ((button: any) => any) | undefined
-    onClick: (e: any) => void
+    onClick: ((e: any) => void) | undefined
     hint: string
     id: string
 }
@@ -31,6 +31,7 @@ Button.defaultProps = {
     stylingMode: 'outlined',
     focusStateEnabled: false,
     render: undefined,
+    onClick: undefined,
     hint: '',
     id: '',
 }

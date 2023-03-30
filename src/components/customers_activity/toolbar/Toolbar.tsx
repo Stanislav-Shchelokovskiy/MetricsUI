@@ -9,6 +9,7 @@ import AdvancedSettingButton from './AdvancedSettingButton'
 import HelpButton from '../../common/components/help/HelpButton'
 import { fetchHelp } from '../network_resource_fetcher/FetchHelp'
 import MenuButton from './MenuButton'
+import GoHomeButton from '../../common/components/HomeButton'
 
 interface Props {
     showHideMenu: () => void
@@ -65,5 +66,7 @@ const ToolbarCommands = React.memo(() => {
             state_salt={state_salt} />
         <div className='CustomersActivityToolbarSeparator'></div>
         <DownloadButton />
+        <div className='CustomersActivityToolbarSeparator'></div>
+        <GoHomeButton className='CustomersActivityGoHomeButton' />
     </div>
 })
