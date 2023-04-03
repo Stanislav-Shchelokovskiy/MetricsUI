@@ -40,7 +40,7 @@ export function getSetDataFields() {
     return Object.getOwnPropertyNames(getAliasedSet(DEFAULT_SET)).map(x => {
         return {
             dataField: x,
-            filterOperations: ['<=', '=', '>', 'in', 'notin', 'between', 'notbetween']
+            filterOperations: ['<=', '=', '!=', '>', 'in', 'notin', 'between', 'notbetween']
         }
     })
 }

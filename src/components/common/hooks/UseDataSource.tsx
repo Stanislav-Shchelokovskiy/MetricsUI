@@ -13,7 +13,8 @@ export default function useDataSource<DataSourceT>(
     dataSource: Array<DataSourceT>,
     fetchDataSource: ((...args: any) => Promise<FetchResult<Array<DataSourceT>>>) | undefined,
     fetchArgs: Array<any>,
-    onDataSourceFetch?: (allValidValues: Array<DataSourceT> | Array<keyof DataSourceT>, dataSource: Array<DataSourceT>) => void
+    onDataSourceFetch?: (allValidValues: Array<DataSourceT> | Array<keyof DataSourceT>, dataSource: Array<DataSourceT>) => void,
+    processFetchedDataSource: (dataSource: Array<DataSourceT>) => Array<DataSourceT> = defaultProcessFetchedDataSource
 ) {
     const [ds, setDataSource] = useState<Array<DataSourceT>>(dataSource)
     useEffect(() => {
@@ -21,7 +22,7 @@ export default function useDataSource<DataSourceT>(
             (async () => {
                 const fetchResult: FetchResult<Array<DataSourceT>> = await fetchDataSource(...fetchArgs)
                 if (fetchResult.success) {
-                    const ds = fetchResult.data
+                    const ds = processFetchedDataSource(fetchResult.data)
                     setDataSource(ds)
                     onDataSourceFetch?.(ds, ds)
                 }
@@ -29,4 +30,8 @@ export default function useDataSource<DataSourceT>(
         }
     }, [...fetchArgs])
     return ds
+}
+
+function defaultProcessFetchedDataSource(dataSource: Array<any>): Array<any> {
+    return dataSource
 }

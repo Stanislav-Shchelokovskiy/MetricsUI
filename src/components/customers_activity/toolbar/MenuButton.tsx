@@ -106,6 +106,9 @@ const FilterLabel = React.memo(() => {
         <CustomOperation
             name='='
             caption='IS' />
+        <CustomOperation
+            name='!='
+            caption='IS NOT' />
     </FilterBuilder>
 })
 

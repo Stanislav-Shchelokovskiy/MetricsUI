@@ -31,12 +31,24 @@ interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     applyValueMode: 'instantly' | 'useButtons'
     customButtons: Array<ButtonOptions> | undefined
     defaultValue: Array<ValueExprT> | undefined
+    displayNullItem: boolean
+}
+
+const IS_NULL_FILTER_VALUE = {
+    value: '#_NULL_FILTER_VALUE_#',
+    displayValue: 'NULL'
 }
 
 
 export default function MultiOptionSelector<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: Props<DataSourceT, ValueExprT>) {
+    const addNullItemToDS = useCallback((ds: any): Array<any> => {
+        if (!props.displayNullItem || ds === undefined || (ds as Array<any>).length === 0)
+            return ds
+        return [{ [props.valueExpr]: IS_NULL_FILTER_VALUE.value, [props.displayExpr]: IS_NULL_FILTER_VALUE.displayValue }, ...ds]
+    }, [])
+
     const validateSelectedValues = useValidate<DataSourceT, ValueExprT>(props.value, props.onValueChange, props.valueExpr)
-    const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, validateSelectedValues)
+    const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, validateSelectedValues, addNullItemToDS)
 
     if (dataSource.length > 0) {
         return (
@@ -104,7 +116,7 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
     const ds = new DataSource({
         store: props.dataStore || props.dataSource,
         paginate: true,
-        pageSize: pageSize
+        pageSize: pageSize,
     });
 
     const includeButtonOptions = useMemo(() => getIncludeButtonOptions(
@@ -212,7 +224,8 @@ const defaultProps = {
     openOnFieldClick: true,
     applyValueMode: 'useButtons',
     customButtons: undefined,
-    defaultValue: undefined
+    defaultValue: undefined,
+    displayNullItem: true,
 }
 
 MultiOptionSelector.defaultProps = defaultProps
