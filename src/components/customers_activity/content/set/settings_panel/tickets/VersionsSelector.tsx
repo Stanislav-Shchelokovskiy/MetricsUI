@@ -13,7 +13,7 @@ export default function VersionsSelector({ setTitle }: { setTitle: string }) {
 
     return <MultiOptionSelector<Version, string>
         className='CustomersActivity_VersionsSelector'
-        displayExpr='id'
+        displayExpr='name'
         valueExpr='id'
         placeholder='Select versions'
         label='Versions'

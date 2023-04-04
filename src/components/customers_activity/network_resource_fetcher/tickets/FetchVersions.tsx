@@ -3,6 +3,7 @@ import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
 
 export interface Version {
     id: string
+    name: string
 }
 
 export async function fetchVersions(): Promise<FetchResult<Array<Version>>> {
