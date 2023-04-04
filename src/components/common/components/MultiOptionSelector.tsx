@@ -11,7 +11,7 @@ import { LoadOptions } from 'devextreme/data'
 import useServerValidate, { ValidateProps, useValidate } from '../hooks/UseValidate'
 import { getIncludeButtonOptions, getClearButtonOptions, ButtonOptions } from './Button'
 
-interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
+export interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     className: string
     displayExpr: string
     valueExpr: string
@@ -31,7 +31,7 @@ interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     applyValueMode: 'instantly' | 'useButtons'
     customButtons: Array<ButtonOptions> | undefined
     defaultValue: Array<ValueExprT> | undefined
-    displayNullItem: boolean
+    showNullItem: boolean
 }
 
 const IS_NULL_FILTER_VALUE = {
@@ -42,9 +42,9 @@ const IS_NULL_FILTER_VALUE = {
 
 export default function MultiOptionSelector<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: Props<DataSourceT, ValueExprT>) {
     const addNullItemToDS = useCallback((ds: any): Array<any> => {
-        if (!props.displayNullItem || ds === undefined || (ds as Array<any>).length === 0)
-            return ds
-        return [{ [props.valueExpr]: IS_NULL_FILTER_VALUE.value, [props.displayExpr]: IS_NULL_FILTER_VALUE.displayValue }, ...ds]
+        if (props.showNullItem && ds !== undefined && (ds as Array<any>).length > 0)
+            (ds as Array<any>).unshift({ [props.valueExpr]: IS_NULL_FILTER_VALUE.value, [props.displayExpr]: IS_NULL_FILTER_VALUE.displayValue })
+        return ds
     }, [])
 
     const validateSelectedValues = useValidate<DataSourceT, ValueExprT>(props.value, props.onValueChange, props.valueExpr)
@@ -225,7 +225,7 @@ const defaultProps = {
     applyValueMode: 'useButtons',
     customButtons: undefined,
     defaultValue: undefined,
-    displayNullItem: true,
+    showNullItem: false,
 }
 
 MultiOptionSelector.defaultProps = defaultProps

@@ -61,5 +61,6 @@ export function EmpSelector(props: EmpSelectorProps) {
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
         container='#CustomersActivity_Sets_ScrollView_div'
+        showNullItem={true}
     />
 }

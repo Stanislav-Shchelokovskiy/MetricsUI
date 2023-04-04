@@ -32,7 +32,6 @@ export default function TribesSelector() {
         defaultValue={defaultValue}
         onValueChange={changeSelectedTribesAction}
         showSelectionControls={true}
-        displayNullItem={false}
     />
 }
 

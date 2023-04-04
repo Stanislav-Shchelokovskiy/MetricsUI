@@ -16,6 +16,7 @@ export default function BugsSelectorWrapper({ Wrapped, setTitle, ...wrappedProps
         {...wrappedProps}
         setTitle={setTitle}
         hideIfDataSourceEmpty={true}
+        showNullItem={true}
     />
 }
 

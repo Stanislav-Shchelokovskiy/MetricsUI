@@ -27,5 +27,6 @@ export default function CustomersGroupsSelector({ setTitle }: { setTitle: string
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
         container='#CustomersActivity_Sets_ScrollView_div'
+        showNullItem={true}
     />
 }
