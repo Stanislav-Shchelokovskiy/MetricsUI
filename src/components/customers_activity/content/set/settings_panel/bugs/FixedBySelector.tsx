@@ -7,6 +7,7 @@ import BugsSelectorWrapper from './BugsSelectors'
 
 export default function FixedBySelector({ setTitle }: { setTitle: string }) {
     const valueSelector = useCallback((x: Set | undefined) => x?.fixedBy, [])
+    const tribesSelector = useCallback((x: Set | undefined) => x?.tribes, [])
     return <BugsSelectorWrapper
         Wrapped={EmpSelector}
         setTitle={setTitle}
@@ -16,5 +17,6 @@ export default function FixedBySelector({ setTitle }: { setTitle: string }) {
         valueSelector={valueSelector}
         changeSelection={changeFixedBy}
         changeInclude={changeFixedByInclude}
+        tribesSelector={tribesSelector}
     />
 }

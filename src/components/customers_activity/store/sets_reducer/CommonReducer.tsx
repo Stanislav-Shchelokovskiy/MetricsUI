@@ -6,6 +6,8 @@ import {
     CHANGE_PERCENTILE_INCLUDE,
     CHANGE_TRIBES,
     CHANGE_TRIBES_INCLUDE,
+    CHANGE_TENTS,
+    CHANGE_TENTS_INCLUDE
 } from '../actions/SetCommon'
 
 
@@ -46,6 +48,22 @@ export function commonReducer(sets: Array<Set>, action: AnyAction): Array<Set> {
                 return {
                     ...x,
                     tribes: updateInclude(x.tribes, action.payload.data)
+                }
+            })
+
+
+        case CHANGE_TENTS:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    tents: updateValues(x.tents, action.payload.data)
+                }
+            })
+        case CHANGE_TENTS_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    tents: updateInclude(x.tents, action.payload.data)
                 }
             })
 

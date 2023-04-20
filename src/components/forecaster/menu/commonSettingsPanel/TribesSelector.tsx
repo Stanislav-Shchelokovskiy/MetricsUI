@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { Tribe } from '../../../common/Interfaces'
-import { fetchTribes } from '../../../common/network_resource_fetcher/FetchAvailableTribes'
+import { fetchTribes } from '../../../common/network_resource_fetcher/FetchTribes'
 import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { changeSelectedTribes } from '../../store/Actions'
 import { ForecasterStore, useForecasterSelector } from '../../store/Store'

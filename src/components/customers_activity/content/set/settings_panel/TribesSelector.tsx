@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Tribe } from '../../../../common/Interfaces'
 import { CustomersActivityStore } from '../../../store/Store'
-import { fetchTribes } from '../../../../common/network_resource_fetcher/FetchAvailableTribes'
+import { fetchTribes } from '../../../../common/network_resource_fetcher/FetchTribes'
 import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
 import { changeTribes, changeTribesInclude } from '../../../store/actions/SetCommon'
 

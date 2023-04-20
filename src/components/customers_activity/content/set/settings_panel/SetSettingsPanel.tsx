@@ -1,6 +1,7 @@
 import React from 'react'
 import PercentileSelector from './PercentileSelector'
 import TribesSelector from './TribesSelector'
+import TentsSelector from './TentsSelector'
 import PlatformsSelector from './platforms_products/PlatformsSelector'
 import ProductsSelector from './platforms_products/ProductsSelector'
 import TicketsTagsSelector from './tickets/TicketsTagsSelector'
@@ -11,6 +12,7 @@ import CustomersTypesSelector from './customers/CustomersTypesSelector'
 import CustomersConversionsTypesSelector from './customers/CustomersConversionsTypesSelector'
 import EmpPositionsSelector from './employees/EmpPositionsSelector'
 import EmpTribesSelector from './employees/EmpTribesSelector'
+import EmpTentsSelector from './employees/EmpTentsSelector'
 import EmployeesSelector from './employees/EmployeesSelector'
 import ReplyTypesSelector from './cat/ReplyTypesSelector'
 import ComponentsSelector from './cat/ComponentsSelector'
@@ -38,6 +40,7 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <PrivacySelector setTitle={setTitle} />
             <TicketsTypesSelector setTitle={setTitle} />
             <TribesSelector setTitle={setTitle} />
+            <TentsSelector setTitle={setTitle} />
             <PlatformsSelector setTitle={setTitle} />
             <ProductsSelector setTitle={setTitle} />
             <VersionsSelector setTitle={setTitle} />
@@ -58,6 +61,7 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
             <CustomersConversionsTypesSelector setTitle={setTitle} />
             <EmpPositionsSelector setTitle={setTitle} />
             <EmpTribesSelector setTitle={setTitle} />
+            <EmpTentsSelector setTitle={setTitle} />
             <EmployeesSelector setTitle={setTitle} />
             <AssignedToSelector setTitle={setTitle} />
             <ReplyTypesSelector setTitle={setTitle} />

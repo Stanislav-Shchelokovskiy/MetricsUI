@@ -8,8 +8,8 @@ export interface Platform {
     platform_name: string
 }
 
-export async function fetchPlatforms(tribes: FilterParametersNode<string>): Promise<FetchResult<Array<Platform>>> {
-    if (allNodesAreConsideredEmpty(tribes)) {
+export async function fetchPlatforms(tents: FilterParametersNode<string>): Promise<FetchResult<Array<Platform>>> {
+    if (allNodesAreConsideredEmpty(tents)) {
         return {
             success: true,
             data: Array<Platform>()
@@ -19,7 +19,7 @@ export async function fetchPlatforms(tribes: FilterParametersNode<string>): Prom
         const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_platforms`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ tribes: tribes, }),
+            body: JSON.stringify({ tents: tents, }),
         }).then(response => response.json())
         return {
             success: true,

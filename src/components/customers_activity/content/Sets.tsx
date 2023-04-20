@@ -17,7 +17,6 @@ export default function Sets() {
             <div id='CustomersActivity_Sets_ScrollView_div'>
                 {sets?.map((set, index) => <Set setTitle={set} key={`${set}${index}`} />)}
             </div>
-
         </ScrollView >
     )
 }

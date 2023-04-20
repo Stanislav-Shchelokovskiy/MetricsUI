@@ -7,8 +7,8 @@ import { fetchPlatforms, Platform } from '../../../../network_resource_fetcher/p
 
 
 export default function PlatformsSelector({ setTitle }: { setTitle: string }) {
-    const tribesNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tribes)
-    const fetchArgs = [tribesNode]
+    const tentsNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tents)
+    const fetchArgs = [tentsNode]
 
     const value = useSelector((store: CustomersActivityStore) =>store.customersActivitySets.find(x => x.title === setTitle)?.platforms)
     const onValueChange = (allValues: Array<Platform>, values: Array<string>) => changePlatforms({ stateId: setTitle, data: values })

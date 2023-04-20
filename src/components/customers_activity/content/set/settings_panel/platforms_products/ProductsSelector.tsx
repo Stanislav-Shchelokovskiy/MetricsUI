@@ -7,8 +7,8 @@ import { fetchProducts, Product } from '../../../../network_resource_fetcher/pla
 
 
 export default function ProductsSelector({ setTitle }: { setTitle: string }) {
-    const tribesNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tribes)
-    const fetchArgs = [tribesNode]
+    const tentsNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tents)
+    const fetchArgs = [tentsNode]
 
     const value = useSelector((store: CustomersActivityStore) =>store.customersActivitySets.find(x => x.title === setTitle)?.products)
     const onValueChange = (allValues: Array<Product>, values: Array<string>) => changeProducts({ stateId: setTitle, data: values })

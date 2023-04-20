@@ -4,14 +4,15 @@ import { FilterParametersNode } from '../../store/sets_reducer/Interfaces'
 
 
 export interface Employee {
-    crmid: string
+    scid: string
     name: string
 }
 
 
 export async function fetchEmployees(
     positions: FilterParametersNode<string>,
-    tribes: FilterParametersNode<string>
+    tribes: FilterParametersNode<string>,
+    tents: FilterParametersNode<string>,
 ): Promise<FetchResult<Array<Employee>>> {
     try {
         const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_employees`,
@@ -21,6 +22,7 @@ export async function fetchEmployees(
                 body: JSON.stringify({
                     positions: positions,
                     tribes: tribes,
+                    tents: tents,
                 }),
             }).then(response => response.json())
         return {

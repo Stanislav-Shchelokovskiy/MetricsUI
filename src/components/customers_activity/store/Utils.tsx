@@ -1,4 +1,5 @@
 import { FilterParametersNode } from './sets_reducer/Interfaces'
+import { getDefaultFilterParametersNode } from './sets_reducer/Defaults'
 
 export function allNodesAreConsideredEmpty<T>(...nodes: Array<FilterParametersNode<T> | undefined>): boolean {
     for (const node of nodes)
@@ -42,4 +43,8 @@ export function bugIsNotSelected(node: FilterParametersNode<number> | undefined)
 export function closedIsNotSelected(node: FilterParametersNode<string> | undefined): boolean {
     const CLOSED = 'Closed'
     return nodeIsEmpty(node, CLOSED)
+}
+
+export function paramOrDefault<T>(param: FilterParametersNode<T> | undefined): FilterParametersNode<T> | Array<T> {
+    return param || ((getDefaultFilterParametersNode<T>([]) as unknown) as Array<T>)
 }

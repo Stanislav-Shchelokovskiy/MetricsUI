@@ -33,6 +33,22 @@ export const changeEmpTribesInclude = (payload: Payload<string, boolean>): Paylo
     }
 }
 
+export const CHANGE_EMP_TENTS = 'customers_activity/change_emp_tents'
+export const changeEmpTents = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_EMP_TENTS,
+        payload: payload
+    }
+}
+
+export const CHANGE_EMP_TENTS_INCLUDE = 'customers_activity/change_emp_tents_include'
+export const changeEmpTentsInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_EMP_TENTS_INCLUDE,
+        payload: payload
+    }
+}
+
 export const CHANGE_EMPLOYEES = 'customers_activity/change_employees'
 export const changeEmployees = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {

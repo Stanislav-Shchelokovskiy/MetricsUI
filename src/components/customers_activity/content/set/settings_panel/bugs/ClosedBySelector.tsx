@@ -7,6 +7,7 @@ import { ClosedBugsSelectorWrapper } from './BugsSelectors'
 
 export default function ClosedBySelector({ setTitle }: { setTitle: string }) {
     const valueSelector = useCallback((x: Set | undefined) => x?.closedBy, [])
+    const tribesSelector = useCallback((x: Set | undefined) => x?.tribes, [])
     return <ClosedBugsSelectorWrapper
         Wrapped={EmpSelector}
         setTitle={setTitle}
@@ -16,5 +17,6 @@ export default function ClosedBySelector({ setTitle }: { setTitle: string }) {
         valueSelector={valueSelector}
         changeSelection={changeClosedBy}
         changeInclude={changeClosedByInclude}
+        tribesSelector={tribesSelector}
     />
 }

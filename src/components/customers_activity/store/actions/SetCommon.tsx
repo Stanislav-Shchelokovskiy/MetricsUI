@@ -32,3 +32,19 @@ export const changeTribesInclude = (payload: Payload<string, boolean>): PayloadA
         payload: payload
     }
 }
+
+export const CHANGE_TENTS = 'customers_activity/change_tents'
+export const changeTents = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
+    return {
+        type: CHANGE_TENTS,
+        payload: payload
+    }
+}
+
+export const CHANGE_TENTS_INCLUDE = 'customers_activity/change_tents_include'
+export const changeTentsInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
+    return {
+        type: CHANGE_TENTS_INCLUDE,
+        payload: payload
+    }
+}

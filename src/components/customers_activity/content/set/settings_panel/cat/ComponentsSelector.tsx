@@ -4,13 +4,12 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeComponents, changeComponentsInclude } from '../../../../store/actions/CAT'
 import { fetchComponents, Component } from '../../../../network_resource_fetcher/cat/FetchComponents'
-
+import { paramOrDefault } from '../../../../store/Utils'
 
 export default function ComponentsSelector({ setTitle }: { setTitle: string }) {
 
-    const tribesNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tribes)
-    const fetchArgs = [tribesNode]
-
+    const tentsNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tents)
+    const fetchArgs = [paramOrDefault(tentsNode)]
     const value = useSelector((store: CustomersActivityStore) =>store.customersActivitySets.find(x => x.title === setTitle)?.components)
 
     const onValueChange = (allValues: Array<Component>, values: Array<string>) => changeComponents({ stateId: setTitle, data: values })
