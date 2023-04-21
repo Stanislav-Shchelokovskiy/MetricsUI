@@ -4,13 +4,14 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changePlatforms, changePlatformsInclude } from '../../../../store/actions/PlatformsProducts'
 import { fetchPlatforms, Platform } from '../../../../network_resource_fetcher/platforms_products/FetchPlatforms'
+import { paramOrDefault } from '../../../../store/Utils'
 
 
 export default function PlatformsSelector({ setTitle }: { setTitle: string }) {
     const tentsNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tents)
-    const fetchArgs = [tentsNode]
+    const fetchArgs = [paramOrDefault(tentsNode)]
 
-    const value = useSelector((store: CustomersActivityStore) =>store.customersActivitySets.find(x => x.title === setTitle)?.platforms)
+    const value = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.platforms)
     const onValueChange = (allValues: Array<Platform>, values: Array<string>) => changePlatforms({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changePlatformsInclude({ stateId: setTitle, data: include })
 
