@@ -14,6 +14,7 @@ import {
     REMOVE_SET,
     CHANGE_SET_TITLE,
     CHANGE_BASELINE_ALIGNED_MODE,
+    HIDE_LEGENDS,
 } from './actions/Common'
 
 
@@ -24,6 +25,7 @@ export interface CustomersActivityState {
     comparisonMethod: string
     baselineAlignedModeEnabled: boolean
     sets: Array<string>
+    hiddenLegends: Array<string>
 }
 
 
@@ -33,7 +35,8 @@ const INITIAL_CUSTOMERS_ACTIVITY_STATE: CustomersActivityState = {
     metric: getValidMetricOrDefault(undefined),
     comparisonMethod: getValidComparisonMethodOrDefault(undefined),
     baselineAlignedModeEnabled: false,
-    sets: [getDefaultTitle()]
+    sets: [getDefaultTitle()],
+    hiddenLegends: Array<string>()
 }
 
 
@@ -71,24 +74,34 @@ export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL
             }
 
         case REMOVE_SET:
+            const remove_selector = (x: string) => x !== action.payload
             return {
                 ...state,
-                sets: state.sets.length < 2 ? [getDefaultTitle()] : state.sets.filter(set => set !== action.payload)
+                sets: state.sets.length < 2 ? [getDefaultTitle()] : state.sets.filter(remove_selector),
+                hiddenLegends: state.hiddenLegends.filter(remove_selector)
             }
 
         case APPLY_STATE:
             return initMissingCustomersActivityProperties(action.payload.customersActivity)
 
         case CHANGE_SET_TITLE:
+            const replace_selector = (x: string) => x !== action.payload.stateId ? x : action.payload.data
             return {
                 ...state,
-                sets: state.sets.map(set => set !== action.payload.stateId ? set : action.payload.data)
+                sets: state.sets.map(replace_selector),
+                hiddenLegends: state.hiddenLegends.map(replace_selector)
             }
 
         case CHANGE_BASELINE_ALIGNED_MODE:
             return {
                 ...state,
                 baselineAlignedModeEnabled: action.payload
+            }
+
+        case HIDE_LEGENDS:
+            return {
+                ...state,
+                hiddenLegends: action.payload
             }
 
         default:

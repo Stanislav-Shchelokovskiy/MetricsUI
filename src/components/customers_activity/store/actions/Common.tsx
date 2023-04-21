@@ -64,3 +64,11 @@ export const changeBaselineAlignedMode = (payload: boolean): PayloadAction<boole
         payload: payload
     }
 }
+
+export const HIDE_LEGENDS = 'customers_activity/hide_legends'
+export const hideLegends = (payload: Array<string>): PayloadAction<Array<string>> => {
+    return {
+        type: HIDE_LEGENDS,
+        payload: payload
+    }
+}

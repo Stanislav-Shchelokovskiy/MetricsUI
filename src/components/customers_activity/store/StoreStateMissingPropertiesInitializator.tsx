@@ -9,6 +9,8 @@ export function initMissingCustomersActivityProperties(customersActivity: Custom
     customersActivity.metric = getValidMetricOrDefault(customersActivity.metric)
     if (customersActivity.baselineAlignedModeEnabled === undefined)
         customersActivity.baselineAlignedModeEnabled = false
+    if (customersActivity.hiddenLegends === undefined)
+        customersActivity.hiddenLegends = []
     return customersActivity
 }
 

@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import Plot from 'react-plotly.js'
 import { Data as GraphData } from 'plotly.js'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch, useStore } from 'react-redux'
 import { CustomersActivityStore } from './store/Store'
+import { hideLegends } from './store/actions/Common'
 import { Token } from '../common/Interfaces'
 import { toFriendlyTitle } from './content/set/header/Title'
 import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './common_settings_panel/ComparisonMethodSelector'
@@ -105,6 +106,9 @@ export default function ComparisonGraph() {
     )
 }
 
+interface LegendClickObject {
+    data: Array<GraphData>
+}
 const GraphPlot = React.memo(
     function GraphPlotMemoized(
         {
@@ -117,11 +121,23 @@ const GraphPlot = React.memo(
             comparisonMethod: string
         }
     ) {
+        const dispatch = useDispatch()
+        const onLegendClick = useCallback(({ data }: LegendClickObject) => {
+            const timerId = setTimeout(() => {
+                const hiddenLegends = (data.filter(legend => (legend as any).visible === 'legendonly').map(legend => legend.hovertext) as Array<string>)
+                dispatch(hideLegends(hiddenLegends))
+                clearTimeout(timerId)
+            }, 500)
+            return true
+        }, [])
+
+        const store = useStore<CustomersActivityStore>().getState()
+        const hiddenLegends = store.customersActivity.hiddenLegends
         return (
             <Plot
                 divId='CustomersActivity_ComparisonGraph'
                 className='CustomersActivity_ComparisonGraph'
-                data={getPlots(aggs.setAggregates, metric, comparisonMethod)}
+                data={getPlots(aggs.setAggregates, metric, comparisonMethod, hiddenLegends)}
                 useResizeHandler={true}
                 layout={{
                     margin: { t: 10, l: 30, r: 10, b: 30 },
@@ -132,12 +148,13 @@ const GraphPlot = React.memo(
                     plot_bgcolor: 'rgba(0,0,0,0)',
                     autosize: true,
                 }}
-                config={{ displayModeBar: false, doubleClick: 'autosize', responsive: true }} />
+                config={{ displayModeBar: false, doubleClick: 'autosize', responsive: true }}
+                onLegendClick={onLegendClick} />
         )
     }
 )
 
-function getPlots(setAggregates: Array<SetAggregates>, metric: string, comparisonMethod: string): Array<GraphData> {
+function getPlots(setAggregates: Array<SetAggregates>, metric: string, comparisonMethod: string, hiddenLegends: Array<string>): Array<GraphData> {
     if (setAggregates.length > 0) {
         const data: Array<GraphData> = []
         for (const set of setAggregates) {
@@ -149,27 +166,27 @@ function getPlots(setAggregates: Array<SetAggregates>, metric: string, compariso
 
     function getPlot(set: SetAggregates, metric: string): GraphData {
         if (isAbsoluteBarSelected(comparisonMethod)) {
-            return createAbsoluteBar(set, metric)
+            return createAbsoluteBar(set, metric, hiddenLegends)
         }
         if (isAbsoluteAreaSelected(comparisonMethod)) {
-            return createAbsoluteArea(set, metric)
+            return createAbsoluteArea(set, metric, hiddenLegends)
         }
-        return createNormalizedStackedArea(set, metric)
+        return createNormalizedStackedArea(set, metric, hiddenLegends)
     }
 }
 
 
-function createAbsoluteBar(set: SetAggregates, metric: string): GraphData {
+function createAbsoluteBar(set: SetAggregates, metric: string, hiddenLegends: Array<string>): GraphData {
     return {
-        ...getCommonGraphSettings(set, metric),
+        ...getCommonGraphSettings(set, metric, hiddenLegends),
         ...getAbsoluteGraphSettings(set, metric),
         type: 'bar',
     }
 }
 
-function createAbsoluteArea(set: SetAggregates, metric: string): GraphData {
+function createAbsoluteArea(set: SetAggregates, metric: string, hiddenLegends: Array<string>): GraphData {
     return {
-        ...getCommonGraphSettings(set, metric),
+        ...getCommonGraphSettings(set, metric, hiddenLegends),
         ...getAbsoluteGraphSettings(set, metric),
         type: 'scatter',
         fill: 'tozeroy',
@@ -179,9 +196,9 @@ function createAbsoluteArea(set: SetAggregates, metric: string): GraphData {
 }
 
 //NormalizedStackedAreaChart
-function createNormalizedStackedArea(set: SetAggregates, metric: string): GraphData {
+function createNormalizedStackedArea(set: SetAggregates, metric: string, hiddenLegends: Array<string>): GraphData {
     return {
-        ...getCommonGraphSettings(set, metric),
+        ...getCommonGraphSettings(set, metric, hiddenLegends),
         type: 'scatter',
         hovertemplate: `<b>${set.name}</b><br>Period: %{x}<br>Value: %{y}%<br><extra></extra>`,
         connectgaps: true,
@@ -196,7 +213,7 @@ function getAbsoluteGraphSettings(set: SetAggregates, metric: string) {
     }
 }
 
-function getCommonGraphSettings(set: SetAggregates, metric: string) {
+function getCommonGraphSettings(set: SetAggregates, metric: string, hiddenLegends: Array<string>) {
     return {
         name: set.name,
         x: set.aggregates.periods,
@@ -204,6 +221,7 @@ function getCommonGraphSettings(set: SetAggregates, metric: string) {
             isIterationsMetricSelected(metric) ? set.aggregates.iterations :
                 isIterationsToTicketsMetricSelected(metric) ? set.aggregates.iterations_to_tickets : set.aggregates.people,
         opacity: 0.6,
-        hovertext: set.name
+        hovertext: set.name,
+        visible: (hiddenLegends.includes(set.name) ? 'legendonly' : true) as 'legendonly' | boolean | undefined
     }
 }
