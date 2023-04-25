@@ -10,7 +10,8 @@ export type Period = [string, string]
 
 export async function fetchPeriod(): Promise<FetchResult<Period>> {
     try {
-        const period = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_period`).then(response => response.json()) as PeriodRaw
+        const period_raw = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_period`).then(response => response.json())
+        const period = period_raw[0] as PeriodRaw
         return {
             success: true,
             data: [period.period_start, period.period_end]
