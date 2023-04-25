@@ -2,10 +2,6 @@ import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 import { anyValueIsEmpty } from '../store/Utils'
 
-interface Period {
-    period: string
-}
-
 export async function fetchPeriodsArray(
     groupByPeriod: string,
     rangeStart: string,
@@ -24,10 +20,10 @@ export async function fetchPeriodsArray(
             `&format=${groupByPeriod}`
         ).then(response => response.json())
         if (baselineAlignedModeEnabled)
-            periods = (periods as Array<Period>).map((x, index) => (index + 1).toString())
+            periods = (periods as Array<string>).map((x, index) => (index + 1).toString())
         return {
             success: true,
-            data: (periods as Array<Period>).map(x => x.period)
+            data: periods as Array<string>
         }
     } catch (error) {
         console.log(error)
