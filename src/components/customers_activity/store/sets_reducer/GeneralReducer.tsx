@@ -1,6 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit'
 import { APPLY_STATE } from '../../../common/store/state/Actions'
-import { initMissingCustomersActivitySetsProperties } from '../StoreStateMissingPropertiesInitializator'
+import { validateCustomersActivitySetsProperties } from '../StoreStateValidator'
 import { INITIAL_SETS, DEFAULT_SET } from './Defaults'
 import { updateSetState } from './Utils'
 import { Set } from './Interfaces'
@@ -14,7 +14,7 @@ export function generalReducer(sets: Array<Set>, action: AnyAction): Array<Set> 
     switch (action.type) {
 
         case APPLY_STATE:
-            return initMissingCustomersActivitySetsProperties(action.payload.customersActivitySets)
+            return validateCustomersActivitySetsProperties(action.payload.customersActivitySets)
 
 
         case ADD_SET:

@@ -3,8 +3,8 @@ import { loadState, saveState } from '../../common/LocalStorage'
 import { CustomersActivityReducer } from './CustomersActivityReducer'
 import { SetsReducer } from './SetsReducer'
 import { ViewStateReducer } from '../../common/store/state/Reducers'
-import { initMissingCustomersActivityProperties } from './StoreStateMissingPropertiesInitializator'
-import { initMissingCustomersActivitySetsProperties } from './StoreStateMissingPropertiesInitializator'
+import { validateCustomersActivityProperties } from './StoreStateValidator'
+import { validateCustomersActivitySetsProperties } from './StoreStateValidator'
 
 
 const currentStateKey = 'current_customers_activity_state_v1'
@@ -22,8 +22,8 @@ export const customersActivityStore = configureStore({
 function loadValidState() {
     const storedState = loadState(currentStateKey)
     if (storedState !== undefined) {
-        initMissingCustomersActivityProperties(storedState.customersActivity)
-        initMissingCustomersActivitySetsProperties(storedState.customersActivitySets)
+        validateCustomersActivityProperties(storedState.customersActivity)
+        validateCustomersActivitySetsProperties(storedState.customersActivitySets)
     }
     return storedState
 }

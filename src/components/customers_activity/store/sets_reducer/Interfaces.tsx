@@ -18,7 +18,7 @@ export interface Set {
     tents: FilterParametersNode<string> | undefined
     platforms: FilterParametersNode<string> | undefined
     products: FilterParametersNode<string> | undefined
-    ticketsTags: FilterParametersNode<number> | undefined
+    ticketsTags: FilterParametersNode<string> | undefined
     ticketsTypes: FilterParametersNode<number> | undefined
     versions: FilterParametersNode<string> | undefined
     fixedIn: FilterParametersNode<string> | undefined

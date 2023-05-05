@@ -35,7 +35,7 @@ export const DEFAULT_SET: Set = {
     tents: getDefaultFilterParametersNode<string>(),
     platforms: getDefaultFilterParametersNode<string>(),
     products: getDefaultFilterParametersNode<string>(),
-    ticketsTags: getDefaultFilterParametersNode<number>(),
+    ticketsTags: getDefaultFilterParametersNode<string>(),
     versions: getDefaultFilterParametersNode<string>(),
     fixedIn: getDefaultFilterParametersNode<string>(),
     fixedBetween: getDefaultFilterParametersNode<string>(),

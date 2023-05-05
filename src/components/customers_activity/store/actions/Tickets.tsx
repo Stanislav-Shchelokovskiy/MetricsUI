@@ -74,7 +74,7 @@ export const changePrivacy = (payload: Payload<string, number | undefined>): Pay
 }
 
 export const CHANGE_TICKETS_TAGS = 'customers_activity/change_tickets_tags'
-export const changeTicketsTags = (payload: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
+export const changeTicketsTags = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
     return {
         type: CHANGE_TICKETS_TAGS,
         payload: payload

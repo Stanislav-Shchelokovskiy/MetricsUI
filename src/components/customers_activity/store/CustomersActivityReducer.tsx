@@ -2,7 +2,7 @@ import { AnyAction } from '@reduxjs/toolkit'
 import { generateNewSetTitle } from './sets_reducer/GeneralReducer'
 import { getDefaultTitle } from './sets_reducer/Defaults'
 import { APPLY_STATE } from '../../common/store/state/Actions'
-import { initMissingCustomersActivityProperties } from './StoreStateMissingPropertiesInitializator'
+import { validateCustomersActivityProperties } from './StoreStateValidator'
 import { getValidComparisonMethodOrDefault } from '../common_settings_panel/ComparisonMethodSelector'
 import { getValidMetricOrDefault } from '../common_settings_panel/MetricSelector'
 import {
@@ -82,7 +82,7 @@ export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL
             }
 
         case APPLY_STATE:
-            return initMissingCustomersActivityProperties(action.payload.customersActivity)
+            return validateCustomersActivityProperties(action.payload.customersActivity)
 
         case CHANGE_SET_TITLE:
             const replace_selector = (x: string) => x !== action.payload.stateId ? x : action.payload.data

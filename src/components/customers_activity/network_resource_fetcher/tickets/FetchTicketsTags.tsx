@@ -2,7 +2,7 @@ import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
 
 export interface TicketsTag {
-    id: number
+    id: string
     name: string
 }
 
