@@ -23,7 +23,7 @@ export function validateCustomersActivitySetsProperties(customersActivitySets: A
             set.ticketsTypes = DEFAULT_SET.ticketsTypes
 
         if (set.ticketsTags !== undefined) {
-            set.ticketsTags.values = set.ticketsTags.values.map(x => isNaN(x as any) ? x : `(${x})`)
+            set.ticketsTags.values = set.ticketsTags.values.map(x => x.toString().includes('(') ? x : `(${x})`)
         }
     }
     return customersActivitySets
