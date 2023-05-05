@@ -22,8 +22,10 @@ export function validateCustomersActivitySetsProperties(customersActivitySets: A
         if (set.ticketsTypes === undefined || set.ticketsTypes.values.length === 0)
             set.ticketsTypes = DEFAULT_SET.ticketsTypes
 
-        if (set.ticketsTags !== undefined)
-            set.ticketsTags.values = set.ticketsTags.values.map(x=>`(${x})`)
+        if (set.ticketsTags !== undefined) {
+            console.log(set.ticketsTags)
+            set.ticketsTags.values = set.ticketsTags.values.map(x => Number.isNaN(x) ? x : `(${x})`)
+        }
     }
     return customersActivitySets
 }
