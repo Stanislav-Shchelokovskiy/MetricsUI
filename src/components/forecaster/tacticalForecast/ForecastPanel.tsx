@@ -53,7 +53,7 @@ export default ForecastPanel
 
 function Metric({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast }) {
     const today = new Date().setUTCHours(23, 0, 0, 0)
-    const idx = tacticalForecast.ds.map(Number).indexOf(today)
+    const idx = tacticalForecast.ts.map(Number).indexOf(today)
     const diff = tacticalForecast.iteration_count[idx] - tacticalForecast.yhat[idx]
     return (
         <div className='TacticalForecastMetric'>
@@ -72,7 +72,7 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
                 data={[
                     {
                         type: 'scatter',
-                        x: tacticalForecast.ds,
+                        x: tacticalForecast.ts,
                         y: tacticalForecast.yhat,
                         name: 'forecast_transparent',
                         showlegend: false,
@@ -82,7 +82,7 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
                     },
                     {
                         type: 'scatter',
-                        x: tacticalForecast.ds,
+                        x: tacticalForecast.ts,
                         y: tacticalForecast.upper_replies,
                         name: 'upper_replies',
                         showlegend: false,
@@ -95,7 +95,7 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
                     },
                     {
                         type: 'scatter',
-                        x: tacticalForecast.ds,
+                        x: tacticalForecast.ts,
                         y: tacticalForecast.iteration_count,
                         name: 'tribe_replies',
                         showlegend: false,
@@ -108,7 +108,7 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
                     },
                     {
                         type: 'scatter',
-                        x: tacticalForecast.ds,
+                        x: tacticalForecast.ts,
                         y: tacticalForecast.yhat_rmse_upper,
                         name: 'forecast_upper',
                         showlegend: false,
@@ -119,7 +119,7 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
                     },
                     {
                         type: 'scatter',
-                        x: tacticalForecast.ds,
+                        x: tacticalForecast.ts,
                         y: tacticalForecast.yhat,
                         name: 'forecast',
                         showlegend: false,
@@ -132,7 +132,7 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
                     },
                     {
                         type: 'scatter',
-                        x: tacticalForecast.ds,
+                        x: tacticalForecast.ts,
                         y: tacticalForecast.yhat_rmse_lower,
                         name: 'forecast_lower',
                         fill: 'tonexty',

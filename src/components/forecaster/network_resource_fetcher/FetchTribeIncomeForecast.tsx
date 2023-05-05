@@ -3,7 +3,7 @@ import FetchResult from '../../common/Interfaces'
 
 
 interface RawIncomeForecast {
-    ds: string
+    ts: string
     y: number
     yhat: number
     yhat_rmse_upper: number
@@ -11,7 +11,7 @@ interface RawIncomeForecast {
 }
 
 export interface IncomeForecast {
-    ds: Array<Date>
+    ts: Array<Date>
     y: Array<number>
     yhat: Array<number>
     yhat_rmse_upper: Array<number>
@@ -23,7 +23,7 @@ export const EMPTY_INCOME_FORECAST: FetchResult<IncomeForecast> =
 {
     success: false,
     data: {
-        ds: Array<Date>(),
+        ts: Array<Date>(),
         y: Array<number>(),
         yhat: Array<number>(),
         yhat_rmse_upper: Array<number>(),
@@ -44,7 +44,7 @@ export const FetchTribeIncomeForecast: (tribeId: string, forecastHorizon: string
                 })
             ).then(response => response.json())
 
-            const ds = tribeIncomeForecast.map(forecast => new Date(forecast.ds))
+            const ts = tribeIncomeForecast.map(forecast => new Date(forecast.ts))
             const y = tribeIncomeForecast.map(forecast => forecast.y)
             const yhat_rmse_upper = tribeIncomeForecast.map(forecast => forecast.yhat_rmse_upper)
             const yhat = tribeIncomeForecast.map(forecast => forecast.yhat)
@@ -53,7 +53,7 @@ export const FetchTribeIncomeForecast: (tribeId: string, forecastHorizon: string
             return {
                 success: true,
                 data: {
-                    ds: ds,
+                    ts: ts,
                     y: y,
                     yhat: yhat,
                     yhat_rmse_upper: yhat_rmse_upper,

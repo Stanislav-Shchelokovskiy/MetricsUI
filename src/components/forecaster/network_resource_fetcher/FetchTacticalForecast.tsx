@@ -3,7 +3,7 @@ import FetchResult from '../../common/Interfaces'
 
 
 interface RawTacticalForecast {
-    ds: string
+    ts: string
     yhat_rmse_upper: number
     yhat: number
     yhat_rmse_lower: number
@@ -12,7 +12,7 @@ interface RawTacticalForecast {
 }
 
 export interface HourlyTacticalForecast {
-    ds: Array<Date>
+    ts: Array<Date>
     yhat_rmse_upper: Array<number>
     yhat: Array<number>
     yhat_rmse_lower: Array<number>
@@ -25,7 +25,7 @@ export const EMPTY_TACTICAL_FORECAST: FetchResult<HourlyTacticalForecast> =
 {
     success: false,
     data: {
-        ds: Array<Date>(),
+        ts: Array<Date>(),
         yhat_rmse_upper: Array<number>(),
         yhat: Array<number>(),
         yhat_rmse_lower: Array<number>(),
@@ -46,7 +46,7 @@ export const FetchTacticalForecast: (incomeType: string, tribeId: string, replyT
                 })
             ).then(response => response.json())
 
-            const ds = rawTacticalForecast.map(forecast => new Date(forecast.ds))
+            const ts = rawTacticalForecast.map(forecast => new Date(forecast.ts))
             const yhat_rmse_upper = rawTacticalForecast.map(forecast => forecast.yhat_rmse_upper)
             const yhat = rawTacticalForecast.map(forecast => forecast.yhat)
             const yhat_rmse_lower = rawTacticalForecast.map(forecast => forecast.yhat_rmse_lower)
@@ -56,7 +56,7 @@ export const FetchTacticalForecast: (incomeType: string, tribeId: string, replyT
             return {
                 success: true,
                 data: {
-                    ds: ds,
+                    ts: ts,
                     yhat_rmse_upper: yhat_rmse_upper,
                     yhat: yhat,
                     yhat_rmse_lower: yhat_rmse_lower,

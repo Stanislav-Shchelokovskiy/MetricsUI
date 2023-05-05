@@ -48,7 +48,7 @@ function getScatters(state: GraphState): Array<GraphData> {
     if (state.incomeForecastLoaded) {
         return [{
             type: 'scatter',
-            x: state.incomeForecast.ds,
+            x: state.incomeForecast.ts,
             y: state.incomeForecast.y,
             name: 'fact',
             line: { shape: 'spline', color: GetColor('fact') },
@@ -57,7 +57,7 @@ function getScatters(state: GraphState): Array<GraphData> {
         },
         {
             type: 'scatter',
-            x: state.incomeForecast.ds,
+            x: state.incomeForecast.ts,
             y: state.incomeForecast.yhat_rmse_upper,
             name: 'Income forecast (upper boundary)',
             showlegend: false,
@@ -67,7 +67,7 @@ function getScatters(state: GraphState): Array<GraphData> {
         },
         {
             type: 'scatter',
-            x: state.incomeForecast.ds,
+            x: state.incomeForecast.ts,
             y: state.incomeForecast.yhat,
             name: 'Income forecast',
             fill: 'tonexty',
@@ -78,7 +78,7 @@ function getScatters(state: GraphState): Array<GraphData> {
         },
         {
             type: 'scatter',
-            x: state.incomeForecast.ds,
+            x: state.incomeForecast.ts,
             y: state.incomeForecast.yhat_rmse_lower,
             name: 'Income forecast (lower boundary)',
             fill: 'tonexty',
