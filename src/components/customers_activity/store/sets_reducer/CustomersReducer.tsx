@@ -32,12 +32,20 @@ export function customersReducer(sets: Array<Set>, action: AnyAction): Array<Set
                 }
             })
         case CHANGE_BASELINE_ALIGNED_MODE:
-            return updateSetState(action.payload.stateId, sets, (x) => {
-                return {
-                    ...x,
-                    customersGroups: updateInclude(x.customersGroups, true)
-                }
-            })
+            if (action.payload)
+                return sets.map((x) => {
+                    return {
+                        ...x,
+                        customersGroups: updateValues(
+                            updateInclude(x.customersGroups, true), 
+                            x.customersGroups !== undefined ? 
+                                x.customersGroups.values.length > 0 ?
+                                    [x.customersGroups.values[0]]
+                                        : x.customersGroups.values 
+                                : undefined)
+                    }
+                })
+            return sets
 
 
         case CHANGE_CUSTOMERS_TYPES:
