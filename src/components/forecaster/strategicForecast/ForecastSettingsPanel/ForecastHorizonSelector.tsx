@@ -8,7 +8,7 @@ import { fetchForecastHorizons } from '../../network_resource_fetcher/FetchForec
 export default function ForecastHorizonSelector({ tribeId, }: { tribeId: string }) {
     const valueSelector = (store: ForecasterStore) => store.strategicForecast.find(x => x.tribeId === tribeId)?.forecastHorizon
     const defaultValueSelector = (values: Array<string>) => values[0]
-    const onValueChange = (value: string) => changeForecastHorizon(tribeId, value)
+    const onValueChange = (value: string | undefined) => changeForecastHorizon(tribeId, value)
 
     return <OptionSelector<string, string>
         className=''

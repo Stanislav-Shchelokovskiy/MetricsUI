@@ -26,7 +26,7 @@ export const ForecasterReducer = (state: ForecasterState = INITIAL_FORECASTER_ST
         case CHANGE_INCOME_TYPE:
             return {
                 ...state,
-                incomeType: action.payload
+                incomeType: action.payload !== undefined ? action.payload : INITIAL_FORECASTER_STATE.incomeType
             }
         case CHANGE_SELECTED_TRIBES:
             return {

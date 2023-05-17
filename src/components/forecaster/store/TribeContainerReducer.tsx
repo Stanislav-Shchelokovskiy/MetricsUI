@@ -68,7 +68,7 @@ export const TacticalForecastReducer = (state: Array<TacticalForecastState> = Ar
             return filterTribes(state, action, INITIAL_TACTICAL_FORECAST_STATE)
 
         case CHANGE_REPLY_TYPE:
-            return updateTribeContainersStates(action.payload.stateId, state, (x) => { return { ...x, replyType: action.payload.data } })
+            return updateTribeContainersStates(action.payload.stateId, state, (x) => { return { ...x, replyType: action.payload.data !== undefined ? action.payload.data : INITIAL_TACTICAL_FORECAST_STATE.replyType } })
         default:
             return state
     }
@@ -81,10 +81,10 @@ export const StrategicForecastReducer = (state: Array<StrategicForecastState> = 
             return filterTribes(state, action, INITIAL_STRATEGIC_FORECAST_STATE)
 
         case CHANGE_FORECAST_HORIZON:
-            return updateTribeContainersStates(action.payload.stateId, state, (x) => { return { ...x, forecastHorizon: action.payload.data } })
+            return updateTribeContainersStates(action.payload.stateId, state, (x) => { return { ...x, forecastHorizon: action.payload.data !== undefined ? action.payload.data : INITIAL_STRATEGIC_FORECAST_STATE.forecastHorizon } })
 
         case CHANGE_TILE:
-            return updateTribeContainersStates(action.payload.stateId, state, (x) => { return { ...x, tile: action.payload.data } })
+            return updateTribeContainersStates(action.payload.stateId, state, (x) => { return { ...x, tile: action.payload.data !== undefined ? action.payload.data : INITIAL_STRATEGIC_FORECAST_STATE.tile } })
 
         case CHANGE_POSITIONS_FILTER:
             return updateTribeContainersStates(action.payload.stateId, state, (x) => { return { ...x, positionsFilter: action.payload.data } })

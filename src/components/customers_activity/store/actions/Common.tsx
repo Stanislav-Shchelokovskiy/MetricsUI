@@ -10,7 +10,7 @@ export const changePeriod = (period: Array<string>): PayloadAction<Array<string>
 }
 
 export const CHANGE_GROUP_BY_PERIOD = 'customers_activity/change_group_by_period'
-export const changeGroupByPeriod = (groupBy: string): PayloadAction<string> => {
+export const changeGroupByPeriod = (groupBy: string | undefined): PayloadAction<string | undefined> => {
     return {
         type: CHANGE_GROUP_BY_PERIOD,
         payload: groupBy
@@ -18,7 +18,7 @@ export const changeGroupByPeriod = (groupBy: string): PayloadAction<string> => {
 }
 
 export const CHANGE_METRIC = 'customers_activity/change_metric'
-export const changeMetric = (metric: string): PayloadAction<string> => {
+export const changeMetric = (metric: string | undefined): PayloadAction<string | undefined> => {
     return {
         type: CHANGE_METRIC,
         payload: metric
@@ -26,7 +26,7 @@ export const changeMetric = (metric: string): PayloadAction<string> => {
 }
 
 export const CHANGE_COMPARISON_METHOD = 'customers_activity/change_comparison_method'
-export const changeComparisonMethod = (comparisonMethod: string): PayloadAction<string> => {
+export const changeComparisonMethod = (comparisonMethod: string | undefined): PayloadAction<string | undefined> => {
     return {
         type: CHANGE_COMPARISON_METHOD,
         payload: comparisonMethod

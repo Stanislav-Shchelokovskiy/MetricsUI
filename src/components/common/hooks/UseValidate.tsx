@@ -9,24 +9,24 @@ export interface ValidateProps {
     fetchValidValuesArgs: Array<any>
 }
 
-export function useValidate<DataSourceT, ValueExprT>(
+export function useMultiValidate<DataSourceT, ValueExprT = (DataSourceT | keyof DataSourceT)>(
     valuesToValidate: Array<ValueExprT> | undefined,
-    dispatchValidValuesAction: (allValidValues: Array<DataSourceT>, validValues: Array<ValueExprT>) => PayloadAction<any>,
+    dispatchValidValuesAction: (allValues: Array<DataSourceT>, validValues: Array<ValueExprT>) => PayloadAction<any>,
     valueExpr: string | undefined = undefined,
     validateValues: (
-        dataSource: Array<DataSourceT> | Array<keyof DataSourceT>,
+        dataSource: Array<DataSourceT>,
         values: Array<ValueExprT>,
         valueExpr: string | undefined
     ) => [Array<ValueExprT>, boolean] = defaultValidateValues
-): (availableValues: Array<DataSourceT> | Array<keyof DataSourceT>, dataSource: Array<DataSourceT> | undefined) => void {
+): (availableValues: Array<DataSourceT>, dataSource: Array<DataSourceT> | undefined) => void {
     const dispatch = useDispatch()
     const emptyArray = useMemo(() => [], [])
     const validateSelectedValues = useCallback((
-        allValidValues: Array<DataSourceT> | Array<keyof DataSourceT>,
+        allValues: Array<DataSourceT>,
         dataSource: Array<DataSourceT> | undefined = undefined) => {
         if (valuesToValidate === undefined)
             return
-        const [validValues, valuesAreValid] = validateValues(allValidValues, valuesToValidate, valueExpr)
+        const [validValues, valuesAreValid] = validateValues(allValues, valuesToValidate, valueExpr)
         if (valuesAreValid)
             return
         dispatch(dispatchValidValuesAction(dataSource === undefined ? emptyArray : dataSource, validValues))
@@ -35,13 +35,13 @@ export function useValidate<DataSourceT, ValueExprT>(
 }
 
 
-export default function useServerValidate<ValueExprT>(
+export default function useServerMultiValidate<ValueExprT>(
     fetchValidValues: ((...args: any[]) => Promise<FetchResult<Array<ValidationResult>>>),
     fetchValidValuesArgs: Array<any>,
     valuesToValidate: Array<ValueExprT> | undefined,
     dispatchValidValuesAction: (allValues: Array<any>, validValues: Array<ValueExprT>) => PayloadAction<any>,
 ) {
-    const validateSelectedValues = useValidate<ValueExprT, ValueExprT>(valuesToValidate, dispatchValidValuesAction, undefined)
+    const validateSelectedValues = useMultiValidate<ValueExprT, ValueExprT>(valuesToValidate, dispatchValidValuesAction, undefined)
     useEffect(() => {
         if (fetchValidValues !== undefined) {
             (async () => {
@@ -54,8 +54,32 @@ export default function useServerValidate<ValueExprT>(
     }, [])//[...fetchValidValuesArgs])
 }
 
-export function defaultValidateValues<DataSourceT, ValueExprT>(
-    dataSource: Array<DataSourceT> | Array<keyof DataSourceT>,
+export function useSingleValidate<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(
+    valueToValidate: ValueExprT | undefined,
+    dispatchValidValuesAction: (validValue: ValueExprT | undefined) => PayloadAction<any>,
+    valueExpr: string | undefined = undefined,
+    defaultValueSelector: ((dataSource: Array<DataSourceT>) => ValueExprT) | undefined,
+    validateValue: (
+        dataSource: Array<DataSourceT>,
+        values: Array<ValueExprT>,
+        valueExpr: string | undefined
+    ) => [Array<ValueExprT>, boolean] = defaultValidateValues
+): (availableValues: Array<DataSourceT>) => void {
+    const dispatch = useDispatch()
+    const validateSelectedValues = useCallback((dataSource: Array<DataSourceT>) => {
+        if (isEmpty(valueToValidate))
+            return
+        const [_, valueIsValid] = validateValue(dataSource, [valueToValidate as ValueExprT], valueExpr)
+        if (valueIsValid)
+            return
+        const defaultValue = defaultValueSelector?.(dataSource)
+        dispatch(dispatchValidValuesAction(defaultValue))
+    }, [valueToValidate])
+    return validateSelectedValues
+}
+
+export function defaultValidateValues<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(
+    dataSource: Array<DataSourceT>,
     values: Array<ValueExprT>,
     valueExpr: string | undefined = undefined
 ): [Array<ValueExprT>, boolean] {
@@ -74,4 +98,8 @@ export function defaultValidateValues<DataSourceT, ValueExprT>(
     if (invalidValues.length === 0)
         return [values, true]
     return [validValues, false]
+}
+
+function isEmpty<ValueExprT>(value: ValueExprT | undefined) {
+    return value === undefined || String(value).length === 0
 }

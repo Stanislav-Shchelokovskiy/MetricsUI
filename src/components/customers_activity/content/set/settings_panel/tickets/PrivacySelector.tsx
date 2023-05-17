@@ -25,6 +25,6 @@ export default function PrivacySelector({ setTitle }: { setTitle: string }) {
         onValueChange={onValueChange}
         label=''
         showDropDownButton={false}
-        showClearButton={true}
+        showClear={true}
     />
 } 

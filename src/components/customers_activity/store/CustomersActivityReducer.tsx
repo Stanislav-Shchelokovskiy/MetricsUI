@@ -52,19 +52,19 @@ export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL
         case CHANGE_GROUP_BY_PERIOD:
             return {
                 ...state,
-                groupByPeriod: action.payload
+                groupByPeriod: action.payload !== undefined ? action.payload : INITIAL_CUSTOMERS_ACTIVITY_STATE.groupByPeriod
             }
 
         case CHANGE_METRIC:
             return {
                 ...state,
-                metric: action.payload
+                metric: action.payload !== undefined ? action.payload : INITIAL_CUSTOMERS_ACTIVITY_STATE.metric
             }
 
         case CHANGE_COMPARISON_METHOD:
             return {
                 ...state,
-                comparisonMethod: action.payload
+                comparisonMethod: action.payload !== undefined ? action.payload : INITIAL_CUSTOMERS_ACTIVITY_STATE.comparisonMethod
             }
 
         case ADD_SET:

@@ -11,6 +11,7 @@ import {
     CHANGE_CUSTOMERS,
     CHANGE_CUSTOMERS_INCLUDE,
 } from '../actions/Customers'
+import { CHANGE_BASELINE_ALIGNED_MODE } from '../actions/Common'
 
 
 export function customersReducer(sets: Array<Set>, action: AnyAction): Array<Set> {
@@ -28,6 +29,13 @@ export function customersReducer(sets: Array<Set>, action: AnyAction): Array<Set
                 return {
                     ...x,
                     customersGroups: updateInclude(x.customersGroups, action.payload.data)
+                }
+            })
+        case CHANGE_BASELINE_ALIGNED_MODE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    customersGroups: updateInclude(x.customersGroups, true)
                 }
             })
 

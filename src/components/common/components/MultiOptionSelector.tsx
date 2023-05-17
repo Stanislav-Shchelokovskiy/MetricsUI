@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { PayloadAction } from '@reduxjs/toolkit'
 import CustomStore from 'devextreme/data/custom_store'
 import { LoadOptions } from 'devextreme/data'
-import useServerValidate, { ValidateProps, useValidate } from '../hooks/UseValidate'
+import useServerMultiValidate, { ValidateProps, useMultiValidate } from '../hooks/UseValidate'
 import { getIncludeButtonOptions, getClearButtonOptions, ButtonOptions } from './Button'
 
 export interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
@@ -47,7 +47,7 @@ export default function MultiOptionSelector<DataSourceT, ValueExprT = DataSource
         return ds
     }, [])
 
-    const validateSelectedValues = useValidate<DataSourceT, ValueExprT>(props.value, props.onValueChange, props.valueExpr)
+    const validateSelectedValues = useMultiValidate<DataSourceT, ValueExprT>(props.value, props.onValueChange, props.valueExpr)
     const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, validateSelectedValues, addNullItemToDS)
 
     if (dataSource.length > 0) {
@@ -67,7 +67,7 @@ export default function MultiOptionSelector<DataSourceT, ValueExprT = DataSource
 type SearchProps<DataSourceT, ValueExprT> = Props<DataSourceT, ValueExprT> & ValidateProps
 
 export function SearchMultioptionSelector<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: SearchProps<DataSourceT, ValueExprT>) {
-    useServerValidate(props.fetchValidValues, props.fetchValidValuesArgs, props.value, props.onValueChange)
+    useServerMultiValidate(props.fetchValidValues, props.fetchValidValuesArgs, props.value, props.onValueChange)
 
     const dataStore = useMemo(() => new CustomStore({
         key: props.valueExpr,

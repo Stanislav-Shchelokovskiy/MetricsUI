@@ -3,7 +3,7 @@ import { Tribe, Payload } from '../../common/Interfaces'
 
 
 export const CHANGE_INCOME_TYPE = 'forecaster/change_income_type'
-export const changeIncomeType = (incomeType: string): PayloadAction<string> => {
+export const changeIncomeType = (incomeType: string | undefined): PayloadAction<string | undefined> => {
     return {
         type: CHANGE_INCOME_TYPE,
         payload: incomeType
@@ -27,7 +27,7 @@ export const changeLastUpdated = (): PayloadAction<number> => {
 }
 
 export const CHANGE_REPLY_TYPE = 'tactical_forecast/change_reply_type'
-export const changeReplyType = (tribeId: string, replyType: string): PayloadAction<Payload<string, string>> => {
+export const changeReplyType = (tribeId: string, replyType: string | undefined): PayloadAction<Payload<string, string | undefined>> => {
     return {
         type: CHANGE_REPLY_TYPE,
         payload: { stateId: tribeId, data: replyType }
@@ -35,7 +35,7 @@ export const changeReplyType = (tribeId: string, replyType: string): PayloadActi
 }
 
 export const CHANGE_FORECAST_HORIZON = 'strategic_forecast/change_forecast_horizon'
-export const changeForecastHorizon = (tribeId: string, forecastHorizon: string): PayloadAction<Payload<string, string>> => {
+export const changeForecastHorizon = (tribeId: string, forecastHorizon: string | undefined): PayloadAction<Payload<string, string | undefined>> => {
     return {
         type: CHANGE_FORECAST_HORIZON,
         payload: { stateId: tribeId, data: forecastHorizon }
@@ -43,7 +43,7 @@ export const changeForecastHorizon = (tribeId: string, forecastHorizon: string):
 }
 
 export const CHANGE_TILE = 'strategic_forecast/change_tile'
-export const changeTile = (tribeId: string, tile: number): PayloadAction<Payload<string, number>> => {
+export const changeTile = (tribeId: string, tile: number | undefined): PayloadAction<Payload<string, number | undefined>> => {
     return {
         type: CHANGE_TILE,
         payload: { stateId: tribeId, data: tile }

@@ -13,7 +13,7 @@ export default function useDataSource<DataSourceT>(
     dataSource: Array<DataSourceT>,
     fetchDataSource: ((...args: any) => Promise<FetchResult<Array<DataSourceT>>>) | undefined,
     fetchArgs: Array<any>,
-    onDataSourceFetch?: (allValidValues: Array<DataSourceT> | Array<keyof DataSourceT>, dataSource: Array<DataSourceT>) => void,
+    onDataSourceFetch?: (allValidValues: Array<DataSourceT>, dataSource: Array<DataSourceT>) => void,
     processFetchedDataSource: (dataSource: Array<DataSourceT>) => Array<DataSourceT> = defaultProcessFetchedDataSource
 ) {
     const [ds, setDataSource] = useState<Array<DataSourceT>>(dataSource)

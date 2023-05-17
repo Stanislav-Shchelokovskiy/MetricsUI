@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RangeSelector as DxRangeSelector, Margin, Scale, ScaleLabel, SliderMarker, Behavior } from 'devextreme-react/range-selector'
 import LoadIndicator from './LoadIndicator'
 import useDataSource, { DataSourceProps } from '../hooks/UseDataSource'
-import { useValidate } from '../hooks/UseValidate'
+import { useMultiValidate } from '../hooks/UseValidate'
 import { Payload } from '../Interfaces'
 
 type Period = [Date, Date]
@@ -54,7 +54,7 @@ export default function RangePeriodSelector(props: Props) {
     const selectedRange = useRef<PeriodStr | PeriodContainer | undefined>([])
     selectedRange.current = useSelector(props.rangeSelector)
 
-    const validateSelectedValues = useValidate(getRange(selectedRange.current), props.onPeriodChange, undefined, validatePeriod)
+    const validateSelectedValues = useMultiValidate(getRange(selectedRange.current), props.onPeriodChange, undefined, validatePeriod)
     const [periodStart, periodEnd] = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, validateSelectedValues)
 
     const dispatch = useDispatch()

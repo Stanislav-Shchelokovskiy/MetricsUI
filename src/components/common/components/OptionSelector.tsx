@@ -1,11 +1,13 @@
-import React, { useRef } from 'react'
-import SelectBox, { DropDownOptions } from 'devextreme-react/select-box'
+import React, { useRef, useMemo } from 'react'
+import SelectBox, { DropDownOptions, Button } from 'devextreme-react/select-box'
 import LoadIndicator from './LoadIndicator'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 import useDataSource, { DataSourceProps } from '../../common/hooks/UseDataSource'
+import { useSingleValidate } from '../hooks/UseValidate'
+import { getClearButtonOptions } from './Button'
 
-interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
+interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> extends DataSourceProps<DataSourceT> {
     className: string
     displayExpr: string
     valueExpr: string
@@ -13,10 +15,10 @@ interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     label: string
     container: string
     valueSelector: (store: any) => ValueExprT | undefined
-    defaultValueSelector: (value: Array<DataSourceT>) => ValueExprT
-    onValueChange: (value: ValueExprT) => PayloadAction<any>
+    defaultValueSelector: (dataSource: Array<DataSourceT>) => ValueExprT
+    onValueChange: (value: ValueExprT | undefined) => PayloadAction<any>
     showDropDownButton: boolean
-    showClearButton: boolean
+    showClear: boolean
 }
 
 
@@ -26,21 +28,25 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
         appDispatch(props.onValueChange(value))
     }
 
-    const value = useRef<ValueExprT>()
-    value.current = useSelector(props.valueSelector)
-    const onDataSourceFetch = (allValidValues: Array<DataSourceT> | Array<keyof DataSourceT>, dataSource: Array<DataSourceT>) => {
-        if (isEmpty(value.current) && props.defaultValueSelector !== undefined) {
-            const defaultValue = props.defaultValueSelector(dataSource)
-            onValueChangeHandler(defaultValue)
+    const value = useSelector(props.valueSelector)
+    const validateSelectedValue = useSingleValidate<DataSourceT, ValueExprT>(value, props.onValueChange, props.valueExpr, props.defaultValueSelector)
+    const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, validateSelectedValue)
+
+    const defaultValue = useMemo(() => props.defaultValueSelector?.(dataSource), [dataSource])
+    const clearButtonOptions = useMemo(() => {
+        return {
+            ...getClearButtonOptions(),
+            onClick: (e: any) => {
+                onValueChangeHandler(defaultValue)
+            }
         }
-    }
-    const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, onDataSourceFetch)
+    }, [defaultValue])
 
     if (dataSource.length > 0) {
         return <SelectBox
             {...props}
             dataSource={dataSource}
-            value={value.current}
+            value={value}
             onValueChange={onValueChangeHandler}
             labelMode='static'
             focusStateEnabled={false}>
@@ -49,9 +55,19 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
                 hideOnParentScroll={true}
                 focusStateEnabled={false}
                 container={props.container} />
+            {props.showClear && !defaultValueIsSelected(value, defaultValue) ?
+                <Button
+                    name='customclear'
+                    location='after'
+                    options={clearButtonOptions} /> :
+                null}
         </SelectBox >
     }
     return <LoadIndicator width={undefined} height={25} />
+}
+
+function defaultValueIsSelected<ValueExprT>(value: ValueExprT | undefined, defaultValue: ValueExprT | undefined) {
+    return value === defaultValue || value === undefined
 }
 
 const defaultProps = {
@@ -65,11 +81,7 @@ const defaultProps = {
     fetchArgs: [],
     showDropDownButton: true,
     showClearButton: false,
+    showClear: false,
 }
 
 OptionSelector.defaultProps = defaultProps
-
-
-function isEmpty<ValueExprT>(value: ValueExprT | undefined) {
-    return value === undefined || String(value).length === 0
-}
