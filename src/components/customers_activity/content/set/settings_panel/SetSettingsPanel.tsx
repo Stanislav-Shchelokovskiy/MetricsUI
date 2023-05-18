@@ -7,7 +7,7 @@ import ProductsSelector from './platforms_products/ProductsSelector'
 import TicketsTagsSelector from './tickets/TicketsTagsSelector'
 import TicketsTypesSelector from './tickets_types/TicketsTypesSelector'
 import DuplicatedToTicketsTypesSelector from './tickets_types/DuplicatedToTicketsTypesSelector'
-import CustomersGroupsSelector from './customers/CustomersGroupsSelector'
+import CustomersGroupsSelector, { BAMCustomersGroupsSelector } from './customers/CustomersGroupsSelector'
 import CustomersTypesSelector from './customers/CustomersTypesSelector'
 import CustomersConversionsTypesSelector from './customers/CustomersConversionsTypesSelector'
 import EmpPositionsSelector from './employees/EmpPositionsSelector'
@@ -38,6 +38,7 @@ export default function SetSettingsPanel({ setTitle }: { setTitle: string }) {
         <div className='CustomersActivity_SetSettingsPanel'>
             <PercentileSelector setTitle={setTitle} />
             <PrivacySelector setTitle={setTitle} />
+            <BAMCustomersGroupsSelector setTitle={setTitle} />
             <TicketsTypesSelector setTitle={setTitle} />
             <TribesSelector setTitle={setTitle} />
             <TentsSelector setTitle={setTitle} />
