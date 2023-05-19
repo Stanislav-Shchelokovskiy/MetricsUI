@@ -1,17 +1,15 @@
-import './styles/CustomersActivityContainer.css'
-import './styles/CommonSettingsPanel.css'
-import './styles/Set.css'
+// import './styles/CustomersActivityContainer.css'
+// import './styles/CommonSettingsPanel.css'
+// import './styles/Set.css'
 
 import React from 'react'
 import { useParams, Navigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import CommonSettingsPanel from './common_settings_panel/CommonSettingsPanel'
-import Sets from './content/Sets'
-import ComparisonGraph from './ComparisonGraph'
+//import Sets from './content/Sets'
 import { applyState } from '../common/store/state/Actions'
 import { PullState } from '../common/network_resource_fetcher/FetchState'
 import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
-import ToolbarWrapper from './toolbar/Toolbar'
+//import Toolbar from './toolbar/Toolbar'
 
 export function CustomersActivityApplySharedState() {
     const { stateId } = useParams()
@@ -27,17 +25,17 @@ export function CustomersActivityApplySharedState() {
 }
 
 export default function CustomersActivity() {
-    return (
-        <MultisetContainer
-            className='CustomersActivityContainer'
-            plotlyDivId='CustomersActivity_ComparisonGraph'
-            sets={Sets}
-            toolbar={ToolbarWrapper}
-        >
-            <div className='CustomersActivityContent'>
-                <CommonSettingsPanel />
-                <ComparisonGraph />
-            </div>
-        </MultisetContainer>
-    )
+    return <div></div>
+    // <MultisetContainer
+    //     className='CustomersActivityContainer'
+    //     plotlyDivId='CustomersActivity_ComparisonGraph'
+    //     sets={Sets}
+    //     toolbar={Toolbar}
+    //     children={
+    //         <div className='CustomersActivityContent'>
+    //             {/* <CommonSettingsPanel />
+    //             <ComparisonGraph /> */}
+    //         </div>
+    //     }
+    // />
 }

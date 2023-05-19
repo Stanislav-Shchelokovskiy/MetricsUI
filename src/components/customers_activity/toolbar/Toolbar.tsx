@@ -8,36 +8,33 @@ import { CustomersActivityStore } from '../store/Store'
 import AdvancedSettingButton from './AdvancedSettingButton'
 import HelpButton from '../../common/components/help/HelpButton'
 import { fetchHelp } from '../network_resource_fetcher/FetchHelp'
-import MenuButton from './MenuButton'
 import GoHomeButton from '../../common/components/HomeButton'
+import { Toolbar, ToolbarProps } from '../../common/components/multiset_container/Toolbar/Toolbar'
+import { ToolbarMenu } from '../../common/components/multiset_container/Toolbar/ToolbarMenu'
+import { FilterTooltip } from './FilterTooltip'
+import { ToolbarCommands, ToolbarSeparator } from '../../common/components/multiset_container/Toolbar/ToolbarCommands'
 
-interface Props {
-    showHideMenu: () => void
-    menuOpened: boolean
-}
 
-export default function Toolbar(props: Props) {
+export default function ToolbarWrapper(props: ToolbarProps) {
     return (
-        < div className='CustomersActivityToolbar'>
-            <ToolbarMenu {...props} />
-            <ToolbarCommands />
-        </div>
+        <Toolbar {...props}>
+            <ToolbarMenu
+                {...props}
+                menuButtonTooltip={FilterTooltip}
+            >
+                <AdvancedSettingButton visible={props.menuOpened} />
+                <HelpButton
+                    visible={props.menuOpened}
+                    className='CustomersActivityHelpButton'
+                    fetchHelpItems={fetchHelp}
+                />
+            </ToolbarMenu >
+            <ToolbarCommandsCached />
+        </Toolbar>
     )
 }
 
-function ToolbarMenu(props: Props) {
-    return <div className='CustomersActivityToolbarMenu'>
-        <MenuButton {...props} />
-        <AdvancedSettingButton visible={props.menuOpened} />
-        <HelpButton
-            visible={props.menuOpened}
-            className='CustomersActivityHelpButton'
-            fetchHelpItems={fetchHelp}
-        />
-    </div>
-}
-
-const ToolbarCommands = React.memo(() => {
+const ToolbarCommandsCached = React.memo(() => {
     const stateNamesSelector = (state: CustomersActivityStore) => state.viewState.stateKeys
     const stateNameSelector = (state: CustomersActivityStore) => state.viewState.key
     const statePropsSelector = (state: CustomersActivityStore) => {
@@ -47,7 +44,7 @@ const ToolbarCommands = React.memo(() => {
         }
     }
     const state_salt = 'CustomersActivity_'
-    return <div className='CustomersActivityToolbarCommands'>
+    return <ToolbarCommands>
         <StateSelector
             className='CustomersActivityViewStateSelector'
             stateNamesSelector={stateNamesSelector}
@@ -64,9 +61,9 @@ const ToolbarCommands = React.memo(() => {
             className='CustomersActivityShareStateButton'
             statePropsSelector={statePropsSelector}
             state_salt={state_salt} />
-        <div className='CustomersActivityToolbarSeparator'></div>
+        <ToolbarSeparator />
         <DownloadButton />
-        <div className='CustomersActivityToolbarSeparator'></div>
+        <ToolbarSeparator />
         <GoHomeButton className='CustomersActivityGoHomeButton' />
-    </div>
+    </ToolbarCommands>
 })

@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react'
-import SetWrapper from './set/Set'
-import { CustomersActivityStore } from '../store/Store'
+import Set from './set/Set'
 import { SettingsSets } from '../../common/components/multiset_container/MultisetContainer'
 
+
 export default function Sets() {
-    const setSelector = useCallback((state: CustomersActivityStore) => state.customersActivity.sets, [])
+    const setSelector = useCallback((state: any) => [], [])
     return <SettingsSets
         setsSelector={setSelector}
-        set={SetWrapper} />
+        set={Set} />
 }

@@ -5,7 +5,7 @@ import { useSelector, useDispatch, useStore } from 'react-redux'
 import { CustomersActivityStore } from './store/Store'
 import { hideLegends } from './store/actions/Common'
 import { Token } from '../common/Interfaces'
-import { toFriendlyTitle } from './content/set/header/Title'
+import { toFriendlyTitle } from '../common/components/multiset_container/set/set_header/Title'
 import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './common_settings_panel/ComparisonMethodSelector'
 import {
     fetchTicketsWithIterationsAggregates,

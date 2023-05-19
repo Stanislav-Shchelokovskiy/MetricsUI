@@ -6,7 +6,7 @@ import Title from './Title'
 
 export default function SetHeader({ setTitle }: { setTitle: string }) {
     return (
-        <div className='CustomerActivity_SetHeader'>
+        <div className='SetHeader'>
             <Title setTitle={setTitle} />
             <CloneButton setTitle={setTitle} />
             <DropButton setTitle={setTitle} />

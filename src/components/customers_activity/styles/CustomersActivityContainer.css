@@ -6,19 +6,8 @@
     align-items: stretch;
 }
 
-.CustomersActivity_Sets_ScrollView {
-    width: 30vw;
-}
-
 .CustomersActivity_ComparisonGraph {
     flex: 1;
-}
-
-.CustomersActivity_ContentDrawer {
-    display: flex;
-    flex-flow: column nowrap;
-    min-width: 70vw;
-    height: 93vh;
 }
 
 .ComparisonGraph_LoadingIndicator {

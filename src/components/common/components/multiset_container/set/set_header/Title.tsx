@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react'
-import Button from '../../../../common/components/Button'
-import InputBox from '../../../../common/components/InputBox'
+import Button from '../../../Button'
+import InputBox from '../../../InputBox'
 import { useDispatch } from 'react-redux'
-import { changeSetTitle } from '../../../store/actions/Common'
+import { changeSetTitle } from '../../../../../customers_activity/store/actions/Common'
 
 
 export default function Title({ setTitle }: { setTitle: string }) {

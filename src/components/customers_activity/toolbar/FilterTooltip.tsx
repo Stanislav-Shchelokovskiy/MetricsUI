@@ -1,56 +1,24 @@
-import React, { useRef, useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import FilterBuilder, { CustomOperation } from 'devextreme-react/filter-builder'
 import { CustomersActivityStore } from '../store/Store'
-import Button from '../../common/components/Button'
 import { Tooltip } from 'devextreme-react/tooltip'
 import { fetchDisplayFilter } from '../network_resource_fetcher/FetchDisplayFilter'
 import { isTicketsMetricSelected } from '../common_settings_panel/MetricSelector'
 import { getSetDataFields } from '../store/sets_reducer/SetDescriptor'
+import { TooltipProps } from '../../common/components/multiset_container/Toolbar/ToolbarMenu'
 
 
-interface Props {
-    showHideMenu: () => void
-    menuOpened: boolean
-}
-
-export default function MenuButton(props: Props) {
-    const [filterTooltipVisible, setFilterTooltipVisible] = useState(false)
-    const timerId = useRef<NodeJS.Timeout | undefined>(undefined)
-    const onEnter = () => {
-        timerId.current = setTimeout(() => {
-            setFilterTooltipVisible(true)
-            clearTimeout(timerId.current)
-        }, 600)
-    }
-    const onLeave = () => {
-        clearTimeout(timerId.current)
-        timerId.current = undefined
-        setFilterTooltipVisible(false)
-    }
-
-    return <div
-        onMouseEnter={onEnter}
-        onMouseLeave={onLeave}
-    >
-        <Button
-            className='CustomersActivityMenuButton'
-            id='CustomersActivityMenuButton'
-            icon='menu'
-            onClick={props.showHideMenu}
-        />
-        <FilterTooltip visible={filterTooltipVisible && !props.menuOpened} />
-    </div >
-}
-
-const FilterTooltip = React.memo(({ visible }: { visible: boolean }) => {
-    return <Tooltip
-        className='CustomersActivityFilterTooltip'
-        target="#CustomersActivityMenuButton"
-        visible={visible}
-    >
-        <FilterLabel />
-    </Tooltip>
+export const FilterTooltip = React.memo(({ visible, target }: TooltipProps) => {
+    return (
+        <Tooltip
+            className='CustomersActivityFilterTooltip'
+            target={target}
+            visible={visible}
+        >
+            <FilterLabel />
+        </Tooltip>
+    )
 })
 
 const FilterLabel = React.memo(() => {
@@ -111,4 +79,3 @@ const FilterLabel = React.memo(() => {
             caption='IS NOT' />
     </FilterBuilder>
 })
-
