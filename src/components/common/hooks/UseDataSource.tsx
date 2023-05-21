@@ -18,7 +18,7 @@ export default function useDataSource<DataSourceT>(
 ) {
     const [ds, setDataSource] = useState<Array<DataSourceT>>(dataSource)
     useEffect(() => {
-        if (fetchDataSource !== undefined) {
+        if (fetchDataSource) {
             (async () => {
                 const fetchResult: FetchResult<Array<DataSourceT>> = await fetchDataSource(...fetchArgs)
                 if (fetchResult.success) {

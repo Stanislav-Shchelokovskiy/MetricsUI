@@ -42,7 +42,7 @@ const IS_NULL_FILTER_VALUE = {
 
 export default function MultiOptionSelector<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: Props<DataSourceT, ValueExprT>) {
     const addNullItemToDS = useCallback((ds: any): Array<any> => {
-        if (props.showNullItem && ds !== undefined && (ds as Array<any>).length > 0)
+        if (props.showNullItem && ds && (ds as Array<any>).length > 0)
             (ds as Array<any>).unshift({ [props.valueExpr]: IS_NULL_FILTER_VALUE.value, [props.displayExpr]: IS_NULL_FILTER_VALUE.displayValue })
         return ds
     }, [])
@@ -73,10 +73,10 @@ export function SearchMultioptionSelector<DataSourceT, ValueExprT = DataSourceT 
         key: props.valueExpr,
         loadMode: 'processed',
         load: (loadOptions: LoadOptions) => {
-            if (props.fetchDataSource === undefined)
+            if (!props.fetchDataSource)
                 return []
             const filter_values = []
-            if (loadOptions.filter !== undefined && loadOptions.filter !== null) {
+            if (loadOptions.filter) {
                 const filter_descriptor = loadOptions.filter[0]
                 if (typeof (filter_descriptor) === 'string' && filter_descriptor !== '!') {
                     filter_values.push(loadOptions.filter[2])
@@ -106,7 +106,7 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
         dispatch(props.onValueChange(props.dataSource || [], values))
     }
     const onIncludeChangeHandler = useCallback((include: boolean) => {
-        if (props.onIncludeChange !== undefined) {
+        if (props.onIncludeChange) {
             dispatch(props.onIncludeChange(include))
         }
     }, [])

@@ -24,7 +24,7 @@ export function useMultiValidate<DataSourceT, ValueExprT = (DataSourceT | keyof 
     const validateSelectedValues = useCallback((
         allValues: Array<DataSourceT>,
         dataSource: Array<DataSourceT> | undefined = undefined) => {
-        if (valuesToValidate === undefined)
+        if (!valuesToValidate)
             return
         const [validValues, valuesAreValid] = validateValues(allValues, valuesToValidate, valueExpr)
         if (valuesAreValid)
@@ -43,7 +43,7 @@ export default function useServerMultiValidate<ValueExprT>(
 ) {
     const validateSelectedValues = useMultiValidate<ValueExprT, ValueExprT>(valuesToValidate, dispatchValidValuesAction, undefined)
     useEffect(() => {
-        if (fetchValidValues !== undefined) {
+        if (fetchValidValues) {
             (async () => {
                 const fetchResult: FetchResult<Array<ValidationResult>> = await fetchValidValues(...fetchValidValuesArgs)
                 if (fetchResult.success) {
