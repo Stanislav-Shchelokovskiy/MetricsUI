@@ -5,15 +5,15 @@ export function updateSetState<T extends Set>(title: string, state: Array<T>, re
 }
 
 export function updateValues<T>(obj: FilterParametersNode<T> | undefined, values: Array<T> | undefined): FilterParametersNode<T> | undefined {
-    if (obj === undefined) {
-        if (values !== undefined && values.length > 0)
+    if (!obj) {
+        if (values && values.length > 0)
             return {
                 include: true,
                 values: values
             }
         return undefined
     }
-    if (obj.include && (values === undefined || values.length === 0))
+    if (obj.include && (!values || values.length === 0))
         return undefined
     return {
         ...obj,
@@ -22,7 +22,7 @@ export function updateValues<T>(obj: FilterParametersNode<T> | undefined, values
 }
 
 export function updateInclude<T>(obj: FilterParametersNode<T> | undefined, include: boolean): FilterParametersNode<T> | undefined {
-    if (obj === undefined) {
+    if (!obj) {
         if (!include)
             return {
                 include: include,
