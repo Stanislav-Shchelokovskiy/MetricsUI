@@ -34,9 +34,7 @@ export function customersReducer(sets: Array<Set>, action: AnyAction): Array<Set
         case CHANGE_BASELINE_ALIGNED_MODE:
             if (action.payload)
                 return sets.map((x) => {
-                    let groups = undefined
-                    if (x.customersGroups !== undefined)
-                        groups = x.customersGroups.values.length > 0 ? [x.customersGroups.values[0]] : x.customersGroups.values
+                    const groups = x.customersGroups && (x.customersGroups.values.length > 0 ? [x.customersGroups.values[0]] : x.customersGroups.values)
                     return {
                         ...x,
                         customersGroups: updateValues(updateInclude(x.customersGroups, true), groups)
