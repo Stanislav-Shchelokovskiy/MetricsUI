@@ -1,17 +1,7 @@
-interface FilterNode {
-    include: boolean
-}
+import { BaseSet } from '../../../common/store/set_container/sets/Interfaces'
+import { FilterParameterNode, FilterParametersNode } from '../../../common/store/set_container/sets/Interfaces'
 
-export interface FilterParametersNode<T> extends FilterNode {
-    values: Array<T>
-}
-
-export interface FilterParameterNode<T> extends FilterNode {
-    value: T
-}
-
-export interface Set {
-    title: string
+export interface Set extends BaseSet {
     percentile: FilterParameterNode<number>
     privacy: FilterParameterNode<number> | undefined
     tribes: FilterParametersNode<string> | undefined

@@ -6,8 +6,9 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeEmployees, changeEmployeesInclude } from '../../../../store/actions/Employees'
 import { fetchEmployees, Employee } from '../../../../network_resource_fetcher/employees/FetchEmployees'
-import { Set, FilterParametersNode } from '../../../../store/sets_reducer/Interfaces'
-import { paramOrDefault } from '../../../../store/Utils'
+import { FilterParametersNode } from '../../../../../common/store/set_container/sets/Interfaces'
+import { paramOrDefault } from '../../../../../common/store/set_container/sets/Utils'
+import { Set } from '../../../../store/sets_reducer/Interfaces'
 
 export interface EmpSelectorProps {
     setTitle: string
@@ -68,7 +69,7 @@ export function EmpSelector(props: EmpSelectorProps) {
         includeButtonState={value === undefined || value.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
-        container='#CustomersActivity_Sets_ScrollView_div'
+        container='#Sets_ScrollView_div'
         showNullItem={true}
     />
 }

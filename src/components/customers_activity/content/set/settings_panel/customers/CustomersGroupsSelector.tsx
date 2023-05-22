@@ -30,7 +30,7 @@ export default function CustomersGroupsSelector({ setTitle }: { setTitle: string
         includeButtonState={value === undefined || value.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
-        container='#CustomersActivity_Sets_ScrollView_div'
+        container='#Sets_ScrollView_div'
         showNullItem={true}
     />
 }
@@ -58,7 +58,7 @@ export function BAMCustomersGroupsSelector({ setTitle }: { setTitle: string }) {
         fetchArgs={fetchArgs}
         valueSelector={valueSelector}
         onValueChange={onValueChange}
-        container='#CustomersActivity_Sets_ScrollView_div'
+        container='#Sets_ScrollView_div'
         showClear={true}
         showDropDownButton={false}
     />

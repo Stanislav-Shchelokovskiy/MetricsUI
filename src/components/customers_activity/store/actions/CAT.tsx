@@ -1,50 +1,24 @@
-import { PayloadAction } from '@reduxjs/toolkit'
-import { Payload } from '../../../common/Interfaces'
+import {
+    getValuesPayloadAction,
+    getIncludePayloadAction
+} from '../../../common/store/set_container/sets/Actions'
 
 export const CHANGE_REPLIES_TYPES = 'customers_activity/change_replies_types'
-export const changeRepliesTypes = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
-    return {
-        type: CHANGE_REPLIES_TYPES,
-        payload: payload
-    }
-}
+export const changeRepliesTypes = getValuesPayloadAction<string>(CHANGE_REPLIES_TYPES)
 
 export const CHANGE_REPLIES_TYPES_INCLUDE = 'customers_activity/change_replies_types_include'
-export const changeRepliesTypesInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
-    return {
-        type: CHANGE_REPLIES_TYPES_INCLUDE,
-        payload: payload
-    }
-}
+export const changeRepliesTypesInclude = getIncludePayloadAction(CHANGE_REPLIES_TYPES_INCLUDE)
+
 
 export const CHANGE_COMPONENTS = 'customers_activity/change_components'
-export const changeComponents = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
-    return {
-        type: CHANGE_COMPONENTS,
-        payload: payload
-    }
-}
+export const changeComponents = getValuesPayloadAction<string>(CHANGE_COMPONENTS)
 
 export const CHANGE_COMPONENTS_INCLUDE = 'customers_activity/change_components_include'
-export const changeComponentsInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
-    return {
-        type: CHANGE_COMPONENTS_INCLUDE,
-        payload: payload
-    }
-}
+export const changeComponentsInclude = getIncludePayloadAction(CHANGE_COMPONENTS_INCLUDE)
+
 
 export const CHANGE_FEATURES = 'customers_activity/change_features'
-export const changeFeatures = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
-    return {
-        type: CHANGE_FEATURES,
-        payload: payload
-    }
-}
+export const changeFeatures = getValuesPayloadAction<string>(CHANGE_FEATURES)
 
 export const CHANGE_FEATURES_INCLUDE = 'customers_activity/change_features_include'
-export const changeFeaturesInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
-    return {
-        type: CHANGE_FEATURES_INCLUDE,
-        payload: payload
-    }
-}
+export const changeFeaturesInclude = getIncludePayloadAction(CHANGE_FEATURES_INCLUDE)

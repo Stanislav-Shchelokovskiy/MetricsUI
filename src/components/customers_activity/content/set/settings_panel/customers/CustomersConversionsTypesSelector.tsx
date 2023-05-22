@@ -27,6 +27,6 @@ export default function CustomersConversionsTypesSelector({ setTitle }: { setTit
         includeButtonState={value === undefined || value.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
-        container='#CustomersActivity_Sets_ScrollView_div'
+        container='#Sets_ScrollView_div'
     />
 }

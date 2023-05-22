@@ -3,7 +3,7 @@ import { NumberBox, Button as NumberBoxButton } from 'devextreme-react/number-bo
 import { useSelector, useDispatch } from 'react-redux'
 import { CustomersActivityStore } from '../../../store/Store'
 import { changePercentile, changePercentileInclude } from '../../../store/actions/SetCommon'
-import { FilterParameterNode } from '../../../store/sets_reducer/Interfaces'
+import { FilterParameterNode } from '../../../../common/store/set_container/sets/Interfaces'
 import { getIncludeButtonOptions } from '../../../../common/components/Button'
 
 

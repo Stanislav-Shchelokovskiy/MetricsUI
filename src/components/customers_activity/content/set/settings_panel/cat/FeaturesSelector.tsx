@@ -4,7 +4,7 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeFeatures, changeFeaturesInclude } from '../../../../store/actions/CAT'
 import { fetchFeatures, Feature } from '../../../../network_resource_fetcher/cat/FetchFeatures'
-import { paramOrDefault } from '../../../../store/Utils'
+import { paramOrDefault } from '../../../../../common/store/set_container/sets/Utils'
 
 
 export default function FeaturesSelector({ setTitle }: { setTitle: string }) {
@@ -29,7 +29,7 @@ export default function FeaturesSelector({ setTitle }: { setTitle: string }) {
         includeButtonState={value === undefined || value.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
-        container='#CustomersActivity_Sets_ScrollView_div'
+        container='#Sets_ScrollView_div'
         showNullItem={true}
     />
 } 

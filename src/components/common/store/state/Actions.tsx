@@ -1,33 +1,13 @@
-import { PayloadAction } from '@reduxjs/toolkit'
+import { getPayloadAction, getAction } from '../Actions'
 
 export const APPLY_STATE = 'apply_state'
-export const applyState = (state: any): PayloadAction<any> => {
-    return {
-        type: APPLY_STATE,
-        payload: state
-    }
-}
+export const applyState = getPayloadAction<any>(APPLY_STATE)
 
 export const REGISTER_STATE = 'register_state'
-export const registerState = (state_key: string): PayloadAction<string> => {
-    return {
-        type: REGISTER_STATE,
-        payload: state_key
-    }
-}
+export const registerState = getAction<string>(REGISTER_STATE)
 
 export const DROP_STATE = 'drop_state'
-export const dropState = (state_key: string): PayloadAction<string> => {
-    return {
-        type: DROP_STATE,
-        payload: state_key
-    }
-}
+export const dropState = getPayloadAction<string>(DROP_STATE)
 
 export const CHANGE_STATE = 'change_state'
-export const changeState = (state_key: string): PayloadAction<string> => {
-    return {
-        type: CHANGE_STATE,
-        payload: state_key
-    }
-}
+export const changeState = getPayloadAction<string>(CHANGE_STATE)

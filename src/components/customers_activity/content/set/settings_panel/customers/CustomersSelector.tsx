@@ -26,6 +26,6 @@ export default function CustomersSelector({ setTitle }: { setTitle: string }) {
         onIncludeChange={onIncludeChange}
         showSelectionControls={false}
         applyValueMode='instantly'
-        container='#CustomersActivity_Sets_ScrollView_div'
+        container='#Sets_ScrollView_div'
     />
 }

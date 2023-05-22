@@ -1,66 +1,32 @@
-import { PayloadAction } from '@reduxjs/toolkit'
-import { Payload } from '../../../common/Interfaces'
+import {
+    getValuesPayloadAction,
+    getIncludePayloadAction
+} from '../../../common/store/set_container/sets/Actions'
+
 
 export const CHANGE_POSITIONS = 'customers_activity/change_positions'
-export const changePositions = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
-    return {
-        type: CHANGE_POSITIONS,
-        payload: payload
-    }
-}
+export const changePositions = getValuesPayloadAction<string>(CHANGE_POSITIONS)
 
 export const CHANGE_POSITIONS_INCLUDE = 'customers_activity/change_positions_include'
-export const changePositionsInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
-    return {
-        type: CHANGE_POSITIONS_INCLUDE,
-        payload: payload
-    }
-}
+export const changePositionsInclude = getIncludePayloadAction(CHANGE_POSITIONS_INCLUDE)
+
 
 export const CHANGE_EMP_TRIBES = 'customers_activity/change_emp_tribes'
-export const changeEmpTribes = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
-    return {
-        type: CHANGE_EMP_TRIBES,
-        payload: payload
-    }
-}
+export const changeEmpTribes = getValuesPayloadAction<string>(CHANGE_EMP_TRIBES)
 
 export const CHANGE_EMP_TRIBES_INCLUDE = 'customers_activity/change_emp_tribes_include'
-export const changeEmpTribesInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
-    return {
-        type: CHANGE_EMP_TRIBES_INCLUDE,
-        payload: payload
-    }
-}
+export const changeEmpTribesInclude = getIncludePayloadAction(CHANGE_EMP_TRIBES_INCLUDE)
+
 
 export const CHANGE_EMP_TENTS = 'customers_activity/change_emp_tents'
-export const changeEmpTents = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
-    return {
-        type: CHANGE_EMP_TENTS,
-        payload: payload
-    }
-}
+export const changeEmpTents = getValuesPayloadAction<string>(CHANGE_EMP_TENTS)
 
 export const CHANGE_EMP_TENTS_INCLUDE = 'customers_activity/change_emp_tents_include'
-export const changeEmpTentsInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
-    return {
-        type: CHANGE_EMP_TENTS_INCLUDE,
-        payload: payload
-    }
-}
+export const changeEmpTentsInclude = getIncludePayloadAction(CHANGE_EMP_TENTS_INCLUDE)
+
 
 export const CHANGE_EMPLOYEES = 'customers_activity/change_employees'
-export const changeEmployees = (payload: Payload<string, Array<string>>): PayloadAction<Payload<string, Array<string>>> => {
-    return {
-        type: CHANGE_EMPLOYEES,
-        payload: payload
-    }
-}
+export const changeEmployees = getValuesPayloadAction<string>(CHANGE_EMPLOYEES)
 
 export const CHANGE_EMPLOYEES_INCLUDE = 'customers_activity/change_employees_include'
-export const changeEmployeesInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
-    return {
-        type: CHANGE_EMPLOYEES_INCLUDE,
-        payload: payload
-    }
-}
+export const changeEmployeesInclude = getIncludePayloadAction(CHANGE_EMPLOYEES_INCLUDE)

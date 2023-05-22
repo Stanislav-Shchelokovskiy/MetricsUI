@@ -1,6 +1,6 @@
 import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
-import { FilterParametersNode } from '../../store/sets_reducer/Interfaces'
+import { FilterParametersNode } from '../../../common/store/set_container/sets/Interfaces'
 
 export interface Component {
     component_id: string

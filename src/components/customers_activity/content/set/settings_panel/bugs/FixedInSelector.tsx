@@ -26,6 +26,5 @@ export default function FixedInSelector({ setTitle }: { setTitle: string }) {
         includeButtonState={value === undefined || value.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
-        container='#CustomersActivity_Sets_ScrollView_div'
     />
 } 

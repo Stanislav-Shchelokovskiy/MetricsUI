@@ -4,7 +4,7 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changePlatforms, changePlatformsInclude } from '../../../../store/actions/PlatformsProducts'
 import { fetchPlatforms, Platform } from '../../../../network_resource_fetcher/platforms_products/FetchPlatforms'
-import { paramOrDefault } from '../../../../store/Utils'
+import { paramOrDefault } from '../../../../../common/store/set_container/sets/Utils'
 
 
 export default function PlatformsSelector({ setTitle }: { setTitle: string }) {
@@ -28,7 +28,7 @@ export default function PlatformsSelector({ setTitle }: { setTitle: string }) {
         includeButtonState={value === undefined || value.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
-        container='#CustomersActivity_Sets_ScrollView_div'
+        container='#Sets_ScrollView_div'
         showNullItem={true}
     />
 } 

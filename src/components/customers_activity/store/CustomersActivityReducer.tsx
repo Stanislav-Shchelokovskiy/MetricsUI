@@ -1,8 +1,8 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { generateNewSetTitle } from './sets_reducer/GeneralReducer'
-import { getDefaultTitle } from './sets_reducer/Defaults'
-import { APPLY_STATE } from '../../common/store/state/Actions'
+import { getDefaultTitle } from '../../common/store/set_container/sets/Defaults'
 import { validateCustomersActivityProperties } from './StoreStateValidator'
+import { getHiddenLegendsReducer, getSetsReducer } from '../../common/store/set_container/ContainerReducer'
+import { getStateReducer } from '../../common/store/set_container/ContainerReducer'
 import { getValidComparisonMethodOrDefault } from '../common_settings_panel/ComparisonMethodSelector'
 import { getValidMetricOrDefault } from '../common_settings_panel/MetricSelector'
 import {
@@ -10,11 +10,7 @@ import {
     CHANGE_GROUP_BY_PERIOD,
     CHANGE_METRIC,
     CHANGE_COMPARISON_METHOD,
-    ADD_SET,
-    REMOVE_SET,
-    CHANGE_SET_TITLE,
     CHANGE_BASELINE_ALIGNED_MODE,
-    HIDE_LEGENDS,
 } from './actions/Common'
 
 
@@ -31,7 +27,7 @@ export interface CustomersActivityState {
 
 const INITIAL_CUSTOMERS_ACTIVITY_STATE: CustomersActivityState = {
     range: Array<string>(),
-    groupByPeriod: '',
+    groupByPeriod: 'takeFromValues',
     metric: getValidMetricOrDefault(undefined),
     comparisonMethod: getValidComparisonMethodOrDefault(undefined),
     baselineAlignedModeEnabled: false,
@@ -41,6 +37,17 @@ const INITIAL_CUSTOMERS_ACTIVITY_STATE: CustomersActivityState = {
 
 
 export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL_CUSTOMERS_ACTIVITY_STATE, action: AnyAction): CustomersActivityState => {
+    let res = setsReducer(state, action)
+    res = hiddenLegendsReducer(res, action)
+    res = stateReducer(res, action)
+    return customersActivityReducer(res, action)
+}
+
+const setsReducer = getSetsReducer<CustomersActivityState>(INITIAL_CUSTOMERS_ACTIVITY_STATE)
+const hiddenLegendsReducer = getHiddenLegendsReducer<CustomersActivityState>()
+const stateReducer = getStateReducer<CustomersActivityState>(validateCustomersActivityProperties)
+
+function customersActivityReducer(state: CustomersActivityState, action: AnyAction): CustomersActivityState {
     switch (action.type) {
 
         case CHANGE_PERIOD:
@@ -67,50 +74,13 @@ export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL
                 comparisonMethod: action.payload !== undefined ? action.payload : INITIAL_CUSTOMERS_ACTIVITY_STATE.comparisonMethod
             }
 
-        case ADD_SET:
-            return {
-                ...state,
-                sets: [...state.sets, generateNewSetTitle(state.sets)]
-            }
-
-        case REMOVE_SET:
-            const remove_selector = (x: string) => x !== action.payload
-            return {
-                ...state,
-                sets: state.sets.length < 2 ? [getDefaultTitle()] : state.sets.filter(remove_selector),
-                hiddenLegends: state.hiddenLegends.filter(remove_selector)
-            }
-
-        case APPLY_STATE:
-            return validateCustomersActivityProperties(action.payload.customersActivity)
-
-        case CHANGE_SET_TITLE:
-            const replace_selector = (x: string) => x !== action.payload.stateId ? x : action.payload.data
-            return {
-                ...state,
-                sets: state.sets.map(replace_selector),
-                hiddenLegends: state.hiddenLegends.map(replace_selector)
-            }
-
         case CHANGE_BASELINE_ALIGNED_MODE:
             return {
                 ...state,
                 baselineAlignedModeEnabled: action.payload
             }
 
-        case HIDE_LEGENDS:
-            return {
-                ...state,
-                hiddenLegends: action.payload
-            }
-
         default:
-            if (state.sets.length === 0) {
-                return {
-                    ...state,
-                    sets: INITIAL_CUSTOMERS_ACTIVITY_STATE.sets
-                }
-            }
             return state
     }
 }

@@ -1,34 +1,17 @@
-import { PayloadAction } from '@reduxjs/toolkit'
-import { Payload } from '../../../common/Interfaces'
+import {
+    getValuesPayloadAction,
+    getIncludePayloadAction,
+} from '../../../common/store/set_container/sets/Actions'
 
 export const CHANGE_TICKETS_TYPES = 'customers_activity/change_tickets_types'
-export const changeTicketsTypes = (payload: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
-    return {
-        type: CHANGE_TICKETS_TYPES,
-        payload: payload
-    }
-}
+export const changeTicketsTypes = getValuesPayloadAction<number>(CHANGE_TICKETS_TYPES)
 
 export const CHANGE_TICKETS_TYPES_INCLUDE = 'customers_activity/change_tickets_types_include'
-export const changeTicketsTypesInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
-    return {
-        type: CHANGE_TICKETS_TYPES_INCLUDE,
-        payload: payload
-    }
-}
+export const changeTicketsTypesInclude = getIncludePayloadAction(CHANGE_TICKETS_TYPES_INCLUDE)
+
 
 export const CHANGE_DUPLICATED_TO_TICKETS_TYPES = 'customers_activity/change_duplicated_to_tickets_types'
-export const changeDuplicatedToTicketTypes = (payload: Payload<string, Array<number>>): PayloadAction<Payload<string, Array<number>>> => {
-    return {
-        type: CHANGE_DUPLICATED_TO_TICKETS_TYPES,
-        payload: payload
-    }
-}
+export const changeDuplicatedToTicketTypes = getValuesPayloadAction<number>(CHANGE_DUPLICATED_TO_TICKETS_TYPES)
 
 export const CHANGE_DUPLICATED_TO_TICKETS_TYPES_INCLUDE = 'customers_activity/change_duplicated_to_tickets_types_include'
-export const changeDuplicatedToTicketsTypesInclude = (payload: Payload<string, boolean>): PayloadAction<Payload<string, boolean>> => {
-    return {
-        type: CHANGE_DUPLICATED_TO_TICKETS_TYPES_INCLUDE,
-        payload: payload
-    }
-}
+export const changeDuplicatedToTicketsTypesInclude = getIncludePayloadAction(CHANGE_DUPLICATED_TO_TICKETS_TYPES_INCLUDE)

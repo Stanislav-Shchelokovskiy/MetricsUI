@@ -17,6 +17,7 @@ export default function BugsSelectorWrapper({ Wrapped, setTitle, ...wrappedProps
         setTitle={setTitle}
         hideIfDataSourceEmpty={true}
         showNullItem={true}
+        container='#Sets_ScrollView_div'
     />
 }
 

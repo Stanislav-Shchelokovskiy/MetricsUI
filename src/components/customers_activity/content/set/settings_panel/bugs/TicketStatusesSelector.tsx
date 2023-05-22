@@ -25,6 +25,5 @@ export default function TicketStatusesSelector({ setTitle }: { setTitle: string 
         includeButtonState={value === undefined || value.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
-        container='#CustomersActivity_Sets_ScrollView_div'
     />
 } 
