@@ -2,7 +2,7 @@ import React from 'react'
 import PeriodSelector from './PeriodSelector'
 import GroupByPeriodSelector from './GroupByPeriodSelector'
 import MetricSelector from './MetricSelector'
-import ComparisonMethodSelector from './ComparisonMethodSelector'
+import ComparisonMethodSelector from '../graph/ComparisonMethodSelector'
 
 
 function CommonSettingsPanel() {

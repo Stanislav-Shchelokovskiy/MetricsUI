@@ -13,7 +13,7 @@ interface TicketsWithIterationsAggregate {
 
 export interface TicketsWithIterationsAggregates {
     index: number
-    title: string
+    name: string
     periods: Array<string | number>
     tickets: Array<number>
     iterations: Array<number>
@@ -21,9 +21,9 @@ export interface TicketsWithIterationsAggregates {
     people: Array<number>
 }
 
-export const EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES = {
+export const EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES: TicketsWithIterationsAggregates = {
     index: 0,
-    title: '',
+    name: '',
     periods: [],
     tickets: [],
     iterations: [],
@@ -74,7 +74,7 @@ export async function fetchTicketsWithIterationsAggregates(
             success: true,
             data: {
                 index: index,
-                title: set.title,
+                name: set.title,
                 periods: periods,
                 tickets: tickets,
                 iterations: iterations,

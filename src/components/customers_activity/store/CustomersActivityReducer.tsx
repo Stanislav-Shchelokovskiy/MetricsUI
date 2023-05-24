@@ -4,7 +4,7 @@ import { getDefaultTitle } from '../../common/store/set_container/sets/Defaults'
 import { containerValidator } from './StoreStateValidator'
 import { getHiddenLegendsReducer, getSetsCRUDReducer } from '../../common/store/set_container/ContainerReducer'
 import { getViewStateReducer } from '../../common/store/set_container/ViewStateReducer'
-import { getValidComparisonMethodOrDefault } from '../common_settings_panel/ComparisonMethodSelector'
+import { getValidComparisonMethodOrDefault } from '../graph/ComparisonMethodSelector'
 import { getValidMetricOrDefault } from '../common_settings_panel/MetricSelector'
 import {
     CHANGE_PERIOD,

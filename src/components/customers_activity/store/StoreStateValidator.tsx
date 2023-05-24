@@ -2,7 +2,7 @@ import { Set } from './sets_reducer/Interfaces'
 import { CustomersActivityShareableState } from './Store'
 import { DEFAULT_SET } from './sets_reducer/Defaults'
 import { CustomersActivityState } from './CustomersActivityReducer'
-import { getValidComparisonMethodOrDefault } from '../common_settings_panel/ComparisonMethodSelector'
+import { getValidComparisonMethodOrDefault } from '../graph/ComparisonMethodSelector'
 import { getValidMetricOrDefault } from '../common_settings_panel/MetricSelector'
 
 export function containerValidator(state: CustomersActivityShareableState): CustomersActivityState {
