@@ -111,10 +111,11 @@ export default function TaskButton(props: Props) {
     }, [dispatchTaskState, onError, onSuccess, task])
 
     return (
-        <div className='CustomersActivityDownloadButton'>
+        <div className={props.className}>
             {state.taskStarted === true ?
-                <LoadIndicator width={undefined} height={25} /> :
+                <LoadIndicator width={36} height={32} /> :
                 <Button
+                    
                     icon={props.icon}
                     hint={props.hint}
                     onClick={startTask} />}

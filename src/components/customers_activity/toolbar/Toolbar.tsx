@@ -1,10 +1,7 @@
 import React from 'react'
 import DownloadButton from './DownloadButton'
-import SaveStateButton from '../../common/components/state_management/SaveStateButton'
-import StateSelector from '../../common/components/state_management/StateSelector'
-import DropStateButton from '../../common/components/state_management/DropStateButton'
-import ShareStateButton from '../../common/components/state_management/ShareStateButton'
-import { CustomersActivityStore, getShareableState } from '../store/Store'
+import StateManagementCommands from '../../common/components/state_management/StateManagementCommands'
+import { getShareableState } from '../store/Store'
 import AdvancedSettingButton from './AdvancedSettingButton'
 import HelpButton from '../../common/components/help/HelpButton'
 import { fetchHelp } from '../network_resource_fetcher/FetchHelp'
@@ -15,7 +12,7 @@ import { FilterTooltip } from './FilterTooltip'
 import { ToolbarCommands, ToolbarSeparator } from '../../common/components/multiset_container/Toolbar/ToolbarCommands'
 
 
-export default function ToolbarWrapper(props: ToolbarProps) {
+export default function CustomersActivityToolbar(props: ToolbarProps) {
     return (
         <Toolbar {...props}>
             <ToolbarMenu
@@ -25,7 +22,7 @@ export default function ToolbarWrapper(props: ToolbarProps) {
                 <AdvancedSettingButton visible={props.menuOpened} />
                 <HelpButton
                     visible={props.menuOpened}
-                    className='CustomersActivityHelpButton'
+                    className='CommandButton'
                     fetchHelpItems={fetchHelp}
                 />
             </ToolbarMenu >
@@ -35,29 +32,14 @@ export default function ToolbarWrapper(props: ToolbarProps) {
 }
 
 const ToolbarCommandsCached = React.memo(() => {
-    const stateNamesSelector = (state: CustomersActivityStore) => state.viewState.stateKeys
-    const stateNameSelector = (state: CustomersActivityStore) => state.viewState.key
-    const state_salt = 'CustomersActivity_'
     return <ToolbarCommands>
-        <StateSelector
-            className='CustomersActivityViewStateSelector'
-            stateNamesSelector={stateNamesSelector}
-            state_salt={state_salt} />
-        <SaveStateButton
-            className='CustomersActivitySaveStateButton'
-            stateNameSelector={stateNameSelector}
-            state_salt={state_salt} />
-        <DropStateButton
-            className='CustomersActivityDropStateButton'
-            stateNamesSelector={stateNamesSelector}
-            state_salt={state_salt} />
-        <ShareStateButton
-            className='CustomersActivityShareStateButton'
-            statePropsSelector={getShareableState}
-            state_salt={state_salt} />
+        <StateManagementCommands
+            shareableStateSelector={getShareableState}
+            stateSalt='CustomersActivity_'
+        />
         <ToolbarSeparator />
         <DownloadButton />
         <ToolbarSeparator />
-        <GoHomeButton className='CustomersActivityGoHomeButton' />
+        <GoHomeButton className='CommandButton' />
     </ToolbarCommands>
 })

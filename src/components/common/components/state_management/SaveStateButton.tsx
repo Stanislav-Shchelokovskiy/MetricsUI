@@ -20,7 +20,7 @@ function SaveStateButton(props: KeyProps) {
     const dispatch = useDispatch()
     const onPopupOkClick = (value: string | undefined) => {
         if (value) {
-            saveState(store.getState(), getStorageItemKey(props.state_salt, value))
+            saveState(store.getState(), getStorageItemKey(props.stateSalt, value))
             dispatch(registerState(value))
         }
         onHiding()

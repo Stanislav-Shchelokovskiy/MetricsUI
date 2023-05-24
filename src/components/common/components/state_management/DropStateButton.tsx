@@ -41,7 +41,7 @@ function DropStatePopup(props: ValuesPopupProps) {
     const onItemDeleted = (e: any) => {
         const key = e.itemData
         dispatch(dropStateAction(key))
-        dropState(getStorageItemKey(props.state_salt, key))
+        dropState(getStorageItemKey(props.stateSalt, key))
     }
 
     return (

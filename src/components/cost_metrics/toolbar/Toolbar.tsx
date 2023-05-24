@@ -1,9 +1,10 @@
 import React from 'react'
-import { Tooltip } from 'devextreme-react/tooltip'
+import { getShareableState } from '../store/Store'
+import StateManagementCommands from '../../common/components/state_management/StateManagementCommands'
 import { Toolbar, ToolbarProps } from '../../common/components/multiset_container/Toolbar/Toolbar'
 import { ToolbarMenu } from '../../common/components/multiset_container/Toolbar/ToolbarMenu'
-import { ToolbarCommands, ToolbarSeparator } from '../../common/components/multiset_container/Toolbar/ToolbarCommands'
-import {FilterTooltip} from './FilterTooltip'
+import { ToolbarCommands } from '../../common/components/multiset_container/Toolbar/ToolbarCommands'
+import { FilterTooltip } from './FilterTooltip'
 
 
 export default function ToolbarWrapper(props: ToolbarProps) {
@@ -14,7 +15,16 @@ export default function ToolbarWrapper(props: ToolbarProps) {
                 menuButtonTooltip={FilterTooltip}
             >
             </ToolbarMenu >
-            <ToolbarCommands />
+            <ToolbarCommandsCached />
         </Toolbar>
     )
 }
+
+const ToolbarCommandsCached = React.memo(() => {
+    return <ToolbarCommands>
+        <StateManagementCommands
+            shareableStateSelector={getShareableState}
+            stateSalt='CostMetrics_'
+        />
+    </ToolbarCommands>
+})

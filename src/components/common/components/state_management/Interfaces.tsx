@@ -1,7 +1,7 @@
 import { PopupProps, ComponentProps } from '../../Interfaces'
 
 interface StorageProps {
-    state_salt: string
+    stateSalt: string
 }
 
 export interface ValuesProps extends StorageProps, ComponentProps {

@@ -10,18 +10,6 @@
     min-width: 70vw;
 }
 
-.CustomersActivityDownloadButton,
-.CustomersActivitySaveStateButton,
-.CustomersActivityDropStateButton,
-.CustomersActivityShareStateButton,
-.CustomersActivityViewStateSelector,
-.CustomersActivityAdvancedSettingsButton,
-.CustomersActivityHelpButton,
-.CustomersActivityGoHomeButton {
-    margin-top: 7px;
-    margin-bottom: 7px;
-}
-
 .CustomersActivity_PeriodSelector {
     margin-bottom: 0px;
     padding-right: 0px;

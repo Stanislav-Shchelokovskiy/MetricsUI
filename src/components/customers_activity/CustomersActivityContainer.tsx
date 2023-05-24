@@ -11,7 +11,7 @@ import ComparisonGraph from './ComparisonGraph'
 import { applyState } from '../common/store/state/Actions'
 import { PullState } from '../common/network_resource_fetcher/FetchState'
 import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
-import ToolbarWrapper from './toolbar/Toolbar'
+import CustomersActivityToolbar from './toolbar/Toolbar'
 
 export function CustomersActivityApplySharedState() {
     const { stateId } = useParams()
@@ -32,7 +32,7 @@ export default function CustomersActivity() {
             className='CustomersActivityContainer'
             plotlyDivId='CustomersActivity_ComparisonGraph'
             sets={Sets}
-            toolbar={ToolbarWrapper}
+            toolbar={CustomersActivityToolbar}
         >
             <div className='CustomersActivityContent'>
                 <CommonSettingsPanel />

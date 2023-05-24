@@ -17,7 +17,7 @@ function DownloadButton() {
         await tryDownloadExcelData(dispatchTaskState, store, onError)
     }
     return <TaskButton
-        className='CustomersActivityDownloadButton'
+        className='CommandButton'
         icon='exportxlsx'
         hint='Download excel'
         task={downloadSetRawData} />

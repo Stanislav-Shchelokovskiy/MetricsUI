@@ -30,7 +30,7 @@ function ShareStateButton(props: StateProps) {
     }
 
     return <TaskButton
-        className='CustomersActivityShareStateButton'
+        className={props.className}
         icon='export'
         hint='Share state'
         task={shareState} />

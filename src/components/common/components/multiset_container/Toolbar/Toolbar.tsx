@@ -7,7 +7,7 @@ export interface ToolbarProps {
 
 export function Toolbar(props: PropsWithChildren<ToolbarProps>) {
     return (
-        < div className='Toolbar'>
+        <div className='Toolbar'>
             {props.children}
         </div>
     )

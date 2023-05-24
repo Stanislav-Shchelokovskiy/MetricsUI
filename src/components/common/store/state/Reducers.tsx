@@ -6,6 +6,10 @@ export interface ViewState {
     stateKeys: Array<string>
 }
 
+export interface ViewStateStore {
+    viewState: ViewState
+}
+
 const INITIAL_VIEW_STATE: ViewState = {
     key: '',
     stateKeys: []

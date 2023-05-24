@@ -10,7 +10,7 @@ export default function StateSelector(props: ValuesProps) {
     const stateNames = useSelector(props.stateNamesSelector)
     const dispatch = useDispatch()
     const onValueChange = ({ itemData }: { itemData: string } | any) => {
-        const state = loadState(getStorageItemKey(props.state_salt, itemData))
+        const state = loadState(getStorageItemKey(props.stateSalt, itemData))
         if (!state)
             return
         dispatch(applyState(state))

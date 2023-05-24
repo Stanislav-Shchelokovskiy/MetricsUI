@@ -26,7 +26,7 @@ export default function AdvancedSettingsButton({ visible }: { visible: boolean }
     const settingsModified = isAnySettingModified({ baselineAlignedMode: baselineAlignedModeEnabled })
     if (visible) {
         return (
-            <div className='CustomersActivityAdvancedSettingsButton'>
+            <div className='CommandButton'>
                 <Button
                     icon='preferences'
                     hint={"Sets' advanced settings" + (settingsModified ? ' (modified)' : '')}
