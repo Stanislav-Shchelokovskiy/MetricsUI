@@ -1,8 +1,9 @@
 import { AnyAction } from '@reduxjs/toolkit'
+import { CustomersActivityShareableState } from './Store'
 import { getDefaultTitle } from '../../common/store/set_container/sets/Defaults'
-import { validateCustomersActivityProperties } from './StoreStateValidator'
-import { getHiddenLegendsReducer, getSetsReducer } from '../../common/store/set_container/ContainerReducer'
-import { getStateReducer } from '../../common/store/set_container/ContainerReducer'
+import { containerValidator } from './StoreStateValidator'
+import { getHiddenLegendsReducer, getSetsCRUDReducer } from '../../common/store/set_container/ContainerReducer'
+import { getViewStateReducer } from '../../common/store/set_container/ViewStateReducer'
 import { getValidComparisonMethodOrDefault } from '../common_settings_panel/ComparisonMethodSelector'
 import { getValidMetricOrDefault } from '../common_settings_panel/MetricSelector'
 import {
@@ -36,16 +37,16 @@ const INITIAL_CUSTOMERS_ACTIVITY_STATE: CustomersActivityState = {
 }
 
 
-export const CustomersActivityReducer = (state: CustomersActivityState = INITIAL_CUSTOMERS_ACTIVITY_STATE, action: AnyAction): CustomersActivityState => {
-    let res = setsReducer(state, action)
+export function CustomersActivityReducer(state: CustomersActivityState = INITIAL_CUSTOMERS_ACTIVITY_STATE, action: AnyAction): CustomersActivityState {
+    let res = setsCRUDReducer(state, action)
     res = hiddenLegendsReducer(res, action)
-    res = stateReducer(res, action)
+    res = viewStateReducer(res, action)
     return customersActivityReducer(res, action)
 }
 
-const setsReducer = getSetsReducer<CustomersActivityState>(INITIAL_CUSTOMERS_ACTIVITY_STATE)
+const setsCRUDReducer = getSetsCRUDReducer<CustomersActivityState>(INITIAL_CUSTOMERS_ACTIVITY_STATE)
 const hiddenLegendsReducer = getHiddenLegendsReducer<CustomersActivityState>()
-const stateReducer = getStateReducer<CustomersActivityState>(validateCustomersActivityProperties)
+const viewStateReducer = getViewStateReducer<CustomersActivityState, CustomersActivityShareableState>(containerValidator)
 
 function customersActivityReducer(state: CustomersActivityState, action: AnyAction): CustomersActivityState {
     switch (action.type) {

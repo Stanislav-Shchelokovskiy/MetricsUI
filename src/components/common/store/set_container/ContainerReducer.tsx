@@ -1,5 +1,7 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { APPLY_STATE } from '../state/Actions'
+import { BaseContainerState } from './Interfaces'
+import { generateSetTitle } from './sets/Utils'
+import { getDefaultTitle } from './sets/Defaults'
 import {
     ADD_SET,
     REMOVE_SET,
@@ -7,17 +9,13 @@ import {
     HIDE_LEGENDS,
 } from './Actions'
 
-import { BaseContainerState } from './Interfaces'
-import { generateNewSetTitle } from './sets/Utils'
-import { getDefaultTitle } from './sets/Defaults'
-
-export function getSetsReducer<ContainerState extends BaseContainerState>(initial_state: ContainerState): (state: ContainerState, action: AnyAction) => ContainerState {
+export function getSetsCRUDReducer<ContainerState extends BaseContainerState>(initial_state: ContainerState): (state: ContainerState, action: AnyAction) => ContainerState {
     return (state: ContainerState, action: AnyAction) => {
         switch (action.type) {
             case ADD_SET:
                 return {
                     ...state,
-                    sets: [...state.sets, generateNewSetTitle(state.sets)]
+                    sets: [...state.sets, generateSetTitle(state.sets)]
                 }
 
             case REMOVE_SET:
@@ -29,7 +27,8 @@ export function getSetsReducer<ContainerState extends BaseContainerState>(initia
                 }
 
             case CHANGE_SET_TITLE:
-                const replace_selector = (x: string) => x !== action.payload.stateId ? x : action.payload.data
+                const setTitle = generateSetTitle(state.sets, action.payload.data)
+                const replace_selector = (x: string) => x !== action.payload.stateId ? x : setTitle
                 return {
                     ...state,
                     sets: state.sets.map(replace_selector),
@@ -60,19 +59,6 @@ export function getHiddenLegendsReducer<ContainerState extends BaseContainerStat
 
             default:
                 return state
-        }
-    }
-}
-
-export function getStateReducer<ContainerState extends BaseContainerState>(stateValidator: (container: ContainerState) => ContainerState): (container: ContainerState, action: AnyAction) => ContainerState {
-    return (container: ContainerState, action: AnyAction) => {
-        switch (action.type) {
-
-            case APPLY_STATE:
-                return stateValidator(action.payload.customersActivity)
-
-            default:
-                return container
         }
     }
 }

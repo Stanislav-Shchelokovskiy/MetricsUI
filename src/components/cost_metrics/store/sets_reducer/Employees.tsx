@@ -1,6 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { Set } from './Interfaces'
-import { 
+import { Set } from '../SetsReducer'
+import {
     updateSetState,
     updateValues,
     updateInclude
@@ -8,8 +8,6 @@ import {
 import {
     CHANGE_EMP_POSITIONS,
     CHANGE_EMP_POSITIONS_INCLUDE,
-    CHANGE_EMP_TENTS,
-    CHANGE_EMP_TENTS_INCLUDE,
     CHANGE_EMP_TRIBES,
     CHANGE_EMP_TRIBES_INCLUDE,
     CHANGE_EMPLOYEES,
@@ -19,22 +17,6 @@ import {
 
 export function employeesReducer(sets: Array<Set>, action: AnyAction): Array<Set> {
     switch (action.type) {
-
-        case CHANGE_EMP_POSITIONS:
-            return updateSetState(action.payload.stateId, sets, (x) => {
-                return {
-                    ...x,
-                    positions: updateValues(x.positions, action.payload.data)
-                }
-            })
-        case CHANGE_EMP_POSITIONS_INCLUDE:
-            return updateSetState(action.payload.stateId, sets, (x) => {
-                return {
-                    ...x,
-                    positions: updateInclude(x.positions, action.payload.data)
-                }
-            })
-
 
         case CHANGE_EMP_TRIBES:
             return updateSetState(action.payload.stateId, sets, (x) => {
@@ -51,19 +33,18 @@ export function employeesReducer(sets: Array<Set>, action: AnyAction): Array<Set
                 }
             })
 
-
-        case CHANGE_EMP_TENTS:
+        case CHANGE_EMP_POSITIONS:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    empTents: updateValues(x.empTents, action.payload.data)
+                    empPositions: updateValues(x.empPositions, action.payload.data)
                 }
             })
-        case CHANGE_EMP_TENTS_INCLUDE:
+        case CHANGE_EMP_POSITIONS_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    empTents: updateInclude(x.empTents, action.payload.data)
+                    empPositions: updateInclude(x.empPositions, action.payload.data)
                 }
             })
 

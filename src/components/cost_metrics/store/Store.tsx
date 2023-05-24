@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { loadState, saveState } from '../../common/LocalStorage'
-// import { CustomersActivityReducer } from './CustomersActivityReducer'
-// import { SetsReducer } from './SetsReducer'
+import { ContainerReducer } from './ContainerReducer'
+import { SetsReducer } from './SetsReducer'
 import { ViewStateReducer } from '../../common/store/state/Reducers'
-// import { validateCustomersActivityProperties } from './StoreStateValidator'
-// import { validateCustomersActivitySetsProperties } from './StoreStateValidator'
+import {
+    containerValidator,
+    setsValidator,
+} from './StoreStateValidator'
 
 
 const currentStateKey = 'cost_metrics'
@@ -12,18 +14,18 @@ const currentStateKey = 'cost_metrics'
 
 export const costMetricsStore = configureStore({
     reducer: {
-        // customersActivity: CustomersActivityReducer,
-        // customersActivitySets: SetsReducer,
+        container: ContainerReducer,
+        sets: SetsReducer,
         viewState: ViewStateReducer,
     },
     preloadedState: loadValidState()
 })
 
 function loadValidState() {
-    const storedState = loadState(currentStateKey)
+    let storedState = loadState(currentStateKey)
     if (storedState !== undefined) {
-        // validateCustomersActivityProperties(storedState.customersActivity)
-        // validateCustomersActivitySetsProperties(storedState.customersActivitySets)
+        storedState.container = containerValidator(storedState)
+        storedState.sets = setsValidator(storedState)
     }
     return storedState
 }
@@ -31,8 +33,16 @@ function loadValidState() {
 
 costMetricsStore.subscribe(() => {
     saveState(costMetricsStore.getState(), currentStateKey);
-});
+})
+
+export function getShareableState(state: CostMetricsStore) {
+    return {
+        container: state.container,
+        sets: state.sets
+    }
+}
 
 
 export type CostMetricsStore = ReturnType<typeof costMetricsStore.getState>
 export type CostMetricsDispatch = typeof costMetricsStore.dispatch
+export type CostMetricsShareableState = ReturnType<typeof getShareableState>

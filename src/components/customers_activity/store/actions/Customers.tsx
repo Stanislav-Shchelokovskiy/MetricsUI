@@ -1,7 +1,7 @@
 import {
     getValuesPayloadAction,
     getIncludePayloadAction
-} from '../../../common/store/set_container/sets/Actions'
+} from '../../../common/store/set_container/sets/actions/Actions'
 
 export const CHANGE_CUSTOMERS_GROUPS = 'customers_activity/change_customers_groups'
 export const changeCustomersGroups = getValuesPayloadAction<string>(CHANGE_CUSTOMERS_GROUPS)

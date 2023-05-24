@@ -1,7 +1,7 @@
 import {
     getValuesPayloadAction,
     getIncludePayloadAction
-} from '../../../common/store/set_container/sets/Actions'
+} from '../../../common/store/set_container/sets/actions/Actions'
 
 export const CHANGE_FIXED_IN = 'customers_activity/change_fixed_id'
 export const changeFixedIn = getValuesPayloadAction<string>(CHANGE_FIXED_IN)

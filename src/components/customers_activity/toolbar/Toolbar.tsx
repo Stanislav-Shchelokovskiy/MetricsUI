@@ -4,7 +4,7 @@ import SaveStateButton from '../../common/components/state_management/SaveStateB
 import StateSelector from '../../common/components/state_management/StateSelector'
 import DropStateButton from '../../common/components/state_management/DropStateButton'
 import ShareStateButton from '../../common/components/state_management/ShareStateButton'
-import { CustomersActivityStore } from '../store/Store'
+import { CustomersActivityStore, getShareableState } from '../store/Store'
 import AdvancedSettingButton from './AdvancedSettingButton'
 import HelpButton from '../../common/components/help/HelpButton'
 import { fetchHelp } from '../network_resource_fetcher/FetchHelp'
@@ -37,12 +37,6 @@ export default function ToolbarWrapper(props: ToolbarProps) {
 const ToolbarCommandsCached = React.memo(() => {
     const stateNamesSelector = (state: CustomersActivityStore) => state.viewState.stateKeys
     const stateNameSelector = (state: CustomersActivityStore) => state.viewState.key
-    const statePropsSelector = (state: CustomersActivityStore) => {
-        return {
-            customersActivity: state.customersActivity,
-            customersActivitySets: state.customersActivitySets
-        }
-    }
     const state_salt = 'CustomersActivity_'
     return <ToolbarCommands>
         <StateSelector
@@ -59,7 +53,7 @@ const ToolbarCommandsCached = React.memo(() => {
             state_salt={state_salt} />
         <ShareStateButton
             className='CustomersActivityShareStateButton'
-            statePropsSelector={statePropsSelector}
+            statePropsSelector={getShareableState}
             state_salt={state_salt} />
         <ToolbarSeparator />
         <DownloadButton />

@@ -1,7 +1,7 @@
 import {
     getValuesPayloadAction,
     getIncludePayloadAction,
-} from '../../../common/store/set_container/sets/Actions'
+} from '../../../common/store/set_container/sets/actions/Actions'
 import { getPayloadAction } from '../../../common/store/Actions'
 
 export const CHANGE_VERSIONS = 'customers_activity/change_versions'

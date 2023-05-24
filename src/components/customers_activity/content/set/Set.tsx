@@ -1,6 +1,6 @@
 import React from 'react'
 import { SetProps } from '../../../common/components/multiset_container/MultisetContainer'
-import Set from '../../../common/components/multiset_container/set/Set'
+import SetWithHeader from '../../../common/components/multiset_container/set/Set'
 import PercentileSelector from './settings_panel/PercentileSelector'
 import TribesSelector from './settings_panel/TribesSelector'
 import TentsSelector from './settings_panel/TentsSelector'
@@ -35,9 +35,9 @@ import ClosedBetweenSelector from './settings_panel/bugs/ClosedBetweenSelector'
 import FixedBetweenSelector from './settings_panel/bugs/FixedBetweenSelector'
 
 
-function SetWrapper({ setTitle }: SetProps) {
+function Set({ setTitle }: SetProps) {
     return (
-        <Set setTitle={setTitle}>
+        <SetWithHeader setTitle={setTitle}>
             <PercentileSelector setTitle={setTitle} />
             <PrivacySelector setTitle={setTitle} />
             <BAMCustomersGroupsSelector setTitle={setTitle} />
@@ -71,8 +71,8 @@ function SetWrapper({ setTitle }: SetProps) {
             <ComponentsSelector setTitle={setTitle} />
             <FeaturesSelector setTitle={setTitle} />
             <CustomersSelector setTitle={setTitle} />
-        </Set>
+        </SetWithHeader>
     )
 }
 
-export default React.memo(SetWrapper)
+export default React.memo(Set)

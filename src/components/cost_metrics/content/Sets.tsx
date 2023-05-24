@@ -5,7 +5,7 @@ import { SettingsSets } from '../../common/components/multiset_container/Multise
 
 
 export default function Sets() {
-    const setSelector = useCallback((state: CostMetricsStore) => [], [])
+    const setSelector = useCallback((state: CostMetricsStore) => state.container.sets, [])
     return <SettingsSets
         setsSelector={setSelector}
         set={Set} />

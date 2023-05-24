@@ -40,16 +40,18 @@ export function updateInclude<T>(obj: FilterParametersNode<T> | undefined, inclu
     }
 }
 
-export function generateNewSetTitle(existingSetsTitles: Array<string>): string {
+export function generateSetTitle(existingSetsTitles: Array<string>, newTitleCandidate: string = ''): string {
     if (!existingSetsTitles.length)
-        return '0'
-    let setsLength = existingSetsTitles.length - 1
-    let isNotUniqueTitle
+        return newTitleCandidate || '0'
+    let setsLength = newTitleCandidate ? -1 : existingSetsTitles.length - 1
+    let isNotUniqueTitle = false
+    let title: string
     do {
         setsLength++
-        isNotUniqueTitle = existingSetsTitles.find(x => x === setsLength.toString()) !== undefined
+        title = (!isNotUniqueTitle && newTitleCandidate) ? newTitleCandidate : (newTitleCandidate + setsLength)
+        isNotUniqueTitle = existingSetsTitles.find(x => x === title) !== undefined
     } while (isNotUniqueTitle)
-    return setsLength.toString()
+    return title
 }
 
 export function allNodesAreConsideredEmpty<T>(...nodes: Array<FilterParametersNode<T> | undefined>): boolean {

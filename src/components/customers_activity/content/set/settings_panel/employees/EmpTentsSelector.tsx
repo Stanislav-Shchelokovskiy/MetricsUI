@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
-import { changeEmpTents, changeEmpTentsInclude } from '../../../../store/actions/Employees'
+import { changeEmpTents, changeEmpTentsInclude } from '../../../../../common/store/set_container/sets/actions/Employees'
 import { fetchEmpTents, EmpTent } from '../../../../network_resource_fetcher/employees/FetchEmptTents'
 
 
