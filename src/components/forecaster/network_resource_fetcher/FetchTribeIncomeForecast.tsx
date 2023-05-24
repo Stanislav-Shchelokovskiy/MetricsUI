@@ -1,4 +1,4 @@
-import FORECASTER_END_POINT from '../../common/EndPoint'
+import { FORECASTER_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 
 
