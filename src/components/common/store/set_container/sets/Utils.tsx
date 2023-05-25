@@ -42,16 +42,22 @@ export function updateInclude<T>(obj: FilterParametersNode<T> | undefined, inclu
 
 export function generateSetTitle(existingSetsTitles: Array<string>, newTitleCandidate: string = ''): string {
     if (!existingSetsTitles.length)
-        return newTitleCandidate || '0'
+        return newTitleCandidate || toFriendlyTitle('0')
     let setsLength = newTitleCandidate ? -1 : existingSetsTitles.length - 1
     let isNotUniqueTitle = false
     let title: string
     do {
         setsLength++
-        title = (!isNotUniqueTitle && newTitleCandidate) ? newTitleCandidate : (newTitleCandidate + setsLength)
+        title = (!isNotUniqueTitle && newTitleCandidate) ? newTitleCandidate : toFriendlyTitle((newTitleCandidate + setsLength))
         isNotUniqueTitle = existingSetsTitles.find(x => x === title) !== undefined
     } while (isNotUniqueTitle)
     return title
+}
+
+export function toFriendlyTitle(title: string) {
+    if (isNaN(parseFloat(title)))
+        return title
+    return `Set ${title}`
 }
 
 export function allNodesAreConsideredEmpty<T>(...nodes: Array<FilterParametersNode<T> | undefined>): boolean {

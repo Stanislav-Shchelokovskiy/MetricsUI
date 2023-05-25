@@ -17,7 +17,8 @@ export function getSetsCRUDReducer<Set extends BaseSet>(default_set: Set, initia
                 return [...sets, { ...baseSet, title: generateSetTitle(sets.map(x => x.title)) }]
 
             case REMOVE_SET:
-                return sets.length < 2 ? initial_sets : sets.filter(set => set.title !== action.payload)
+                const restSets = sets.filter(set => set.title !== action.payload)
+                return restSets.length ? restSets : initial_sets
 
             case CHANGE_SET_TITLE:
                 return updateSetState(action.payload.stateId, sets, (x) => {

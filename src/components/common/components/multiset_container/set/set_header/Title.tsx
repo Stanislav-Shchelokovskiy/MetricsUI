@@ -8,17 +8,10 @@ import { changeSetTitle } from '../../../../store/set_container/Actions'
 export default function Title({ setTitle }: { setTitle: string }) {
     return (
         <div className='SetHeaderTitle'>
-            {toFriendlyTitle(setTitle)}
+            {setTitle}
             <RenameButton setTitle={setTitle} />
         </div>)
 }
-
-export function toFriendlyTitle(title: string) {
-    if (isNaN(parseFloat(title)))
-        return title
-    return `Set ${title}`
-}
-
 
 function RenameButton({ setTitle }: { setTitle: string }) {
     const [inputBoxVisible, setInputBoxVisible] = useState(false)
@@ -46,7 +39,7 @@ function RenameButton({ setTitle }: { setTitle: string }) {
             <InputBox
                 title='New name'
                 visible={inputBoxVisible}
-                value={toFriendlyTitle(setTitle)}
+                value={setTitle}
                 onHiding={onHiding}
                 onOkClick={onPopupOkClick} />
         </React.Fragment>

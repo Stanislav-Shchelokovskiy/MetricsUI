@@ -20,9 +20,10 @@ export function getSetsCRUDReducer<ContainerState extends BaseContainerState>(in
 
             case REMOVE_SET:
                 const remove_selector = (x: string) => x !== action.payload
+                const restSets = state.sets.filter(remove_selector)
                 return {
                     ...state,
-                    sets: state.sets.length < 2 ? [getDefaultTitle()] : state.sets.filter(remove_selector),
+                    sets: restSets.length ? restSets : [getDefaultTitle()],
                     hiddenLegends: state.hiddenLegends.filter(remove_selector)
                 }
 

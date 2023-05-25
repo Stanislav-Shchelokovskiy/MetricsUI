@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { useSelector, useDispatch, useStore } from 'react-redux'
+import { useSelector, useStore } from 'react-redux'
 import { CustomersActivityStore } from './store/Store'
 import { Token } from '../common/Interfaces'
-import { toFriendlyTitle } from '../common/components/multiset_container/set/set_header/Title'
-import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './graph/ComparisonMethodSelector'
 import {
     fetchTicketsWithIterationsAggregates,
     TicketsWithIterationsAggregates
@@ -74,13 +72,12 @@ export default function ComparisonGraph() {
             let aggs: Array<GraphData> = []
             if (periods_array.success) {
                 aggs = sets.map(x => {
-                    const name = toFriendlyTitle(x.data.name)
                     return {
-                        name: name,
+                        name: x.data.name,
                         metric: customersActivityState.metric,
                         x: periods_array.data,
                         y: aggSelector(x.data),
-                        visible: (hiddenLegends.includes(name) ? 'legendonly' : true) as 'legendonly' | boolean | undefined,
+                        visible: (hiddenLegends.includes(x.data.name) ? 'legendonly' : true) as 'legendonly' | boolean | undefined,
                         index: x.data.index
                     }
                 }).sort((a, b) => a.index - b.index)

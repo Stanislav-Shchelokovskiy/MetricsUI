@@ -4,9 +4,10 @@ import {
     getDefaultFilterParametersNode,
     getOptionalDefaultFilterParameterNode,
 } from '../../../common/store/set_container/sets/Defaults'
+import { getDefaultTitle } from '../../../common/store/set_container/sets/Defaults'
 
 export const DEFAULT_SET: Set = {
-    title: '0',
+    title: getDefaultTitle(),
     percentile: getDefaultFilterParameterNode<number>(100),
     ticketsTypes: getDefaultFilterParametersNode<number>([1]),
     privacy: getOptionalDefaultFilterParameterNode<number>(),
