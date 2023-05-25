@@ -1,8 +1,8 @@
 import { FilterParametersNode } from './Interfaces'
-import { BaseSet } from './Interfaces'
+import { BaseSetState } from './Interfaces'
 import { getDefaultFilterParametersNode } from './Defaults'
 
-export function updateSetState<T extends BaseSet>(title: string, state: Array<T>, replaceState: (currState: T) => T): Array<T> {
+export function updateSetState<T extends BaseSetState>(title: string, state: Array<T>, replaceState: (currState: T) => T): Array<T> {
     return state.map((x) => { return x.title === title ? replaceState(x) : x })
 }
 

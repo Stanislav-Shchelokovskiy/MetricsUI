@@ -4,7 +4,7 @@ import FilterBuilder, { CustomOperation } from 'devextreme-react/filter-builder'
 import { CustomersActivityStore } from '../store/Store'
 import { Tooltip } from 'devextreme-react/tooltip'
 import { fetchDisplayFilter } from '../network_resource_fetcher/FetchDisplayFilter'
-import { isTicketsMetricSelected } from '../common_settings_panel/MetricSelector'
+import { isTicketsMetricSelected } from '../../common/components/multiset_container/graph/MetricSelector'
 import { getSetDataFields } from '../store/sets_reducer/SetDescriptor'
 import { TooltipProps } from '../../common/components/multiset_container/Toolbar/ToolbarMenu'
 

@@ -1,5 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { Set } from './Interfaces'
+import { SetState } from './Interfaces'
 import { FilterParametersNode } from '../../../common/store/set_container/sets/Interfaces'
 import { DEFAULT_SET } from './Defaults'
 import { bugIsNotSelected } from '../Utils'
@@ -16,7 +16,7 @@ import {
 } from '../actions/TicketsTypes'
 
 
-export function ticketTypesReducer(sets: Array<Set>, action: AnyAction): Array<Set> {
+export function ticketTypesReducer(sets: Array<SetState>, action: AnyAction): Array<SetState> {
     switch (action.type) {
 
         case CHANGE_TICKETS_TYPES:
@@ -56,17 +56,17 @@ export function ticketTypesReducer(sets: Array<Set>, action: AnyAction): Array<S
     }
 }
 
-function _updateValues(set: Set, newTicketTypes: Array<number> | undefined) {
+function _updateValues(set: SetState, newTicketTypes: Array<number> | undefined) {
     const ticketTypes = updateValues(set.ticketsTypes, newTicketTypes)
     return tryGetBugFreeState(set, ticketTypes)
 }
 
-function _updateInclude(set: Set, newTicketTypesInclude: boolean) {
+function _updateInclude(set: SetState, newTicketTypesInclude: boolean) {
     const ticketTypes = updateInclude(set.ticketsTypes, newTicketTypesInclude)
     return tryGetBugFreeState(set, ticketTypes)
 }
 
-function tryGetBugFreeState(set: Set, ticketTypes: FilterParametersNode<number> | undefined) {
+function tryGetBugFreeState(set: SetState, ticketTypes: FilterParametersNode<number> | undefined) {
     if (bugIsNotSelected(ticketTypes)) {
         return {
             ...set,

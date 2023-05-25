@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react'
 import { changeClosedBy, changeClosedByInclude } from '../../../../store/actions/Bugs'
-import { Set } from '../../../../store/sets_reducer/Interfaces'
+import { SetState } from '../../../../store/sets_reducer/Interfaces'
 import { EmpSelector } from '../employees/EmployeesSelector'
 import { ClosedBugsSelectorWrapper } from './BugsSelectors'
 
 
 export default function ClosedBySelector({ setTitle }: { setTitle: string }) {
-    const valueSelector = useCallback((x: Set | undefined) => x?.closedBy, [])
-    const tribesSelector = useCallback((x: Set | undefined) => x?.tribes, [])
+    const valueSelector = useCallback((x: SetState | undefined) => x?.closedBy, [])
+    const tribesSelector = useCallback((x: SetState | undefined) => x?.tribes, [])
     return <ClosedBugsSelectorWrapper
         Wrapped={EmpSelector}
         setTitle={setTitle}

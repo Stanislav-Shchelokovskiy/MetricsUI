@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, PropsWithChildren, FC } from 'react'
 import { useSelector } from 'react-redux'
-import Drawer from 'devextreme-react/drawer'
 import Plotly from 'plotly.js-basic-dist-min'
+import Drawer from 'devextreme-react/drawer'
 import ScrollView from 'devextreme-react/scroll-view'
 import { ToolbarProps } from './Toolbar/Toolbar'
 
@@ -43,11 +43,10 @@ export default function MultisetContainer(props: PropsWithChildren<MultisetConta
 
     useEffect(() => {
         const timerId = setTimeout(() => {
-            if (props.plotlyDivId !== undefined)
-                Plotly.Plots.resize(props.plotlyDivId)
+            Plotly.Plots.resize('ComparisonGraph')
             clearTimeout(timerId)
         }, 500)
-    }, [opened, props.plotlyDivId])
+    }, [opened])
 
     const showHideMenuCallback = useCallback(() => setOpened(!opened), [opened])
 

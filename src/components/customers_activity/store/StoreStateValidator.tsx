@@ -1,9 +1,9 @@
-import { Set } from './sets_reducer/Interfaces'
+import { SetState } from './sets_reducer/Interfaces'
 import { CustomersActivityShareableState } from './Store'
 import { DEFAULT_SET } from './sets_reducer/Defaults'
 import { CustomersActivityState } from './CustomersActivityReducer'
-import { getValidComparisonMethodOrDefault } from '../graph/ComparisonMethodSelector'
-import { getValidMetricOrDefault } from '../common_settings_panel/MetricSelector'
+import { getValidComparisonMethodOrDefault } from '../../common/components/multiset_container/graph/ComparisonMethodSelector'
+import { getValidMetricOrDefault } from '../../common/components/multiset_container/graph/MetricSelector'
 import { toFriendlyTitle } from '../../common/store/set_container/sets/Utils'
 
 export function containerValidator(state: CustomersActivityShareableState): CustomersActivityState {
@@ -18,7 +18,7 @@ export function containerValidator(state: CustomersActivityShareableState): Cust
     return customersActivity
 }
 
-export function setsValidator(state: CustomersActivityShareableState): Array<Set> {
+export function setsValidator(state: CustomersActivityShareableState): Array<SetState> {
     const customersActivitySets = state.customersActivitySets
     for (const set of customersActivitySets) {
         set.title = toFriendlyTitle(set.title)

@@ -4,7 +4,6 @@ import * as XLSX from 'xlsx'
 import { CustomersActivityStore } from '../store/Store'
 import { fetchTicketsWithIterationsRaw, TicketsWithIterationsRaw } from '../network_resource_fetcher/FetchTicketsWithIterationsRaw'
 import TaskButton from '../../common/components/TaskButton'
-import { isTicketsMetricSelected } from '../common_settings_panel/MetricSelector'
 
 
 function DownloadButton() {
@@ -49,14 +48,7 @@ async function downloadRawData(state: CustomersActivityStore) {
     const customersActivityState = state.customersActivity
     const customersActivitySets = state.customersActivitySets
     let rawData: Array<TicketsWithIterationsRaw> = []
-    let fetchResults = await Promise.all(customersActivitySets.map((set, index) => fetchTicketsWithIterationsRaw(
-        customersActivityState.range[0],
-        customersActivityState.range[1],
-        customersActivityState.baselineAlignedModeEnabled,
-        isTicketsMetricSelected(customersActivityState.metric),
-        set,
-        index,
-    )))
+    let fetchResults = await Promise.all(customersActivitySets.map((set, index) => fetchTicketsWithIterationsRaw(customersActivityState, set, index,)))
     fetchResults.sort((a, b) => a.data.index - b.data.index)
     for (const fetchResult of fetchResults)
         if (fetchResult.success)

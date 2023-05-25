@@ -1,7 +1,7 @@
 import { AnyAction } from '@reduxjs/toolkit'
 import { updateSetState, updateValues, updateInclude } from '../../../common/store/set_container/sets/Utils'
 import { closedIsNotSelected } from '../Utils'
-import { Set } from './Interfaces'
+import { SetState } from './Interfaces'
 import { FilterParametersNode } from '../../../common/store/set_container/sets/Interfaces'
 import {
     CHANGE_FIXED_IN,
@@ -22,7 +22,7 @@ import {
     CHANGE_FIXED_BETWEEN_INCLUDE,
 } from '../actions/Bugs'
 
-export function bugsReducer(sets: Array<Set>, action: AnyAction): Array<Set> {
+export function bugsReducer(sets: Array<SetState>, action: AnyAction): Array<SetState> {
     switch (action.type) {
 
         case CHANGE_FIXED_IN:
@@ -152,17 +152,17 @@ export function bugsReducer(sets: Array<Set>, action: AnyAction): Array<Set> {
     }
 }
 
-function updateTicketStatusesValues(set: Set, newTicketStatuses: Array<string> | undefined) {
+function updateTicketStatusesValues(set: SetState, newTicketStatuses: Array<string> | undefined) {
     const ticketStatuses = updateValues(set.ticketStatuses, newTicketStatuses)
     return tryGetClosedFreeState(set, ticketStatuses)
 }
 
-function updateTicketStatusesInclude(set: Set, newTicketStatusesInclude: boolean) {
+function updateTicketStatusesInclude(set: SetState, newTicketStatusesInclude: boolean) {
     const ticketStatuses = updateInclude(set.ticketStatuses, newTicketStatusesInclude)
     return tryGetClosedFreeState(set, ticketStatuses)
 }
 
-function tryGetClosedFreeState(set: Set, ticketStatuses: FilterParametersNode<string> | undefined) {
+function tryGetClosedFreeState(set: SetState, ticketStatuses: FilterParametersNode<string> | undefined) {
     if (closedIsNotSelected(ticketStatuses)) {
         return {
             ...set,

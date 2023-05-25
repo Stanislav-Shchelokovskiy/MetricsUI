@@ -1,6 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit'
 import { updateSetState, updateValues, updateInclude } from '../../../common/store/set_container/sets/Utils'
-import { Set } from './Interfaces'
+import { SetState } from './Interfaces'
 import {
     CHANGE_REPLIES_TYPES,
     CHANGE_REPLIES_TYPES_INCLUDE,
@@ -11,7 +11,7 @@ import {
 } from '../actions/CAT'
 
 
-export function catReducer(sets: Array<Set>, action: AnyAction): Array<Set> {
+export function catReducer(sets: Array<SetState>, action: AnyAction): Array<SetState> {
     switch (action.type) {
 
         case CHANGE_REPLIES_TYPES:

@@ -1,5 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { Set } from './Interfaces'
+import { SetState } from './Interfaces'
 import { 
     updateSetState,
     updateValues,
@@ -15,7 +15,7 @@ import {
 } from '../actions/SetCommon'
 
 
-export function commonReducer(sets: Array<Set>, action: AnyAction): Array<Set> {
+export function commonReducer(sets: Array<SetState>, action: AnyAction): Array<SetState> {
     switch (action.type) {
 
         case CHANGE_PERCENTILE:

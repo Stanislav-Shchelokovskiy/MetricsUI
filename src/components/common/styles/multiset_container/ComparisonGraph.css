@@ -1,0 +1,41 @@
+.ComparisonGraph_LoadingIndicator {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 10000;
+    display: flex;
+    padding-top: 20vh;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.ComparisonGraph_SettingsPanel {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+    gap: 10px;
+    flex: 1;
+    height: 18vh;
+    min-width: 70vw;
+}
+
+.ComparisonGraph_PeriodSelector {
+    margin-bottom: 0px;
+    padding-right: 0px;
+    margin-right: 0px;
+    flex: 3;
+}
+
+.ComparisonGraph_GroupByPeriodSelector,
+.ComparisonGraph_MetricSelector,
+.ComparisonGraph_ComparisonMethodSelector {
+    min-height: 3rem;
+    height: 3rem;
+    flex: 1;
+}
+
+.ComparisonGraph_ComparisonMethodSelector {
+    margin-right: 10px;
+}

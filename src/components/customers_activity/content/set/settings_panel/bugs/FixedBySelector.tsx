@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react'
 import { changeFixedBy, changeFixedByInclude } from '../../../../store/actions/Bugs'
-import { Set } from '../../../../store/sets_reducer/Interfaces'
+import { SetState } from '../../../../store/sets_reducer/Interfaces'
 import { EmpSelector } from '../employees/EmployeesSelector'
 import BugsSelectorWrapper from './BugsSelectors'
 
 
 export default function FixedBySelector({ setTitle }: { setTitle: string }) {
-    const valueSelector = useCallback((x: Set | undefined) => x?.fixedBy, [])
-    const tribesSelector = useCallback((x: Set | undefined) => x?.tribes, [])
+    const valueSelector = useCallback((x: SetState | undefined) => x?.fixedBy, [])
+    const tribesSelector = useCallback((x: SetState | undefined) => x?.tribes, [])
     return <BugsSelectorWrapper
         Wrapped={EmpSelector}
         setTitle={setTitle}

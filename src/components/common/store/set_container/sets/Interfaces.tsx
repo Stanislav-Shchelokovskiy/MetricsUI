@@ -10,6 +10,6 @@ export interface FilterParameterNode<T> extends FilterNode {
     value: T
 }
 
-export interface BaseSet {
+export interface BaseSetState {
     title: string
 }

@@ -1,11 +1,12 @@
 import { AnyAction } from '@reduxjs/toolkit'
+import { BaseContainerState } from '../../common/store/set_container/Interfaces'
 import { CustomersActivityShareableState } from './Store'
 import { getDefaultTitle } from '../../common/store/set_container/sets/Defaults'
 import { containerValidator } from './StoreStateValidator'
 import { getHiddenLegendsReducer, getSetsCRUDReducer } from '../../common/store/set_container/ContainerReducer'
 import { getViewStateReducer } from '../../common/store/set_container/ViewStateReducer'
-import { getValidComparisonMethodOrDefault } from '../graph/ComparisonMethodSelector'
-import { getValidMetricOrDefault } from '../common_settings_panel/MetricSelector'
+import { getValidComparisonMethodOrDefault } from '../../common/components/multiset_container/graph/ComparisonMethodSelector'
+import { getValidMetricOrDefault } from '../../common/components/multiset_container/graph/MetricSelector'
 import {
     CHANGE_PERIOD,
     CHANGE_GROUP_BY_PERIOD,
@@ -15,14 +16,8 @@ import {
 } from './actions/Common'
 
 
-export interface CustomersActivityState {
-    range: Array<string>
-    groupByPeriod: string
-    metric: string
-    comparisonMethod: string
+export interface CustomersActivityState extends BaseContainerState {
     baselineAlignedModeEnabled: boolean
-    sets: Array<string>
-    hiddenLegends: Array<string>
 }
 
 

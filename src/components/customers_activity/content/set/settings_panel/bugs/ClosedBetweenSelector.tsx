@@ -3,11 +3,11 @@ import { ClosedBugsSelectorWrapper } from './BugsSelectors'
 import BetweenPeriodSelectorWrapper from './BetweenPeriodSelector'
 import { fetchPeriod } from '../../../../network_resource_fetcher/FetchPeriod'
 import { changeClosedBetween, changeClosedBetweenInclude } from '../../../../store/actions/Bugs'
-import { Set } from '../../../../store/sets_reducer/Interfaces'
+import { SetState } from '../../../../store/sets_reducer/Interfaces'
 
 
 export default function ClosedBetweenSelector({ setTitle }: { setTitle: string }) {
-    const valueSelector = useCallback((x: Set | undefined) => x?.closedBetween, [])
+    const valueSelector = useCallback((x: SetState | undefined) => x?.closedBetween, [])
     return <ClosedBugsSelectorWrapper
         Wrapped={BetweenPeriodSelectorWrapper}
         setTitle={setTitle}

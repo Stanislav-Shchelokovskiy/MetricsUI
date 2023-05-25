@@ -1,5 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { Set } from './Interfaces'
+import { SetState } from './Interfaces'
 import { 
     updateSetState,
     updateValues,
@@ -13,7 +13,7 @@ import {
 } from '../actions/PlatformsProducts'
 
 
-export function platformsProductsReducer(sets: Array<Set>, action: AnyAction): Array<Set> {
+export function platformsProductsReducer(sets: Array<SetState>, action: AnyAction): Array<SetState> {
     switch (action.type) {
 
         case CHANGE_PLATFORMS:

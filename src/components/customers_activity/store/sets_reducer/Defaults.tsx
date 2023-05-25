@@ -1,4 +1,4 @@
-import { Set } from './Interfaces'
+import { SetState } from './Interfaces'
 import { 
     getDefaultFilterParameterNode,
     getDefaultFilterParametersNode,
@@ -6,7 +6,7 @@ import {
 } from '../../../common/store/set_container/sets/Defaults'
 import { getDefaultTitle } from '../../../common/store/set_container/sets/Defaults'
 
-export const DEFAULT_SET: Set = {
+export const DEFAULT_SET: SetState = {
     title: getDefaultTitle(),
     percentile: getDefaultFilterParameterNode<number>(100),
     ticketsTypes: getDefaultFilterParametersNode<number>([1]),
@@ -42,4 +42,4 @@ export const DEFAULT_SET: Set = {
     customers: getDefaultFilterParametersNode<string>(),
 }
 
-export const INITIAL_SETS: Array<Set> = [DEFAULT_SET]
+export const INITIAL_SETS: Array<SetState> = [DEFAULT_SET]

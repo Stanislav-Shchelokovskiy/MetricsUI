@@ -1,6 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit'
 import { updateSetState } from '../Utils'
-import { BaseSet } from '../Interfaces'
+import { BaseSetState } from '../Interfaces'
 import { generateSetTitle } from '../Utils'
 import {
     ADD_SET,
@@ -8,7 +8,7 @@ import {
     CHANGE_SET_TITLE,
 } from '../../Actions'
 
-export function getSetsCRUDReducer<Set extends BaseSet>(default_set: Set, initial_sets: Array<Set>): (sets: Array<Set>, action: AnyAction) => Array<Set> {
+export function getSetsCRUDReducer<Set extends BaseSetState>(default_set: Set, initial_sets: Array<Set>): (sets: Array<Set>, action: AnyAction) => Array<Set> {
     return (sets: Array<Set>, action: AnyAction) => {
         switch (action.type) {
 

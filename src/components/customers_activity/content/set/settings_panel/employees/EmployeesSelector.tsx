@@ -8,27 +8,27 @@ import { changeEmployees, changeEmployeesInclude } from '../../../../../common/s
 import { fetchEmployees, Employee } from '../../../../network_resource_fetcher/employees/FetchEmployees'
 import { FilterParametersNode } from '../../../../../common/store/set_container/sets/Interfaces'
 import { paramOrDefault } from '../../../../../common/store/set_container/sets/Utils'
-import { Set } from '../../../../store/sets_reducer/Interfaces'
+import { SetState } from '../../../../store/sets_reducer/Interfaces'
 
 export interface EmpSelectorProps {
     setTitle: string
     className: string
     placeholder: string
     label: string
-    valueSelector: (x: Set | undefined) => FilterParametersNode<string> | undefined
+    valueSelector: (x: SetState | undefined) => FilterParametersNode<string> | undefined
     changeSelection: (payload: Payload<string, Array<string>>) => PayloadAction<Payload<string, Array<string>>>
     changeInclude: (payload: Payload<string, boolean>) => PayloadAction<Payload<string, boolean>>
-    positionsSelector: (x: Set | undefined) => FilterParametersNode<string> | undefined
-    tribesSelector: (x: Set | undefined) => FilterParametersNode<string> | undefined
-    tentsSelector: (x: Set | undefined) => FilterParametersNode<string> | undefined
+    positionsSelector: (x: SetState | undefined) => FilterParametersNode<string> | undefined
+    tribesSelector: (x: SetState | undefined) => FilterParametersNode<string> | undefined
+    tentsSelector: (x: SetState | undefined) => FilterParametersNode<string> | undefined
 }
 
 
 export default function EmployeesSelector({ setTitle }: { setTitle: string }) {
-    const valueSelector = useCallback((x: Set | undefined) => x?.employees, [])
-    const positionsSelector = useCallback((x: Set | undefined) => x?.positions, [])
-    const tribesSelector = useCallback((x: Set | undefined) => x?.empTribes, [])
-    const tentsSelector = useCallback((x: Set | undefined) => x?.empTents, [])
+    const valueSelector = useCallback((x: SetState | undefined) => x?.employees, [])
+    const positionsSelector = useCallback((x: SetState | undefined) => x?.positions, [])
+    const tribesSelector = useCallback((x: SetState | undefined) => x?.empTribes, [])
+    const tentsSelector = useCallback((x: SetState | undefined) => x?.empTents, [])
     return <EmpSelector
         setTitle={setTitle}
         className='CustomersActivity_EmployeesSelector'

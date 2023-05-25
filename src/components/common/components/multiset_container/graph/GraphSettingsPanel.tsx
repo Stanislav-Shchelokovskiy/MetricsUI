@@ -2,12 +2,12 @@ import React from 'react'
 import PeriodSelector from './PeriodSelector'
 import GroupByPeriodSelector from './GroupByPeriodSelector'
 import MetricSelector from './MetricSelector'
-import ComparisonMethodSelector from '../graph/ComparisonMethodSelector'
+import ComparisonMethodSelector from './ComparisonMethodSelector'
 
 
-function CommonSettingsPanel() {
+function GraphSettingsPanel() {
     return (
-        <div className='CustomersActivity_CommonSettingsPanel'>
+        <div className='ComparisonGraph_SettingsPanel'>
             <PeriodSelector />
             <GroupByPeriodSelector />
             <MetricSelector />
@@ -16,4 +16,4 @@ function CommonSettingsPanel() {
     )
 }
 
-export default React.memo(CommonSettingsPanel)
+export default React.memo(GraphSettingsPanel)

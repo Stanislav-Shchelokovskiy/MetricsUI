@@ -7,14 +7,14 @@ import { DataSourceProps } from '../../../../../common/hooks/UseDataSource'
 import RangePeriodSelector, { RangeSelectorProps } from '../../../../../common/components/RangePeriodSelector'
 import Button, { getClearButtonOptions, getIncludeButtonOptions } from '../../../../../common/components/Button'
 import { CustomersActivityStore } from '../../../../store/Store'
-import { Set } from '../../../../store/sets_reducer/Interfaces'
+import { SetState } from '../../../../store/sets_reducer/Interfaces'
 import { FilterParametersNode } from '../../../../../common/store/set_container/sets/Interfaces'
 
 interface Props extends DataSourceProps<string> {
     className: string
     label: string
     setTitle: string
-    valueSelector: (x: Set | undefined) => FilterParametersNode<string> | undefined
+    valueSelector: (x: SetState | undefined) => FilterParametersNode<string> | undefined
     changeSelection: (payload: Payload<string, Array<string>>) => PayloadAction<Payload<string, Array<string>>>
     changeInclude: (payload: Payload<string, boolean>) => PayloadAction<Payload<string, boolean>>
 }

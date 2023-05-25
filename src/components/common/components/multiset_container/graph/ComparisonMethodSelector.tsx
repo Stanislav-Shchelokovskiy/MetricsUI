@@ -1,7 +1,7 @@
 import React from 'react'
-import OptionSelector from '../../common/components/OptionSelector'
-import { CustomersActivityStore } from '../store/Store'
-import { changeComparisonMethod } from '../store/actions/Common'
+import OptionSelector from '../../OptionSelector'
+import { CustomersActivityStore } from '../../../../customers_activity/store/Store'
+import { changeComparisonMethod } from '../../../../customers_activity/store/actions/Common'
 
 
 const ABSOLUTE_BAR = 'Absolute (Bar)'
@@ -28,7 +28,7 @@ export default function ComparisonMethodSelector() {
     const valueSelector = (store: CustomersActivityStore) => store.customersActivity.comparisonMethod
     return (
         <OptionSelector
-            className='CustomersActivity_ComparisonMethodSelector'
+            className='ComparisonGraph_ComparisonMethodSelector'
             dataSource={comparisonMethods}
             valueSelector={valueSelector}
             onValueChange={changeComparisonMethod}

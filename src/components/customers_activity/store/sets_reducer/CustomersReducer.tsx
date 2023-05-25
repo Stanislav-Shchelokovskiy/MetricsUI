@@ -1,5 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { Set } from './Interfaces'
+import { SetState } from './Interfaces'
 import { 
     updateSetState,
     updateValues,
@@ -18,7 +18,7 @@ import {
 import { CHANGE_BASELINE_ALIGNED_MODE } from '../actions/Common'
 
 
-export function customersReducer(sets: Array<Set>, action: AnyAction): Array<Set> {
+export function customersReducer(sets: Array<SetState>, action: AnyAction): Array<SetState> {
     switch (action.type) {
 
         case CHANGE_CUSTOMERS_GROUPS:

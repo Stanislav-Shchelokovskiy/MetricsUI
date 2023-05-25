@@ -1,7 +1,7 @@
-import { BaseSet } from '../../../common/store/set_container/sets/Interfaces'
+import { BaseSetState } from '../../../common/store/set_container/sets/Interfaces'
 import { FilterParameterNode, FilterParametersNode } from '../../../common/store/set_container/sets/Interfaces'
 
-export interface Set extends BaseSet {
+export interface SetState extends BaseSetState {
     percentile: FilterParameterNode<number>
     privacy: FilterParameterNode<number> | undefined
     tribes: FilterParametersNode<string> | undefined

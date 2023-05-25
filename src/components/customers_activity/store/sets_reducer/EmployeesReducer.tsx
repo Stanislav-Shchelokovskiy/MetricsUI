@@ -1,5 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { Set } from './Interfaces'
+import { SetState } from './Interfaces'
 import { 
     updateSetState,
     updateValues,
@@ -17,7 +17,7 @@ import {
 } from '../../../common/store/set_container/sets/actions/Employees'
 
 
-export function employeesReducer(sets: Array<Set>, action: AnyAction): Array<Set> {
+export function employeesReducer(sets: Array<SetState>, action: AnyAction): Array<SetState> {
     switch (action.type) {
 
         case CHANGE_EMP_POSITIONS:

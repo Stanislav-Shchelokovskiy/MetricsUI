@@ -1,7 +1,7 @@
 import React from 'react'
-import OptionSelector from '../../common/components/OptionSelector'
-import { changeMetric } from '../store/actions/Common'
-import { CustomersActivityStore } from '../store/Store'
+import OptionSelector from '../../OptionSelector'
+import { changeMetric } from '../../../../customers_activity/store/actions/Common'
+import { CustomersActivityStore } from '../../../../customers_activity/store/Store'
 
 
 const TICKETS = 'Tickets'
@@ -34,7 +34,7 @@ export default function MetricSelector() {
     const valueSelector = (store: CustomersActivityStore) => store.customersActivity.metric
 
     return <OptionSelector
-        className='CustomersActivity_MetricSelector'
+        className='ComparisonGraph_MetricSelector'
         dataSource={metrics}
         valueSelector={valueSelector}
         onValueChange={changeMetric}

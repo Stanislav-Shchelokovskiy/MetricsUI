@@ -1,0 +1,47 @@
+.Toolbar,
+.ToolbarMenu,
+.ToolbarCommands {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+}
+
+.Toolbar {
+    background-color: rgba(246, 246, 246, 0.5);
+    justify-content: flex-start;
+}
+
+
+.ToolbarMenu {
+    gap: 12px;
+    padding-left: 1%;
+    padding-right: 1%;
+    width: 27vw;
+    gap: 12px;
+}
+
+.ToolbarCommands {
+    gap: 12px;
+    justify-content: flex-end;
+    padding-right: 12px;
+    flex: 1;
+}
+
+.ToolbarSeparator {
+    background-color: rgb(221, 221, 221);
+    width: 2px;
+    border-radius: 25px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.ToolbarMenuButton,
+.ToolbarSeparator,
+.CommandButton,
+.CommandButtonStateSelector,
+.CommandButtonSaveStateButton,
+.CommandButtonDropStateButton,
+.CommandButtonShareStateButton {
+    margin-top: 7px;
+    margin-bottom: 7px;
+}

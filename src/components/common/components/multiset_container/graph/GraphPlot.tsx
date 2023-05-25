@@ -1,8 +1,8 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 import Plot from 'react-plotly.js'
 import { Data as PlotData, PlotType } from 'plotly.js'
-import { useDispatch } from 'react-redux'
-import { hideLegends } from '../../common/store/set_container/Actions'
+import { hideLegends } from '../../../store/set_container/Actions'
 import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './ComparisonMethodSelector'
 
 interface LegendClickArgs {
@@ -10,6 +10,7 @@ interface LegendClickArgs {
 }
 
 interface PlotProps {
+    categories: Array<string> | Array<number>
     aggs: Array<GraphData>
     comparisonMethod: string
 }
@@ -33,16 +34,15 @@ export default function GraphPlot(props: PlotProps) {
         return true
     }, [])
 
-    const categories = useMemo(() => props.aggs.length > 0 ? props.aggs[0].x : [], [props.aggs])
     return (
         <Plot
-            divId='CustomersActivity_ComparisonGraph'
-            className='CustomersActivity_ComparisonGraph'
+            divId='ComparisonGraph'
+            className='ComparisonGraph'
             data={getPlots(props)}
             useResizeHandler={true}
             layout={{
                 margin: { t: 10, l: 30, r: 10, b: 30 },
-                xaxis: { autorange: true, automargin: true, type: 'category', categoryorder: 'array', categoryarray: categories },
+                xaxis: { autorange: true, automargin: true, type: 'category', categoryorder: 'array', categoryarray: props.categories },
                 yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: true },
                 barmode: 'group',
                 paper_bgcolor: 'rgba(0,0,0,0)',

@@ -1,7 +1,7 @@
-import { Set } from "./Interfaces"
+import { SetState } from "./Interfaces"
 import { DEFAULT_SET } from "./Defaults"
 
-export function getAliasedSet(set: Set) {
+export function getAliasedSet(set: SetState) {
     return {
         Percentile: set.percentile,
         Privacy: set.privacy,

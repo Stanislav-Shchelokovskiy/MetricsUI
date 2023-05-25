@@ -1,5 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { BaseSet } from '../../common/store/set_container/sets/Interfaces'
+import { BaseSetState } from '../../common/store/set_container/sets/Interfaces'
 import { CostMetricsShareableState } from './Store'
 import { getViewStateReducer } from '../../common/store/set_container/ViewStateReducer'
 import { getSetsCRUDReducer } from '../../common/store/set_container/sets/reducers/SetsCRUDReducer'
@@ -8,7 +8,7 @@ import { FilterParametersNode } from '../../common/store/set_container/sets/Inte
 import { getDefaultFilterParametersNode } from '../../common/store/set_container/sets/Defaults'
 import { employeesReducer } from './sets_reducer/Employees'
 
-export interface Set extends BaseSet {
+export interface Set extends BaseSetState {
     empPositions: FilterParametersNode<string> | undefined
     empTribes: FilterParametersNode<string> | undefined
     employees: FilterParametersNode<string> | undefined

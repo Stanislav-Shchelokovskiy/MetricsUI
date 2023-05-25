@@ -1,14 +1,11 @@
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
+import { CustomersActivityState } from '../store/CustomersActivityReducer'
 import { anyValueIsEmpty } from '../../common/store/set_container/sets/Utils'
 
-export async function fetchPeriodsArray(
-    groupByPeriod: string,
-    rangeStart: string,
-    rangeEnd: string,
-    baselineAlignedModeEnabled: boolean,
-): Promise<FetchResult<Array<string>>> {
-    if (anyValueIsEmpty(groupByPeriod, rangeStart, rangeEnd))
+export async function fetchPeriodsArray(containerState: CustomersActivityState): Promise<FetchResult<Array<string>>> {
+    const [rangeStart, rangeEnd] = containerState.range
+    if (anyValueIsEmpty(containerState.groupByPeriod, rangeStart, rangeEnd))
         return {
             success: true,
             data: []
@@ -17,9 +14,9 @@ export async function fetchPeriodsArray(
         let periods = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_periods_array?` +
             `start=${rangeStart}` +
             `&end=${rangeEnd}` +
-            `&format=${groupByPeriod}`
+            `&format=${containerState.groupByPeriod}`
         ).then(response => response.json())
-        if (baselineAlignedModeEnabled)
+        if (containerState.baselineAlignedModeEnabled)
             periods = (periods as Array<string>).map((x, index) => (index + 1).toString())
         return {
             success: true,

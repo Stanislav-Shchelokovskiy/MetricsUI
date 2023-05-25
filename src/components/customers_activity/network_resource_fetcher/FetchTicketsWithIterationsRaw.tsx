@@ -1,7 +1,9 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { Set } from '../store/sets_reducer/Interfaces'
+import { SetState } from '../store/sets_reducer/Interfaces'
 import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
+import { CustomersActivityState } from '../store/CustomersActivityReducer'
+import { isTicketsMetricSelected } from '../../common/components/multiset_container/graph/MetricSelector'
 
 export interface TicketsWithIterationsRaw {
     user_id: string
@@ -38,25 +40,23 @@ const EMPTY_TICKETS_WITH_ITERATIONS_RAW_SET = {
 }
 
 export async function fetchTicketsWithIterationsRaw(
-    rangeStart: string,
-    rangeEnd: string,
-    baselineAlignedModeEnabled: boolean,
-    isTicketsMetricSelected: boolean,
-    set: Set,
+    containerState: CustomersActivityState,
+    set: SetState,
     index: number,
 ): Promise<FetchResult<TicketsWithIterationsRawSet>> {
     try {
+        const [rangeStart, rangeEnd] = containerState.range
         const raw_data: Array<TicketsWithIterationsRaw> = await fetch(
             `${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_raw?` +
             `&range_start=${rangeStart}` +
             `&range_end=${rangeEnd}` +
-            `&baseline_aligned_mode_enabled=${baselineAlignedModeEnabled}`,
+            `&baseline_aligned_mode_enabled=${containerState.baselineAlignedModeEnabled}`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     ...getAliasedSet(set),
-                    Percentile: { metric: (isTicketsMetricSelected ? 'tickets' : 'iterations'), value: set.percentile }
+                    Percentile: { metric: (isTicketsMetricSelected(containerState.metric) ? 'tickets' : 'iterations'), value: set.percentile }
                 }),
             },
         ).then(response => response.json())
