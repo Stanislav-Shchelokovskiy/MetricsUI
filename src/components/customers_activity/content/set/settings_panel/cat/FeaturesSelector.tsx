@@ -4,15 +4,15 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeFeatures, changeFeaturesInclude } from '../../../../store/actions/CAT'
 import { fetchFeatures, Feature } from '../../../../network_resource_fetcher/cat/FetchFeatures'
-import { paramOrDefault } from '../../../../../common/store/set_container/sets/Utils'
+import { paramOrDefault } from '../../../../../common/store/multiset_container/sets/Utils'
 
 
 export default function FeaturesSelector({ setTitle }: { setTitle: string }) {
-    const tentsNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tents)
-    const componentsNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.components)
+    const tentsNode = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.tents)
+    const componentsNode = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.components)
     const fetchArgs = [paramOrDefault(tentsNode), paramOrDefault(componentsNode)]
 
-    const value = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.features)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.features)
     const onValueChange = (allValues: Array<Feature>, values: Array<string>) => changeFeatures({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeFeaturesInclude({ stateId: setTitle, data: include })
 

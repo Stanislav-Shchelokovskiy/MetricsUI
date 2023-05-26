@@ -7,7 +7,7 @@ import { fetchOperatingSystems, OS } from '../../../../network_resource_fetcher/
 
 
 export default function OsSelector({ setTitle }: { setTitle: string }) {
-    const value = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.operatingSystems)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.operatingSystems)
     const onValueChange = (allValues: Array<OS>, values: Array<string>) => changeOperatingSystems({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeOperatingSystemsInclude({ stateId: setTitle, data: include })
 

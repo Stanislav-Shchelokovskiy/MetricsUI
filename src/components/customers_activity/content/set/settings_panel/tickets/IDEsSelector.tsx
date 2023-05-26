@@ -7,7 +7,7 @@ import { fetchIDEs, IDE } from '../../../../network_resource_fetcher/tickets/Fet
 
 
 export default function IDEsSelector({ setTitle }: { setTitle: string }) {
-    const value = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.ides)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.ides)
     const onValueChange = (allValues: Array<IDE>, values: Array<string>) => changeIDEs({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeIDEsInclude({ stateId: setTitle, data: include })
 

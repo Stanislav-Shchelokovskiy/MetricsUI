@@ -4,13 +4,13 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeComponents, changeComponentsInclude } from '../../../../store/actions/CAT'
 import { fetchComponents, Component } from '../../../../network_resource_fetcher/cat/FetchComponents'
-import { paramOrDefault } from '../../../../../common/store/set_container/sets/Utils'
+import { paramOrDefault } from '../../../../../common/store/multiset_container/sets/Utils'
 
 export default function ComponentsSelector({ setTitle }: { setTitle: string }) {
 
-    const tentsNode = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.tents)
+    const tentsNode = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.tents)
     const fetchArgs = [paramOrDefault(tentsNode)]
-    const value = useSelector((store: CustomersActivityStore) =>store.customersActivitySets.find(x => x.title === setTitle)?.components)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.components)
 
     const onValueChange = (allValues: Array<Component>, values: Array<string>) => changeComponents({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeComponentsInclude({ stateId: setTitle, data: include })

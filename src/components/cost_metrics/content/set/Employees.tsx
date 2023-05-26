@@ -1,21 +1,21 @@
 import React, { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { PayloadAction } from '@reduxjs/toolkit'
+import { CostMetricsStore } from '../../store/Store'
+import { SetState } from '../../store/SetsReducer'
 import { Payload } from '../../../common/Interfaces'
 import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
-import { CostMetricsStore } from '../../store/Store'
-import { changeEmployees, changeEmployeesInclude } from '../../../common/store/set_container/sets/actions/Employees'
+import { changeEmployees, changeEmployeesInclude } from '../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchEmployees, Employee } from '../../network_resource_fetcher/Employees'
-import { FilterParametersNode } from '../../../common/store/set_container/sets/Interfaces'
+import { FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
 //import { paramOrDefault } from '../../../common/store/set_container/sets/Utils'
-import { Set } from '../../store/SetsReducer'
 
 export interface EmpSelectorProps {
     setTitle: string
     className: string
     placeholder: string
     label: string
-    valueSelector: (x: Set | undefined) => FilterParametersNode<string> | undefined
+    valueSelector: (x: SetState | undefined) => FilterParametersNode<string> | undefined
     changeSelection: (payload: Payload<string, Array<string>>) => PayloadAction<Payload<string, Array<string>>>
     changeInclude: (payload: Payload<string, boolean>) => PayloadAction<Payload<string, boolean>>
     // positionsSelector: (x: Set | undefined) => FilterParametersNode<string> | undefined
@@ -25,7 +25,7 @@ export interface EmpSelectorProps {
 
 
 export default function EmployeesSelector({ setTitle }: { setTitle: string }) {
-    const valueSelector = useCallback((x: Set | undefined) => x?.employees, [])
+    const valueSelector = useCallback((x: SetState | undefined) => x?.employees, [])
     // const positionsSelector = useCallback((x: Set | undefined) => x?.positions, [])
     // const tribesSelector = useCallback((x: Set | undefined) => x?.empTribes, [])
     // const tentsSelector = useCallback((x: Set | undefined) => x?.empTents, [])

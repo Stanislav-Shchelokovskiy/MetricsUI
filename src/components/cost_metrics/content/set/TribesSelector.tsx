@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { CostMetricsStore } from '../../store/Store'
-import { changeEmpTribes, changeEmpTribesInclude } from '../../../common/store/set_container/sets/actions/Employees'
+import { changeEmpTribes, changeEmpTribesInclude } from '../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchTribes, Tribe } from '../../network_resource_fetcher/Tribes'
 
 

@@ -22,8 +22,8 @@ export const FilterTooltip = React.memo(({ visible, target }: TooltipProps) => {
 })
 
 const FilterLabel = React.memo(() => {
-    const metric = useSelector((store: CustomersActivityStore) => store.customersActivity.metric)
-    const customersActivitySets = useSelector((store: CustomersActivityStore) => store.customersActivitySets)
+    const metric = useSelector((store: CustomersActivityStore) => store.container.metric)
+    const customersActivitySets = useSelector((store: CustomersActivityStore) => store.sets)
 
     const fields = useMemo(() => getSetDataFields(), [])
 

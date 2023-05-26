@@ -8,7 +8,7 @@ import BugsSelectorWrapper from './BugsSelectors'
 
 
 export default function SeveritySelector({ setTitle }: { setTitle: string }) {
-    const value = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.severity)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.severity)
     const onValueChange = (allValues: Array<Severity>, values: Array<string>) => changeSeverity({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeSeverityInclude({ stateId: setTitle, data: include })
 

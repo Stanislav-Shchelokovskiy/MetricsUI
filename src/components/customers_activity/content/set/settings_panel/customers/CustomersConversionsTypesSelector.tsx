@@ -7,10 +7,10 @@ import { fetchConversionStatuses, ConversionStatus } from '../../../../network_r
 
 
 export default function CustomersConversionsTypesSelector({ setTitle }: { setTitle: string }) {
-    const customersTypeNode = useSelector((store: CustomersActivityStore) =>store.customersActivitySets.find(x => x.title === setTitle)?.customersTypes)
+    const customersTypeNode = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.customersTypes)
     const fetchArgs = [customersTypeNode]
 
-    const value = useSelector((store: CustomersActivityStore) =>store.customersActivitySets.find(x => x.title === setTitle)?.conversionsTypes)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.conversionsTypes)
     const onValueChange = (allValues: Array<ConversionStatus>, values: Array<number>) => changeConversionsTypes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeConversionsTypesInclude({ stateId: setTitle, data: include })
 

@@ -1,31 +1,45 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { CostMetricsShareableStore } from './Store'
 import { BaseContainerState } from '../../common/store/multiset_container/Interfaces'
+import { CustomersActivityShareableStore } from './Store'
 import { getDefaultTitle } from '../../common/store/multiset_container/sets/Defaults'
-import { getContainerReducer } from '../../common/store/multiset_container/ContainerReducerFactory'
 import { containerValidator } from './StoreStateValidator'
+import { getContainerReducer } from '../../common/store/multiset_container/ContainerReducerFactory'
 import { getValidComparisonMethodOrDefault } from '../../common/components/multiset_container/graph/ComparisonMethodSelector'
 import { getValidMetricOrDefault } from '../../common/components/multiset_container/graph/MetricSelector'
+import { CHANGE_BASELINE_ALIGNED_MODE } from './actions/Common'
 
 
-export interface ContainerState extends BaseContainerState { }
+export interface ContainerState extends BaseContainerState {
+    baselineAlignedModeEnabled: boolean
+}
 
-const INITIAL_CONTAINER_STATE: ContainerState = {
+const INITIAL_CUSTOMERS_ACTIVITY_STATE: ContainerState = {
     range: Array<string>(),
     groupByPeriod: 'takeFromValues',
     metric: getValidMetricOrDefault(undefined),
     comparisonMethod: getValidComparisonMethodOrDefault(undefined),
+    baselineAlignedModeEnabled: false,
     sets: [getDefaultTitle()],
     hiddenLegends: Array<string>()
 }
 
-export const containerReducer = (state: ContainerState = INITIAL_CONTAINER_STATE, action: PayloadAction<any>): ContainerState => {
+export function containerReducer(state: ContainerState = INITIAL_CUSTOMERS_ACTIVITY_STATE, action: PayloadAction<any>): ContainerState {
     let res = containerReducerDefault(state, action)
     return customOptionsReducer(res, action)
 }
 
-const containerReducerDefault = getContainerReducer<ContainerState, CostMetricsShareableStore>(INITIAL_CONTAINER_STATE, containerValidator)
+const containerReducerDefault = getContainerReducer<ContainerState, CustomersActivityShareableStore>(INITIAL_CUSTOMERS_ACTIVITY_STATE, containerValidator)
 
 function customOptionsReducer(state: ContainerState, action: PayloadAction<any>): ContainerState {
-    return state
+    switch (action.type) {
+
+        case CHANGE_BASELINE_ALIGNED_MODE:
+            return {
+                ...state,
+                baselineAlignedModeEnabled: action.payload
+            }
+
+        default:
+            return state
+    }
 }

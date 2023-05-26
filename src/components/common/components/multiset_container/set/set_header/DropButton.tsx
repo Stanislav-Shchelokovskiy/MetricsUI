@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import Button from '../../../Button'
-import { removeSet } from '../../../../store/set_container/Actions'
+import { removeSet } from '../../../../store/multiset_container/Actions'
 
 
 export default function DropButton({ setTitle }: { setTitle: string }) {

@@ -1,6 +1,10 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { updateSetState, updateValues, updateInclude } from '../../../common/store/set_container/sets/Utils'
 import { SetState } from './Interfaces'
+import { 
+    updateSetState,
+    updateValues,
+    updateInclude
+} from '../../../common/store/multiset_container/sets/Utils'
 import {
     CHANGE_REPLIES_TYPES,
     CHANGE_REPLIES_TYPES_INCLUDE,

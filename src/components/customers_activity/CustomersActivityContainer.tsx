@@ -33,7 +33,6 @@ export default function CustomersActivity() {
     return (
         <MultisetContainer
             className='CustomersActivityContainer'
-            plotlyDivId='CustomersActivity_ComparisonGraph'
             sets={Sets}
             toolbar={CustomersActivityToolbar}
         >

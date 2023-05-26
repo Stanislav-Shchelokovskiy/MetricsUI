@@ -7,7 +7,7 @@ import { fetchLicenseStatuses, LicenseStatus } from '../../../../network_resourc
 
 
 export default function CustomersTypesSelector({ setTitle }: { setTitle: string }) {
-    const value = useSelector((store: CustomersActivityStore) =>store.customersActivitySets.find(x => x.title === setTitle)?.customersTypes)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.customersTypes)
     const onValueChange = (allValues: Array<LicenseStatus>, values: Array<number>) => changeCustomersTypes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeCustomersTypesInclude({ stateId: setTitle, data: include })
 

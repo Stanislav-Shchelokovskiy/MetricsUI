@@ -7,7 +7,7 @@ import { fetchTicketsTags, TicketsTag } from '../../../../network_resource_fetch
 
 
 export default function TicketsTagsSelector({ setTitle }: { setTitle: string }) {
-    const value = useSelector((store: CustomersActivityStore) =>store.customersActivitySets.find(x => x.title === setTitle)?.ticketsTags)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.ticketsTags)
     const onValueChange = (allValues: Array<TicketsTag>, values: Array<string>) => changeTicketsTags({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTicketsTagsInclude({ stateId: setTitle, data: include })
 

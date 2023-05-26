@@ -7,7 +7,7 @@ import { fetchRepliesTypes, ReplyType } from '../../../../network_resource_fetch
 
 
 export default function ReplyTypesSelector({ setTitle }: { setTitle: string }) {
-    const value = useSelector((store: CustomersActivityStore) =>store.customersActivitySets.find(x => x.title === setTitle)?.repliesTypes)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.repliesTypes)
     const onValueChange = (allValues: Array<ReplyType>, values: Array<string>) => changeRepliesTypes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeRepliesTypesInclude({ stateId: setTitle, data: include })
 

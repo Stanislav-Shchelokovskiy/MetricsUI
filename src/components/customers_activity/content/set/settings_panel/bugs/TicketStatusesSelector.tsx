@@ -8,7 +8,7 @@ import BugsSelectorWrapper from './BugsSelectors'
 
 
 export default function TicketStatusesSelector({ setTitle }: { setTitle: string }) {
-    const value = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.ticketStatuses)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.ticketStatuses)
     const onValueChange = (allValues: Array<TicketStatus>, values: Array<string>) => changeTicketStatuses({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTicketStatusesInclude({ stateId: setTitle, data: include })
 

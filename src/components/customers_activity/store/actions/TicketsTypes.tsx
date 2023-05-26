@@ -1,7 +1,7 @@
 import {
     getValuesPayloadAction,
     getIncludePayloadAction,
-} from '../../../common/store/set_container/sets/actions/Actions'
+} from '../../../common/store/multiset_container/sets/actions/Actions'
 
 export const CHANGE_TICKETS_TYPES = 'customers_activity/change_tickets_types'
 export const changeTicketsTypes = getValuesPayloadAction<number>(CHANGE_TICKETS_TYPES)

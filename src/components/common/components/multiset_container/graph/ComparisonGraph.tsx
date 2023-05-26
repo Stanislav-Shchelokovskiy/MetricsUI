@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import FetchResult, { Token } from '../../../Interfaces'
-import { BaseContainerState } from '../../../store/set_container/Interfaces'
-import { BaseSetState } from '../../../store/set_container/sets/Interfaces'
+import { MultisetContainerStore } from '../../../store/multiset_container/Store'
+import { BaseContainerState } from '../../../store/multiset_container/Interfaces'
+import { BaseSetState } from '../../../store/multiset_container/sets/Interfaces'
 import LoadIndicator from '../../LoadIndicator'
 import GraphPlot, { GraphData } from './GraphPlot'
 
@@ -12,19 +13,17 @@ interface BaseAgg {
     periods: Array<string> | Array<number>
 }
 
-interface ComparisonGraphProps<StoreT, ContainerT extends BaseContainerState, SetT extends BaseSetState, AggT extends BaseAgg> {
+interface ComparisonGraphProps<ContainerStateT extends BaseContainerState, SetStateT extends BaseSetState, AggT extends BaseAgg> {
     className: string
-    containerSelector: (store: StoreT) => ContainerT
-    setsSelector: (store: StoreT) => Array<SetT>
-    aggSelector: (container: ContainerT, agg: AggT) => Array<number>
-    fetchPeriods: (container: ContainerT) => Promise<FetchResult<Array<string> | Array<number>>>
-    fetchAggs: (container: ContainerT, set: SetT, setIndex: number) => Promise<FetchResult<AggT>>
-    containerDepsSelector: (container: ContainerT) => Array<any>
+    aggSelector: (container: ContainerStateT, agg: AggT) => Array<number>
+    fetchPeriods: (container: ContainerStateT) => Promise<FetchResult<Array<string> | Array<number>>>
+    fetchAggs: (container: ContainerStateT, set: SetStateT, setIndex: number) => Promise<FetchResult<AggT>>
+    containerDepsSelector: (container: ContainerStateT) => Array<any>
 }
 
-export default function ComparisonGraph<StoreT, ContainerT extends BaseContainerState, SetT extends BaseSetState, AggT extends BaseAgg>(props: ComparisonGraphProps<StoreT, ContainerT, SetT, AggT>) {
-    const containerState = useSelector(props.containerSelector)
-    const setsState = useSelector(props.setsSelector)
+export default function ComparisonGraph<ContainerStateT extends BaseContainerState, SetStateT extends BaseSetState, AggT extends BaseAgg>(props: ComparisonGraphProps<ContainerStateT, SetStateT, AggT>) {
+    const containerState = useSelector((state: MultisetContainerStore<ContainerStateT>)=> state.container)
+    const setsState = useSelector((state: MultisetContainerStore<ContainerStateT, SetStateT>)=> state.sets)
 
     const [[categories, aggregates], setAggregates] = useState<[Array<string> | Array<number>, Array<GraphData>]>([[], []])
     const [dataLoading, setDataLoading] = useState<boolean>(false)

@@ -8,7 +8,7 @@ import RangePeriodSelector, { RangeSelectorProps } from '../../../../../common/c
 import Button, { getClearButtonOptions, getIncludeButtonOptions } from '../../../../../common/components/Button'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { SetState } from '../../../../store/sets_reducer/Interfaces'
-import { FilterParametersNode } from '../../../../../common/store/set_container/sets/Interfaces'
+import { FilterParametersNode } from '../../../../../common/store/multiset_container/sets/Interfaces'
 
 interface Props extends DataSourceProps<string> {
     className: string
@@ -20,7 +20,7 @@ interface Props extends DataSourceProps<string> {
 }
 
 export default function BetweenPeriodSelectorWrapper(props: Props) {
-    const rangeSelector = (store: CustomersActivityStore) => props.valueSelector(store.customersActivitySets.find(x => x.title === props.setTitle))
+    const rangeSelector = (store: CustomersActivityStore) => props.valueSelector(store.sets.find(x => x.title === props.setTitle))
     const onPeriodChange = (period: Array<string>) => props.changeSelection({ stateId: props.setTitle, data: period })
     const restOptions = { onIncludeChange: (include: boolean) => props.changeInclude({ stateId: props.setTitle, data: include }) }
     return <RangePeriodSelector

@@ -22,7 +22,7 @@ export default function AdvancedSettingsButton({ visible }: { visible: boolean }
         setPopupVisible(false)
     }, [])
 
-    const baselineAlignedModeEnabled = useSelector((store: CustomersActivityStore) => store.customersActivity.baselineAlignedModeEnabled)
+    const baselineAlignedModeEnabled = useSelector((store: CustomersActivityStore) => store.container.baselineAlignedModeEnabled)
     const settingsModified = isAnySettingModified({ baselineAlignedMode: baselineAlignedModeEnabled })
     if (visible) {
         return (

@@ -1,13 +1,13 @@
 import { AnyAction } from '@reduxjs/toolkit'
 import { SetState } from './Interfaces'
-import { FilterParametersNode } from '../../../common/store/set_container/sets/Interfaces'
+import { FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
 import { DEFAULT_SET } from './Defaults'
 import { bugIsNotSelected } from '../Utils'
 import { 
     updateSetState,
     updateValues,
     updateInclude
-} from '../../../common/store/set_container/sets/Utils'
+} from '../../../common/store/multiset_container/sets/Utils'
 import {
     CHANGE_TICKETS_TYPES,
     CHANGE_TICKETS_TYPES_INCLUDE,

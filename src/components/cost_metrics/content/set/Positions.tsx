@@ -2,9 +2,8 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { CostMetricsStore } from '../../store/Store'
-import { changePositions, changePositionsInclude } from '../../../common/store/set_container/sets/actions/Employees'
+import { changePositions, changePositionsInclude } from '../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchPositions, Position } from '../../network_resource_fetcher/Positions'
-
 
 export default function EmpPositionsSelector({ setTitle }: { setTitle: string }) {
     const value = useSelector((store: CostMetricsStore) => store.sets.find(x => x.title === setTitle)?.empPositions)

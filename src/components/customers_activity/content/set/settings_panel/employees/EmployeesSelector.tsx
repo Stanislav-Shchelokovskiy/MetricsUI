@@ -4,11 +4,11 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { Payload } from '../../../../../common/Interfaces'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
-import { changeEmployees, changeEmployeesInclude } from '../../../../../common/store/set_container/sets/actions/Employees'
-import { fetchEmployees, Employee } from '../../../../network_resource_fetcher/employees/FetchEmployees'
-import { FilterParametersNode } from '../../../../../common/store/set_container/sets/Interfaces'
-import { paramOrDefault } from '../../../../../common/store/set_container/sets/Utils'
 import { SetState } from '../../../../store/sets_reducer/Interfaces'
+import { changeEmployees, changeEmployeesInclude } from '../../../../../common/store/multiset_container/sets/actions/Employees'
+import { fetchEmployees, Employee } from '../../../../network_resource_fetcher/employees/FetchEmployees'
+import { FilterParametersNode } from '../../../../../common/store/multiset_container/sets/Interfaces'
+import { paramOrDefault } from '../../../../../common/store/multiset_container/sets/Utils'
 
 export interface EmpSelectorProps {
     setTitle: string
@@ -45,7 +45,7 @@ export default function EmployeesSelector({ setTitle }: { setTitle: string }) {
 
 export function EmpSelector(props: EmpSelectorProps) {
     const setTitle = props.setTitle
-    const findSet = useCallback((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle), [setTitle])
+    const findSet = useCallback((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle), [setTitle])
 
     const positionsNode = useSelector((store: CustomersActivityStore) => props.positionsSelector?.(findSet(store)))
     const tribesNode = useSelector((store: CustomersActivityStore) => props.tribesSelector?.(findSet(store)))

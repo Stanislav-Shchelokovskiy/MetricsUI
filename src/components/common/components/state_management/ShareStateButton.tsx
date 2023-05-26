@@ -8,7 +8,6 @@ import { StateProps } from './Interfaces'
 
 
 function ShareStateButton(props: StateProps) {
-
     const store = useStore()
 
     const shareState = async (

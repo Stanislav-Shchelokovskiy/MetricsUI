@@ -1,33 +1,30 @@
-import { AnyAction } from '@reduxjs/toolkit'
-import { BaseSetState } from '../../common/store/set_container/sets/Interfaces'
-import { CostMetricsShareableState } from './Store'
-import { getViewStateReducer } from '../../common/store/set_container/ViewStateReducer'
-import { getSetsCRUDReducer } from '../../common/store/set_container/sets/reducers/SetsCRUDReducer'
+import { PayloadAction } from '@reduxjs/toolkit'
+import { BaseSetState } from '../../common/store/multiset_container/sets/Interfaces'
+import { CostMetricsShareableStore } from './Store'
+import { getSetsReducer } from '../../common/store/multiset_container/sets/SetsReducerFactory'
 import { setsValidator } from './StoreStateValidator'
-import { FilterParametersNode } from '../../common/store/set_container/sets/Interfaces'
-import { getDefaultFilterParametersNode } from '../../common/store/set_container/sets/Defaults'
+import { FilterParametersNode } from '../../common/store/multiset_container/sets/Interfaces'
+import { getDefaultFilterParametersNode } from '../../common/store/multiset_container/sets/Defaults'
 import { employeesReducer } from './sets_reducer/Employees'
 
-export interface Set extends BaseSetState {
+export interface SetState extends BaseSetState {
     empPositions: FilterParametersNode<string> | undefined
     empTribes: FilterParametersNode<string> | undefined
     employees: FilterParametersNode<string> | undefined
 }
 
-export const DEFAULT_SET: Set = {
+export const DEFAULT_SET: SetState = {
     title: '0',
     empPositions: getDefaultFilterParametersNode<string>(),
     empTribes: getDefaultFilterParametersNode<string>(),
     employees: getDefaultFilterParametersNode<string>(),
 }
 
-export const INITIAL_SETS: Array<Set> = [DEFAULT_SET]
+export const INITIAL_SETS: Array<SetState> = [DEFAULT_SET]
 
-export function SetsReducer(sets: Array<Set> = INITIAL_SETS, action: AnyAction): Array<Set> {
-    let res = setsCRUDReducer(sets, action)
-    res = employeesReducer(res, action)
-    return stateReducer(res, action)
+export function setsReducer(sets: Array<SetState> = INITIAL_SETS, action: PayloadAction<any>): Array<SetState> {
+    let res = setsReducerDefault(sets, action)
+    return employeesReducer(res, action)
 }
 
-const setsCRUDReducer = getSetsCRUDReducer<Set>(DEFAULT_SET, INITIAL_SETS)
-const stateReducer = getViewStateReducer<Array<Set>, CostMetricsShareableState>(setsValidator)
+const setsReducerDefault = getSetsReducer<SetState, CostMetricsShareableStore>(DEFAULT_SET, INITIAL_SETS, setsValidator)

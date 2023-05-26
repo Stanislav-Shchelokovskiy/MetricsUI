@@ -1,6 +1,6 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import { CustomersActivityState } from '../store/CustomersActivityReducer'
+import { ContainerState } from '../store/ContainerReducer'
 import { SetState } from '../store/sets_reducer/Interfaces'
 import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
 import { isTicketsMetricSelected } from '../../common/components/multiset_container/graph/MetricSelector'
@@ -34,7 +34,7 @@ export const EMPTY_TICKETS_WITH_ITERATIONS_AGGREGATES: TicketsWithIterationsAggr
 }
 
 export async function fetchTicketsWithIterationsAggregates(
-    containerState: CustomersActivityState,
+    containerState: ContainerState,
     set: SetState,
     index: number
 ): Promise<FetchResult<TicketsWithIterationsAggregates>> {

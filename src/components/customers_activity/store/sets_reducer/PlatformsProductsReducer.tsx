@@ -4,7 +4,7 @@ import {
     updateSetState,
     updateValues,
     updateInclude
-} from '../../../common/store/set_container/sets/Utils'
+} from '../../../common/store/multiset_container/sets/Utils'
 import {
     CHANGE_PLATFORMS,
     CHANGE_PLATFORMS_INCLUDE,

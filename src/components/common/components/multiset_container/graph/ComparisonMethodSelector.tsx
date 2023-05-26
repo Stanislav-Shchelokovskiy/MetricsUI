@@ -1,7 +1,8 @@
 import React from 'react'
 import OptionSelector from '../../OptionSelector'
-import { CustomersActivityStore } from '../../../../customers_activity/store/Store'
-import { changeComparisonMethod } from '../../../../customers_activity/store/actions/Common'
+import { MultisetContainerStore } from '../../../store/multiset_container/Store'
+import { BaseContainerState } from '../../../store/multiset_container/Interfaces'
+import { changeComparisonMethod } from '../../../store/multiset_container/Actions'
 
 
 const ABSOLUTE_BAR = 'Absolute (Bar)'
@@ -25,7 +26,7 @@ export const isAbsoluteAreaSelected: (method: string) => boolean = (metric: stri
 
 
 export default function ComparisonMethodSelector() {
-    const valueSelector = (store: CustomersActivityStore) => store.customersActivity.comparisonMethod
+    const valueSelector = (store: MultisetContainerStore<BaseContainerState>) => store.container.comparisonMethod
     return (
         <OptionSelector
             className='ComparisonGraph_ComparisonMethodSelector'

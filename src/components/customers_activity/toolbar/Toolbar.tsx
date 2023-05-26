@@ -1,7 +1,7 @@
 import React from 'react'
 import DownloadButton from './DownloadButton'
 import StateManagementCommands from '../../common/components/state_management/StateManagementCommands'
-import { getShareableState } from '../store/Store'
+import { getShareableState } from '../../common/store/multiset_container/Store'
 import AdvancedSettingButton from './AdvancedSettingButton'
 import HelpButton from '../../common/components/help/HelpButton'
 import { fetchHelp } from '../network_resource_fetcher/FetchHelp'

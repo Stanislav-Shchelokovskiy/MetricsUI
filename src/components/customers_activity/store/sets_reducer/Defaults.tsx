@@ -3,8 +3,8 @@ import {
     getDefaultFilterParameterNode,
     getDefaultFilterParametersNode,
     getOptionalDefaultFilterParameterNode,
-} from '../../../common/store/set_container/sets/Defaults'
-import { getDefaultTitle } from '../../../common/store/set_container/sets/Defaults'
+} from '../../../common/store/multiset_container/sets/Defaults'
+import { getDefaultTitle } from '../../../common/store/multiset_container/sets/Defaults'
 
 export const DEFAULT_SET: SetState = {
     title: getDefaultTitle(),

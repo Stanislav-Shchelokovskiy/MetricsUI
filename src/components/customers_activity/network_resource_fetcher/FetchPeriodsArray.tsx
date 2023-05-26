@@ -1,9 +1,9 @@
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
-import { CustomersActivityState } from '../store/CustomersActivityReducer'
-import { anyValueIsEmpty } from '../../common/store/set_container/sets/Utils'
+import { ContainerState } from '../store/ContainerReducer'
+import { anyValueIsEmpty } from '../../common/store/multiset_container/sets/Utils'
 
-export async function fetchPeriodsArray(containerState: CustomersActivityState): Promise<FetchResult<Array<string>>> {
+export async function fetchPeriodsArray(containerState: ContainerState): Promise<FetchResult<Array<string>>> {
     const [rangeStart, rangeEnd] = containerState.range
     if (anyValueIsEmpty(containerState.groupByPeriod, rangeStart, rangeEnd))
         return {

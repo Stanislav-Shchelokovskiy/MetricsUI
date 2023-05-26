@@ -45,8 +45,8 @@ async function downloadExcelData(store: any) {
 }
 
 async function downloadRawData(state: CustomersActivityStore) {
-    const customersActivityState = state.customersActivity
-    const customersActivitySets = state.customersActivitySets
+    const customersActivityState = state.container
+    const customersActivitySets = state.sets
     let rawData: Array<TicketsWithIterationsRaw> = []
     let fetchResults = await Promise.all(customersActivitySets.map((set, index) => fetchTicketsWithIterationsRaw(customersActivityState, set, index,)))
     fetchResults.sort((a, b) => a.data.index - b.data.index)

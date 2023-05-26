@@ -1,10 +1,9 @@
-import { AnyAction } from '@reduxjs/toolkit'
+import { PayloadAction } from '@reduxjs/toolkit'
 import { SetState } from './sets_reducer/Interfaces'
-import { CustomersActivityShareableState } from './Store'
+import { CustomersActivityShareableStore } from './Store'
 import { INITIAL_SETS, DEFAULT_SET } from './sets_reducer/Defaults'
 import { setsValidator } from './StoreStateValidator'
-import { getViewStateReducer } from '../../common/store/set_container/ViewStateReducer'
-import { getSetsCRUDReducer } from '../../common/store/set_container/sets/reducers/SetsCRUDReducer'
+import { getSetsReducer } from '../../common/store/multiset_container/sets/SetsReducerFactory'
 import { bugsReducer } from './sets_reducer/BugsReducer'
 import { catReducer } from './sets_reducer/CATReducer'
 import { commonReducer } from './sets_reducer/CommonReducer'
@@ -14,9 +13,8 @@ import { platformsProductsReducer } from './sets_reducer/PlatformsProductsReduce
 import { ticketsReducer } from './sets_reducer/TicketsReducer'
 import { ticketTypesReducer } from './sets_reducer/TicketTypesReducer'
 
-export function SetsReducer(sets: Array<SetState> = INITIAL_SETS, action: AnyAction): Array<SetState> {
-    let res = setsCRUDReducer(sets, action)
-    res = stateReducer(res, action)
+export function setsReducer(sets: Array<SetState> = INITIAL_SETS, action: PayloadAction<any>): Array<SetState> {
+    let res = setsReducerDefault(sets, action)
     res = commonReducer(res, action)
     res = bugsReducer(res, action)
     res = catReducer(res, action)
@@ -27,5 +25,4 @@ export function SetsReducer(sets: Array<SetState> = INITIAL_SETS, action: AnyAct
     return employeesReducer(res, action)
 }
 
-const setsCRUDReducer = getSetsCRUDReducer<SetState>(DEFAULT_SET, INITIAL_SETS)
-const stateReducer = getViewStateReducer<Array<SetState>, CustomersActivityShareableState>(setsValidator)
+const setsReducerDefault = getSetsReducer<SetState, CustomersActivityShareableStore>(DEFAULT_SET, INITIAL_SETS, setsValidator)

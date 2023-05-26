@@ -7,7 +7,7 @@ import { fetchVersions, Version } from '../../../../network_resource_fetcher/tic
 
 
 export default function VersionsSelector({ setTitle }: { setTitle: string }) {
-    const value = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.versions)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.versions)
     const onValueChange = (allValues: Array<Version>, values: Array<string>) => changeVersions({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeVersionsInclude({ stateId: setTitle, data: include })
 

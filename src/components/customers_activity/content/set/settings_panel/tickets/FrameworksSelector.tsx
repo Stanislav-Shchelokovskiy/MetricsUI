@@ -7,7 +7,7 @@ import { FetchFrameworks, Framework } from '../../../../network_resource_fetcher
 
 
 export default function FrameworksSelector({ setTitle }: { setTitle: string }) {
-    const value = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.frameworks)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.frameworks)
     const onValueChange = (allValues: Array<Framework>, values: Array<string>) => changeFrameworks({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeFrameworksInclude({ stateId: setTitle, data: include })
 

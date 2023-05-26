@@ -4,17 +4,17 @@ import Plotly from 'plotly.js-basic-dist-min'
 import Drawer from 'devextreme-react/drawer'
 import ScrollView from 'devextreme-react/scroll-view'
 import { ToolbarProps } from './Toolbar/Toolbar'
+import { MultisetContainerStore } from '../../store/multiset_container/Store'
 
 
 export interface SetProps { setTitle: string }
 
 interface SettingsSetsProps {
-    setsSelector: (store: any) => Array<string>
     set: FC<SetProps>
 }
 
 export function SettingsSets(props: SettingsSetsProps) {
-    const sets = useSelector(props.setsSelector)
+    const sets = useSelector((state: MultisetContainerStore) => state.container.sets)
     return (
         <ScrollView
             className='Sets_ScrollView'
@@ -33,7 +33,6 @@ export function SettingsSets(props: SettingsSetsProps) {
 
 interface MultisetContainerProps {
     className: string
-    plotlyDivId: string | undefined
     sets: FC<SetProps>
     toolbar: FC<ToolbarProps>
 }

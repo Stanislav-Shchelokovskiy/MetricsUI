@@ -8,7 +8,7 @@ import { changeTribes, changeTribesInclude } from '../../../store/actions/SetCom
 
 
 export default function TribesSelector({ setTitle }: { setTitle: string }) {
-    const value = useSelector((store: CustomersActivityStore) =>store.customersActivitySets.find(x => x.title === setTitle)?.tribes)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.tribes)
     const onValueChange = (allValues: Array<Tribe>, selectedTribes: Array<string>) => changeTribes({ stateId: setTitle, data: selectedTribes })
     const onIncludeChange = (include: boolean) => changeTribesInclude({ stateId: setTitle, data: include })
 

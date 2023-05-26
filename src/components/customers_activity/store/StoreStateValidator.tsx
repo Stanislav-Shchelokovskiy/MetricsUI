@@ -1,25 +1,41 @@
+import { CustomersActivityShareableStore } from './Store'
+import { ContainerState } from './ContainerReducer'
 import { SetState } from './sets_reducer/Interfaces'
-import { CustomersActivityShareableState } from './Store'
 import { DEFAULT_SET } from './sets_reducer/Defaults'
-import { CustomersActivityState } from './CustomersActivityReducer'
 import { getValidComparisonMethodOrDefault } from '../../common/components/multiset_container/graph/ComparisonMethodSelector'
 import { getValidMetricOrDefault } from '../../common/components/multiset_container/graph/MetricSelector'
-import { toFriendlyTitle } from '../../common/store/set_container/sets/Utils'
+import { toFriendlyTitle } from '../../common/store/multiset_container/sets/Utils'
 
-export function containerValidator(state: CustomersActivityShareableState): CustomersActivityState {
-    const customersActivity = state.customersActivity
-    customersActivity.comparisonMethod = getValidComparisonMethodOrDefault(customersActivity.comparisonMethod)
-    customersActivity.metric = getValidMetricOrDefault(customersActivity.metric)
-    customersActivity.sets = customersActivity.sets.map(x => toFriendlyTitle(x))
-    if (customersActivity.baselineAlignedModeEnabled === undefined)
-        customersActivity.baselineAlignedModeEnabled = false
-    if (customersActivity.hiddenLegends === undefined)
-        customersActivity.hiddenLegends = []
-    return customersActivity
+interface OldCustomersActivityShareableStore {
+    customersActivity: ContainerState
+    customersActivitySets: Array<SetState>
 }
 
-export function setsValidator(state: CustomersActivityShareableState): Array<SetState> {
-    const customersActivitySets = state.customersActivitySets
+export function storeValidator({ customersActivity, customersActivitySets, ...remainder }: any) {
+    const state = customersActivity ? {
+        container: customersActivity,
+        sets: customersActivitySets,
+        ...remainder,
+    } : remainder
+    state.container = containerValidator(state)
+    state.sets = setsValidator(state)
+    return state
+}
+
+export function containerValidator(state: CustomersActivityShareableStore | OldCustomersActivityShareableStore): ContainerState {
+    const container = 'customersActivity' in state ? state.customersActivity : state.container
+    container.comparisonMethod = getValidComparisonMethodOrDefault(container.comparisonMethod)
+    container.metric = getValidMetricOrDefault(container.metric)
+    container.sets = container.sets.map(x => toFriendlyTitle(x))
+    if (container.baselineAlignedModeEnabled === undefined)
+        container.baselineAlignedModeEnabled = false
+    if (container.hiddenLegends === undefined)
+        container.hiddenLegends = []
+    return container
+}
+
+export function setsValidator(state: CustomersActivityShareableStore | OldCustomersActivityShareableStore): Array<SetState> {
+    const customersActivitySets: Array<SetState> = 'customersActivitySets' in state ? state.customersActivitySets : state.sets
     for (const set of customersActivitySets) {
         set.title = toFriendlyTitle(set.title)
 

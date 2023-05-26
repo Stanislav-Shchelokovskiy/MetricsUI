@@ -1,5 +1,5 @@
-import { BaseSetState } from '../../../common/store/set_container/sets/Interfaces'
-import { FilterParameterNode, FilterParametersNode } from '../../../common/store/set_container/sets/Interfaces'
+import { BaseSetState } from '../../../common/store/multiset_container/sets/Interfaces'
+import { FilterParameterNode, FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
 
 export interface SetState extends BaseSetState {
     percentile: FilterParameterNode<number>

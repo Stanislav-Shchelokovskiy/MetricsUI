@@ -1,12 +1,15 @@
-import { CostMetricsShareableState } from './Store'
-import { Container } from './ContainerReducer'
-import { Set } from './SetsReducer'
+import { CostMetricsStore, CostMetricsShareableStore } from './Store'
+import { ContainerState } from './ContainerReducer'
+import { SetState } from './SetsReducer'
 
+export function stateValidator(state: CostMetricsStore) {
+    return state
+}
 
-export function containerValidator(state: CostMetricsShareableState): Container {
+export function containerValidator(state: CostMetricsShareableStore): ContainerState {
     return state.container
 }
 
-export function setsValidator(state: CostMetricsShareableState): Array<Set> {
+export function setsValidator(state: CostMetricsShareableStore): Array<SetState> {
     return state.sets
 }

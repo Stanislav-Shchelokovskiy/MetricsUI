@@ -3,18 +3,18 @@ import { NumberBox, Button as NumberBoxButton } from 'devextreme-react/number-bo
 import { useSelector, useDispatch } from 'react-redux'
 import { CustomersActivityStore } from '../../../store/Store'
 import { changePercentile, changePercentileInclude } from '../../../store/actions/SetCommon'
-import { FilterParameterNode } from '../../../../common/store/set_container/sets/Interfaces'
+import { FilterParameterNode } from '../../../../common/store/multiset_container/sets/Interfaces'
 import { getIncludeButtonOptions } from '../../../../common/components/Button'
 
 
 export default function PercentileSelector({ setTitle }: { setTitle: string }) {
     const ref = useRef<NumberBox>(null)
     const percentile = useSelector((store: CustomersActivityStore) =>
-        store.customersActivitySets.find(x => x.title === setTitle)?.percentile as FilterParameterNode<number>
+        store.sets.find(x => x.title === setTitle)?.percentile as FilterParameterNode<number>
     )
 
     const disabled = useSelector((store: CustomersActivityStore) =>
-        store.customersActivity.baselineAlignedModeEnabled
+        store.container.baselineAlignedModeEnabled
     )
 
     const format = (value: number) => {

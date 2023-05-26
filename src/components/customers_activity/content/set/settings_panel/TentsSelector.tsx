@@ -8,7 +8,7 @@ import { changeTents, changeTentsInclude } from '../../../store/actions/SetCommo
 
 
 export default function TentsSelector({ setTitle }: { setTitle: string }) {
-    const value = useSelector((store: CustomersActivityStore) =>store.customersActivitySets.find(x => x.title === setTitle)?.tents)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.tents)
     const onValueChange = (allValues: Array<Tribe>, values: Array<string>) => changeTents({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTentsInclude({ stateId: setTitle, data: include })
 

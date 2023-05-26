@@ -1,5 +1,5 @@
 import React from 'react'
-import { getShareableState } from '../store/Store'
+import { getShareableState } from '../../common/store/multiset_container/Store'
 import StateManagementCommands from '../../common/components/state_management/StateManagementCommands'
 import { Toolbar, ToolbarProps } from '../../common/components/multiset_container/Toolbar/Toolbar'
 import { ToolbarMenu } from '../../common/components/multiset_container/Toolbar/ToolbarMenu'

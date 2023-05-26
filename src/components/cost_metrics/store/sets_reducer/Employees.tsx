@@ -1,10 +1,10 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { Set } from '../SetsReducer'
+import { SetState } from '../SetsReducer'
 import {
     updateSetState,
     updateValues,
     updateInclude
-} from '../../../common/store/set_container/sets/Utils'
+} from '../../../common/store/multiset_container/sets/Utils'
 import {
     CHANGE_EMP_POSITIONS,
     CHANGE_EMP_POSITIONS_INCLUDE,
@@ -12,10 +12,10 @@ import {
     CHANGE_EMP_TRIBES_INCLUDE,
     CHANGE_EMPLOYEES,
     CHANGE_EMPLOYEES_INCLUDE,
-} from '../../../common/store/set_container/sets/actions/Employees'
+} from '../../../common/store/multiset_container/sets/actions/Employees'
 
 
-export function employeesReducer(sets: Array<Set>, action: AnyAction): Array<Set> {
+export function employeesReducer(sets: Array<SetState>, action: AnyAction): Array<SetState> {
     switch (action.type) {
 
         case CHANGE_EMP_TRIBES:

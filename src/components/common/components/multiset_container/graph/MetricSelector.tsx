@@ -1,8 +1,7 @@
 import React from 'react'
 import OptionSelector from '../../OptionSelector'
-import { changeMetric } from '../../../../customers_activity/store/actions/Common'
-import { CustomersActivityStore } from '../../../../customers_activity/store/Store'
-
+import { changeMetric } from '../../../store/multiset_container/Actions'
+import { MultisetContainerStore } from '../../../store/multiset_container/Store'
 
 const TICKETS = 'Tickets'
 const ITERATIONS = 'Iterations'
@@ -16,7 +15,6 @@ export function getValidMetricOrDefault(currentValue: string | undefined) {
     return TICKETS
 }
 
-
 export const isTicketsMetricSelected: (metric: string) => boolean = (metric: string) => {
     return metric === TICKETS
 }
@@ -29,10 +27,8 @@ export const isIterationsToTicketsMetricSelected: (metric: string) => boolean = 
     return metric === ITERATIONS_TO_TICKETS
 }
 
-
 export default function MetricSelector() {
-    const valueSelector = (store: CustomersActivityStore) => store.customersActivity.metric
-
+    const valueSelector = (store: MultisetContainerStore) => store.container.metric
     return <OptionSelector
         className='ComparisonGraph_MetricSelector'
         dataSource={metrics}

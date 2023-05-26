@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import Plot from 'react-plotly.js'
 import { Data as PlotData, PlotType } from 'plotly.js'
-import { hideLegends } from '../../../store/set_container/Actions'
+import { hideLegends } from '../../../store/multiset_container/Actions'
 import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './ComparisonMethodSelector'
 
 interface LegendClickArgs {

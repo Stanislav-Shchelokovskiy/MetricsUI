@@ -9,7 +9,7 @@ interface BugSelectorProps {
 }
 
 export default function BugsSelectorWrapper({ Wrapped, setTitle, ...wrappedProps }: BugSelectorProps & any) {
-    const ticketTypes = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.ticketsTypes)
+    const ticketTypes = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.ticketsTypes)
     if (bugIsNotSelected(ticketTypes))
         return null
     return <Wrapped
@@ -22,7 +22,7 @@ export default function BugsSelectorWrapper({ Wrapped, setTitle, ...wrappedProps
 }
 
 export function ClosedBugsSelectorWrapper({ Wrapped, setTitle, ...wrappedProps }: BugSelectorProps & any) {
-    const ticketStatuses = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.ticketStatuses)
+    const ticketStatuses = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.ticketStatuses)
     if (closedIsNotSelected(ticketStatuses))
         return null
     return <BugsSelectorWrapper Wrapped={Wrapped} setTitle={setTitle} {...wrappedProps} />

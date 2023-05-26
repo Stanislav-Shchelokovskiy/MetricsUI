@@ -8,10 +8,10 @@ import { fetchCustomersGroups, CustomersGroup } from '../../../../network_resour
 
 
 export default function CustomersGroupsSelector({ setTitle }: { setTitle: string }) {
-    const baselineAlignedModeEnabled = useSelector((store: CustomersActivityStore) => store.customersActivity.baselineAlignedModeEnabled)
+    const baselineAlignedModeEnabled = useSelector((store: CustomersActivityStore) => store.container.baselineAlignedModeEnabled)
     const fetchArgs = useMemo(() => [false], [])
 
-    const value = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.customersGroups)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.customersGroups)
     const onValueChange = useCallback((allValues: Array<CustomersGroup>, values: Array<string>) => changeCustomersGroups({ stateId: setTitle, data: values }), [setTitle])
     const onIncludeChange = useCallback((include: boolean) => changeCustomersGroupsInclude({ stateId: setTitle, data: include }), [setTitle])
 
@@ -36,12 +36,12 @@ export default function CustomersGroupsSelector({ setTitle }: { setTitle: string
 }
 
 export function BAMCustomersGroupsSelector({ setTitle }: { setTitle: string }) {
-    const baselineAlignedModeEnabled = useSelector((store: CustomersActivityStore) => store.customersActivity.baselineAlignedModeEnabled)
+    const baselineAlignedModeEnabled = useSelector((store: CustomersActivityStore) => store.container.baselineAlignedModeEnabled)
     const fetchArgs = useMemo(() => [true], [])
 
     const onValueChange = useCallback((value: string | undefined) => changeCustomersGroups({ stateId: setTitle, data: value === undefined ? [] : [value] }), [])
     const valueSelector = useCallback((store: CustomersActivityStore) => {
-        const groups = store.customersActivitySets.find(x => x.title === setTitle)?.customersGroups
+        const groups = store.sets.find(x => x.title === setTitle)?.customersGroups
         return groups?.values.length === 0 ? undefined : groups?.values[0]
     }, [setTitle])
 

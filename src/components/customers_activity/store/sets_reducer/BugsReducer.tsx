@@ -1,8 +1,12 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { updateSetState, updateValues, updateInclude } from '../../../common/store/set_container/sets/Utils'
 import { closedIsNotSelected } from '../Utils'
 import { SetState } from './Interfaces'
-import { FilterParametersNode } from '../../../common/store/set_container/sets/Interfaces'
+import { FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
+import {
+    updateSetState,
+    updateValues,
+    updateInclude
+} from '../../../common/store/multiset_container/sets/Utils'
 import {
     CHANGE_FIXED_IN,
     CHANGE_FIXED_IN_INCLUDE,

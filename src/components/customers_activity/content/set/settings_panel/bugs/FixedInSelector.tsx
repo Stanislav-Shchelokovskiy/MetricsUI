@@ -9,7 +9,7 @@ import BugsSelectorWrapper from './BugsSelectors'
 
 
 export default function FixedInSelector({ setTitle }: { setTitle: string }) {
-    const value = useSelector((store: CustomersActivityStore) => store.customersActivitySets.find(x => x.title === setTitle)?.fixedIn)
+    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.fixedIn)
     const onValueChange = (allValues: Array<Version>, values: Array<string>) => changeFixedIn({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeFixedInInclude({ stateId: setTitle, data: include })
 

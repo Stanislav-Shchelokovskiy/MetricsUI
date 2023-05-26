@@ -16,7 +16,6 @@ import Toolbar from './toolbar/Toolbar'
 export default function CostMetrics() {
     return <MultisetContainer
         className='CostMetricsContainer'
-        plotlyDivId='CostMetrics_ComparisonGraph'
         sets={Sets}
         toolbar={Toolbar}
         children={

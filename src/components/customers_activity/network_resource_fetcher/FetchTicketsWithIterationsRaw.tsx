@@ -2,7 +2,7 @@ import FetchResult from '../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 import { SetState } from '../store/sets_reducer/Interfaces'
 import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
-import { CustomersActivityState } from '../store/CustomersActivityReducer'
+import { ContainerState } from '../store/ContainerReducer'
 import { isTicketsMetricSelected } from '../../common/components/multiset_container/graph/MetricSelector'
 
 export interface TicketsWithIterationsRaw {
@@ -40,7 +40,7 @@ const EMPTY_TICKETS_WITH_ITERATIONS_RAW_SET = {
 }
 
 export async function fetchTicketsWithIterationsRaw(
-    containerState: CustomersActivityState,
+    containerState: ContainerState,
     set: SetState,
     index: number,
 ): Promise<FetchResult<TicketsWithIterationsRawSet>> {

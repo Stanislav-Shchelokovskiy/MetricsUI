@@ -1,7 +1,7 @@
 import {
     getValuesPayloadAction,
     getIncludePayloadAction
-} from '../../../common/store/set_container/sets/actions/Actions'
+} from '../../../common/store/multiset_container/sets/actions/Actions'
 
 export const CHANGE_REPLIES_TYPES = 'customers_activity/change_replies_types'
 export const changeRepliesTypes = getValuesPayloadAction<string>(CHANGE_REPLIES_TYPES)
