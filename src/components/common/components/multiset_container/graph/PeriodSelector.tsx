@@ -6,7 +6,7 @@ import RangePeriodSelector, { PeriodGroupBy } from '../../RangePeriodSelector'
 
 type Period = [string, string]
 
-interface Props {
+export interface Props {
     fetchPeriod: (...args: any) => Promise<FetchResult<Period>>
 }
 

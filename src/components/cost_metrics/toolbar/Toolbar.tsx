@@ -7,7 +7,7 @@ import { ToolbarCommands } from '../../common/components/multiset_container/Tool
 import { FilterTooltip } from './FilterTooltip'
 
 
-export default function ToolbarWrapper(props: ToolbarProps) {
+export default function CostMetricsToolbar(props: ToolbarProps) {
     return (
         <Toolbar {...props}>
             <ToolbarMenu

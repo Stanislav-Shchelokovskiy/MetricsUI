@@ -10,20 +10,23 @@ import '../common/styles/multiset_container/FilterTooltip.css'
 import React from 'react'
 import Sets from './content/Sets'
 import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
-import Toolbar from './toolbar/Toolbar'
+import CostMetricsToolbar from './toolbar/Toolbar'
+import GraphSettingsPanel from '../common/components/multiset_container/graph/GraphSettingsPanel'
+import { fetchPeriod } from './network_resource_fetcher/FetchPeriod'
+import { fetchGroupByPeriods } from './network_resource_fetcher/FetchGroupByPeriods'
 
 
 export default function CostMetrics() {
     return <MultisetContainer
         className='CostMetricsContainer'
         sets={Sets}
-        toolbar={Toolbar}
-        children={
-            <div className='CostMetricsContent'>
-                <div>Content</div>
-                {/* <CommonSettingsPanel />
-                <ComparisonGraph /> */}
-            </div>
-        }
-    />
+        toolbar={CostMetricsToolbar}
+    >
+        <div className='CostMetricsContent'>
+            <GraphSettingsPanel
+                fetchPeriod={fetchPeriod}
+                fetchGroupByPeriods={fetchGroupByPeriods} />
+            {/* <CustomersActivityComparisonGraph /> */}
+        </div>
+    </MultisetContainer>
 }

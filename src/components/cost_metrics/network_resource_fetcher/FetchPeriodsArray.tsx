@@ -1,6 +1,6 @@
 import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
-import { BaseContainerState } from '../../common/store/multiset_container/Interfaces'
+import { BaseContainerState } from '../../common/store/multiset_container/BaseContainerState'
 import { anyValueIsEmpty } from '../../common/store/multiset_container/sets/Utils'
 
 export async function fetchPeriodsArray(containerState: BaseContainerState): Promise<FetchResult<Array<string>>> {

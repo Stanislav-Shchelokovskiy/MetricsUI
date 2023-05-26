@@ -1,7 +1,7 @@
 import React from 'react'
 import OptionSelector from '../../OptionSelector'
 import { MultisetContainerStore } from '../../../store/multiset_container/Store'
-import { BaseContainerState } from '../../../store/multiset_container/Interfaces'
+import { BaseContainerState } from '../../../store/multiset_container/BaseContainerState'
 import { changeComparisonMethod } from '../../../store/multiset_container/Actions'
 
 

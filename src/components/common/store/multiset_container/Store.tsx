@@ -1,7 +1,7 @@
 import { configureStore, PayloadAction } from '@reduxjs/toolkit'
 import { loadState, saveState } from '../../LocalStorage'
 import { ViewStateReducer } from '../state/Reducers'
-import { BaseContainerState } from './Interfaces'
+import { BaseContainerState } from './BaseContainerState'
 import { BaseSetState } from './sets/Interfaces'
 import { ViewState } from '../state/Reducers'
 

@@ -2,8 +2,7 @@ import { CustomersActivityShareableStore } from './Store'
 import { ContainerState } from './ContainerReducer'
 import { SetState } from './sets_reducer/Interfaces'
 import { DEFAULT_SET } from './sets_reducer/Defaults'
-import { getValidComparisonMethodOrDefault } from '../../common/components/multiset_container/graph/ComparisonMethodSelector'
-import { getValidMetricOrDefault } from '../../common/components/multiset_container/graph/MetricSelector'
+import { defaultContainerValidator } from '../../common/store/multiset_container/StoreStateValidator'
 import { toFriendlyTitle } from '../../common/store/multiset_container/sets/Utils'
 
 interface OldCustomersActivityShareableStore {
@@ -23,14 +22,11 @@ export function storeValidator({ customersActivity, customersActivitySets, ...re
 }
 
 export function containerValidator(state: CustomersActivityShareableStore | OldCustomersActivityShareableStore): ContainerState {
-    const container = 'customersActivity' in state ? state.customersActivity : state.container
-    container.comparisonMethod = getValidComparisonMethodOrDefault(container.comparisonMethod)
-    container.metric = getValidMetricOrDefault(container.metric)
+    let container = 'customersActivity' in state ? state.customersActivity : state.container
+    container = defaultContainerValidator(container)
     container.sets = container.sets.map(x => toFriendlyTitle(x))
     if (container.baselineAlignedModeEnabled === undefined)
         container.baselineAlignedModeEnabled = false
-    if (container.hiddenLegends === undefined)
-        container.hiddenLegends = []
     return container
 }
 

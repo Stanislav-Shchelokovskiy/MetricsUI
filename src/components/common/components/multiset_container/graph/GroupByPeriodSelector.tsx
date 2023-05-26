@@ -9,11 +9,11 @@ interface GroupByPeriod {
     format: string
 }
 
-interface Props {
+export interface Props {
     fetchGroupByPeriods: (...args: any) => Promise<FetchResult<Array<GroupByPeriod>>>
 }
 
-export default function GroupByPeriodSelector<T>(props: Props) {
+export default function GroupByPeriodSelector(props: Props) {
     const valueSelector = (store: MultisetContainerStore) => store.container.groupByPeriod
     const defaultValueSelector = (values: Array<GroupByPeriod>) => values[0]?.format
 
@@ -27,4 +27,8 @@ export default function GroupByPeriodSelector<T>(props: Props) {
         onValueChange={changeGroupByPeriod}
         label='Group by'
     />
-} 
+}
+
+export function getValidGroupByPeriodOrDefault(value: string | undefined) {
+    return value ? value : 'takeFromValues'
+}

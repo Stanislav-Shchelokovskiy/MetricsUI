@@ -15,6 +15,8 @@ import Sets from './content/Sets'
 import CustomersActivityComparisonGraph from './ComparisonGraph'
 import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
 import CustomersActivityToolbar from './toolbar/Toolbar'
+import { fetchGroupByPeriods } from './network_resource_fetcher/FetchGroupByPeriods'
+import { fetchPeriod } from './network_resource_fetcher/FetchPeriod'
 
 export function CustomersActivityApplySharedState() {
     const { stateId } = useParams()
@@ -37,7 +39,9 @@ export default function CustomersActivity() {
             toolbar={CustomersActivityToolbar}
         >
             <div className='CustomersActivityContent'>
-                <GraphSettingsPanel />
+                <GraphSettingsPanel
+                    fetchPeriod={fetchPeriod}
+                    fetchGroupByPeriods={fetchGroupByPeriods} />
                 <CustomersActivityComparisonGraph />
             </div>
         </MultisetContainer>

@@ -1,17 +1,16 @@
 import React from 'react'
-import PeriodSelector from './PeriodSelector'
-import GroupByPeriodSelector from './GroupByPeriodSelector'
+import PeriodSelector, {Props as PeriodSelectorProps} from './PeriodSelector'
+import GroupByPeriodSelector, {Props as GroupByPeriodSelectorProps} from './GroupByPeriodSelector'
 import MetricSelector from './MetricSelector'
 import ComparisonMethodSelector from './ComparisonMethodSelector'
-import { fetchGroupByPeriods } from '../../../../customers_activity/network_resource_fetcher/FetchGroupByPeriods'
-import { fetchPeriod } from '../../../../customers_activity/network_resource_fetcher/FetchPeriod'
 
+type GraphSettingsPanelProps = PeriodSelectorProps & GroupByPeriodSelectorProps
 
-function GraphSettingsPanel() {
+function GraphSettingsPanel(props: GraphSettingsPanelProps) {
     return (
         <div className='ComparisonGraph_SettingsPanel'>
-            <PeriodSelector fetchPeriod={fetchPeriod} />
-            <GroupByPeriodSelector fetchGroupByPeriods={fetchGroupByPeriods} />
+            <PeriodSelector fetchPeriod={props.fetchPeriod} />
+            <GroupByPeriodSelector fetchGroupByPeriods={props.fetchGroupByPeriods} />
             <MetricSelector />
             <ComparisonMethodSelector />
         </div>

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { BaseContainerState } from '../common/store/multiset_container/Interfaces'
+import { BaseContainerState } from '../common/store/multiset_container/BaseContainerState'
 import { SetState } from './store/sets_reducer/Interfaces'
 import { ContainerState } from './store/ContainerReducer'
 import ComparisonGraph from '../common/components/multiset_container/graph/ComparisonGraph'

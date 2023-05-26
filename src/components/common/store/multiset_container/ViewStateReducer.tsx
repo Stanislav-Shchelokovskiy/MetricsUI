@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { BaseContainerState } from './Interfaces'
+import { BaseContainerState } from './BaseContainerState'
 import { BaseSetState } from './sets/Interfaces'
 import { APPLY_STATE } from '../state/Actions'
 

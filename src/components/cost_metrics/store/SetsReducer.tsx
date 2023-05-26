@@ -6,6 +6,7 @@ import { setsValidator } from './StoreStateValidator'
 import { FilterParametersNode } from '../../common/store/multiset_container/sets/Interfaces'
 import { getDefaultFilterParametersNode } from '../../common/store/multiset_container/sets/Defaults'
 import { employeesReducer } from './sets_reducer/Employees'
+import { getDefaultTitle } from '../../common/store/multiset_container/sets/Defaults'
 
 export interface SetState extends BaseSetState {
     empPositions: FilterParametersNode<string> | undefined
@@ -14,7 +15,7 @@ export interface SetState extends BaseSetState {
 }
 
 export const DEFAULT_SET: SetState = {
-    title: '0',
+    title: getDefaultTitle(),
     empPositions: getDefaultFilterParametersNode<string>(),
     empTribes: getDefaultFilterParametersNode<string>(),
     employees: getDefaultFilterParametersNode<string>(),
