@@ -31,7 +31,6 @@ export default function CustomersActivityComparisonGraph() {
     const containerDepsSelector = useCallback((containerState: ContainerState) => [containerState.baselineAlignedModeEnabled], [])
 
     return <ComparisonGraph<ContainerState, SetState, TicketsWithIterationsAggregates>
-        className='CustomersActivityContent'
         aggSelector={aggSelector}
         fetchPeriods={fetchPeriodsArray}
         fetchAggs={fetchTicketsWithIterationsAggregates}

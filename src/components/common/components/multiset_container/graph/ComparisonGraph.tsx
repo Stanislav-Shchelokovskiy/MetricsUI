@@ -22,8 +22,8 @@ interface ComparisonGraphProps<ContainerStateT extends BaseContainerState, SetSt
 }
 
 export default function ComparisonGraph<ContainerStateT extends BaseContainerState, SetStateT extends BaseSetState, AggT extends BaseAgg>(props: ComparisonGraphProps<ContainerStateT, SetStateT, AggT>) {
-    const containerState = useSelector((state: MultisetContainerStore<ContainerStateT>)=> state.container)
-    const setsState = useSelector((state: MultisetContainerStore<ContainerStateT, SetStateT>)=> state.sets)
+    const containerState = useSelector((state: MultisetContainerStore<ContainerStateT>) => state.container)
+    const setsState = useSelector((state: MultisetContainerStore<ContainerStateT, SetStateT>) => state.sets)
 
     const [[categories, aggregates], setAggregates] = useState<[Array<string> | Array<number>, Array<GraphData>]>([[], []])
     const [dataLoading, setDataLoading] = useState<boolean>(false)
@@ -84,7 +84,7 @@ export default function ComparisonGraph<ContainerStateT extends BaseContainerSta
 const GraphPlotMempized = React.memo(GraphPlot)
 
 function defaultContainerDepsSelector(container: any) { return [] }
-const defaultProps = {
+ComparisonGraph.defaultProps = {
+    className: 'ComparisonGraph',
     containerDepsSelector: defaultContainerDepsSelector,
 }
-ComparisonGraph.defaultProps = defaultProps

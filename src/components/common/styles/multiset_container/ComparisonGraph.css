@@ -39,3 +39,11 @@
 .ComparisonGraph_ComparisonMethodSelector {
     margin-right: 10px;
 }
+
+.ComparisonGraph {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex: 1;
+}

@@ -69,3 +69,7 @@ export default function MultisetContainer(props: PropsWithChildren<MultisetConta
         </div >
     )
 }
+
+MultisetContainer.defaultProps = {
+    className: 'MultisetContainer',
+}

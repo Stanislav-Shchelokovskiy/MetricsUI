@@ -44,3 +44,11 @@
     padding-left: 1px;
     padding-right: 1px;
 }
+
+.MultisetContainer,
+.MultisetContainerContent {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+}
