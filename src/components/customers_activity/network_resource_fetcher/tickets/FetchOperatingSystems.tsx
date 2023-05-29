@@ -8,5 +8,5 @@ export interface OS {
 }
 
 export async function fetchOperatingSystems(): Promise<FetchResult<Array<OS>>> {
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_operating_systems`)
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/OperatingSystems`)
 }

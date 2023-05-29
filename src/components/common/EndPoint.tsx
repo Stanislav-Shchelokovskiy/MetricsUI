@@ -1,4 +1,4 @@
- const baseEndPoint = 'http://ubuntu-support.corp.devexpress.com'
+const baseEndPoint = 'http://ubuntu-support.corp.devexpress.com'
 //const baseEndPoint = 'http://localhost'
 
 export const FORECASTER_END_POINT = baseEndPoint + ':11002'

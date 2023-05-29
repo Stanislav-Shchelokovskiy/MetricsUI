@@ -8,5 +8,5 @@ export interface IDE {
 }
 
 export async function fetchIDEs(): Promise<FetchResult<Array<IDE>>> {
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_ides`)
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/Ides`)
 }

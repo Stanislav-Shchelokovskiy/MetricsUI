@@ -9,6 +9,7 @@ interface StateManagementCommandsProps {
     className: string
     shareableStateSelector: (state: any) => any
     stateSalt: string
+    endPoint: string,
 }
 
 export default function StateManagementCommands(props: StateManagementCommandsProps) {
@@ -28,7 +29,8 @@ export default function StateManagementCommands(props: StateManagementCommandsPr
         <ShareStateButton
             className={`${props.className}ShareStateButton`}
             statePropsSelector={props.shareableStateSelector}
-            stateSalt={props.stateSalt} />
+            stateSalt={props.stateSalt}
+            endPoint={props.endPoint} />
     </React.Fragment>
 }
 

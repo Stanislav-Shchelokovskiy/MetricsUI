@@ -8,5 +8,5 @@ export interface TicketStatus {
 }
 
 export async function fetchTicketStatuses(): Promise<FetchResult<Array<TicketStatus>>> {
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_ticket_statuses`)
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/TicketStatuses`)
 }

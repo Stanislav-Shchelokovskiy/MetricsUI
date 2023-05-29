@@ -13,7 +13,8 @@ export interface KeyProps extends StorageProps, ComponentProps {
 }
 
 export interface StateProps extends StorageProps, ComponentProps {
-    statePropsSelector: (state: any) => any
+    statePropsSelector: (state: any) => any,
+    endPoint: string,
 }
 
 export type ValuesPopupProps = PopupProps & ValuesProps

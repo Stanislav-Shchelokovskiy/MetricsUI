@@ -8,5 +8,5 @@ export interface EmpTribe {
 }
 
 export async function fetchEmpTribes(): Promise<FetchResult<Array<EmpTribe>>> {
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_emp_tribes`)
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/EmpTribes`)
 }

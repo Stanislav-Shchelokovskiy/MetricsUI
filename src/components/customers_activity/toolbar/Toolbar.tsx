@@ -1,4 +1,5 @@
 import React from 'react'
+import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 import DownloadButton from './DownloadButton'
 import StateManagementCommands from '../../common/components/state_management/StateManagementCommands'
 import { getShareableState } from '../../common/store/multiset_container/Store'
@@ -36,6 +37,7 @@ const ToolbarCommandsCached = React.memo(() => {
         <StateManagementCommands
             shareableStateSelector={getShareableState}
             stateSalt='CustomersActivity_'
+            endPoint={SUPPORT_ANALYTICS_END_POINT}
         />
         <ToolbarSeparator />
         <DownloadButton />

@@ -15,7 +15,7 @@ export async function fetchEmployees(
     tents: FilterParametersNode<string>,
 ): Promise<FetchResult<Array<Employee>>> {
     return fetchArray(
-        `${SUPPORT_ANALYTICS_END_POINT}/get_employees`,
+        `${SUPPORT_ANALYTICS_END_POINT}/Employees`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

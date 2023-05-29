@@ -8,5 +8,5 @@ export interface ReplyType {
 }
 
 export async function fetchRepliesTypes(): Promise<FetchResult<Array<ReplyType>>> {
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_replies_types`)
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/CATRepliesTypes`)
 }

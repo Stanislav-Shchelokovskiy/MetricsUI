@@ -61,7 +61,7 @@ export async function fetchTicketsWithIterationsAggregates(
 ): Promise<FetchResult<TicketsWithIterationsAggregates>> {
     const [rangeStart, rangeEnd] = containerState.range
     return fetchConvert(getConverter(set.title),
-        `${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_aggregates?` +
+        `${SUPPORT_ANALYTICS_END_POINT}/TicketsWithIterationsAggregates?` +
         `group_by_period=${containerState.groupByPeriod}` +
         `&range_start=${rangeStart}` +
         `&range_end=${rangeEnd}` +

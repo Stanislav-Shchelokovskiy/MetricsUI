@@ -8,5 +8,5 @@ export interface LicenseStatus {
 }
 
 export async function fetchLicenseStatuses(): Promise<FetchResult<Array<LicenseStatus>>> {
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_license_statuses`)
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/LicenseStatuses`)
 }

@@ -8,5 +8,5 @@ export interface EmpTent {
 }
 
 export async function fetchEmpTents(): Promise<FetchResult<Array<EmpTent>>> {
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_emp_tents`)
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/EmpTents`)
 }

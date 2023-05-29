@@ -11,7 +11,7 @@ export async function fetchDisplayFilter(
     set: SetState,
 ): Promise<FetchResult<DisplayFilter>> {
     return fetchArray(
-        `${SUPPORT_ANALYTICS_END_POINT}/get_customers_activity_display_filter`,
+        `${SUPPORT_ANALYTICS_END_POINT}/DisplayFilter`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

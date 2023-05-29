@@ -8,5 +8,5 @@ export interface Position {
 }
 
 export async function fetchPositions(): Promise<FetchResult<Array<Position>>> {
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_positions`)
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/Positions`)
 }

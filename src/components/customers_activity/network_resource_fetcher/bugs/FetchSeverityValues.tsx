@@ -8,5 +8,5 @@ export interface Severity {
 }
 
 export async function fetchSeverityValues(): Promise<FetchResult<Array<Severity>>> {
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_severity_values`)
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/SeverityValues`)
 }

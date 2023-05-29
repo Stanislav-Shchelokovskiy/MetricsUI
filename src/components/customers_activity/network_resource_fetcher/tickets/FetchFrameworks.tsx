@@ -8,5 +8,5 @@ export interface Framework {
 }
 
 export async function FetchFrameworks(): Promise<FetchResult<Array<Framework>>> {
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_frameworks`)
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/Frameworks`)
 }

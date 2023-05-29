@@ -11,7 +11,7 @@ export async function fetchPeriodsArray(containerState: ContainerState): Promise
             success: true,
             data: []
         }
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_periods_array?` +
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/PeriodsArray?` +
         `start=${rangeStart}` +
         `&end=${rangeEnd}` +
         `&format=${containerState.groupByPeriod}`

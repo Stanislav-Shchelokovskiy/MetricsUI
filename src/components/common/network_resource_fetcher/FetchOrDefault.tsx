@@ -8,9 +8,14 @@ function fetchArrayConverter<T>(values: Array<T> | undefined): Array<T> {
     return values ? values : Array<T>()
 }
 
-export async function fetchConvert<RawT, ResT>(converter: (value: RawT | undefined) => ResT, input: RequestInfo | URL, init?: RequestInit): Promise<FetchResult<ResT>> {
+export async function fetchConvert<RawT, ResT>(
+    converter: (value: RawT | undefined) => ResT,
+    input: RequestInfo | URL,
+    init?: RequestInit,
+    responseSelector: ((r: Response) => any) = (r: Response) => r.json()
+): Promise<FetchResult<ResT>> {
     try {
-        const res = await fetch(input, init).then(response => response.json())
+        const res = await fetch(input, init).then(response => responseSelector(response))
         return getFetchResult(true, converter(res))
     } catch (error) {
         console.log(error)

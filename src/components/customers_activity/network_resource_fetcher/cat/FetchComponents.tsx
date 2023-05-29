@@ -10,7 +10,7 @@ export interface Component {
 
 export async function fetchComponents(tents: FilterParametersNode<string>): Promise<FetchResult<Array<Component>>> {
     return fetchArray(
-        `${SUPPORT_ANALYTICS_END_POINT}/get_components`,
+        `${SUPPORT_ANALYTICS_END_POINT}/CATComponents`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

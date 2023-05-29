@@ -8,5 +8,5 @@ export interface Version {
 }
 
 export async function fetchVersions(): Promise<FetchResult<Array<Version>>> {
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_builds`)
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/Builds`)
 }

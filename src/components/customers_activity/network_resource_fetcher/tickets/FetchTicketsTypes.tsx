@@ -8,5 +8,5 @@ export interface TicketsType {
 }
 
 export async function fetchTicketsTypes(): Promise<FetchResult<Array<TicketsType>>> {
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_tickets_types`)
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/TicketsTypes`)
 }

@@ -10,7 +10,7 @@ export interface Product {
 
 export async function fetchProducts(tents: FilterParametersNode<string>): Promise<FetchResult<Array<Product>>> {
     return fetchArray(
-        `${SUPPORT_ANALYTICS_END_POINT}/get_products`,
+        `${SUPPORT_ANALYTICS_END_POINT}/Products`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

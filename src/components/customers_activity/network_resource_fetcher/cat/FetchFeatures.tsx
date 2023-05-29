@@ -13,7 +13,7 @@ export async function fetchFeatures(
     components: FilterParametersNode<string>
 ): Promise<FetchResult<Array<Feature>>> {
     return fetchArray(
-        `${SUPPORT_ANALYTICS_END_POINT}/get_features`,
+        `${SUPPORT_ANALYTICS_END_POINT}/CATFeatures`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

@@ -10,7 +10,7 @@ export interface Platform {
 
 export async function fetchPlatforms(tents: FilterParametersNode<string>): Promise<FetchResult<Array<Platform>>> {
     return fetchArray(
-        `${SUPPORT_ANALYTICS_END_POINT}/get_platforms`,
+        `${SUPPORT_ANALYTICS_END_POINT}/Platforms`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

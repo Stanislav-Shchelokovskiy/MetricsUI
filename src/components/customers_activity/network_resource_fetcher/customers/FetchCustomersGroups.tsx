@@ -9,7 +9,7 @@ export interface CustomersGroup {
 
 export async function fetchCustomersGroups(baseLineAligned: boolean): Promise<FetchResult<Array<CustomersGroup>>> {
     return fetchArray(
-        `${SUPPORT_ANALYTICS_END_POINT}/get_customers_groups?` + new URLSearchParams({
+        `${SUPPORT_ANALYTICS_END_POINT}/CustomersGroups?` + new URLSearchParams({
             tracked: baseLineAligned.toString()
         })
     )

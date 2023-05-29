@@ -17,7 +17,7 @@ export async function fetchConversionStatuses(licenseStatuses: FilterParametersN
         }
 
     return fetchArray(
-        `${SUPPORT_ANALYTICS_END_POINT}/get_conversion_statuses`,
+        `${SUPPORT_ANALYTICS_END_POINT}/ConversionStatuses`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

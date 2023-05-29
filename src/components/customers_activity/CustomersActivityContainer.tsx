@@ -5,10 +5,8 @@ import '../common/styles/multiset_container/Toolbar.css'
 import '../common/styles/multiset_container/FilterTooltip.css'
 
 import React from 'react'
-import { useParams, Navigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { applyState } from '../common/store/state/Actions'
-import { PullState } from '../common/network_resource_fetcher/FetchState'
+import ApplySharedState from '../common/components/state_management/ApplySharedState'
+import { SUPPORT_ANALYTICS_END_POINT } from '../common/EndPoint'
 import GraphSettingsPanel from '../common/components/multiset_container/graph/GraphSettingsPanel'
 import Sets from './content/Sets'
 import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
@@ -19,16 +17,10 @@ import { fetchGroupByPeriods } from './network_resource_fetcher/FetchGroupByPeri
 import { fetchPeriod } from './network_resource_fetcher/FetchPeriod'
 
 export function CustomersActivityApplySharedState() {
-    const { stateId } = useParams()
-    const dispatch = useDispatch();
-    (async () => {
-        if (stateId === undefined)
-            return
-        const fetchedState = await PullState(stateId)
-        if (fetchedState.success)
-            dispatch(applyState(fetchedState.data))
-    })()
-    return <Navigate to='/CustomersActivity' replace={true} />
+    return <ApplySharedState
+        endPoint={SUPPORT_ANALYTICS_END_POINT}
+        navigateTo='/CustomersActivity'
+    />
 }
 
 export default function CustomersActivity() {

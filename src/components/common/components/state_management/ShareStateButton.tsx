@@ -15,7 +15,7 @@ function ShareStateButton(props: StateProps) {
         onSuccess: (message: string) => void,
         onError: (message: string) => void,
     ) => {
-        const fetchedStateId: FetchResult<string> = await PushState(props.statePropsSelector(store.getState()))
+        const fetchedStateId: FetchResult<string> = await PushState(props.endPoint, props.statePropsSelector(store.getState()))
         if (fetchedStateId.success) {
             const successfullyCopied = copy(`${window.location.href}/${fetchedStateId.data}`)
             if (successfullyCopied) {

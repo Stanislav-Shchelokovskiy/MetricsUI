@@ -23,7 +23,7 @@ export async function fetchTicketsWithIterationsRaw(
     set: SetState,
 ): Promise<FetchResult<Array<TicketsWithIterationsRaw>>> {
     const [rangeStart, rangeEnd] = containerState.range
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_raw?` +
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/TicketsWithIterationsRaw?` +
         `&range_start=${rangeStart}` +
         `&range_end=${rangeEnd}` +
         `&baseline_aligned_mode_enabled=${containerState.baselineAlignedModeEnabled}`,

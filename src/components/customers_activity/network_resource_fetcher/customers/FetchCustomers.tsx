@@ -22,7 +22,7 @@ export async function fetchCustomers(
         }
     }
     return fetchArray(
-        `${SUPPORT_ANALYTICS_END_POINT}/get_customers?` +
+        `${SUPPORT_ANALYTICS_END_POINT}/Customers?` +
         `search=${validateValue(searchValue, '')}` +
         `&skip=${validateValue(skip, 0)}` +
         `&take=${validateValue(take, 0)}`,
@@ -42,7 +42,7 @@ export async function fetchValidateCustomers(customers: Array<string> | undefine
         }
     }
     return fetchArray(
-        `${SUPPORT_ANALYTICS_END_POINT}/validate_customers`,
+        `${SUPPORT_ANALYTICS_END_POINT}/ValidateCustomers`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

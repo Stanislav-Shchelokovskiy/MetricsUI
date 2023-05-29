@@ -18,5 +18,5 @@ function converter(periodRaw: Array<PeriodRaw> | undefined): Period {
 }
 
 export async function fetchPeriod(): Promise<FetchResult<Period>> {
-    return fetchConvert(converter, `${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_period`)
+    return fetchConvert(converter, `${SUPPORT_ANALYTICS_END_POINT}/TicketsWithIterationsPeriod`)
 }

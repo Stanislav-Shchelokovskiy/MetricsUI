@@ -8,5 +8,5 @@ export interface GroupByPeriod {
 }
 
 export async function fetchGroupByPeriods(): Promise<FetchResult<Array<GroupByPeriod>>> {
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_group_by_periods`)
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/GroupByPeriods`)
 }
