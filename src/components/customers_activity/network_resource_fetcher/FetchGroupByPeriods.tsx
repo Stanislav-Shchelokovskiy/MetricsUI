@@ -1,5 +1,6 @@
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
+import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
 
 export interface GroupByPeriod {
     name: string
@@ -7,17 +8,5 @@ export interface GroupByPeriod {
 }
 
 export async function fetchGroupByPeriods(): Promise<FetchResult<Array<GroupByPeriod>>> {
-    try {
-        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_group_by_periods`).then(response => response.json())
-        return {
-            success: true,
-            data: values as Array<GroupByPeriod>
-        }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: Array<GroupByPeriod>()
-        }
-    }
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_group_by_periods`)
 }

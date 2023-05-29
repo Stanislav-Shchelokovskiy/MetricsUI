@@ -1,14 +1,13 @@
-import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
+import FetchResult from '../../../common/Interfaces'
+import { fetchArray } from '../../../common/network_resource_fetcher/FetchOrDefault'
 import { anyValueIsEmpty } from '../../../common/store/multiset_container/sets/Utils'
 import { ValidationResult } from '../../../common/Interfaces'
-
 
 export interface Customer {
     id: string
     name: string
 }
-
 
 export async function fetchCustomers(
     filterValues: Array<string>,
@@ -22,29 +21,17 @@ export async function fetchCustomers(
             data: Array<Customer>()
         }
     }
-    try {
-        const values = await fetch(
-            `${SUPPORT_ANALYTICS_END_POINT}/get_customers?` +
-            `search=${validateValue(searchValue, '')}` +
-            `&skip=${validateValue(skip, 0)}` +
-            `&take=${validateValue(take, 0)}`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ customers: filterValues }),
-            },
-        ).then(response => response.json())
-        return {
-            success: true,
-            data: (values as Array<Customer>)
+    return fetchArray(
+        `${SUPPORT_ANALYTICS_END_POINT}/get_customers?` +
+        `search=${validateValue(searchValue, '')}` +
+        `&skip=${validateValue(skip, 0)}` +
+        `&take=${validateValue(take, 0)}`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ customers: filterValues }),
         }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: Array<Customer>()
-        }
-    }
+    )
 }
 
 export async function fetchValidateCustomers(customers: Array<string> | undefined): Promise<FetchResult<Array<ValidationResult>>> {
@@ -54,30 +41,18 @@ export async function fetchValidateCustomers(customers: Array<string> | undefine
             data: Array<ValidationResult>()
         }
     }
-    try {
-        const values = await fetch(
-            `${SUPPORT_ANALYTICS_END_POINT}/validate_customers`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ customers: customers }),
-            },
-        ).then(response => response.json())
-        return {
-            success: true,
-            data: (values as Array<ValidationResult>)
+    return fetchArray(
+        `${SUPPORT_ANALYTICS_END_POINT}/validate_customers`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ customers: customers }),
         }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: Array<ValidationResult>()
-        }
-    }
+    )
 }
 
-function validateValue(value: any, default_value: string | number): string | number {
-    if (value === undefined || value === null)
-        return default_value
-    return value.toString()
+function validateValue(value: any, defaultValue: string | number): string | number {
+    if (value)
+        return value.toString()
+    return defaultValue
 }

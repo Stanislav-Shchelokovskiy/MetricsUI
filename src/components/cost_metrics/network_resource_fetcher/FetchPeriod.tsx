@@ -8,6 +8,12 @@ interface PeriodRaw {
 
 export type Period = [string, string]
 
+function converter(value: PeriodRaw | undefined) {
+    if (value)
+        return [value.start, value.end]
+    return ['', '']
+}
+
 export async function fetchPeriod(): Promise<FetchResult<Period>> {
     try {
         const period = await fetch(`${SUPPORT_METRICS_END_POINT}/CostMetrics/Period`).then(response => response.json()) as PeriodRaw

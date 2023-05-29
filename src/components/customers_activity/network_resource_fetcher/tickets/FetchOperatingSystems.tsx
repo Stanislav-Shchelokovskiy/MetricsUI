@@ -1,5 +1,6 @@
-import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
+import FetchResult from '../../../common/Interfaces'
+import { fetchArray } from '../../../common/network_resource_fetcher/FetchOrDefault'
 
 export interface OS {
     id: string
@@ -7,17 +8,5 @@ export interface OS {
 }
 
 export async function fetchOperatingSystems(): Promise<FetchResult<Array<OS>>> {
-    try {
-        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_operating_systems`).then(response => response.json())
-        return {
-            success: true,
-            data: (values as Array<OS>)
-        }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: Array<OS>()
-        }
-    }
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_operating_systems`)
 }

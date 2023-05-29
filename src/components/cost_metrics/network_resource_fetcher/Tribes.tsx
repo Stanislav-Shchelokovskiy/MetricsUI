@@ -1,22 +1,11 @@
-import FetchResult from '../../common/Interfaces'
 import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
+import FetchResult from '../../common/Interfaces'
+import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
 
 export interface Tribe {
     name: string
 }
 
 export async function fetchTribes(): Promise<FetchResult<Array<Tribe>>> {
-    try {
-        const values = await fetch(`${SUPPORT_METRICS_END_POINT}/CostMetrics/Tribes`).then(response => response.json())
-        return {
-            success: true,
-            data: (values as Array<Tribe>)
-        }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: Array<Tribe>()
-        }
-    }
+    return fetchArray(`${SUPPORT_METRICS_END_POINT}/CostMetrics/Tribes`)
 }

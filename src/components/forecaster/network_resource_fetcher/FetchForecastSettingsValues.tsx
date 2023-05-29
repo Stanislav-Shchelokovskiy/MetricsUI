@@ -1,7 +1,7 @@
 import { FORECASTER_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
+import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
 import { Tribe } from '../../common/Interfaces'
-
 
 export interface ForecasterSettingsValues {
     incomeTypes: Array<string>
@@ -22,67 +22,18 @@ export const EMPTY_FORECATER_SETTINGS_VALUES: FetchResult<ForecasterSettingsValu
     }
 }
 
-
-export const fetchIncomeTypes: () => Promise<FetchResult<Array<string>>> = async function () {
-    try {
-        const incomeTypes = await fetch(`${FORECASTER_END_POINT}/get_income_types`).then(response => response.json())
-        return {
-            success: true,
-            data: (incomeTypes as Array<string>)
-        }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: Array<string>()
-        }
-    }
+export async function fetchIncomeTypes(): Promise<FetchResult<Array<string>>> {
+    return fetchArray(`${FORECASTER_END_POINT}/get_income_types`)
 }
 
-export const fetchReplyTypes: () => Promise<FetchResult<Array<string>>> = async function () {
-    try {
-        const replyTypes = await fetch(`${FORECASTER_END_POINT}/get_reply_type_filters`).then(response => response.json())
-        return {
-            success: true,
-            data: (replyTypes as Array<string>)
-        }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: Array<string>()
-        }
-    }
+export async function fetchReplyTypes(): Promise<FetchResult<Array<string>>> {
+    return fetchArray(`${FORECASTER_END_POINT}/get_reply_type_filters`)
 }
 
-export const fetchForecastHorizons: () => Promise<FetchResult<Array<string>>> = async function () {
-    try {
-        const forecastHorizons = await fetch(`${FORECASTER_END_POINT}/get_daily_horizons`).then(response => response.json())
-        return {
-            success: true,
-            data: (forecastHorizons as Array<string>)
-        }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: Array<string>()
-        }
-    }
+export async function fetchForecastHorizons(): Promise<FetchResult<Array<string>>> {
+    return fetchArray(`${FORECASTER_END_POINT}/get_daily_horizons`)
 }
 
-export const fetchTiles: () => Promise<FetchResult<Array<number>>> = async function () {
-    try {
-        const tiles = await fetch(`${FORECASTER_END_POINT}/get_tiles`).then(response => response.json())
-        return {
-            success: true,
-            data: (tiles as Array<number>)
-        }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: Array<number>()
-        }
-    }
+export async function fetchTiles(): Promise<FetchResult<Array<number>>> {
+    return fetchArray(`${FORECASTER_END_POINT}/get_tiles`)
 }

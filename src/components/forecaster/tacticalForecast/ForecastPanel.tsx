@@ -6,9 +6,16 @@ import FetchResult from '../../common/Interfaces'
 import {
     HourlyTacticalForecast,
     EMPTY_TACTICAL_FORECAST,
-    FetchTacticalForecast
+    fetchTacticalForecast
 } from '../network_resource_fetcher/FetchTacticalForecast'
 
+
+interface ForecastPanelProps {
+    tribeId: string
+    incomeType: string
+    replyType: string
+    lastUpdated: number
+}
 
 const ForecastPanel = React.memo(
     function ForecastPanel(
@@ -17,23 +24,18 @@ const ForecastPanel = React.memo(
             incomeType,
             replyType,
             lastUpdated,
-        }: {
-            tribeId: string
-            incomeType: string
-            replyType: string
-            lastUpdated: number
-        }) {
+        }: ForecastPanelProps) {
         // const renderCount = useRef(0)
         // console.log('Tactical ForecastPanel render: ', renderCount.current++)
 
-        const [{ success: forecastLoaded, data: tacticalForecast }, setForecastLoaded] = useState<FetchResult<HourlyTacticalForecast>>(EMPTY_TACTICAL_FORECAST)
+        const [[forecastLoaded, tacticalForecast], setForecastLoaded] = useState<[boolean, HourlyTacticalForecast]>([false, EMPTY_TACTICAL_FORECAST])
 
         useEffect(() => {
             (async () => {
                 if (replyType === '')
                     return
-                const fetchResult: FetchResult<HourlyTacticalForecast> = await FetchTacticalForecast(incomeType, tribeId, replyType)
-                setForecastLoaded(fetchResult)
+                const fetchResult: FetchResult<HourlyTacticalForecast> = await fetchTacticalForecast(incomeType, tribeId, replyType)
+                setForecastLoaded([fetchResult.success, fetchResult.data])
             })();
         }, [tribeId, incomeType, replyType, lastUpdated])
 

@@ -1,6 +1,6 @@
 import { FORECASTER_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
-
+import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'
 
 interface RawIncomeForecast {
     ts: string
@@ -18,50 +18,33 @@ export interface IncomeForecast {
     yhat_rmse_lower: Array<number>
 }
 
-
-export const EMPTY_INCOME_FORECAST: FetchResult<IncomeForecast> =
-{
-    success: false,
-    data: {
-        ts: Array<Date>(),
-        y: Array<number>(),
-        yhat: Array<number>(),
-        yhat_rmse_upper: Array<number>(),
-        yhat_rmse_lower: Array<number>()
-    }
+export const EMPTY_INCOME_FORECAST = {
+    ts: Array<Date>(),
+    y: Array<number>(),
+    yhat: Array<number>(),
+    yhat_rmse_upper: Array<number>(),
+    yhat_rmse_lower: Array<number>()
 }
 
-
-export const FetchTribeIncomeForecast: (tribeId: string, forecastHorizon: string, incomeType: string) => Promise<FetchResult<IncomeForecast>> =
-    async function (tribeId: string, forecastHorizon: string, incomeType: string) {
-        try {
-            const tribeIncomeForecast: Array<RawIncomeForecast> = await fetch(
-                `${FORECASTER_END_POINT}/get_forecast?` +
-                new URLSearchParams({
-                    tribe_id: tribeId,
-                    horizon: forecastHorizon,
-                    income_type: incomeType
-                })
-            ).then(response => response.json())
-
-            const ts = tribeIncomeForecast.map(forecast => new Date(forecast.ts))
-            const y = tribeIncomeForecast.map(forecast => forecast.y)
-            const yhat_rmse_upper = tribeIncomeForecast.map(forecast => forecast.yhat_rmse_upper)
-            const yhat = tribeIncomeForecast.map(forecast => forecast.yhat)
-            const yhat_rmse_lower = tribeIncomeForecast.map(forecast => forecast.yhat_rmse_lower)
-
-            return {
-                success: true,
-                data: {
-                    ts: ts,
-                    y: y,
-                    yhat: yhat,
-                    yhat_rmse_upper: yhat_rmse_upper,
-                    yhat_rmse_lower: yhat_rmse_lower
-                }
-            }
-        } catch (error) {
-            console.log(error)
-            return EMPTY_INCOME_FORECAST
+function convert(tribeIncomeForecast: Array<RawIncomeForecast> | undefined): IncomeForecast {
+    if (tribeIncomeForecast)
+        return {
+            ts: tribeIncomeForecast.map(forecast => new Date(forecast.ts)),
+            y: tribeIncomeForecast.map(forecast => forecast.y),
+            yhat: tribeIncomeForecast.map(forecast => forecast.yhat),
+            yhat_rmse_upper: tribeIncomeForecast.map(forecast => forecast.yhat_rmse_upper),
+            yhat_rmse_lower: tribeIncomeForecast.map(forecast => forecast.yhat_rmse_lower)
         }
-    }
+    return EMPTY_INCOME_FORECAST
+}
+
+export async function FetchTribeIncomeForecast(tribeId: string, forecastHorizon: string, incomeType: string): Promise<FetchResult<IncomeForecast>> {
+    return fetchConvert(convert,
+        `${FORECASTER_END_POINT}/get_forecast?` +
+        new URLSearchParams({
+            tribe_id: tribeId,
+            horizon: forecastHorizon,
+            income_type: incomeType
+        })
+    )
+}

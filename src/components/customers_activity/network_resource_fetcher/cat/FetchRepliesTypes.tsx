@@ -1,5 +1,6 @@
-import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
+import FetchResult from '../../../common/Interfaces'
+import { fetchArray } from '../../../common/network_resource_fetcher/FetchOrDefault'
 
 export interface ReplyType {
     id: string
@@ -7,17 +8,5 @@ export interface ReplyType {
 }
 
 export async function fetchRepliesTypes(): Promise<FetchResult<Array<ReplyType>>> {
-    try {
-        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_replies_types`).then(response => response.json())
-        return {
-            success: true,
-            data: (values as Array<ReplyType>)
-        }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: Array<ReplyType>()
-        }
-    }
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_replies_types`)
 }

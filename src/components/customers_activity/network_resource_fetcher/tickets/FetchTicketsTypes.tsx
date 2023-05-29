@@ -1,5 +1,6 @@
-import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
+import FetchResult from '../../../common/Interfaces'
+import { fetchArray } from '../../../common/network_resource_fetcher/FetchOrDefault'
 
 export interface TicketsType {
     id: number
@@ -7,17 +8,5 @@ export interface TicketsType {
 }
 
 export async function fetchTicketsTypes(): Promise<FetchResult<Array<TicketsType>>> {
-    try {
-        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_tickets_types`).then(response => response.json())
-        return {
-            success: true,
-            data: (values as Array<TicketsType>)
-        }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: Array<TicketsType>()
-        }
-    }
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_tickets_types`)
 }

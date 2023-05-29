@@ -148,10 +148,10 @@ interface GraphState {
 }
 
 const initialGraphState: GraphState = {
-    incomeForecastLoaded: EMPTY_INCOME_FORECAST.success,
-    incomeForecast: EMPTY_INCOME_FORECAST.data,
-    tribeRepliesLoaded: EMPTY_DAILY_TRIBE_REPLIES.success,
-    tribeReplies: EMPTY_DAILY_TRIBE_REPLIES.data,
+    incomeForecastLoaded: false,
+    incomeForecast: EMPTY_INCOME_FORECAST,
+    tribeRepliesLoaded: false,
+    tribeReplies: EMPTY_DAILY_TRIBE_REPLIES,
 }
 
 interface GraphAction {
@@ -207,28 +207,28 @@ function Graph({ state }: { state: ForecastPanelState }) {
     const [graphState, dispatch] = useReducer(graphStateReducer, initialGraphState)
 
     useEffect(() => {
-            (async () => {
-                if (state.forecastHorizon === '')
-                    return
-                const fetchedIncomeForecast: FetchResult<IncomeForecast> = await FetchTribeIncomeForecast(state.tribeId, state.forecastHorizon, state.incomeType)
-                dispatch({
-                    type: FETCH_INCOME_FORECAST,
-                    ...initialGraphState,
-                    incomeForecastLoaded: fetchedIncomeForecast.success,
-                    incomeForecast: fetchedIncomeForecast.data,
-                })
-                const fetchedDailyTribeReplies: FetchResult<Array<DailyTribeReplies>> = await FetchDailyTribeReplies(state.tile, state.tribeId, state.forecastHorizon)
-                dispatch({
-                    type: FETCH_DAILY_TRIBE_REPLIES,
-                    ...initialGraphState,
-                    tribeRepliesLoaded: fetchedDailyTribeReplies.success,
-                    tribeReplies: fetchedDailyTribeReplies.data,
-                })
-            })()
+        (async () => {
+            if (state.forecastHorizon === '')
+                return
+            const fetchedIncomeForecast: FetchResult<IncomeForecast> = await FetchTribeIncomeForecast(state.tribeId, state.forecastHorizon, state.incomeType)
+            dispatch({
+                type: FETCH_INCOME_FORECAST,
+                ...initialGraphState,
+                incomeForecastLoaded: fetchedIncomeForecast.success,
+                incomeForecast: fetchedIncomeForecast.data,
+            })
+            const fetchedDailyTribeReplies: FetchResult<Array<DailyTribeReplies>> = await FetchDailyTribeReplies(state.tile, state.tribeId, state.forecastHorizon)
+            dispatch({
+                type: FETCH_DAILY_TRIBE_REPLIES,
+                ...initialGraphState,
+                tribeRepliesLoaded: fetchedDailyTribeReplies.success,
+                tribeReplies: fetchedDailyTribeReplies.data,
+            })
+        })()
     }, [state.tribeId, state.forecastHorizon, state.incomeType, state.tile, state.lastUpdated])
 
     const forecasterDispatch = useForecasterDispatch()
-    const onLegendClick = useCallback(({ data }: LegendClickObject) => {    
+    const onLegendClick = useCallback(({ data }: LegendClickObject) => {
         const timerId = setTimeout(() => {
             const legendsToStore = (data.filter(legend => legend.type === 'bar' && legend.visible === 'legendonly').map(legend => legend.hovertext) as Array<string>)
             forecasterDispatch(legendClick(state.tribeId, legendsToStore))

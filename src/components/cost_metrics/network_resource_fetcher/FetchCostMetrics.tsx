@@ -11,14 +11,12 @@ interface CostMetricsAggregate {
 }
 
 export interface CostMetricsAggregates {
-    index: number
     name: string
     periods: Array<string> | Array<number>
     sc_hours: Array<number>
 }
 
 export const EMPTY_AGGREGATES: CostMetricsAggregates = {
-    index: 0,
     name: '',
     periods: [],
     sc_hours: [],
@@ -27,7 +25,6 @@ export const EMPTY_AGGREGATES: CostMetricsAggregates = {
 export async function fetchCostMetricsAggregates(
     containerState: ContainerState,
     set: SetState,
-    index: number
 ): Promise<FetchResult<CostMetricsAggregates>> {
     try {
         const [rangeStart, rangeEnd] = containerState.range
@@ -57,7 +54,6 @@ export async function fetchCostMetricsAggregates(
         return {
             success: true,
             data: {
-                index: index,
                 name: set.title,
                 periods: periods,
                 sc_hours: sc_hours,

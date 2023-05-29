@@ -1,5 +1,6 @@
-import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
+import FetchResult from '../../../common/Interfaces'
+import { fetchArray } from '../../../common/network_resource_fetcher/FetchOrDefault'
 import { FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
 
 export interface Product {
@@ -8,21 +9,12 @@ export interface Product {
 }
 
 export async function fetchProducts(tents: FilterParametersNode<string>): Promise<FetchResult<Array<Product>>> {
-    try {
-        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_products`, {
+    return fetchArray(
+        `${SUPPORT_ANALYTICS_END_POINT}/get_products`,
+        {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ tents: tents }),
-        }).then(response => response.json())
-        return {
-            success: true,
-            data: (values as Array<Product>)
         }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: Array<Product>()
-        }
-    }
+    )
 }

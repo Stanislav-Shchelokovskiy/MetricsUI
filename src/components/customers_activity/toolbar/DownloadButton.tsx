@@ -48,11 +48,10 @@ async function downloadRawData(state: CustomersActivityStore) {
     const customersActivityState = state.container
     const customersActivitySets = state.sets
     let rawData: Array<TicketsWithIterationsRaw> = []
-    let fetchResults = await Promise.all(customersActivitySets.map((set, index) => fetchTicketsWithIterationsRaw(customersActivityState, set, index,)))
-    fetchResults.sort((a, b) => a.data.index - b.data.index)
+    let fetchResults = await Promise.all(customersActivitySets.map((set) => fetchTicketsWithIterationsRaw(customersActivityState, set,)))
     for (const fetchResult of fetchResults)
         if (fetchResult.success)
-            rawData = rawData.concat(fetchResult.data.raw_data)
+            rawData = rawData.concat(fetchResult.data) 
     return rawData
 }
 

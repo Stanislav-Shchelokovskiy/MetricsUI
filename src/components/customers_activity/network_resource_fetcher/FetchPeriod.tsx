@@ -1,5 +1,6 @@
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
+import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'
 
 interface PeriodRaw {
     period_start: string
@@ -8,19 +9,14 @@ interface PeriodRaw {
 
 export type Period = [string, string]
 
-export async function fetchPeriod(): Promise<FetchResult<Period>> {
-    try {
-        const period_raw = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_period`).then(response => response.json())
-        const period = period_raw[0] as PeriodRaw
-        return {
-            success: true,
-            data: [period.period_start, period.period_end]
-        }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: ['', '']
-        }
+function converter(periodRaw: Array<PeriodRaw> | undefined): Period {
+    if (periodRaw) {
+        const period = periodRaw[0]
+        return [period.period_start, period.period_end]
     }
+    return ['', '']
+}
+
+export async function fetchPeriod(): Promise<FetchResult<Period>> {
+    return fetchConvert(converter, `${SUPPORT_ANALYTICS_END_POINT}/get_tickets_with_iterations_period`)
 }

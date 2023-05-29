@@ -9,7 +9,6 @@ import GraphPlot, { GraphData } from './GraphPlot'
 
 interface BaseAgg {
     name: string
-    index: number
     periods: Array<string> | Array<number>
 }
 
@@ -17,7 +16,7 @@ interface ComparisonGraphProps<ContainerStateT extends BaseContainerState, SetSt
     className: string
     aggSelector: (container: ContainerStateT, agg: AggT) => Array<number>
     fetchPeriods: (container: ContainerStateT) => Promise<FetchResult<Array<string> | Array<number>>>
-    fetchAggs: (container: ContainerStateT, set: SetStateT, setIndex: number) => Promise<FetchResult<AggT>>
+    fetchAggs: (container: ContainerStateT, set: SetStateT) => Promise<FetchResult<AggT>>
     containerDepsSelector: (container: ContainerStateT) => Array<any>
 }
 
@@ -38,27 +37,30 @@ export default function ComparisonGraph<ContainerStateT extends BaseContainerSta
             token.cancel = () => {
                 cancelled = true
             }
+            
             const [periods_array, ...sets] = await Promise.all([
                 props.fetchPeriods(containerState),
-                ...setsState.map((set, index) => props.fetchAggs(containerState, set, index))
+                ...setsState.map((set) => props.fetchAggs(containerState, set))
             ])
 
-            let aggs: Array<GraphData> = []
-            if (periods_array.success) {
-                aggs = sets.map(x => {
-                    return {
-                        name: x.data.name,
-                        metric: containerState.metric,
-                        x: x.data.periods,
-                        y: props.aggSelector(containerState, x.data),
-                        visible: (containerState.hiddenLegends.includes(x.data.name) ? 'legendonly' : true) as 'legendonly' | boolean | undefined,
-                        index: x.data.index
-                    }
-                }).sort((a, b) => a.index - b.index)
-            }
             if (!cancelled) {
-                setAggregates([periods_array.data, aggs])
-                setDataLoading(false)
+                let aggs: Array<GraphData> = []
+                if (periods_array.success) {
+                    aggs = sets.map(x => {
+                        return {
+                            name: x.data.name,
+                            metric: containerState.metric,
+                            x: x.data.periods,
+                            y: props.aggSelector(containerState, x.data),
+                            visible: (containerState.hiddenLegends.includes(x.data.name) ? 'legendonly' : true) as 'legendonly' | boolean | undefined,
+                        }
+                    })
+                }
+
+                if (!cancelled) {
+                    setAggregates([periods_array.data, aggs])
+                    setDataLoading(false)
+                }
             }
         })(cancellationToken.current)
     },

@@ -1,5 +1,6 @@
-import FetchResult from '../../../common/Interfaces'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
+import FetchResult from '../../../common/Interfaces'
+import { fetchArray } from '../../../common/network_resource_fetcher/FetchOrDefault'
 
 export interface Framework {
     id: string
@@ -7,17 +8,5 @@ export interface Framework {
 }
 
 export async function FetchFrameworks(): Promise<FetchResult<Array<Framework>>> {
-    try {
-        const values = await fetch(`${SUPPORT_ANALYTICS_END_POINT}/get_frameworks`).then(response => response.json())
-        return {
-            success: true,
-            data: (values as Array<Framework>)
-        }
-    } catch (error) {
-        console.log(error)
-        return {
-            success: false,
-            data: Array<Framework>()
-        }
-    }
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/get_frameworks`)
 }
