@@ -4,7 +4,7 @@ import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault
 import { SetState } from '../store/sets_reducer/Interfaces'
 import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
 import { ContainerState } from '../store/ContainerReducer'
-import { isTicketsMetricSelected } from '../../common/components/multiset_container/graph/MetricSelector'
+import { isTicketsMetricSelected } from './FetchMetrics'
 
 export interface TicketsWithIterationsRaw {
     user_id: string

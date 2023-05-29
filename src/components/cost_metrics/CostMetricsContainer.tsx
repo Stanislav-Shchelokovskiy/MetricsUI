@@ -14,6 +14,7 @@ import GraphSettingsPanel from '../common/components/multiset_container/graph/Gr
 import CostMetricsComparisonGraph from './ComparisonGraph'
 import { fetchPeriod } from './network_resource_fetcher/FetchPeriod'
 import { fetchGroupByPeriods } from './network_resource_fetcher/FetchGroupByPeriods'
+import { fetchMetrics } from './network_resource_fetcher/FetchMetrics'
 
 export function CostMetricsApplySharedState() {
     return <ApplySharedState
@@ -30,7 +31,8 @@ export default function CostMetrics() {
         <MultisetContainerContent>
             <GraphSettingsPanel
                 fetchPeriod={fetchPeriod}
-                fetchGroupByPeriods={fetchGroupByPeriods} />
+                fetchGroupByPeriods={fetchGroupByPeriods}
+                fetchMetrics={fetchMetrics} />
             <CostMetricsComparisonGraph />
         </MultisetContainerContent>
     </MultisetContainer>

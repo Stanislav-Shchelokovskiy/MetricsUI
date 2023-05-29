@@ -15,6 +15,7 @@ import CustomersActivityToolbar from './toolbar/Toolbar'
 import CustomersActivityComparisonGraph from './ComparisonGraph'
 import { fetchGroupByPeriods } from './network_resource_fetcher/FetchGroupByPeriods'
 import { fetchPeriod } from './network_resource_fetcher/FetchPeriod'
+import { fetchMetrics } from './network_resource_fetcher/FetchMetrics'
 
 export function CustomersActivityApplySharedState() {
     return <ApplySharedState
@@ -32,7 +33,8 @@ export default function CustomersActivity() {
             <MultisetContainerContent>
                 <GraphSettingsPanel
                     fetchPeriod={fetchPeriod}
-                    fetchGroupByPeriods={fetchGroupByPeriods} />
+                    fetchGroupByPeriods={fetchGroupByPeriods}
+                    fetchMetrics={fetchMetrics} />
                 <CustomersActivityComparisonGraph />
             </MultisetContainerContent>
         </MultisetContainer>

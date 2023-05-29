@@ -12,8 +12,7 @@ import {
     isTicketsMetricSelected,
     isIterationsMetricSelected,
     isIterationsToTicketsMetricSelected
-} from '../common/components/multiset_container/graph/MetricSelector'
-
+} from './network_resource_fetcher/FetchMetrics'
 
 export default function CustomersActivityComparisonGraph() {
     const aggSelector = useCallback((containerState: BaseContainerState, aggs: TicketsWithIterationsAggregates) => {

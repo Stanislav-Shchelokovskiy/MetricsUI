@@ -4,7 +4,7 @@ import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefau
 import { ContainerState } from '../store/ContainerReducer'
 import { SetState } from '../store/sets_reducer/Interfaces'
 import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
-import { isTicketsMetricSelected } from '../../common/components/multiset_container/graph/MetricSelector'
+import { isTicketsMetricSelected } from './FetchMetrics'
 
 interface TicketsWithIterationsAggregate {
     period: string

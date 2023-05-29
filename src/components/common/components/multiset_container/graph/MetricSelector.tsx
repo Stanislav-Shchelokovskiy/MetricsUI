@@ -1,39 +1,34 @@
 import React from 'react'
+import FetchResult from '../../../Interfaces'
 import OptionSelector from '../../OptionSelector'
 import { changeMetric } from '../../../store/multiset_container/Actions'
 import { MultisetContainerStore } from '../../../store/multiset_container/Store'
+import { DataSourceProps } from '../../../hooks/UseDataSource'
 
-const TICKETS = 'Tickets'
-const ITERATIONS = 'Iterations'
-const PEOPLE = 'People'
-const ITERATIONS_TO_TICKETS = 'Iterations / Tickets'
-const metrics = [TICKETS, ITERATIONS, ITERATIONS_TO_TICKETS, PEOPLE]
-
-export function getValidMetricOrDefault(currentValue: string | undefined) {
-    if (currentValue !== undefined && metrics.includes(currentValue))
-        return currentValue
-    return TICKETS
+interface Metric {
+    name: string
 }
 
-export const isTicketsMetricSelected: (metric: string) => boolean = (metric: string) => {
-    return metric === TICKETS
+export interface Props {
+    fetchMetrics: (...args: any) => Promise<FetchResult<Array<Metric>>>
 }
 
-export const isIterationsMetricSelected: (metric: string) => boolean = (metric: string) => {
-    return metric === ITERATIONS
-}
-
-export const isIterationsToTicketsMetricSelected: (metric: string) => boolean = (metric: string) => {
-    return metric === ITERATIONS_TO_TICKETS
-}
-
-export default function MetricSelector() {
+export default function MetricSelector<T>(props: Props) {
     const valueSelector = (store: MultisetContainerStore) => store.container.metric
+    const defaultValueSelector = (values: Array<Metric>) => values[0]?.name
+
     return <OptionSelector
         className='ComparisonGraph_MetricSelector'
-        dataSource={metrics}
+        displayExpr='name'
+        valueExpr='name'
+        fetchDataSource={props.fetchMetrics}
         valueSelector={valueSelector}
+        defaultValueSelector={defaultValueSelector}
         onValueChange={changeMetric}
         label='Metric'
     />
-} 
+}
+
+export function getValidMetricOrDefault(value: string | undefined) {
+    return value ? value : 'takeFromValues'
+}
