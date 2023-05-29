@@ -1,12 +1,15 @@
 import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
-import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
+import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'
 
 export interface GroupByPeriod {
     name: string
     format: string
 }
 
+function convert(values: Array<GroupByPeriod> | undefined): Array<GroupByPeriod> {
+    return values ? values.slice(2) : Array<GroupByPeriod>()
+}
 export async function fetchGroupByPeriods(): Promise<FetchResult<Array<GroupByPeriod>>> {
-    return fetchArray(`${SUPPORT_METRICS_END_POINT}/GroupByPeriods`)
+    return await fetchConvert(convert, `${SUPPORT_METRICS_END_POINT}/GroupByPeriods`)
 }
