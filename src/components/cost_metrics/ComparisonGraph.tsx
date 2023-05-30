@@ -3,11 +3,11 @@ import { BaseContainerState } from '../common/store/multiset_container/BaseConta
 import { SetState } from './store/SetsReducer'
 import { ContainerState } from './store/ContainerReducer'
 import ComparisonGraph from '../common/components/multiset_container/graph/ComparisonGraph'
-import { fetchPeriodsArray } from './network_resource_fetcher/FetchPeriodsArray'
+import { fetchPeriodsArray } from './network_resource_fetcher/PeriodsArray'
 import {
     fetchCostMetricsAggregates,
     CostMetricsAggregates,
-} from './network_resource_fetcher/FetchCostMetrics'
+} from './network_resource_fetcher/CostMetrics'
 
 
 export default function CostMetricsComparisonGraph() {

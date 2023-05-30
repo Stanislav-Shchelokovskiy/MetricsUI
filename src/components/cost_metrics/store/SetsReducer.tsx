@@ -12,6 +12,7 @@ export interface SetState extends BaseSetState {
     empPositions: FilterParametersNode<string> | undefined
     empTribes: FilterParametersNode<string> | undefined
     employees: FilterParametersNode<string> | undefined
+    empTeams: FilterParametersNode<number> | undefined
 }
 
 export const DEFAULT_SET: SetState = {
@@ -19,6 +20,7 @@ export const DEFAULT_SET: SetState = {
     empPositions: getDefaultFilterParametersNode<string>(),
     empTribes: getDefaultFilterParametersNode<string>(),
     employees: getDefaultFilterParametersNode<string>(),
+    empTeams: getDefaultFilterParametersNode<number>(),
 }
 
 export const INITIAL_SETS: Array<SetState> = [DEFAULT_SET]

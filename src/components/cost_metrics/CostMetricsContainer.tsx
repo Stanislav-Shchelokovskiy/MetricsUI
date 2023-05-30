@@ -12,9 +12,9 @@ import MultisetContainerContent from '../common/components/multiset_container/Mu
 import CostMetricsToolbar from './toolbar/Toolbar'
 import GraphSettingsPanel from '../common/components/multiset_container/graph/GraphSettingsPanel'
 import CostMetricsComparisonGraph from './ComparisonGraph'
-import { fetchPeriod } from './network_resource_fetcher/FetchPeriod'
-import { fetchGroupByPeriods } from './network_resource_fetcher/FetchGroupByPeriods'
-import { fetchMetrics } from './network_resource_fetcher/FetchMetrics'
+import { fetchPeriod } from './network_resource_fetcher/Period'
+import { fetchGroupByPeriods } from './network_resource_fetcher/GroupByPeriods'
+import { fetchMetrics } from './network_resource_fetcher/Metrics'
 
 export function CostMetricsApplySharedState() {
     return <ApplySharedState
