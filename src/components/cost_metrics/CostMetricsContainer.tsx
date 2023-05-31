@@ -3,6 +3,8 @@ import '../common/styles/multiset_container/MultisetContainer.css'
 import '../common/styles/multiset_container/Toolbar.css'
 import '../common/styles/multiset_container/FilterTooltip.css'
 
+import './styles/GraphSettingsPanel.css'
+
 import React from 'react'
 import { SUPPORT_METRICS_END_POINT } from '../common/EndPoint'
 import ApplySharedState from '../common/components/state_management/ApplySharedState'
@@ -15,6 +17,7 @@ import CostMetricsComparisonGraph from './ComparisonGraph'
 import { fetchPeriod } from './network_resource_fetcher/Period'
 import { fetchGroupByPeriods } from './network_resource_fetcher/GroupByPeriods'
 import { fetchMetrics } from './network_resource_fetcher/Metrics'
+import AggSelector from './AggSelector'
 
 export function CostMetricsApplySharedState() {
     return <ApplySharedState
@@ -30,9 +33,15 @@ export default function CostMetrics() {
     >
         <MultisetContainerContent>
             <GraphSettingsPanel
+                comparisonMethodSelectorClassName='CostMetrics_ComparisonMethodSelector'
+                groupByPeriodSelectorClassName='CostMetrics_GroupByPeriodSelector'
+                metricSelectorClassName='CostMetrics_MetricSelector'
+                periodSelectorClassName='CostMetrics_PeriodSelector'
                 fetchPeriod={fetchPeriod}
                 fetchGroupByPeriods={fetchGroupByPeriods}
-                fetchMetrics={fetchMetrics} />
+                fetchMetrics={fetchMetrics}>
+                <AggSelector />
+            </GraphSettingsPanel>
             <CostMetricsComparisonGraph />
         </MultisetContainerContent>
     </MultisetContainer>

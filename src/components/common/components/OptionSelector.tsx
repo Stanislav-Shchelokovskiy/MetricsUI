@@ -8,7 +8,7 @@ import { useSingleValidate } from '../hooks/UseValidate'
 import { getClearButtonOptions } from './Button'
 
 interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> extends DataSourceProps<DataSourceT> {
-    className: string
+    className: string | undefined
     displayExpr: string
     valueExpr: string
     placeholder: string

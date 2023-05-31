@@ -10,15 +10,16 @@ interface Metric {
 }
 
 export interface Props {
+    metricSelectorClassName: string | undefined
     fetchMetrics: (...args: any) => Promise<FetchResult<Array<Metric>>>
 }
 
-export default function MetricSelector<T>(props: Props) {
+export default function MetricSelector(props: Props) {
     const valueSelector = (store: MultisetContainerStore) => store.container.metric
     const defaultValueSelector = (values: Array<Metric>) => values[0]?.name
 
     return <OptionSelector
-        className='ComparisonGraph_MetricSelector'
+        className={props.metricSelectorClassName}
         displayExpr='name'
         valueExpr='name'
         fetchDataSource={props.fetchMetrics}

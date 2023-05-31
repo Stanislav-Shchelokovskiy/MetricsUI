@@ -7,6 +7,7 @@ import RangePeriodSelector, { PeriodGroupBy } from '../../RangePeriodSelector'
 type Period = [string, string]
 
 export interface Props {
+    periodSelectorClassName: string | undefined
     fetchPeriod: (...args: any) => Promise<FetchResult<Period>>
 }
 
@@ -14,7 +15,7 @@ export default function PeriodSelector(props: Props) {
     const rangeSelector = useCallback((store: MultisetContainerStore) => store.container.range, [])
     const groupBySelector = useCallback((store: MultisetContainerStore) => store.container.groupByPeriod as PeriodGroupBy, [])
     return <RangePeriodSelector
-        className='ComparisonGraph_PeriodSelector'
+        className={props.periodSelectorClassName}
         rangeSelector={rangeSelector}
         groupBySelector={groupBySelector}
         onPeriodChange={changePeriod}

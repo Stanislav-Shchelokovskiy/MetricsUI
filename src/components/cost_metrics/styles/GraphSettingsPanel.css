@@ -1,0 +1,32 @@
+.CostMetrics_GroupByPeriodSelector,
+.CostMetrics_MetricSelector,
+.CostMetrics_AggSelector,
+.CostMetrics_ComparisonMethodSelector {
+    min-height: 3rem;
+    height: 3rem;
+    width: min-content;
+}
+
+.CostMetrics_PeriodSelector {
+    flex: 1.8;
+}
+
+.CostMetrics_GroupByPeriodSelector {
+    flex: 0.6;
+}
+
+.CostMetrics_MetricSelector {
+    flex: 1.4;
+}
+
+.CostMetrics_ComparisonMethodSelector {
+    flex: 0.9;
+}
+
+.CostMetrics_AggSelector {
+    flex: 0.5
+}
+
+.ComparisonGraph_ComparisonMethodSelector {
+    margin-right: 10px;
+}

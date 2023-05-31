@@ -24,15 +24,17 @@ export const isAbsoluteAreaSelected: (method: string) => boolean = (metric: stri
     return metric === ABSOLUTE_AREA
 }
 
-
-export default function ComparisonMethodSelector() {
+export interface Props {
+    comparisonMethodSelectorClassName: string | undefined
+}
+export default function ComparisonMethodSelector(props: Props) {
     const valueSelector = (store: MultisetContainerStore<BaseContainerState>) => store.container.comparisonMethod
     return (
         <OptionSelector
-            className='ComparisonGraph_ComparisonMethodSelector'
+            className={props.comparisonMethodSelectorClassName}
             dataSource={comparisonMethods}
             valueSelector={valueSelector}
             onValueChange={changeComparisonMethod}
             label='Comparison method' />
     )
-} 
+}

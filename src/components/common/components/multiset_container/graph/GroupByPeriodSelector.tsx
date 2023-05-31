@@ -10,6 +10,7 @@ interface GroupByPeriod {
 }
 
 export interface Props {
+    groupByPeriodSelectorClassName: string | undefined
     fetchGroupByPeriods: (...args: any) => Promise<FetchResult<Array<GroupByPeriod>>>
 }
 
@@ -18,7 +19,7 @@ export default function GroupByPeriodSelector(props: Props) {
     const defaultValueSelector = (values: Array<GroupByPeriod>) => values[0]?.format
 
     return <OptionSelector<GroupByPeriod, string>
-        className='ComparisonGraph_GroupByPeriodSelector'
+        className={props.groupByPeriodSelectorClassName}
         displayExpr='name'
         valueExpr='format'
         fetchDataSource={props.fetchGroupByPeriods}
