@@ -3,16 +3,15 @@ import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
 import { ContainerState } from '../store/ContainerReducer'
 import { SetState } from '../store/sets_reducer/SetsReducer'
 import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
-// import { isTicketsMetricSelected } from '../../common/components/multiset_container/graph/MetricSelector'
+import { BaseAgg } from '../../common/components/multiset_container/graph/ComparisonGraph'
 
 interface CostMetricsAggregate {
     year_month: string
     agg: number
+    name: string
 }
 
-export interface CostMetricsAggregates {
-    name: string
-    periods: Array<string> | Array<number>
+export interface CostMetricsAggregates extends BaseAgg {
     aggs: Array<number>
 }
 
@@ -20,6 +19,7 @@ export const EMPTY_AGGREGATES: CostMetricsAggregates = {
     name: '',
     periods: [],
     aggs: [],
+    customdata: [],
 }
 
 export async function fetchCostMetricsAggregates(
@@ -46,9 +46,11 @@ export async function fetchCostMetricsAggregates(
 
         const periods = []
         const aggs = []
+        const agg_names = Array<string>()
         for (const agg of aggregates) {
             periods.push(agg.year_month)
             aggs.push(agg.agg)
+            agg_names.push(get_agg_name(agg, set))
         }
 
         return {
@@ -57,6 +59,7 @@ export async function fetchCostMetricsAggregates(
                 name: set.title,
                 periods: periods,
                 aggs: aggs,
+                customdata: get_agg_names(agg_names),
             }
         }
     } catch (error) {
@@ -67,3 +70,11 @@ export async function fetchCostMetricsAggregates(
         }
     }
 }
+function get_agg_names(agg_names: Array<string>): Array<string> {
+    return (agg_names.length > 1 && agg_names.every(x => x === agg_names[0])) ? agg_names.map(x => '') : agg_names
+}
+
+function get_agg_name(agg: CostMetricsAggregate, set: SetState): string {
+    return agg.agg > 0 && agg.name !== '' && agg.name !== set.title ? `(${agg.name})` : ''
+}
+

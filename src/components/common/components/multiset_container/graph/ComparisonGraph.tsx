@@ -7,9 +7,10 @@ import { BaseSetState } from '../../../store/multiset_container/sets/Interfaces'
 import LoadIndicator from '../../LoadIndicator'
 import GraphPlot, { GraphData } from './GraphPlot'
 
-interface BaseAgg {
+export interface BaseAgg {
     name: string
     periods: Array<string> | Array<number>
+    customdata: Array<string> | Array<number>
 }
 
 interface ComparisonGraphProps<ContainerStateT extends BaseContainerState, SetStateT extends BaseSetState, AggT extends BaseAgg> {
@@ -53,6 +54,7 @@ export default function ComparisonGraph<ContainerStateT extends BaseContainerSta
                             x: x.data.periods,
                             y: props.aggSelector(containerState, x.data),
                             visible: (containerState.hiddenLegends.includes(x.data.name) ? 'legendonly' : true) as 'legendonly' | boolean | undefined,
+                            customdata: x.data.customdata,
                         }
                     })
                 }

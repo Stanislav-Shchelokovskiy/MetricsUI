@@ -7,7 +7,7 @@ import { fetchPeriodsArray } from './network_resource_fetcher/PeriodsArray'
 import {
     fetchCostMetricsAggregates,
     CostMetricsAggregates,
-} from './network_resource_fetcher/CostMetrics'
+} from './network_resource_fetcher/CostMetricsAggregates'
 
 
 export default function CostMetricsComparisonGraph() {

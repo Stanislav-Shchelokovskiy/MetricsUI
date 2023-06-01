@@ -5,6 +5,7 @@ import { ContainerState } from '../store/ContainerReducer'
 import { SetState } from '../store/sets_reducer/Interfaces'
 import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
 import { isTicketsMetricSelected } from './FetchMetrics'
+import { BaseAgg } from '../../common/components/multiset_container/graph/ComparisonGraph'
 
 interface TicketsWithIterationsAggregate {
     period: string
@@ -14,9 +15,7 @@ interface TicketsWithIterationsAggregate {
     people: number
 }
 
-export interface TicketsWithIterationsAggregates {
-    name: string
-    periods: Array<string> | Array<number>
+export interface TicketsWithIterationsAggregates extends BaseAgg {
     tickets: Array<number>
     iterations: Array<number>
     iterations_to_tickets: Array<number>
@@ -29,6 +28,7 @@ function aggregatesConverter(aggregates: Array<TicketsWithIterationsAggregate> |
     const iterations = []
     const iterations_to_tickets = []
     const people = []
+    const agg_names = []
     if (aggregates)
         for (const agg of aggregates) {
             periods.push(agg.period)
@@ -36,6 +36,7 @@ function aggregatesConverter(aggregates: Array<TicketsWithIterationsAggregate> |
             iterations.push(agg.iterations)
             iterations_to_tickets.push(agg.iterations / agg.tickets)
             people.push(agg.people)
+            agg_names.push('')
         }
     return {
         periods: periods,
@@ -43,6 +44,7 @@ function aggregatesConverter(aggregates: Array<TicketsWithIterationsAggregate> |
         iterations: iterations,
         iterations_to_tickets: iterations_to_tickets,
         people: people,
+        customdata: agg_names,
     }
 }
 

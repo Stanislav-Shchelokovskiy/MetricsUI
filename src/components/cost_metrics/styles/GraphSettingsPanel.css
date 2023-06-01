@@ -4,11 +4,12 @@
 .CostMetrics_ComparisonMethodSelector {
     min-height: 3rem;
     height: 3rem;
-    width: min-content;
+    
 }
 
 .CostMetrics_PeriodSelector {
     flex: 1.13;
+    width: min-content;
 }
 
 .CostMetrics_GroupByPeriodSelector {
