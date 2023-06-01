@@ -1,25 +1,25 @@
 import FetchResult from '../../common/Interfaces'
 import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
 import { ContainerState } from '../store/ContainerReducer'
-import { SetState } from '../store/SetsReducer'
-// import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
+import { SetState } from '../store/sets_reducer/SetsReducer'
+import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
 // import { isTicketsMetricSelected } from '../../common/components/multiset_container/graph/MetricSelector'
 
 interface CostMetricsAggregate {
     year_month: string
-    sc_hours: number
+    agg: number
 }
 
 export interface CostMetricsAggregates {
     name: string
     periods: Array<string> | Array<number>
-    sc_hours: Array<number>
+    aggs: Array<number>
 }
 
 export const EMPTY_AGGREGATES: CostMetricsAggregates = {
     name: '',
     periods: [],
-    sc_hours: [],
+    aggs: [],
 }
 
 export async function fetchCostMetricsAggregates(
@@ -29,26 +29,26 @@ export async function fetchCostMetricsAggregates(
     try {
         const [rangeStart, rangeEnd] = containerState.range
         const aggregates: Array<CostMetricsAggregate> = await fetch(
-            `${SUPPORT_METRICS_END_POINT}/CostMetrics`, //+
-            // `group_by_period=${containerState.groupByPeriod}` +
-            // `&range_start=${rangeStart}` +
-            // `&range_end=${rangeEnd}` +
-            // `&baseline_aligned_mode_enabled=${containerState.baselineAlignedModeEnabled}`,
+            `${SUPPORT_METRICS_END_POINT}/CostMetrics/Aggregates?` +
+            `group_by_period=${containerState.groupByPeriod}` +
+            `&range_start=${rangeStart}` +
+            `&range_end=${rangeEnd}` +
+            `&metric=${containerState.metric}` +
+            `&agg_by=${containerState.aggBy}`,
             {
-                method: 'GET',
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                // body: JSON.stringify({
-                //     ...getAliasedSet(set),
-                //     Percentile: { metric: (isTicketsMetricSelected(containerState.metric) ? 'tickets' : 'iterations'), value: set.percentile }
-                // }),
+                body: JSON.stringify({
+                    ...getAliasedSet(set),
+                }),
             },
         ).then(response => response.json())
 
         const periods = []
-        const sc_hours = []
+        const aggs = []
         for (const agg of aggregates) {
             periods.push(agg.year_month)
-            sc_hours.push(agg.sc_hours)
+            aggs.push(agg.agg)
         }
 
         return {
@@ -56,7 +56,7 @@ export async function fetchCostMetricsAggregates(
             data: {
                 name: set.title,
                 periods: periods,
-                sc_hours: sc_hours,
+                aggs: aggs,
             }
         }
     } catch (error) {

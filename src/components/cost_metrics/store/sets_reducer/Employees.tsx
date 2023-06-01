@@ -1,5 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { SetState } from '../SetsReducer'
+import { SetState } from './SetsReducer'
 import {
     updateSetState,
     updateValues,

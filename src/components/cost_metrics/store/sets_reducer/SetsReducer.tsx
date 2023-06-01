@@ -1,12 +1,12 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { BaseSetState } from '../../common/store/multiset_container/sets/Interfaces'
-import { CostMetricsShareableStore } from './Store'
-import { getSetsReducer } from '../../common/store/multiset_container/sets/SetsReducerFactory'
-import { setsValidator } from './StoreStateValidator'
-import { FilterParametersNode } from '../../common/store/multiset_container/sets/Interfaces'
-import { getDefaultFilterParametersNode } from '../../common/store/multiset_container/sets/Defaults'
-import { employeesReducer } from './sets_reducer/Employees'
-import { getDefaultTitle } from '../../common/store/multiset_container/sets/Defaults'
+import { BaseSetState } from '../../../common/store/multiset_container/sets/Interfaces'
+import { CostMetricsShareableStore } from '../Store'
+import { getSetsReducer } from '../../../common/store/multiset_container/sets/SetsReducerFactory'
+import { setsValidator } from '../StoreStateValidator'
+import { FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
+import { getDefaultFilterParametersNode } from '../../../common/store/multiset_container/sets/Defaults'
+import { employeesReducer } from './Employees'
+import { getDefaultTitle } from '../../../common/store/multiset_container/sets/Defaults'
 
 export interface SetState extends BaseSetState {
     empPositions: FilterParametersNode<string> | undefined
