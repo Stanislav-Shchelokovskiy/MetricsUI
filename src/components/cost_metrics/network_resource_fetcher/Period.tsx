@@ -9,9 +9,11 @@ interface PeriodRaw {
 
 export type Period = [string, string]
 
-function converter(value: PeriodRaw | undefined): Period {
-    if (value)
-        return [value.start, value.end]
+function converter(value: Array<PeriodRaw> | undefined): Period {
+    if (value && value.length > 0) {
+        const period = value[0]
+        return [period.start, period.end]
+    }
     return ['', '']
 }
 
