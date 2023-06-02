@@ -36,6 +36,9 @@ function validatePeriod(period: PeriodStr | any, possiblePeriod: PeriodStr, _: a
     return [[possiblePeriodStartStr, possiblePeriodEndStr], true]
 }
 
+export function getValidRangeOrDefault(value: PeriodStr | undefined) {
+    return value ? value : ['', '']
+}
 
 function getRange(val: PeriodContainer | PeriodStr | undefined): PeriodStr {
     return (Array.isArray(val) ? val : (val && 'values' in val ? (val as PeriodContainer).values : undefined)) || []

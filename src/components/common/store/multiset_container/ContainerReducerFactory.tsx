@@ -1,6 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { BaseContainerState } from './BaseContainerState'
-import { generateSetTitle } from './sets/Utils'
+import { generateSetTitle } from './Utils'
 import { getDefaultTitle } from './sets/Defaults'
 import { getViewStateReducer } from './ViewStateReducer'
 import {

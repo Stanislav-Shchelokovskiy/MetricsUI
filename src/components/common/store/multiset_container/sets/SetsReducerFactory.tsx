@@ -1,7 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { updateSetState } from './Utils'
+import { updateSetState } from '../Utils'
 import { BaseSetState } from './Interfaces'
-import { generateSetTitle } from './Utils'
+import { generateSetTitle } from '../Utils'
 import { getViewStateReducer } from '../ViewStateReducer'
 import {
     ADD_SET,

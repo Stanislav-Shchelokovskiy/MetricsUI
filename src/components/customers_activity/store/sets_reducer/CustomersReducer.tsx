@@ -4,7 +4,7 @@ import {
     updateSetState,
     updateValues,
     updateInclude
-} from '../../../common/store/multiset_container/sets/Utils'
+} from '../../../common/store/multiset_container/Utils'
 import {
     CHANGE_CUSTOMERS_GROUPS,
     CHANGE_CUSTOMERS_GROUPS_INCLUDE,

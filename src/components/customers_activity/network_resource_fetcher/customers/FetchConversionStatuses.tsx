@@ -2,7 +2,7 @@ import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
 import FetchResult from '../../../common/Interfaces'
 import { fetchArray } from '../../../common/network_resource_fetcher/FetchOrDefault'
 import { FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
-import { allNodesAreConsideredEmpty } from '../../../common/store/multiset_container/sets/Utils'
+import { allNodesAreConsideredEmpty } from '../../../common/store/multiset_container/Utils'
 
 export interface ConversionStatus {
     id: number

@@ -6,7 +6,7 @@ import {
     updateSetState,
     updateValues,
     updateInclude
-} from '../../../common/store/multiset_container/sets/Utils'
+} from '../../../common/store/multiset_container/Utils'
 import {
     CHANGE_FIXED_IN,
     CHANGE_FIXED_IN_INCLUDE,

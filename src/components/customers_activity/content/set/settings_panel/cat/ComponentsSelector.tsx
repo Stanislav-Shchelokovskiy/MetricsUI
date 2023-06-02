@@ -4,7 +4,7 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeComponents, changeComponentsInclude } from '../../../../store/actions/CAT'
 import { fetchComponents, Component } from '../../../../network_resource_fetcher/cat/FetchComponents'
-import { paramOrDefault } from '../../../../../common/store/multiset_container/sets/Utils'
+import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 
 export default function ComponentsSelector({ setTitle }: { setTitle: string }) {
 

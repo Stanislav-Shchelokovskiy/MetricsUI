@@ -1,5 +1,5 @@
 import { FilterParametersNode, FilterParameterNode } from './Interfaces'
-import { generateSetTitle } from './Utils'
+import { generateSetTitle } from '../Utils'
 
 export function getDefaultFilterParametersNode<T>(defaultValue: Array<T> | undefined = undefined): FilterParametersNode<T> | undefined {
     if (defaultValue === undefined)

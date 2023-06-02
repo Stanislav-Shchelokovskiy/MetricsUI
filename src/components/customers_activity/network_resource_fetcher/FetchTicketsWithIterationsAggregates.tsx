@@ -6,6 +6,7 @@ import { SetState } from '../store/sets_reducer/Interfaces'
 import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
 import { isTicketsMetricSelected } from './FetchMetrics'
 import { BaseAgg } from '../../common/components/multiset_container/graph/ComparisonGraph'
+import { anyValueIsEmpty } from '../../common/store/multiset_container/Utils'
 
 interface TicketsWithIterationsAggregate {
     period: string
@@ -22,14 +23,24 @@ export interface TicketsWithIterationsAggregates extends BaseAgg {
     people: Array<number>
 }
 
+const EMPTY_AGGREGATES = {
+    periods: [],
+    tickets: [],
+    iterations: [],
+    iterations_to_tickets: [],
+    people: [],
+    customdata: [],
+}
+
 function aggregatesConverter(aggregates: Array<TicketsWithIterationsAggregate> | undefined) {
-    const periods = []
-    const tickets = []
-    const iterations = []
-    const iterations_to_tickets = []
-    const people = []
-    const agg_names = []
-    if (aggregates)
+
+    if (aggregates) {
+        const periods = []
+        const tickets = []
+        const iterations = []
+        const iterations_to_tickets = []
+        const people = []
+        const agg_names = []
         for (const agg of aggregates) {
             periods.push(agg.period)
             tickets.push(agg.tickets)
@@ -38,14 +49,16 @@ function aggregatesConverter(aggregates: Array<TicketsWithIterationsAggregate> |
             people.push(agg.people)
             agg_names.push('')
         }
-    return {
-        periods: periods,
-        tickets: tickets,
-        iterations: iterations,
-        iterations_to_tickets: iterations_to_tickets,
-        people: people,
-        customdata: agg_names,
+        return {
+            periods: periods,
+            tickets: tickets,
+            iterations: iterations,
+            iterations_to_tickets: iterations_to_tickets,
+            people: people,
+            customdata: agg_names,
+        }
     }
+    return EMPTY_AGGREGATES
 }
 
 function getConverter(setTitle: string) {
@@ -62,6 +75,16 @@ export async function fetchTicketsWithIterationsAggregates(
     set: SetState,
 ): Promise<FetchResult<TicketsWithIterationsAggregates>> {
     const [rangeStart, rangeEnd] = containerState.range
+
+    if (anyValueIsEmpty(rangeStart, rangeEnd, containerState.groupByPeriod, containerState.metric))
+        return {
+            success: false,
+            data: {
+                name: '',
+                ...EMPTY_AGGREGATES,
+            }
+        }
+
     return fetchConvert(getConverter(set.title),
         `${SUPPORT_ANALYTICS_END_POINT}/TicketsWithIterationsAggregates?` +
         `group_by_period=${containerState.groupByPeriod}` +

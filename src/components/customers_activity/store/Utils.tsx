@@ -1,5 +1,5 @@
 import { FilterParametersNode } from '../../common/store/multiset_container/sets/Interfaces'
-import { nodeIsEmpty } from '../../common/store/multiset_container/sets/Utils'
+import { nodeIsEmpty } from '../../common/store/multiset_container/Utils'
 
 export function bugIsNotSelected(node: FilterParametersNode<number> | undefined): boolean {
     const BUG = 2

@@ -1,6 +1,6 @@
-import { FilterParametersNode } from './Interfaces'
-import { BaseSetState } from './Interfaces'
-import { getDefaultFilterParametersNode } from './Defaults'
+import { FilterParametersNode } from './sets/Interfaces'
+import { BaseSetState } from './sets/Interfaces'
+import { getDefaultFilterParametersNode } from './sets/Defaults'
 
 export function updateSetState<T extends BaseSetState>(title: string, state: Array<T>, replaceState: (currState: T) => T): Array<T> {
     return state.map((x) => { return x.title === title ? replaceState(x) : x })
@@ -86,9 +86,10 @@ export function nodeIsEmpty<T>(node: FilterParametersNode<T> | undefined, mustHa
     )
 }
 
+export const TAKE_FROM_DEFAULT_SELECTOR = '#takeFromValues#'
 export function anyValueIsEmpty(...values: Array<any>): boolean {
     for (const value of values)
-        if (value === undefined || value === null || value.toString() === '')
+        if (value === undefined || value === null || value.toString() === '' || value.toString() === TAKE_FROM_DEFAULT_SELECTOR)
             return true
     return false
 }

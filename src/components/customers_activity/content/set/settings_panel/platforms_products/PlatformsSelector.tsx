@@ -4,7 +4,7 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changePlatforms, changePlatformsInclude } from '../../../../store/actions/PlatformsProducts'
 import { fetchPlatforms, Platform } from '../../../../network_resource_fetcher/platforms_products/FetchPlatforms'
-import { paramOrDefault } from '../../../../../common/store/multiset_container/sets/Utils'
+import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 
 
 export default function PlatformsSelector({ setTitle }: { setTitle: string }) {

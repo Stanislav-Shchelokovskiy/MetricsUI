@@ -8,7 +8,7 @@ import { SetState } from '../../../../store/sets_reducer/Interfaces'
 import { changeEmployees, changeEmployeesInclude } from '../../../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchEmployees, Employee } from '../../../../network_resource_fetcher/employees/FetchEmployees'
 import { FilterParametersNode } from '../../../../../common/store/multiset_container/sets/Interfaces'
-import { paramOrDefault } from '../../../../../common/store/multiset_container/sets/Utils'
+import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 
 export interface EmpSelectorProps {
     setTitle: string

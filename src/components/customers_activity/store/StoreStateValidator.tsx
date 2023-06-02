@@ -3,7 +3,7 @@ import { ContainerState } from './ContainerReducer'
 import { SetState } from './sets_reducer/Interfaces'
 import { DEFAULT_SET } from './sets_reducer/Defaults'
 import { defaultContainerValidator } from '../../common/store/multiset_container/StoreStateValidator'
-import { toFriendlyTitle } from '../../common/store/multiset_container/sets/Utils'
+import { toFriendlyTitle } from '../../common/store/multiset_container/Utils'
 
 interface OldCustomersActivityShareableStore {
     customersActivity: ContainerState

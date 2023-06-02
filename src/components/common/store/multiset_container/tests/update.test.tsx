@@ -1,4 +1,4 @@
-import { FilterParametersNode } from '../Interfaces'
+import { FilterParametersNode } from '../sets/Interfaces'
 import { updateValues, updateInclude } from '../Utils'
 
 

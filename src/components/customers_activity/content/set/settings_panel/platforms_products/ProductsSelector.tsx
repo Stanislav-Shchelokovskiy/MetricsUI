@@ -4,7 +4,7 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeProducts, changeProductsInclude } from '../../../../store/actions/PlatformsProducts'
 import { fetchProducts, Product } from '../../../../network_resource_fetcher/platforms_products/FetchProducts'
-import { paramOrDefault } from '../../../../../common/store/multiset_container/sets/Utils'
+import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 
 
 export default function ProductsSelector({ setTitle }: { setTitle: string }) {

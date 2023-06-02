@@ -4,7 +4,7 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeFeatures, changeFeaturesInclude } from '../../../../store/actions/CAT'
 import { fetchFeatures, Feature } from '../../../../network_resource_fetcher/cat/FetchFeatures'
-import { paramOrDefault } from '../../../../../common/store/multiset_container/sets/Utils'
+import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 
 
 export default function FeaturesSelector({ setTitle }: { setTitle: string }) {

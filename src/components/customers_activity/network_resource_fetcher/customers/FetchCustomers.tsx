@@ -1,7 +1,7 @@
 import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
 import FetchResult from '../../../common/Interfaces'
 import { fetchArray } from '../../../common/network_resource_fetcher/FetchOrDefault'
-import { anyValueIsEmpty } from '../../../common/store/multiset_container/sets/Utils'
+import { anyValueIsEmpty } from '../../../common/store/multiset_container/Utils'
 import { ValidationResult } from '../../../common/Interfaces'
 
 export interface Customer {

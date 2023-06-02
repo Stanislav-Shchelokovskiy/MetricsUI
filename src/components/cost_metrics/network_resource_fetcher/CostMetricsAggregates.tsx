@@ -1,9 +1,11 @@
 import FetchResult from '../../common/Interfaces'
+import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'
 import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
 import { ContainerState } from '../store/ContainerReducer'
 import { SetState } from '../store/sets_reducer/SetsReducer'
 import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
 import { BaseAgg } from '../../common/components/multiset_container/graph/ComparisonGraph'
+import { anyValueIsEmpty } from '../../common/store/multiset_container/Utils'
 
 interface CostMetricsAggregate {
     year_month: string
@@ -15,66 +17,79 @@ export interface CostMetricsAggregates extends BaseAgg {
     aggs: Array<number>
 }
 
-export const EMPTY_AGGREGATES: CostMetricsAggregates = {
-    name: '',
+const EMPTY_AGGREGATES = {
     periods: [],
     aggs: [],
     customdata: [],
+}
+
+function aggregatesConverter(aggregates: Array<CostMetricsAggregate> | undefined, setTitle: string) {
+    if (aggregates) {
+        const periods = []
+        const aggs = []
+        const agg_names = Array<string>()
+        const customdata = Array<string>
+        for (const agg of aggregates) {
+            periods.push(agg.year_month)
+            aggs.push(agg.agg)
+            agg_names.push(get_agg_name(agg, setTitle))
+
+        }
+        return {
+            periods: periods,
+            aggs: aggs,
+            agg_names: agg_names,
+            customdata: get_agg_names(agg_names),
+        }
+    }
+    return EMPTY_AGGREGATES
+}
+
+function getConverter(setTitle: string) {
+    return (aggregates: Array<CostMetricsAggregate> | undefined): CostMetricsAggregates => {
+        return {
+            name: setTitle,
+            ...aggregatesConverter(aggregates, setTitle),
+        }
+    }
 }
 
 export async function fetchCostMetricsAggregates(
     containerState: ContainerState,
     set: SetState,
 ): Promise<FetchResult<CostMetricsAggregates>> {
-    try {
-        const [rangeStart, rangeEnd] = containerState.range
-        const aggregates: Array<CostMetricsAggregate> = await fetch(
-            `${SUPPORT_METRICS_END_POINT}/CostMetrics/Aggregates?` +
-            `group_by_period=${containerState.groupByPeriod}` +
-            `&range_start=${rangeStart}` +
-            `&range_end=${rangeEnd}` +
-            `&metric=${containerState.metric}` +
-            `&agg_by=${containerState.aggBy}`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    ...getAliasedSet(set),
-                }),
-            },
-        ).then(response => response.json())
+    const [rangeStart, rangeEnd] = containerState.range
 
-        const periods = []
-        const aggs = []
-        const agg_names = Array<string>()
-        for (const agg of aggregates) {
-            periods.push(agg.year_month)
-            aggs.push(agg.agg)
-            agg_names.push(get_agg_name(agg, set))
-        }
-
-        return {
-            success: true,
-            data: {
-                name: set.title,
-                periods: periods,
-                aggs: aggs,
-                customdata: get_agg_names(agg_names),
-            }
-        }
-    } catch (error) {
-        console.log(error)
+    if (anyValueIsEmpty(rangeStart, rangeEnd, containerState.groupByPeriod, containerState.metric, containerState.aggBy))
         return {
             success: false,
-            data: EMPTY_AGGREGATES
+            data: {
+                name: set.title,
+                ...EMPTY_AGGREGATES
+            }
         }
-    }
+
+    return fetchConvert(getConverter(set.title),
+        `${SUPPORT_METRICS_END_POINT}/CostMetrics/Aggregates?` +
+        `group_by_period=${containerState.groupByPeriod}` +
+        `&range_start=${rangeStart}` +
+        `&range_end=${rangeEnd}` +
+        `&metric=${containerState.metric}` +
+        `&agg_by=${containerState.aggBy}`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                ...getAliasedSet(set),
+            }),
+        },
+    )
 }
 function get_agg_names(agg_names: Array<string>): Array<string> {
     return (agg_names.length > 1 && agg_names.every(x => x === agg_names[0])) ? agg_names.map(x => '') : agg_names
 }
 
-function get_agg_name(agg: CostMetricsAggregate, set: SetState): string {
-    return agg.agg > 0 && agg.name !== '' && agg.name !== set.title ? `(${agg.name})` : ''
+function get_agg_name(agg: CostMetricsAggregate, setTitle: string): string {
+    return agg.agg > 0 && agg.name !== '' && agg.name !== setTitle ? `(${agg.name})` : ''
 }
 
