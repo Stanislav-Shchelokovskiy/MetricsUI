@@ -15,7 +15,7 @@ export default function EmpPositionsSelector({ setTitle }: { setTitle: string })
         displayExpr='name'
         valueExpr='name'
         placeholder='Select employees positions'
-        label='Employees positions'
+        label='Positions'
         fetchDataSource={fetchPositions}
         value={value?.values}
         includeButtonState={value === undefined || value.include}

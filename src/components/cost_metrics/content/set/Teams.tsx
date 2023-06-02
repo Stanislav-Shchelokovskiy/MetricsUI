@@ -15,7 +15,7 @@ export default function EmpTeamsSelector({ setTitle }: { setTitle: string }) {
         displayExpr='name'
         valueExpr='id'
         placeholder='Select employees teams'
-        label='Employees teams'
+        label='Teams'
         fetchDataSource={fetchTeams}
         value={value?.values}
         includeButtonState={value === undefined || value.include}

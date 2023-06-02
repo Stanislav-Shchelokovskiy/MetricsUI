@@ -16,7 +16,7 @@ export default function EmpTribesSelector({ setTitle }: { setTitle: string }) {
         displayExpr='name'
         valueExpr='name'
         placeholder='Select employees tribes'
-        label='Employees tribes'
+        label='Tribes'
         fetchDataSource={fetchTribes}
         value={value?.values}
         includeButtonState={value === undefined || value.include}
