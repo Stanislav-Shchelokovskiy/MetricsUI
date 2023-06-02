@@ -13,7 +13,7 @@ const comparisonMethods = [ABSOLUTE_AREA, ABSOLUTE_BAR, RELATIVE]
 export function getValidComparisonMethodOrDefault(currentValue: string | undefined) {
     if (currentValue !== undefined && comparisonMethods.includes(currentValue))
         return currentValue
-    return ABSOLUTE_AREA
+    return ABSOLUTE_BAR
 }
 
 export const isAbsoluteBarSelected: (method: string) => boolean = (metric: string) => {
