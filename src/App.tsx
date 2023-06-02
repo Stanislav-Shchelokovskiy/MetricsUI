@@ -43,6 +43,12 @@ function Root() {
           text='Customers Activity'
           focusStateEnabled={false} />
       </Link>
+      <Link to={'CostMetrics'} className='NavigationButton'>
+        <Button
+          className='NavElement'
+          text='Cost Metrics'
+          focusStateEnabled={false} />
+      </Link>
     </div>
   )
 }

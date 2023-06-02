@@ -4,7 +4,8 @@ import { getShareableState } from '../../common/store/multiset_container/Store'
 import StateManagementCommands from '../../common/components/state_management/StateManagementCommands'
 import { Toolbar, ToolbarProps } from '../../common/components/multiset_container/Toolbar/Toolbar'
 import { ToolbarMenu } from '../../common/components/multiset_container/Toolbar/ToolbarMenu'
-import { ToolbarCommands } from '../../common/components/multiset_container/Toolbar/ToolbarCommands'
+import { ToolbarCommands, ToolbarSeparator } from '../../common/components/multiset_container/Toolbar/ToolbarCommands'
+import GoHomeButton from '../../common/components/HomeButton'
 import { FilterTooltip } from './FilterTooltip'
 
 
@@ -28,5 +29,7 @@ const ToolbarCommandsCached = React.memo(() => {
             stateSalt='CostMetrics_'
             endPoint={SUPPORT_METRICS_END_POINT}
         />
+        <ToolbarSeparator />
+        <GoHomeButton className='CommandButton' />
     </ToolbarCommands>
 })
