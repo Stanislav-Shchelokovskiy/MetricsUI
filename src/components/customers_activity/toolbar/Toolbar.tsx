@@ -1,6 +1,6 @@
 import React from 'react'
 import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
-import DownloadButton from './DownloadButton'
+import DownloadButton from '../../common/components/DownloadButton'
 import StateManagementCommands from '../../common/components/state_management/StateManagementCommands'
 import { getShareableState } from '../../common/store/multiset_container/Store'
 import AdvancedSettingButton from './AdvancedSettingButton'
@@ -11,6 +11,7 @@ import { Toolbar, ToolbarProps } from '../../common/components/multiset_containe
 import { ToolbarMenu } from '../../common/components/multiset_container/Toolbar/ToolbarMenu'
 import { FilterTooltip } from './FilterTooltip'
 import { ToolbarCommands, ToolbarSeparator } from '../../common/components/multiset_container/Toolbar/ToolbarCommands'
+import { fetchTicketsWithIterationsRaw } from '../network_resource_fetcher/FetchTicketsWithIterationsRaw'
 
 
 export default function CustomersActivityToolbar(props: ToolbarProps) {
@@ -40,7 +41,7 @@ const ToolbarCommandsCached = React.memo(() => {
             endPoint={SUPPORT_ANALYTICS_END_POINT}
         />
         <ToolbarSeparator />
-        <DownloadButton />
+        <DownloadButton fetchData={fetchTicketsWithIterationsRaw}/>
         <ToolbarSeparator />
         <GoHomeButton className='CommandButton' />
     </ToolbarCommands>

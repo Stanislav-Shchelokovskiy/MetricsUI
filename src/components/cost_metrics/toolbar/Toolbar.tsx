@@ -5,8 +5,10 @@ import StateManagementCommands from '../../common/components/state_management/St
 import { Toolbar, ToolbarProps } from '../../common/components/multiset_container/Toolbar/Toolbar'
 import { ToolbarMenu } from '../../common/components/multiset_container/Toolbar/ToolbarMenu'
 import { ToolbarCommands, ToolbarSeparator } from '../../common/components/multiset_container/Toolbar/ToolbarCommands'
+import DownloadButton from '../../common/components/DownloadButton'
 import GoHomeButton from '../../common/components/HomeButton'
 import { FilterTooltip } from './FilterTooltip'
+import { fetchCostMetricsRaw } from '../network_resource_fetcher/CostMetricsRaw'
 
 
 export default function CostMetricsToolbar(props: ToolbarProps) {
@@ -29,6 +31,8 @@ const ToolbarCommandsCached = React.memo(() => {
             stateSalt='CostMetrics_'
             endPoint={SUPPORT_METRICS_END_POINT}
         />
+        <ToolbarSeparator />
+        <DownloadButton fetchData={fetchCostMetricsRaw} />
         <ToolbarSeparator />
         <GoHomeButton className='CommandButton' />
     </ToolbarCommands>
