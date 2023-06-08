@@ -17,7 +17,6 @@ import CostMetricsComparisonGraph from './ComparisonGraph'
 import { fetchPeriod } from './network_resource_fetcher/Period'
 import { fetchGroupByPeriods } from './network_resource_fetcher/GroupByPeriods'
 import { fetchMetrics } from './network_resource_fetcher/Metrics'
-import AggBySelector from './AggBySelector'
 
 export function CostMetricsApplySharedState() {
     return <ApplySharedState
@@ -40,7 +39,6 @@ export default function CostMetrics() {
                 fetchPeriod={fetchPeriod}
                 fetchGroupByPeriods={fetchGroupByPeriods}
                 fetchMetrics={fetchMetrics}>
-                <AggBySelector />
             </GraphSettingsPanel>
             <CostMetricsComparisonGraph />
         </MultisetContainerContent>

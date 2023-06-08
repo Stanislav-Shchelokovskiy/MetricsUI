@@ -1,6 +1,5 @@
 .CostMetrics_GroupByPeriodSelector,
 .CostMetrics_MetricSelector,
-.CostMetrics_AggBySelector,
 .CostMetrics_ComparisonMethodSelector {
     min-height: 3rem;
     height: 3rem;
@@ -18,10 +17,6 @@
 
 .CostMetrics_MetricSelector {
     flex: 1.95;
-}
-
-.CostMetrics_AggBySelector {
-    flex: 0.65
 }
 
 .CostMetrics_ComparisonMethodSelector {

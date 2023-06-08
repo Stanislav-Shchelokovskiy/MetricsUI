@@ -14,14 +14,9 @@ export default function CostMetricsComparisonGraph() {
     const aggSelector = useCallback((containerState: BaseContainerState, aggs: CostMetricsAggregates) => {
         return aggs.aggs
     }, [])
-    const depsSelector = useCallback((containerState: ContainerState) => {
-        return [containerState.aggBy]
-    }, [])
-
 
     return <ComparisonGraph<ContainerState, SetState, CostMetricsAggregates>
         aggSelector={aggSelector}
-        containerDepsSelector={depsSelector}
         fetchPeriods={fetchPeriodsArray}
         fetchAggs={fetchCostMetricsAggregates}
     />

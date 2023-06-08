@@ -60,7 +60,7 @@ export async function fetchCostMetricsAggregates(
 ): Promise<FetchResult<CostMetricsAggregates>> {
     const [rangeStart, rangeEnd] = containerState.range
 
-    if (anyValueIsEmpty(rangeStart, rangeEnd, containerState.groupByPeriod, containerState.metric, containerState.aggBy))
+    if (anyValueIsEmpty(rangeStart, rangeEnd, containerState.groupByPeriod, containerState.metric))
         return {
             success: false,
             data: {
@@ -74,8 +74,7 @@ export async function fetchCostMetricsAggregates(
         `group_by_period=${containerState.groupByPeriod}` +
         `&range_start=${rangeStart}` +
         `&range_end=${rangeEnd}` +
-        `&metric=${containerState.metric}` +
-        `&agg_by=${containerState.aggBy}`,
+        `&metric=${containerState.metric}`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
