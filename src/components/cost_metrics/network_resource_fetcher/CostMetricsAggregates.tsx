@@ -8,7 +8,7 @@ import { BaseAgg } from '../../common/components/multiset_container/graph/Compar
 import { anyValueIsEmpty } from '../../common/store/multiset_container/Utils'
 
 interface CostMetricsAggregate {
-    year_month: string
+    period: string
     agg: number
     name: string
 }
@@ -28,9 +28,8 @@ function aggregatesConverter(aggregates: Array<CostMetricsAggregate> | undefined
         const periods = []
         const aggs = []
         const agg_names = Array<string>()
-        const customdata = Array<string>
         for (const agg of aggregates) {
-            periods.push(agg.year_month)
+            periods.push(agg.period)
             aggs.push(agg.agg)
             agg_names.push(get_agg_name(agg, setTitle))
 
