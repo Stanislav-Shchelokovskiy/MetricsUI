@@ -13,9 +13,7 @@ interface CostMetricsAggregate {
     name: string
 }
 
-export interface CostMetricsAggregates extends BaseAgg {
-    aggs: Array<number>
-}
+export interface CostMetricsAggregates extends BaseAgg {}
 
 const EMPTY_AGGREGATES = {
     periods: [],
@@ -27,18 +25,14 @@ function aggregatesConverter(aggregates: Array<CostMetricsAggregate> | undefined
     if (aggregates) {
         const periods = []
         const aggs = []
-        const agg_names = Array<string>()
         for (const agg of aggregates) {
             periods.push(agg.period)
             aggs.push(agg.agg)
-            agg_names.push(get_agg_name(agg, setTitle))
-
         }
         return {
             periods: periods,
             aggs: aggs,
-            agg_names: agg_names,
-            customdata: get_agg_names(agg_names),
+            customdata: [],
         }
     }
     return EMPTY_AGGREGATES
@@ -83,11 +77,3 @@ export async function fetchCostMetricsAggregates(
         },
     )
 }
-function get_agg_names(agg_names: Array<string>): Array<string> {
-    return (agg_names.length > 1 && agg_names.every(x => x === agg_names[0])) ? agg_names.map(x => '') : agg_names
-}
-
-function get_agg_name(agg: CostMetricsAggregate, setTitle: string): string {
-    return agg.agg > 0 && agg.name !== '' && agg.name !== setTitle ? `(${agg.name})` : ''
-}
-

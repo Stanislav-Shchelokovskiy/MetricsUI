@@ -4,7 +4,6 @@ import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault
 import { SetState } from '../store/sets_reducer/Interfaces'
 import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
 import { ContainerState } from '../store/ContainerReducer'
-import { isTicketsMetricSelected } from './FetchMetrics'
 
 export interface TicketsWithIterationsRaw {
     user_id: string
@@ -32,7 +31,7 @@ export async function fetchTicketsWithIterationsRaw(
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 ...getAliasedSet(set),
-                Percentile: { metric: (isTicketsMetricSelected(containerState.metric) ? 'tickets' : 'iterations'), value: set.percentile }
+                Percentile: { metric: containerState.metric, value: set.percentile }
             }),
         })
 }

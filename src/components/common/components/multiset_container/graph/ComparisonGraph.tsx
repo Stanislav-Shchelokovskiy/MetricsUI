@@ -10,12 +10,12 @@ import GraphPlot, { GraphData } from './GraphPlot'
 export interface BaseAgg {
     name: string
     periods: Array<string> | Array<number>
+    aggs: Array<number>
     customdata: Array<string> | Array<number>
 }
 
 interface ComparisonGraphProps<ContainerStateT extends BaseContainerState, SetStateT extends BaseSetState, AggT extends BaseAgg> {
     className: string
-    aggSelector: (container: ContainerStateT, agg: AggT) => Array<number>
     fetchPeriods: (container: ContainerStateT) => Promise<FetchResult<Array<string> | Array<number>>>
     fetchAggs: (container: ContainerStateT, set: SetStateT) => Promise<FetchResult<AggT>>
     containerDepsSelector: (container: ContainerStateT) => Array<any>
@@ -52,7 +52,7 @@ export default function ComparisonGraph<ContainerStateT extends BaseContainerSta
                             name: x.data.name,
                             metric: containerState.metric,
                             x: x.data.periods,
-                            y: props.aggSelector(containerState, x.data),
+                            y: x.data.aggs,
                             visible: (containerState.hiddenLegends.includes(x.data.name) ? 'legendonly' : true) as 'legendonly' | boolean | undefined,
                             customdata: x.data.customdata,
                         }

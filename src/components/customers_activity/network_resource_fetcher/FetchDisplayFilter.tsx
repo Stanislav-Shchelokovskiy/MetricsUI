@@ -7,7 +7,7 @@ import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
 export type DisplayFilter = Array<any>
 
 export async function fetchDisplayFilter(
-    isTicketsMetricSelected: boolean,
+    metric: string,
     set: SetState,
 ): Promise<FetchResult<DisplayFilter>> {
     return fetchArray(
@@ -17,7 +17,7 @@ export async function fetchDisplayFilter(
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 ...getAliasedSet(set),
-                Percentile: { metric: (isTicketsMetricSelected ? 'tickets' : 'iterations'), value: set.percentile }
+                Percentile: { metric: metric, value: set.percentile }
             }),
         }
     )

@@ -4,7 +4,6 @@ import FilterBuilder, { CustomOperation } from 'devextreme-react/filter-builder'
 import { CustomersActivityStore } from '../store/Store'
 import { Tooltip } from 'devextreme-react/tooltip'
 import { fetchDisplayFilter } from '../network_resource_fetcher/FetchDisplayFilter'
-import { isTicketsMetricSelected } from '../network_resource_fetcher/FetchMetrics'
 import { getSetDataFields } from '../store/sets_reducer/SetDescriptor'
 import { TooltipProps } from '../../common/components/multiset_container/Toolbar/ToolbarMenu'
 
@@ -31,7 +30,7 @@ const FilterLabel = React.memo(() => {
 
     useEffect(() => {
         (async () => {
-            Promise.all(customersActivitySets.map(set => fetchDisplayFilter(isTicketsMetricSelected(metric), set)))
+            Promise.all(customersActivitySets.map(set => fetchDisplayFilter(metric, set)))
                 .then(fetchResults => {
                     const ds: Array<any> = []
                     let fetchResult: any
