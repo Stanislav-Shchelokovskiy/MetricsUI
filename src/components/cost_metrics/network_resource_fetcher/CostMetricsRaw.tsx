@@ -1,7 +1,7 @@
 import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
 import { ContainerState } from '../store/ContainerReducer'
-import { SetState } from '../store/sets_reducer/SetsReducer'
-import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
+import { SetState } from '../store/sets/SetsReducer'
+import { getAliasedSet } from '../store/sets/SetDescriptor'
 import FetchResult from '../../common/Interfaces'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
 

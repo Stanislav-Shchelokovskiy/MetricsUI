@@ -1,6 +1,6 @@
 import { CostMetricsStore, CostMetricsShareableStore } from './Store'
 import { ContainerState } from './ContainerReducer'
-import { SetState } from './sets_reducer/SetsReducer'
+import { SetState } from './sets/SetsReducer'
 import { defaultContainerValidator } from '../../common/store/multiset_container/StoreStateValidator'
 
 export function stateValidator(state: CostMetricsStore) {

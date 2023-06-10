@@ -5,7 +5,7 @@ import { getSetsReducer } from '../../../common/store/multiset_container/sets/Se
 import { setsValidator } from '../StoreStateValidator'
 import { FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
 import { getDefaultFilterParametersNode } from '../../../common/store/multiset_container/sets/Defaults'
-import { employeesReducer } from './Employees'
+import { employeesReducer } from './EmployeesReducer'
 import { getDefaultTitle } from '../../../common/store/multiset_container/sets/Defaults'
 
 export interface SetState extends BaseSetState {
