@@ -1,10 +1,13 @@
-import React, { useState, useEffect, useCallback, PropsWithChildren, FC } from 'react'
+import React, { useState, useEffect, useCallback, FC } from 'react'
 import { useSelector } from 'react-redux'
 import Plotly from 'plotly.js-basic-dist-min'
 import Drawer from 'devextreme-react/drawer'
 import ScrollView from 'devextreme-react/scroll-view'
 import { ToolbarProps } from './Toolbar/Toolbar'
 import { MultisetContainerStore } from '../../store/multiset_container/Store'
+import MultisetContainerContent from './MultisetContainerContent'
+import GraphSettingsPanel from './graph/GraphSettingsPanel'
+import ComparisonGraph from './graph/ComparisonGraph'
 
 
 export interface SetProps { setTitle: string }
@@ -37,7 +40,7 @@ interface MultisetContainerProps {
     toolbar: FC<ToolbarProps>
 }
 
-export default function MultisetContainer(props: PropsWithChildren<MultisetContainerProps>) {
+export default function MultisetContainer(props: MultisetContainerProps) {
     const [opened, setOpened] = useState(false)
 
     useEffect(() => {
@@ -64,7 +67,10 @@ export default function MultisetContainer(props: PropsWithChildren<MultisetConta
                 component={props.sets}
                 closeOnOutsideClick={true}
             >
-                {props.children}
+                <MultisetContainerContent>
+                    <GraphSettingsPanel />
+                    <ComparisonGraph />
+                </MultisetContainerContent>
             </Drawer >
         </div >
     )

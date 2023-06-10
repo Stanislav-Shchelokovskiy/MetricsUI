@@ -1,29 +1,25 @@
-import React, { useCallback } from 'react'
-import FetchResult from '../../../Interfaces'
+import React, { useCallback, useContext } from 'react'
 import OptionSelector from '../../OptionSelector'
 import { MultisetContainerStore } from '../../../store/multiset_container/Store'
 import { changeGroupByPeriod } from '../../../store/multiset_container/Actions'
 import { TAKE_FROM_DEFAULT_SELECTOR } from '../../../store/multiset_container/Utils'
+import { MultisetContainerContext } from '../MultisetContainerContext'
 
-interface GroupByPeriod {
+export interface GroupByPeriod {
     name: string
     format: string
 }
 
-export interface Props {
-    groupByPeriodSelectorClassName: string | undefined
-    fetchGroupByPeriods: (...args: any) => Promise<FetchResult<Array<GroupByPeriod>>>
-}
-
-export default function GroupByPeriodSelector(props: Props) {
+export default function GroupByPeriodSelector() {
+    const context = useContext(MultisetContainerContext)
     const valueSelector = useCallback((store: MultisetContainerStore) => store.container.groupByPeriod, [])
     const defaultValueSelector = useCallback((values: Array<GroupByPeriod>) => values[0]?.format, [])
 
     return <OptionSelector<GroupByPeriod, string>
-        className={props.groupByPeriodSelectorClassName}
+        className='ComparisonGraph_GroupByPeriodSelector'
         displayExpr='name'
         valueExpr='format'
-        fetchDataSource={props.fetchGroupByPeriods}
+        fetchDataSource={context.graphSettingsPanel.fetchGroupByPeriods}
         valueSelector={valueSelector}
         defaultValueSelector={defaultValueSelector}
         onValueChange={changeGroupByPeriod}

@@ -1,19 +1,19 @@
 import FetchResult from '../../common/Interfaces'
 import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'
 import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
-import { ContainerState } from '../store/ContainerReducer'
 import { SetState } from '../store/sets_reducer/SetsReducer'
 import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
-import { BaseAgg } from '../../common/components/multiset_container/graph/ComparisonGraph'
+import { Agg } from '../../common/components/multiset_container/graph/ComparisonGraph'
 import { anyValueIsEmpty } from '../../common/store/multiset_container/Utils'
+
+import { BaseContainerState } from '../../common/store/multiset_container/BaseContainerState'
+import { BaseSetState } from '../../common/store/multiset_container/sets/Interfaces'
 
 interface CostMetricsAggregate {
     period: string
     agg: number
     name: string
 }
-
-export interface CostMetricsAggregates extends BaseAgg {}
 
 const EMPTY_AGGREGATES = {
     periods: [],
@@ -39,7 +39,7 @@ function aggregatesConverter(aggregates: Array<CostMetricsAggregate> | undefined
 }
 
 function getConverter(setTitle: string) {
-    return (aggregates: Array<CostMetricsAggregate> | undefined): CostMetricsAggregates => {
+    return (aggregates: Array<CostMetricsAggregate> | undefined): Agg => {
         return {
             name: setTitle,
             ...aggregatesConverter(aggregates, setTitle),
@@ -48,9 +48,9 @@ function getConverter(setTitle: string) {
 }
 
 export async function fetchCostMetricsAggregates(
-    containerState: ContainerState,
-    set: SetState,
-): Promise<FetchResult<CostMetricsAggregates>> {
+    containerState: BaseContainerState,
+    set: BaseSetState,
+): Promise<FetchResult<Agg>> {
     const [rangeStart, rangeEnd] = containerState.range
 
     if (anyValueIsEmpty(rangeStart, rangeEnd, containerState.groupByPeriod, containerState.metric))
@@ -72,7 +72,7 @@ export async function fetchCostMetricsAggregates(
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                ...getAliasedSet(set),
+                ...getAliasedSet(set as SetState),
             }),
         },
     )

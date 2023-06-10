@@ -1,29 +1,22 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useSelector } from 'react-redux'
-import FetchResult, { Token } from '../../../Interfaces'
+import { Token } from '../../../Interfaces'
 import { MultisetContainerStore } from '../../../store/multiset_container/Store'
-import { BaseContainerState } from '../../../store/multiset_container/BaseContainerState'
-import { BaseSetState } from '../../../store/multiset_container/sets/Interfaces'
 import LoadIndicator from '../../LoadIndicator'
 import GraphPlot, { GraphData } from './GraphPlot'
+import { MultisetContainerContext } from '../MultisetContainerContext'
 
-export interface BaseAgg {
+export interface Agg {
     name: string
     periods: Array<string> | Array<number>
     aggs: Array<number>
     customdata: Array<string> | Array<number>
 }
 
-interface ComparisonGraphProps<ContainerStateT extends BaseContainerState, SetStateT extends BaseSetState, AggT extends BaseAgg> {
-    className: string
-    fetchPeriods: (container: ContainerStateT) => Promise<FetchResult<Array<string> | Array<number>>>
-    fetchAggs: (container: ContainerStateT, set: SetStateT) => Promise<FetchResult<AggT>>
-    containerDepsSelector: (container: ContainerStateT) => Array<any>
-}
-
-export default function ComparisonGraph<ContainerStateT extends BaseContainerState, SetStateT extends BaseSetState, AggT extends BaseAgg>(props: ComparisonGraphProps<ContainerStateT, SetStateT, AggT>) {
-    const containerState = useSelector((state: MultisetContainerStore<ContainerStateT>) => state.container)
-    const setsState = useSelector((state: MultisetContainerStore<ContainerStateT, SetStateT>) => state.sets)
+export default function ComparisonGraph() {
+    const context = useContext(MultisetContainerContext)
+    const containerState = useSelector((state: MultisetContainerStore) => state.container)
+    const setsState = useSelector((state: MultisetContainerStore) => state.sets)
 
     const [[categories, aggregates], setAggregates] = useState<[Array<string> | Array<number>, Array<GraphData>]>([[], []])
     const [dataLoading, setDataLoading] = useState<boolean>(false)
@@ -38,10 +31,10 @@ export default function ComparisonGraph<ContainerStateT extends BaseContainerSta
             token.cancel = () => {
                 cancelled = true
             }
-            
+
             const [periods_array, ...sets] = await Promise.all([
-                props.fetchPeriods(containerState),
-                ...setsState.map((set) => props.fetchAggs(containerState, set))
+                context.graph.fetchPeriods(containerState),
+                ...setsState.map((set) => context.graph.fetchAggs(containerState, set))
             ])
 
             if (!cancelled) {
@@ -70,11 +63,11 @@ export default function ComparisonGraph<ContainerStateT extends BaseContainerSta
             containerState.groupByPeriod,
             containerState.metric,
             ...containerState.range,
-            ...props.containerDepsSelector(containerState),
+            ...context.graph.containerDepsSelector(containerState),
             setsState,
         ])
     return (
-        <div className={props.className}>
+        <div className='ComparisonGraph'>
             {dataLoading ? <LoadIndicator className='ComparisonGraph_LoadingIndicator' width={100} height={100} /> : null}
             <GraphPlotMempized
                 categories={categories}
@@ -86,9 +79,3 @@ export default function ComparisonGraph<ContainerStateT extends BaseContainerSta
 }
 
 const GraphPlotMempized = React.memo(GraphPlot)
-
-function defaultContainerDepsSelector(container: any) { return [] }
-ComparisonGraph.defaultProps = {
-    className: 'ComparisonGraph',
-    containerDepsSelector: defaultContainerDepsSelector,
-}

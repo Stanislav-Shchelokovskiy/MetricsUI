@@ -3,8 +3,10 @@ import FetchResult from '../../common/Interfaces'
 import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'
 import { ContainerState } from '../store/ContainerReducer'
 import { SetState } from '../store/sets_reducer/Interfaces'
+import { BaseContainerState } from '../../common/store/multiset_container/BaseContainerState'
+import { BaseSetState } from '../../common/store/multiset_container/sets/Interfaces'
 import { getAliasedSet } from '../store/sets_reducer/SetDescriptor'
-import { BaseAgg } from '../../common/components/multiset_container/graph/ComparisonGraph'
+import { Agg } from '../../common/components/multiset_container/graph/ComparisonGraph'
 import { anyValueIsEmpty } from '../../common/store/multiset_container/Utils'
 
 
@@ -14,15 +16,13 @@ interface TicketsWithIterationsAggregate {
     name: string
 }
 
-export interface TicketsWithIterationsAggregates extends BaseAgg {}
-
 const EMPTY_AGGREGATES = {
     periods: [],
     aggs: [],
     customdata: [],
 }
 
-function aggregatesConverter(aggregates: Array<TicketsWithIterationsAggregate> | undefined, setTitle: string) {
+function aggregatesConverter(aggregates: Array<TicketsWithIterationsAggregate> | undefined) {
     if (aggregates) {
         const periods = []
         const aggs = []
@@ -40,18 +40,18 @@ function aggregatesConverter(aggregates: Array<TicketsWithIterationsAggregate> |
 }
 
 function getConverter(setTitle: string) {
-    return (aggregates: Array<TicketsWithIterationsAggregate> | undefined): TicketsWithIterationsAggregates => {
+    return (aggregates: Array<TicketsWithIterationsAggregate> | undefined): Agg => {
         return {
             name: setTitle,
-            ...aggregatesConverter(aggregates, setTitle),
+            ...aggregatesConverter(aggregates),
         }
     }
 }
 
 export async function fetchTicketsWithIterationsAggregates(
-    containerState: ContainerState,
-    set: SetState,
-): Promise<FetchResult<TicketsWithIterationsAggregates>> {
+    containerState: BaseContainerState,
+    set: BaseSetState,
+): Promise<FetchResult<Agg>> {
     const [rangeStart, rangeEnd] = containerState.range
 
     if (anyValueIsEmpty(rangeStart, rangeEnd, containerState.groupByPeriod, containerState.metric))
@@ -68,14 +68,14 @@ export async function fetchTicketsWithIterationsAggregates(
         `group_by_period=${containerState.groupByPeriod}` +
         `&range_start=${rangeStart}` +
         `&range_end=${rangeEnd}` +
-        `&baseline_aligned_mode_enabled=${containerState.baselineAlignedModeEnabled}` +
+        `&baseline_aligned_mode_enabled=${(containerState as ContainerState).baselineAlignedModeEnabled}` +
         `&metric=${containerState.metric}`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                ...getAliasedSet(set),
-                Percentile: { metric: containerState.metric, value: set.percentile }
+                ...getAliasedSet(set as SetState),
+                Percentile: { metric: containerState.metric, value: (set as SetState).percentile }
             }),
         })
 }
