@@ -7,7 +7,11 @@ const setsSelector = (store: CostMetricsStore) => store.sets
 const setTitleSelector = (store: CostMetricsStore, setTitle: string) => setTitle
 const setSelector = (sets: Array<SetState>, setTitle: string) => sets.find(x => x.title === setTitle)
 
-export const empTeamsSelector = createSelector([setsSelector, setTitleSelector], (sets, setTitle) => setSelector(sets, setTitle)?.empTeams)
-export const empTribesSelector = createSelector([setsSelector, setTitleSelector], (sets, setTitle) => setSelector(sets, setTitle)?.empTribes)
-export const empPositionsSelector = createSelector([setsSelector, setTitleSelector], (sets, setTitle) => setSelector(sets, setTitle)?.empPositions)
-export const employeesSelector = createSelector([setsSelector, setTitleSelector], (sets, setTitle) => setSelector(sets, setTitle)?.employees)
+function get_selector<T>(selector: (set: SetState | undefined) => T | undefined) {
+    return createSelector([setsSelector, setTitleSelector], (sets, setTitle) => selector(setSelector(sets, setTitle)))
+}
+
+export const empTeamsSelector = get_selector(set => set?.empTeams)
+export const empTribesSelector = get_selector(set => set?.empTribes)
+export const empPositionsSelector = get_selector(set => set?.empPositions)
+export const employeesSelector = get_selector(set => set?.employees)
