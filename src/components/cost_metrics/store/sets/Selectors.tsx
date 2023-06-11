@@ -10,3 +10,4 @@ const setSelector = (sets: Array<SetState>, setTitle: string) => sets.find(x => 
 export const empTeamsSelector = createSelector([setsSelector, setTitleSelector], (sets, setTitle) => setSelector(sets, setTitle)?.empTeams)
 export const empTribesSelector = createSelector([setsSelector, setTitleSelector], (sets, setTitle) => setSelector(sets, setTitle)?.empTribes)
 export const empPositionsSelector = createSelector([setsSelector, setTitleSelector], (sets, setTitle) => setSelector(sets, setTitle)?.empPositions)
+export const employeesSelector = createSelector([setsSelector, setTitleSelector], (sets, setTitle) => setSelector(sets, setTitle)?.employees)
