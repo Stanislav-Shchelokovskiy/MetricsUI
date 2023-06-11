@@ -1,11 +1,11 @@
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback } from 'react'
 import { changePeriod } from '../../../store/multiset_container/Actions'
 import { MultisetContainerStore } from '../../../store/multiset_container/Store'
 import RangePeriodSelector, { PeriodGroupBy } from '../../RangePeriodSelector'
-import { MultisetContainerContext } from '../MultisetContainerContext'
+import { useMultisetContainerContext } from '../MultisetContainerContext'
 
 export default function PeriodSelector() {
-    const context = useContext(MultisetContainerContext)
+    const context = useMultisetContainerContext()
     const rangeSelector = useCallback((store: MultisetContainerStore) => store.container.range, [])
     const groupBySelector = useCallback((store: MultisetContainerStore) => store.container.groupByPeriod as PeriodGroupBy, [])
     return <RangePeriodSelector

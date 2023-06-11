@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { Token } from '../../../Interfaces'
 import { MultisetContainerStore } from '../../../store/multiset_container/Store'
 import LoadIndicator from '../../LoadIndicator'
 import GraphPlot, { GraphData } from './GraphPlot'
-import { MultisetContainerContext } from '../MultisetContainerContext'
+import { useMultisetContainerContext } from '../MultisetContainerContext'
 
 export interface Agg {
     name: string
@@ -14,7 +14,7 @@ export interface Agg {
 }
 
 export default function ComparisonGraph() {
-    const context = useContext(MultisetContainerContext)
+    const context = useMultisetContainerContext()
     const containerState = useSelector((state: MultisetContainerStore) => state.container)
     const setsState = useSelector((state: MultisetContainerStore) => state.sets)
 

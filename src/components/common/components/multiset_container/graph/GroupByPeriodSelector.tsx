@@ -1,9 +1,9 @@
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback } from 'react'
 import OptionSelector from '../../OptionSelector'
 import { MultisetContainerStore } from '../../../store/multiset_container/Store'
 import { changeGroupByPeriod } from '../../../store/multiset_container/Actions'
 import { TAKE_FROM_DEFAULT_SELECTOR } from '../../../store/multiset_container/Utils'
-import { MultisetContainerContext } from '../MultisetContainerContext'
+import { useMultisetContainerContext } from '../MultisetContainerContext'
 
 export interface GroupByPeriod {
     name: string
@@ -11,7 +11,7 @@ export interface GroupByPeriod {
 }
 
 export default function GroupByPeriodSelector() {
-    const context = useContext(MultisetContainerContext)
+    const context = useMultisetContainerContext()
     const valueSelector = useCallback((store: MultisetContainerStore) => store.container.groupByPeriod, [])
     const defaultValueSelector = useCallback((values: Array<GroupByPeriod>) => values[0]?.format, [])
 

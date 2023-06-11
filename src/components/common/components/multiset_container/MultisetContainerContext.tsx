@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import React, { createContext, useContext } from 'react'
 import FetchResult from '../../Interfaces'
 import { BaseContainerState } from '../../store/multiset_container/BaseContainerState'
 import { BaseSetState } from '../../store/multiset_container/sets/Interfaces'
@@ -23,4 +23,8 @@ interface Context {
     graph: GraphContext
 }
 
-export const MultisetContainerContext = createContext<Context>(null!)
+const MultisetContainerContext = createContext<Context>(null!)
+
+export function useMultisetContainerContext() {
+    return useContext(MultisetContainerContext)
+}

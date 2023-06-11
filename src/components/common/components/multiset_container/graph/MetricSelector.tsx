@@ -1,17 +1,16 @@
-import React, { useCallback, useContext } from 'react'
-import FetchResult from '../../../Interfaces'
+import React, { useCallback } from 'react'
 import OptionSelector from '../../OptionSelector'
 import { changeMetric } from '../../../store/multiset_container/Actions'
 import { MultisetContainerStore } from '../../../store/multiset_container/Store'
 import { TAKE_FROM_DEFAULT_SELECTOR } from '../../../store/multiset_container/Utils'
-import { MultisetContainerContext } from '../MultisetContainerContext'
+import { useMultisetContainerContext } from '../MultisetContainerContext'
 
 export interface Metric {
     name: string
 }
 
 export default function MetricSelector() {
-    const context = useContext(MultisetContainerContext)
+    const context = useMultisetContainerContext()
     const valueSelector = useCallback((store: MultisetContainerStore) => store.container.metric, [])
     const defaultValueSelector = useCallback((values: Array<Metric>) => values[0]?.name, [])
 
