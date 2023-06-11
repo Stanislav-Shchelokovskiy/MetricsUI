@@ -5,11 +5,12 @@ import { CustomersActivityStore } from '../../../../store/Store'
 import { changePositions, changePositionsInclude } from '../../../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchPositions, Position } from '../../../../network_resource_fetcher/employees/FetchPositions'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
+import { positionsSelector } from '../../../../store/sets_reducer/Selectors'
 
 
 export default function EmpPositionsSelector() {
     const setTitle = useSetTitle()
-    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.positions)
+    const value = useSelector((store: CustomersActivityStore) => positionsSelector(store, setTitle))
     const onValueChange = (allValues: Array<Position>, values: Array<string>) => changePositions({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changePositionsInclude({ stateId: setTitle, data: include })
 

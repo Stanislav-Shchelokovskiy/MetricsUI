@@ -6,14 +6,13 @@ import { changePercentile, changePercentileInclude } from '../../../store/action
 import { FilterParameterNode } from '../../../../common/store/multiset_container/sets/Interfaces'
 import { getIncludeButtonOptions } from '../../../../common/components/Button'
 import { useSetTitle } from '../../../../common/components/multiset_container/set/SetContext'
+import { percentileSelector } from '../../../store/sets_reducer/Selectors'
 
 
 export default function PercentileSelector() {
     const setTitle = useSetTitle()
     const ref = useRef<NumberBox>(null)
-    const percentile = useSelector((store: CustomersActivityStore) =>
-        store.sets.find(x => x.title === setTitle)?.percentile as FilterParameterNode<number>
-    )
+    const percentile = useSelector((store: CustomersActivityStore) => percentileSelector(store, setTitle) as FilterParameterNode<number>)
 
     const disabled = useSelector((store: CustomersActivityStore) =>
         store.container.baselineAlignedModeEnabled

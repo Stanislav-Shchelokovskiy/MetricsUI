@@ -5,6 +5,7 @@ import OptionSelector from '../../../../../common/components/OptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeCustomersGroups, changeCustomersGroupsInclude } from '../../../../store/actions/Customers'
 import { fetchCustomersGroups, CustomersGroup } from '../../../../network_resource_fetcher/customers/FetchCustomersGroups'
+import { customersGroupsSelector } from '../../../../store/sets_reducer/Selectors'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
@@ -13,7 +14,7 @@ export default function CustomersGroupsSelector() {
     const baselineAlignedModeEnabled = useSelector((store: CustomersActivityStore) => store.container.baselineAlignedModeEnabled)
     const fetchArgs = useMemo(() => [false], [])
 
-    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.customersGroups)
+    const value = useSelector((store: CustomersActivityStore) => customersGroupsSelector(store, setTitle))
     const onValueChange = useCallback((allValues: Array<CustomersGroup>, values: Array<string>) => changeCustomersGroups({ stateId: setTitle, data: values }), [setTitle])
     const onIncludeChange = useCallback((include: boolean) => changeCustomersGroupsInclude({ stateId: setTitle, data: include }), [setTitle])
 
@@ -44,7 +45,7 @@ export function BAMCustomersGroupsSelector() {
 
     const onValueChange = useCallback((value: string | undefined) => changeCustomersGroups({ stateId: setTitle, data: value === undefined ? [] : [value] }), [])
     const valueSelector = useCallback((store: CustomersActivityStore) => {
-        const groups = store.sets.find(x => x.title === setTitle)?.customersGroups
+        const groups = customersGroupsSelector(store, setTitle)
         return groups?.values.length === 0 ? undefined : groups?.values[0]
     }, [setTitle])
 

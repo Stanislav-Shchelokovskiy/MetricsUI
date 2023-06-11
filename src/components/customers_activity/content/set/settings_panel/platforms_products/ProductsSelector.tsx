@@ -6,14 +6,16 @@ import { changeProducts, changeProductsInclude } from '../../../../store/actions
 import { fetchProducts, Product } from '../../../../network_resource_fetcher/platforms_products/FetchProducts'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
+import { tentsSelector } from '../../../../store/sets_reducer/Selectors'
+import { productsSelector } from '../../../../store/sets_reducer/Selectors'
 
 
 export default function ProductsSelector() {
     const setTitle = useSetTitle()
-    const tentsNode = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.tents)
+    const tentsNode = useSelector((store: CustomersActivityStore) => tentsSelector(store, setTitle))
     const fetchArgs = [paramOrDefault(tentsNode)]
 
-    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.products)
+    const value = useSelector((store: CustomersActivityStore) => productsSelector(store, setTitle))
     const onValueChange = (allValues: Array<Product>, values: Array<string>) => changeProducts({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeProductsInclude({ stateId: setTitle, data: include })
 

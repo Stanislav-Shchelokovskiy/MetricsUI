@@ -6,11 +6,12 @@ import { fetchTribes } from '../../../../common/network_resource_fetcher/FetchTr
 import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
 import { changeTribes, changeTribesInclude } from '../../../store/actions/SetCommon'
 import { useSetTitle } from '../../../../common/components/multiset_container/set/SetContext'
+import { tribesSelector } from '../../../store/sets_reducer/Selectors'
 
 
 export default function TribesSelector() {
     const setTitle = useSetTitle()
-    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.tribes)
+    const value = useSelector((store: CustomersActivityStore) => tribesSelector(store, setTitle))
     const onValueChange = (allValues: Array<Tribe>, selectedTribes: Array<string>) => changeTribes({ stateId: setTitle, data: selectedTribes })
     const onIncludeChange = (include: boolean) => changeTribesInclude({ stateId: setTitle, data: include })
 

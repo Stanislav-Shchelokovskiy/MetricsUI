@@ -7,20 +7,19 @@ import { DataSourceProps } from '../../../../../common/hooks/UseDataSource'
 import RangePeriodSelector, { RangeSelectorProps } from '../../../../../common/components/RangePeriodSelector'
 import Button, { getClearButtonOptions, getIncludeButtonOptions } from '../../../../../common/components/Button'
 import { CustomersActivityStore } from '../../../../store/Store'
-import { SetState } from '../../../../store/sets_reducer/Interfaces'
 import { FilterParametersNode } from '../../../../../common/store/multiset_container/sets/Interfaces'
 
 interface Props extends DataSourceProps<string> {
     className: string
     label: string
     setTitle: string
-    valueSelector: (x: SetState | undefined) => FilterParametersNode<string> | undefined
+    valueSelector: (store: CustomersActivityStore, setTitle: string) => FilterParametersNode<string> | undefined
     changeSelection: (payload: Payload<string, Array<string>>) => PayloadAction<Payload<string, Array<string>>>
     changeInclude: (payload: Payload<string, boolean>) => PayloadAction<Payload<string, boolean>>
 }
 
 export default function BetweenPeriodSelectorWrapper(props: Props) {
-    const rangeSelector = (store: CustomersActivityStore) => props.valueSelector(store.sets.find(x => x.title === props.setTitle))
+    const rangeSelector = (store: CustomersActivityStore) => props.valueSelector(store, props.setTitle)
     const onPeriodChange = (period: Array<string>) => props.changeSelection({ stateId: props.setTitle, data: period })
     const restOptions = { onIncludeChange: (include: boolean) => props.changeInclude({ stateId: props.setTitle, data: include }) }
     return <RangePeriodSelector

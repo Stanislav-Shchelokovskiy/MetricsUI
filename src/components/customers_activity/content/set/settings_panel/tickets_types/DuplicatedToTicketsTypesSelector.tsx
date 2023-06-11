@@ -5,11 +5,12 @@ import { CustomersActivityStore } from '../../../../store/Store'
 import { changeDuplicatedToTicketTypes, changeDuplicatedToTicketsTypesInclude, } from '../../../../store/actions/TicketsTypes'
 import { fetchTicketsTypes, TicketsType } from '../../../../network_resource_fetcher/tickets/FetchTicketsTypes'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
+import { duplicatedToTicketsTypesSelector } from '../../../../store/sets_reducer/Selectors'
 
 
 export default function DuplicatedToTicketsTypesSelector() {
     const setTitle = useSetTitle()
-    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.duplicatedToTicketsTypes)
+    const value = useSelector((store: CustomersActivityStore) => duplicatedToTicketsTypesSelector(store, setTitle))
     const onValueChange = (allValues: Array<TicketsType>, values: Array<number>) => changeDuplicatedToTicketTypes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeDuplicatedToTicketsTypesInclude({ stateId: setTitle, data: include })
 

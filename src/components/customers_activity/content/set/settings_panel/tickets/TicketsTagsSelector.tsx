@@ -5,11 +5,12 @@ import { CustomersActivityStore } from '../../../../store/Store'
 import { changeTicketsTags, changeTicketsTagsInclude } from '../../../../store/actions/Tickets'
 import { fetchTicketsTags, TicketsTag } from '../../../../network_resource_fetcher/tickets/FetchTicketsTags'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
+import { ticketsTagsSelector } from '../../../../store/sets_reducer/Selectors'
 
 
 export default function TicketsTagsSelector() {
     const setTitle = useSetTitle()
-    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.ticketsTags)
+    const value = useSelector((store: CustomersActivityStore) => ticketsTagsSelector(store, setTitle))
     const onValueChange = (allValues: Array<TicketsTag>, values: Array<string>) => changeTicketsTags({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTicketsTagsInclude({ stateId: setTitle, data: include })
 

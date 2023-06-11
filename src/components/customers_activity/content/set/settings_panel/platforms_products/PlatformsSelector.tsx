@@ -6,14 +6,15 @@ import { changePlatforms, changePlatformsInclude } from '../../../../store/actio
 import { fetchPlatforms, Platform } from '../../../../network_resource_fetcher/platforms_products/FetchPlatforms'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
+import { tentsSelector, platformsSelector } from '../../../../store/sets_reducer/Selectors'
 
 
 export default function PlatformsSelector() {
     const setTitle = useSetTitle()
-    const tentsNode = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.tents)
+    const tentsNode = useSelector((store: CustomersActivityStore) => tentsSelector(store, setTitle))
     const fetchArgs = [paramOrDefault(tentsNode)]
 
-    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.platforms)
+    const value = useSelector((store: CustomersActivityStore) => platformsSelector(store, setTitle))
     const onValueChange = (allValues: Array<Platform>, values: Array<string>) => changePlatforms({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changePlatformsInclude({ stateId: setTitle, data: include })
 

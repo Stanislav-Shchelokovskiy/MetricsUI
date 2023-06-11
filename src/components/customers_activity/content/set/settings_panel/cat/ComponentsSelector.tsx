@@ -6,16 +6,16 @@ import { changeComponents, changeComponentsInclude } from '../../../../store/act
 import { fetchComponents, Component } from '../../../../network_resource_fetcher/cat/FetchComponents'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
+import { tentsSelector, componentsSelector } from '../../../../store/sets_reducer/Selectors'
 
 export default function ComponentsSelector() {
     const setTitle = useSetTitle()
-    const tentsNode = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.tents)
+    const tentsNode = useSelector((store: CustomersActivityStore) => tentsSelector(store, setTitle))
     const fetchArgs = [paramOrDefault(tentsNode)]
-    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.components)
 
+    const value = useSelector((store: CustomersActivityStore) => componentsSelector(store, setTitle))
     const onValueChange = (allValues: Array<Component>, values: Array<string>) => changeComponents({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeComponentsInclude({ stateId: setTitle, data: include })
-
 
     return <MultiOptionSelector<Component, string>
         className='CustomersActivity_ComponentsSelector'

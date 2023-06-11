@@ -5,11 +5,12 @@ import { CustomersActivityStore } from '../../../../store/Store'
 import { changeEmpTribes, changeEmpTribesInclude } from '../../../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchEmpTribes, EmpTribe } from '../../../../network_resource_fetcher/employees/FetchEmpTribes'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
+import { empTribesSelector } from '../../../../store/sets_reducer/Selectors'
 
 
 export default function EmpTribesSelector() {
     const setTitle = useSetTitle()
-    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.empTribes)
+    const value = useSelector((store: CustomersActivityStore) => empTribesSelector(store, setTitle))
     const onValueChange = (allValues: Array<EmpTribe>, values: Array<string>) => changeEmpTribes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeEmpTribesInclude({ stateId: setTitle, data: include })
 

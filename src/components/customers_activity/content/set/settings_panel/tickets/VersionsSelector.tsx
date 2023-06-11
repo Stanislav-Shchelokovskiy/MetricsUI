@@ -5,11 +5,12 @@ import { CustomersActivityStore } from '../../../../store/Store'
 import { changeVersions, changeVersionsInclude } from '../../../../store/actions/Tickets'
 import { fetchVersions, Version } from '../../../../network_resource_fetcher/tickets/FetchVersions'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
+import { versionsSelector } from '../../../../store/sets_reducer/Selectors'
 
 
 export default function VersionsSelector() {
     const setTitle = useSetTitle()
-    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.versions)
+    const value = useSelector((store: CustomersActivityStore) => versionsSelector(store, setTitle))
     const onValueChange = (allValues: Array<Version>, values: Array<string>) => changeVersions({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeVersionsInclude({ stateId: setTitle, data: include })
 

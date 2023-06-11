@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import { useSelector } from 'react-redux'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { closedIsNotSelected, bugIsNotSelected } from '../../../../store/Utils'
+import { ticketsTypesSelector, ticketStatusesSelector } from '../../../../store/sets_reducer/Selectors'
 
 interface BugSelectorProps {
     Wrapped: FC<any>
@@ -9,7 +10,7 @@ interface BugSelectorProps {
 }
 
 export default function BugsSelectorWrapper({ Wrapped, setTitle, ...wrappedProps }: BugSelectorProps & any) {
-    const ticketTypes = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.ticketsTypes)
+    const ticketTypes = useSelector((store: CustomersActivityStore) => ticketsTypesSelector(store, setTitle))
     if (bugIsNotSelected(ticketTypes))
         return null
     return <Wrapped
@@ -22,7 +23,7 @@ export default function BugsSelectorWrapper({ Wrapped, setTitle, ...wrappedProps
 }
 
 export function ClosedBugsSelectorWrapper({ Wrapped, setTitle, ...wrappedProps }: BugSelectorProps & any) {
-    const ticketStatuses = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.ticketStatuses)
+    const ticketStatuses = useSelector((store: CustomersActivityStore) => ticketStatusesSelector(store, setTitle))
     if (closedIsNotSelected(ticketStatuses))
         return null
     return <BugsSelectorWrapper Wrapped={Wrapped} setTitle={setTitle} {...wrappedProps} />

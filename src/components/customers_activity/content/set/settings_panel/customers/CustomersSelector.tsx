@@ -5,11 +5,12 @@ import { CustomersActivityStore } from '../../../../store/Store'
 import { changeCustomers, changeCustomersInclude } from '../../../../store/actions/Customers'
 import { fetchCustomers, Customer, fetchValidateCustomers } from '../../../../network_resource_fetcher/customers/FetchCustomers'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
+import { customersSelector } from '../../../../store/sets_reducer/Selectors'
 
 
 export default function CustomersSelector() {
     const setTitle = useSetTitle()
-    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.customers)
+    const value = useSelector((store: CustomersActivityStore) => customersSelector(store, setTitle))
     const onValueChange = (allValues: Array<Customer>, values: Array<string>) => changeCustomers({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeCustomersInclude({ stateId: setTitle, data: include })
 

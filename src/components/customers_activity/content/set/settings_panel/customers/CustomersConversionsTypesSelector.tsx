@@ -5,14 +5,15 @@ import { CustomersActivityStore } from '../../../../store/Store'
 import { changeConversionsTypes, changeConversionsTypesInclude } from '../../../../store/actions/Customers'
 import { fetchConversionStatuses, ConversionStatus } from '../../../../network_resource_fetcher/customers/FetchConversionStatuses'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
+import { customersTypesSelector, conversionsTypesSelector } from '../../../../store/sets_reducer/Selectors'
 
 
 export default function CustomersConversionsTypesSelector() {
     const setTitle = useSetTitle()
-    const customersTypeNode = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.customersTypes)
+    const customersTypeNode = useSelector((store: CustomersActivityStore) => customersTypesSelector(store, setTitle))
     const fetchArgs = [customersTypeNode]
 
-    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.conversionsTypes)
+    const value = useSelector((store: CustomersActivityStore) => conversionsTypesSelector(store, setTitle))
     const onValueChange = (allValues: Array<ConversionStatus>, values: Array<number>) => changeConversionsTypes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeConversionsTypesInclude({ stateId: setTitle, data: include })
 

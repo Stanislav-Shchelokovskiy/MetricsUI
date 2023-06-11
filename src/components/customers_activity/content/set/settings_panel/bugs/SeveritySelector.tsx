@@ -6,11 +6,12 @@ import { fetchSeverityValues, Severity } from '../../../../network_resource_fetc
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import BugsSelectorWrapper from './BugsSelectors'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
+import { severitySelector } from '../../../../store/sets_reducer/Selectors'
 
 
 export default function SeveritySelector() {
     const setTitle = useSetTitle()
-    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.severity)
+    const value = useSelector((store: CustomersActivityStore) => severitySelector(store, setTitle))
     const onValueChange = (allValues: Array<Severity>, values: Array<string>) => changeSeverity({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeSeverityInclude({ stateId: setTitle, data: include })
 

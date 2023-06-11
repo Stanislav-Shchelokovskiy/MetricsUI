@@ -6,15 +6,16 @@ import { changeFeatures, changeFeaturesInclude } from '../../../../store/actions
 import { fetchFeatures, Feature } from '../../../../network_resource_fetcher/cat/FetchFeatures'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
+import { tentsSelector, componentsSelector, featuresSelector } from '../../../../store/sets_reducer/Selectors'
 
 
 export default function FeaturesSelector() {
     const setTitle = useSetTitle()
-    const tentsNode = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.tents)
-    const componentsNode = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.components)
+    const tentsNode = useSelector((store: CustomersActivityStore) => tentsSelector(store, setTitle))
+    const componentsNode = useSelector((store: CustomersActivityStore) => componentsSelector(store, setTitle))
     const fetchArgs = [paramOrDefault(tentsNode), paramOrDefault(componentsNode)]
 
-    const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.features)
+    const value = useSelector((store: CustomersActivityStore) => featuresSelector(store, setTitle))
     const onValueChange = (allValues: Array<Feature>, values: Array<string>) => changeFeatures({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeFeaturesInclude({ stateId: setTitle, data: include })
 
