@@ -9,9 +9,9 @@ import { changeEmployees, changeEmployeesInclude } from '../../../../../common/s
 import { fetchEmployees, Employee } from '../../../../network_resource_fetcher/employees/FetchEmployees'
 import { FilterParametersNode } from '../../../../../common/store/multiset_container/sets/Interfaces'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 export interface EmpSelectorProps {
-    setTitle: string
     className: string
     placeholder: string
     label: string
@@ -24,13 +24,12 @@ export interface EmpSelectorProps {
 }
 
 
-export default function EmployeesSelector({ setTitle }: { setTitle: string }) {
+export default function EmployeesSelector() {
     const valueSelector = useCallback((x: SetState | undefined) => x?.employees, [])
     const positionsSelector = useCallback((x: SetState | undefined) => x?.positions, [])
     const tribesSelector = useCallback((x: SetState | undefined) => x?.empTribes, [])
     const tentsSelector = useCallback((x: SetState | undefined) => x?.empTents, [])
     return <EmpSelector
-        setTitle={setTitle}
         className='CustomersActivity_EmployeesSelector'
         placeholder='Select posts owners'
         label='Employees (posts owners)'
@@ -44,7 +43,7 @@ export default function EmployeesSelector({ setTitle }: { setTitle: string }) {
 }
 
 export function EmpSelector(props: EmpSelectorProps) {
-    const setTitle = props.setTitle
+    const setTitle = useSetTitle()
     const findSet = useCallback((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle), [setTitle])
 
     const positionsNode = useSelector((store: CustomersActivityStore) => props.positionsSelector?.(findSet(store)))

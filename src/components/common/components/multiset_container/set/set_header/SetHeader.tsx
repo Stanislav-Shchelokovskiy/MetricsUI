@@ -4,12 +4,12 @@ import DropButton from './DropButton'
 import Title from './Title'
 
 
-export default function SetHeader({ setTitle }: { setTitle: string }) {
+export default function SetHeader() {
     return (
         <div className='SetHeader'>
-            <Title setTitle={setTitle} />
-            <CloneButton setTitle={setTitle} />
-            <DropButton setTitle={setTitle} />
+            <Title />
+            <CloneButton />
+            <DropButton />
         </div>
     )
 }

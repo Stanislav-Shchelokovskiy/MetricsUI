@@ -5,10 +5,11 @@ import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { changePositions, changePositionsInclude } from '../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchPositions, Position } from '../../network_resource_fetcher/Positions'
 import { empPositionsSelector } from '../../store/sets/Selectors'
+import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
 
-export default function EmpPositionsSelector({ setTitle }: { setTitle: string }) {
+export default function EmpPositionsSelector() {
+    const setTitle = useSetTitle()
     const value = useSelector((state: CostMetricsStore) => empPositionsSelector(state, setTitle))
-
     const onValueChange = (allValues: Array<Position>, values: Array<string>) => changePositions({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changePositionsInclude({ stateId: setTitle, data: include })
 

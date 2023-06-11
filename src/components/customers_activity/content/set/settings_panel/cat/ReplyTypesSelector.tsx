@@ -4,9 +4,11 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeRepliesTypes, changeRepliesTypesInclude } from '../../../../store/actions/CAT'
 import { fetchRepliesTypes, ReplyType } from '../../../../network_resource_fetcher/cat/FetchRepliesTypes'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function ReplyTypesSelector({ setTitle }: { setTitle: string }) {
+export default function ReplyTypesSelector() {
+    const setTitle = useSetTitle()
     const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.repliesTypes)
     const onValueChange = (allValues: Array<ReplyType>, values: Array<string>) => changeRepliesTypes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeRepliesTypesInclude({ stateId: setTitle, data: include })

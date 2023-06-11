@@ -5,9 +5,11 @@ import { CustomersActivityStore } from '../../../store/Store'
 import { changePercentile, changePercentileInclude } from '../../../store/actions/SetCommon'
 import { FilterParameterNode } from '../../../../common/store/multiset_container/sets/Interfaces'
 import { getIncludeButtonOptions } from '../../../../common/components/Button'
+import { useSetTitle } from '../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function PercentileSelector({ setTitle }: { setTitle: string }) {
+export default function PercentileSelector() {
+    const setTitle = useSetTitle()
     const ref = useRef<NumberBox>(null)
     const percentile = useSelector((store: CustomersActivityStore) =>
         store.sets.find(x => x.title === setTitle)?.percentile as FilterParameterNode<number>

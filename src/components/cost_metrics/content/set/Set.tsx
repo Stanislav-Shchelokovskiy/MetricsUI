@@ -9,10 +9,10 @@ import EmployeesSelector from './Employees'
 
 function Set({ setTitle }: SetProps) {
     return <SetWithHeader setTitle={setTitle}>
-        <EmpTeamsSelector setTitle={setTitle} />
-        <EmpTribesSelector setTitle={setTitle} />
-        <EmpPositionsSelector setTitle={setTitle} />
-        <EmployeesSelector setTitle={setTitle} />
+        <EmpTeamsSelector />
+        <EmpTribesSelector />
+        <EmpPositionsSelector />
+        <EmployeesSelector />
     </SetWithHeader>
 }
 

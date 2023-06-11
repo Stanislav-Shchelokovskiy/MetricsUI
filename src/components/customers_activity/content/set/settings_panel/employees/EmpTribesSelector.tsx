@@ -4,9 +4,11 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeEmpTribes, changeEmpTribesInclude } from '../../../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchEmpTribes, EmpTribe } from '../../../../network_resource_fetcher/employees/FetchEmpTribes'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function EmpTribesSelector({ setTitle }: { setTitle: string }) {
+export default function EmpTribesSelector() {
+    const setTitle = useSetTitle()
     const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.empTribes)
     const onValueChange = (allValues: Array<EmpTribe>, values: Array<string>) => changeEmpTribes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeEmpTribesInclude({ stateId: setTitle, data: include })

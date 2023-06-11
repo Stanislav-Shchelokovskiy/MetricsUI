@@ -4,9 +4,11 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeEmpTents, changeEmpTentsInclude } from '../../../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchEmpTents, EmpTent } from '../../../../network_resource_fetcher/employees/FetchEmptTents'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function EmpTentsSelector({ setTitle }: { setTitle: string }) {
+export default function EmpTentsSelector() {
+    const setTitle = useSetTitle()
     const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.empTents)
     const onValueChange = (allValues: Array<EmpTent>, values: Array<string>) => changeEmpTents({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeEmpTentsInclude({ stateId: setTitle, data: include })

@@ -38,39 +38,39 @@ import FixedBetweenSelector from './settings_panel/bugs/FixedBetweenSelector'
 function Set({ setTitle }: SetProps) {
     return (
         <SetWithHeader setTitle={setTitle}>
-            <PercentileSelector setTitle={setTitle} />
-            <PrivacySelector setTitle={setTitle} />
-            <BAMCustomersGroupsSelector setTitle={setTitle} />
-            <TicketsTypesSelector setTitle={setTitle} />
-            <TribesSelector setTitle={setTitle} />
-            <TentsSelector setTitle={setTitle} />
-            <PlatformsSelector setTitle={setTitle} />
-            <ProductsSelector setTitle={setTitle} />
-            <VersionsSelector setTitle={setTitle} />
-            <TicketsTagsSelector setTitle={setTitle} />
-            <DuplicatedToTicketsTypesSelector setTitle={setTitle} />
-            <FixedInSelector setTitle={setTitle} />
-            <FixedBySelector setTitle={setTitle} />
-            <FixedBetweenSelector setTitle={setTitle} />
-            <SeveritySelector setTitle={setTitle} />
-            <TicketStatusesSelector setTitle={setTitle} />
-            <ClosedBySelector setTitle={setTitle} />
-            <ClosedBetweenSelector setTitle={setTitle} />
-            <FrameworksSelector setTitle={setTitle} />
-            <OsSelector setTitle={setTitle} />
-            <IDEsSelector setTitle={setTitle} />
-            <CustomersGroupsSelector setTitle={setTitle} />
-            <CustomersTypesSelector setTitle={setTitle} />
-            <CustomersConversionsTypesSelector setTitle={setTitle} />
-            <EmpPositionsSelector setTitle={setTitle} />
-            <EmpTribesSelector setTitle={setTitle} />
-            <EmpTentsSelector setTitle={setTitle} />
-            <EmployeesSelector setTitle={setTitle} />
-            <AssignedToSelector setTitle={setTitle} />
-            <ReplyTypesSelector setTitle={setTitle} />
-            <ComponentsSelector setTitle={setTitle} />
-            <FeaturesSelector setTitle={setTitle} />
-            <CustomersSelector setTitle={setTitle} />
+            <PercentileSelector />
+            <PrivacySelector />
+            <BAMCustomersGroupsSelector />
+            <TicketsTypesSelector />
+            <TribesSelector />
+            <TentsSelector />
+            <PlatformsSelector />
+            <ProductsSelector />
+            <VersionsSelector />
+            <TicketsTagsSelector />
+            <DuplicatedToTicketsTypesSelector />
+            <FixedInSelector />
+            <FixedBySelector />
+            <FixedBetweenSelector />
+            <SeveritySelector />
+            <TicketStatusesSelector />
+            <ClosedBySelector />
+            <ClosedBetweenSelector />
+            <FrameworksSelector />
+            <OsSelector />
+            <IDEsSelector />
+            <CustomersGroupsSelector />
+            <CustomersTypesSelector />
+            <CustomersConversionsTypesSelector />
+            <EmpPositionsSelector />
+            <EmpTribesSelector />
+            <EmpTentsSelector />
+            <EmployeesSelector />
+            <AssignedToSelector />
+            <ReplyTypesSelector />
+            <ComponentsSelector />
+            <FeaturesSelector />
+            <CustomersSelector />
         </SetWithHeader>
     )
 }

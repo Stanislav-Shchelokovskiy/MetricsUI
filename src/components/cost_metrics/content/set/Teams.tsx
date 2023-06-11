@@ -5,8 +5,10 @@ import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { changeTeams, changeTeamsInclude } from '../../store/sets/Actions'
 import { fetchTeams, Team } from '../../network_resource_fetcher/Teams'
 import { empTeamsSelector } from '../../store/sets/Selectors'
+import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
 
-export default function EmpTeamsSelector({ setTitle }: { setTitle: string }) {
+export default function EmpTeamsSelector() {
+    const setTitle = useSetTitle()
     const value = useSelector((state: CostMetricsStore) => empTeamsSelector(state, setTitle))
     const onValueChange = (allValues: Array<Team>, values: Array<number>) => changeTeams({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTeamsInclude({ stateId: setTitle, data: include })

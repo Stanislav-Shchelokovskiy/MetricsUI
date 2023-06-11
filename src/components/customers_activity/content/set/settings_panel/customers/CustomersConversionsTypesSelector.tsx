@@ -4,9 +4,11 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeConversionsTypes, changeConversionsTypesInclude } from '../../../../store/actions/Customers'
 import { fetchConversionStatuses, ConversionStatus } from '../../../../network_resource_fetcher/customers/FetchConversionStatuses'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function CustomersConversionsTypesSelector({ setTitle }: { setTitle: string }) {
+export default function CustomersConversionsTypesSelector() {
+    const setTitle = useSetTitle()
     const customersTypeNode = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.customersTypes)
     const fetchArgs = [customersTypeNode]
 

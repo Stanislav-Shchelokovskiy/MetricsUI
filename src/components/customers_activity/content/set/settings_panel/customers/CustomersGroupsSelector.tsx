@@ -5,9 +5,11 @@ import OptionSelector from '../../../../../common/components/OptionSelector'
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeCustomersGroups, changeCustomersGroupsInclude } from '../../../../store/actions/Customers'
 import { fetchCustomersGroups, CustomersGroup } from '../../../../network_resource_fetcher/customers/FetchCustomersGroups'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function CustomersGroupsSelector({ setTitle }: { setTitle: string }) {
+export default function CustomersGroupsSelector() {
+    const setTitle = useSetTitle()
     const baselineAlignedModeEnabled = useSelector((store: CustomersActivityStore) => store.container.baselineAlignedModeEnabled)
     const fetchArgs = useMemo(() => [false], [])
 
@@ -35,7 +37,8 @@ export default function CustomersGroupsSelector({ setTitle }: { setTitle: string
     />
 }
 
-export function BAMCustomersGroupsSelector({ setTitle }: { setTitle: string }) {
+export function BAMCustomersGroupsSelector() {
+    const setTitle = useSetTitle()
     const baselineAlignedModeEnabled = useSelector((store: CustomersActivityStore) => store.container.baselineAlignedModeEnabled)
     const fetchArgs = useMemo(() => [true], [])
 

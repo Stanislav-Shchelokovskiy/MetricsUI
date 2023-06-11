@@ -5,9 +5,10 @@ import { CustomersActivityStore } from '../../../../store/Store'
 import { changeComponents, changeComponentsInclude } from '../../../../store/actions/CAT'
 import { fetchComponents, Component } from '../../../../network_resource_fetcher/cat/FetchComponents'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
-export default function ComponentsSelector({ setTitle }: { setTitle: string }) {
-
+export default function ComponentsSelector() {
+    const setTitle = useSetTitle()
     const tentsNode = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.tents)
     const fetchArgs = [paramOrDefault(tentsNode)]
     const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.components)

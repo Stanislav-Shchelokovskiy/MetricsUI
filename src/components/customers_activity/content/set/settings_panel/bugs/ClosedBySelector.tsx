@@ -3,9 +3,11 @@ import { changeClosedBy, changeClosedByInclude } from '../../../../store/actions
 import { SetState } from '../../../../store/sets_reducer/Interfaces'
 import { EmpSelector } from '../employees/EmployeesSelector'
 import { ClosedBugsSelectorWrapper } from './BugsSelectors'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function ClosedBySelector({ setTitle }: { setTitle: string }) {
+export default function ClosedBySelector() {
+    const setTitle = useSetTitle()
     const valueSelector = useCallback((x: SetState | undefined) => x?.closedBy, [])
     const tribesSelector = useCallback((x: SetState | undefined) => x?.tribes, [])
     return <ClosedBugsSelectorWrapper

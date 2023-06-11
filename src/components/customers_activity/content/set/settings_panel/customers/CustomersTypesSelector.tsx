@@ -4,9 +4,11 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeCustomersTypes, changeCustomersTypesInclude } from '../../../../store/actions/Customers'
 import { fetchLicenseStatuses, LicenseStatus } from '../../../../network_resource_fetcher/customers/FetchLicenseStatuses'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function CustomersTypesSelector({ setTitle }: { setTitle: string }) {
+export default function CustomersTypesSelector() {
+    const setTitle = useSetTitle()
     const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.customersTypes)
     const onValueChange = (allValues: Array<LicenseStatus>, values: Array<number>) => changeCustomersTypes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeCustomersTypesInclude({ stateId: setTitle, data: include })

@@ -3,9 +3,11 @@ import { changeFixedBy, changeFixedByInclude } from '../../../../store/actions/B
 import { SetState } from '../../../../store/sets_reducer/Interfaces'
 import { EmpSelector } from '../employees/EmployeesSelector'
 import BugsSelectorWrapper from './BugsSelectors'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function FixedBySelector({ setTitle }: { setTitle: string }) {
+export default function FixedBySelector() {
+    const setTitle = useSetTitle()
     const valueSelector = useCallback((x: SetState | undefined) => x?.fixedBy, [])
     const tribesSelector = useCallback((x: SetState | undefined) => x?.tribes, [])
     return <BugsSelectorWrapper

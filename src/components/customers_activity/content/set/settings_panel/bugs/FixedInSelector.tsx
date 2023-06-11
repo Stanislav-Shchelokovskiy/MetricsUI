@@ -6,9 +6,11 @@ import { Version } from '../../../../network_resource_fetcher/tickets/FetchVersi
 import { fetchFixedInVersions } from '../../../../network_resource_fetcher/bugs/FetchFixedInVersions'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import BugsSelectorWrapper from './BugsSelectors'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function FixedInSelector({ setTitle }: { setTitle: string }) {
+export default function FixedInSelector() {
+    const setTitle = useSetTitle()
     const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.fixedIn)
     const onValueChange = (allValues: Array<Version>, values: Array<string>) => changeFixedIn({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeFixedInInclude({ stateId: setTitle, data: include })

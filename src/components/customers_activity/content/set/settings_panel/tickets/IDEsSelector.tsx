@@ -4,9 +4,11 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeIDEs, changeIDEsInclude } from '../../../../store/actions/Tickets'
 import { fetchIDEs, IDE } from '../../../../network_resource_fetcher/tickets/FetchIDEs'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function IDEsSelector({ setTitle }: { setTitle: string }) {
+export default function IDEsSelector() {
+    const setTitle = useSetTitle()
     const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.ides)
     const onValueChange = (allValues: Array<IDE>, values: Array<string>) => changeIDEs({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeIDEsInclude({ stateId: setTitle, data: include })

@@ -4,9 +4,11 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeOperatingSystems, changeOperatingSystemsInclude } from '../../../../store/actions/Tickets'
 import { fetchOperatingSystems, OS } from '../../../../network_resource_fetcher/tickets/FetchOperatingSystems'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function OsSelector({ setTitle }: { setTitle: string }) {
+export default function OsSelector() {
+    const setTitle = useSetTitle()
     const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.operatingSystems)
     const onValueChange = (allValues: Array<OS>, values: Array<string>) => changeOperatingSystems({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeOperatingSystemsInclude({ stateId: setTitle, data: include })

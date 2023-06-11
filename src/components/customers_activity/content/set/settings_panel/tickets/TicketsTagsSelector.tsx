@@ -4,9 +4,11 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeTicketsTags, changeTicketsTagsInclude } from '../../../../store/actions/Tickets'
 import { fetchTicketsTags, TicketsTag } from '../../../../network_resource_fetcher/tickets/FetchTicketsTags'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function TicketsTagsSelector({ setTitle }: { setTitle: string }) {
+export default function TicketsTagsSelector() {
+    const setTitle = useSetTitle()
     const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.ticketsTags)
     const onValueChange = (allValues: Array<TicketsTag>, values: Array<string>) => changeTicketsTags({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTicketsTagsInclude({ stateId: setTitle, data: include })

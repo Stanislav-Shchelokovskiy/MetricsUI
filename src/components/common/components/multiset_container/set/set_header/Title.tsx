@@ -3,9 +3,11 @@ import Button from '../../../Button'
 import InputBox from '../../../InputBox'
 import { useDispatch } from 'react-redux'
 import { changeSetTitle } from '../../../../store/multiset_container/Actions'
+import { useSetTitle } from '../SetContext'
 
 
-export default function Title({ setTitle }: { setTitle: string }) {
+export default function Title() {
+    const setTitle = useSetTitle()
     return (
         <div className='SetHeaderTitle'>
             {setTitle}

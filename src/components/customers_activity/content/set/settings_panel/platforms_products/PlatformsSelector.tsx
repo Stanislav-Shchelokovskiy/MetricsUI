@@ -5,9 +5,11 @@ import { CustomersActivityStore } from '../../../../store/Store'
 import { changePlatforms, changePlatformsInclude } from '../../../../store/actions/PlatformsProducts'
 import { fetchPlatforms, Platform } from '../../../../network_resource_fetcher/platforms_products/FetchPlatforms'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function PlatformsSelector({ setTitle }: { setTitle: string }) {
+export default function PlatformsSelector() {
+    const setTitle = useSetTitle()
     const tentsNode = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.tents)
     const fetchArgs = [paramOrDefault(tentsNode)]
 

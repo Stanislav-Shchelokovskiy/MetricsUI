@@ -5,9 +5,11 @@ import { CustomersActivityStore } from '../../../../store/Store'
 import { changeFeatures, changeFeaturesInclude } from '../../../../store/actions/CAT'
 import { fetchFeatures, Feature } from '../../../../network_resource_fetcher/cat/FetchFeatures'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function FeaturesSelector({ setTitle }: { setTitle: string }) {
+export default function FeaturesSelector() {
+    const setTitle = useSetTitle()
     const tentsNode = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.tents)
     const componentsNode = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.components)
     const fetchArgs = [paramOrDefault(tentsNode), paramOrDefault(componentsNode)]

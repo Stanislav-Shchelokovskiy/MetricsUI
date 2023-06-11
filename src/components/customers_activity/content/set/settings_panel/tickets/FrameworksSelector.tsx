@@ -4,9 +4,11 @@ import MultiOptionSelector from '../../../../../common/components/MultiOptionSel
 import { CustomersActivityStore } from '../../../../store/Store'
 import { changeFrameworks, changeFrameworksInclude } from '../../../../store/actions/Tickets'
 import { FetchFrameworks, Framework } from '../../../../network_resource_fetcher/tickets/FetchFrameworks'
+import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function FrameworksSelector({ setTitle }: { setTitle: string }) {
+export default function FrameworksSelector() {
+    const setTitle = useSetTitle()
     const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.frameworks)
     const onValueChange = (allValues: Array<Framework>, values: Array<string>) => changeFrameworks({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeFrameworksInclude({ stateId: setTitle, data: include })

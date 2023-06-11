@@ -23,7 +23,7 @@ interface Context {
     graph: GraphContext
 }
 
-const MultisetContainerContext = createContext<Context>(null!)
+export const MultisetContainerContext = createContext<Context>(null!)
 
 export function useMultisetContainerContext() {
     return useContext(MultisetContainerContext)

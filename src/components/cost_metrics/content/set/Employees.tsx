@@ -6,8 +6,10 @@ import { changeEmployees, changeEmployeesInclude } from '../../../common/store/m
 import { fetchEmployees, Employee } from '../../network_resource_fetcher/Employees'
 import { empTribesSelector, empPositionsSelector, employeesSelector } from '../../store/sets/Selectors'
 import { paramOrDefault } from '../../../common/store/multiset_container/Utils'
+import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
 
-export default function EmployeesSelector({ setTitle }: { setTitle: string }) {
+export default function EmployeesSelector() {
+    const setTitle = useSetTitle()
     const value = useSelector((state: CostMetricsStore) => employeesSelector(state, setTitle))
     const tribes = useSelector((state: CostMetricsStore) => empTribesSelector(state, setTitle))
     const positions = useSelector((state: CostMetricsStore) => empPositionsSelector(state, setTitle))

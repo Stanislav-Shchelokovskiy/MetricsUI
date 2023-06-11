@@ -5,9 +5,11 @@ import { CustomersActivityStore } from '../../../store/Store'
 import { fetchTents } from '../../../../common/network_resource_fetcher/FetchTents'
 import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
 import { changeTents, changeTentsInclude } from '../../../store/actions/SetCommon'
+import { useSetTitle } from '../../../../common/components/multiset_container/set/SetContext'
 
 
-export default function TentsSelector({ setTitle }: { setTitle: string }) {
+export default function TentsSelector() {
+    const setTitle = useSetTitle()
     const value = useSelector((store: CustomersActivityStore) => store.sets.find(x => x.title === setTitle)?.tents)
     const onValueChange = (allValues: Array<Tribe>, values: Array<string>) => changeTents({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTentsInclude({ stateId: setTitle, data: include })
