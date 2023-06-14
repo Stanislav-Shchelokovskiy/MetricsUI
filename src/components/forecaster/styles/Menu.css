@@ -1,8 +1,0 @@
-.ForecasterMenu {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: stretch;
-    /* background-color: rgb(182, 187, 103); */
-    gap: 10px;
-}
