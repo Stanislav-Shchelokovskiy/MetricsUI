@@ -1,6 +1,6 @@
 import React from 'react'
 import OptionSelector from '../../../common/components/OptionSelector'
-import { fetchIncomeTypes } from '../../network_resource_fetcher/FetchForecastSettingsValues'
+import { fetchIncomeTypes } from '../../network_resource_fetcher/ForecastSettingsValues'
 import { changeIncomeType } from '../../store/forecaster/Actions'
 import { incomeTypeSelector } from '../../store/forecaster/Selectors'
 

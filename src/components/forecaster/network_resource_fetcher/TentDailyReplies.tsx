@@ -46,7 +46,7 @@ function convert(rawDailyTribeReplies: Array<RawDailyTentReplies> | undefined): 
     return EMPTY_DAILY_TENT_REPLIES
 }
 
-export async function FetchDailyTentReplies(tile: number, tentId: string, forecastHorizon: string): Promise<FetchResult<Array<DailyTentReplies>>> {
+export async function fetchDailyTentReplies(tile: number, tentId: string, forecastHorizon: string): Promise<FetchResult<Array<DailyTentReplies>>> {
     return fetchConvert(convert,
         `${FORECASTER_END_POINT}/tent_replies?` +
         new URLSearchParams({

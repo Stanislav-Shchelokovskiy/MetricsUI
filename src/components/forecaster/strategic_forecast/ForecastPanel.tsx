@@ -6,8 +6,8 @@ import ForecastMissing from '../utils/ForecastMissing'
 import GetColor from '../utils/ColorPalette'
 import FetchResult from '../../common/Interfaces'
 import { legendClick } from '../store/strategic_forecast/Actions'
-import { DailyTentReplies, FetchDailyTentReplies, EMPTY_DAILY_TENT_REPLIES } from '../network_resource_fetcher/FetchTentDailyReplies'
-import { IncomeForecast, FetchTentIncomeForecast, EMPTY_INCOME_FORECAST } from '../network_resource_fetcher/FetchTentIncomeForecast'
+import { DailyTentReplies, fetchDailyTentReplies, EMPTY_DAILY_TENT_REPLIES } from '../network_resource_fetcher/TentDailyReplies'
+import { IncomeForecast, fetchTentIncomeForecast, EMPTY_INCOME_FORECAST } from '../network_resource_fetcher/TentIncomeForecast'
 
 
 export interface ForecastPanelState {
@@ -210,14 +210,14 @@ function Graph({ state }: { state: ForecastPanelState }) {
         (async () => {
             if (state.forecastHorizon === '')
                 return
-            const fetchedIncomeForecast: FetchResult<IncomeForecast> = await FetchTentIncomeForecast(state.tentId, state.forecastHorizon, state.incomeType)
+            const fetchedIncomeForecast: FetchResult<IncomeForecast> = await fetchTentIncomeForecast(state.tentId, state.forecastHorizon, state.incomeType)
             updateGraphState({
                 type: FETCH_INCOME_FORECAST,
                 ...initialGraphState,
                 incomeForecastLoaded: fetchedIncomeForecast.success,
                 incomeForecast: fetchedIncomeForecast.data,
             })
-            const fetchedDailyTribeReplies: FetchResult<Array<DailyTentReplies>> = await FetchDailyTentReplies(state.tile, state.tentId, state.forecastHorizon)
+            const fetchedDailyTribeReplies: FetchResult<Array<DailyTentReplies>> = await fetchDailyTentReplies(state.tile, state.tentId, state.forecastHorizon)
             updateGraphState({
                 type: FETCH_DAILY_TRIBE_REPLIES,
                 ...initialGraphState,

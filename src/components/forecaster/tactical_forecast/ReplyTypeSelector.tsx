@@ -2,7 +2,7 @@ import React from 'react'
 import OptionSelector from '../../common/components/OptionSelector'
 import { ForecasterStore } from '../store/Store'
 import { changeReplyType } from '../store/tactical_forecast/Actions'
-import { fetchReplyTypes } from '../network_resource_fetcher/FetchForecastSettingsValues'
+import { fetchReplyTypes } from '../network_resource_fetcher/ForecastSettingsValues'
 import { useTentId } from '../tent/TentContext'
 import { replyTypeSelector } from '../store/tactical_forecast/Selectors'
 

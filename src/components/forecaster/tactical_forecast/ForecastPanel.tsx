@@ -11,7 +11,7 @@ import {
     HourlyTacticalForecast,
     EMPTY_TACTICAL_FORECAST,
     fetchTacticalForecast
-} from '../network_resource_fetcher/FetchTacticalForecast'
+} from '../network_resource_fetcher/TacticalForecast'
 import { useTentId } from '../tent/TentContext'
 
 export default function ForecastPanel() {

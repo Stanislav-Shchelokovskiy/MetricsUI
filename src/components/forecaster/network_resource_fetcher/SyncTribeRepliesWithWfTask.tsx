@@ -34,6 +34,6 @@ function convertStarted(taskStatus: SyncTentRepliesWithWfTasks | undefined): Syn
     return { started: false }
 }
 
-export async function FetchSyncTentRepliesWithWfTasksStarted(): Promise<FetchResult<SyncTentRepliesWithWfTasks>> {
+export async function fetchSyncTentRepliesWithWfTasksStarted(): Promise<FetchResult<SyncTentRepliesWithWfTasks>> {
     return fetchConvert(convertStarted, `${FORECASTER_END_POINT}/sync_tent_replies_with_wf_tasks_started`)
 }

@@ -5,10 +5,10 @@ import FetchResult from '../../../common/Interfaces'
 import { changeLastUpdated } from '../../store/forecaster/Actions'
 import { useDispatch } from 'react-redux'
 import {
-    FetchSyncTentRepliesWithWfTasksStarted,
+    fetchSyncTentRepliesWithWfTasksStarted,
     SyncTentRepliesWithWfTasks,
     FetchApplySyncTentRepliesWithWfTask,
-} from '../../network_resource_fetcher/FetchSyncTribeRepliesWithWfTask'
+} from '../../network_resource_fetcher/SyncTribeRepliesWithWfTask'
 
 
 export default function UpdateTentRepliesButton() {
@@ -19,7 +19,7 @@ export default function UpdateTentRepliesButton() {
         setTaskStarted(true);
 
         (async () => {
-            const fetchTaskStarted: FetchResult<SyncTentRepliesWithWfTasks> = await FetchSyncTentRepliesWithWfTasksStarted();
+            const fetchTaskStarted: FetchResult<SyncTentRepliesWithWfTasks> = await fetchSyncTentRepliesWithWfTasksStarted();
             if (fetchTaskStarted.success && !fetchTaskStarted.data.started) {
                 await FetchApplySyncTentRepliesWithWfTask()
             }
@@ -27,7 +27,7 @@ export default function UpdateTentRepliesButton() {
 
         const intervalId = setInterval(() => {
             (async () => {
-                const fetchResult: FetchResult<SyncTentRepliesWithWfTasks> = await FetchSyncTentRepliesWithWfTasksStarted();
+                const fetchResult: FetchResult<SyncTentRepliesWithWfTasks> = await fetchSyncTentRepliesWithWfTasksStarted();
                 if (!fetchResult.success || !fetchResult.data.started) {
                     setTaskStarted(false);
                     dispatch(changeLastUpdated())
