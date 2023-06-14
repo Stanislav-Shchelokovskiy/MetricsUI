@@ -5,9 +5,9 @@ import { Data as GraphData } from 'plotly.js'
 import ForecastMissing from '../utils/ForecastMissing'
 import GetColor from '../utils/ColorPalette'
 import FetchResult from '../../common/Interfaces'
-import { IncomeForecast, FetchTentIncomeForecast, EMPTY_INCOME_FORECAST } from '../network_resource_fetcher/FetchTentIncomeForecast'
-import { DailyTentReplies, FetchDailyTentReplies, EMPTY_DAILY_TENT_REPLIES } from '../network_resource_fetcher/FetchTentDailyReplies'
 import { legendClick } from '../store/strategic_forecast/Actions'
+import { DailyTentReplies, FetchDailyTentReplies, EMPTY_DAILY_TENT_REPLIES } from '../network_resource_fetcher/FetchTentDailyReplies'
+import { IncomeForecast, FetchTentIncomeForecast, EMPTY_INCOME_FORECAST } from '../network_resource_fetcher/FetchTentIncomeForecast'
 
 
 export interface ForecastPanelState {
