@@ -1,12 +1,12 @@
 import React from 'react'
-import UpdateTribeRepliesButton from './UpdateTribeRepliesButton'
+import UpdateTentRepliesButton from './UpdateTribeRepliesButton'
 import GoHomeButton from '../../../common/components/HomeButton'
 
 
 function CommandPanel() {
     return (
         <div className='ForecasterCommandPanel'>
-            <UpdateTribeRepliesButton />
+            <UpdateTentRepliesButton />
             <GoHomeButton className='ForecasterGoHomeButton' />
         </div>
     )

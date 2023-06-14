@@ -1,4 +1,4 @@
-.Tribe {
+.Tent {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
@@ -6,6 +6,6 @@
     /* background-color: orange; */
 }
 
-.TribeHeader {
+.TentHeader {
     padding-left: 10px;
 }

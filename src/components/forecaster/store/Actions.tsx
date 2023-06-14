@@ -10,10 +10,10 @@ export const changeIncomeType = (incomeType: string | undefined): PayloadAction<
     }
 }
 
-export const CHANGE_SELECTED_TRIBES = 'forecaster/change_selected_tribes'
-export const changeSelectedTribes = (selectedTribes: Array<Tribe>): PayloadAction<Array<Tribe>> => {
+export const CHANGE_SELECTED_TENTS = 'forecaster/change_selected_tents'
+export const changeSelectedTents = (selectedTribes: Array<Tribe>): PayloadAction<Array<Tribe>> => {
     return {
-        type: CHANGE_SELECTED_TRIBES,
+        type: CHANGE_SELECTED_TENTS,
         payload: selectedTribes
     }
 }

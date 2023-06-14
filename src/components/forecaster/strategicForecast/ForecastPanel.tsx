@@ -4,14 +4,14 @@ import { Data as GraphData } from 'plotly.js'
 import ForecastMissing from '../utils/ForecastMissing'
 import GetColor from '../utils/ColorPalette'
 import FetchResult from '../../common/Interfaces'
-import { IncomeForecast, FetchTribeIncomeForecast, EMPTY_INCOME_FORECAST } from '../network_resource_fetcher/FetchTribeIncomeForecast'
-import { DailyTribeReplies, FetchDailyTribeReplies, EMPTY_DAILY_TRIBE_REPLIES } from '../network_resource_fetcher/FetchTribeDailyReplies'
+import { IncomeForecast, FetchTentIncomeForecast, EMPTY_INCOME_FORECAST } from '../network_resource_fetcher/FetchTentIncomeForecast'
+import { DailyTribeReplies, FetchDailyTentReplies, EMPTY_DAILY_TENT_REPLIES } from '../network_resource_fetcher/FetchTentDailyReplies'
 import { useForecasterDispatch } from '../store/Store'
 import { legendClick } from '../store/Actions'
 
 
 export interface ForecastPanelState {
-    tribeId: string
+    tentId: string
     forecastHorizon: string
     incomeType: string
     tile: number
@@ -29,7 +29,7 @@ function ForecastPanel({ state }: { state: ForecastPanelState }) {
 }
 
 function areEqual(prevProps: { state: ForecastPanelState }, nextProps: { state: ForecastPanelState }) {
-    const res = (prevProps.state.tribeId === nextProps.state.tribeId) &&
+    const res = (prevProps.state.tentId === nextProps.state.tentId) &&
         (prevProps.state.forecastHorizon === nextProps.state.forecastHorizon) &&
         (prevProps.state.incomeType === nextProps.state.incomeType) &&
         (prevProps.state.tile === nextProps.state.tile) &&
@@ -95,21 +95,21 @@ function getScatters(state: GraphState): Array<GraphData> {
 
 
 function getBars(state: GraphState, positionsFilter: Array<string>, hiddenLegends: Array<string>): Array<GraphData> {
-    if (state.tribeRepliesLoaded) {
+    if (state.tentRepliesLoaded) {
         const data: Array<GraphData> = []
-        for (const user of state.tribeReplies) {
-            const visible = positionsFilter.length === 0 && hiddenLegends.includes(user.user_name) ? 'legendonly' : undefined
+        for (const user of state.tentReplies) {
+            const visible = positionsFilter.length === 0 && hiddenLegends.includes(user.name) ? 'legendonly' : undefined
             data.push(
                 {
                     type: 'bar',
                     name: user.user_display_name,
                     x: user.reply_date,
-                    y: user.iteration_count,
+                    y: user.iterations,
                     opacity: 0.6,
-                    hovertext: user.user_name,
-                    hovertemplate: `<b>${user.user_name}</b><br>Date: %{x}<br>Count: %{y}<br><extra></extra>`,
+                    hovertext: user.name,
+                    hovertemplate: `<b>${user.name}</b><br>Date: %{x}<br>Count: %{y}<br><extra></extra>`,
                     visible: visible || getBarVisibility(
-                        user.tribe_belonging_status,
+                        user.tent_belonging_status,
                         user.position_name,
                         positionsFilter,
                     ),
@@ -143,23 +143,23 @@ function getBarVisibility(
 interface GraphState {
     incomeForecastLoaded: boolean
     incomeForecast: IncomeForecast
-    tribeRepliesLoaded: boolean
-    tribeReplies: Array<DailyTribeReplies>
+    tentRepliesLoaded: boolean
+    tentReplies: Array<DailyTribeReplies>
 }
 
 const initialGraphState: GraphState = {
     incomeForecastLoaded: false,
     incomeForecast: EMPTY_INCOME_FORECAST,
-    tribeRepliesLoaded: false,
-    tribeReplies: EMPTY_DAILY_TRIBE_REPLIES,
+    tentRepliesLoaded: false,
+    tentReplies: EMPTY_DAILY_TENT_REPLIES,
 }
 
 interface GraphAction {
     type: string
     incomeForecastLoaded: boolean
     incomeForecast: IncomeForecast
-    tribeRepliesLoaded: boolean
-    tribeReplies: Array<DailyTribeReplies>
+    tentRepliesLoaded: boolean
+    tentReplies: Array<DailyTribeReplies>
 }
 
 const FETCH_INCOME_FORECAST = 'fetchIncomeForecast'
@@ -179,14 +179,14 @@ function graphStateReducer(state: GraphState, action: GraphAction): GraphState {
             }
             return state
         case FETCH_DAILY_TRIBE_REPLIES:
-            if (state.tribeReplies === action.tribeReplies) {
+            if (state.tentReplies === action.tentReplies) {
                 return state;
             }
-            if (action.tribeRepliesLoaded) {
+            if (action.tentRepliesLoaded) {
                 return {
                     ...state,
-                    tribeRepliesLoaded: action.tribeRepliesLoaded,
-                    tribeReplies: action.tribeReplies
+                    tentRepliesLoaded: action.tentRepliesLoaded,
+                    tentReplies: action.tentReplies
                 }
             }
             return state
@@ -210,34 +210,34 @@ function Graph({ state }: { state: ForecastPanelState }) {
         (async () => {
             if (state.forecastHorizon === '')
                 return
-            const fetchedIncomeForecast: FetchResult<IncomeForecast> = await FetchTribeIncomeForecast(state.tribeId, state.forecastHorizon, state.incomeType)
+            const fetchedIncomeForecast: FetchResult<IncomeForecast> = await FetchTentIncomeForecast(state.tentId, state.forecastHorizon, state.incomeType)
             dispatch({
                 type: FETCH_INCOME_FORECAST,
                 ...initialGraphState,
                 incomeForecastLoaded: fetchedIncomeForecast.success,
                 incomeForecast: fetchedIncomeForecast.data,
             })
-            const fetchedDailyTribeReplies: FetchResult<Array<DailyTribeReplies>> = await FetchDailyTribeReplies(state.tile, state.tribeId, state.forecastHorizon)
+            const fetchedDailyTribeReplies: FetchResult<Array<DailyTribeReplies>> = await FetchDailyTentReplies(state.tile, state.tentId, state.forecastHorizon)
             dispatch({
                 type: FETCH_DAILY_TRIBE_REPLIES,
                 ...initialGraphState,
-                tribeRepliesLoaded: fetchedDailyTribeReplies.success,
-                tribeReplies: fetchedDailyTribeReplies.data,
+                tentRepliesLoaded: fetchedDailyTribeReplies.success,
+                tentReplies: fetchedDailyTribeReplies.data,
             })
         })()
-    }, [state.tribeId, state.forecastHorizon, state.incomeType, state.tile, state.lastUpdated])
+    }, [state.tentId, state.forecastHorizon, state.incomeType, state.tile, state.lastUpdated])
 
     const forecasterDispatch = useForecasterDispatch()
     const onLegendClick = useCallback(({ data }: LegendClickObject) => {
         const timerId = setTimeout(() => {
             const legendsToStore = (data.filter(legend => legend.type === 'bar' && legend.visible === 'legendonly').map(legend => legend.hovertext) as Array<string>)
-            forecasterDispatch(legendClick(state.tribeId, legendsToStore))
+            forecasterDispatch(legendClick(state.tentId, legendsToStore))
             clearTimeout(timerId)
         }, 500)
         return true
-    }, [state.tribeId, forecasterDispatch])
+    }, [state.tentId, forecasterDispatch])
 
-    if (graphState.incomeForecastLoaded || graphState.tribeRepliesLoaded) {
+    if (graphState.incomeForecastLoaded || graphState.tentRepliesLoaded) {
 
         const data: Array<GraphData> = []
         data.push(...getScatters(graphState))

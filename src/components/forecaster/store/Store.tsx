@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { loadState, saveState } from '../../common/LocalStorage'
 import { ForecasterReducer } from './ForecasterReducer'
-import { ForecasterItemsReducer, TacticalForecastReducer, StrategicForecastReducer } from './TribeContainerReducer'
+import { ForecasterItemsReducer, TacticalForecastReducer, StrategicForecastReducer } from './TentContainerReducer'
 
 
 const currentStateKey = 'current_forecaster_state_v1'

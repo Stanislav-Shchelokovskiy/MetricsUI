@@ -5,13 +5,13 @@ import FetchResult from '../../../common/Interfaces'
 import { changeLastUpdated } from '../../store/Actions'
 import { useForecasterDispatch } from '../../store/Store'
 import {
-    FetchSyncTribeRepliesWithWfTasksStarted,
-    SyncTribeRepliesWithWfTasks,
-    FetchApplySyncTribeRepliesWithWfTask,
+    FetchSyncTentRepliesWithWfTasksStarted,
+    SyncTentRepliesWithWfTasks,
+    FetchApplySyncTentRepliesWithWfTask,
 } from '../../network_resource_fetcher/FetchSyncTribeRepliesWithWfTask'
 
 
-export default function UpdateTribeRepliesButton() {
+export default function UpdateTentRepliesButton() {
     const [taskStarted, setTaskStarted] = useState<boolean>(false);
     const dispatch = useForecasterDispatch()
 
@@ -19,15 +19,15 @@ export default function UpdateTribeRepliesButton() {
         setTaskStarted(true);
 
         (async () => {
-            const fetchTaskStarted: FetchResult<SyncTribeRepliesWithWfTasks> = await FetchSyncTribeRepliesWithWfTasksStarted();
+            const fetchTaskStarted: FetchResult<SyncTentRepliesWithWfTasks> = await FetchSyncTentRepliesWithWfTasksStarted();
             if (fetchTaskStarted.success && !fetchTaskStarted.data.started) {
-                await FetchApplySyncTribeRepliesWithWfTask()
+                await FetchApplySyncTentRepliesWithWfTask()
             }
         })();
 
         const intervalId = setInterval(() => {
             (async () => {
-                const fetchResult: FetchResult<SyncTribeRepliesWithWfTasks> = await FetchSyncTribeRepliesWithWfTasksStarted();
+                const fetchResult: FetchResult<SyncTentRepliesWithWfTasks> = await FetchSyncTentRepliesWithWfTasksStarted();
                 if (!fetchResult.success || !fetchResult.data.started) {
                     setTaskStarted(false);
                     dispatch(changeLastUpdated())

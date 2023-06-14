@@ -5,10 +5,10 @@ import { fetchTiles } from '../../network_resource_fetcher/FetchForecastSettings
 import { changeTile } from '../../store/Actions'
 
 
-export default function TilesSelector({ tribeId, }: { tribeId: string }) {
-    const valueSelector = (store: ForecasterStore) => store.strategicForecast.find(x => x.tribeId === tribeId)?.tile
+export default function TilesSelector({ tentId }: { tentId: string }) {
+    const valueSelector = (store: ForecasterStore) => store.strategicForecast.find(x => x.tentId === tentId)?.tile
     const defaultValueSelector = (values: Array<number>) => values[values.length % 2]
-    const onValueChange = (value: number | undefined) => changeTile(tribeId, value)
+    const onValueChange = (value: number | undefined) => changeTile(tentId, value)
 
     return <OptionSelector<number, number>
         className=''

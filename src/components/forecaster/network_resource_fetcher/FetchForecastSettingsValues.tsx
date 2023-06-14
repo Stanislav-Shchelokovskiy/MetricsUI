@@ -23,17 +23,17 @@ export const EMPTY_FORECATER_SETTINGS_VALUES: FetchResult<ForecasterSettingsValu
 }
 
 export async function fetchIncomeTypes(): Promise<FetchResult<Array<string>>> {
-    return fetchArray(`${FORECASTER_END_POINT}/get_income_types`)
+    return fetchArray(`${FORECASTER_END_POINT}/income_types`)
 }
 
 export async function fetchReplyTypes(): Promise<FetchResult<Array<string>>> {
-    return fetchArray(`${FORECASTER_END_POINT}/get_reply_type_filters`)
+    return fetchArray(`${FORECASTER_END_POINT}/reply_type_filters`)
 }
 
 export async function fetchForecastHorizons(): Promise<FetchResult<Array<string>>> {
-    return fetchArray(`${FORECASTER_END_POINT}/get_daily_horizons`)
+    return fetchArray(`${FORECASTER_END_POINT}/daily_horizons`)
 }
 
 export async function fetchTiles(): Promise<FetchResult<Array<number>>> {
-    return fetchArray(`${FORECASTER_END_POINT}/get_tiles`)
+    return fetchArray(`${FORECASTER_END_POINT}/tiles`)
 }

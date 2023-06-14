@@ -5,12 +5,12 @@ import TilesSelector from './TilesSelector'
 
 
 const ForecastSettingsPanel = React.memo(
-    function ForecastSettingsPanel({ tribeId, }: { tribeId: string }) {
+    function ForecastSettingsPanel({ tentId }: { tentId: string }) {
         return (
             <div className='ForecastHeader'>
-                <ForecastHorizonSelector tribeId={tribeId} />
-                <TilesSelector tribeId={tribeId} />
-                <PositionsSelector tribeId={tribeId} />
+                <ForecastHorizonSelector tentId={tentId} />
+                <TilesSelector tentId={tentId} />
+                <PositionsSelector tentId={tentId} />
             </div>
         )
     })

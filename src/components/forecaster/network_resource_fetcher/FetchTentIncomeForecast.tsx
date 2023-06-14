@@ -38,11 +38,11 @@ function convert(tribeIncomeForecast: Array<RawIncomeForecast> | undefined): Inc
     return EMPTY_INCOME_FORECAST
 }
 
-export async function FetchTribeIncomeForecast(tribeId: string, forecastHorizon: string, incomeType: string): Promise<FetchResult<IncomeForecast>> {
+export async function FetchTentIncomeForecast(tentId: string, forecastHorizon: string, incomeType: string): Promise<FetchResult<IncomeForecast>> {
     return fetchConvert(convert,
-        `${FORECASTER_END_POINT}/get_forecast?` +
+        `${FORECASTER_END_POINT}/tent_income_forecast?` +
         new URLSearchParams({
-            tribe_id: tribeId,
+            tent_id: tentId,
             horizon: forecastHorizon,
             income_type: incomeType
         })

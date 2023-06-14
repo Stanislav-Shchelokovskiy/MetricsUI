@@ -3,10 +3,10 @@ import ReplyTypeSelector from './ReplyTypeSelector'
 
 
 const ForecastSettingsPanel = React.memo(
-    function ForecastSettingsPanel({ tribeId }: { tribeId: string }) {
+    function ForecastSettingsPanel({ tentId }: { tentId: string }) {
         return (
             <div className='ForecastHeader'>
-                <ReplyTypeSelector tribeId={tribeId} />
+                <ReplyTypeSelector tentId={tentId} />
             </div>
         )
     }

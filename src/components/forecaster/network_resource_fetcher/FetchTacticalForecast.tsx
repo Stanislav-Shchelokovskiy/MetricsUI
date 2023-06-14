@@ -7,8 +7,8 @@ interface RawTacticalForecast {
     yhat_rmse_upper: number
     yhat: number
     yhat_rmse_lower: number
-    iteration_count: number
-    upper_replies: number
+    iterations: number
+    upper_iterations: number
 }
 
 export interface HourlyTacticalForecast {
@@ -16,8 +16,8 @@ export interface HourlyTacticalForecast {
     yhat_rmse_upper: Array<number>
     yhat: Array<number>
     yhat_rmse_lower: Array<number>
-    iteration_count: Array<number>
-    upper_replies: Array<number>
+    iterations: Array<number>
+    upper_iterations: Array<number>
 }
 
 export const EMPTY_TACTICAL_FORECAST = {
@@ -25,8 +25,8 @@ export const EMPTY_TACTICAL_FORECAST = {
     yhat_rmse_upper: Array<number>(),
     yhat: Array<number>(),
     yhat_rmse_lower: Array<number>(),
-    iteration_count: Array<number>(),
-    upper_replies: Array<number>()
+    iterations: Array<number>(),
+    upper_iterations: Array<number>()
 }
 
 function convert(rawTacticalForecast: Array<RawTacticalForecast> | undefined): HourlyTacticalForecast {
@@ -36,16 +36,16 @@ function convert(rawTacticalForecast: Array<RawTacticalForecast> | undefined): H
             yhat_rmse_upper: rawTacticalForecast.map(forecast => forecast.yhat_rmse_upper),
             yhat: rawTacticalForecast.map(forecast => forecast.yhat),
             yhat_rmse_lower: rawTacticalForecast.map(forecast => forecast.yhat_rmse_lower),
-            iteration_count: rawTacticalForecast.map(forecast => forecast.iteration_count),
-            upper_replies: rawTacticalForecast.map(forecast => forecast.upper_replies)
+            iterations: rawTacticalForecast.map(forecast => forecast.iterations),
+            upper_iterations: rawTacticalForecast.map(forecast => forecast.upper_iterations)
         }
     return EMPTY_TACTICAL_FORECAST
 }
-export async function fetchTacticalForecast(incomeType: string, tribeId: string, replyType: string,): Promise<FetchResult<HourlyTacticalForecast>> {
+export async function fetchTacticalForecast(incomeType: string, tentId: string, replyType: string,): Promise<FetchResult<HourlyTacticalForecast>> {
     return fetchConvert(convert,
-        `${FORECASTER_END_POINT}/get_tactical_forecast?` + new URLSearchParams({
+        `${FORECASTER_END_POINT}/tactical_forecast?` + new URLSearchParams({
             income_type: incomeType,
-            tribe_id: tribeId,
+            tent_id: tentId,
             reply_type_filter: replyType
         })
     )

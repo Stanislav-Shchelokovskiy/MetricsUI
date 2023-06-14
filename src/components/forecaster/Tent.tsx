@@ -3,19 +3,19 @@ import Accordion, { Item } from 'devextreme-react/accordion'
 import { Tribe } from '../common/Interfaces'
 import { useForecasterSelector, ForecasterStore, useForecasterDispatch } from './store/Store'
 import { selectForecastItems } from './store/Actions'
-import { ForecasterItemsState, INITIAL_FORECAST_ITEMS_EXPANDED_STATE } from './store/TribeContainerReducer'
+import { ForecasterItemsState, INITIAL_FORECAST_ITEMS_EXPANDED_STATE } from './store/TentContainerReducer'
 import TacticalForecast from './tacticalForecast/TacticalForecast'
 import StrategicForecast from './strategicForecast/StrategicForecast'
 
 
 export interface ForecastMainParams {
-    tribeID: string
+    tentId: string
     incomeType: string
     lastUpdate: number
 }
 
 export interface TribeContainerState {
-    tribe: Tribe
+    tent: Tribe
     incomeType: string
     replyTypes: Array<string>
     defaultReplyType: string
@@ -27,17 +27,17 @@ export interface TribeContainerState {
 }
 
 
-export default function TribeContainer({ tribe }: { tribe: Tribe }) {
-    const forecasterItemsState: ForecasterItemsState = useForecasterSelector((state: ForecasterStore) => state.selectedForecastItems.find(x => x.tribeId === tribe.id)) || INITIAL_FORECAST_ITEMS_EXPANDED_STATE
+export default function TentContainer({ tent }: { tent: Tribe }) {
+    const forecasterItemsState: ForecasterItemsState = useForecasterSelector((state: ForecasterStore) => state.selectedForecastItems.find(x => x.tentId === tent.id)) || INITIAL_FORECAST_ITEMS_EXPANDED_STATE
 
     const dispatch = useForecasterDispatch()
     const onSelectedItemsChange = useCallback((e: any) => {
-        dispatch(selectForecastItems(tribe.id, e))
-    }, [dispatch, tribe.id])
+        dispatch(selectForecastItems(tent.id, e))
+    }, [dispatch, tent.id])
 
     return (
-        <div className='Tribe'>
-            <Header tribeName={tribe.name} />
+        <div className='Tent'>
+            <Header tentName={tent.name} />
             <Accordion
                 id='tribe_accordion'
                 collapsible={true}
@@ -48,16 +48,16 @@ export default function TribeContainer({ tribe }: { tribe: Tribe }) {
                 onSelectedItemKeysChange={onSelectedItemsChange}
             >
                 <Item title='Tactical forecast'>
-                    <TacticalForecast tribeId={tribe.id} />
+                    <TacticalForecast tentId={tent.id} />
                 </Item>
                 <Item title='Strategic forecast' >
-                    <StrategicForecast tribeId={tribe.id} />
+                    <StrategicForecast tentId={tent.id} />
                 </Item>
             </Accordion>
         </div>
     )
 }
 
-function Header({ tribeName }: { tribeName: string }) {
-    return <h3 className='TribeHeader'> {tribeName}</h3 >
+function Header({ tentName }: { tentName: string }) {
+    return <h3 className='TentHeader'> {tentName}</h3 >
 }

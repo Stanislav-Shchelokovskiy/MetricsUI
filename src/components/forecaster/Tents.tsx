@@ -2,10 +2,10 @@ import React from 'react'
 import ScrollView from 'devextreme-react/scroll-view'
 import { Tribe } from '../common/Interfaces'
 import { useForecasterSelector, ForecasterStore } from './store/Store'
-import TribeContainer from './Tribe'
+import TentContainer from './Tent'
 
 
-interface TribeContainerState {
+interface TentContainerState {
     incomeType: string
     replyTypes: Array<string>
     defaultReplyType: string
@@ -16,19 +16,19 @@ interface TribeContainerState {
     lastUpdate: number
 }
 
-export interface TribesTribeContainerState extends TribeContainerState {
-    tribes: Array<Tribe>
+export interface TentsContainerState extends TentContainerState {
+    tents: Array<Tribe>
 }
 
 
-export default function TribesContainer() {
+export default function TentsContainer() {
     const selectedTribes = useForecasterSelector((state: ForecasterStore) => {
-        return state.forecaster.tribes
+        return state.forecaster.tents
     })
 
     if (selectedTribes?.length > 0) {
         return (
-            <div data-testid='TribesContainer' className='TribesContainer'>
+            <div className='TentsContainer'>
                 <ScrollView
                     id='scrollview'
                     showScrollbar='onHover'
@@ -38,9 +38,9 @@ export default function TribesContainer() {
                 >
                     <div className='Tribes'>
                         {selectedTribes?.map((tribe) => {
-                            return <TribeContainer
+                            return <TentContainer
                                 key={tribe.id}
-                                tribe={tribe}
+                                tent={tribe}
                             />
                         })}
                     </div>

@@ -6,10 +6,10 @@ import { fetchReplyTypes } from '../network_resource_fetcher/FetchForecastSettin
 
 
 
-export default function ReplyTypeSelector({ tribeId }: { tribeId: string }) {
-    const valueSelector = (store: ForecasterStore) => store.tacticalForecast.find(x => x.tribeId === tribeId)?.replyType
+export default function ReplyTypeSelector({ tentId }: { tentId: string }) {
+    const valueSelector = (store: ForecasterStore) => store.tacticalForecast.find(x => x.tentId === tentId)?.replyType
     const defaultValueSelector = (values: Array<string>) => values[0]
-    const onValueChange = (value: string | undefined) => changeReplyType(tribeId, value)
+    const onValueChange = (value: string | undefined) => changeReplyType(tentId, value)
 
     return <OptionSelector<string, string>
         className='ForecasterReplyTypeSelector'

@@ -11,7 +11,7 @@ import {
 
 
 interface ForecastPanelProps {
-    tribeId: string
+    tentId: string
     incomeType: string
     replyType: string
     lastUpdated: number
@@ -20,7 +20,7 @@ interface ForecastPanelProps {
 const ForecastPanel = React.memo(
     function ForecastPanel(
         {
-            tribeId,
+            tentId,
             incomeType,
             replyType,
             lastUpdated,
@@ -34,10 +34,10 @@ const ForecastPanel = React.memo(
             (async () => {
                 if (replyType === '')
                     return
-                const fetchResult: FetchResult<HourlyTacticalForecast> = await fetchTacticalForecast(incomeType, tribeId, replyType)
+                const fetchResult: FetchResult<HourlyTacticalForecast> = await fetchTacticalForecast(incomeType, tentId, replyType)
                 setForecastLoaded([fetchResult.success, fetchResult.data])
             })();
-        }, [tribeId, incomeType, replyType, lastUpdated])
+        }, [tentId, incomeType, replyType, lastUpdated])
 
         if (forecastLoaded) {
             return (
@@ -56,7 +56,7 @@ export default ForecastPanel
 function Metric({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast }) {
     const today = new Date().setUTCHours(23, 0, 0, 0)
     const idx = tacticalForecast.ts.map(Number).indexOf(today)
-    const diff = tacticalForecast.iteration_count[idx] - tacticalForecast.yhat[idx]
+    const diff = tacticalForecast.iterations[idx] - tacticalForecast.yhat[idx]
     return (
         <div className='TacticalForecastMetric'>
             <label>Expected to close today</label>
@@ -85,7 +85,7 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
                     {
                         type: 'scatter',
                         x: tacticalForecast.ts,
-                        y: tacticalForecast.upper_replies,
+                        y: tacticalForecast.upper_iterations,
                         name: 'upper_replies',
                         showlegend: false,
                         line: { shape: 'spline', color: GetColor('transparent') },
@@ -98,7 +98,7 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
                     {
                         type: 'scatter',
                         x: tacticalForecast.ts,
-                        y: tacticalForecast.iteration_count,
+                        y: tacticalForecast.iterations,
                         name: 'tribe_replies',
                         showlegend: false,
                         line: { shape: 'spline', color: GetColor('tribe_replies') },

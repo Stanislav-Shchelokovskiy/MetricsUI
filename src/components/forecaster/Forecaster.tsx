@@ -1,12 +1,12 @@
 import './styles/CommonSettingsPanel.css'
-import './styles/Tribes.css'
-import './styles/Tribe.css'
+import './styles/Tents.css'
+import './styles/Tent.css'
 import './styles/Forecast.css'
 import './styles/Menu.css'
 import './styles/CommandPanel.css'
 
 import React from 'react'
-import TribesContainer from './Tribes'
+import TentsContainer from './Tents'
 import ForecasterCommonSettingsPanel from './menu/commonSettingsPanel/CommonSettingsPanel'
 import ForecasterCommandPanel from './menu/commandPanel/CommandPanel'
 
@@ -18,7 +18,7 @@ export default function Forecaster() {
                 <ForecasterCommonSettingsPanel />
                 <ForecasterCommandPanel />
             </div>
-            <TribesContainer />
+            <TentsContainer />
         </div>
     )
 }

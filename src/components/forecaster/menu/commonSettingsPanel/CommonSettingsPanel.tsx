@@ -1,6 +1,6 @@
 import React from 'react'
 import IncomeSelector from './IncomeSelector'
-import TribesSelector from './TribesSelector'
+import TentsSelector from './TentsSelector'
 
 
 
@@ -8,7 +8,7 @@ function CommonSettingsPanel() {
     return (
         <div className='ForecasterCommonSettingsPanel'>
             <IncomeSelector />
-            <TribesSelector />
+            <TentsSelector />
         </div>
     )
 }
