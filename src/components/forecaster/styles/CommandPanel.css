@@ -1,0 +1,15 @@
+.ForecasterCommandPanel {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    /* background-color: rgb(212, 150, 150); */
+    flex-grow: 1;
+}
+
+.ForecasterUpdateTribeRepliesButton {
+    margin-top: 7px;
+    margin-bottom: 15px;
+    flex: 1.2 0.2 auto;
+    font-size: smaller;
+}
