@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Plot from 'react-plotly.js'
+import { useSelector } from 'react-redux'
+import { ForecasterStore } from '../store/Store'
+import { replyTypeSelector } from '../store/tactical_forecast/Selectors'
+import { incomeTypeSelector, lastUpdatedSelector } from '../store/forecaster/Selectors'
 import ForecastMissing from '../utils/ForecastMissing'
 import GetColor from '../utils/ColorPalette'
 import FetchResult from '../../common/Interfaces'
@@ -8,49 +12,41 @@ import {
     EMPTY_TACTICAL_FORECAST,
     fetchTacticalForecast
 } from '../network_resource_fetcher/FetchTacticalForecast'
+import { useTentId } from '../tent/TentContext'
 
+export default function ForecastPanel() {
+    const tentId = useTentId()
+    const replyType = useSelector((store: ForecasterStore) => replyTypeSelector(store, tentId))
+    const incomeType = useSelector((store: ForecasterStore) => incomeTypeSelector(store))
+    const lastUpdated = useSelector((store: ForecasterStore) => lastUpdatedSelector(store))
 
-interface ForecastPanelProps {
-    tentId: string
-    incomeType: string
-    replyType: string
-    lastUpdated: number
+    const [[forecastLoaded, tacticalForecast], setForecastLoaded] = useState<[boolean, HourlyTacticalForecast]>([false, EMPTY_TACTICAL_FORECAST])
+
+    useEffect(() => {
+        (async () => {
+            if (replyType === '')
+                return
+            const fetchResult: FetchResult<HourlyTacticalForecast> = await fetchTacticalForecast(incomeType, tentId, replyType)
+            setForecastLoaded([fetchResult.success, fetchResult.data])
+        })();
+    }, [tentId, incomeType, replyType, lastUpdated])
+
+    if (forecastLoaded)
+        return <ForecastBody tacticalForecast={tacticalForecast} />
+    return <ForecastMissing />
 }
 
-const ForecastPanel = React.memo(
-    function ForecastPanel(
-        {
-            tentId,
-            incomeType,
-            replyType,
-            lastUpdated,
-        }: ForecastPanelProps) {
-        // const renderCount = useRef(0)
-        // console.log('Tactical ForecastPanel render: ', renderCount.current++)
+const ForecastBody = React.memo(function ForecastBody({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast }) {
+    // const renderCount = React.useRef(0)
+    // console.log('Tactical ForecastBody render: ', renderCount.current++)
+    return (
+        <div className='ForecastBody'>
+            <Graph tacticalForecast={tacticalForecast} />
+            <Metric tacticalForecast={tacticalForecast} />
+        </div>
+    )
 
-        const [[forecastLoaded, tacticalForecast], setForecastLoaded] = useState<[boolean, HourlyTacticalForecast]>([false, EMPTY_TACTICAL_FORECAST])
-
-        useEffect(() => {
-            (async () => {
-                if (replyType === '')
-                    return
-                const fetchResult: FetchResult<HourlyTacticalForecast> = await fetchTacticalForecast(incomeType, tentId, replyType)
-                setForecastLoaded([fetchResult.success, fetchResult.data])
-            })();
-        }, [tentId, incomeType, replyType, lastUpdated])
-
-        if (forecastLoaded) {
-            return (
-                <div className='ForecastBody'>
-                    <Graph tacticalForecast={tacticalForecast} />
-                    <Metric tacticalForecast={tacticalForecast} />
-                </div>
-            )
-        }
-        return <ForecastMissing />
-    })
-
-export default ForecastPanel
+})
 
 
 function Metric({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast }) {

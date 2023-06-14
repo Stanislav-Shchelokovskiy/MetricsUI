@@ -1,13 +1,13 @@
 import React, { useReducer, useEffect, useCallback, useRef } from 'react'
 import Plot from 'react-plotly.js'
+import { useDispatch } from 'react-redux'
 import { Data as GraphData } from 'plotly.js'
 import ForecastMissing from '../utils/ForecastMissing'
 import GetColor from '../utils/ColorPalette'
 import FetchResult from '../../common/Interfaces'
 import { IncomeForecast, FetchTentIncomeForecast, EMPTY_INCOME_FORECAST } from '../network_resource_fetcher/FetchTentIncomeForecast'
-import { DailyTribeReplies, FetchDailyTentReplies, EMPTY_DAILY_TENT_REPLIES } from '../network_resource_fetcher/FetchTentDailyReplies'
-import { useForecasterDispatch } from '../store/Store'
-import { legendClick } from '../store/Actions'
+import { DailyTentReplies, FetchDailyTentReplies, EMPTY_DAILY_TENT_REPLIES } from '../network_resource_fetcher/FetchTentDailyReplies'
+import { legendClick } from '../store/strategic_forecast/Actions'
 
 
 export interface ForecastPanelState {
@@ -144,7 +144,7 @@ interface GraphState {
     incomeForecastLoaded: boolean
     incomeForecast: IncomeForecast
     tentRepliesLoaded: boolean
-    tentReplies: Array<DailyTribeReplies>
+    tentReplies: Array<DailyTentReplies>
 }
 
 const initialGraphState: GraphState = {
@@ -159,7 +159,7 @@ interface GraphAction {
     incomeForecastLoaded: boolean
     incomeForecast: IncomeForecast
     tentRepliesLoaded: boolean
-    tentReplies: Array<DailyTribeReplies>
+    tentReplies: Array<DailyTentReplies>
 }
 
 const FETCH_INCOME_FORECAST = 'fetchIncomeForecast'
@@ -204,21 +204,21 @@ function Graph({ state }: { state: ForecastPanelState }) {
     // const renderCount = useRef(0)
     // console.log('Graph render: ', renderCount.current++)
 
-    const [graphState, dispatch] = useReducer(graphStateReducer, initialGraphState)
+    const [graphState, updateGraphState] = useReducer(graphStateReducer, initialGraphState)
 
     useEffect(() => {
         (async () => {
             if (state.forecastHorizon === '')
                 return
             const fetchedIncomeForecast: FetchResult<IncomeForecast> = await FetchTentIncomeForecast(state.tentId, state.forecastHorizon, state.incomeType)
-            dispatch({
+            updateGraphState({
                 type: FETCH_INCOME_FORECAST,
                 ...initialGraphState,
                 incomeForecastLoaded: fetchedIncomeForecast.success,
                 incomeForecast: fetchedIncomeForecast.data,
             })
-            const fetchedDailyTribeReplies: FetchResult<Array<DailyTribeReplies>> = await FetchDailyTentReplies(state.tile, state.tentId, state.forecastHorizon)
-            dispatch({
+            const fetchedDailyTribeReplies: FetchResult<Array<DailyTentReplies>> = await FetchDailyTentReplies(state.tile, state.tentId, state.forecastHorizon)
+            updateGraphState({
                 type: FETCH_DAILY_TRIBE_REPLIES,
                 ...initialGraphState,
                 tentRepliesLoaded: fetchedDailyTribeReplies.success,
@@ -227,15 +227,15 @@ function Graph({ state }: { state: ForecastPanelState }) {
         })()
     }, [state.tentId, state.forecastHorizon, state.incomeType, state.tile, state.lastUpdated])
 
-    const forecasterDispatch = useForecasterDispatch()
+    const dispatch = useDispatch()
     const onLegendClick = useCallback(({ data }: LegendClickObject) => {
         const timerId = setTimeout(() => {
             const legendsToStore = (data.filter(legend => legend.type === 'bar' && legend.visible === 'legendonly').map(legend => legend.hovertext) as Array<string>)
-            forecasterDispatch(legendClick(state.tentId, legendsToStore))
+            dispatch(legendClick(state.tentId, legendsToStore))
             clearTimeout(timerId)
         }, 500)
         return true
-    }, [state.tentId, forecasterDispatch])
+    }, [state.tentId, dispatch])
 
     if (graphState.incomeForecastLoaded || graphState.tentRepliesLoaded) {
 

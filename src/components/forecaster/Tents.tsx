@@ -1,8 +1,9 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import ScrollView from 'devextreme-react/scroll-view'
 import { Tribe } from '../common/Interfaces'
-import { useForecasterSelector, ForecasterStore } from './store/Store'
-import TentContainer from './Tent'
+import TentContainer from './tent/Tent'
+import { tentsSelector } from './store/forecaster/Selectors'
 
 
 interface TentContainerState {
@@ -22,11 +23,9 @@ export interface TentsContainerState extends TentContainerState {
 
 
 export default function TentsContainer() {
-    const selectedTribes = useForecasterSelector((state: ForecasterStore) => {
-        return state.forecaster.tents
-    })
+    const selectedTents = useSelector(tentsSelector)
 
-    if (selectedTribes?.length > 0) {
+    if (selectedTents?.length > 0) {
         return (
             <div className='TentsContainer'>
                 <ScrollView
@@ -36,11 +35,11 @@ export default function TentsContainer() {
                     scrollByContent={false}
                     height={'89vh'}
                 >
-                    <div className='Tribes'>
-                        {selectedTribes?.map((tribe) => {
+                    <div className='Tents'>
+                        {selectedTents?.map((tent) => {
                             return <TentContainer
-                                key={tribe.id}
-                                tent={tribe}
+                                key={tent.id}
+                                tent={tent}
                             />
                         })}
                     </div>

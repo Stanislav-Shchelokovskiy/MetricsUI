@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import Button from '../../../common/components/Button'
 import LoadIndicator from '../../../common/components/LoadIndicator'
 import FetchResult from '../../../common/Interfaces'
-import { changeLastUpdated } from '../../store/Actions'
-import { useForecasterDispatch } from '../../store/Store'
+import { changeLastUpdated } from '../../store/forecaster/Actions'
+import { useDispatch } from 'react-redux'
 import {
     FetchSyncTentRepliesWithWfTasksStarted,
     SyncTentRepliesWithWfTasks,
@@ -13,7 +13,7 @@ import {
 
 export default function UpdateTentRepliesButton() {
     const [taskStarted, setTaskStarted] = useState<boolean>(false);
-    const dispatch = useForecasterDispatch()
+    const dispatch = useDispatch()
 
     const onClick = () => {
         setTaskStarted(true);
@@ -31,14 +31,14 @@ export default function UpdateTentRepliesButton() {
                 if (!fetchResult.success || !fetchResult.data.started) {
                     setTaskStarted(false);
                     dispatch(changeLastUpdated())
-                    clearInterval(intervalId);
+                    clearInterval(intervalId)
                 }
             })();
         }, 3000);
     };
     const renderButton = () => {
         if (!taskStarted)
-            return 'Update Tribe Replies';
+            return 'Update Replies'
         return <LoadIndicator width={undefined} height={25} />;
     }
     return <Button

@@ -1,18 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { loadState, saveState } from '../../common/LocalStorage'
-import { ForecasterReducer } from './ForecasterReducer'
-import { ForecasterItemsReducer, TacticalForecastReducer, StrategicForecastReducer } from './TentContainerReducer'
+import { ForecasterReducer } from './forecaster/ForecasterReducer'
+import { tacticalForecastsReducer } from './tactical_forecast/TacticalForecastsReducer';
+import { forecasterItemsReducer } from './forecaster_items/ForecasterItemsReducer'
+import { strategicForecastsReducer } from './strategic_forecast/StrategicForecastReducer';
 
-
-const currentStateKey = 'current_forecaster_state_v1'
+const currentStateKey = 'forecaster'
 
 export const forecasterStore = configureStore({
     reducer: {
         forecaster: ForecasterReducer,
-        tacticalForecast: TacticalForecastReducer,
-        strategicForecast: StrategicForecastReducer,
-        selectedForecastItems: ForecasterItemsReducer,
+        tacticalForecasts: tacticalForecastsReducer,
+        strategicForecasts: strategicForecastsReducer,
+        forecasterItems: forecasterItemsReducer,
     },
     preloadedState: loadState(currentStateKey)
 })
@@ -24,8 +24,3 @@ forecasterStore.subscribe(() => {
 
 
 export type ForecasterStore = ReturnType<typeof forecasterStore.getState>
-export type ForecasterDispatch = typeof forecasterStore.dispatch
-
-
-export const useForecasterDispatch: () => ForecasterDispatch = useDispatch
-export const useForecasterSelector: TypedUseSelectorHook<ForecasterStore> = useSelector

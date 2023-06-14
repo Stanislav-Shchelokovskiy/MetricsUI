@@ -1,14 +1,14 @@
 import React from 'react'
 import UpdateTentRepliesButton from './UpdateTribeRepliesButton'
 import GoHomeButton from '../../../common/components/HomeButton'
-
+import { ToolbarCommands } from '../../../common/components/multiset_container/Toolbar/ToolbarCommands'
 
 function CommandPanel() {
     return (
-        <div className='ForecasterCommandPanel'>
+        <ToolbarCommands>
             <UpdateTentRepliesButton />
-            <GoHomeButton className='ForecasterGoHomeButton' />
-        </div>
+            <GoHomeButton className='CommandButton' />
+        </ToolbarCommands>
     )
 }
 

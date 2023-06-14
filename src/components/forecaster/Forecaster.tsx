@@ -4,6 +4,7 @@ import './styles/Tent.css'
 import './styles/Forecast.css'
 import './styles/Menu.css'
 import './styles/CommandPanel.css'
+import '../common/styles/multiset_container/Toolbar.css'
 
 import React from 'react'
 import TentsContainer from './Tents'

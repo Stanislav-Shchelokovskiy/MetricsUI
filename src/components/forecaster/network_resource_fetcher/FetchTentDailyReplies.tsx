@@ -2,7 +2,7 @@ import { FORECASTER_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'
 
-interface RawDailyTribeReplies {
+interface RawDailyTentReplies {
     tent_belonging_status: number
     tent_name: string
     position_name: string
@@ -13,7 +13,7 @@ interface RawDailyTribeReplies {
     iterations: Array<number>
 }
 
-export interface DailyTribeReplies {
+export interface DailyTentReplies {
     tent_belonging_status: number
     tent_name: string
     position_name: string
@@ -35,7 +35,7 @@ export const EMPTY_DAILY_TENT_REPLIES = [{
     iterations: Array<number>()
 }]
 
-function convert(rawDailyTribeReplies: Array<RawDailyTribeReplies> | undefined): Array<DailyTribeReplies> {
+function convert(rawDailyTribeReplies: Array<RawDailyTentReplies> | undefined): Array<DailyTentReplies> {
     if (rawDailyTribeReplies)
         return rawDailyTribeReplies.map((replies) => {
             return {
@@ -46,7 +46,7 @@ function convert(rawDailyTribeReplies: Array<RawDailyTribeReplies> | undefined):
     return EMPTY_DAILY_TENT_REPLIES
 }
 
-export async function FetchDailyTentReplies(tile: number, tentId: string, forecastHorizon: string): Promise<FetchResult<Array<DailyTribeReplies>>> {
+export async function FetchDailyTentReplies(tile: number, tentId: string, forecastHorizon: string): Promise<FetchResult<Array<DailyTentReplies>>> {
     return fetchConvert(convert,
         `${FORECASTER_END_POINT}/tent_replies?` +
         new URLSearchParams({
