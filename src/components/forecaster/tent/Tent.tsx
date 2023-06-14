@@ -35,7 +35,7 @@ export default function TentContainer({ tent }: { tent: Tribe }) {
     const dispatch = useDispatch()
     const onSelectedItemsChange = useCallback((e: any) => {
         dispatch(expandForecastItems(tent.id, e))
-    }, [dispatch, tent.id])
+    }, [tent.id])
     return (
         <div className='Tent'>
             <Header tentName={tent.name} />
