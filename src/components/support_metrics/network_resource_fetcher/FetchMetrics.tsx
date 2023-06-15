@@ -1,18 +1,8 @@
+import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
+import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
 import FetchResult from '../../common/Interfaces'
-
-export interface Metric {
-    name: string
-}
-
-const TICKETS = 'Tickets'
-const ITERATIONS = 'Iterations'
-const PEOPLE = 'People'
-const ITERATIONS_TO_TICKETS = 'Iterations / Tickets'
-const metrics = [{ name: TICKETS }, { name: ITERATIONS }, { name: ITERATIONS_TO_TICKETS }, { name: PEOPLE }]
+import { Metric } from '../../common/components/multiset_container/graph/MetricSelector'
 
 export async function fetchMetrics(): Promise<FetchResult<Array<Metric>>> {
-    return {
-        success: true,
-        data: metrics
-    }
+    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/Metrics`)
 }

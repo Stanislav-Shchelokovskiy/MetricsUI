@@ -9,7 +9,6 @@ import { Metric } from './graph/MetricSelector'
 interface GraphSettingsPanelContext {
     fetchPeriod: (...args: any) => Promise<FetchResult<Array<string>>>,
     fetchGroupByPeriods: (...args: any) => Promise<FetchResult<Array<GroupByPeriod>>>,
-    fetchMetrics: (...args: any) => Promise<FetchResult<Array<Metric>>>,
 }
 
 interface GraphContext {
@@ -39,6 +38,8 @@ interface Context {
     stateManagement: StateManagementContext
     rawData: RawDataContext
     filterLabel: FilterLabelContext
+    fetchMetrics: (...args: any) => Promise<FetchResult<Array<Metric>>>,
+    changeContext: (context: number) => void
 }
 
 export const MultisetContainerContext = createContext<Context>(null!)

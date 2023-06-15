@@ -17,6 +17,7 @@ interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> exten
     valueSelector: (store: any) => ValueExprT | undefined
     defaultValueSelector: (dataSource: Array<DataSourceT>) => ValueExprT
     onValueChange: (value: ValueExprT | undefined) => PayloadAction<any>
+    onValueChangeEx: ((dsValue: DataSourceT) => void) | undefined
     showDropDownButton: boolean
     showClear: boolean
 }
@@ -25,6 +26,13 @@ interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> exten
 export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: Props<DataSourceT, ValueExprT>) {
     const appDispatch = useDispatch()
     const onValueChangeHandler = (value: ValueExprT) => {
+        if (props.onValueChangeEx) {
+            const keySelector = props.valueExpr === undefined ?
+                (x: keyof DataSourceT) => (x as unknown) as ValueExprT :
+                (x: DataSourceT) => (x[props.valueExpr as keyof DataSourceT] as unknown) as ValueExprT
+            const dsValue = (dataSource as Array<any>).find(x => keySelector(x) === value)
+            props.onValueChangeEx(dsValue)
+        }
         appDispatch(props.onValueChange(value))
     }
 
@@ -82,6 +90,7 @@ const defaultProps = {
     showDropDownButton: true,
     showClearButton: false,
     showClear: false,
+    onValueChangeEx: undefined
 }
 
 OptionSelector.defaultProps = defaultProps

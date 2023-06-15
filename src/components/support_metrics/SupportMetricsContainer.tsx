@@ -11,7 +11,6 @@ import MultisetContainer from '../common/components/multiset_container/MultisetC
 import SupportMetricsToolbar from './toolbar/Toolbar'
 import { ContainerState } from './store/ContainerReducer'
 import { BaseContainerState } from '../common/store/multiset_container/BaseContainerState'
-import { MultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
 import { fetchGroupByPeriods } from './network_resource_fetcher/FetchGroupByPeriods'
 import { fetchPeriod } from './network_resource_fetcher/FetchPeriod'
 import { fetchMetrics } from './network_resource_fetcher/FetchMetrics'
@@ -21,11 +20,11 @@ import { SUPPORT_ANALYTICS_END_POINT } from '../common/EndPoint'
 import { getShareableState } from '../common/store/multiset_container/Store'
 import { fetchTicketsWithIterationsRaw } from './network_resource_fetcher/FetchTicketsWithIterationsRaw'
 import { fetchDisplayFilter } from './network_resource_fetcher/FetchDisplayFilter'
+import { MultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
 
 const graphSettings = {
     fetchPeriod: fetchPeriod,
     fetchGroupByPeriods: fetchGroupByPeriods,
-    fetchMetrics: fetchMetrics,
 }
 
 const graph = {
@@ -49,23 +48,23 @@ const filterLabel = {
     fetchDisplayFilter: fetchDisplayFilter
 }
 
-const multisetContainerContext = {
+export const supportMetricsContext = {
     graphSettingsPanel: graphSettings,
     graph: graph,
     stateManagement: stateManagement,
     rawData: rawData,
-    filterLabel: filterLabel
+    filterLabel: filterLabel,
+    fetchMetrics: fetchMetrics,
+    changeContext: (ctx: any) => { },
 }
 
 
 export function SupportMetricsApplySharedState() {
-    return <MultisetContainerContext.Provider value={multisetContainerContext}>
-        <ApplySharedState />
-    </MultisetContainerContext.Provider>
+    return <ApplySharedState />
 }
 
 export default function SupportMetrics() {
-    return <MultisetContainerContext.Provider value={multisetContainerContext}>
+    return <MultisetContainerContext.Provider value={supportMetricsContext}>
         <MultisetContainer
             sets={Sets}
             toolbar={SupportMetricsToolbar}

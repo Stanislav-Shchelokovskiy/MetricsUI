@@ -6,10 +6,8 @@ import '../common/styles/multiset_container/FilterTooltip.css'
 import React from 'react'
 import { SUPPORT_METRICS_END_POINT } from '../common/EndPoint'
 import ApplySharedState from '../common/components/state_management/ApplySharedState'
-import Sets from './content/Sets'
 import { BaseContainerState } from '../common/store/multiset_container/BaseContainerState'
 import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
-import CostMetricsToolbar from './toolbar/Toolbar'
 import { MultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
 import { fetchPeriod } from './network_resource_fetcher/Period'
 import { fetchGroupByPeriods } from './network_resource_fetcher/GroupByPeriods'
@@ -18,14 +16,14 @@ import { fetchPeriodsArray } from './network_resource_fetcher/PeriodsArray'
 import { fetchCostMetricsAggregates } from './network_resource_fetcher/CostMetricsAggregates'
 import { getShareableState } from '../common/store/multiset_container/Store'
 import { fetchCostMetricsRaw } from './network_resource_fetcher/CostMetricsRaw'
-import { fetchDisplayFilter } from '../support_metrics/network_resource_fetcher/FetchDisplayFilter'
+import { fetchDisplayFilter } from '../cost_metrics/network_resource_fetcher/DisplayFilter'
 
-
+import Sets from './content/Sets'
+import CostMetricsToolbar from './toolbar/Toolbar'
 
 const graphSettings = {
     fetchPeriod: fetchPeriod,
     fetchGroupByPeriods: fetchGroupByPeriods,
-    fetchMetrics: fetchMetrics,
 }
 
 const graph = {
@@ -49,25 +47,22 @@ const filterLabel = {
     fetchDisplayFilter: fetchDisplayFilter
 }
 
-const multisetContainerContext = {
+export const costMetricsContext = {
     graphSettingsPanel: graphSettings,
     graph: graph,
     stateManagement: stateManagement,
     rawData: rawData,
-    filterLabel: filterLabel
+    filterLabel: filterLabel,
+    fetchMetrics: fetchMetrics,
+    changeContext: (ctx: any) => { },
 }
 
-
-
-
 export function CostMetricsApplySharedState() {
-    return <MultisetContainerContext.Provider value={multisetContainerContext}>
-        <ApplySharedState />
-    </MultisetContainerContext.Provider>
+    return <ApplySharedState />
 }
 
 export default function CostMetrics() {
-    return <MultisetContainerContext.Provider value={multisetContainerContext}>
+    return <MultisetContainerContext.Provider value={costMetricsContext}>
         <MultisetContainer
             sets={Sets}
             toolbar={CostMetricsToolbar}

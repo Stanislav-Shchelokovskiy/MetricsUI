@@ -23,7 +23,7 @@ export async function fetchConvert<RawT, ResT>(
     }
 }
 
-function getFetchResult<T>(success: boolean, data: T): FetchResult<T> {
+export function getFetchResult<T>(success: boolean, data: T): FetchResult<T> {
     return {
         success: success,
         data: data
