@@ -9,11 +9,11 @@ import { Button } from 'devextreme-react/button'
 
 import { Provider } from 'react-redux';
 import { forecasterStore } from './components/forecaster/store/Store'
-import { customersActivityStore } from './components/customers_activity/store/Store'
+import { supportMetricsStore } from './components/support_metrics/store/Store'
 import { costMetricsStore } from './components/cost_metrics/store/Store'
 
 import Forecaster from './components/forecaster/Forecaster'
-import CustomersActivity, { CustomersActivityApplySharedState } from './components/customers_activity/CustomersActivityContainer'
+import SupportMetrics, { SupportMetricsApplySharedState } from './components/support_metrics/SupportMetricsContainer'
 import CostMetrics, { CostMetricsApplySharedState } from './components/cost_metrics/CostMetricsContainer'
 
 
@@ -64,16 +64,16 @@ const router = createBrowserRouter([
   {
     path: '/CustomersActivity',
     element: (
-      <Provider store={customersActivityStore}>
-        <CustomersActivity />
+      <Provider store={supportMetricsStore}>
+        <SupportMetrics />
       </Provider>
     ),
   },
   {
     path: '/CustomersActivity/:stateId',
     element: (
-      <Provider store={customersActivityStore}>
-        <CustomersActivityApplySharedState />
+      <Provider store={supportMetricsStore}>
+        <SupportMetricsApplySharedState />
       </Provider>
     ),
   },
