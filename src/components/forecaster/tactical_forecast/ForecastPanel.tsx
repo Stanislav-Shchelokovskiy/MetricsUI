@@ -101,7 +101,7 @@ function Graph({ tacticalForecast }: { tacticalForecast: HourlyTacticalForecast 
                         fill: 'tonexty',
                         fillcolor: GetColor('tribe_replies_lower_fill'),
                         mode: 'lines',
-                        hovertemplate: 'Tribe replies: <b>%{y}</b><extra></extra>',
+                        hovertemplate: 'Tent replies: <b>%{y}</b><extra></extra>',
                         connectgaps: true,
                     },
                     {
