@@ -4,10 +4,11 @@ import { useStore } from 'react-redux'
 import TaskButton from '../../../common/components/TaskButton'
 import { PushState } from '../../network_resource_fetcher/FetchState'
 import FetchResult from '../../Interfaces'
-import { StateProps } from './Interfaces'
+import { useMultisetContainerContext } from '../../components/multiset_container/MultisetContainerContext'
 
 
-function ShareStateButton(props: StateProps) {
+function ShareStateButton() {
+    const context = useMultisetContainerContext()
     const store = useStore()
 
     const shareState = async (
@@ -15,7 +16,11 @@ function ShareStateButton(props: StateProps) {
         onSuccess: (message: string) => void,
         onError: (message: string) => void,
     ) => {
-        const fetchedStateId: FetchResult<string> = await PushState(props.endPoint, props.statePropsSelector(store.getState()))
+        const fetchedStateId: FetchResult<string> = await PushState(
+            context.stateManagement.endPoint,
+            context.stateManagement.shareableStateSelector(store.getState())
+        )
+
         if (fetchedStateId.success) {
             const successfullyCopied = copy(`${window.location.href}/${fetchedStateId.data}`)
             if (successfullyCopied) {
@@ -29,7 +34,7 @@ function ShareStateButton(props: StateProps) {
     }
 
     return <TaskButton
-        className={props.className}
+        className='CommandButton'
         icon='export'
         hint='Share state'
         task={shareState} />

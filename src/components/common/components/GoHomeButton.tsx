@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Button from '../../common/components/Button'
+import Button from './Button'
 
-function GoHomeButton({ className }: { className: string }) {
+function GoHomeButton() {
     return <Link to={'/'} className='NavigationButton'>
         <Button
-            className={className}
+            className='CommandButton'
             icon='home'
             hint='Go home'
             focusStateEnabled={false} />

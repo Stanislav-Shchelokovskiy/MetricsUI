@@ -1,7 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { BaseContainerState } from './BaseContainerState'
 import { BaseSetState } from './sets/Interfaces'
-import { APPLY_STATE } from '../state/Actions'
+import { APPLY_STATE } from '../view_state/Actions'
 
 interface SetsState extends Array<BaseSetState> { }
 interface ContainerState extends BaseContainerState { }

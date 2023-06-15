@@ -37,11 +37,7 @@
 
 .ToolbarMenuButton,
 .ToolbarSeparator,
-.CommandButton,
-.CommandButtonStateSelector,
-.CommandButtonSaveStateButton,
-.CommandButtonDropStateButton,
-.CommandButtonShareStateButton {
+.CommandButton {
     margin-top: 7px;
     margin-bottom: 7px;
 }

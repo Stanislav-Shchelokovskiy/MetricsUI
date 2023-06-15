@@ -1,22 +1,19 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { Store } from '@reduxjs/toolkit'
 import { useStore } from 'react-redux'
 import * as XLSX from 'xlsx'
 import { MultisetContainerStore } from '../store/multiset_container/Store'
 import FetchResult from '../Interfaces'
 import TaskButton from './TaskButton'
+import { useMultisetContainerContext } from '../components/multiset_container/MultisetContainerContext'
 
-type FetchData = (containerState: any, set: any) => Promise<FetchResult<Array<any>>>
 
-interface Props {
-    fetchData: FetchData
-}
-
-function DownloadButton(props: Props) {
+function DownloadButton() {
+    const context = useMultisetContainerContext()
     const store = useStore<MultisetContainerStore>()
 
     const downloadSetRawData = async (dispatchTaskState: (started: boolean) => void, onError: (message: string) => void) =>
-        await tryDownloadExcelData(dispatchTaskState, store, onError, props.fetchData)
+        await tryDownloadExcelData(dispatchTaskState, store, onError, context.rawData.fetchRawData)
 
     return <TaskButton
         className='CommandButton'
@@ -28,6 +25,7 @@ function DownloadButton(props: Props) {
 export default React.memo(DownloadButton)
 
 
+type FetchData = (containerState: any, set: any) => Promise<FetchResult<Array<any>>>
 async function tryDownloadExcelData(
     setTaskStarted: (started: boolean) => void,
     store: Store<MultisetContainerStore>,

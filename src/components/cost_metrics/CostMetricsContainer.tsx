@@ -16,13 +16,10 @@ import { fetchGroupByPeriods } from './network_resource_fetcher/GroupByPeriods'
 import { fetchMetrics } from './network_resource_fetcher/Metrics'
 import { fetchPeriodsArray } from './network_resource_fetcher/PeriodsArray'
 import { fetchCostMetricsAggregates } from './network_resource_fetcher/CostMetricsAggregates'
+import { getShareableState } from '../common/store/multiset_container/Store'
+import { fetchCostMetricsRaw } from './network_resource_fetcher/CostMetricsRaw'
 
-export function CostMetricsApplySharedState() {
-    return <ApplySharedState
-        endPoint={SUPPORT_METRICS_END_POINT}
-        navigateTo='/CostMetrics'
-    />
-}
+
 
 const graphSettingsContext = {
     fetchPeriod: fetchPeriod,
@@ -36,9 +33,28 @@ const graphContext = {
     containerDepsSelector: (containerState: BaseContainerState) => [],
 }
 
+const stateManagement = {
+    shareableStateSelector: getShareableState,
+    stateSalt: 'CostMetrics_',
+    endPoint: SUPPORT_METRICS_END_POINT,
+    navigateTo: '/CostMetrics',
+}
+
+const rawData = {
+    fetchRawData: fetchCostMetricsRaw
+}
+
 const multisetContainerContext = {
     graphSettingsPanel: graphSettingsContext,
     graph: graphContext,
+    stateManagement: stateManagement,
+    rawData: rawData,
+}
+
+export function CostMetricsApplySharedState() {
+    return <MultisetContainerContext.Provider value={multisetContainerContext}>
+        <ApplySharedState />
+    </MultisetContainerContext.Provider>
 }
 
 export default function CostMetrics() {

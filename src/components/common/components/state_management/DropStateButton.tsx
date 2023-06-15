@@ -4,12 +4,13 @@ import { Popup } from 'devextreme-react/popup'
 import List from 'devextreme-react/list'
 import Button from '../Button'
 import { dropState } from '../../LocalStorage'
-import { dropState as dropStateAction } from '../../store/state/Actions'
-import { ValuesProps, ValuesPopupProps } from './Interfaces'
+import { dropState as dropStateAction } from '../../store/view_state/Actions'
 import getStorageItemKey from './Utils'
+import { useMultisetContainerContext } from '../../components/multiset_container/MultisetContainerContext'
+import { PopupProps } from '../../Interfaces'
+import { stateNamesSelector } from '../../store/view_state/Selectors'
 
-
-function DropStateButton(props: ValuesProps) {
+function DropStateButton() {
     const [popupVisible, setPopupVisible] = useState(false)
 
     const onClick = () => setPopupVisible(true)
@@ -19,13 +20,12 @@ function DropStateButton(props: ValuesProps) {
     }, [])
 
     return (
-        <div className={props.className}>
+        <div className='CommandButton'>
             <Button
                 icon='remove'
                 hint='Drop state'
                 onClick={onClick} />
             <DropStatePopup
-                {...props}
                 visible={popupVisible}
                 onHiding={onHiding} />
         </div>
@@ -35,13 +35,14 @@ function DropStateButton(props: ValuesProps) {
 export default React.memo(DropStateButton)
 
 
-function DropStatePopup(props: ValuesPopupProps) {
-    const stateNames = useSelector(props.stateNamesSelector)
+function DropStatePopup(props: PopupProps) {
+    const context = useMultisetContainerContext()
+    const stateNames = useSelector(stateNamesSelector)
     const dispatch = useDispatch()
     const onItemDeleted = (e: any) => {
         const key = e.itemData
         dispatch(dropStateAction(key))
-        dropState(getStorageItemKey(props.stateSalt, key))
+        dropState(getStorageItemKey(context.stateManagement.stateSalt, key))
     }
 
     return (

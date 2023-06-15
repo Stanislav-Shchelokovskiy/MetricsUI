@@ -3,13 +3,15 @@ import { useStore, useDispatch, useSelector } from 'react-redux'
 import { saveState } from '../../LocalStorage'
 import InputBox from '../InputBox'
 import Button from '../Button'
-import { registerState } from '../../store/state/Actions'
+import { registerState } from '../../store/view_state/Actions'
 import getStorageItemKey from './Utils'
-import { KeyProps } from './Interfaces'
+import { useMultisetContainerContext } from '../../components/multiset_container/MultisetContainerContext'
+import { stateNameSelector } from '../../store/view_state/Selectors'
 
-function SaveStateButton(props: KeyProps) {
+function SaveStateButton() {
+    const context = useMultisetContainerContext()
+    const stateName = useSelector(stateNameSelector)
     const [inputBoxVisible, setInputBoxVisible] = useState(false)
-    const currentStateName = useSelector(props.stateNameSelector)
 
     const onClick = () => setInputBoxVisible(true)
     const onHiding = useCallback(() => {
@@ -20,14 +22,14 @@ function SaveStateButton(props: KeyProps) {
     const dispatch = useDispatch()
     const onPopupOkClick = (value: string | undefined) => {
         if (value) {
-            saveState(store.getState(), getStorageItemKey(props.stateSalt, value))
+            saveState(store.getState(), getStorageItemKey(context.stateManagement.stateSalt, value))
             dispatch(registerState(value))
         }
         onHiding()
     }
 
     return (
-        <div className={props.className}>
+        <div className='CommandButton'>
             <Button
                 icon='save'
                 hint='Save state'
@@ -35,7 +37,7 @@ function SaveStateButton(props: KeyProps) {
             <InputBox
                 title='Save as'
                 visible={inputBoxVisible}
-                value={currentStateName}
+                value={stateName}
                 onHiding={onHiding}
                 onOkClick={onPopupOkClick} />
         </div>

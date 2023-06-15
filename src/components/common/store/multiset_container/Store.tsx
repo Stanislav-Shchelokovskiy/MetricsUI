@@ -1,9 +1,9 @@
 import { configureStore, PayloadAction } from '@reduxjs/toolkit'
 import { loadState, saveState } from '../../LocalStorage'
-import { ViewStateReducer } from '../state/Reducers'
+import { ViewStateReducer } from '../view_state/Reducers'
 import { BaseContainerState } from './BaseContainerState'
 import { BaseSetState } from './sets/Interfaces'
-import { ViewState } from '../state/Reducers'
+import { ViewState } from '../view_state/Reducers'
 
 export interface MultisetContainerShareableStore<ContainerStateT = BaseContainerState, SetStateT = BaseSetState> {
     container: ContainerStateT

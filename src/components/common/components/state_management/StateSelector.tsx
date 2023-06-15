@@ -2,15 +2,17 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadState } from '../../LocalStorage'
 import DropDownButton from 'devextreme-react/drop-down-button'
-import { applyState, changeState } from '../../store/state/Actions'
+import { applyState, changeState } from '../../store/view_state/Actions'
 import getStorageItemKey from './Utils'
-import { ValuesProps } from './Interfaces'
+import { useMultisetContainerContext } from '../../components/multiset_container/MultisetContainerContext'
+import { stateNamesSelector } from '../../store/view_state/Selectors'
 
-export default function StateSelector(props: ValuesProps) {
-    const stateNames = useSelector(props.stateNamesSelector)
+export default function StateSelector() {
+    const context = useMultisetContainerContext()
+    const stateNames = useSelector(stateNamesSelector)
     const dispatch = useDispatch()
     const onValueChange = ({ itemData }: { itemData: string } | any) => {
-        const state = loadState(getStorageItemKey(props.stateSalt, itemData))
+        const state = loadState(getStorageItemKey(context.stateManagement.stateSalt, itemData))
         if (!state)
             return
         dispatch(applyState(state))
@@ -18,7 +20,7 @@ export default function StateSelector(props: ValuesProps) {
     }
 
     return <DropDownButton
-        className={props.className}
+        className='CommandButton'
         dataSource={stateNames}
         onItemClick={onValueChange}
         focusStateEnabled={false}

@@ -18,9 +18,22 @@ interface GraphContext {
     containerDepsSelector: (container: BaseContainerState) => Array<any>
 }
 
+interface StateManagementContext {
+    shareableStateSelector: (state: any) => any,
+    stateSalt: string
+    endPoint: string
+    navigateTo: string
+}
+
+interface RawDataContext {
+    fetchRawData: (...args: any) => Promise<FetchResult<Array<any>>>
+}
+
 interface Context {
     graphSettingsPanel: GraphSettingsPanelContext
     graph: GraphContext
+    stateManagement: StateManagementContext
+    rawData: RawDataContext
 }
 
 export const MultisetContainerContext = createContext<Context>(null!)

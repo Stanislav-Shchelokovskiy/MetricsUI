@@ -3,7 +3,7 @@ import { Popup } from 'devextreme-react/popup'
 import Accordion, { Item } from 'devextreme-react/accordion'
 import ScrollView from 'devextreme-react/scroll-view'
 import Button from '../Button'
-import { PopupProps, ComponentProps } from '../../Interfaces'
+import { PopupProps } from '../../Interfaces'
 import FetchResult from '../../../common/Interfaces'
 import LoadIndicator from '../LoadIndicator'
 import Markdown from 'markdown-to-jsx';
@@ -13,7 +13,7 @@ export interface HelpItem {
     content: string
 }
 
-interface Props extends ComponentProps {
+interface Props {
     visible: boolean
     fetchHelpItems: (...args: any) => Promise<FetchResult<Array<HelpItem>>>
     fetchArgs: Array<any>
@@ -31,7 +31,7 @@ function HelpButton(props: Props) {
     }, [])
     if (props.visible) {
         return (
-            <div className={props.className}>
+            <div className='CommandButton'>
                 <Button
                     icon='help'
                     hint='Help'
@@ -74,8 +74,8 @@ function HelpPopup(props: HelpPopupProps) {
         >
             {helpItems.length > 0 ?
                 <ScrollView
-                    className={`${props.className}_ScrollView`}
-                    id={`${props.className}_ScrollView_id`}
+                    className='CommandButton_ScrollView'
+                    id='CommandButton_ScrollView_id'
                     showScrollbar='onHover'
                     scrollByThumb={true}
                     scrollByContent={false}
