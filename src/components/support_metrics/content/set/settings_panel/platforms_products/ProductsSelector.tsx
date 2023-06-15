@@ -6,8 +6,8 @@ import { changeProducts, changeProductsInclude } from '../../../../store/actions
 import { fetchProducts, Product } from '../../../../network_resource_fetcher/platforms_products/FetchProducts'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { tentsSelector } from '../../../../store/sets_reducer/Selectors'
-import { productsSelector } from '../../../../store/sets_reducer/Selectors'
+import { tentsSelector } from '../../../../store/sets/Selectors'
+import { productsSelector } from '../../../../store/sets/Selectors'
 
 
 export default function ProductsSelector() {

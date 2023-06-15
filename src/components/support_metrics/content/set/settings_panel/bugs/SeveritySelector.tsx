@@ -6,7 +6,7 @@ import { fetchSeverityValues, Severity } from '../../../../network_resource_fetc
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import BugsSelectorWrapper from './BugsSelectors'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { severitySelector } from '../../../../store/sets_reducer/Selectors'
+import { severitySelector } from '../../../../store/sets/Selectors'
 
 
 export default function SeveritySelector() {

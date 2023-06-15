@@ -4,7 +4,7 @@ import BetweenPeriodSelectorWrapper from './BetweenPeriodSelector'
 import { fetchPeriod } from '../../../../network_resource_fetcher/FetchPeriod'
 import { changeClosedBetween, changeClosedBetweenInclude } from '../../../../store/actions/Bugs'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { closedBetweenSelector } from '../../../../store/sets_reducer/Selectors'
+import { closedBetweenSelector } from '../../../../store/sets/Selectors'
 
 
 export default function ClosedBetweenSelector() {

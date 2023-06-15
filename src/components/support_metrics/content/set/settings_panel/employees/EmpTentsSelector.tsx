@@ -5,7 +5,7 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeEmpTents, changeEmpTentsInclude } from '../../../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchEmpTents, EmpTent } from '../../../../network_resource_fetcher/employees/FetchEmptTents'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { empTentsSelector } from '../../../../store/sets_reducer/Selectors'
+import { empTentsSelector } from '../../../../store/sets/Selectors'
 
 
 export default function EmpTentsSelector() {

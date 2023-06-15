@@ -5,7 +5,7 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeCustomersTypes, changeCustomersTypesInclude } from '../../../../store/actions/Customers'
 import { fetchLicenseStatuses, LicenseStatus } from '../../../../network_resource_fetcher/customers/FetchLicenseStatuses'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { customersTypesSelector } from '../../../../store/sets_reducer/Selectors'
+import { customersTypesSelector } from '../../../../store/sets/Selectors'
 
 
 export default function CustomersTypesSelector() {

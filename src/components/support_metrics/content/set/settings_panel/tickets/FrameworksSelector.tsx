@@ -5,7 +5,7 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeFrameworks, changeFrameworksInclude } from '../../../../store/actions/Tickets'
 import { FetchFrameworks, Framework } from '../../../../network_resource_fetcher/tickets/FetchFrameworks'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { frameworksSelector } from '../../../../store/sets_reducer/Selectors'
+import { frameworksSelector } from '../../../../store/sets/Selectors'
 
 
 export default function FrameworksSelector() {

@@ -3,7 +3,7 @@ import OptionSelector from '../../../../../common/components/OptionSelector'
 import { changePrivacy } from '../../../../store/actions/Tickets'
 import { SupportMetricsStore } from '../../../../store/Store'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { privacySelector } from '../../../../store/sets_reducer/Selectors'
+import { privacySelector } from '../../../../store/sets/Selectors'
 
 interface Privacy {
     id: number

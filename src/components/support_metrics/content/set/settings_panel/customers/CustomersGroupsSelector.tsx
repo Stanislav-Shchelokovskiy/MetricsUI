@@ -5,7 +5,7 @@ import OptionSelector from '../../../../../common/components/OptionSelector'
 import { SupportMetricsStore } from '../../../../store/Store'
 import { changeCustomersGroups, changeCustomersGroupsInclude } from '../../../../store/actions/Customers'
 import { fetchCustomersGroups, CustomersGroup } from '../../../../network_resource_fetcher/customers/FetchCustomersGroups'
-import { customersGroupsSelector } from '../../../../store/sets_reducer/Selectors'
+import { customersGroupsSelector } from '../../../../store/sets/Selectors'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 
 

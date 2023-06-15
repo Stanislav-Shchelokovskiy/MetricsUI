@@ -7,7 +7,7 @@ import { fetchFixedInVersions } from '../../../../network_resource_fetcher/bugs/
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import BugsSelectorWrapper from './BugsSelectors'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { fixedInSelector } from '../../../../store/sets_reducer/Selectors'
+import { fixedInSelector } from '../../../../store/sets/Selectors'
 
 
 export default function FixedInSelector() {

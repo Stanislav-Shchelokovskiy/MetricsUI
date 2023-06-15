@@ -5,7 +5,7 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeIDEs, changeIDEsInclude } from '../../../../store/actions/Tickets'
 import { fetchIDEs, IDE } from '../../../../network_resource_fetcher/tickets/FetchIDEs'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { idesSelector } from '../../../../store/sets_reducer/Selectors'
+import { idesSelector } from '../../../../store/sets/Selectors'
 
 
 export default function IDEsSelector() {

@@ -6,7 +6,7 @@ import { changeFeatures, changeFeaturesInclude } from '../../../../store/actions
 import { fetchFeatures, Feature } from '../../../../network_resource_fetcher/cat/FetchFeatures'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { tentsSelector, componentsSelector, featuresSelector } from '../../../../store/sets_reducer/Selectors'
+import { tentsSelector, componentsSelector, featuresSelector } from '../../../../store/sets/Selectors'
 
 
 export default function FeaturesSelector() {

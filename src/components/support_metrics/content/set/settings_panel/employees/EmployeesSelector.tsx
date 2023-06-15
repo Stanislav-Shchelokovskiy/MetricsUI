@@ -9,7 +9,7 @@ import { fetchEmployees, Employee } from '../../../../network_resource_fetcher/e
 import { FilterParametersNode } from '../../../../../common/store/multiset_container/sets/Interfaces'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { positionsSelector, empTribesSelector, empTentsSelector, employeesSelector } from '../../../../store/sets_reducer/Selectors'
+import { positionsSelector, empTribesSelector, empTentsSelector, employeesSelector } from '../../../../store/sets/Selectors'
 
 
 

@@ -3,7 +3,7 @@ import { changeClosedBy, changeClosedByInclude } from '../../../../store/actions
 import { EmpSelector } from '../employees/EmployeesSelector'
 import { ClosedBugsSelectorWrapper } from './BugsSelectors'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { tribesSelector, closedBySelector } from '../../../../store/sets_reducer/Selectors'
+import { tribesSelector, closedBySelector } from '../../../../store/sets/Selectors'
 
 
 export default function ClosedBySelector() {

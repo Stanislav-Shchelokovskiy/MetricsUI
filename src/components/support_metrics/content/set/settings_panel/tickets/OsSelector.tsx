@@ -5,7 +5,7 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeOperatingSystems, changeOperatingSystemsInclude } from '../../../../store/actions/Tickets'
 import { fetchOperatingSystems, OS } from '../../../../network_resource_fetcher/tickets/FetchOperatingSystems'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { operatingSystemsSelector } from '../../../../store/sets_reducer/Selectors'
+import { operatingSystemsSelector } from '../../../../store/sets/Selectors'
 
 
 export default function OsSelector() {

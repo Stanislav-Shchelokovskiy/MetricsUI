@@ -6,7 +6,7 @@ import { changePercentile, changePercentileInclude } from '../../../store/action
 import { FilterParameterNode } from '../../../../common/store/multiset_container/sets/Interfaces'
 import { getIncludeButtonOptions } from '../../../../common/components/Button'
 import { useSetTitle } from '../../../../common/components/multiset_container/set/SetContext'
-import { percentileSelector } from '../../../store/sets_reducer/Selectors'
+import { percentileSelector } from '../../../store/sets/Selectors'
 
 
 export default function PercentileSelector() {

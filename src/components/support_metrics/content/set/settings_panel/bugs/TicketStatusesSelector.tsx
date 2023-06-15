@@ -6,7 +6,7 @@ import { fetchTicketStatuses, TicketStatus } from '../../../../network_resource_
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import BugsSelectorWrapper from './BugsSelectors'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { ticketStatusesSelector } from '../../../../store/sets_reducer/Selectors'
+import { ticketStatusesSelector } from '../../../../store/sets/Selectors'
 
 
 export default function TicketStatusesSelector() {

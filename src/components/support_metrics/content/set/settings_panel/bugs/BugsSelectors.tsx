@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { useSelector } from 'react-redux'
 import { SupportMetricsStore } from '../../../../store/Store'
 import { closedIsNotSelected, bugIsNotSelected } from '../../../../store/Utils'
-import { ticketsTypesSelector, ticketStatusesSelector } from '../../../../store/sets_reducer/Selectors'
+import { ticketsTypesSelector, ticketStatusesSelector } from '../../../../store/sets/Selectors'
 
 interface BugSelectorProps {
     Wrapped: FC<any>

@@ -4,7 +4,7 @@ import BetweenPeriodSelectorWrapper from './BetweenPeriodSelector'
 import { fetchPeriod } from '../../../../network_resource_fetcher/FetchPeriod'
 import { changeFixedBetween, changeFixedBetweenInclude } from '../../../../store/actions/Bugs'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { fixedBetweenSelector } from '../../../../store/sets_reducer/Selectors'
+import { fixedBetweenSelector } from '../../../../store/sets/Selectors'
 
 
 export default function FixedBetweenSelector() {

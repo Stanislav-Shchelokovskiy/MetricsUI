@@ -5,7 +5,7 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeTicketsTags, changeTicketsTagsInclude } from '../../../../store/actions/Tickets'
 import { fetchTicketsTags, TicketsTag } from '../../../../network_resource_fetcher/tickets/FetchTicketsTags'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { ticketsTagsSelector } from '../../../../store/sets_reducer/Selectors'
+import { ticketsTagsSelector } from '../../../../store/sets/Selectors'
 
 
 export default function TicketsTagsSelector() {

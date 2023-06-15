@@ -5,7 +5,7 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeVersions, changeVersionsInclude } from '../../../../store/actions/Tickets'
 import { fetchVersions, Version } from '../../../../network_resource_fetcher/tickets/FetchVersions'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { versionsSelector } from '../../../../store/sets_reducer/Selectors'
+import { versionsSelector } from '../../../../store/sets/Selectors'
 
 
 export default function VersionsSelector() {

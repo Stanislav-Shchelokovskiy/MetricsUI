@@ -4,7 +4,7 @@ import { setsReducer } from './SetsReducer'
 import { storeValidator } from './StoreStateValidator'
 import { MultisetContainerStore, MultisetContainerShareableStore } from '../../common/store/multiset_container/Store'
 import { ContainerState } from './ContainerReducer'
-import { SetState } from './sets_reducer/Interfaces'
+import { SetState } from './sets/Interfaces'
 
 export const supportMetricsStore = configureMultisetContainerStore(
     'current_customers_activity_state_v1',

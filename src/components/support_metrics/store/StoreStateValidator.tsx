@@ -1,7 +1,7 @@
 import { SupportMetricsShareableStore } from './Store'
 import { ContainerState } from './ContainerReducer'
-import { SetState } from './sets_reducer/Interfaces'
-import { DEFAULT_SET } from './sets_reducer/Defaults'
+import { SetState } from './sets/Interfaces'
+import { DEFAULT_SET } from './sets/Defaults'
 import { defaultContainerValidator } from '../../common/store/multiset_container/StoreStateValidator'
 import { toFriendlyTitle } from '../../common/store/multiset_container/Utils'
 

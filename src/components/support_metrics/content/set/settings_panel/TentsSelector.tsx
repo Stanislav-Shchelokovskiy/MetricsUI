@@ -6,7 +6,7 @@ import { fetchTents } from '../../../../common/network_resource_fetcher/FetchTen
 import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
 import { changeTents, changeTentsInclude } from '../../../store/actions/SetCommon'
 import { useSetTitle } from '../../../../common/components/multiset_container/set/SetContext'
-import { tentsSelector } from '../../../store/sets_reducer/Selectors'
+import { tentsSelector } from '../../../store/sets/Selectors'
 
 
 export default function TentsSelector() {

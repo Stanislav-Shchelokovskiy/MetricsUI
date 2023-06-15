@@ -20,14 +20,15 @@ import { fetchTicketsWithIterationsAggregates } from './network_resource_fetcher
 import { SUPPORT_ANALYTICS_END_POINT } from '../common/EndPoint'
 import { getShareableState } from '../common/store/multiset_container/Store'
 import { fetchTicketsWithIterationsRaw } from './network_resource_fetcher/FetchTicketsWithIterationsRaw'
+import { fetchDisplayFilter } from './network_resource_fetcher/FetchDisplayFilter'
 
-const graphSettingsContext = {
+const graphSettings = {
     fetchPeriod: fetchPeriod,
     fetchGroupByPeriods: fetchGroupByPeriods,
     fetchMetrics: fetchMetrics,
 }
 
-const graphContext = {
+const graph = {
     fetchPeriods: fetchPeriodsArray,
     fetchAggs: fetchTicketsWithIterationsAggregates,
     containerDepsSelector: (containerState: BaseContainerState) => [(containerState as ContainerState).baselineAlignedModeEnabled],
@@ -44,11 +45,16 @@ const rawData = {
     fetchRawData: fetchTicketsWithIterationsRaw
 }
 
+const filterLabel = {
+    fetchDisplayFilter: fetchDisplayFilter
+}
+
 const multisetContainerContext = {
-    graphSettingsPanel: graphSettingsContext,
-    graph: graphContext,
+    graphSettingsPanel: graphSettings,
+    graph: graph,
     stateManagement: stateManagement,
     rawData: rawData,
+    filterLabel: filterLabel
 }
 
 

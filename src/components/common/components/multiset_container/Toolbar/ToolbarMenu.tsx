@@ -1,25 +1,16 @@
 import React, { useState, PropsWithChildren, FC, useRef } from 'react'
 import Button from '../../Button'
 import { ToolbarProps } from './Toolbar'
+import FilterTooltip from './FilterTooltip'
 
-export interface ToolbarMenuProps extends ToolbarProps {
-    menuButtonTooltip: FC<TooltipProps>
-}
-
-export interface TooltipProps {
-    visible: boolean
-    target: string
-}
-
-
-export function ToolbarMenu(props: PropsWithChildren<ToolbarMenuProps>) {
+export function ToolbarMenu(props: PropsWithChildren<ToolbarProps>) {
     return <div className='ToolbarMenu'>
         <MenuButton {...props} />
         {props.children}
     </div>
 }
 
-function MenuButton(props: ToolbarMenuProps) {
+function MenuButton(props: ToolbarProps) {
     const [filterTooltipVisible, setFilterTooltipVisible] = useState(false)
     const timerId = useRef<NodeJS.Timeout | undefined>(undefined)
     const onEnter = () => {
@@ -44,7 +35,7 @@ function MenuButton(props: ToolbarMenuProps) {
             icon='menu'
             onClick={props.showHideMenu}
         />
-        <props.menuButtonTooltip
+        <FilterTooltip
             visible={filterTooltipVisible && !props.menuOpened}
             target='#ToolbarMenuButton'
         />

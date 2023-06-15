@@ -5,7 +5,7 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeRepliesTypes, changeRepliesTypesInclude } from '../../../../store/actions/CAT'
 import { fetchRepliesTypes, ReplyType } from '../../../../network_resource_fetcher/cat/FetchRepliesTypes'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { repliesTypesSelector } from '../../../../store/sets_reducer/Selectors'
+import { repliesTypesSelector } from '../../../../store/sets/Selectors'
 
 
 export default function ReplyTypesSelector() {

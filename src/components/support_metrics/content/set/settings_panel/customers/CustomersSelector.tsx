@@ -5,7 +5,7 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeCustomers, changeCustomersInclude } from '../../../../store/actions/Customers'
 import { fetchCustomers, Customer, fetchValidateCustomers } from '../../../../network_resource_fetcher/customers/FetchCustomers'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { customersSelector } from '../../../../store/sets_reducer/Selectors'
+import { customersSelector } from '../../../../store/sets/Selectors'
 
 
 export default function CustomersSelector() {

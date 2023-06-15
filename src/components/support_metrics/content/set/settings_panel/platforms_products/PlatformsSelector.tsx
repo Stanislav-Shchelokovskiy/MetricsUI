@@ -6,7 +6,7 @@ import { changePlatforms, changePlatformsInclude } from '../../../../store/actio
 import { fetchPlatforms, Platform } from '../../../../network_resource_fetcher/platforms_products/FetchPlatforms'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { tentsSelector, platformsSelector } from '../../../../store/sets_reducer/Selectors'
+import { tentsSelector, platformsSelector } from '../../../../store/sets/Selectors'
 
 
 export default function PlatformsSelector() {

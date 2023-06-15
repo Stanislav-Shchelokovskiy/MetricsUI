@@ -1,28 +1,37 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import FilterBuilder, { CustomOperation } from 'devextreme-react/filter-builder'
-import { SupportMetricsStore } from '../store/Store'
 import { Tooltip } from 'devextreme-react/tooltip'
-import { fetchDisplayFilter } from '../network_resource_fetcher/FetchDisplayFilter'
-import { getSetDataFields } from '../store/sets_reducer/SetDescriptor'
-import { TooltipProps } from '../../common/components/multiset_container/Toolbar/ToolbarMenu'
+import { getSetDataFields } from '../../../../support_metrics/store/sets/SetDescriptor'
+import { MultisetContainerStore } from '../../../store/multiset_container/Store'
+import { metricSelector, setsSelector } from '../../../store/multiset_container/Selectors'
+import { BaseSetState } from '../../../store/multiset_container/sets/Interfaces'
+import { useMultisetContainerContext } from '../MultisetContainerContext'
+
+interface TooltipProps {
+    visible: boolean
+    target: string
+}
 
 
-export const FilterTooltip = React.memo(({ visible, target }: TooltipProps) => {
+function FilterTooltip(props: TooltipProps) {
     return (
         <Tooltip
-            className='CustomersActivityFilterTooltip'
-            target={target}
-            visible={visible}
+            className='MultisetContainerFilterTooltip'
+            target={props.target}
+            visible={props.visible}
         >
             <FilterLabel />
         </Tooltip>
     )
-})
+}
+
+export default React.memo(FilterTooltip)
 
 const FilterLabel = React.memo(() => {
-    const metric = useSelector((store: SupportMetricsStore) => store.container.metric)
-    const customersActivitySets = useSelector((store: SupportMetricsStore) => store.sets)
+    const context = useMultisetContainerContext()
+    const metric = useSelector<MultisetContainerStore, string>(metricSelector)
+    const sets = useSelector<MultisetContainerStore, Array<BaseSetState>>(setsSelector)
 
     const fields = useMemo(() => getSetDataFields(), [])
 
@@ -30,7 +39,7 @@ const FilterLabel = React.memo(() => {
 
     useEffect(() => {
         (async () => {
-            Promise.all(customersActivitySets.map(set => fetchDisplayFilter(metric, set)))
+            Promise.all(sets.map(set => context.filterLabel.fetchDisplayFilter(metric, set)))
                 .then(fetchResults => {
                     const ds: Array<any> = []
                     let fetchResult: any
@@ -45,12 +54,12 @@ const FilterLabel = React.memo(() => {
                 })
         }
         )()
-    }, [metric, customersActivitySets])
+    }, [metric, sets])
 
     if (displayFilter.length < 1)
         return <div>No filters</div>
     return <FilterBuilder
-        className='CustomersActivityFilterBuilder'
+        className='MultisetContainerFilterLabel'
         fields={fields}
         value={displayFilter}
     >

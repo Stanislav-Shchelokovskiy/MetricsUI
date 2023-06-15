@@ -29,11 +29,16 @@ interface RawDataContext {
     fetchRawData: (...args: any) => Promise<FetchResult<Array<any>>>
 }
 
+interface FilterLabelContext {
+    fetchDisplayFilter(metric: string, set: BaseSetState): Promise<FetchResult<Array<any>>>
+}
+
 interface Context {
     graphSettingsPanel: GraphSettingsPanelContext
     graph: GraphContext
     stateManagement: StateManagementContext
     rawData: RawDataContext
+    filterLabel: FilterLabelContext
 }
 
 export const MultisetContainerContext = createContext<Context>(null!)

@@ -3,7 +3,7 @@ import { changeAssignedTo, changeAssignedToInclude } from '../../../../store/act
 import { EmpSelector } from '../employees/EmployeesSelector'
 import BugsSelectorWrapper from './BugsSelectors'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { assignedToSelector } from '../../../../store/sets_reducer/Selectors'
+import { assignedToSelector } from '../../../../store/sets/Selectors'
 
 
 export default function AssignedToSelector() {

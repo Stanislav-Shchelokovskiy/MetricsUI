@@ -5,7 +5,7 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeConversionsTypes, changeConversionsTypesInclude } from '../../../../store/actions/Customers'
 import { fetchConversionStatuses, ConversionStatus } from '../../../../network_resource_fetcher/customers/FetchConversionStatuses'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { customersTypesSelector, conversionsTypesSelector } from '../../../../store/sets_reducer/Selectors'
+import { customersTypesSelector, conversionsTypesSelector } from '../../../../store/sets/Selectors'
 
 
 export default function CustomersConversionsTypesSelector() {

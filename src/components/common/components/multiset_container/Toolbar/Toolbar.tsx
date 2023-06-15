@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react'
 import ToolbarCommands from './ToolbarCommands'
+import { ToolbarMenu } from './ToolbarMenu'
 
 export interface ToolbarProps {
     showHideMenu: () => void
@@ -9,7 +10,9 @@ export interface ToolbarProps {
 export function Toolbar(props: PropsWithChildren<ToolbarProps>) {
     return (
         <div className='Toolbar'>
-            {props.children}
+            <ToolbarMenu {...props}>
+                {props.children}
+            </ToolbarMenu>
             <ToolbarCommands />
         </div>
     )
