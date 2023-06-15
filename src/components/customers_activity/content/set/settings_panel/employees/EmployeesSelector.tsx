@@ -71,9 +71,8 @@ export function EmpSelector(props: EmpSelectorProps) {
 }
 
 const defaultProps = {
-    positionsSelector: undefined,
-    tribesSelector: undefined,
-    tentsSelector: undefined,
+    positionsSelector: (store: CustomersActivityStore, setTitle: string) => undefined,
+    tribesSelector: (store: CustomersActivityStore, setTitle: string) => undefined,
+    tentsSelector: (store: CustomersActivityStore, setTitle: string) => undefined,
 }
-
 EmpSelector.defaultProps = defaultProps
