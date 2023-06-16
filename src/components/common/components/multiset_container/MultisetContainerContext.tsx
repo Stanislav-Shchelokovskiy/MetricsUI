@@ -39,7 +39,8 @@ interface Context {
     rawData: RawDataContext
     filterLabel: FilterLabelContext
     fetchMetrics: (...args: any) => Promise<FetchResult<Array<Metric>>>,
-    changeContext: (context: number) => void
+    changeMetric: (metric: Metric) => void
+    context: number
 }
 
 export const MultisetContainerContext = createContext<Context>(null!)

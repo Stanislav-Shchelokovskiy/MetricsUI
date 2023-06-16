@@ -24,7 +24,7 @@ interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> exten
 
 
 export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: Props<DataSourceT, ValueExprT>) {
-    const appDispatch = useDispatch()
+    const dispatch = useDispatch()
     const onValueChangeHandler = (value: ValueExprT) => {
         if (props.onValueChangeEx) {
             const keySelector = props.valueExpr === undefined ?
@@ -33,7 +33,7 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
             const dsValue = (dataSource as Array<any>).find(x => keySelector(x) === value)
             props.onValueChangeEx(dsValue)
         }
-        appDispatch(props.onValueChange(value))
+        dispatch(props.onValueChange(value))
     }
 
     const value = useSelector(props.valueSelector)

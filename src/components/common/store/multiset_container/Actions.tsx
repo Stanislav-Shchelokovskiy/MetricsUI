@@ -22,8 +22,5 @@ export const changeGroupByPeriod = getAction<string | undefined>(CHANGE_GROUP_BY
 export const CHANGE_METRIC = 'change_metric'
 export const changeMetric = getAction<string | undefined>(CHANGE_METRIC)
 
-export const CHANGE_CONTEXT = 'change_context'
-export const changeContext = getAction<number>(CHANGE_CONTEXT)
-
 export const CHANGE_COMPARISON_METHOD = 'change_comparison_method'
 export const changeComparisonMethod = getAction<string | undefined>(CHANGE_COMPARISON_METHOD)

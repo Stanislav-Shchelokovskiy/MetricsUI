@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import OptionSelector from '../../OptionSelector'
 import { changeMetric } from '../../../store/multiset_container/Actions'
 import { TAKE_FROM_DEFAULT_SELECTOR } from '../../../store/multiset_container/Utils'
@@ -12,11 +12,17 @@ export interface Metric {
 }
 
 export default function MetricSelector() {
+    const [metric, dispatchMetric] = useState<Metric>()
     const context = useMultisetContainerContext()
     const defaultValueSelector = useCallback((values: Array<Metric>) => values[0]?.name, [])
     const onValueChangeEx = useCallback((dsVal: Metric) => {
-        context.changeContext(dsVal.context)
+        dispatchMetric(dsVal)
     }, [])
+
+    useEffect(() => {
+        if(metric)
+            context.changeMetric(metric)
+    }, [metric])
 
     return <OptionSelector
         className='ComparisonGraph_MetricSelector'

@@ -1,17 +1,18 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { CHANGE_CONTEXT } from '../../common/store/multiset_container/Actions'
+import { CHANGE_CONTEXT } from './Actions'
+import { Metric } from '../../common/components/multiset_container/graph/MetricSelector'
 
 export enum Context {
-    Support=0,
-    Cost=1,
+    Support = 0,
+    Cost = 1,
 }
 
-interface ContainerState {
-    context: Context
+export interface ContainerState {
+    metric: Metric
 }
 
 const INITIAL_STATE: ContainerState = {
-    context: Context.Support
+    metric: { name: '', context: Context.Support }
 }
 
 export function containerReducer(state: ContainerState = INITIAL_STATE, action: PayloadAction<any>): ContainerState {
@@ -20,7 +21,7 @@ export function containerReducer(state: ContainerState = INITIAL_STATE, action: 
         case CHANGE_CONTEXT:
             return {
                 ...state,
-                context: action.payload
+                metric: action.payload
             }
 
         default:

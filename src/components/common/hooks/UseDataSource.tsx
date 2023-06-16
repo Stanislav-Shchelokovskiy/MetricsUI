@@ -28,7 +28,7 @@ export default function useDataSource<DataSourceT>(
                 }
             })()
         }
-    }, [...fetchArgs])
+    }, [...fetchArgs, fetchDataSource])
     return ds
 }
 

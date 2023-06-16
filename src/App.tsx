@@ -7,14 +7,12 @@ import React from 'react'
 import { RouterProvider, useRouteError, createBrowserRouter, isRouteErrorResponse, Link } from 'react-router-dom'
 import { Button } from 'devextreme-react/button'
 
-import { Provider } from 'react-redux';
+import { Provider } from 'react-redux'
 import { forecasterStore } from './components/forecaster/store/Store'
-import { supportMetricsStore } from './components/support_metrics/store/Store'
-import { costMetricsStore } from './components/cost_metrics/store/Store'
 
 import Forecaster from './components/forecaster/Forecaster'
-import SupportMetrics, { SupportMetricsApplySharedState } from './components/support_metrics/SupportMetricsContainer'
-import CostMetrics, { CostMetricsApplySharedState } from './components/cost_metrics/CostMetricsContainer'
+import EngineeringMetrics, { EngineeringMetricsApplySharedState } from './components/engineering_metrics/EngineeringMetricsContainer'
+import { Navigate } from 'react-router-dom'
 
 
 function ErrorPage() {
@@ -37,10 +35,10 @@ function Root() {
           text='Forecaster'
           focusStateEnabled={false} />
       </Link>
-      <Link to={'CustomersActivity'} className='NavigationButton'>
+      <Link to={'EngineeringMetrics'} className='NavigationButton'>
         <Button
           className='NavElement'
-          text='Customers Activity'
+          text='Engineering metrics'
           focusStateEnabled={false} />
       </Link>
     </div>
@@ -63,35 +61,23 @@ const router = createBrowserRouter([
   },
   {
     path: '/CustomersActivity',
-    element: (
-      <Provider store={supportMetricsStore}>
-        <SupportMetrics />
-      </Provider>
-    ),
+    element: <Navigate to='/EngineeringMetrics' replace={true} />,
   },
   {
     path: '/CustomersActivity/:stateId',
-    element: (
-      <Provider store={supportMetricsStore}>
-        <SupportMetricsApplySharedState />
-      </Provider>
-    ),
+    element: <EngineeringMetricsApplySharedState />,
   },
   {
     path: '/CostMetrics',
-    element: (
-      <Provider store={costMetricsStore}>
-        <CostMetrics />
-      </Provider>
-    ),
+    element: <Navigate to='/EngineeringMetrics' replace={true} />,
   },
   {
     path: '/CostMetrics/:stateId',
-    element: (
-      <Provider store={costMetricsStore}>
-        <CostMetricsApplySharedState />
-      </Provider>
-    ),
+    element: <EngineeringMetricsApplySharedState />,
+  },
+  {
+    path: '/EngineeringMetrics',
+    element: <EngineeringMetrics />,
   },
 ])
 

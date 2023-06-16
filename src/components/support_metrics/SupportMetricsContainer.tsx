@@ -55,7 +55,8 @@ export const supportMetricsContext = {
     rawData: rawData,
     filterLabel: filterLabel,
     fetchMetrics: fetchMetrics,
-    changeContext: (ctx: any) => { },
+    changeMetric: (ctx: any) => { },
+    context: 0
 }
 
 
