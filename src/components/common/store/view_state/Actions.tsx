@@ -7,7 +7,7 @@ export const REGISTER_STATE = 'register_state'
 export const registerState = getAction<string>(REGISTER_STATE)
 
 export const DROP_STATE = 'drop_state'
-export const dropState = getPayloadAction<string>(DROP_STATE)
+export const dropState = getAction<string>(DROP_STATE)
 
 export const CHANGE_STATE = 'change_state'
-export const changeState = getPayloadAction<string>(CHANGE_STATE)
+export const changeState = getAction<string>(CHANGE_STATE)
