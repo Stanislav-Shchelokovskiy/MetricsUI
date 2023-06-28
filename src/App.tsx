@@ -4,7 +4,7 @@ import './components/common/styles/App.css'
 import './components/common/styles/Components.css'
 
 import React from 'react'
-import { RouterProvider, useRouteError, createBrowserRouter, isRouteErrorResponse, Link } from 'react-router-dom'
+import { Navigate, RouterProvider, useRouteError, createBrowserRouter, isRouteErrorResponse, Link } from 'react-router-dom'
 import { Button } from 'devextreme-react/button'
 
 import { Provider } from 'react-redux'
@@ -12,7 +12,7 @@ import { forecasterStore } from './components/forecaster/store/Store'
 
 import Forecaster from './components/forecaster/Forecaster'
 import EngineeringMetrics, { EngineeringMetricsApplySharedState } from './components/engineering_metrics/EngineeringMetricsContainer'
-import { Navigate } from 'react-router-dom'
+import { Context } from './components/common/store/multiset_container/Context'
 
 
 function ErrorPage() {
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/CustomersActivity/:stateId',
-    element: <EngineeringMetricsApplySharedState />,
+    element: <EngineeringMetricsApplySharedState context={Context.Support}/>,
   },
   {
     path: '/CostMetrics',
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/CostMetrics/:stateId',
-    element: <EngineeringMetricsApplySharedState />,
+    element: <EngineeringMetricsApplySharedState context={Context.Cost} />,
   },
   {
     path: '/EngineeringMetrics',

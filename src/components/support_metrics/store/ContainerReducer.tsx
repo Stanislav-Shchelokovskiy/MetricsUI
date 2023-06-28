@@ -4,14 +4,16 @@ import { SupportMetricsShareableStore } from './Store'
 import { containerValidator } from './StoreStateValidator'
 import { getContainerReducer } from '../../common/store/multiset_container/ContainerReducerFactory'
 import { CHANGE_BASELINE_ALIGNED_MODE } from './actions/Common'
+import { Context } from '../../common/store/multiset_container/Context'
 
+export const CONTEXT = Context.Support
 
 export interface ContainerState extends BaseContainerState {
     baselineAlignedModeEnabled: boolean
 }
 
 const INITIAL_STATE: ContainerState = {
-    ...getDefaultBaseContainerState(),
+    ...getDefaultBaseContainerState(CONTEXT),
     baselineAlignedModeEnabled: false,
 }
 

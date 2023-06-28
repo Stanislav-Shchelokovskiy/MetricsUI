@@ -1,18 +1,17 @@
 import { CostMetricsStore, CostMetricsShareableStore } from './Store'
-import { ContainerState } from './ContainerReducer'
+import { ContainerState, CONTEXT } from './ContainerReducer'
 import { SetState } from './sets/SetsReducer'
 import { defaultContainerValidator } from '../../common/store/multiset_container/StoreStateValidator'
 
-export function stateValidator(state: CostMetricsStore) {
-    state.container = containerValidator(state)
-    state.sets = setsValidator(state)
-    return state
+export function stateValidator(state: CostMetricsStore): CostMetricsStore {
+    return {
+        container: containerValidator(state),
+        sets: setsValidator(state),
+    }
 }
 
 export function containerValidator(state: CostMetricsShareableStore): ContainerState {
-    let container = state.container
-    container = defaultContainerValidator(container)
-    return container
+    return defaultContainerValidator(state.container, CONTEXT)
 }
 
 export function setsValidator(state: CostMetricsShareableStore): Array<SetState> {

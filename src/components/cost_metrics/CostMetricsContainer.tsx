@@ -17,6 +17,7 @@ import { fetchCostMetricsAggregates } from './network_resource_fetcher/CostMetri
 import { getShareableState } from '../common/store/multiset_container/Store'
 import { fetchCostMetricsRaw } from './network_resource_fetcher/CostMetricsRaw'
 import { fetchDisplayFilter } from '../cost_metrics/network_resource_fetcher/DisplayFilter'
+import { CONTEXT } from './store/ContainerReducer'
 
 import Sets from './content/Sets'
 import CostMetricsToolbar from './toolbar/Toolbar'
@@ -55,7 +56,8 @@ export const costMetricsContext = {
     filterLabel: filterLabel,
     fetchMetrics: fetchMetrics,
     changeMetric: (ctx: any) => { },
-    context: 1,
+    changeState: (state: any) => { },
+    context: CONTEXT,
 }
 
 export function CostMetricsApplySharedState() {

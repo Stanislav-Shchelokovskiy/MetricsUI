@@ -1,29 +1,31 @@
 import { SupportMetricsShareableStore } from './Store'
-import { ContainerState } from './ContainerReducer'
+import { ContainerState, CONTEXT } from './ContainerReducer'
 import { SetState } from './sets/Interfaces'
 import { DEFAULT_SET } from './sets/Defaults'
 import { defaultContainerValidator } from '../../common/store/multiset_container/StoreStateValidator'
 import { toFriendlyTitle } from '../../common/store/multiset_container/Utils'
+import { SupportMetricsStore } from './Store'
 
 interface OldCustomersActivityShareableStore {
     customersActivity: ContainerState
     customersActivitySets: Array<SetState>
 }
 
-export function storeValidator({ customersActivity, customersActivitySets, ...remainder }: any) {
+export function storeValidator({ customersActivity, customersActivitySets, ...remainder }: any): SupportMetricsStore {
     const state = customersActivity ? {
         container: customersActivity,
         sets: customersActivitySets,
         ...remainder,
     } : remainder
-    state.container = containerValidator(state)
-    state.sets = setsValidator(state)
-    return state
+    return {
+        container: containerValidator(state),
+        sets: setsValidator(state),
+    }
 }
 
 export function containerValidator(state: SupportMetricsShareableStore | OldCustomersActivityShareableStore): ContainerState {
     let container = 'customersActivity' in state ? state.customersActivity : state.container
-    container = defaultContainerValidator(container)
+    container = defaultContainerValidator(container, CONTEXT)
     container.sets = container.sets.map(x => toFriendlyTitle(x))
     if (container.baselineAlignedModeEnabled === undefined)
         container.baselineAlignedModeEnabled = false

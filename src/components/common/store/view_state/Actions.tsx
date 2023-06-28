@@ -1,7 +1,7 @@
-import { getPayloadAction, getAction } from '../Actions'
+import { getAction } from '../Actions'
 
 export const APPLY_STATE = 'apply_state'
-export const applyState = getPayloadAction<any>(APPLY_STATE)
+export const applyState = getAction<any>(APPLY_STATE)
 
 export const REGISTER_STATE = 'register_state'
 export const registerState = getAction<string>(REGISTER_STATE)

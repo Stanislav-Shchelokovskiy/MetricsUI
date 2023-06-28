@@ -6,9 +6,9 @@ import Button from '../Button'
 import { dropState } from '../../LocalStorage'
 import { dropState as dropStateAction } from '../../store/view_state/Actions'
 import getStorageItemKey from './Utils'
-import { useMultisetContainerContext } from '../../components/multiset_container/MultisetContainerContext'
 import { PopupProps } from '../../Interfaces'
 import { stateNamesSelector } from '../../store/view_state/Selectors'
+import { STATE_SALT } from '../../store/view_state/Store'
 
 function DropStateButton() {
     const [popupVisible, setPopupVisible] = useState(false)
@@ -36,13 +36,11 @@ export default React.memo(DropStateButton)
 
 
 function DropStatePopup(props: PopupProps) {
-    const context = useMultisetContainerContext()
     const stateNames = useSelector(stateNamesSelector)
     const dispatch = useDispatch()
-    const onItemDeleted = (e: any) => {
-        const key = e.itemData
-        dispatch(dropStateAction(key))
-        dropState(getStorageItemKey(context.stateManagement.stateSalt, key))
+    const onItemDeleted = ({ itemData: stateName }: { itemData: string } | any) => {
+        dispatch(dropStateAction(stateName))
+        dropState(getStorageItemKey(STATE_SALT, stateName))
     }
 
     return (

@@ -2,7 +2,7 @@ import { configureMultisetContainerStore } from '../../common/store/multiset_con
 import { containerReducer } from './ContainerReducer'
 import { setsReducer } from './SetsReducer'
 import { storeValidator } from './StoreStateValidator'
-import { MultisetContainerStore, MultisetContainerShareableStore } from '../../common/store/multiset_container/Store'
+import { MultisetContainerStore } from '../../common/store/multiset_container/Store'
 import { ContainerState } from './ContainerReducer'
 import { SetState } from './sets/Interfaces'
 
@@ -14,4 +14,5 @@ export const supportMetricsStore = configureMultisetContainerStore(
 )
 
 export type SupportMetricsStore = MultisetContainerStore<ContainerState, SetState>
-export type SupportMetricsShareableStore = MultisetContainerShareableStore<ContainerState, SetState>
+export type SupportMetricsShareableStore = MultisetContainerStore<ContainerState, SetState>
+

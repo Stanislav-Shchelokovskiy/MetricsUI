@@ -1,10 +1,10 @@
 import React, { useCallback, useMemo, FC } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Provider, useStore } from 'react-redux'
-import { changeContext } from './store/Actions'
-import { Context } from './store/ContainerReducer'
+import { Provider, useStore, useDispatch, useSelector} from 'react-redux'
+import { Store } from '@reduxjs/toolkit'
+import { changeMetric, changeContext } from './store/Actions'
+import { isSupportContextSelected, contextOrDefault, Context } from '../common/store/multiset_container/Context'
 import { contextSelector } from './store/Selectors'
-import { MultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
+import { MultisetContainerContext, useMultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
 import ApplySharedState from '../common/components/state_management/ApplySharedState'
 import { supportMetricsContext } from '../support_metrics/SupportMetricsContainer'
 import { costMetricsContext } from '../cost_metrics/CostMetricsContainer'
@@ -15,13 +15,14 @@ import { Metric } from '../common/components/multiset_container/graph/MetricSele
 import { EngineeringMetricsStore } from './store/Store'
 import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
 import { SettingsSets } from '../common/components/multiset_container/MultisetContainer'
-import { useMultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
 import SupportMetricsSet from '../support_metrics/content/set/Set'
 import CostMetricsSet from '../cost_metrics/content/set/Set'
 import SupportMetricsToolbar from '../support_metrics/toolbar/Toolbar'
 import CostMetricsToolbar from '../cost_metrics/toolbar/Toolbar'
 import { ContainerState } from './store/ContainerReducer'
 import { engineeringMetricsStore } from './store/Store'
+import { MultisetContainerStore } from '../common/store/multiset_container/Store'
+import { applyState } from '../common/store/view_state/Actions'
 
 export default function EngineeringMetrics() {
     return <Provider store={engineeringMetricsStore}>
@@ -29,7 +30,8 @@ export default function EngineeringMetrics() {
     </Provider>
 }
 
-export function EngineeringMetricsApplySharedState() {
+export function EngineeringMetricsApplySharedState({ context }: { context: Context }) {
+    engineeringMetricsStore.dispatch(changeContext(context))
     return <Provider store={engineeringMetricsStore}>
         <EngineeringMetricsContainer content={ApplySharedState} />
     </Provider>
@@ -41,7 +43,7 @@ interface Props {
 }
 
 function getContext(ctx: Context) {
-    if (ctx === Context.Support)
+    if (isSupportContextSelected(ctx))
         return supportMetricsContext
     return costMetricsContext
 }
@@ -49,16 +51,25 @@ function getContext(ctx: Context) {
 function EngineeringMetricsContainer(props: Props) {
     const ctx = useSelector(contextSelector)
     const dispatch = useDispatch()
-    const changeMetric = useCallback((metric: Metric) => {
-        dispatch(changeContext(metric))
+    const dispatchMetric = useCallback((metric: Metric) => {
+        dispatch(changeMetric(metric))
+    }, [])
+
+    const dispatchState = useCallback((state: MultisetContainerStore) => {
+        console.log(state)
+        const context = contextOrDefault(state.container?.context)
+        const store = getStore(context)
+        store.dispatch(applyState(state))
+        dispatch(changeContext(context))
     }, [])
 
     const context = useMemo(() => {
         return {
             ...getContext(ctx),
-            changeMetric: changeMetric,
             fetchMetrics: fetchMetrics,
-            context: ctx
+            changeMetric: dispatchMetric,
+            changeState: dispatchState,
+            context: ctx,
         }
     }, [ctx])
 
@@ -66,29 +77,29 @@ function EngineeringMetricsContainer(props: Props) {
     const state = store.getState()
     return <MultisetContainerContext.Provider value={context}>
         <Provider store={getStore(ctx)}>
-            <props.content metric={state.metric} />
+            <props.content {...state} />
         </Provider>
     </MultisetContainerContext.Provider >
 }
 
 function EngineeringMetricsContent(props: ContainerState) {
-    console.log(window.location.href.replace(window.location.pathname, '/qwe'))
+    //console.log(window.location.href.replace(window.location.pathname, '/qwe'))
     return <MultisetContainer
-        metric={props.metric.name}
+        metric={props.metric}
         sets={Sets}
-        toolbar={getToolbar(props.metric.context)}
+        toolbar={getToolbar(props.context)}
     />
 }
 
 function Sets() {
     const { context } = useMultisetContainerContext()
-    return <SettingsSets set={context === Context.Support ? SupportMetricsSet : CostMetricsSet} />
+    return <SettingsSets set={isSupportContextSelected(context) ? SupportMetricsSet : CostMetricsSet} />
 }
 
 function getStore(ctx: Context) {
-    return ctx === Context.Support ? supportMetricsStore : costMetricsStore as any
+    return isSupportContextSelected(ctx) ? supportMetricsStore : costMetricsStore as Store
 }
 
 function getToolbar(ctx: Context) {
-    return ctx === Context.Support ? SupportMetricsToolbar : CostMetricsToolbar
+    return isSupportContextSelected(ctx) ? SupportMetricsToolbar : CostMetricsToolbar
 }

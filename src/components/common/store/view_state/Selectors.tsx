@@ -1,8 +1,8 @@
-import { ViewStateStore } from './Reducers'
+import { ViewState } from './Reducers'
 
-export function stateNamesSelector(store: ViewStateStore) {
-    return store.viewState.stateKeys
+export function stateNamesSelector(store: ViewState) {
+    return store.stateKeys
 }
-export function stateNameSelector(store: ViewStateStore) {
-    return store.viewState.key
+export function stateNameSelector(store: ViewState) {
+    return store.key
 } 

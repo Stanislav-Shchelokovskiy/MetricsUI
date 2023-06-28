@@ -9,7 +9,7 @@ import ApplySharedState from '../common/components/state_management/ApplySharedS
 import Sets from './content/Sets'
 import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
 import SupportMetricsToolbar from './toolbar/Toolbar'
-import { ContainerState } from './store/ContainerReducer'
+import { ContainerState, CONTEXT } from './store/ContainerReducer'
 import { BaseContainerState } from '../common/store/multiset_container/BaseContainerState'
 import { fetchGroupByPeriods } from './network_resource_fetcher/FetchGroupByPeriods'
 import { fetchPeriod } from './network_resource_fetcher/FetchPeriod'
@@ -56,7 +56,8 @@ export const supportMetricsContext = {
     filterLabel: filterLabel,
     fetchMetrics: fetchMetrics,
     changeMetric: (ctx: any) => { },
-    context: 0
+    changeState: (state: any) => { },
+    context: CONTEXT,
 }
 
 

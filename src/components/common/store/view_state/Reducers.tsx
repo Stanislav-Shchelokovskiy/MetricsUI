@@ -6,16 +6,12 @@ export interface ViewState {
     stateKeys: Array<string>
 }
 
-export interface ViewStateStore {
-    viewState: ViewState
-}
-
-const INITIAL_VIEW_STATE: ViewState = {
+const INITIAL_STATE: ViewState = {
     key: '',
     stateKeys: []
 }
 
-export function ViewStateReducer(state: ViewState = INITIAL_VIEW_STATE, action: AnyAction): ViewState {
+export function viewStateReducer(state: ViewState = INITIAL_STATE, action: AnyAction): ViewState {
     switch (action.type) {
 
         case CHANGE_STATE:

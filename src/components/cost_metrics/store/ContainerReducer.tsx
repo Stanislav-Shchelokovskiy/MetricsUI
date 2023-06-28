@@ -3,11 +3,14 @@ import { CostMetricsShareableStore } from './Store'
 import { BaseContainerState, getDefaultBaseContainerState } from '../../common/store/multiset_container/BaseContainerState'
 import { getContainerReducer } from '../../common/store/multiset_container/ContainerReducerFactory'
 import { containerValidator } from './StoreStateValidator'
+import { Context } from '../../common/store/multiset_container/Context'
+
+export const CONTEXT = Context.Cost
 
 export interface ContainerState extends BaseContainerState { }
 
 const INITIAL_CONTAINER_STATE: ContainerState = {
-    ...getDefaultBaseContainerState(),
+    ...getDefaultBaseContainerState(CONTEXT),
 }
 
 export const containerReducer = (state: ContainerState = INITIAL_CONTAINER_STATE, action: PayloadAction<any>): ContainerState => {
