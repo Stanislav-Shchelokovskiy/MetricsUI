@@ -3,14 +3,20 @@ import { ContainerState } from '../store/ContainerReducer'
 import { SetState } from '../store/sets/SetsReducer'
 import { getAliasedSet } from '../store/sets/SetDescriptor'
 import FetchResult from '../../common/Interfaces'
-import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
+import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'
+import { toDate } from '../../common/Utils'
+
+interface RawData {
+    year_month: any
+    [index: string]: any
+}
 
 export async function fetchCostMetricsRaw(
     containerState: ContainerState,
     set: SetState,
-): Promise<FetchResult<Array<any>>> {
+): Promise<FetchResult<Array<RawData>>> {
     const [rangeStart, rangeEnd] = containerState.range
-    return fetchArray(`${SUPPORT_METRICS_END_POINT}/CostMetrics/Raw?` +
+    return fetchConvert(converter, `${SUPPORT_METRICS_END_POINT}/CostMetrics/Raw?` +
         `&range_start=${rangeStart}` +
         `&range_end=${rangeEnd}`,
         {
@@ -20,4 +26,11 @@ export async function fetchCostMetricsRaw(
                 ...getAliasedSet(set),
             }),
         })
+}
+
+function converter(values: Array<RawData> | undefined): Array<RawData> {
+    return values ? values.map(r => {
+        r.year_month = toDate(r.year_month)
+        return r
+    }) : Array<RawData>()
 }
