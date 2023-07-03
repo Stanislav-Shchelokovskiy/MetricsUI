@@ -1,16 +1,18 @@
 import React, { useCallback, useState } from 'react'
-import { useStore, useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { saveState } from '../../LocalStorage'
 import InputBox from '../InputBox'
 import Button from '../Button'
 import { registerState } from '../../store/view_state/Actions'
 import getStorageItemKey from './Utils'
-import { stateNameSelector } from '../../store/view_state/Selectors'
-import { STATE_SALT } from '../../store/view_state/Store'
+import { stateNameSelector, saltSelector } from '../../store/view_state/Selectors'
+import { useMultisetContainerContext } from '../../components/multiset_container/MultisetContainerContext'
 
 
 function SaveStateButton() {
     const stateName = useSelector(stateNameSelector)
+    const salt = useSelector(saltSelector)
+
     const [inputBoxVisible, setInputBoxVisible] = useState(false)
 
     const onClick = () => setInputBoxVisible(true)
@@ -18,11 +20,11 @@ function SaveStateButton() {
         setInputBoxVisible(false)
     }, [])
 
-    const store = useStore()
+    const context = useMultisetContainerContext()
     const dispatch = useDispatch()
     const onPopupOkClick = (stateName: string | undefined) => {
         if (stateName) {
-            saveState(store.getState(), getStorageItemKey(STATE_SALT, stateName))
+            saveState(context.stateManagement.getShareableState(), getStorageItemKey(salt, stateName))
             dispatch(registerState(stateName))
         }
         onHiding()

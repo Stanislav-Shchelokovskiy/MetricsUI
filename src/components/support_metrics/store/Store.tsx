@@ -16,3 +16,6 @@ export const supportMetricsStore = configureMultisetContainerStore(
 export type SupportMetricsStore = MultisetContainerStore<ContainerState, SetState>
 export type SupportMetricsShareableStore = MultisetContainerStore<ContainerState, SetState>
 
+export function getShareableState(): MultisetContainerStore {
+    return supportMetricsStore.getState()
+}

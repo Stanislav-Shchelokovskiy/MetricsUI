@@ -4,13 +4,13 @@ import { loadState } from '../../LocalStorage'
 import DropDownButton from 'devextreme-react/drop-down-button'
 import { changeState } from '../../store/view_state/Actions'
 import getStorageItemKey from './Utils'
-import { stateNamesSelector } from '../../store/view_state/Selectors'
+import { stateNamesSelector, saltSelector } from '../../store/view_state/Selectors'
 import { useMultisetContainerContext } from '../multiset_container/MultisetContainerContext'
-import { STATE_SALT } from '../../store/view_state/Store'
 
 export default function StateSelector() {
     const context = useMultisetContainerContext()
     const stateNames = useSelector(stateNamesSelector)
+    const salt = useSelector(saltSelector)
     const [stateName, dispatchStateName] = useState<string>('')
     const dispatch = useDispatch()
     const onValueChange = ({ itemData: stateName }: { itemData: string } | any) => {
@@ -20,7 +20,7 @@ export default function StateSelector() {
 
     useEffect(() => {
         if (stateName) {
-            const state = loadState(getStorageItemKey(STATE_SALT, stateName))
+            const state = loadState(getStorageItemKey(salt, stateName))
             if (state)
                 context.changeState(state)
         }

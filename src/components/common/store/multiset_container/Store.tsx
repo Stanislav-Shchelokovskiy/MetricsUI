@@ -35,7 +35,3 @@ export function configureMultisetContainerStore<ContainerStateT extends BaseCont
 
     return store
 }
-
-export function getShareableState(state: MultisetContainerStore): MultisetContainerStore {
-    return state
-}

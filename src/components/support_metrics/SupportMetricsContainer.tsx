@@ -17,7 +17,7 @@ import { fetchMetrics } from './network_resource_fetcher/FetchMetrics'
 import { fetchPeriodsArray } from './network_resource_fetcher/FetchPeriodsArray'
 import { fetchTicketsWithIterationsAggregates } from './network_resource_fetcher/FetchTicketsWithIterationsAggregates'
 import { SUPPORT_ANALYTICS_END_POINT } from '../common/EndPoint'
-import { getShareableState } from '../common/store/multiset_container/Store'
+import { getShareableState } from './store/Store'
 import { fetchTicketsWithIterationsRaw } from './network_resource_fetcher/FetchTicketsWithIterationsRaw'
 import { fetchDisplayFilter } from './network_resource_fetcher/FetchDisplayFilter'
 import { MultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
@@ -34,8 +34,7 @@ const graph = {
 }
 
 const stateManagement = {
-    shareableStateSelector: getShareableState,
-    stateSalt: 'CustomersActivity_',
+    getShareableState: getShareableState,
     endPoint: SUPPORT_ANALYTICS_END_POINT,
     navigateTo: '/CustomersActivity',
 }

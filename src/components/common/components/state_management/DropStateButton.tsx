@@ -7,8 +7,7 @@ import { dropState } from '../../LocalStorage'
 import { dropState as dropStateAction } from '../../store/view_state/Actions'
 import getStorageItemKey from './Utils'
 import { PopupProps } from '../../Interfaces'
-import { stateNamesSelector } from '../../store/view_state/Selectors'
-import { STATE_SALT } from '../../store/view_state/Store'
+import { stateNamesSelector, saltSelector } from '../../store/view_state/Selectors'
 
 function DropStateButton() {
     const [popupVisible, setPopupVisible] = useState(false)
@@ -37,10 +36,11 @@ export default React.memo(DropStateButton)
 
 function DropStatePopup(props: PopupProps) {
     const stateNames = useSelector(stateNamesSelector)
+    const salt = useSelector(saltSelector)
     const dispatch = useDispatch()
     const onItemDeleted = ({ itemData: stateName }: { itemData: string } | any) => {
         dispatch(dropStateAction(stateName))
-        dropState(getStorageItemKey(STATE_SALT, stateName))
+        dropState(getStorageItemKey(salt, stateName))
     }
 
     return (

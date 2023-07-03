@@ -20,8 +20,7 @@ interface GraphContext {
 }
 
 interface StateManagementContext {
-    shareableStateSelector: (state: any) => any,
-    stateSalt: string
+    getShareableState: () => any,
     endPoint: string
     navigateTo: string
 }

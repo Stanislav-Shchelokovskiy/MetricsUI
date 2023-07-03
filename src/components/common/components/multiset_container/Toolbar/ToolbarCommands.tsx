@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react'
-import StateManagementCommands from '../../state_management/StateManagementCommands'
+import StateManagementCommands from './StateManagementCommands'
 import DownloadButton from '../../DownloadButton'
 import GoHomeButton from '../../GoHomeButton'
 

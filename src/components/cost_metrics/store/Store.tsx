@@ -15,3 +15,7 @@ export const costMetricsStore = configureMultisetContainerStore(
 
 export type CostMetricsStore = MultisetContainerStore<ContainerState, SetState>
 export type CostMetricsShareableStore = MultisetContainerStore<ContainerState, SetState>
+
+export function getShareableState(): MultisetContainerStore {
+    return costMetricsStore.getState()
+}
