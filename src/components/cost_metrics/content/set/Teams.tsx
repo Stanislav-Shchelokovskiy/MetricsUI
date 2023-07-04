@@ -10,13 +10,13 @@ import { useSetTitle } from '../../../common/components/multiset_container/set/S
 export default function EmpTeamsSelector() {
     const setTitle = useSetTitle()
     const value = useSelector((state: CostMetricsStore) => empTeamsSelector(state, setTitle))
-    const onValueChange = (allValues: Array<Team>, values: Array<number>) => changeTeams({ stateId: setTitle, data: values })
+    const onValueChange = (allValues: Array<Team>, values: Array<string>) => changeTeams({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTeamsInclude({ stateId: setTitle, data: include })
 
-    return <MultiOptionSelector<Team, number>
+    return <MultiOptionSelector<Team, string>
         className='CostMetrics_TeamsSelector'
         displayExpr='name'
-        valueExpr='id'
+        valueExpr='name'
         placeholder='Select employees teams'
         label='Teams'
         fetchDataSource={fetchTeams}

@@ -3,7 +3,6 @@ import FetchResult from '../../common/Interfaces'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
 
 export interface Team {
-    id: number
     name: string
 }
 
