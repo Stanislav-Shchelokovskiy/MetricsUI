@@ -1,4 +1,4 @@
-import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
+import { SUPPORT_METRICS_END_POINT } from '../../../common/EndPoint'
 import FetchResult from '../../../common/Interfaces'
 import { fetchArray } from '../../../common/network_resource_fetcher/FetchOrDefault'
 import { FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
@@ -10,7 +10,7 @@ export interface Component {
 
 export async function fetchComponents(tents: FilterParametersNode<string>): Promise<FetchResult<Array<Component>>> {
     return fetchArray(
-        `${SUPPORT_ANALYTICS_END_POINT}/CATComponents`,
+        `${SUPPORT_METRICS_END_POINT}/CATComponents`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

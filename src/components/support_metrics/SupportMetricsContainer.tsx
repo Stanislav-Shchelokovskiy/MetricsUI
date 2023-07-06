@@ -16,7 +16,7 @@ import { fetchPeriod } from './network_resource_fetcher/FetchPeriod'
 import { fetchMetrics } from './network_resource_fetcher/FetchMetrics'
 import { fetchPeriodsArray } from './network_resource_fetcher/FetchPeriodsArray'
 import { fetchTicketsWithIterationsAggregates } from './network_resource_fetcher/FetchTicketsWithIterationsAggregates'
-import { SUPPORT_ANALYTICS_END_POINT } from '../common/EndPoint'
+import { SUPPORT_METRICS_END_POINT } from '../common/EndPoint'
 import { getShareableState } from './store/Store'
 import { fetchTicketsWithIterationsRaw } from './network_resource_fetcher/FetchTicketsWithIterationsRaw'
 import { fetchDisplayFilter } from './network_resource_fetcher/FetchDisplayFilter'
@@ -35,7 +35,7 @@ const graph = {
 
 const stateManagement = {
     getShareableState: getShareableState,
-    endPoint: SUPPORT_ANALYTICS_END_POINT,
+    endPoint: SUPPORT_METRICS_END_POINT,
     navigateTo: '/CustomersActivity',
 }
 

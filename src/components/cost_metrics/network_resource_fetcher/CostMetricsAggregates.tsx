@@ -1,6 +1,6 @@
 import FetchResult from '../../common/Interfaces'
 import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'
-import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
+import { COST_METRICS_END_POINT } from '../../common/EndPoint'
 import { SetState } from '../store/sets/SetsReducer'
 import { getAliasedSet } from '../store/sets/SetDescriptor'
 import { Agg } from '../../common/components/multiset_container/graph/ComparisonGraph'
@@ -62,7 +62,7 @@ export async function fetchCostMetricsAggregates(
         }
 
     return fetchConvert(getConverter(set.title),
-        `${SUPPORT_METRICS_END_POINT}/CostMetrics/Aggregates?` +
+        `${COST_METRICS_END_POINT}/CostMetrics/Aggregates?` +
         `group_by_period=${containerState.groupByPeriod}` +
         `&range_start=${rangeStart}` +
         `&range_end=${rangeEnd}` +

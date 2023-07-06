@@ -1,4 +1,4 @@
-import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
+import { SUPPORT_METRICS_END_POINT } from '../../../common/EndPoint'
 import FetchResult from '../../../common/Interfaces'
 import { fetchArray } from '../../../common/network_resource_fetcher/FetchOrDefault'
 
@@ -8,5 +8,5 @@ export interface ReplyType {
 }
 
 export async function fetchRepliesTypes(): Promise<FetchResult<Array<ReplyType>>> {
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/CATRepliesTypes`)
+    return fetchArray(`${SUPPORT_METRICS_END_POINT}/CATRepliesTypes`)
 }

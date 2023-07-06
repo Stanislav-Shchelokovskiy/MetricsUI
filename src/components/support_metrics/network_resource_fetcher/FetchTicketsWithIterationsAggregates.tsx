@@ -1,4 +1,4 @@
-import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
+import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'
 import { ContainerState } from '../store/ContainerReducer'
@@ -64,7 +64,7 @@ export async function fetchTicketsWithIterationsAggregates(
         }
 
     return fetchConvert(getConverter(set.title),
-        `${SUPPORT_ANALYTICS_END_POINT}/TicketsWithIterationsAggregates?` +
+        `${SUPPORT_METRICS_END_POINT}/TicketsWithIterationsAggregates?` +
         `group_by_period=${containerState.groupByPeriod}` +
         `&range_start=${rangeStart}` +
         `&range_end=${rangeEnd}` +

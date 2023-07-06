@@ -1,4 +1,4 @@
-import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
+import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'
 import { SetState } from '../store/sets/Interfaces'
@@ -21,7 +21,7 @@ export async function fetchTicketsWithIterationsRaw(
     set: SetState,
 ): Promise<FetchResult<Array<RawData>>> {
     const [rangeStart, rangeEnd] = containerState.range
-    return fetchConvert(converter, `${SUPPORT_ANALYTICS_END_POINT}/TicketsWithIterationsRaw?` +
+    return fetchConvert(converter, `${SUPPORT_METRICS_END_POINT}/TicketsWithIterationsRaw?` +
         `&range_start=${rangeStart}` +
         `&range_end=${rangeEnd}` +
         `&baseline_aligned_mode_enabled=${containerState.baselineAlignedModeEnabled}`,

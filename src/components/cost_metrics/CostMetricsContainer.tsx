@@ -4,7 +4,7 @@ import '../common/styles/multiset_container/Toolbar.css'
 import '../common/styles/multiset_container/FilterTooltip.css'
 
 import React from 'react'
-import { SUPPORT_METRICS_END_POINT } from '../common/EndPoint'
+import { COST_METRICS_END_POINT } from '../common/EndPoint'
 import ApplySharedState from '../common/components/state_management/ApplySharedState'
 import { BaseContainerState } from '../common/store/multiset_container/BaseContainerState'
 import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
@@ -35,7 +35,7 @@ const graph = {
 
 const stateManagement = {
     getShareableState: getShareableState,
-    endPoint: SUPPORT_METRICS_END_POINT,
+    endPoint: COST_METRICS_END_POINT,
     navigateTo: '/CostMetrics',
 }
 

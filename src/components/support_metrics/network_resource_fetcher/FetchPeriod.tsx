@@ -1,4 +1,4 @@
-import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
+import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'
 
@@ -18,5 +18,5 @@ function converter(periodRaw: Array<PeriodRaw> | undefined): Period {
 }
 
 export async function fetchPeriod(): Promise<FetchResult<Period>> {
-    return fetchConvert(converter, `${SUPPORT_ANALYTICS_END_POINT}/TicketsWithIterationsPeriod`)
+    return fetchConvert(converter, `${SUPPORT_METRICS_END_POINT}/TicketsWithIterationsPeriod`)
 }

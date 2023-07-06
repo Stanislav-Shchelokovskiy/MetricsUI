@@ -1,4 +1,4 @@
-import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
+import { COST_METRICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
 import { FilterParametersNode } from '../../common/store/multiset_container/sets/Interfaces'
@@ -12,7 +12,7 @@ export async function fetchEmployees(
     positions: FilterParametersNode<string>,
 ): Promise<FetchResult<Array<Employee>>> {
     return fetchArray(
-        `${SUPPORT_METRICS_END_POINT}/CostMetrics/Employees`,
+        `${COST_METRICS_END_POINT}/CostMetrics/Employees`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

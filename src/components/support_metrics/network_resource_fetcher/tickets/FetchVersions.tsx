@@ -1,4 +1,4 @@
-import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
+import { SUPPORT_METRICS_END_POINT } from '../../../common/EndPoint'
 import FetchResult from '../../../common/Interfaces'
 import { fetchArray } from '../../../common/network_resource_fetcher/FetchOrDefault'
 
@@ -8,5 +8,5 @@ export interface Version {
 }
 
 export async function fetchVersions(): Promise<FetchResult<Array<Version>>> {
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/Builds`)
+    return fetchArray(`${SUPPORT_METRICS_END_POINT}/Builds`)
 }

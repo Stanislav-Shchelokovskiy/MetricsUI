@@ -1,4 +1,4 @@
-import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
+import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
 import { SetState } from '../store/sets/Interfaces'
@@ -11,7 +11,7 @@ export async function fetchDisplayFilter(
     set: SetState,
 ): Promise<FetchResult<DisplayFilter>> {
     return fetchArray(
-        `${SUPPORT_ANALYTICS_END_POINT}/DisplayFilter`,
+        `${SUPPORT_METRICS_END_POINT}/DisplayFilter`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

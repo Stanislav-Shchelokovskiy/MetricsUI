@@ -1,4 +1,4 @@
-import { SUPPORT_ANALYTICS_END_POINT } from '../../common/EndPoint'
+import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
 import { BaseContainerState } from '../../common/store/multiset_container/BaseContainerState'
@@ -11,7 +11,7 @@ export async function fetchPeriodsArray(containerState: BaseContainerState): Pro
             success: true,
             data: []
         }
-    return fetchArray(`${SUPPORT_ANALYTICS_END_POINT}/PeriodsArray?` +
+    return fetchArray(`${SUPPORT_METRICS_END_POINT}/PeriodsArray?` +
         `start=${rangeStart}` +
         `&end=${rangeEnd}` +
         `&format=${containerState.groupByPeriod}`

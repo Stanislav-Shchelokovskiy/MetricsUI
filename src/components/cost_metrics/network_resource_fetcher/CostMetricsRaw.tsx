@@ -1,4 +1,4 @@
-import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
+import { COST_METRICS_END_POINT } from '../../common/EndPoint'
 import { ContainerState } from '../store/ContainerReducer'
 import { SetState } from '../store/sets/SetsReducer'
 import { getAliasedSet } from '../store/sets/SetDescriptor'
@@ -16,7 +16,7 @@ export async function fetchCostMetricsRaw(
     set: SetState,
 ): Promise<FetchResult<Array<RawData>>> {
     const [rangeStart, rangeEnd] = containerState.range
-    return fetchConvert(converter, `${SUPPORT_METRICS_END_POINT}/CostMetrics/Raw?` +
+    return fetchConvert(converter, `${COST_METRICS_END_POINT}/CostMetrics/Raw?` +
         `&range_start=${rangeStart}` +
         `&range_end=${rangeEnd}`,
         {

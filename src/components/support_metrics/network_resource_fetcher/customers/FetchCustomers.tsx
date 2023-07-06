@@ -1,4 +1,4 @@
-import { SUPPORT_ANALYTICS_END_POINT } from '../../../common/EndPoint'
+import { SUPPORT_METRICS_END_POINT } from '../../../common/EndPoint'
 import FetchResult from '../../../common/Interfaces'
 import { fetchArray } from '../../../common/network_resource_fetcher/FetchOrDefault'
 import { anyValueIsEmpty } from '../../../common/store/multiset_container/Utils'
@@ -22,7 +22,7 @@ export async function fetchCustomers(
         }
     }
     return fetchArray(
-        `${SUPPORT_ANALYTICS_END_POINT}/Customers?` +
+        `${SUPPORT_METRICS_END_POINT}/Customers?` +
         `search=${validateValue(searchValue, '')}` +
         `&skip=${validateValue(skip, 0)}` +
         `&take=${validateValue(take, 0)}`,
@@ -42,7 +42,7 @@ export async function fetchValidateCustomers(customers: Array<string> | undefine
         }
     }
     return fetchArray(
-        `${SUPPORT_ANALYTICS_END_POINT}/ValidateCustomers`,
+        `${SUPPORT_METRICS_END_POINT}/ValidateCustomers`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
