@@ -1,15 +1,16 @@
-import { LogLevel } from '@azure/msal-browser';
-import { BrowserCacheLocation } from '@azure/msal-browser';
-import { MSID_REDIRECT } from '../EndPoint';
+import { LogLevel } from '@azure/msal-browser'
+import { BrowserCacheLocation } from '@azure/msal-browser'
+import { MSID_REDIRECT } from '../EndPoint'
 
 /**
  * Configuration object to be passed to MSAL instance on creation. 
  * For a full list of MSAL.js configuration parameters, visit:
  * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/configuration.md 
  */
-export const msalConfig = {
+const clientId = 'b66011cb-5d1f-4a6d-a16c-c7ddf5138ffd'
+export const MSAL_CONFIG = {
     auth: {
-        clientId: 'b66011cb-5d1f-4a6d-a16c-c7ddf5138ffd',
+        clientId: clientId,
         authority: 'https://login.microsoftonline.com/e4d60396-9352-4ae8-b84c-e69244584fa4',
         redirectUri: MSID_REDIRECT
     },
@@ -20,28 +21,29 @@ export const msalConfig = {
     },
     system: {
         loggerOptions: {
-            loggerCallback: (level: any, message: any, containsPii: any) => {
+            loggerCallback: (level: LogLevel, message: any, containsPii: any) => {
+                return
                 if (containsPii) {
-                    return;
+                    return
                 }
                 switch (level) {
                     case LogLevel.Error:
-                        console.error(message);
-                        return;
+                        console.error(message)
+                        return
                     case LogLevel.Info:
-                        console.info(message);
-                        return;
+                        console.info(message)
+                        return
                     case LogLevel.Verbose:
-                        console.debug(message);
-                        return;
+                        console.debug(message)
+                        return
                     case LogLevel.Warning:
-                        console.warn(message);
-                        return;
+                        console.warn(message)
+                        return
                 }
             }
         }
     }
-};
+}
 
 /**
  * Scopes you add here will be prompted for user consent during sign-in.
@@ -49,14 +51,14 @@ export const msalConfig = {
  * For more information about OIDC scopes, visit: 
  * https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent#openid-connect-scopes
  */
-export const loginRequest = {
-    scopes: ['User.Read']
-};
+export const LOGIN_REQUEST = {
+    scopes: [`api://${clientId}/access_via_approle_assignments`]
+}
 
 /**
  * Add here the scopes to request when obtaining an access token for MS Graph API. For more information, see:
  * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/resources-and-scopes.md
  */
-export const graphConfig = {
+export const GRAPH_CONFIG = {
     graphMeEndpoint: 'https://graph.microsoft.com/v1.0/me'
-};
+}

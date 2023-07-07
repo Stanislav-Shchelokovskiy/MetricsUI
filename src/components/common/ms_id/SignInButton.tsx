@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useMsal } from '@azure/msal-react';
-import { loginRequest } from './AuthConfig';
+import { LOGIN_REQUEST } from './AuthConfig';
 import Button from '../../common/components/Button'
 
 export default function SignInButton() {
@@ -9,11 +9,11 @@ export default function SignInButton() {
     const handleLogin = (e: any) => {
         const loginType: string = 'redirect'
         if (loginType === 'popup') {
-            instance.loginPopup(loginRequest).catch(e => {
+            instance.loginPopup(LOGIN_REQUEST).catch(e => {
                 console.log(e);
             });
         } else if (loginType === 'redirect') {
-            instance.loginRedirect(loginRequest).catch(e => {
+            instance.loginRedirect(LOGIN_REQUEST).catch(e => {
                 console.log(e);
             });
         }
