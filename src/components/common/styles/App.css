@@ -35,3 +35,14 @@
 .NavigationButton {
   text-decoration: none
 }
+
+.SignButton {
+  font-size: larger;
+}
+
+.SignButton .dx-icon {
+  font-size: 2em;
+  width: auto;
+  height: auto;
+  line-height: normal;
+}

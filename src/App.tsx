@@ -3,14 +3,17 @@ import 'devextreme/dist/css/dx.light.css'
 import './components/common/styles/App.css'
 import './components/common/styles/Components.css'
 
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import { Navigate, RouterProvider, useRouteError, createBrowserRouter, isRouteErrorResponse, Link } from 'react-router-dom'
-import { Button } from 'devextreme-react/button'
-
 import { Provider } from 'react-redux'
-import { forecasterStore } from './components/forecaster/store/Store'
+import { AuthenticatedTemplate, UnauthenticatedTemplate } from '@azure/msal-react'
 
+import { Button } from 'devextreme-react/button'
+import SignInButton from './components/common/ms_id/SignInButton'
+
+import { forecasterStore } from './components/forecaster/store/Store'
 import Forecaster from './components/forecaster/Forecaster'
+
 import EngineeringMetrics, { EngineeringMetricsApplySharedState } from './components/engineering_metrics/EngineeringMetricsContainer'
 import { Context } from './components/common/store/multiset_container/Context'
 
@@ -26,9 +29,15 @@ function ErrorPage() {
   )
 }
 
-function Root() {
+function Root(props: PropsWithChildren) {
+  return <div className='Root'>
+    {props.children}
+  </div>
+}
+
+function NavMenu() {
   return (
-    <div className='Root'>
+    <Root>
       <Link to={'forecaster'} className='NavigationButton'>
         <Button
           className='NavElement'
@@ -41,14 +50,32 @@ function Root() {
           text='Engineering metrics'
           focusStateEnabled={false} />
       </Link>
-    </div>
+    </Root>
   )
+}
+
+function SignIn() {
+  return <Root>
+    <SignInButton />
+  </Root>
+}
+
+export default function App() {
+  return <>
+    <AuthenticatedTemplate>
+      <RouterProvider router={router} />
+    </AuthenticatedTemplate>
+
+    <UnauthenticatedTemplate>
+      <SignIn />
+    </UnauthenticatedTemplate>
+  </>
 }
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Root />,
+    element: <NavMenu />,
     errorElement: <ErrorPage />
   },
   {
@@ -65,7 +92,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/CustomersActivity/:stateId',
-    element: <EngineeringMetricsApplySharedState context={Context.Support}/>,
+    element: <EngineeringMetricsApplySharedState context={Context.Support} />,
   },
   {
     path: '/CostMetrics',
@@ -80,9 +107,3 @@ const router = createBrowserRouter([
     element: <EngineeringMetrics />,
   },
 ])
-
-function App() {
-  return <RouterProvider router={router} />
-}
-
-export default App

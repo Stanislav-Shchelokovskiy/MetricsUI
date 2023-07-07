@@ -28,7 +28,7 @@ Button.defaultProps = {
     icon: '',
     disabled: false,
     type: 'normal',
-    stylingMode: 'outlined',
+    stylingMode: 'text',
     focusStateEnabled: false,
     render: undefined,
     onClick: undefined,

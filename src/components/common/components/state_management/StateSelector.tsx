@@ -27,6 +27,7 @@ export default function StateSelector() {
     }, [stateName])
 
     return <DropDownButton
+        stylingMode='text'
         className='CommandButton'
         dataSource={stateNames}
         onItemClick={onValueChange}
