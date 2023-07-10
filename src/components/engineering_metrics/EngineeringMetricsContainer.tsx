@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, FC } from 'react'
-import { useMsal } from '@azure/msal-react'
 import { Provider, useStore, useDispatch, useSelector } from 'react-redux'
 import { Store } from '@reduxjs/toolkit'
 import { changeMetric, changeContext } from './store/Actions'
@@ -38,15 +37,7 @@ interface Props {
     content: FC<ContainerState>
 }
 function EngineeringMetricsContainer(props: Props) {
-
-    const { instance } = useMsal()
-
-    const currentAccount = instance.getActiveAccount()
-
-    console.log('roles', currentAccount)
-
-
-    return <Provider store={engineeringMetricsStore}>
+        return <Provider store={engineeringMetricsStore}>
         <EngineeringMetricsContainerInner {...props} />
     </Provider>
 }

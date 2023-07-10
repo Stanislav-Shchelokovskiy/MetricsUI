@@ -15,7 +15,10 @@ export async function fetchConvert<RawT, ResT>(
     responseSelector: ((r: Response) => any) = (r: Response) => r.json()
 ): Promise<FetchResult<ResT>> {
     try {
-        const res = await fetch(input, init).then(response => responseSelector(response))
+        const res = await fetch(input, {
+            ...init,
+            credentials: 'include',
+        }).then(response => responseSelector(response))
         return getFetchResult(true, converter(res))
     } catch (error) {
         console.log(error)
