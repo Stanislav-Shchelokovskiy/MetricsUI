@@ -21,6 +21,8 @@ import { getShareableState } from './store/Store'
 import { fetchTicketsWithIterationsRaw } from './network_resource_fetcher/FetchTicketsWithIterationsRaw'
 import { fetchDisplayFilter } from './network_resource_fetcher/FetchDisplayFilter'
 import { MultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
+import { SUPPORT_METRICS } from '../app_components/Paths'
+
 
 const graphSettings = {
     fetchPeriod: fetchPeriod,
@@ -36,7 +38,7 @@ const graph = {
 const stateManagement = {
     getShareableState: getShareableState,
     endPoint: SUPPORT_METRICS_END_POINT,
-    navigateTo: '/CustomersActivity',
+    navigateTo: SUPPORT_METRICS,
 }
 
 const rawData = {

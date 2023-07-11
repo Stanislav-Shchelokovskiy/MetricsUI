@@ -37,7 +37,7 @@ interface Props {
     content: FC<ContainerState>
 }
 function EngineeringMetricsContainer(props: Props) {
-        return <Provider store={engineeringMetricsStore}>
+    return <Provider store={engineeringMetricsStore}>
         <EngineeringMetricsContainerInner {...props} />
     </Provider>
 }

@@ -18,9 +18,9 @@ import { getShareableState } from './store/Store'
 import { fetchCostMetricsRaw } from './network_resource_fetcher/CostMetricsRaw'
 import { fetchDisplayFilter } from '../cost_metrics/network_resource_fetcher/DisplayFilter'
 import { CONTEXT } from './store/ContainerReducer'
-
 import Sets from './content/Sets'
 import CostMetricsToolbar from './toolbar/Toolbar'
+import { COST_METRICS } from '../app_components/Paths'
 
 const graphSettings = {
     fetchPeriod: fetchPeriod,
@@ -36,7 +36,7 @@ const graph = {
 const stateManagement = {
     getShareableState: getShareableState,
     endPoint: COST_METRICS_END_POINT,
-    navigateTo: '/CostMetrics',
+    navigateTo: COST_METRICS,
 }
 
 const rawData = {

@@ -18,7 +18,7 @@ export async function PushState(endPoint: string, state: any) {
 
 
 function convertPull(state: any): any {
-    return state ? state : {}
+    return state && Object.keys(state).length === 0 ? undefined : state
 }
 
 export async function PullState(endPoint: string, stateId: string) {
