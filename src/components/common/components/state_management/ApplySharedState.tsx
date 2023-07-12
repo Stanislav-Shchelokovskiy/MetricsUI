@@ -21,7 +21,7 @@ export default function ApplySharedState() {
             context.changeState(fetchedState.success ? state : undefined)
             setLoadState(getState(true, status))
         })()
-    }, [context.stateManagement.endPoint, stateId])
+    }, [])
 
     const notificationContext = useNotificationContext()
     notificationContext.error = loadState.error

@@ -42,7 +42,7 @@ interface Context {
 }
 
 const defaultContext = { error: '' }
-export const NotificationContext = createContext<Context>(defaultContext)
+const NotificationContext = createContext<Context>(defaultContext)
 
 export function useNotificationContext() {
     return useContext(NotificationContext)

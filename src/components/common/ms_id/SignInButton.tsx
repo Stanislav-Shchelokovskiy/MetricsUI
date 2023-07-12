@@ -8,14 +8,15 @@ export default function SignInButton() {
 
     const handleLogin = (e: any) => {
         const loginType: string = 'redirect'
-        if (loginType === 'popup') {
-            instance.loginPopup(LOGIN_REQUEST).catch(e => {
-                console.log(e);
-            });
-        } else if (loginType === 'redirect') {
-            instance.loginRedirect(LOGIN_REQUEST).catch(e => {
-                console.log(e);
-            });
+
+        switch (loginType) {
+            case 'popup':
+                instance.loginPopup(LOGIN_REQUEST).catch(e => { console.log(e) })
+                break
+
+            case 'redirect':
+                instance.loginRedirect(LOGIN_REQUEST).catch(e => { console.log(e) })
+                break
         }
     }
 

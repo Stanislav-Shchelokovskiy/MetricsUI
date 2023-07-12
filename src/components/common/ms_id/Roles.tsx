@@ -1,4 +1,3 @@
-import { useMsal } from "@azure/msal-react"
 import { AccountInfo } from "@azure/msal-browser"
 
 enum Role {
@@ -6,7 +5,6 @@ enum Role {
     Advanced = 'Advanced',
     Admin = 'Admin',
 }
-
 
 export function getRole(account: AccountInfo | undefined): string {
     return getRoleFromClaims(account?.idTokenClaims)
