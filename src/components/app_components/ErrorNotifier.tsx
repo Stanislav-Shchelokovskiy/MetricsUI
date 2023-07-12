@@ -30,21 +30,11 @@ function ErrorToast() {
     )
 }
 
-interface NavState {
-    error: string
-}
-
 export default function ErrorNotifier(props: PropsWithChildren) {
     return <NotificationContext.Provider value={defaultContext}>
         {props.children}
         <ErrorToast />
     </NotificationContext.Provider>
-}
-
-export function getNavState(error: string): NavState {
-    return {
-        error: error
-    }
 }
 
 interface Context {
