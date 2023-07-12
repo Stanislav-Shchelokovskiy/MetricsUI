@@ -12,13 +12,13 @@ export async function fetchConvert<RawT, ResT>(
     converter: (value: RawT | undefined) => ResT,
     input: RequestInfo | URL,
     init?: RequestInit,
-    responseSelector: ((r: Response) => any) = (r: Response) => r.json()
+    responseSelector: ((r: Response) => Promise<any>) = (r: Response) => r.json()
 ): Promise<FetchResult<ResT>> {
     try {
         const res = await fetch(input, {
             ...init,
             credentials: 'include',
-        }).then(response => responseSelector(response))
+        }).then(async response => await responseSelector(response))
         return getFetchResult(true, converter(res))
     } catch (error) {
         console.log(error)
