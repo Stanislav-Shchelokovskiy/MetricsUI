@@ -1,56 +1,49 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, Navigate } from 'react-router-dom'
-import { Toast } from 'devextreme-react/toast'
 import { PullState } from '../../network_resource_fetcher/FetchState'
 import { useMultisetContainerContext } from '../../components/multiset_container/MultisetContainerContext'
+import { useNotificationContext } from '../../../app_components/ErrorNotifier'
 
+const FORBIDDEN = 403
+const NOT_FOUND = 404
 
 export default function ApplySharedState() {
     const context = useMultisetContainerContext()
     const { stateId } = useParams()
+    const [loadState, setLoadState] = useState(getState())
 
     useEffect(() => {
         (async () => {
             if (stateId === undefined)
                 return
             const fetchedState = await PullState(context.stateManagement.endPoint, stateId)
-            if (fetchedState.success) {
-                if (fetchedState.data) {
-                    context.changeState(fetchedState.data)
-                    return
-                }
-            }
+            const [status, state] = fetchedState.data
+            context.changeState(fetchedState.success ? state : undefined)
+            setLoadState(getState(true, status))
         })()
-    }, [])
+    }, [context.stateManagement.endPoint, stateId])
 
+    const notificationContext = useNotificationContext()
+    notificationContext.error = loadState.error
 
-    return <Navigate to={context.stateManagement.navigateTo} replace={true} />
+    if (loadState.loaded)
+        return <Navigate to={context.stateManagement.navigateTo} replace={true} />
+    return null
 }
 
+export function getState(loaded: boolean = false, status: number = 200) {
+    let error = ''
+    switch (status) {
+        case FORBIDDEN:
+            error = 'You are not authorized to apply this state.'
+            break
 
-export function ApplyStateErrorToast({ state }: { state: any }) {
-
-    const hidden = {
-        visible: false,
-        message: '',
+        case NOT_FOUND:
+            error = 'State is not available.'
+            break
     }
-
-    const visible = {
-        visible: true,
-        message: state.error,
+    return {
+        loaded: loaded,
+        error: error
     }
-
-    const [config, setConfig] = useState(state.error ? visible : hidden)
-
-
-    const onHiding = useCallback(() => setConfig(hidden), [])
-
-    return (
-        state.error ? < Toast
-            {...config}
-            displayTime={3000}
-            type='error'
-            onHiding={onHiding}
-        /> : null
-    )
 }

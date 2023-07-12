@@ -16,9 +16,12 @@ export async function PushState(endPoint: string, state: any) {
     ).then()
 }
 
-
-function convertPull(state: any): any {
-    return state && Object.keys(state).length === 0 ? undefined : state
+type StatePullResult = [number, any]
+export function convertPull(res: StatePullResult | undefined): StatePullResult {
+    if (res === undefined)
+        return [500, undefined]
+    const [status, state] = res
+    return [status, status !== 200 ? undefined : state]
 }
 
 export async function PullState(endPoint: string, stateId: string) {
@@ -26,6 +29,8 @@ export async function PullState(endPoint: string, stateId: string) {
         `${endPoint}/PullState?` +
         new URLSearchParams({
             state_id: stateId,
-        })
+        }),
+        {},
+        async (r: Response) => [r.status, await r.json()],
     )
 }

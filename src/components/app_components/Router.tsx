@@ -8,8 +8,9 @@ import Forecaster from '../forecaster/Forecaster'
 import EngineeringMetrics, { EngineeringMetricsApplySharedState } from '../engineering_metrics/EngineeringMetricsContainer'
 import { Context } from '../common/store/multiset_container/Context'
 
-import ErrorPage from '../app_components/ErrorPage'
-import NavMenu from '../app_components/Navigation'
+import ErrorPage from './ErrorPage'
+import NavMenu from './Navigation'
+import ErrorNotifier from './ErrorNotifier'
 
 import {
   FORECASTER,
@@ -51,6 +52,8 @@ export const ROUTER = createBrowserRouter([
   },
   {
     path: ENGINEERING_METRICS,
-    element: <EngineeringMetrics />,
+    element: <ErrorNotifier>
+      <EngineeringMetrics />
+    </ErrorNotifier>,
   },
 ])
