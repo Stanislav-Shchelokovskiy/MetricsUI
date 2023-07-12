@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, FC } from 'react'
 import { Provider, useStore, useDispatch, useSelector } from 'react-redux'
 import { Store } from '@reduxjs/toolkit'
-import { changeMetric, changeContext } from './store/Actions'
+import { changeMetric, changeContext, resetContext } from './store/Actions'
 import { isSupportContextSelected, contextOrDefault, Context } from '../common/store/multiset_container/Context'
 import { contextSelector } from './store/Selectors'
 import { MultisetContainerContext, useMultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
@@ -55,7 +55,11 @@ function EngineeringMetricsContainerInner(props: Props) {
         dispatch(changeMetric(metric))
     }, [])
 
-    const dispatchState = useCallback((contentState: MultisetContainerStore) => {
+    const dispatchState = useCallback((contentState: MultisetContainerStore | undefined) => {
+        if (contentState === undefined) {
+            dispatch(resetContext(undefined))
+            return
+        }
         const context = contextOrDefault(contentState.container?.context)
         const contentStore = getSubStore(context)
         contentStore.dispatch(applyState(contentState))
