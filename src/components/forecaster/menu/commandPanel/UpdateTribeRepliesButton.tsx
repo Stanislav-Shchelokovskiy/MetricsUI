@@ -36,14 +36,13 @@ export default function UpdateTentRepliesButton() {
             })();
         }, 3000);
     };
-    const renderButton = () => {
-        if (!taskStarted)
-            return 'Update Replies'
-        return <LoadIndicator width={undefined} height={25} />;
-    }
-    return <Button
-        className='ForecasterUpdateTribeRepliesButton'
-        render={renderButton}
-        disabled={taskStarted}
-        onClick={onClick} />
+
+    if (!taskStarted)
+        return <Button
+            className='ForecasterUpdateTribeRepliesButton'
+            text='Update Replies'
+            disabled={taskStarted}
+            icon='refresh'
+            onClick={onClick} />
+    return <div className='ForecasterUpdateTribeRepliesButton'><LoadIndicator width={undefined} height={35} /></div>
 }
