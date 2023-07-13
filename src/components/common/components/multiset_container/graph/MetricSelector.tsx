@@ -15,7 +15,7 @@ export interface Metric {
 export default function MetricSelector() {
     const [metric, dispatchMetric] = useState<Metric>()
     const context = useMultisetContainerContext()
-    const defaultValueSelector = useCallback((values: Array<Metric>) => values.find(x => x.context === context.context)?.name || values[0].name, [])
+    const defaultValueSelector = useCallback((values: Array<Metric>) => values.find(x => x.context === context.context)?.name || values[0]?.name, [])
     const onValueChangeEx = useCallback((dsVal: Metric) => {
         dispatchMetric(dsVal)
     }, [])
