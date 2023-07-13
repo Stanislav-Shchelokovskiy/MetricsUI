@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useMsal } from '@azure/msal-react';
 import { LOGIN_REQUEST } from './AuthConfig';
 import Button from '../../common/components/Button'
@@ -23,7 +23,9 @@ export default function SignInButton() {
     return < Button
         className='SignButton'
         stylingMode='text'
-        text='Sign In'
+        text='Sign in'
         icon='user'
-        onClick={handleLogin} />
+        focusStateEnabled={false}
+        onClick={handleLogin}
+    />
 }

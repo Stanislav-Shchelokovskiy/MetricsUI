@@ -2,8 +2,8 @@ import React from 'react';
 import { useMsal } from '@azure/msal-react';
 import Button from '../../common/components/Button'
 
-export const SignOutButton = () => {
-    const { instance } = useMsal();
+export default function SignOutButton() {
+    const { instance } = useMsal()
 
     const handleLogout = (e: any) => {
         const logoutType: string = 'redirect'
@@ -25,8 +25,9 @@ export const SignOutButton = () => {
     }
     return < Button
         className='CommandButton'
-        stylingMode='text'
-        hint='Sign Out'
+        hint='Sign out'
         icon='runner'
-        onClick={handleLogout} />
+        focusStateEnabled={false}
+        onClick={handleLogout}
+    />
 }
