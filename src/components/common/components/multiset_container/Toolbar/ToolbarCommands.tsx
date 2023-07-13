@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react'
 import StateManagementCommands from './StateManagementCommands'
 import DownloadButton from '../../DownloadButton'
 import GoHomeButton from '../../GoHomeButton'
-import { SignOutButton } from '../../../ms_id/SignOutButton'
+import SignOutButton from '../../../ms_id/SignOutButton'
 
 function ToolbarCommands(props: PropsWithChildren) {
     return <div className='ToolbarCommands'>
