@@ -30,7 +30,8 @@ export function getMsalInstance() {
             case EventType.LOGIN_SUCCESS:
                 const account = setActiveAccount(msalInstance)
                 const role = getRole(account)
-                Cookies.set(ROLE, role, { secure: true, expires: 90 })
+                if (role)
+                    Cookies.set(ROLE, role, { secure: true, expires: 90 })
                 break
             case EventType.LOGOUT_SUCCESS:
                 resetActiveAccount(msalInstance)

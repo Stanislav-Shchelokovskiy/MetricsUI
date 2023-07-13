@@ -1,7 +1,6 @@
 import { AccountInfo } from "@azure/msal-browser"
 
 enum Role {
-    Basic = 'Basic',
     Advanced = 'Advanced',
     Admin = 'Admin',
 }
@@ -17,5 +16,5 @@ function getRoleFromClaims(claims: { roles?: Array<string> } | undefined): strin
         if (claims.roles.includes(Role.Admin))
             return Role.Admin
     }
-    return Role.Basic
+    return ''
 }
