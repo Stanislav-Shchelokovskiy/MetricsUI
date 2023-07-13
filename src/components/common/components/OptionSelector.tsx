@@ -1,5 +1,6 @@
 import React, { useRef, useMemo } from 'react'
 import SelectBox, { DropDownOptions, Button } from 'devextreme-react/select-box'
+import DataSource from 'devextreme/data/data_source'
 import LoadIndicator from './LoadIndicator'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,6 +12,7 @@ interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> exten
     className: string | undefined
     displayExpr: string
     valueExpr: string
+    groupExpr: string,
     placeholder: string
     label: string
     container: string
@@ -40,6 +42,13 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
     const validateSelectedValue = useSingleValidate<DataSourceT, ValueExprT>(value, props.onValueChange, props.valueExpr, props.defaultValueSelector)
     const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, validateSelectedValue)
 
+    const ds = new DataSource({
+        store: dataSource,
+        paginate: true,
+        pageSize: 20,
+        group: props.groupExpr,
+    })
+
     const defaultValue = useMemo(() => props.defaultValueSelector?.(dataSource), [dataSource])
     const clearButtonOptions = useMemo(() => {
         return {
@@ -53,7 +62,8 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
     if (dataSource.length > 0) {
         return <SelectBox
             {...props}
-            dataSource={dataSource}
+            dataSource={ds}
+            grouped={props.groupExpr !== undefined}
             value={value}
             onValueChange={onValueChangeHandler}
             labelMode='static'
@@ -81,6 +91,7 @@ function defaultValueIsSelected<ValueExprT>(value: ValueExprT | undefined, defau
 const defaultProps = {
     displayExpr: undefined,
     valueExpr: undefined,
+    groupExpr: undefined,
     placeholder: undefined,
     container: undefined,
     defaultValueSelector: undefined,

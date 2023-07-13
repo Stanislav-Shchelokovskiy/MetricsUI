@@ -8,6 +8,7 @@ import { metricSelector } from '../../../store/multiset_container/Selectors'
 
 export interface Metric {
     name: string
+    group: string
     context: number
 }
 
@@ -28,6 +29,7 @@ export default function MetricSelector() {
         className='ComparisonGraph_MetricSelector'
         displayExpr='name'
         valueExpr='name'
+        groupExpr='group'
         fetchDataSource={context.fetchMetrics}
         valueSelector={metricSelector}
         defaultValueSelector={defaultValueSelector}
