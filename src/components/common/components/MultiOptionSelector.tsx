@@ -34,7 +34,7 @@ export interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSour
     showNullItem: boolean
 }
 
-const IS_NULL_FILTER_VALUE = {
+const NULL_FILTER_VALUE = {
     value: '#_NULL_FILTER_VALUE_#',
     displayValue: 'NULL'
 }
@@ -43,7 +43,7 @@ const IS_NULL_FILTER_VALUE = {
 export default function MultiOptionSelector<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: Props<DataSourceT, ValueExprT>) {
     const addNullItemToDS = useCallback((ds: any): Array<any> => {
         if (props.showNullItem && ds && (ds as Array<any>).length > 0)
-            (ds as Array<any>).unshift({ [props.valueExpr]: IS_NULL_FILTER_VALUE.value, [props.displayExpr]: IS_NULL_FILTER_VALUE.displayValue })
+            (ds as Array<any>).unshift({ [props.valueExpr]: NULL_FILTER_VALUE.value, [props.displayExpr]: NULL_FILTER_VALUE.displayValue })
         return ds
     }, [])
 

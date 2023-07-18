@@ -7,6 +7,7 @@ import { Agg } from './graph/ComparisonGraph'
 import { GroupByPeriod } from './graph/GroupByPeriodSelector'
 import { Metric } from './graph/MetricSelector'
 import { MultisetContainerStore } from '../../store/multiset_container/Store'
+import { FilterField } from './Toolbar/FilterTooltip'
 
 interface GraphSettingsPanelContext {
     fetchPeriod: (...args: any) => Promise<FetchResult<Array<string>>>,
@@ -31,6 +32,7 @@ interface RawDataContext {
 
 interface FilterLabelContext {
     fetchDisplayFilter(metric: string, set: BaseSetState): Promise<FetchResult<Array<any>>>
+    getFilterFields(): Array<FilterField>
 }
 
 interface Context {

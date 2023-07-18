@@ -34,7 +34,7 @@ export function employeesReducer(sets: Array<SetState>, action: AnyAction): Arra
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    empTrempTeamsibes: updateInclude(x.empTeams, action.payload.data)
+                    empTeams: updateInclude(x.empTeams, action.payload.data)
                 }
             })
 

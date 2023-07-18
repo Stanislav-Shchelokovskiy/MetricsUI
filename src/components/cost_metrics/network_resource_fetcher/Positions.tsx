@@ -1,11 +1,7 @@
 import { COST_METRICS_END_POINT } from '../../common/EndPoint'
-import FetchResult from '../../common/Interfaces'
+import FetchResult, { Knot } from '../../common/Interfaces'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
 
-export interface Position {
-    name: string
-}
-
-export async function fetchPositions(): Promise<FetchResult<Array<Position>>> {
+export async function fetchPositions(): Promise<FetchResult<Array<Knot>>> {
     return fetchArray(`${COST_METRICS_END_POINT}/CostMetrics/Positions`)
 }

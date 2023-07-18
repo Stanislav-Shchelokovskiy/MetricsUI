@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import FilterBuilder, { CustomOperation } from 'devextreme-react/filter-builder'
 import { Tooltip } from 'devextreme-react/tooltip'
-import { getSetDataFields } from '../../../../support_metrics/store/sets/SetDescriptor'
 import { MultisetContainerStore } from '../../../store/multiset_container/Store'
 import { metricSelector, setsSelector } from '../../../store/multiset_container/Selectors'
 import { BaseSetState } from '../../../store/multiset_container/sets/Interfaces'
@@ -33,7 +32,7 @@ const FilterLabel = React.memo(() => {
     const metric = useSelector<MultisetContainerStore, string>(metricSelector)
     const sets = useSelector<MultisetContainerStore, Array<BaseSetState>>(setsSelector)
 
-    const fields = useMemo(() => getSetDataFields(), [])
+    const fields = useMemo(() => context.filterLabel.getFilterFields(), [context.context])
 
     const [displayFilter, setDisplayFilter] = useState<Array<any>>([])
 
@@ -87,3 +86,20 @@ const FilterLabel = React.memo(() => {
             caption='IS NOT' />
     </FilterBuilder>
 })
+
+
+export interface FilterField {
+    dataField: string,
+    filterOperations: Array<string>
+}
+
+const default_ops = ['<=', '=', '!=', '>', 'in', 'notin', 'between', 'notbetween']
+
+export function getFilterFields(o: any): Array<FilterField> {
+    return Object.getOwnPropertyNames(o).map(x => {
+        return {
+            dataField: x,
+            filterOperations: default_ops
+        }
+    })
+}

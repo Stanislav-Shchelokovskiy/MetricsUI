@@ -1,12 +1,12 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { Tribe } from '../../common/Interfaces'
+import { Knot } from '../../common/Interfaces'
 
 export interface Forecast {
     tentId: string
 }
 
 export function filterTents<T extends Forecast>(state: Array<T>, action: AnyAction, initialState: T): Array<T> {
-    const selectedTents: Array<Tribe> = action.payload
+    const selectedTents: Array<Knot> = action.payload
     const currentTentContainersStates = [...state]
     for (const tent of selectedTents) {
         if (currentTentContainersStates.find(x => x.tentId === tent.id) === undefined) {

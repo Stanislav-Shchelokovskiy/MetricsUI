@@ -3,7 +3,7 @@ export default interface FetchResult<T> {
     data: T
 }
 
-export interface Tribe {
+export interface Knot {
     id: string
     name: string
 }
