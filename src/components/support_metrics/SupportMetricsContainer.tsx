@@ -22,6 +22,7 @@ import { fetchTicketsWithIterationsRaw } from './network_resource_fetcher/FetchT
 import { fetchDisplayFilter } from './network_resource_fetcher/FetchDisplayFilter'
 import { MultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
 import { SUPPORT_METRICS } from '../app_components/Paths'
+import { getSetDataFields } from './store/sets/SetDescriptor'
 
 
 const graphSettings = {
@@ -46,7 +47,8 @@ const rawData = {
 }
 
 const filterLabel = {
-    fetchDisplayFilter: fetchDisplayFilter
+    fetchDisplayFilter: fetchDisplayFilter,
+    getFilterFields: getSetDataFields,
 }
 
 export const supportMetricsContext = {

@@ -21,6 +21,7 @@ import { CONTEXT } from './store/ContainerReducer'
 import Sets from './content/Sets'
 import CostMetricsToolbar from './toolbar/Toolbar'
 import { COST_METRICS } from '../app_components/Paths'
+import { getSetDataFields } from './store/sets/SetDescriptor'
 
 const graphSettings = {
     fetchPeriod: fetchPeriod,
@@ -44,7 +45,8 @@ const rawData = {
 }
 
 const filterLabel = {
-    fetchDisplayFilter: fetchDisplayFilter
+    fetchDisplayFilter: fetchDisplayFilter,
+    getFilterFields: getSetDataFields,
 }
 
 export const costMetricsContext = {

@@ -1,5 +1,6 @@
-import { SetState } from "./Interfaces"
-import { DEFAULT_SET } from "./Defaults"
+import { SetState } from './Interfaces'
+import { DEFAULT_SET } from './Defaults'
+import { getFilterFields } from '../../../common/components/multiset_container/Toolbar/FilterTooltip'
 
 export function getAliasedSet(set: SetState) {
     return {
@@ -39,10 +40,5 @@ export function getAliasedSet(set: SetState) {
 }
 
 export function getSetDataFields() {
-    return Object.getOwnPropertyNames(getAliasedSet(DEFAULT_SET)).map(x => {
-        return {
-            dataField: x,
-            filterOperations: ['<=', '=', '!=', '>', 'in', 'notin', 'between', 'notbetween']
-        }
-    })
+    return getFilterFields(getAliasedSet(DEFAULT_SET))
 }

@@ -9,18 +9,18 @@ import { employeesReducer } from './EmployeesReducer'
 import { getDefaultTitle } from '../../../common/store/multiset_container/sets/Defaults'
 
 export interface SetState extends BaseSetState {
-    empPositions: FilterParametersNode<string> | undefined
-    empTribes: FilterParametersNode<string> | undefined
-    employees: FilterParametersNode<string> | undefined
     empTeams: FilterParametersNode<string> | undefined
+    empTribes: FilterParametersNode<string> | undefined
+    empPositions: FilterParametersNode<string> | undefined
+    employees: FilterParametersNode<string> | undefined
 }
 
 export const DEFAULT_SET: SetState = {
     title: getDefaultTitle(),
-    empPositions: getDefaultFilterParametersNode<string>(),
-    empTribes: getDefaultFilterParametersNode<string>(),
-    employees: getDefaultFilterParametersNode<string>(),
     empTeams: getDefaultFilterParametersNode<string>(),
+    empTribes: getDefaultFilterParametersNode<string>(),
+    empPositions: getDefaultFilterParametersNode<string>(),
+    employees: getDefaultFilterParametersNode<string>(),
 }
 
 export const INITIAL_SETS: Array<SetState> = [DEFAULT_SET]
