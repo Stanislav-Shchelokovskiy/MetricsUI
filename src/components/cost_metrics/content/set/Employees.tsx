@@ -24,7 +24,7 @@ export default function EmployeesSelector() {
         placeholder='Select employees'
         label='Employees'
         displayExpr='name'
-        valueExpr='name'
+        valueExpr='id'
         fetchDataSource={fetchEmployees}
         fetchArgs={fetchArgs}
         hideIfDataSourceEmpty={false}
