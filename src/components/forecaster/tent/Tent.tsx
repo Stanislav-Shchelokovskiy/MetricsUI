@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Accordion, { Item } from 'devextreme-react/accordion'
-import { Tribe } from '../../common/Interfaces'
+import { Knot } from '../../common/Interfaces'
 import { ForecasterStore } from '../store/Store'
 import { expandForecastItems } from '../store/forecaster_items/Actions'
 import { expandedItemsSelector } from '../store/forecaster_items/Selectors'
@@ -17,7 +17,7 @@ export interface ForecastMainParams {
 }
 
 export interface TribeContainerState {
-    tent: Tribe
+    tent: Knot
     incomeType: string
     replyTypes: Array<string>
     defaultReplyType: string
@@ -29,7 +29,7 @@ export interface TribeContainerState {
 }
 
 
-export default function TentContainer({ tent }: { tent: Tribe }) {
+export default function TentContainer({ tent }: { tent: Knot }) {
     const expandedItems = useSelector((store: ForecasterStore) => expandedItemsSelector(store, tent.id))
 
     const dispatch = useDispatch()

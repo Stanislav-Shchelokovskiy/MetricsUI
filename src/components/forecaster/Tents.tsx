@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import ScrollView from 'devextreme-react/scroll-view'
-import { Tribe } from '../common/Interfaces'
+import { Knot } from '../common/Interfaces'
 import TentContainer from './tent/Tent'
 import { tentsSelector } from './store/forecaster/Selectors'
 
@@ -18,7 +18,7 @@ interface TentContainerState {
 }
 
 export interface TentsContainerState extends TentContainerState {
-    tents: Array<Tribe>
+    tents: Array<Knot>
 }
 
 

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import { Tribe } from '../../../common/Interfaces'
+import { Knot } from '../../../common/Interfaces'
 import { fetchTents } from '../../../common/network_resource_fetcher/FetchTents'
 import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { changeSelectedTents } from '../../store/forecaster/Actions'
@@ -13,17 +13,17 @@ function areEqual(prevState: Array<string>, newState: Array<string>) {
 
 export default function TentsSelector() {
     const selectedTentIds = useSelector((store: ForecasterStore) => tentIdsSelector(store), areEqual)
-    const onValueChange = useCallback((allValues: Array<Tribe>, selectedValues: Array<string>) => {
-        let tents: Array<Tribe> = []
+    const onValueChange = useCallback((allValues: Array<Knot>, selectedValues: Array<string>) => {
+        let tents: Array<Knot> = []
         for (const tentId of selectedValues) {
-            tents.push((allValues.find(tent => tent.id === tentId) as Tribe))
+            tents.push((allValues.find(tent => tent.id === tentId) as Knot))
         }
         return changeSelectedTents(tents)
     }, [])
 
     const defaultValue = useMemo(() => [], [])
 
-    return <MultiOptionSelector<Tribe, string>
+    return <MultiOptionSelector<Knot, string>
         className='TentsSelector'
         displayExpr='name'
         valueExpr='id'

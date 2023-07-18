@@ -1,5 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { Tribe } from '../../../common/Interfaces'
+import { Knot } from '../../../common/Interfaces'
 import {
     CHANGE_INCOME_TYPE,
     CHANGE_SELECTED_TENTS,
@@ -9,14 +9,14 @@ import {
 
 export interface Forecaster {
     incomeType: string
-    tents: Array<Tribe>
+    tents: Array<Knot>
     lastUpdated: number
 }
 
 
 export const INITIAL_STATE: Forecaster = {
     incomeType: '',
-    tents: Array<Tribe>(),
+    tents: Array<Knot>(),
     lastUpdated: Date.now()
 }
 

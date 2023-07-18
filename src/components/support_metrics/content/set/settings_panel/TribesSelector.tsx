@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Tribe } from '../../../../common/Interfaces'
+import { Knot } from '../../../../common/Interfaces'
 import { SupportMetricsStore } from '../../../store/Store'
 import { fetchTribes } from '../../../../common/network_resource_fetcher/FetchTribes'
 import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
@@ -12,10 +12,10 @@ import { tribesSelector } from '../../../store/sets/Selectors'
 export default function TribesSelector() {
     const setTitle = useSetTitle()
     const value = useSelector((store: SupportMetricsStore) => tribesSelector(store, setTitle))
-    const onValueChange = (allValues: Array<Tribe>, selectedTribes: Array<string>) => changeTribes({ stateId: setTitle, data: selectedTribes })
+    const onValueChange = (allValues: Array<Knot>, selectedTribes: Array<string>) => changeTribes({ stateId: setTitle, data: selectedTribes })
     const onIncludeChange = (include: boolean) => changeTribesInclude({ stateId: setTitle, data: include })
 
-    return <MultiOptionSelector<Tribe, string>
+    return <MultiOptionSelector<Knot, string>
         className='TribesSelector'
         displayExpr='name'
         valueExpr='id'

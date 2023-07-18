@@ -1,14 +1,14 @@
 import { FORECASTER_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
-import { Tribe } from '../../common/Interfaces'
+import { Knot } from '../../common/Interfaces'
 
 export interface ForecasterSettingsValues {
     incomeTypes: Array<string>
     replyTypes: Array<string>
     tiles: Array<number>
     dailyForecastHorizons: Array<string>
-    tribes: Array<Tribe>
+    tribes: Array<Knot>
 }
 
 export const EMPTY_FORECATER_SETTINGS_VALUES: FetchResult<ForecasterSettingsValues> = {
@@ -18,7 +18,7 @@ export const EMPTY_FORECATER_SETTINGS_VALUES: FetchResult<ForecasterSettingsValu
         replyTypes: Array<string>(),
         tiles: Array<number>(),
         dailyForecastHorizons: Array<string>(),
-        tribes: Array<Tribe>(),
+        tribes: Array<Knot>(),
     }
 }
 
