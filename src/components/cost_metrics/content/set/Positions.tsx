@@ -3,20 +3,21 @@ import { useSelector } from 'react-redux'
 import { CostMetricsStore } from '../../store/Store'
 import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { changePositions, changePositionsInclude } from '../../../common/store/multiset_container/sets/actions/Employees'
-import { fetchPositions, Position } from '../../network_resource_fetcher/Positions'
+import { fetchPositions } from '../../network_resource_fetcher/Positions'
 import { empPositionsSelector } from '../../store/sets/Selectors'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
+import { Knot } from '../../../common/Interfaces'
 
 export default function EmpPositionsSelector() {
     const setTitle = useSetTitle()
     const value = useSelector((state: CostMetricsStore) => empPositionsSelector(state, setTitle))
-    const onValueChange = (allValues: Array<Position>, values: Array<string>) => changePositions({ stateId: setTitle, data: values })
+    const onValueChange = (allValues: Array<Knot>, values: Array<string>) => changePositions({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changePositionsInclude({ stateId: setTitle, data: include })
 
-    return <MultiOptionSelector<Position, string>
+    return <MultiOptionSelector<Knot, string>
         className='CostMetrics_PositionsSelector'
         displayExpr='name'
-        valueExpr='name'
+        valueExpr='id'
         placeholder='Select employees positions'
         label='Positions'
         fetchDataSource={fetchPositions}
