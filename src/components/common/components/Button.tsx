@@ -39,11 +39,7 @@ Button.defaultProps = {
 export interface ButtonOptions {
     name: string
     location: string,
-    text: string
-    type: string
-    icon: string
-    hint: string
-    onClick: (e: any) => void
+    [index: string]: any;
 }
 
 export function getIncludeButtonOptions(
@@ -91,5 +87,18 @@ export function getClearButtonOptions() {
         focusStateEnabled: false,
         activeStateEnabled: false,
         onClick: undefined
+    }
+}
+
+export function getHelpButtonOptions() {
+    return {
+        name: 'helpButton',
+        location: 'before',
+        stylingMode: 'text',
+        icon: 'help',
+        type: 'normal',
+        hoverStateEnabled: true,
+        focusStateEnabled: false,
+        activeStateEnabled: false,
     }
 }

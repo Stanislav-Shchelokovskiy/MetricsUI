@@ -13,7 +13,7 @@ import { ContainerState, CONTEXT } from './store/ContainerReducer'
 import { BaseContainerState } from '../common/store/multiset_container/BaseContainerState'
 import { fetchGroupByPeriods } from './network_resource_fetcher/FetchGroupByPeriods'
 import { fetchPeriod } from './network_resource_fetcher/FetchPeriod'
-import { fetchMetrics } from './network_resource_fetcher/FetchMetrics'
+import { fetchMetrics, fetchMetricDesc } from './network_resource_fetcher/FetchMetrics'
 import { fetchPeriodsArray } from './network_resource_fetcher/FetchPeriodsArray'
 import { fetchTicketsWithIterationsAggregates } from './network_resource_fetcher/FetchTicketsWithIterationsAggregates'
 import { SUPPORT_METRICS_END_POINT } from '../common/EndPoint'
@@ -51,12 +51,17 @@ const filterLabel = {
     getFilterFields: getSetDataFields,
 }
 
+const metricDescription = {
+    fetchMetricDescription: fetchMetricDesc,
+}
+
 export const supportMetricsContext = {
     graphSettingsPanel: graphSettings,
     graph: graph,
     stateManagement: stateManagement,
     rawData: rawData,
     filterLabel: filterLabel,
+    metricDescription: metricDescription,
     fetchMetrics: fetchMetrics,
     changeMetric: (ctx: any) => { },
     changeState: (state: any) => { },

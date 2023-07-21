@@ -15,7 +15,6 @@
     justify-content: flex-start;
     align-items: center;
     padding-left: 10px;
-    gap: 10px;
     flex: 1;
     height: 18vh;
     min-width: 70vw;
@@ -35,6 +34,7 @@
     min-height: 3rem;
     height: 3rem;
     width: 10vw;
+    margin-left: 10px;
 }
 
 .ComparisonGraph_GroupByPeriodSelector {
