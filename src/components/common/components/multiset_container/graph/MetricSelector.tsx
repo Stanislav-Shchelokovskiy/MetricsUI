@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux'
 
 export interface Metric {
     name: string
+    displayName: string
     group: string
     context: number
 }
@@ -36,7 +37,7 @@ export default function MetricSelector() {
     return <HelpProvider
         Wrapped={OptionSelector}
         className='ComparisonGraph_MetricSelector'
-        displayExpr='name'
+        displayExpr='displayName'
         valueExpr='name'
         groupExpr='group'
         fetchDataSource={context.fetchMetrics}
