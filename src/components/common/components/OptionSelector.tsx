@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import SelectBox, { DropDownOptions, Button } from 'devextreme-react/select-box'
 import DataSource from 'devextreme/data/data_source'
 import LoadIndicator from './LoadIndicator'
@@ -6,7 +6,8 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 import useDataSource, { DataSourceProps } from '../../common/hooks/UseDataSource'
 import { useSingleValidate } from '../hooks/UseValidate'
-import { getClearButtonOptions } from './Button'
+import { getClearButtonOptions, ButtonOptions } from './Button'
+
 
 interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> extends DataSourceProps<DataSourceT> {
     className: string | undefined
@@ -22,6 +23,7 @@ interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> exten
     onValueChangeEx: ((dsValue: DataSourceT) => void) | undefined
     showDropDownButton: boolean
     showClear: boolean
+    customButtons: Array<ButtonOptions> | undefined
 }
 
 
@@ -73,6 +75,16 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
                 hideOnParentScroll={true}
                 focusStateEnabled={false}
                 container={props.container} />
+            {
+                props.customButtons !== undefined ?
+                    props.customButtons.map(o => <Button
+                        key={o.name}
+                        name={o.name}
+                        location={o.location}
+                        options={o} />) :
+                    null
+            }
+            <Button name='dropDown' />
             {props.showClear && !defaultValueIsSelected(value, defaultValue) ?
                 <Button
                     name='customclear'
@@ -101,7 +113,8 @@ const defaultProps = {
     showDropDownButton: true,
     showClearButton: false,
     showClear: false,
-    onValueChangeEx: undefined
+    onValueChangeEx: undefined,
+    customButtons: undefined,
 }
 
 OptionSelector.defaultProps = defaultProps

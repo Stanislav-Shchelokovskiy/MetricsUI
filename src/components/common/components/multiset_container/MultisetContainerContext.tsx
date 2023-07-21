@@ -8,6 +8,7 @@ import { GroupByPeriod } from './graph/GroupByPeriodSelector'
 import { Metric } from './graph/MetricSelector'
 import { MultisetContainerStore } from '../../store/multiset_container/Store'
 import { FilterField } from './Toolbar/FilterTooltip'
+import { HelpItem } from '../../Interfaces'
 
 interface GraphSettingsPanelContext {
     fetchPeriod: (...args: any) => Promise<FetchResult<Array<string>>>,
@@ -35,12 +36,17 @@ interface FilterLabelContext {
     getFilterFields(): Array<FilterField>
 }
 
+interface MetricDescriptionContext {
+    fetchMetricDescription: (metric: string) => Promise<FetchResult<HelpItem>>
+}
+
 interface Context {
     graphSettingsPanel: GraphSettingsPanelContext
     graph: GraphContext
     stateManagement: StateManagementContext
     rawData: RawDataContext
     filterLabel: FilterLabelContext
+    metricDescription: MetricDescriptionContext
     fetchMetrics: (...args: any) => Promise<FetchResult<Array<Metric>>>,
     changeMetric: (metric: Metric) => void
     changeState: (state: MultisetContainerStore) => void

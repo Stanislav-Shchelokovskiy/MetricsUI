@@ -30,3 +30,8 @@ export interface ValidationResult {
     value: any
     valid: boolean
 }
+
+export interface HelpItem {
+    title: string
+    content: string
+}

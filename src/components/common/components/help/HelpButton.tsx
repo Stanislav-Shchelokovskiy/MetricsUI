@@ -1,17 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Popup } from 'devextreme-react/popup'
 import Accordion, { Item } from 'devextreme-react/accordion'
 import ScrollView from 'devextreme-react/scroll-view'
 import Button from '../Button'
 import { PopupProps } from '../../Interfaces'
-import FetchResult from '../../../common/Interfaces'
+import FetchResult from '../../Interfaces'
 import LoadIndicator from '../LoadIndicator'
-import Markdown from 'markdown-to-jsx';
+import Markdown from 'markdown-to-jsx'
+import { HelpItem } from '../../Interfaces'
+import { useHelp } from '../../hooks/UseHelp'
 
-export interface HelpItem {
-    title: string
-    content: string
-}
 
 interface Props {
     visible: boolean
@@ -50,15 +48,7 @@ export default React.memo(HelpButton)
 
 
 function HelpPopup(props: HelpPopupProps) {
-    const [helpItems, setHelpItems] = useState<Array<HelpItem>>([])
-
-    useEffect(() => {
-        (async () => {
-            const fetchResult: FetchResult<Array<HelpItem>> = await props.fetchHelpItems(...props.fetchArgs)
-            if (fetchResult.success)
-                setHelpItems(fetchResult.data)
-        })()
-    }, [...props.fetchArgs])
+    const helpItems = useHelp<Array<HelpItem>>(props.fetchHelpItems, props.fetchArgs)
 
     return (
         <Popup
@@ -72,7 +62,7 @@ function HelpPopup(props: HelpPopupProps) {
             maxWidth='70vw'
             maxHeight='90vh'
         >
-            {helpItems.length > 0 ?
+            {helpItems && helpItems.length > 0 ?
                 <ScrollView
                     className='CommandButton_ScrollView'
                     id='CommandButton_ScrollView_id'

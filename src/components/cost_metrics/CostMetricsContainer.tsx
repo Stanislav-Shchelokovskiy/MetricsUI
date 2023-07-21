@@ -11,7 +11,7 @@ import MultisetContainer from '../common/components/multiset_container/MultisetC
 import { MultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
 import { fetchPeriod } from './network_resource_fetcher/Period'
 import { fetchGroupByPeriods } from './network_resource_fetcher/GroupByPeriods'
-import { fetchMetrics } from './network_resource_fetcher/Metrics'
+import { fetchMetrics, fetchMetricDesc } from './network_resource_fetcher/Metrics'
 import { fetchPeriodsArray } from './network_resource_fetcher/PeriodsArray'
 import { fetchCostMetricsAggregates } from './network_resource_fetcher/CostMetricsAggregates'
 import { getShareableState } from './store/Store'
@@ -49,12 +49,17 @@ const filterLabel = {
     getFilterFields: getSetDataFields,
 }
 
+const metricDescription = {
+    fetchMetricDescription: fetchMetricDesc,
+}
+
 export const costMetricsContext = {
     graphSettingsPanel: graphSettings,
     graph: graph,
     stateManagement: stateManagement,
     rawData: rawData,
     filterLabel: filterLabel,
+    metricDescription: metricDescription,
     fetchMetrics: fetchMetrics,
     changeMetric: (ctx: any) => { },
     changeState: (state: any) => { },
