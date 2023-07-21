@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Popup } from 'devextreme-react/popup'
 import Accordion, { Item } from 'devextreme-react/accordion'
 import ScrollView from 'devextreme-react/scroll-view'
