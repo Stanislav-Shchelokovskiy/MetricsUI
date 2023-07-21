@@ -86,8 +86,8 @@ function HelpProvider({ Wrapped, fetchMetricDescription, fetchArgsSelector, ...w
                 showCloseButton={true}
                 showTitle={true}
                 title={help.title}
-                maxWidth='70vw'
-                maxHeight='90vh'
+                maxWidth='60vw'
+                maxHeight='70vh'
 
             >
                 <ScrollView
