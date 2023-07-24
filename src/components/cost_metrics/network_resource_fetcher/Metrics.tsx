@@ -10,9 +10,7 @@ export async function fetchMetrics(): Promise<FetchResult<Array<Metric>>> {
 
 
 function converter(value: HelpItem | undefined): HelpItem {
-    if (value)
-        return value
-    return {
+    return value || {
         title: '',
         content: ''
     }
