@@ -4,17 +4,26 @@ import { CostMetricsStore } from '../../store/Store'
 import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { changeEmployees, changeEmployeesInclude } from '../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchEmployees } from '../../network_resource_fetcher/Employees'
-import { empTribesSelector, empPositionsSelector, employeesSelector } from '../../store/sets/Selectors'
 import { paramOrDefault } from '../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
 import { Knot } from '../../../common/Interfaces'
+import {
+    empTeamsSelector,
+    empTribesSelector,
+    empTentsSelector,
+    empPositionsSelector,
+    employeesSelector
+} from '../../store/sets/Selectors'
 
 export default function EmployeesSelector() {
     const setTitle = useSetTitle()
     const value = useSelector((state: CostMetricsStore) => employeesSelector(state, setTitle))
+
+    const teams = useSelector((state: CostMetricsStore) => empTeamsSelector(state, setTitle))
     const tribes = useSelector((state: CostMetricsStore) => empTribesSelector(state, setTitle))
+    const tents = useSelector((state: CostMetricsStore) => empTentsSelector(state, setTitle))
     const positions = useSelector((state: CostMetricsStore) => empPositionsSelector(state, setTitle))
-    const fetchArgs = [paramOrDefault(tribes), paramOrDefault(positions)]
+    const fetchArgs = [paramOrDefault(teams), paramOrDefault(tribes), paramOrDefault(tents), paramOrDefault(positions)]
 
     const onValueChange = (allValues: Array<Knot>, values: Array<string>) => changeEmployees({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeEmployeesInclude({ stateId: setTitle, data: include })
@@ -27,7 +36,7 @@ export default function EmployeesSelector() {
         valueExpr='id'
         fetchDataSource={fetchEmployees}
         fetchArgs={fetchArgs}
-        hideIfDataSourceEmpty={false}
+        hideIfDataSourceEmpty={true}
         value={value?.values}
         includeButtonState={value === undefined || value.include}
         onValueChange={onValueChange}

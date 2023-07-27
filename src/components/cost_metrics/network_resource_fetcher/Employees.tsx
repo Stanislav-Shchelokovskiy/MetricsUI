@@ -4,7 +4,9 @@ import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault
 import { FilterParametersNode } from '../../common/store/multiset_container/sets/Interfaces'
 
 export async function fetchEmployees(
+    teams: FilterParametersNode<string>,
     tribes: FilterParametersNode<string>,
+    tents: FilterParametersNode<string>,
     positions: FilterParametersNode<string>,
 ): Promise<FetchResult<Array<Knot>>> {
     return fetchArray(
@@ -13,8 +15,10 @@ export async function fetchEmployees(
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                tribes: tribes,
-                positions: positions,
+                Teams: teams,
+                Tribes: tribes,
+                Tents: tents,
+                Positions: positions,
             }),
         }
     )

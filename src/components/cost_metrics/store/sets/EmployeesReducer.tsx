@@ -10,6 +10,8 @@ import {
     CHANGE_EMP_POSITIONS_INCLUDE,
     CHANGE_EMP_TRIBES,
     CHANGE_EMP_TRIBES_INCLUDE,
+    CHANGE_EMP_TENTS,
+    CHANGE_EMP_TENTS_INCLUDE,
     CHANGE_EMPLOYEES,
     CHANGE_EMPLOYEES_INCLUDE,
 } from '../../../common/store/multiset_container/sets/actions/Employees'
@@ -50,6 +52,21 @@ export function employeesReducer(sets: Array<SetState>, action: AnyAction): Arra
                 return {
                     ...x,
                     empTribes: updateInclude(x.empTribes, action.payload.data)
+                }
+            })
+
+        case CHANGE_EMP_TENTS:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    empTents: updateValues(x.empTribes, action.payload.data)
+                }
+            })
+        case CHANGE_EMP_TENTS_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    empTents: updateInclude(x.empTribes, action.payload.data)
                 }
             })
 

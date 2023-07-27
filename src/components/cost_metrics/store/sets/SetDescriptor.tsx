@@ -5,6 +5,7 @@ export function getAliasedSet(set: SetState) {
     return {
         'Teams': set.empTeams,
         'Tribes': set.empTribes,
+        'Tents': set.empTents,
         'Positions': set.empPositions,
         'Employees': set.employees
     }
