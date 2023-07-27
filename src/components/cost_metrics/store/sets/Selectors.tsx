@@ -7,5 +7,6 @@ function getSelector<R>(selector: (set: SetState | undefined) => R | undefined) 
 
 export const empTeamsSelector = getSelector(set => set?.empTeams)
 export const empTribesSelector = getSelector(set => set?.empTribes)
+export const empTentsSelector = getSelector(set => set?.empTents)
 export const empPositionsSelector = getSelector(set => set?.empPositions)
 export const employeesSelector = getSelector(set => set?.employees)

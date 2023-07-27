@@ -11,6 +11,7 @@ import { getDefaultTitle } from '../../../common/store/multiset_container/sets/D
 export interface SetState extends BaseSetState {
     empTeams: FilterParametersNode<string> | undefined
     empTribes: FilterParametersNode<string> | undefined
+    empTents: FilterParametersNode<string> | undefined
     empPositions: FilterParametersNode<string> | undefined
     employees: FilterParametersNode<string> | undefined
 }
@@ -19,6 +20,7 @@ export const DEFAULT_SET: SetState = {
     title: getDefaultTitle(),
     empTeams: getDefaultFilterParametersNode<string>(),
     empTribes: getDefaultFilterParametersNode<string>(),
+    empTents: getDefaultFilterParametersNode<string>(),
     empPositions: getDefaultFilterParametersNode<string>(),
     employees: getDefaultFilterParametersNode<string>(),
 }
