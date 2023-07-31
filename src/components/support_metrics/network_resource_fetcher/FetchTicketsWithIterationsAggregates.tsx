@@ -8,13 +8,7 @@ import { BaseSetState } from '../../common/store/multiset_container/sets/Interfa
 import { getAliasedSet } from '../store/sets/SetDescriptor'
 import { Agg } from '../../common/components/multiset_container/graph/ComparisonGraph'
 import { anyValueIsEmpty } from '../../common/store/multiset_container/Utils'
-
-
-interface TicketsWithIterationsAggregate {
-    period: string
-    agg: number
-    name: string
-}
+import { Aggregate } from '../../common/components/multiset_container/graph/GraphPlot'
 
 const EMPTY_AGGREGATES = {
     periods: [],
@@ -22,7 +16,7 @@ const EMPTY_AGGREGATES = {
     customdata: [],
 }
 
-function aggregatesConverter(aggregates: Array<TicketsWithIterationsAggregate> | undefined) {
+function aggregatesConverter(aggregates: Array<Aggregate> | undefined) {
     if (aggregates) {
         const periods = []
         const aggs = []
@@ -40,7 +34,7 @@ function aggregatesConverter(aggregates: Array<TicketsWithIterationsAggregate> |
 }
 
 function getConverter(setTitle: string) {
-    return (aggregates: Array<TicketsWithIterationsAggregate> | undefined): Agg => {
+    return (aggregates: Array<Aggregate> | undefined): Agg => {
         return {
             name: setTitle,
             ...aggregatesConverter(aggregates),

@@ -43,7 +43,6 @@ export default function ComparisonGraph() {
                     aggs = sets.map(x => {
                         return {
                             name: x.data.name,
-                            metric: containerState.metric,
                             x: x.data.periods,
                             y: x.data.aggs,
                             visible: (containerState.hiddenLegends.includes(x.data.name) ? 'legendonly' : true) as 'legendonly' | boolean | undefined,

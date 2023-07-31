@@ -7,12 +7,7 @@ import { Agg } from '../../common/components/multiset_container/graph/Comparison
 import { anyValueIsEmpty } from '../../common/store/multiset_container/Utils'
 import { BaseContainerState } from '../../common/store/multiset_container/BaseContainerState'
 import { BaseSetState } from '../../common/store/multiset_container/sets/Interfaces'
-
-interface CostMetricsAggregate {
-    period: string
-    agg: number
-    name: string
-}
+import { Aggregate } from '../../common/components/multiset_container/graph/GraphPlot'
 
 const EMPTY_AGGREGATES = {
     periods: [],
@@ -20,7 +15,7 @@ const EMPTY_AGGREGATES = {
     customdata: [],
 }
 
-function aggregatesConverter(aggregates: Array<CostMetricsAggregate> | undefined, setTitle: string) {
+function aggregatesConverter(aggregates: Array<Aggregate> | undefined, setTitle: string) {
     if (aggregates) {
         const periods = []
         const aggs = []
@@ -38,7 +33,7 @@ function aggregatesConverter(aggregates: Array<CostMetricsAggregate> | undefined
 }
 
 function getConverter(setTitle: string) {
-    return (aggregates: Array<CostMetricsAggregate> | undefined): Agg => {
+    return (aggregates: Array<Aggregate> | undefined): Agg => {
         return {
             name: setTitle,
             ...aggregatesConverter(aggregates, setTitle),
