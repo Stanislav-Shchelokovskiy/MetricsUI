@@ -2,7 +2,7 @@ version: '3'
 
 services:
   stat_app:
-    image: shchelokovskiy/stat_app:latest
+    image: dxservices/stat_app:latest
     restart: always
     hostname: stat_app
     container_name: stat_app
