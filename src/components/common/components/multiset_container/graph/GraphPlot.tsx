@@ -15,9 +15,14 @@ interface PlotProps {
     comparisonMethod: string
 }
 
+export interface Aggregate {
+    period: string
+    agg: number
+    name: string
+}
+
 export interface GraphData {
     name: string
-    metric: string
     x: Array<string> | Array<number>
     y: Array<number>
     visible: 'legendonly' | boolean | undefined
@@ -95,7 +100,6 @@ function createNormalizedStackedArea(data: GraphData) {
     return {
         ...getCommonGraphSettings(data),
         type: 'scatter' as PlotType,
-        hovertemplate: `<b>${data.name} </b><br>Period: %{x}<br>Value: %{y}%<br><extra></extra>`,
         connectgaps: true,
         stackgroup: 'one',
         groupnorm: 'percent'
@@ -104,9 +108,7 @@ function createNormalizedStackedArea(data: GraphData) {
 
 function getAbsoluteGraphSettings(data: GraphData) {
     //%{customdata}
-    return {
-        hovertemplate: `<b>${data.name} </b><br>Period: %{x}<br>${data.metric}: %{y}<br><extra></extra>`,
-    }
+    return {}
 }
 
 function getCommonGraphSettings(data: GraphData) {
@@ -118,5 +120,6 @@ function getCommonGraphSettings(data: GraphData) {
         hovertext: data.name,
         visible: data.visible,
         customdata: data.customdata,
+        hovertemplate: `<b>${data.name} </b><br>Period: %{x}<br>Value: %{y}<br><extra></extra>`,
     }
 }
