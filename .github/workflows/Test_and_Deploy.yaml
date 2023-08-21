@@ -1,7 +1,9 @@
 name: Test
 on:
   push:
-    branches: [main]
+    branches:
+      - rc
+      - release
 
 jobs:
   test:
@@ -22,7 +24,7 @@ jobs:
         run: npm ci
       - name: Test
         run: CI=true npm test
-  
+
   deploy:
     needs: test
     runs-on: ubuntu-latest
