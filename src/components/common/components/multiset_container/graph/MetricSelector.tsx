@@ -90,6 +90,7 @@ function HelpProvider({ Wrapped, fetchMetricDescription, fetchArgsSelector, ...w
                 maxHeight='70vh'
 
             >
+
                 <ScrollView
                     className='Help_ScrollView'
                     id='Help_ScrollView_id'
@@ -97,7 +98,9 @@ function HelpProvider({ Wrapped, fetchMetricDescription, fetchArgsSelector, ...w
                     scrollByThumb={true}
                     scrollByContent={false}
                 >
-                    <Markdown>{help.content}</Markdown>
+                    <span>
+                        <Markdown>{help.content}</Markdown>
+                    </span>
                 </ScrollView>
 
             </Popup > :
