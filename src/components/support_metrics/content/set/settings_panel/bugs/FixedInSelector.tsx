@@ -20,7 +20,7 @@ export default function FixedInSelector() {
         Wrapped={MultiOptionSelector}
         setTitle={setTitle}
         className='CustomersActivity_FixedInSelector'
-        displayExpr='id'
+        displayExpr='name'
         valueExpr='id'
         placeholder='Select versions'
         label='Fixed In'
