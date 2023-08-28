@@ -8,7 +8,7 @@ import { positionsSelector } from '../../store/strategic_forecast/Selectors'
 
 
 export default function PositionsSelector() {
-    const ds = useMemo<Array<string>>(() => { return ['Support', 'Developer', 'EM', 'PM', 'Technical Writer'] }, [])
+    const ds = useMemo<Array<string>>(() => { return ['Support', 'Developer', 'Chapter Manager', 'EM', 'PM', 'Technical Writer'] }, [])
 
     const tentId = useTentId()
     const selectedPositions = useSelector((store: ForecasterStore) => positionsSelector(store, tentId))
