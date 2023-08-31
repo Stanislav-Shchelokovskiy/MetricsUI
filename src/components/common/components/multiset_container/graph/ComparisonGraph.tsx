@@ -32,14 +32,14 @@ export default function ComparisonGraph() {
                 cancelled = true
             }
 
-            const [periods_array, ...sets] = await Promise.all([
+            const [periods, ...sets] = await Promise.all([
                 context.graph.fetchPeriods(containerState),
                 ...setsState.map((set) => context.graph.fetchAggs(containerState, set))
             ])
 
             if (!cancelled) {
                 let aggs: Array<GraphData> = []
-                if (periods_array.success) {
+                if (periods.success) {
                     aggs = sets.map(x => {
                         return {
                             name: x.data.name,
@@ -52,7 +52,7 @@ export default function ComparisonGraph() {
                 }
 
                 if (!cancelled) {
-                    setAggregates([periods_array.data, aggs])
+                    setAggregates([periods.data, aggs])
                     setDataLoading(false)
                 }
             }
@@ -68,7 +68,7 @@ export default function ComparisonGraph() {
     return (
         <div className='ComparisonGraph'>
             {dataLoading ? <LoadIndicator className='ComparisonGraph_LoadingIndicator' width={100} height={100} /> : null}
-            <GraphPlotMempized
+            <GraphPlotMemoized
                 categories={categories}
                 aggs={aggregates}
                 comparisonMethod={containerState.comparisonMethod}
@@ -77,4 +77,4 @@ export default function ComparisonGraph() {
     )
 }
 
-const GraphPlotMempized = React.memo(GraphPlot)
+const GraphPlotMemoized = React.memo(GraphPlot)
