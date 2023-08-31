@@ -1,6 +1,7 @@
-import { Agg } from './ComparisonGraph'
+import { Agg } from '../../components/multiset_container/graph/ComparisonGraph'
 
-export interface Aggregate {
+
+interface Aggregate {
     period: string
     agg: number
     name: string

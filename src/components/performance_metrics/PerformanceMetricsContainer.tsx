@@ -4,7 +4,7 @@ import '../common/styles/multiset_container/Toolbar.css'
 import '../common/styles/multiset_container/FilterTooltip.css'
 
 import React from 'react'
-import { COST_METRICS_END_POINT } from '../common/EndPoint'
+import { PERFORMANCE_METRICS_END_POINT } from '../common/EndPoint'
 import ApplySharedState from '../common/components/state_management/ApplySharedState'
 import { BaseContainerState } from '../common/store/multiset_container/BaseContainerState'
 import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
@@ -16,15 +16,16 @@ import { fetchAggregates } from './network_resource_fetcher/Aggregates'
 import { getShareableState } from './store/Store'
 import { fetchRaw } from './network_resource_fetcher/Raw'
 import { fetchDisplayFilter } from './network_resource_fetcher/DisplayFilter'
+import { fetchGroupByPeriods } from './network_resource_fetcher/GroupByPeriods'
 import { CONTEXT } from './store/ContainerReducer'
 import Sets from './content/Sets'
 import PerformanceMetricsToolbar from './toolbar/Toolbar'
-import { COST_METRICS } from '../app_components/Paths'
+import { PERFORMANCE_METRICS } from '../app_components/Paths'
 import { getSetDataFields } from './store/sets/SetDescriptor'
 
 const graphSettings = {
     fetchPeriod: fetchPeriod,
-    fetchGroupByPeriods: () => [],
+    fetchGroupByPeriods: fetchGroupByPeriods,
 }
 
 const graph = {
@@ -35,8 +36,8 @@ const graph = {
 
 const stateManagement = {
     getShareableState: getShareableState,
-    endPoint: COST_METRICS_END_POINT,
-    navigateTo: COST_METRICS,
+    endPoint: PERFORMANCE_METRICS_END_POINT,
+    navigateTo: PERFORMANCE_METRICS,
 }
 
 const rawData = {

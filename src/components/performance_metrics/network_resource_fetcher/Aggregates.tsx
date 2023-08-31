@@ -7,7 +7,7 @@ import { Agg } from '../../common/components/multiset_container/graph/Comparison
 import { anyValueIsEmpty } from '../../common/store/multiset_container/Utils'
 import { BaseContainerState } from '../../common/store/multiset_container/BaseContainerState'
 import { BaseSetState } from '../../common/store/multiset_container/sets/Interfaces'
-import { EMPTY_AGGREGATES, getAggregatesConverter } from '../../common/components/multiset_container/graph/Aggregate'
+import { EMPTY_AGGREGATES, getAggregatesConverter } from '../../common/network_resource_fetcher/converters/Aggregate'
 
 
 export async function fetchAggregates(

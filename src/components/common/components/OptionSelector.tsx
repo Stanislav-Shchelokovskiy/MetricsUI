@@ -24,6 +24,7 @@ interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> exten
     showDropDownButton: boolean
     showClear: boolean
     customButtons: Array<ButtonOptions> | undefined
+    hideIfEmpty: boolean
 }
 
 
@@ -93,6 +94,8 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
                 null}
         </SelectBox >
     }
+    if (props.hideIfEmpty)
+        return null
     return <LoadIndicator width={undefined} height={25} />
 }
 
@@ -115,6 +118,7 @@ const defaultProps = {
     showClear: false,
     onValueChangeEx: undefined,
     customButtons: undefined,
+    hideIfEmpty: false,
 }
 
 OptionSelector.defaultProps = defaultProps

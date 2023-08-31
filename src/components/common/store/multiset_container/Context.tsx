@@ -8,6 +8,10 @@ export function isSupportContextSelected(ctx: Context) {
     return ctx === Context.Support
 }
 
+export function isCostContextSelected(ctx: Context) {
+    return ctx === Context.Cost
+}
+
 export function contextOrDefault(ctx: Context | undefined): Context {
     if (ctx !== undefined)
         return ctx

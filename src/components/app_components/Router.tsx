@@ -17,6 +17,7 @@ import {
   SUPPORT_METRICS,
   COST_METRICS,
   ENGINEERING_METRICS,
+  PERFORMANCE_METRICS,
 } from './Paths'
 
 
@@ -49,6 +50,14 @@ export const ROUTER = createBrowserRouter([
   {
     path: `${COST_METRICS}/:stateId`,
     element: <EngineeringMetricsApplySharedState context={Context.Cost} />,
+  },
+  {
+    path: PERFORMANCE_METRICS,
+    element: <Navigate to={ENGINEERING_METRICS} replace={true} />,
+  },
+  {
+    path: `${PERFORMANCE_METRICS}/:stateId`,
+    element: <EngineeringMetricsApplySharedState context={Context.Performance} />,
   },
   {
     path: ENGINEERING_METRICS,

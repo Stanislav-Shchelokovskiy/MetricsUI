@@ -24,6 +24,7 @@ export default function GroupByPeriodSelector() {
         defaultValueSelector={defaultValueSelector}
         onValueChange={changeGroupByPeriod}
         label='Group by'
+        hideIfEmpty={true}
     />
 }
 

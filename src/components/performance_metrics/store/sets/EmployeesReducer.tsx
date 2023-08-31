@@ -37,14 +37,14 @@ export function employeesReducer(sets: Array<SetState>, action: AnyAction): Arra
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    empTeams: updateValues(x.tents, action.payload.data)
+                    tents: updateValues(x.tents, action.payload.data)
                 }
             })
         case CHANGE_TENTS_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    empTeams: updateValuesInclude(x.tents, action.payload.data)
+                    tents: updateValuesInclude(x.tents, action.payload.data)
                 }
             })
 
@@ -67,14 +67,14 @@ export function employeesReducer(sets: Array<SetState>, action: AnyAction): Arra
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    empPositions: updateValues(x.positions, action.payload.data)
+                    positions: updateValues(x.positions, action.payload.data)
                 }
             })
         case CHANGE_EMP_POSITIONS_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    empPositions: updateValuesInclude(x.positions, action.payload.data)
+                    positions: updateValuesInclude(x.positions, action.payload.data)
                 }
             })
 

@@ -8,7 +8,7 @@ import { BaseSetState } from '../../common/store/multiset_container/sets/Interfa
 import { getAliasedSet } from '../store/sets/SetDescriptor'
 import { Agg } from '../../common/components/multiset_container/graph/ComparisonGraph'
 import { anyValueIsEmpty } from '../../common/store/multiset_container/Utils'
-import { EMPTY_AGGREGATES, getAggregatesConverter } from '../../common/components/multiset_container/graph/Aggregate'
+import { EMPTY_AGGREGATES, getAggregatesConverter } from '../../common/network_resource_fetcher/converters/Aggregate'
 
 
 export async function fetchTicketsWithIterationsAggregates(
