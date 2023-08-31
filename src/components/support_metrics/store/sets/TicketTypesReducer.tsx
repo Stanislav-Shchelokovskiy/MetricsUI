@@ -6,7 +6,7 @@ import { bugIsNotSelected } from '../Utils'
 import { 
     updateSetState,
     updateValues,
-    updateInclude
+    updateValuesInclude
 } from '../../../common/store/multiset_container/Utils'
 import {
     CHANGE_TICKETS_TYPES,
@@ -46,7 +46,7 @@ export function ticketTypesReducer(sets: Array<SetState>, action: AnyAction): Ar
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    duplicatedToTicketsTypes: updateInclude(x.duplicatedToTicketsTypes, action.payload.data)
+                    duplicatedToTicketsTypes: updateValuesInclude(x.duplicatedToTicketsTypes, action.payload.data)
                 }
             })
 
@@ -62,7 +62,7 @@ function _updateValues(set: SetState, newTicketTypes: Array<number> | undefined)
 }
 
 function _updateInclude(set: SetState, newTicketTypesInclude: boolean) {
-    const ticketTypes = updateInclude(set.ticketsTypes, newTicketTypesInclude)
+    const ticketTypes = updateValuesInclude(set.ticketsTypes, newTicketTypesInclude)
     return tryGetBugFreeState(set, ticketTypes)
 }
 

@@ -15,12 +15,6 @@ interface PlotProps {
     comparisonMethod: string
 }
 
-export interface Aggregate {
-    period: string
-    agg: number
-    name: string
-}
-
 export interface GraphData {
     name: string
     x: Array<string> | Array<number>

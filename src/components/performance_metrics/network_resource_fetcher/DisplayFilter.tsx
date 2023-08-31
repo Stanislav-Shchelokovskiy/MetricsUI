@@ -1,13 +1,13 @@
 import FetchResult from '../../common/Interfaces'
 import { SetState } from '../store/sets/SetsReducer'
-import { COST_METRICS_END_POINT } from '../../common/EndPoint'
+import { PERFORMANCE_METRICS_END_POINT } from '../../common/EndPoint'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
 import { getAliasedSet } from '../store/sets/SetDescriptor'
 
 
 export async function fetchDisplayFilter(metric: string, set: SetState): Promise<FetchResult<Array<any>>> {
     return fetchArray(
-        `${COST_METRICS_END_POINT}/DisplayFilter`,
+        `${PERFORMANCE_METRICS_END_POINT}/DisplayFilter`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

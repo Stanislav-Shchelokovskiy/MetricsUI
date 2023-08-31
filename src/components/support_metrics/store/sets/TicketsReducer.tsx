@@ -3,7 +3,7 @@ import { SetState } from './Interfaces'
 import { 
     updateSetState,
     updateValues,
-    updateInclude
+    updateValuesInclude
 } from '../../../common/store/multiset_container/Utils'
 import {
     CHANGE_VERSIONS,
@@ -46,7 +46,7 @@ export function ticketsReducer(sets: Array<SetState>, action: AnyAction): Array<
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    ticketsTags: updateInclude(x.ticketsTags, action.payload.data)
+                    ticketsTags: updateValuesInclude(x.ticketsTags, action.payload.data)
                 }
             })
 
@@ -62,7 +62,7 @@ export function ticketsReducer(sets: Array<SetState>, action: AnyAction): Array<
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    versions: updateInclude(x.versions, action.payload.data)
+                    versions: updateValuesInclude(x.versions, action.payload.data)
                 }
             })
 
@@ -78,7 +78,7 @@ export function ticketsReducer(sets: Array<SetState>, action: AnyAction): Array<
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    ides: updateInclude(x.ides, action.payload.data)
+                    ides: updateValuesInclude(x.ides, action.payload.data)
                 }
             })
 
@@ -94,7 +94,7 @@ export function ticketsReducer(sets: Array<SetState>, action: AnyAction): Array<
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    operatingSystems: updateInclude(x.operatingSystems, action.payload.data)
+                    operatingSystems: updateValuesInclude(x.operatingSystems, action.payload.data)
                 }
             })
 
@@ -110,7 +110,7 @@ export function ticketsReducer(sets: Array<SetState>, action: AnyAction): Array<
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    frameworks: updateInclude(x.frameworks, action.payload.data)
+                    frameworks: updateValuesInclude(x.frameworks, action.payload.data)
                 }
             })
 

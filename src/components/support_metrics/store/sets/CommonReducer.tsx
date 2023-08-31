@@ -1,17 +1,19 @@
 import { AnyAction } from '@reduxjs/toolkit'
 import { SetState } from './Interfaces'
-import { 
+import {
     updateSetState,
     updateValues,
-    updateInclude
+    updateValuesInclude
 } from '../../../common/store/multiset_container/Utils'
+import {
+    CHANGE_TENTS,
+    CHANGE_TENTS_INCLUDE
+} from '../../../common/store/multiset_container/sets/actions/Common'
 import {
     CHANGE_PERCENTILE,
     CHANGE_PERCENTILE_INCLUDE,
     CHANGE_TRIBES,
     CHANGE_TRIBES_INCLUDE,
-    CHANGE_TENTS,
-    CHANGE_TENTS_INCLUDE
 } from '../actions/SetCommon'
 
 
@@ -51,7 +53,7 @@ export function commonReducer(sets: Array<SetState>, action: AnyAction): Array<S
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    tribes: updateInclude(x.tribes, action.payload.data)
+                    tribes: updateValuesInclude(x.tribes, action.payload.data)
                 }
             })
 
@@ -67,7 +69,7 @@ export function commonReducer(sets: Array<SetState>, action: AnyAction): Array<S
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    tents: updateInclude(x.tents, action.payload.data)
+                    tents: updateValuesInclude(x.tents, action.payload.data)
                 }
             })
 

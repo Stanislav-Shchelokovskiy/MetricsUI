@@ -5,7 +5,7 @@ import { FilterParametersNode } from '../../../common/store/multiset_container/s
 import {
     updateSetState,
     updateValues,
-    updateInclude
+    updateValuesInclude
 } from '../../../common/store/multiset_container/Utils'
 import {
     CHANGE_FIXED_IN,
@@ -40,7 +40,7 @@ export function bugsReducer(sets: Array<SetState>, action: AnyAction): Array<Set
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    fixedIn: updateInclude(x.fixedIn, action.payload.data)
+                    fixedIn: updateValuesInclude(x.fixedIn, action.payload.data)
                 }
             })
 
@@ -56,7 +56,7 @@ export function bugsReducer(sets: Array<SetState>, action: AnyAction): Array<Set
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    severity: updateInclude(x.severity, action.payload.data)
+                    severity: updateValuesInclude(x.severity, action.payload.data)
                 }
             })
 
@@ -82,7 +82,7 @@ export function bugsReducer(sets: Array<SetState>, action: AnyAction): Array<Set
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    closedBetween: updateInclude(x.closedBetween, action.payload.data)
+                    closedBetween: updateValuesInclude(x.closedBetween, action.payload.data)
                 }
             })
 
@@ -98,7 +98,7 @@ export function bugsReducer(sets: Array<SetState>, action: AnyAction): Array<Set
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    closedBy: updateInclude(x.closedBy, action.payload.data)
+                    closedBy: updateValuesInclude(x.closedBy, action.payload.data)
                 }
             })
 
@@ -114,7 +114,7 @@ export function bugsReducer(sets: Array<SetState>, action: AnyAction): Array<Set
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    fixedBetween: updateInclude(x.fixedBetween, action.payload.data)
+                    fixedBetween: updateValuesInclude(x.fixedBetween, action.payload.data)
                 }
             })
 
@@ -130,7 +130,7 @@ export function bugsReducer(sets: Array<SetState>, action: AnyAction): Array<Set
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    assignedTo: updateInclude(x.assignedTo, action.payload.data)
+                    assignedTo: updateValuesInclude(x.assignedTo, action.payload.data)
                 }
             })
 
@@ -146,7 +146,7 @@ export function bugsReducer(sets: Array<SetState>, action: AnyAction): Array<Set
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    fixedBy: updateInclude(x.fixedBy, action.payload.data)
+                    fixedBy: updateValuesInclude(x.fixedBy, action.payload.data)
                 }
             })
 
@@ -162,7 +162,7 @@ function updateTicketStatusesValues(set: SetState, newTicketStatuses: Array<stri
 }
 
 function updateTicketStatusesInclude(set: SetState, newTicketStatusesInclude: boolean) {
-    const ticketStatuses = updateInclude(set.ticketStatuses, newTicketStatusesInclude)
+    const ticketStatuses = updateValuesInclude(set.ticketStatuses, newTicketStatusesInclude)
     return tryGetClosedFreeState(set, ticketStatuses)
 }
 

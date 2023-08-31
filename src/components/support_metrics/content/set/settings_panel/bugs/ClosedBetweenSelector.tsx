@@ -1,7 +1,7 @@
 import React from 'react'
 import { ClosedBugsSelectorWrapper } from './BugsSelectors'
 import BetweenPeriodSelectorWrapper from './BetweenPeriodSelector'
-import { fetchPeriod } from '../../../../network_resource_fetcher/FetchPeriod'
+import { fetchPeriod } from '../../../../network_resource_fetcher/Period'
 import { changeClosedBetween, changeClosedBetweenInclude } from '../../../../store/actions/Bugs'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 import { closedBetweenSelector } from '../../../../store/sets/Selectors'

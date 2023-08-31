@@ -1,49 +1,46 @@
-import './styles/Set.css'
 import '../common/styles/multiset_container/ComparisonGraph.css'
 import '../common/styles/multiset_container/MultisetContainer.css'
 import '../common/styles/multiset_container/Toolbar.css'
 import '../common/styles/multiset_container/FilterTooltip.css'
 
 import React from 'react'
+import { COST_METRICS_END_POINT } from '../common/EndPoint'
 import ApplySharedState from '../common/components/state_management/ApplySharedState'
-import Sets from './content/Sets'
-import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
-import SupportMetricsToolbar from './toolbar/Toolbar'
-import { ContainerState, CONTEXT } from './store/ContainerReducer'
 import { BaseContainerState } from '../common/store/multiset_container/BaseContainerState'
-import { fetchGroupByPeriods } from './network_resource_fetcher/GroupByPeriods'
+import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
+import { MultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
 import { fetchPeriod } from './network_resource_fetcher/Period'
 import { fetchMetrics, fetchMetricDesc } from './network_resource_fetcher/Metrics'
 import { fetchPeriodsArray } from './network_resource_fetcher/PeriodsArray'
-import { fetchTicketsWithIterationsAggregates } from './network_resource_fetcher/Aggregates'
-import { SUPPORT_METRICS_END_POINT } from '../common/EndPoint'
+import { fetchAggregates } from './network_resource_fetcher/Aggregates'
 import { getShareableState } from './store/Store'
-import { fetchTicketsWithIterationsRaw } from './network_resource_fetcher/Raw'
+import { fetchRaw } from './network_resource_fetcher/Raw'
 import { fetchDisplayFilter } from './network_resource_fetcher/DisplayFilter'
-import { MultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
-import { SUPPORT_METRICS } from '../app_components/Paths'
+import { CONTEXT } from './store/ContainerReducer'
+import Sets from './content/Sets'
+import PerformanceMetricsToolbar from './toolbar/Toolbar'
+import { COST_METRICS } from '../app_components/Paths'
 import { getSetDataFields } from './store/sets/SetDescriptor'
-
 
 const graphSettings = {
     fetchPeriod: fetchPeriod,
-    fetchGroupByPeriods: fetchGroupByPeriods,
+    fetchGroupByPeriods: () => [],
 }
 
 const graph = {
     fetchPeriods: fetchPeriodsArray,
-    fetchAggs: fetchTicketsWithIterationsAggregates,
-    containerDepsSelector: (containerState: BaseContainerState) => [(containerState as ContainerState).baselineAlignedModeEnabled],
+    fetchAggs: fetchAggregates,
+    containerDepsSelector: (containerState: BaseContainerState) => [''],
 }
 
 const stateManagement = {
     getShareableState: getShareableState,
-    endPoint: SUPPORT_METRICS_END_POINT,
-    navigateTo: SUPPORT_METRICS,
+    endPoint: COST_METRICS_END_POINT,
+    navigateTo: COST_METRICS,
 }
 
 const rawData = {
-    fetchRawData: fetchTicketsWithIterationsRaw
+    fetchRawData: fetchRaw
 }
 
 const filterLabel = {
@@ -55,7 +52,7 @@ const metricDescription = {
     fetchMetricDescription: fetchMetricDesc,
 }
 
-export const supportMetricsContext = {
+export const performanceMetricsContext = {
     graphSettingsPanel: graphSettings,
     graph: graph,
     stateManagement: stateManagement,
@@ -68,16 +65,15 @@ export const supportMetricsContext = {
     context: CONTEXT,
 }
 
-
-export function SupportMetricsApplySharedState() {
+export function PerformanceMetricsApplySharedState() {
     return <ApplySharedState />
 }
 
-export default function SupportMetrics() {
-    return <MultisetContainerContext.Provider value={supportMetricsContext}>
+export default function PerformanceMetrics() {
+    return <MultisetContainerContext.Provider value={performanceMetricsContext}>
         <MultisetContainer
             sets={Sets}
-            toolbar={SupportMetricsToolbar}
+            toolbar={PerformanceMetricsToolbar}
         />
     </MultisetContainerContext.Provider>
 }

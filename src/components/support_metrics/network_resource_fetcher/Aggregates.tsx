@@ -8,39 +8,8 @@ import { BaseSetState } from '../../common/store/multiset_container/sets/Interfa
 import { getAliasedSet } from '../store/sets/SetDescriptor'
 import { Agg } from '../../common/components/multiset_container/graph/ComparisonGraph'
 import { anyValueIsEmpty } from '../../common/store/multiset_container/Utils'
-import { Aggregate } from '../../common/components/multiset_container/graph/GraphPlot'
+import { EMPTY_AGGREGATES, getAggregatesConverter } from '../../common/components/multiset_container/graph/Aggregate'
 
-const EMPTY_AGGREGATES = {
-    periods: [],
-    aggs: [],
-    customdata: [],
-}
-
-function aggregatesConverter(aggregates: Array<Aggregate> | undefined) {
-    if (aggregates) {
-        const periods = []
-        const aggs = []
-        for (const agg of aggregates) {
-            periods.push(agg.period)
-            aggs.push(agg.agg)
-        }
-        return {
-            periods: periods,
-            aggs: aggs,
-            customdata: []
-        }
-    }
-    return EMPTY_AGGREGATES
-}
-
-function getConverter(setTitle: string) {
-    return (aggregates: Array<Aggregate> | undefined): Agg => {
-        return {
-            name: setTitle,
-            ...aggregatesConverter(aggregates),
-        }
-    }
-}
 
 export async function fetchTicketsWithIterationsAggregates(
     containerState: BaseContainerState,
@@ -57,7 +26,7 @@ export async function fetchTicketsWithIterationsAggregates(
             }
         }
 
-    return fetchConvert(getConverter(set.title),
+    return fetchConvert(getAggregatesConverter(set.title),
         `${SUPPORT_METRICS_END_POINT}/TicketsWithIterationsAggregates?` +
         `group_by_period=${containerState.groupByPeriod}` +
         `&range_start=${rangeStart}` +

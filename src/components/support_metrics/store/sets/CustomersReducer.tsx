@@ -3,7 +3,7 @@ import { SetState } from './Interfaces'
 import { 
     updateSetState,
     updateValues,
-    updateInclude
+    updateValuesInclude
 } from '../../../common/store/multiset_container/Utils'
 import {
     CHANGE_CUSTOMERS_GROUPS,
@@ -32,7 +32,7 @@ export function customersReducer(sets: Array<SetState>, action: AnyAction): Arra
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    customersGroups: updateInclude(x.customersGroups, action.payload.data)
+                    customersGroups: updateValuesInclude(x.customersGroups, action.payload.data)
                 }
             })
         case CHANGE_BASELINE_ALIGNED_MODE:
@@ -41,7 +41,7 @@ export function customersReducer(sets: Array<SetState>, action: AnyAction): Arra
                     const groups = x.customersGroups && (x.customersGroups.values.length > 0 ? [x.customersGroups.values[0]] : x.customersGroups.values)
                     return {
                         ...x,
-                        customersGroups: updateValues(updateInclude(x.customersGroups, true), groups)
+                        customersGroups: updateValues(updateValuesInclude(x.customersGroups, true), groups)
                     }
                 })
             return sets
@@ -58,7 +58,7 @@ export function customersReducer(sets: Array<SetState>, action: AnyAction): Arra
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    customersTypes: updateInclude(x.customersTypes, action.payload.data)
+                    customersTypes: updateValuesInclude(x.customersTypes, action.payload.data)
                 }
             })
 
@@ -74,7 +74,7 @@ export function customersReducer(sets: Array<SetState>, action: AnyAction): Arra
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    conversionsTypes: updateInclude(x.conversionsTypes, action.payload.data)
+                    conversionsTypes: updateValuesInclude(x.conversionsTypes, action.payload.data)
                 }
             })
 
@@ -90,7 +90,7 @@ export function customersReducer(sets: Array<SetState>, action: AnyAction): Arra
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    customers: updateInclude(x.customers, action.payload.data),
+                    customers: updateValuesInclude(x.customers, action.payload.data),
                 }
             })
 

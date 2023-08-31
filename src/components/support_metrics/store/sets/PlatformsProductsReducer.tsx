@@ -3,7 +3,7 @@ import { SetState } from './Interfaces'
 import { 
     updateSetState,
     updateValues,
-    updateInclude
+    updateValuesInclude
 } from '../../../common/store/multiset_container/Utils'
 import {
     CHANGE_PLATFORMS,
@@ -27,7 +27,7 @@ export function platformsProductsReducer(sets: Array<SetState>, action: AnyActio
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    platforms: updateInclude(x.platforms, action.payload.data)
+                    platforms: updateValuesInclude(x.platforms, action.payload.data)
                 }
             })
 
@@ -43,7 +43,7 @@ export function platformsProductsReducer(sets: Array<SetState>, action: AnyActio
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    products: updateInclude(x.products, action.payload.data)
+                    products: updateValuesInclude(x.products, action.payload.data)
                 }
             })
 

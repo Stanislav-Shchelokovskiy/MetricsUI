@@ -3,7 +3,7 @@ import { SetState } from './Interfaces'
 import { 
     updateSetState,
     updateValues,
-    updateInclude
+    updateValuesInclude
 } from '../../../common/store/multiset_container/Utils'
 import {
     CHANGE_EMP_POSITIONS,
@@ -31,7 +31,7 @@ export function employeesReducer(sets: Array<SetState>, action: AnyAction): Arra
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    positions: updateInclude(x.positions, action.payload.data)
+                    positions: updateValuesInclude(x.positions, action.payload.data)
                 }
             })
 
@@ -47,7 +47,7 @@ export function employeesReducer(sets: Array<SetState>, action: AnyAction): Arra
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    empTribes: updateInclude(x.empTribes, action.payload.data)
+                    empTribes: updateValuesInclude(x.empTribes, action.payload.data)
                 }
             })
 
@@ -63,7 +63,7 @@ export function employeesReducer(sets: Array<SetState>, action: AnyAction): Arra
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    empTents: updateInclude(x.empTents, action.payload.data)
+                    empTents: updateValuesInclude(x.empTents, action.payload.data)
                 }
             })
 
@@ -79,7 +79,7 @@ export function employeesReducer(sets: Array<SetState>, action: AnyAction): Arra
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    employees: updateInclude(x.employees, action.payload.data)
+                    employees: updateValuesInclude(x.employees, action.payload.data)
                 }
             })
 

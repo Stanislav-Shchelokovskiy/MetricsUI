@@ -1,6 +1,6 @@
-import { FilterParametersNode } from './sets/Interfaces'
+import { FilterParametersNode, FilterParameterNode } from './sets/Interfaces'
 import { BaseSetState } from './sets/Interfaces'
-import { getDefaultFilterParametersNode } from './sets/Defaults'
+import { getDefaultFilterParametersNode, getDefaultFilterParameterNode } from './sets/Defaults'
 
 export function updateSetState<T extends BaseSetState>(title: string, state: Array<T>, replaceState: (currState: T) => T): Array<T> {
     return state.map((x) => { return x.title === title ? replaceState(x) : x })
@@ -9,25 +9,22 @@ export function updateSetState<T extends BaseSetState>(title: string, state: Arr
 export function updateValues<T>(obj: FilterParametersNode<T> | undefined, values: Array<T> | undefined): FilterParametersNode<T> | undefined {
     if (!obj) {
         if (values && values.length > 0)
-            return {
-                include: true,
-                values: values
-            }
+            return getDefaultFilterParametersNode(values)
         return undefined
     }
     if (obj.include && (!values || values.length === 0))
         return undefined
     return {
         ...obj,
-        values: values || []
+        values: values || Array<T>()
     }
 }
 
-export function updateInclude<T>(obj: FilterParametersNode<T> | undefined, include: boolean): FilterParametersNode<T> | undefined {
+export function updateValuesInclude<T>(obj: FilterParametersNode<T> | undefined, include: boolean): FilterParametersNode<T> | undefined {
     if (!obj) {
         if (!include)
             return {
-                include: include,
+                include: false,
                 values: Array<T>()
             }
         return obj
@@ -38,6 +35,20 @@ export function updateInclude<T>(obj: FilterParametersNode<T> | undefined, inclu
         ...obj,
         include: include
     }
+}
+
+export function updateThreeStateValue(obj: FilterParameterNode<boolean> | undefined, value: boolean | undefined): FilterParameterNode<boolean> | undefined {
+    if (value === undefined)
+        return undefined
+    if (obj && !obj.include)
+        return undefined
+    return getDefaultFilterParameterNode(value)
+}
+
+export function updateThreeStateValueInclude(obj: FilterParameterNode<boolean> | undefined, include: boolean, defaultValue: boolean): FilterParameterNode<boolean> | undefined {
+    if (!include)
+        return undefined
+    return getDefaultFilterParameterNode(obj ? obj.value : defaultValue)
 }
 
 export function generateSetTitle(existingSetsTitles: Array<string>, newTitleCandidate: string = ''): string {

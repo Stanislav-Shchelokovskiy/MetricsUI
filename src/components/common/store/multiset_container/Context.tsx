@@ -1,6 +1,7 @@
 export enum Context {
     Support = 0,
     Cost = 1,
+    Performance = 2,
 }
 
 export function isSupportContextSelected(ctx: Context) {

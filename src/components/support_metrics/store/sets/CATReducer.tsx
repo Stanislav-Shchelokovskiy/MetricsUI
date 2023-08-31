@@ -3,7 +3,7 @@ import { SetState } from './Interfaces'
 import { 
     updateSetState,
     updateValues,
-    updateInclude
+    updateValuesInclude
 } from '../../../common/store/multiset_container/Utils'
 import {
     CHANGE_REPLIES_TYPES,
@@ -29,7 +29,7 @@ export function catReducer(sets: Array<SetState>, action: AnyAction): Array<SetS
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    repliesTypes: updateInclude(x.repliesTypes, action.payload.data)
+                    repliesTypes: updateValuesInclude(x.repliesTypes, action.payload.data)
                 }
             })
 
@@ -45,7 +45,7 @@ export function catReducer(sets: Array<SetState>, action: AnyAction): Array<SetS
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    components: updateInclude(x.components, action.payload.data)
+                    components: updateValuesInclude(x.components, action.payload.data)
                 }
             })
 
@@ -61,7 +61,7 @@ export function catReducer(sets: Array<SetState>, action: AnyAction): Array<SetS
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    features: updateInclude(x.features, action.payload.data)
+                    features: updateValuesInclude(x.features, action.payload.data)
                 }
             })
 

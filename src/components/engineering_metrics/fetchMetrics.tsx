@@ -1,5 +1,5 @@
 import FetchResult from '../common/Interfaces'
-import { fetchMetrics as fetchSupportMetrics } from '../support_metrics/network_resource_fetcher/FetchMetrics'
+import { fetchMetrics as fetchSupportMetrics } from '../support_metrics/network_resource_fetcher/Metrics'
 import { fetchMetrics as fetchCostMetrics } from '../cost_metrics/network_resource_fetcher/Metrics'
 import { Metric } from '../common/components/multiset_container/graph/MetricSelector'
 import { getFetchResult } from '../common/network_resource_fetcher/FetchOrDefault'
