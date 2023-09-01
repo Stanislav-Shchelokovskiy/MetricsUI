@@ -52,3 +52,10 @@
     justify-content: flex-start;
     align-items: stretch;
 }
+
+.ThreeStateSelectorSelector {
+    border: 1px solid rgba(221, 221, 221, 255);
+    border-radius: 5px;
+    padding: 10px;
+    color: rgba(153, 153, 153, 255);
+}

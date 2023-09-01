@@ -20,8 +20,8 @@ export async function fetchEmployees(
             body: JSON.stringify({
                 'Employees Tents': tents,
                 Positions: positions,
-                Trainee: trainee,
-                Junior: junior,
+                Trainee: junior,
+                Junior: trainee,
             }),
         }
     )

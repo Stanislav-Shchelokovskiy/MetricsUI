@@ -40,8 +40,6 @@ export function updateValuesInclude<T>(obj: FilterParametersNode<T> | undefined,
 export function updateThreeStateValue(obj: FilterParameterNode<boolean> | undefined, value: boolean | undefined): FilterParameterNode<boolean> | undefined {
     if (value === undefined)
         return undefined
-    if (obj && !obj.include)
-        return undefined
     return getDefaultFilterParameterNode(value)
 }
 

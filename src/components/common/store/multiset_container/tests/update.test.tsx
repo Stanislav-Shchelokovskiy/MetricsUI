@@ -70,15 +70,6 @@ describe('testing updateThreeStateValue', () => {
         expect(updateThreeStateValue(obj, false)).toEqual({ include: true, value: false })
         expect(updateThreeStateValue(obj, undefined)).toEqual(undefined)
     });
-    test('obj != undefined && include = false', () => {
-        const obj: FilterParameterNode<boolean> = {
-            include: false,
-            value: true
-        }
-        expect(updateThreeStateValue(obj, false)).toEqual(undefined)
-        expect(updateThreeStateValue(obj, true)).toEqual(undefined)
-        expect(updateThreeStateValue(obj, undefined)).toEqual(undefined)
-    });
 });
 
 describe('testing updateThreeStateValueInclude', () => {

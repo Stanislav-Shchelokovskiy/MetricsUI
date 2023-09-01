@@ -4,7 +4,11 @@ import { SetProps } from '../../../common/components/multiset_container/Multiset
 import TentsSelector from './Tents'
 import EmpTentsSelector from './EmpTents'
 import EmpPositionsSelector from './Positions'
+import TraineeSelector from './TraineeSelector'
+import JuniorSelector from './JuniorSelector'
 import EmployeesSelector from './Employees'
+import SecondShiftsSelector from './SecondShiftsSelector'
+
 
 
 function Set({ setTitle }: SetProps) {
@@ -12,7 +16,10 @@ function Set({ setTitle }: SetProps) {
         <TentsSelector />
         <EmpTentsSelector />
         <EmpPositionsSelector />
+        <TraineeSelector />
+        <JuniorSelector />
         <EmployeesSelector />
+        <SecondShiftsSelector />
     </SetWithHeader>
 }
 
