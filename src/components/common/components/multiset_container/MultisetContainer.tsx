@@ -53,7 +53,7 @@ export default function MultisetContainer(props: MultisetContainerProps) {
 
     useEffect(() => {
         const timerId = setTimeout(() => {
-            Plotly.Plots.resize('ComparisonGraph')
+            Plotly.Plots.resize('ComparisonPlot')
             clearTimeout(timerId)
         }, 500)
     }, [opened])

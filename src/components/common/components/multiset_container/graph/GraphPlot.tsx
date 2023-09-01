@@ -4,6 +4,8 @@ import Plot from 'react-plotly.js'
 import { Data as PlotData, PlotType } from 'plotly.js'
 import { hideLegends } from '../../../store/multiset_container/Actions'
 import { isAbsoluteAreaSelected, isAbsoluteBarSelected } from './ComparisonMethodSelector'
+import ScrollView from 'devextreme-react/scroll-view'
+import { PlotOrientation, isHorzOrientation } from '../MultisetContainerContext'
 
 interface LegendClickArgs {
     data: Array<PlotData>
@@ -13,6 +15,7 @@ interface PlotProps {
     categories: Array<string> | Array<number>
     aggs: Array<GraphData>
     comparisonMethod: string
+    orientation: PlotOrientation
 }
 
 export interface GraphData {
@@ -21,6 +24,8 @@ export interface GraphData {
     y: Array<number>
     visible: 'legendonly' | boolean | undefined
     customdata: Array<string> | Array<number>
+    xName: string
+    yName: string
 }
 
 export default function GraphPlot(props: PlotProps) {
@@ -35,52 +40,102 @@ export default function GraphPlot(props: PlotProps) {
     }, [])
 
     return (
-        <Plot
-            divId='ComparisonGraph'
-            className='ComparisonGraph'
-            data={getPlots(props)}
-            useResizeHandler={true}
-            layout={{
-                margin: { t: 10, l: 30, r: 10, b: 30 },
-                xaxis: { autorange: true, automargin: true, type: 'category', categoryorder: 'array', categoryarray: props.categories },
-                yaxis: { 'showgrid': true, zeroline: false, autorange: true, automargin: true },
-                barmode: 'group',
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                autosize: true,
-            }}
-            config={{ displayModeBar: false, doubleClick: 'autosize', responsive: true }}
-            onLegendClick={onLegendClick} />
+        <ScrollView
+            className='GraphPlot_ScrollView'
+            id='GraphPlot_ScrollView_id'
+            showScrollbar='onHover'
+            scrollByThumb={true}
+            scrollByContent={false}
+        >
+            <Plot
+                divId='ComparisonPlot'
+                className='ComparisonPlot'
+                data={getPlots(props)}
+                useResizeHandler={true}
+                layout={{
+                    xaxis: {
+                        autorange: true,
+                        automargin: true,
+                        ...axisType(props),
+                    },
+                    yaxis: {
+                        showgrid: true,
+                        zeroline: false,
+                        autorange: true,
+                        automargin: true,
+                        ...tickMode(props)
+                    },
+                    margin: { t: 10, l: 30, r: 10, b: 30 },
+                    barmode: 'group',
+                    paper_bgcolor: 'rgba(0,0,0,0)',
+                    plot_bgcolor: 'rgba(0,0,0,0)',
+                    autosize: true,
+                    ...plotHeight(props)
+                }}
+                config={{ displayModeBar: false, doubleClick: 'autosize', responsive: true }}
+                onLegendClick={onLegendClick}
+            />
+        </ScrollView>
     )
 }
 
-function getPlots({ aggs, comparisonMethod }: PlotProps): Array<PlotData> {
-    return aggs.map(x => getPlot(x))
+
+function plotHeight(props: PlotProps) {
+    if (isHorzOrientation(props.orientation)) {
+        let h = 0
+        for (const agg of props.aggs) {
+            for (const y of agg.y)
+                h += 40
+        }
+        return { height: h}
+    }
+    return {height: -1}
+}
+
+function tickMode(props: PlotProps) {
+    if (isHorzOrientation(props.orientation))
+        return { tickmode: 'linear' as const}
+    return undefined
+}
+
+function axisType(props: PlotProps) {
+    if (isHorzOrientation(props.orientation))
+        return undefined
+    return {
+        type: 'category' as const,
+        categoryorder: 'array' as const,
+        categoryarray: props.categories
+    }
+
+}
 
 
-    function getPlot(data: GraphData) {
+function getPlots({ aggs, comparisonMethod, orientation }: PlotProps): Array<PlotData> {
+    return aggs.map(x => toPlot(x))
+
+    function toPlot(data: GraphData) {
         if (isAbsoluteBarSelected(comparisonMethod)) {
-            return createAbsoluteBar(data)
+            return createAbsoluteBar(data, orientation)
         }
         if (isAbsoluteAreaSelected(comparisonMethod)) {
-            return createAbsoluteArea(data)
+            return createAbsoluteArea(data, orientation)
         }
-        return createNormalizedStackedArea(data)
+        return createNormalizedStackedArea(data, orientation)
     }
 }
 
 
-function createAbsoluteBar(data: GraphData) {
+function createAbsoluteBar(data: GraphData, orientation: PlotOrientation) {
     return {
-        ...getCommonGraphSettings(data),
+        ...getCommonGraphSettings(data, orientation),
         ...getAbsoluteGraphSettings(data),
         type: 'bar' as PlotType,
     }
 }
 
-function createAbsoluteArea(data: GraphData) {
+function createAbsoluteArea(data: GraphData, orientation: PlotOrientation) {
     return {
-        ...getCommonGraphSettings(data),
+        ...getCommonGraphSettings(data, orientation),
         ...getAbsoluteGraphSettings(data),
         type: 'scatter' as PlotType,
         fill: 'tozeroy',
@@ -90,9 +145,9 @@ function createAbsoluteArea(data: GraphData) {
 }
 
 //NormalizedStackedAreaChart
-function createNormalizedStackedArea(data: GraphData) {
+function createNormalizedStackedArea(data: GraphData, orientation: PlotOrientation) {
     return {
-        ...getCommonGraphSettings(data),
+        ...getCommonGraphSettings(data, orientation),
         type: 'scatter' as PlotType,
         connectgaps: true,
         stackgroup: 'one',
@@ -105,15 +160,34 @@ function getAbsoluteGraphSettings(data: GraphData) {
     return {}
 }
 
-function getCommonGraphSettings(data: GraphData) {
+function getCommonGraphSettings(data: GraphData, orientation: PlotOrientation) {
     return {
         name: data.name,
-        x: data.x,
-        y: data.y,
+        ...xy(data, orientation),
         opacity: 0.6,
         hovertext: data.name,
         visible: data.visible,
         customdata: data.customdata,
-        hovertemplate: `<b>${data.name} </b><br>Period: %{x}<br>Value: %{y}<br><extra></extra>`,
+        hovertemplate: hoverTemplate(data, orientation),
+        orientation: orientation,
+    }
+}
+function hoverTemplate(data: GraphData, orientation: PlotOrientation) {
+    let { xName, yName } = data
+    if (isHorzOrientation(orientation))
+        return `<b>${data.name} </b><br>${yName}: %{y}<br> ${xName}: %{x}<br><extra></extra>`
+    return `<b>${data.name} </b><br>${xName}: %{x}<br> ${yName}: %{y}<br><extra></extra>`
+}
+
+function xy(data: GraphData, orientation: PlotOrientation) {
+    let { x, y } = data
+    if (isHorzOrientation(orientation))
+        return {
+            x: y,
+            y: x,
+        }
+    return {
+        x: x,
+        y: y,
     }
 }

@@ -45,8 +45,10 @@ export default function ComparisonGraph() {
                             name: x.data.name,
                             x: x.data.periods,
                             y: x.data.aggs,
-                            visible: (containerState.hiddenLegends.includes(x.data.name) ? 'legendonly' : true) as 'legendonly' | boolean | undefined,
+                            visible: containerState.hiddenLegends.includes(x.data.name) ? 'legendonly' as const : true,
                             customdata: x.data.customdata,
+                            xName: context.xName,
+                            yName: context.yName,
                         }
                     })
                 }
@@ -72,6 +74,7 @@ export default function ComparisonGraph() {
                 categories={categories}
                 aggs={aggregates}
                 comparisonMethod={containerState.comparisonMethod}
+                orientation={context.orientation}
             />
         </div>
     )

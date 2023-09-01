@@ -51,6 +51,14 @@ interface Context {
     changeMetric: (metric: Metric) => void
     changeState: (state: MultisetContainerStore) => void
     context: context
+    orientation: PlotOrientation
+    xName: string
+    yName: string
+}
+
+export type PlotOrientation = 'h' | 'v' | undefined
+export function isHorzOrientation(orientation: PlotOrientation): boolean {
+    return orientation === 'h'
 }
 
 export const MultisetContainerContext = createContext<Context>(null!)

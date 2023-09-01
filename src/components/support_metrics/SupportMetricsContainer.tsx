@@ -66,6 +66,9 @@ export const supportMetricsContext = {
     changeMetric: (ctx: any) => { },
     changeState: (state: any) => { },
     context: CONTEXT,
+    orientation: undefined,
+    xName: 'Period',
+    yName: 'Value',
 }
 
 
