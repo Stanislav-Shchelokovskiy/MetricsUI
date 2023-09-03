@@ -83,18 +83,16 @@ export default function GraphPlot(props: PlotProps) {
 function plotHeight(props: PlotProps) {
     if (isHorzOrientation(props.orientation)) {
         let h = 0
-        for (const agg of props.aggs) {
-            for (const y of agg.y)
-                h += 40
-        }
-        return { height: h}
+        for (const agg of props.aggs)
+            h += 40 * agg.y.length
+        return { height: h }
     }
-    return {height: -1}
+    return { height: -1 }
 }
 
 function tickMode(props: PlotProps) {
     if (isHorzOrientation(props.orientation))
-        return { tickmode: 'linear' as const}
+        return { tickmode: 'linear' as const }
     return undefined
 }
 
