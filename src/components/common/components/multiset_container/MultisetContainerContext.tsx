@@ -16,8 +16,8 @@ interface GraphSettingsPanelContext {
 }
 
 interface GraphContext {
-    fetchPeriods: (container: BaseContainerState) => Promise<FetchResult<Array<string> | Array<number>>>
-    fetchAggs: (container: BaseContainerState, set: BaseSetState) => Promise<FetchResult<Agg>>
+    fetchPeriods: (container: BaseContainerState, signal: AbortSignal) => Promise<FetchResult<Array<string> | Array<number>>>
+    fetchAggs: (container: BaseContainerState, set: BaseSetState, signal: AbortSignal) => Promise<FetchResult<Agg>>
     containerDepsSelector: (container: BaseContainerState) => Array<any>
 }
 

@@ -11,9 +11,10 @@ import { anyValueIsEmpty } from '../../common/store/multiset_container/Utils'
 import { EMPTY_AGGREGATES, getAggregatesConverter } from '../../common/network_resource_fetcher/converters/Aggregate'
 
 
-export async function fetchTicketsWithIterationsAggregates(
+export async function fetchAggregates(
     containerState: BaseContainerState,
     set: BaseSetState,
+    signal: AbortSignal,
 ): Promise<FetchResult<Agg>> {
     const [rangeStart, rangeEnd] = containerState.range
 
@@ -40,5 +41,6 @@ export async function fetchTicketsWithIterationsAggregates(
                 ...getAliasedSet(set as SetState),
                 Percentile: { metric: containerState.metric, value: (set as SetState).percentile }
             }),
+            signal: signal,
         })
 }

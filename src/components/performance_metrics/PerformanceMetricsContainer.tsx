@@ -11,7 +11,7 @@ import MultisetContainer from '../common/components/multiset_container/MultisetC
 import { MultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
 import { fetchPeriod } from './network_resource_fetcher/Period'
 import { fetchMetrics, fetchMetricDesc } from './network_resource_fetcher/Metrics'
-import { fetchPeriodsArray } from './network_resource_fetcher/PeriodsArray'
+import { fetchPeriods } from './network_resource_fetcher/Periods'
 import { fetchAggregates } from './network_resource_fetcher/Aggregates'
 import { getShareableState } from './store/Store'
 import { fetchRaw } from './network_resource_fetcher/Raw'
@@ -29,7 +29,7 @@ const graphSettings = {
 }
 
 const graph = {
-    fetchPeriods: fetchPeriodsArray,
+    fetchPeriods: fetchPeriods,
     fetchAggs: fetchAggregates,
     containerDepsSelector: (containerState: BaseContainerState) => [''],
 }

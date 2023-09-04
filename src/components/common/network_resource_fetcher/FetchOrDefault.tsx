@@ -21,7 +21,8 @@ export async function fetchConvert<RawT, ResT>(
         }).then(async response => await responseSelector(response))
         return getFetchResult(true, converter(res))
     } catch (error) {
-        console.log(error)
+        if (!(error instanceof DOMException && error.name === 'AbortError'))
+            console.log(error)
         return getFetchResult(false, converter(undefined))
     }
 }

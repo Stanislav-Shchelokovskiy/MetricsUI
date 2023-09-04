@@ -12,8 +12,8 @@ import { MultisetContainerContext } from '../common/components/multiset_containe
 import { fetchPeriod } from './network_resource_fetcher/Period'
 import { fetchGroupByPeriods } from './network_resource_fetcher/GroupByPeriods'
 import { fetchMetrics, fetchMetricDesc } from './network_resource_fetcher/Metrics'
-import { fetchPeriodsArray } from './network_resource_fetcher/PeriodsArray'
-import { fetchCostMetricsAggregates } from './network_resource_fetcher/Aggregates'
+import { fetchPeriods } from './network_resource_fetcher/Periods'
+import { fetchAggregates } from './network_resource_fetcher/Aggregates'
 import { getShareableState } from './store/Store'
 import { fetchCostMetricsRaw } from './network_resource_fetcher/Raw'
 import { fetchDisplayFilter } from '../cost_metrics/network_resource_fetcher/DisplayFilter'
@@ -29,8 +29,8 @@ const graphSettings = {
 }
 
 const graph = {
-    fetchPeriods: fetchPeriodsArray,
-    fetchAggs: fetchCostMetricsAggregates,
+    fetchPeriods: fetchPeriods,
+    fetchAggs: fetchAggregates,
     containerDepsSelector: (containerState: BaseContainerState) => [''],
 }
 

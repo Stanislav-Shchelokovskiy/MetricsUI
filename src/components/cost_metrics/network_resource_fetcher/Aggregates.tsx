@@ -10,9 +10,10 @@ import { BaseSetState } from '../../common/store/multiset_container/sets/Interfa
 import { EMPTY_AGGREGATES, getAggregatesConverter } from '../../common/network_resource_fetcher/converters/Aggregate'
 
 
-export async function fetchCostMetricsAggregates(
+export async function fetchAggregates(
     containerState: BaseContainerState,
     set: BaseSetState,
+    signal: AbortSignal,
 ): Promise<FetchResult<Agg>> {
     const [rangeStart, rangeEnd] = containerState.range
 
@@ -37,6 +38,7 @@ export async function fetchCostMetricsAggregates(
             body: JSON.stringify({
                 ...getAliasedSet(set as SetState),
             }),
+            signal: signal,
         },
     )
 }

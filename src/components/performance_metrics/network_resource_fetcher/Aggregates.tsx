@@ -13,6 +13,7 @@ import { EMPTY_AGGREGATES, getAggregatesConverter } from '../../common/network_r
 export async function fetchAggregates(
     containerState: BaseContainerState,
     set: BaseSetState,
+    signal: AbortSignal,
 ): Promise<FetchResult<Agg>> {
     const [rangeStart, rangeEnd] = containerState.range
 
@@ -36,6 +37,7 @@ export async function fetchAggregates(
             body: JSON.stringify({
                 ...getAliasedSet(set as SetState),
             }),
+            signal: signal,
         },
     )
 }

@@ -27,17 +27,18 @@ export default function ComparisonGraph() {
         setDataLoading(true);
         cancellationToken.current.cancel();
         (async (token: Token) => {
-            let cancelled = false
+            const controller = new AbortController()
             token.cancel = () => {
-                cancelled = true
+                controller.abort()
             }
 
+
             const [periods, ...sets] = await Promise.all([
-                context.graph.fetchPeriods(containerState),
-                ...setsState.map((set) => context.graph.fetchAggs(containerState, set))
+                context.graph.fetchPeriods(containerState, controller.signal),
+                ...setsState.map((set) => context.graph.fetchAggs(containerState, set, controller.signal))
             ])
 
-            if (!cancelled) {
+            if (!controller.signal.aborted) {
                 let aggs: Array<GraphData> = []
                 if (periods.success) {
                     aggs = sets.map(x => {
@@ -53,7 +54,7 @@ export default function ComparisonGraph() {
                     })
                 }
 
-                if (!cancelled) {
+                if (!controller.signal.aborted) {
                     setAggregates([periods.data, aggs])
                     setDataLoading(false)
                 }

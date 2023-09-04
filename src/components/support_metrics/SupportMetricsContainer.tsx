@@ -14,8 +14,8 @@ import { BaseContainerState } from '../common/store/multiset_container/BaseConta
 import { fetchGroupByPeriods } from './network_resource_fetcher/GroupByPeriods'
 import { fetchPeriod } from './network_resource_fetcher/Period'
 import { fetchMetrics, fetchMetricDesc } from './network_resource_fetcher/Metrics'
-import { fetchPeriodsArray } from './network_resource_fetcher/PeriodsArray'
-import { fetchTicketsWithIterationsAggregates } from './network_resource_fetcher/Aggregates'
+import { fetchPeriods } from './network_resource_fetcher/Periods'
+import { fetchAggregates } from './network_resource_fetcher/Aggregates'
 import { SUPPORT_METRICS_END_POINT } from '../common/EndPoint'
 import { getShareableState } from './store/Store'
 import { fetchTicketsWithIterationsRaw } from './network_resource_fetcher/Raw'
@@ -31,8 +31,8 @@ const graphSettings = {
 }
 
 const graph = {
-    fetchPeriods: fetchPeriodsArray,
-    fetchAggs: fetchTicketsWithIterationsAggregates,
+    fetchPeriods: fetchPeriods,
+    fetchAggs: fetchAggregates,
     containerDepsSelector: (containerState: BaseContainerState) => [(containerState as ContainerState).baselineAlignedModeEnabled],
 }
 
