@@ -82,7 +82,7 @@ export default function GraphPlot(props: PlotProps) {
 
 function plotHeight(props: PlotProps) {
     if (isHorzOrientation(props.orientation)) {
-        let h = 0
+        let h = 40
         for (const agg of props.aggs)
             h += 40 * agg.y.length
         return { height: h }
