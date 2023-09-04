@@ -29,5 +29,5 @@ export default function GroupByPeriodSelector() {
 }
 
 export function getValidGroupByPeriodOrDefault(value: string | undefined) {
-    return value ? value : TAKE_FROM_DEFAULT_SELECTOR
+    return value ? value : '%Y-%W'
 }
