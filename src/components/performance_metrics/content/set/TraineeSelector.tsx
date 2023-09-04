@@ -5,10 +5,11 @@ import { PerformanceMetricsStore } from '../../store/Store'
 import { changeTrainee, changeTraineeInclude } from '../../store/sets/Actions'
 import { traineeSelector } from '../../store/sets/Selectors'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
+import { FilterParameterNode } from '../../../common/store/multiset_container/sets/Interfaces'
 
 export default function TraineeSelector() {
     const setTitle = useSetTitle()
-    const value = useSelector((state: PerformanceMetricsStore) => traineeSelector(state, setTitle))
+    const value = useSelector((state: PerformanceMetricsStore) => traineeSelector(state, setTitle)) as FilterParameterNode<boolean>
     const onValueChange = (value: boolean | null | undefined) => {
         if (value == null)
             return changeTraineeInclude({ stateId: setTitle, data: false })
@@ -17,6 +18,6 @@ export default function TraineeSelector() {
     return <ThreeStateSelectorSelector
         text='Trainee'
         onValueChange={onValueChange}
-        value={value}
+        defaultValue={value?.value}
     />
 } 
