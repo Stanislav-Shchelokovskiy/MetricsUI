@@ -2,7 +2,6 @@ import React, { useCallback } from 'react'
 import OptionSelector from '../../OptionSelector'
 import { MultisetContainerStore } from '../../../store/multiset_container/Store'
 import { changeGroupByPeriod } from '../../../store/multiset_container/Actions'
-import { TAKE_FROM_DEFAULT_SELECTOR } from '../../../store/multiset_container/Utils'
 import { useMultisetContainerContext } from '../MultisetContainerContext'
 
 export interface GroupByPeriod {
