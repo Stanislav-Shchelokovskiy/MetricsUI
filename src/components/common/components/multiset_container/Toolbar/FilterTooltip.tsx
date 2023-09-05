@@ -48,7 +48,7 @@ const FilterLabel = React.memo(() => {
                     }
                     if (ds.length === 1)
                         setDisplayFilter(ds[0])
-                    else if (ds.length > 1)
+                    else
                         setDisplayFilter(ds)
                 })
         }
