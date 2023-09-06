@@ -30,6 +30,7 @@ export async function fetchAggregates(
         `${PERFORMANCE_METRICS_END_POINT}/Aggregates?` +
         `&range_start=${rangeStart}` +
         `&range_end=${rangeEnd}` +
+        `&group_by=${containerState.groupBy}` +
         `&metric=${containerState.metric}`,
         {
             method: 'POST',
