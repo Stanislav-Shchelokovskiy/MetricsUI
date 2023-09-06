@@ -16,8 +16,8 @@ export const hideLegends = getAction<Array<string>>(HIDE_LEGENDS)
 export const CHANGE_PERIOD = 'change_period'
 export const changePeriod = getAction<Array<string>>(CHANGE_PERIOD)
 
-export const CHANGE_GROUP_BY_PERIOD = 'change_group_by_period'
-export const changeGroupByPeriod = getAction<string | undefined>(CHANGE_GROUP_BY_PERIOD)
+export const CHANGE_GROUP_BY = 'change_group_by'
+export const changeGroupBy = getAction<string | undefined>(CHANGE_GROUP_BY)
 
 export const CHANGE_METRIC = 'change_metric'
 export const changeMetric = getAction<string | undefined>(CHANGE_METRIC)

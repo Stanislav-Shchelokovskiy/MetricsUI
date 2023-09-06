@@ -7,7 +7,7 @@ import { useMultisetContainerContext } from '../MultisetContainerContext'
 export default function PeriodSelector() {
     const context = useMultisetContainerContext()
     const rangeSelector = useCallback((store: MultisetContainerStore) => store.container.range, [])
-    const groupBySelector = useCallback((store: MultisetContainerStore) => store.container.groupByPeriod as PeriodGroupBy, [])
+    const groupBySelector = useCallback((store: MultisetContainerStore) => store.container.groupBy as PeriodGroupBy, [])
     return <RangePeriodSelector
         className='ComparisonGraph_PeriodSelector'
         rangeSelector={rangeSelector}

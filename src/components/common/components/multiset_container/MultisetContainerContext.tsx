@@ -4,7 +4,7 @@ import { BaseContainerState } from '../../store/multiset_container/BaseContainer
 import { Context as context } from '../../store/multiset_container/Context'
 import { BaseSetState } from '../../store/multiset_container/sets/Interfaces'
 import { Agg } from './graph/ComparisonGraph'
-import { GroupByPeriod } from './graph/GroupByPeriodSelector'
+import { GroupBy } from './graph/GroupBySelector'
 import { Metric } from './graph/MetricSelector'
 import { MultisetContainerStore } from '../../store/multiset_container/Store'
 import { FilterField } from './Toolbar/FilterTooltip'
@@ -12,7 +12,7 @@ import { HelpItem } from '../../Interfaces'
 
 interface GraphSettingsPanelContext {
     fetchPeriod: (...args: any) => Promise<FetchResult<Array<string>>>,
-    fetchGroupByPeriods: (...args: any) => Promise<FetchResult<Array<GroupByPeriod>>>,
+    fetchGroupBys: (...args: any) => Promise<FetchResult<Array<GroupBy>>>,
 }
 
 interface GraphContext {

@@ -11,7 +11,7 @@ import MultisetContainer from '../common/components/multiset_container/MultisetC
 import SupportMetricsToolbar from './toolbar/Toolbar'
 import { ContainerState, CONTEXT } from './store/ContainerReducer'
 import { BaseContainerState } from '../common/store/multiset_container/BaseContainerState'
-import { fetchGroupByPeriods } from './network_resource_fetcher/GroupByPeriods'
+import { fetchGroupBys } from './network_resource_fetcher/GroupBy'
 import { fetchPeriod } from './network_resource_fetcher/Period'
 import { fetchMetrics, fetchMetricDesc } from './network_resource_fetcher/Metrics'
 import { fetchPeriods } from './network_resource_fetcher/Periods'
@@ -27,7 +27,7 @@ import { getSetDataFields } from './store/sets/SetDescriptor'
 
 const graphSettings = {
     fetchPeriod: fetchPeriod,
-    fetchGroupByPeriods: fetchGroupByPeriods,
+    fetchGroupBys: fetchGroupBys,
 }
 
 const graph = {

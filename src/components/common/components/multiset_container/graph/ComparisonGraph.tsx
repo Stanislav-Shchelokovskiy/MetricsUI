@@ -62,7 +62,7 @@ export default function ComparisonGraph() {
         })(cancellationToken.current)
     },
         [
-            containerState.groupByPeriod,
+            containerState.groupBy,
             containerState.metric,
             ...containerState.range,
             ...context.graph.containerDepsSelector(containerState),

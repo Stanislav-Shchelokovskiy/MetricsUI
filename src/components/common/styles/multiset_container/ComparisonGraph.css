@@ -28,7 +28,7 @@
     min-width: 50vw;
 }
 
-.ComparisonGraph_GroupByPeriodSelector,
+.ComparisonGraph_GroupBySelector,
 .ComparisonGraph_MetricSelector,
 .ComparisonGraph_ComparisonMethodSelector {
     min-height: 3rem;
@@ -37,7 +37,7 @@
     margin-left: 10px;
 }
 
-.ComparisonGraph_GroupByPeriodSelector {
+.ComparisonGraph_GroupBySelector {
     flex: 0.7;
 }
 

@@ -6,7 +6,7 @@ import { anyValueIsEmpty } from '../../common/store/multiset_container/Utils'
 
 export async function fetchPeriods(containerState: BaseContainerState, signal: AbortSignal): Promise<FetchResult<Array<string>>> {
     const [rangeStart, rangeEnd] = containerState.range
-    if (anyValueIsEmpty(containerState.groupByPeriod, rangeStart, rangeEnd))
+    if (anyValueIsEmpty(containerState.groupBy, rangeStart, rangeEnd))
         return {
             success: true,
             data: []
@@ -14,7 +14,7 @@ export async function fetchPeriods(containerState: BaseContainerState, signal: A
     return fetchArray(`${SUPPORT_METRICS_END_POINT}/PeriodsArray?` +
         `start=${rangeStart}` +
         `&end=${rangeEnd}` +
-        `&format=${containerState.groupByPeriod}`,
+        `&format=${containerState.groupBy}`,
         { signal },
     )
 }

@@ -16,7 +16,7 @@ import { fetchAggregates } from './network_resource_fetcher/Aggregates'
 import { getShareableState } from './store/Store'
 import { fetchRaw } from './network_resource_fetcher/Raw'
 import { fetchDisplayFilter } from './network_resource_fetcher/DisplayFilter'
-import { fetchGroupByPeriods } from './network_resource_fetcher/GroupByPeriods'
+import { fetchGroupBys } from './network_resource_fetcher/GroupBy'
 import { CONTEXT } from './store/ContainerReducer'
 import Sets from './content/Sets'
 import PerformanceMetricsToolbar from './toolbar/Toolbar'
@@ -25,7 +25,7 @@ import { getSetDataFields } from './store/sets/SetDescriptor'
 
 const graphSettings = {
     fetchPeriod: fetchPeriod,
-    fetchGroupByPeriods: fetchGroupByPeriods,
+    fetchGroupBys: fetchGroupBys,
 }
 
 const graph = {

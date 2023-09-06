@@ -18,7 +18,7 @@ export async function fetchAggregates(
 ): Promise<FetchResult<Agg>> {
     const [rangeStart, rangeEnd] = containerState.range
 
-    if (anyValueIsEmpty(rangeStart, rangeEnd, containerState.groupByPeriod, containerState.metric))
+    if (anyValueIsEmpty(rangeStart, rangeEnd, containerState.groupBy, containerState.metric))
         return {
             success: false,
             data: {
@@ -29,7 +29,7 @@ export async function fetchAggregates(
 
     return fetchConvert(getAggregatesConverter(set.title),
         `${SUPPORT_METRICS_END_POINT}/TicketsWithIterationsAggregates?` +
-        `group_by_period=${containerState.groupByPeriod}` +
+        `group_by_period=${containerState.groupBy}` +
         `&range_start=${rangeStart}` +
         `&range_end=${rangeEnd}` +
         `&baseline_aligned_mode_enabled=${(containerState as ContainerState).baselineAlignedModeEnabled}` +

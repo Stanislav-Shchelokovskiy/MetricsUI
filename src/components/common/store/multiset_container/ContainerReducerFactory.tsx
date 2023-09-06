@@ -9,7 +9,7 @@ import {
     CHANGE_SET_TITLE,
     HIDE_LEGENDS,
     CHANGE_PERIOD,
-    CHANGE_GROUP_BY_PERIOD,
+    CHANGE_GROUP_BY,
     CHANGE_METRIC,
     CHANGE_COMPARISON_METHOD,
 } from './Actions'
@@ -79,10 +79,10 @@ function getComparisonGraphReducer<ContainerStateT extends BaseContainerState>(i
                     range: action.payload
                 }
 
-            case CHANGE_GROUP_BY_PERIOD:
+            case CHANGE_GROUP_BY:
                 return {
                     ...state,
-                    groupByPeriod: action.payload !== undefined ? action.payload : initialState.groupByPeriod
+                    groupBy: action.payload !== undefined ? action.payload : initialState.groupBy
                 }
 
             case CHANGE_METRIC:

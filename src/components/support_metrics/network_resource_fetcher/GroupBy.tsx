@@ -1,8 +1,8 @@
 import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Interfaces'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
-import { GroupByPeriod } from '../../common/components/multiset_container/graph/GroupByPeriodSelector'
+import { GroupBy } from '../../common/components/multiset_container/graph/GroupBySelector'
 
-export async function fetchGroupByPeriods(): Promise<FetchResult<Array<GroupByPeriod>>> {
+export async function fetchGroupBys(): Promise<FetchResult<Array<GroupBy>>> {
     return fetchArray(`${SUPPORT_METRICS_END_POINT}/GroupByPeriods`)
 }
