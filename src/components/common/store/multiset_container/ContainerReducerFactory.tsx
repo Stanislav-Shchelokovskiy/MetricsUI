@@ -6,6 +6,7 @@ import { getViewStateReducer } from './ViewStateReducer'
 import {
     ADD_SET,
     REMOVE_SET,
+    REMOVE_ALL_SETS,
     CHANGE_SET_TITLE,
     HIDE_LEGENDS,
     CHANGE_PERIOD,
@@ -46,6 +47,12 @@ function getSetsCRUDReducer<ContainerStateT extends BaseContainerState>(initialS
                     ...state,
                     sets: restSets.length ? restSets : [getDefaultTitle()],
                     hiddenLegends: state.hiddenLegends.filter(remove_selector)
+                }
+
+            case REMOVE_ALL_SETS:
+                return {
+                    ...state,
+                    sets: [getDefaultTitle()]
                 }
 
             case CHANGE_SET_TITLE:

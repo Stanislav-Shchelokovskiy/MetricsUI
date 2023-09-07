@@ -7,6 +7,9 @@ export const addSet = getAction<string>(ADD_SET)
 export const REMOVE_SET = 'remove_set'
 export const removeSet = getAction<string>(REMOVE_SET)
 
+export const REMOVE_ALL_SETS = 'remove_all_sets'
+export const removeAllSets = getAction<undefined>(REMOVE_ALL_SETS)
+
 export const CHANGE_SET_TITLE = 'change_set_title'
 export const changeSetTitle = getPayloadAction<string>(CHANGE_SET_TITLE)
 

@@ -6,6 +6,7 @@ import { getViewStateReducer } from '../ViewStateReducer'
 import {
     ADD_SET,
     REMOVE_SET,
+    REMOVE_ALL_SETS,
     CHANGE_SET_TITLE,
 } from '../Actions'
 
@@ -13,7 +14,7 @@ export function getSetsReducer<SetState extends BaseSetState, ShareableStateT>(
     default_set: SetState,
     initial_sets: Array<SetState>,
     stateValidator: (state: ShareableStateT) => Array<SetState>)
-: (sets: Array<SetState>, action: PayloadAction<any>) => Array<SetState> {
+    : (sets: Array<SetState>, action: PayloadAction<any>) => Array<SetState> {
 
     const setsCRUDReducer = getSetsCRUDReducer<SetState>(default_set, initial_sets)
     const viewStateReducer = getViewStateReducer<Array<SetState>, ShareableStateT>(stateValidator)
@@ -39,6 +40,9 @@ function getSetsCRUDReducer<SetState extends BaseSetState>(
             case REMOVE_SET:
                 const restSets = sets.filter(set => set.title !== action.payload)
                 return restSets.length ? restSets : initial_sets
+
+            case REMOVE_ALL_SETS:
+                return initial_sets
 
             case CHANGE_SET_TITLE:
                 return updateSetState(action.payload.stateId, sets, (x) => {
