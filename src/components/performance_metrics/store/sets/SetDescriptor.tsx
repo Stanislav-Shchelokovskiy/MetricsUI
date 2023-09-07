@@ -6,10 +6,9 @@ export function getAliasedSet(set: SetState) {
         'Tents': set.tents,
         'Employees Tents': set.empTents,
         'Positions': set.positions,
-        'Trainee': set.trainee,
-        'Junior': set.junior,
-        'SecondShifts': set.secondShifts,
+        'Levels': set.levels,
         'Employees': set.employees,
+        'SecondShifts': set.secondShifts,
     }
 }
 

@@ -4,20 +4,16 @@ import { SetProps } from '../../../common/components/multiset_container/Multiset
 import TentsSelector from './Tents'
 import EmpTentsSelector from './EmpTents'
 import EmpPositionsSelector from './Positions'
-import TraineeSelector from './TraineeSelector'
-import JuniorSelector from './JuniorSelector'
+import LevelsSelector from './LevelsSelector'
 import EmployeesSelector from './Employees'
 import SecondShiftsSelector from './SecondShiftsSelector'
-
-
 
 function Set({ setTitle }: SetProps) {
     return <SetWithHeader setTitle={setTitle}>
         <TentsSelector />
         <EmpTentsSelector />
         <EmpPositionsSelector />
-        <TraineeSelector />
-        <JuniorSelector />
+        <LevelsSelector />
         <EmployeesSelector />
         <SecondShiftsSelector />
     </SetWithHeader>

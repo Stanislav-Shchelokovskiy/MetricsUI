@@ -9,8 +9,7 @@ import {
 export async function fetchEmployees(
     tents: FilterParametersNode<string>,
     positions: FilterParametersNode<string>,
-    trainee: FilterParameterNode<boolean> | undefined,
-    junior: FilterParameterNode<boolean> | undefined,
+    levels: FilterParametersNode<number>,
 ): Promise<FetchResult<Array<Knot>>> {
     return fetchArray(
         `${PERFORMANCE_METRICS_END_POINT}/Employees`,
@@ -20,8 +19,7 @@ export async function fetchEmployees(
             body: JSON.stringify({
                 'Employees Tents': tents,
                 Positions: positions,
-                Trainee: junior,
-                Junior: trainee,
+                Levels: levels,
             }),
         }
     )

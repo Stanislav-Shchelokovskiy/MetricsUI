@@ -9,6 +9,11 @@ export const CHANGE_EMP_POSITIONS_INCLUDE = 'change_emp_positions_include'
 export const changePositions = getValuesPayloadAction<string>(CHANGE_EMP_POSITIONS)
 export const changePositionsInclude = getIncludePayloadAction(CHANGE_EMP_POSITIONS_INCLUDE)
 
+export const CHANGE_LEVELS = 'change_levels'
+export const CHANGE_LEVELS_INCLUDE = 'change_level_include'
+export const changeLevels = getValuesPayloadAction<number>(CHANGE_LEVELS)
+export const changeLevelsInclude = getIncludePayloadAction(CHANGE_LEVELS_INCLUDE)
+
 
 export const CHANGE_EMP_TRIBES = 'change_emp_tribes'
 export const CHANGE_EMP_TRIBES_INCLUDE = 'change_emp_tribes_include'

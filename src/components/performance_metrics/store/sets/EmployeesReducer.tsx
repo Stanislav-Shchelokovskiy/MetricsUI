@@ -14,6 +14,8 @@ import {
 import {
     CHANGE_EMP_POSITIONS,
     CHANGE_EMP_POSITIONS_INCLUDE,
+    CHANGE_LEVELS,
+    CHANGE_LEVELS_INCLUDE,
     CHANGE_EMP_TENTS,
     CHANGE_EMP_TENTS_INCLUDE,
     CHANGE_EMPLOYEES,
@@ -21,10 +23,6 @@ import {
 } from '../../../common/store/multiset_container/sets/actions/Employees'
 
 import {
-    CHANGE_TRAINEE,
-    CHANGE_TRAINEE_INCLUDE,
-    CHANGE_JUNIOR,
-    CHANGE_JUNIOR_INCLUDE,
     CHANGE_SECOND_SHIFTS,
     CHANGE_SECOND_SHIFTS_INCLUDE,
 } from './Actions'
@@ -78,33 +76,18 @@ export function employeesReducer(sets: Array<SetState>, action: AnyAction): Arra
                 }
             })
 
-        case CHANGE_TRAINEE:
+        case CHANGE_LEVELS:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    trainee: updateThreeStateValue(x.trainee, action.payload.data)
+                    levels: updateValues(x.levels, action.payload.data)
                 }
             })
-        case CHANGE_TRAINEE_INCLUDE:
+        case CHANGE_LEVELS_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    trainee: updateThreeStateValueInclude(x.trainee, action.payload.data, true)
-                }
-            })
-
-        case CHANGE_JUNIOR:
-            return updateSetState(action.payload.stateId, sets, (x) => {
-                return {
-                    ...x,
-                    junior: updateThreeStateValue(x.junior, action.payload.data)
-                }
-            })
-        case CHANGE_JUNIOR_INCLUDE:
-            return updateSetState(action.payload.stateId, sets, (x) => {
-                return {
-                    ...x,
-                    junior: updateThreeStateValueInclude(x.junior, action.payload.data, true)
+                    levels: updateValuesInclude(x.levels, action.payload.data)
                 }
             })
 

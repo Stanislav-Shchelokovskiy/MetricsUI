@@ -10,8 +10,7 @@ import { Knot } from '../../../common/Interfaces'
 import {
     empTentsSelector,
     positionsSelector,
-    juniorSelector,
-    traineeSelector,
+    levelsSelector,
     employeesSelector,
 } from '../../store/sets/Selectors'
 
@@ -21,10 +20,9 @@ export default function EmployeesSelector() {
 
     const tents = useSelector((state: PerformanceMetricsStore) => empTentsSelector(state, setTitle))    
     const positions = useSelector((state: PerformanceMetricsStore) => positionsSelector(state, setTitle))
-    const junior = useSelector((state: PerformanceMetricsStore) => juniorSelector(state, setTitle))
-    const trainee = useSelector((state: PerformanceMetricsStore) => traineeSelector(state, setTitle))
+    const levels = useSelector((state: PerformanceMetricsStore) => levelsSelector(state, setTitle))
     
-    const fetchArgs = [paramOrDefault(tents), paramOrDefault(positions), junior, trainee]
+    const fetchArgs = [paramOrDefault(tents), paramOrDefault(positions), paramOrDefault(levels)]
 
     const onValueChange = (allValues: Array<Knot>, values: Array<string>) => changeEmployees({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeEmployeesInclude({ stateId: setTitle, data: include })
