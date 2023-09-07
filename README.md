@@ -8,6 +8,7 @@ It gets all information from the following backend apps:
  - https://github.com/DevExpress/forecaster.git
  - https://github.com/DevExpress/cost_metrics.git
  - https://github.com/DevExpress/support_metrics.git
+ - https://github.com/DevExpress/performance_metrics.git
 <br>
 
 To run the app locally, run **npm install** and then **npm start**.<br>
