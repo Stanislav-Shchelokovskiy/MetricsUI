@@ -7,12 +7,13 @@ import { FilterParametersNode, FilterParameterNode } from '../../../common/store
 import { getDefaultFilterParametersNode, getOptionalDefaultFilterParameterNode } from '../../../common/store/multiset_container/sets/Defaults'
 import { employeesReducer } from './EmployeesReducer'
 import { getDefaultTitle } from '../../../common/store/multiset_container/sets/Defaults'
+import { SupportsNullFilter } from '../../../common/Interfaces'
 
 export interface SetState extends BaseSetState {
     tents: FilterParametersNode<string> | undefined
     empTents: FilterParametersNode<string> | undefined
     positions: FilterParametersNode<string> | undefined
-    levels: FilterParametersNode<number> | undefined
+    levels: FilterParametersNode<SupportsNullFilter<number>> | undefined
     employees: FilterParametersNode<string> | undefined
     secondShifts: FilterParameterNode<boolean> | undefined
 }
@@ -22,7 +23,7 @@ export const DEFAULT_SET: SetState = {
     tents: getDefaultFilterParametersNode<string>(),
     empTents: getDefaultFilterParametersNode<string>(),
     positions: getDefaultFilterParametersNode<string>(),
-    levels: getDefaultFilterParametersNode<number>(),
+    levels: getDefaultFilterParametersNode<SupportsNullFilter<number>>(),
     employees: getDefaultFilterParametersNode<string>(),
     secondShifts: getOptionalDefaultFilterParameterNode<boolean>(),
 }

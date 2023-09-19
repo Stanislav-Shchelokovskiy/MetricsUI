@@ -10,6 +10,7 @@ import CustomStore from 'devextreme/data/custom_store'
 import { LoadOptions } from 'devextreme/data'
 import useServerMultiValidate, { ValidateProps, useMultiValidate } from '../hooks/UseValidate'
 import { getIncludeButtonOptions, getClearButtonOptions, ButtonOptions } from './Button'
+import { NULL_FILTER_VALUE } from '../Interfaces'
 
 export interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     className: string
@@ -34,8 +35,8 @@ export interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSour
     showNullItem: boolean
 }
 
-const NULL_FILTER_VALUE = {
-    value: '#_NULL_FILTER_VALUE_#',
+const NULL_FILTER = {
+    value: NULL_FILTER_VALUE,
     displayValue: 'NULL'
 }
 
@@ -43,7 +44,7 @@ const NULL_FILTER_VALUE = {
 export default function MultiOptionSelector<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: Props<DataSourceT, ValueExprT>) {
     const addNullItemToDS = useCallback((ds: any): Array<any> => {
         if (props.showNullItem && ds && (ds as Array<any>).length > 0)
-            (ds as Array<any>).unshift({ [props.valueExpr]: NULL_FILTER_VALUE.value, [props.displayExpr]: NULL_FILTER_VALUE.displayValue })
+            (ds as Array<any>).unshift({ [props.valueExpr]: NULL_FILTER.value, [props.displayExpr]: NULL_FILTER.displayValue })
         return ds
     }, [])
 

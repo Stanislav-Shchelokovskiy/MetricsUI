@@ -35,3 +35,6 @@ export interface HelpItem {
     title: string
     content: string
 }
+
+export const NULL_FILTER_VALUE = '#_NULL_FILTER_VALUE_#'
+export type SupportsNullFilter<T> = T | '#_NULL_FILTER_VALUE_#'

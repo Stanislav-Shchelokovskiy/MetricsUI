@@ -2,6 +2,7 @@ import {
     getValuesPayloadAction,
     getIncludePayloadAction
 } from './Actions'
+import { SupportsNullFilter } from '../../../../Interfaces'
 
 
 export const CHANGE_EMP_POSITIONS = 'change_emp_positions'
@@ -11,7 +12,7 @@ export const changePositionsInclude = getIncludePayloadAction(CHANGE_EMP_POSITIO
 
 export const CHANGE_LEVELS = 'change_levels'
 export const CHANGE_LEVELS_INCLUDE = 'change_level_include'
-export const changeLevels = getValuesPayloadAction<number>(CHANGE_LEVELS)
+export const changeLevels = getValuesPayloadAction<SupportsNullFilter<number>>(CHANGE_LEVELS)
 export const changeLevelsInclude = getIncludePayloadAction(CHANGE_LEVELS_INCLUDE)
 
 

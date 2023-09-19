@@ -7,14 +7,15 @@ import { fetcLevels } from '../../network_resource_fetcher/Levels'
 import { levelsSelector } from '../../store/sets/Selectors'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
 import { Knot } from '../../../common/Interfaces'
+import { SupportsNullFilter } from '../../../common/Interfaces'
 
 export default function LevelsSelector() {
     const setTitle = useSetTitle()
     const value = useSelector((state: PerformanceMetricsStore) => levelsSelector(state, setTitle))
-    const onValueChange = (allValues: Array<Knot>, values: Array<number>) => changeLevels({ stateId: setTitle, data: values })
+    const onValueChange = (allValues: Array<Knot>, values: Array<SupportsNullFilter<number>>) => changeLevels({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeLevelsInclude({ stateId: setTitle, data: include })
 
-    return <MultiOptionSelector<Knot, number>
+    return <MultiOptionSelector<Knot, number | SupportsNullFilter<number>>
         className='LevelsSelector'
         displayExpr='name'
         valueExpr='id'
