@@ -6,7 +6,7 @@ import { changePositions, changePositionsInclude } from '../../../common/store/m
 import { fetchPositions } from '../../network_resource_fetcher/Positions'
 import { positionsSelector } from '../../store/sets/Selectors'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
-import { Knot } from '../../../common/Interfaces'
+import { Knot } from '../../../common/Typing'
 
 export default function PositionsSelector() {
     const setTitle = useSetTitle()

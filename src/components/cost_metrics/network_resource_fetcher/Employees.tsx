@@ -1,5 +1,5 @@
 import { COST_METRICS_END_POINT } from '../../common/EndPoint'
-import FetchResult, { Knot } from '../../common/Interfaces'
+import FetchResult, { Knot } from '../../common/Typing'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
 import { FilterParametersNode } from '../../common/store/multiset_container/sets/Interfaces'
 

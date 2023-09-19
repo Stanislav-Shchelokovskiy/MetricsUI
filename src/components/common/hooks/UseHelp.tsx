@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import FetchResult from '../../common/Interfaces'
-import { HelpItem } from '../../common/Interfaces'
+import FetchResult from '../Typing'
+import { HelpItem } from '../Typing'
 
 
 export interface HelpProps {

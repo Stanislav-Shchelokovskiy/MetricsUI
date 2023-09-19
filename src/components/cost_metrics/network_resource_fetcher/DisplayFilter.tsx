@@ -1,4 +1,4 @@
-import FetchResult from '../../common/Interfaces'
+import FetchResult from '../../common/Typing'
 import { SetState } from '../store/sets/SetsReducer'
 import { COST_METRICS_END_POINT } from '../../common/EndPoint'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'

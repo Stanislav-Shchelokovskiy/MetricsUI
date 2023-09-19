@@ -6,7 +6,7 @@ import { changeEmpTribes, changeEmpTribesInclude } from '../../../common/store/m
 import { fetchTribes } from '../../network_resource_fetcher/Tribes'
 import { empTribesSelector } from '../../store/sets/Selectors'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
-import { Knot } from '../../../common/Interfaces'
+import { Knot } from '../../../common/Typing'
 
 
 export default function EmpTribesSelector() {

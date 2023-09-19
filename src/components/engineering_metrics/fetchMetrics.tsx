@@ -1,4 +1,4 @@
-import FetchResult from '../common/Interfaces'
+import FetchResult from '../common/Typing'
 import { fetchMetrics as fetchSupportMetrics } from '../support_metrics/network_resource_fetcher/Metrics'
 import { fetchMetrics as fetchCostMetrics } from '../cost_metrics/network_resource_fetcher/Metrics'
 import { fetchMetrics as fetchPerformanceMetrics } from '../performance_metrics/network_resource_fetcher/Metrics'

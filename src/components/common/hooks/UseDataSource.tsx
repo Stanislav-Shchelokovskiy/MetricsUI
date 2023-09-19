@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import FetchResult from '../../common/Interfaces'
+import FetchResult from '../Typing'
 
 
 export interface DataSourceProps<DataSourceT> {

@@ -6,7 +6,7 @@ import Button from '../Button'
 import { dropState } from '../../LocalStorage'
 import { dropState as dropStateAction } from '../../store/view_state/Actions'
 import getStorageItemKey from './Utils'
-import { PopupProps } from '../../Interfaces'
+import { PopupProps } from '../../Typing'
 import { stateNamesSelector, saltSelector } from '../../store/view_state/Selectors'
 
 function DropStateButton() {

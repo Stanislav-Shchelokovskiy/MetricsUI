@@ -9,7 +9,7 @@ import { useHelp } from '../../../hooks/UseHelp'
 import { Popup } from 'devextreme-react/popup'
 import Markdown from 'markdown-to-jsx'
 import ScrollView from 'devextreme-react/scroll-view'
-import { HelpItem } from '../../../Interfaces'
+import { HelpItem } from '../../../Typing'
 import { useSelector } from 'react-redux'
 
 

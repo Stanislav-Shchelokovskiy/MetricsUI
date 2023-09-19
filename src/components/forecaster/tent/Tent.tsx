@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Accordion, { Item } from 'devextreme-react/accordion'
-import { Knot } from '../../common/Interfaces'
+import { Knot } from '../../common/Typing'
 import { ForecasterStore } from '../store/Store'
 import { expandForecastItems } from '../store/forecaster_items/Actions'
 import { expandedItemsSelector } from '../store/forecaster_items/Selectors'

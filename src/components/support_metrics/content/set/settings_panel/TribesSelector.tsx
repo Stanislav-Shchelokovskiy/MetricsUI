@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Knot } from '../../../../common/Interfaces'
+import { Knot } from '../../../../common/Typing'
 import { SupportMetricsStore } from '../../../store/Store'
 import { fetchTribes } from '../../../network_resource_fetcher/Tribes'
 import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'

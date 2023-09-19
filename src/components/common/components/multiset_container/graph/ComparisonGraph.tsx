@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
-import { Token } from '../../../Interfaces'
+import { Token } from '../../../Typing'
 import { MultisetContainerStore } from '../../../store/multiset_container/Store'
 import LoadIndicator from '../../LoadIndicator'
 import GraphPlot, { GraphData } from './GraphPlot'

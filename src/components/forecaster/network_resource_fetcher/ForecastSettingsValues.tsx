@@ -1,7 +1,7 @@
 import { FORECASTER_END_POINT } from '../../common/EndPoint'
-import FetchResult from '../../common/Interfaces'
+import FetchResult from '../../common/Typing'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
-import { Knot } from '../../common/Interfaces'
+import { Knot } from '../../common/Typing'
 
 export interface ForecasterSettingsValues {
     incomeTypes: Array<string>

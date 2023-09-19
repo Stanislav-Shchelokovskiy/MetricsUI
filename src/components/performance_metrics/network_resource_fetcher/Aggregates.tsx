@@ -1,4 +1,4 @@
-import FetchResult from '../../common/Interfaces'
+import FetchResult from '../../common/Typing'
 import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'
 import { PERFORMANCE_METRICS_END_POINT } from '../../common/EndPoint'
 import { SetState } from '../store/sets/SetsReducer'

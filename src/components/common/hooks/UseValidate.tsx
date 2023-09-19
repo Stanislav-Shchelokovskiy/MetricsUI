@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
-import FetchResult, { ValidationResult } from '../Interfaces'
+import FetchResult, { ValidationResult } from '../Typing'
 import { PayloadAction } from '@reduxjs/toolkit'
 
 

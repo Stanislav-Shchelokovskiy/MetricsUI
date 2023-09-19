@@ -6,7 +6,7 @@ import { changeTeams, changeTeamsInclude } from '../../store/sets/Actions'
 import { fetchTeams } from '../../network_resource_fetcher/Teams'
 import { empTeamsSelector } from '../../store/sets/Selectors'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
-import { Knot } from '../../../common/Interfaces'
+import { Knot } from '../../../common/Typing'
 
 export default function EmpTeamsSelector() {
     const setTitle = useSetTitle()

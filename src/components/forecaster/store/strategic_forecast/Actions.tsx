@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { Payload } from '../../../common/Interfaces'
+import { Payload } from '../../../common/Typing'
 
 export const CHANGE_FORECAST_HORIZON = 'strategic_forecast/change_forecast_horizon'
 export const changeForecastHorizon = (tribeId: string, forecastHorizon: string | undefined): PayloadAction<Payload<string, string | undefined>> => {

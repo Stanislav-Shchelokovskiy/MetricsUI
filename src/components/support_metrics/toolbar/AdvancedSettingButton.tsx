@@ -5,7 +5,7 @@ import Button from '../../common/components/Button'
 import { CheckBox } from 'devextreme-react/check-box'
 import { SupportMetricsStore } from '../store/Store'
 import { changeBaselineAlignedMode } from '../store/actions/Common'
-import { PopupProps } from '../../common/Interfaces'
+import { PopupProps } from '../../common/Typing'
 
 interface AdvancedSettings {
     baselineAlignedMode: boolean

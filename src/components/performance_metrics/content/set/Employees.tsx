@@ -6,7 +6,7 @@ import { changeEmployees, changeEmployeesInclude } from '../../../common/store/m
 import { fetchEmployees } from '../../network_resource_fetcher/Employees'
 import { paramOrDefault } from '../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
-import { Knot } from '../../../common/Interfaces'
+import { Knot } from '../../../common/Typing'
 import {
     empTentsSelector,
     positionsSelector,

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import { Knot } from '../../../common/Interfaces'
+import { Knot } from '../../../common/Typing'
 import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { fetchTents } from '../../network_resource_fetcher/Tents'
 import { changeSelectedTents } from '../../store/forecaster/Actions'

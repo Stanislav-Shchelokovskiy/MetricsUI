@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react'
-import FetchResult from '../../Interfaces'
+import FetchResult from '../../Typing'
 import { BaseContainerState } from '../../store/multiset_container/BaseContainerState'
 import { Context as context } from '../../store/multiset_container/Context'
 import { BaseSetState } from '../../store/multiset_container/sets/Interfaces'
@@ -8,7 +8,7 @@ import { GroupBy } from './graph/GroupBySelector'
 import { Metric } from './graph/MetricSelector'
 import { MultisetContainerStore } from '../../store/multiset_container/Store'
 import { FilterField } from './Toolbar/FilterTooltip'
-import { HelpItem } from '../../Interfaces'
+import { HelpItem } from '../../Typing'
 
 interface GraphSettingsPanelContext {
     fetchPeriod: (...args: any) => Promise<FetchResult<Array<string>>>,

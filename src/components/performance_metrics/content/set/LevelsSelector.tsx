@@ -6,8 +6,8 @@ import { changeLevels, changeLevelsInclude } from '../../../common/store/multise
 import { fetcLevels } from '../../network_resource_fetcher/Levels'
 import { levelsSelector } from '../../store/sets/Selectors'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
-import { Knot } from '../../../common/Interfaces'
-import { SupportsNullFilter } from '../../../common/Interfaces'
+import { Knot } from '../../../common/Typing'
+import { SupportsNullFilter } from '../../../common/Typing'
 
 export default function LevelsSelector() {
     const setTitle = useSetTitle()

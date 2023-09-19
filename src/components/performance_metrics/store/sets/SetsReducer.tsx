@@ -7,7 +7,7 @@ import { FilterParametersNode, FilterParameterNode } from '../../../common/store
 import { getDefaultFilterParametersNode, getOptionalDefaultFilterParameterNode } from '../../../common/store/multiset_container/sets/Defaults'
 import { employeesReducer } from './EmployeesReducer'
 import { getDefaultTitle } from '../../../common/store/multiset_container/sets/Defaults'
-import { SupportsNullFilter } from '../../../common/Interfaces'
+import { SupportsNullFilter } from '../../../common/Typing'
 
 export interface SetState extends BaseSetState {
     tents: FilterParametersNode<string> | undefined

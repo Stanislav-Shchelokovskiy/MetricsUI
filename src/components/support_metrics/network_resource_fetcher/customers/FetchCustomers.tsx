@@ -1,8 +1,8 @@
 import { SUPPORT_METRICS_END_POINT } from '../../../common/EndPoint'
-import FetchResult from '../../../common/Interfaces'
+import FetchResult from '../../../common/Typing'
 import { fetchArray } from '../../../common/network_resource_fetcher/FetchOrDefault'
 import { anyValueIsEmpty } from '../../../common/store/multiset_container/Utils'
-import { ValidationResult } from '../../../common/Interfaces'
+import { ValidationResult } from '../../../common/Typing'
 
 export interface Customer {
     id: string

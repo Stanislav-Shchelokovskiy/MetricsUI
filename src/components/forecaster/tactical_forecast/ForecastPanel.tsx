@@ -6,7 +6,7 @@ import { replyTypeSelector } from '../store/tactical_forecast/Selectors'
 import { incomeTypeSelector, lastUpdatedSelector } from '../store/forecaster/Selectors'
 import ForecastMissing from '../utils/ForecastMissing'
 import GetColor from '../utils/ColorPalette'
-import FetchResult from '../../common/Interfaces'
+import FetchResult from '../../common/Typing'
 import {
     HourlyTacticalForecast,
     EMPTY_TACTICAL_FORECAST,

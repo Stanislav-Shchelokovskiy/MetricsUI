@@ -6,7 +6,7 @@ import { changeEmpTents, changeEmpTentsInclude } from '../../../common/store/mul
 import { fetchTents } from '../../network_resource_fetcher/Tents'
 import { empTentsSelector } from '../../store/sets/Selectors'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
-import { Knot } from '../../../common/Interfaces'
+import { Knot } from '../../../common/Typing'
 
 
 export default function EmpTentsSelector() {

@@ -2,7 +2,7 @@ import {
     getValuesPayloadAction,
     getIncludePayloadAction
 } from './Actions'
-import { SupportsNullFilter } from '../../../../Interfaces'
+import { SupportsNullFilter } from '../../../../Typing'
 
 
 export const CHANGE_EMP_POSITIONS = 'change_emp_positions'

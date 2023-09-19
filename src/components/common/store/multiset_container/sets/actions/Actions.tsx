@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { Payload } from '../../../../Interfaces'
+import { Payload } from '../../../../Typing'
 import { getPayloadAction } from '../../../Actions'
 
 export function getValuesPayloadAction<T>(actionType: string): (value: Payload<string, Array<T>>) => PayloadAction<Payload<string, Array<T>>> {

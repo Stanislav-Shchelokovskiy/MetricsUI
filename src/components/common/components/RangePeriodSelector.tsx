@@ -5,7 +5,7 @@ import { RangeSelector as DxRangeSelector, Margin, Scale, ScaleLabel, SliderMark
 import LoadIndicator from './LoadIndicator'
 import useDataSource, { DataSourceProps } from '../hooks/UseDataSource'
 import { useMultiValidate } from '../hooks/UseValidate'
-import { Payload } from '../Interfaces'
+import { Payload } from '../Typing'
 
 type Period = [Date, Date]
 type PeriodStr = Array<string>

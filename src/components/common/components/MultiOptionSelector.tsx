@@ -10,7 +10,7 @@ import CustomStore from 'devextreme/data/custom_store'
 import { LoadOptions } from 'devextreme/data'
 import useServerMultiValidate, { ValidateProps, useMultiValidate } from '../hooks/UseValidate'
 import { getIncludeButtonOptions, getClearButtonOptions, ButtonOptions } from './Button'
-import { NULL_FILTER_VALUE } from '../Interfaces'
+import { NULL_FILTER_VALUE } from '../Typing'
 
 export interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     className: string

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import ScrollView from 'devextreme-react/scroll-view'
-import { Knot } from '../common/Interfaces'
+import { Knot } from '../common/Typing'
 import TentContainer from './tent/Tent'
 import { tentsSelector } from './store/forecaster/Selectors'
 

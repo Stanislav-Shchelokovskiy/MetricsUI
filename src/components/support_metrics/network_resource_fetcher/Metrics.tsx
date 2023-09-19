@@ -1,8 +1,8 @@
 import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
 import { fetchArray, fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'
-import FetchResult from '../../common/Interfaces'
+import FetchResult from '../../common/Typing'
 import { Metric } from '../../common/components/multiset_container/graph/MetricSelector'
-import { HelpItem } from '../../common/Interfaces'
+import { HelpItem } from '../../common/Typing'
 
 export async function fetchMetrics(): Promise<FetchResult<Array<Metric>>> {
     return fetchArray(`${SUPPORT_METRICS_END_POINT}/Metrics`)

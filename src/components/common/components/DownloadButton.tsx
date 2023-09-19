@@ -3,7 +3,7 @@ import { Store } from '@reduxjs/toolkit'
 import { useStore } from 'react-redux'
 import * as XLSX from 'xlsx'
 import { MultisetContainerStore } from '../store/multiset_container/Store'
-import FetchResult from '../Interfaces'
+import FetchResult from '../Typing'
 import TaskButton from './TaskButton'
 import { useMultisetContainerContext } from '../components/multiset_container/MultisetContainerContext'
 

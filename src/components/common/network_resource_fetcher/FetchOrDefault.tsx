@@ -1,4 +1,4 @@
-import FetchResult from '../Interfaces'
+import FetchResult from '../Typing'
 
 export async function fetchArray<T>(input: RequestInfo | URL, init?: RequestInit): Promise<FetchResult<Array<T>>> {
     return fetchConvert<Array<T>, Array<T>>(fetchArrayConverter, input, init)

@@ -1,5 +1,5 @@
 import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
-import FetchResult from '../../common/Interfaces'
+import FetchResult from '../../common/Typing'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
 import { BaseContainerState } from '../../common/store/multiset_container/BaseContainerState'
 import { anyValueIsEmpty } from '../../common/store/multiset_container/Utils'

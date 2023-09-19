@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { PayloadAction } from '@reduxjs/toolkit'
-import { Payload } from '../../../../../common/Interfaces'
+import { Payload } from '../../../../../common/Typing'
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import { SupportMetricsStore } from '../../../../store/Store'
 import { changeEmployees, changeEmployeesInclude } from '../../../../../common/store/multiset_container/sets/actions/Employees'

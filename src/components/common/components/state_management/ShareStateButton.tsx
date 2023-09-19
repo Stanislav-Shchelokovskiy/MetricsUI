@@ -2,7 +2,7 @@ import React from 'react'
 import copy from 'copy-to-clipboard'
 import TaskButton from '../../../common/components/TaskButton'
 import { PushState } from '../../network_resource_fetcher/FetchState'
-import FetchResult from '../../Interfaces'
+import FetchResult from '../../Typing'
 import { useMultisetContainerContext } from '../../components/multiset_container/MultisetContainerContext'
 
 

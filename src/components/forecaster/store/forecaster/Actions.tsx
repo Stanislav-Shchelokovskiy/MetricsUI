@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { Knot } from '../../../common/Interfaces'
+import { Knot } from '../../../common/Typing'
 
 export const CHANGE_SELECTED_TENTS = 'change_selected_tents'
 export const changeSelectedTents = (selectedTribes: Array<Knot>): PayloadAction<Array<Knot>> => {

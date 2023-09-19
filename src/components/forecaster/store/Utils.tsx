@@ -1,5 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { Knot } from '../../common/Interfaces'
+import { Knot } from '../../common/Typing'
 
 export interface Forecast {
     tentId: string

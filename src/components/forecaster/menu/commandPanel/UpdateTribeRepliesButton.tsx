@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Button from '../../../common/components/Button'
 import LoadIndicator from '../../../common/components/LoadIndicator'
-import FetchResult from '../../../common/Interfaces'
+import FetchResult from '../../../common/Typing'
 import { changeLastUpdated } from '../../store/forecaster/Actions'
 import { useDispatch } from 'react-redux'
 import {
