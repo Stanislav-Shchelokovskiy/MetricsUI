@@ -1,7 +1,7 @@
 import { getDefaultTitle } from './sets/Defaults'
-import { getValidGroupByOrDefault as getValidGroupByOrDefault } from '../../components/multiset_container/graph/GroupBySelector'
-import { getValidComparisonMethodOrDefault } from '../../components/multiset_container/graph/ComparisonMethodSelector'
-import { getValidMetricOrDefault } from '../../components/multiset_container/graph/MetricSelector'
+import { groupByOrDefault as groupByOrDefault } from '../../components/multiset_container/graph/GroupBySelector'
+import { validComparisonMethodOrDefault } from '../../components/multiset_container/graph/ComparisonMethodSelector'
+import { validMetricOrDefault } from '../../components/multiset_container/graph/MetricSelector'
 import { getValidRangeOrDefault } from '../../components/RangePeriodSelector'
 import { Context } from './Context'
 
@@ -19,9 +19,9 @@ export function getDefaultBaseContainerState(context: Context): BaseContainerSta
     return {
         context: context,
         range: getValidRangeOrDefault(undefined),
-        groupBy: getValidGroupByOrDefault(undefined),
-        metric: getValidMetricOrDefault(undefined),
-        comparisonMethod: getValidComparisonMethodOrDefault(undefined),
+        groupBy: groupByOrDefault(undefined),
+        metric: validMetricOrDefault(undefined),
+        comparisonMethod: validComparisonMethodOrDefault(undefined),
         sets: [getDefaultTitle()],
         hiddenLegends: Array<string>(),
     }

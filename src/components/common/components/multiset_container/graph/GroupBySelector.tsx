@@ -27,6 +27,6 @@ export default function GroupBySelector() {
     />
 }
 
-export function getValidGroupByOrDefault(value: string | undefined) {
+export function groupByOrDefault(value: string | undefined) {
     return value ? value : '%Y-%W'
 }

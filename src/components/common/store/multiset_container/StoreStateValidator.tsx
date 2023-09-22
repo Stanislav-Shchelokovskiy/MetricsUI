@@ -1,6 +1,6 @@
-import { getValidGroupByOrDefault } from '../../components/multiset_container/graph/GroupBySelector'
-import { getValidComparisonMethodOrDefault } from '../../components/multiset_container/graph/ComparisonMethodSelector'
-import { getValidMetricOrDefault } from '../../components/multiset_container/graph/MetricSelector'
+import { groupByOrDefault } from '../../components/multiset_container/graph/GroupBySelector'
+import { validComparisonMethodOrDefault } from '../../components/multiset_container/graph/ComparisonMethodSelector'
+import { validMetricOrDefault } from '../../components/multiset_container/graph/MetricSelector'
 import { BaseContainerState } from './BaseContainerState'
 import { Context } from './Context'
 
@@ -12,8 +12,8 @@ interface OldContainerState extends BaseContainerState {
 export function defaultContainerValidator<ContainerState extends BaseContainerState>(container: ContainerState, context: Context): ContainerState {
     container.context = context
     container.groupBy = validateGroupBy(container)
-    container.comparisonMethod = getValidComparisonMethodOrDefault(container.comparisonMethod)
-    container.metric = getValidMetricOrDefault(container.metric)
+    container.comparisonMethod = validComparisonMethodOrDefault(container.comparisonMethod)
+    container.metric = validMetricOrDefault(container.metric)
     if (container.hiddenLegends === undefined)
         container.hiddenLegends = []
     return container
@@ -22,5 +22,5 @@ export function defaultContainerValidator<ContainerState extends BaseContainerSt
 function validateGroupBy(container: OldContainerState): string {
     const groupBy = 'groupBy' in container ? container.groupBy : (container as OldContainerState).groupByPeriod
     delete  (container as OldContainerState)['groupByPeriod']
-    return getValidGroupByOrDefault(groupBy)
+    return groupByOrDefault(groupBy)
 }
