@@ -18,6 +18,14 @@ interface PlotProps {
     orientation: PlotOrientation
 }
 
+export function plotPropsAreEqual(prevProps: PlotProps, nextProps: PlotProps) {
+    return (
+        (prevProps.categories === nextProps.categories) &&
+        (prevProps.aggs === nextProps.aggs) &&
+        (prevProps.comparisonMethod === nextProps.comparisonMethod)
+    )
+}
+
 export interface GraphData {
     name: string
     x: Array<string> | Array<number>

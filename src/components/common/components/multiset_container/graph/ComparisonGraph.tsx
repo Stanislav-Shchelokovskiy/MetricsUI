@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Token } from '../../../Typing'
 import { MultisetContainerStore } from '../../../store/multiset_container/Store'
 import LoadIndicator from '../../LoadIndicator'
-import GraphPlot, { GraphData } from './GraphPlot'
+import GraphPlot, { GraphData, plotPropsAreEqual } from './GraphPlot'
 import { useMultisetContainerContext } from '../MultisetContainerContext'
 
 export interface Agg {
@@ -81,4 +81,4 @@ export default function ComparisonGraph() {
     )
 }
 
-const GraphPlotMemoized = React.memo(GraphPlot)
+const GraphPlotMemoized = React.memo(GraphPlot, plotPropsAreEqual)
