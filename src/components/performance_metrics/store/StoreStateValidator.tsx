@@ -1,7 +1,7 @@
 import { PerformanceMetricsStore, PerformanceMetricsShareableStore } from './Store'
 import { ContainerState, CONTEXT } from './ContainerReducer'
 import { SetState } from './sets/SetsReducer'
-import { defaultContainerValidator } from '../../common/store/multiset_container/StoreStateValidator'
+import { defaultContainerValidator, defaultSetsValidator } from '../../common/store/multiset_container/StoreStateValidator'
 
 export function stateValidator(state: PerformanceMetricsStore): PerformanceMetricsStore {
     return {
@@ -15,5 +15,5 @@ export function containerValidator(state: PerformanceMetricsShareableStore): Con
 }
 
 export function setsValidator(state: PerformanceMetricsShareableStore): Array<SetState> {
-    return state.sets
+    return defaultSetsValidator(state.sets)
 }

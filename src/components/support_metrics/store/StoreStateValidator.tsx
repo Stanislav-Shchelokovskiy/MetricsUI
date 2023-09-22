@@ -2,7 +2,7 @@ import { SupportMetricsShareableStore } from './Store'
 import { ContainerState, CONTEXT } from './ContainerReducer'
 import { SetState } from './sets/Interfaces'
 import { DEFAULT_SET } from './sets/Defaults'
-import { defaultContainerValidator } from '../../common/store/multiset_container/StoreStateValidator'
+import { defaultContainerValidator, defaultSetsValidator } from '../../common/store/multiset_container/StoreStateValidator'
 import { toFriendlyTitle } from '../../common/store/multiset_container/Utils'
 import { SupportMetricsStore } from './Store'
 
@@ -33,10 +33,9 @@ export function containerValidator(state: SupportMetricsShareableStore | OldCust
 }
 
 export function setsValidator(state: SupportMetricsShareableStore | OldCustomersActivityShareableStore): Array<SetState> {
-    const customersActivitySets: Array<SetState> = 'customersActivitySets' in state ? state.customersActivitySets : state.sets
+    const setsToValidate = 'customersActivitySets' in state ? state.customersActivitySets : state.sets as Array<SetState>
+    const customersActivitySets = defaultSetsValidator(setsToValidate)
     for (const set of customersActivitySets) {
-        set.title = toFriendlyTitle(set.title)
-
         if (set.percentile === undefined)
             set.percentile = DEFAULT_SET.percentile
 
