@@ -12,4 +12,8 @@ export interface FilterParameterNode<T> extends FilterNode {
 
 export interface BaseSetState {
     title: string
+    tents: FilterParametersNode<string> | undefined
+    empTents: FilterParametersNode<string> | undefined
+    positions: FilterParametersNode<string> | undefined
+    employees: FilterParametersNode<string> | undefined
 }

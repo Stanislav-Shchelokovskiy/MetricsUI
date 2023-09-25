@@ -5,7 +5,6 @@ export interface SetState extends BaseSetState {
     percentile: FilterParameterNode<number>
     privacy: FilterParameterNode<number> | undefined
     tribes: FilterParametersNode<string> | undefined
-    tents: FilterParametersNode<string> | undefined
     platforms: FilterParametersNode<string> | undefined
     products: FilterParametersNode<string> | undefined
     ticketsTags: FilterParametersNode<string> | undefined
@@ -23,10 +22,7 @@ export interface SetState extends BaseSetState {
     customersGroups: FilterParametersNode<string> | undefined
     customersTypes: FilterParametersNode<number> | undefined
     conversionsTypes: FilterParametersNode<number> | undefined
-    positions: FilterParametersNode<string> | undefined
     empTribes: FilterParametersNode<string> | undefined
-    empTents: FilterParametersNode<string> | undefined
-    employees: FilterParametersNode<string> | undefined
     assignedTo: FilterParametersNode<string> | undefined
     closedBy: FilterParametersNode<string> | undefined
     fixedBy: FilterParametersNode<string> | undefined

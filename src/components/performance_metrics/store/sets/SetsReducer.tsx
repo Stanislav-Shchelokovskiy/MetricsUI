@@ -10,11 +10,7 @@ import { getDefaultTitle } from '../../../common/store/multiset_container/sets/D
 import { SupportsNullFilter } from '../../../common/Typing'
 
 export interface SetState extends BaseSetState {
-    tents: FilterParametersNode<string> | undefined
-    empTents: FilterParametersNode<string> | undefined
-    positions: FilterParametersNode<string> | undefined
     levels: FilterParametersNode<SupportsNullFilter<number>> | undefined
-    employees: FilterParametersNode<string> | undefined
     secondShifts: FilterParameterNode<boolean> | undefined
 }
 

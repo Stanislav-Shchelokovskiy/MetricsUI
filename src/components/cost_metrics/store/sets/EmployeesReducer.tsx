@@ -74,14 +74,14 @@ export function employeesReducer(sets: Array<SetState>, action: AnyAction): Arra
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    empPositions: updateValues(x.empPositions, action.payload.data)
+                    positions: updateValues(x.positions, action.payload.data)
                 }
             })
         case CHANGE_EMP_POSITIONS_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    empPositions: updateValuesInclude(x.empPositions, action.payload.data)
+                    positions: updateValuesInclude(x.positions, action.payload.data)
                 }
             })
 

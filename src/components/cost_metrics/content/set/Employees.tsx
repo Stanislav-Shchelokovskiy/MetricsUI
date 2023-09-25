@@ -11,7 +11,7 @@ import {
     empTeamsSelector,
     empTribesSelector,
     empTentsSelector,
-    empPositionsSelector,
+    positionsSelector,
     employeesSelector
 } from '../../store/sets/Selectors'
 
@@ -22,7 +22,7 @@ export default function EmployeesSelector() {
     const teams = useSelector((state: CostMetricsStore) => empTeamsSelector(state, setTitle))
     const tribes = useSelector((state: CostMetricsStore) => empTribesSelector(state, setTitle))
     const tents = useSelector((state: CostMetricsStore) => empTentsSelector(state, setTitle))
-    const positions = useSelector((state: CostMetricsStore) => empPositionsSelector(state, setTitle))
+    const positions = useSelector((state: CostMetricsStore) => positionsSelector(state, setTitle))
     const fetchArgs = [paramOrDefault(teams), paramOrDefault(tribes), paramOrDefault(tents), paramOrDefault(positions)]
 
     const onValueChange = (allValues: Array<Knot>, values: Array<string>) => changeEmployees({ stateId: setTitle, data: values })
