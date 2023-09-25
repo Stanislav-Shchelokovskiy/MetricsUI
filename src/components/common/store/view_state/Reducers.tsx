@@ -1,10 +1,11 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { REGISTER_STATE, DROP_STATE, CHANGE_STATE } from './Actions'
+import { REGISTER_STATE, DROP_STATE, CHANGE_STATE, CHANGE_VERSION, } from './Actions'
 
 export interface ViewState {
     key: string
     salt: string
     stateKeys: Array<string>
+    version: string
 }
 
 export function getViewStateReducer(stateSalt: string) {
@@ -12,6 +13,7 @@ export function getViewStateReducer(stateSalt: string) {
         key: '',
         salt: stateSalt,
         stateKeys: [],
+        version: '0',
     }
     return (state: ViewState = initialState, action: AnyAction): ViewState => {
         switch (action.type) {
@@ -35,6 +37,12 @@ export function getViewStateReducer(stateSalt: string) {
                     ...state,
                     key: state.key === action.payload ? '' : state.key,
                     stateKeys: state.stateKeys.filter(x => x !== action.payload)
+                }
+
+            case CHANGE_VERSION:
+                return {
+                    ...state,
+                    version: action.payload
                 }
 
             default:

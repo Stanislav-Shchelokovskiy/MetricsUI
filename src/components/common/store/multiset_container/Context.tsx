@@ -12,6 +12,10 @@ export function isCostContextSelected(ctx: Context) {
     return ctx === Context.Cost
 }
 
+export function isPerformanceContextSelected(ctx: Context) {
+    return ctx === Context.Performance
+}
+
 export function contextOrDefault(ctx: Context | undefined): Context {
     if (ctx !== undefined)
         return ctx

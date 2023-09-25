@@ -11,3 +11,7 @@ export function stateNameSelector(store: ViewState) {
 export function saltSelector(store: ViewState) {
     return store.salt
 }
+
+export function versionSelector(store: ViewState) {
+    return store.version
+}
