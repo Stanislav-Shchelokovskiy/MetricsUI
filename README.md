@@ -14,3 +14,6 @@ It gets all information from the following backend apps:
 To run the app locally, run **npm install** and then **npm start**.<br>
 To run tests, run **npm test**.<br>
 Make sure end point consts at **src > components > EndPoint.tsx** changed accordingly.
+<br>
+
+If you introduce any breaking changes, update all shared states manually and add code to LocalStatesConverter to convert local states accordingly.

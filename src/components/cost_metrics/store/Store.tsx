@@ -6,8 +6,10 @@ import { MultisetContainerStore } from '../../common/store/multiset_container/St
 import { ContainerState } from '../store/ContainerReducer'
 import { SetState } from './sets/SetsReducer'
 
+export const COST_METRICS_STORE_NAME = 'cost_metrics'
+
 export const costMetricsStore = configureMultisetContainerStore(
-    'cost_metrics',
+    COST_METRICS_STORE_NAME,
     containerReducer,
     setsReducer,
     stateValidator

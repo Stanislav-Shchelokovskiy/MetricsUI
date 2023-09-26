@@ -3,9 +3,10 @@ import { stateValidator } from './StoreStateValidator'
 import { containerReducer, ContainerState } from './ContainerReducer'
 import { setsReducer, SetState } from './sets/SetsReducer'
 
+export const PERFORMANCE_METRICS_STORE_NAME = 'performance_metrics'
 
 export const performanceMetricsStore = configureMultisetContainerStore(
-    'performance_metrics',
+    PERFORMANCE_METRICS_STORE_NAME,
     containerReducer,
     setsReducer,
     stateValidator

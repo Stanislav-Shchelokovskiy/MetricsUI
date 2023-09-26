@@ -6,8 +6,10 @@ import { MultisetContainerStore } from '../../common/store/multiset_container/St
 import { ContainerState } from './ContainerReducer'
 import { SetState } from './sets/Interfaces'
 
+export const SUPPORT_METRICS_STORE_NAME = 'support_metrics'
+
 export const supportMetricsStore = configureMultisetContainerStore(
-    'current_customers_activity_state_v1',
+    SUPPORT_METRICS_STORE_NAME,
     containerReducer,
     setsReducer,
     storeValidator

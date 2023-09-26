@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, FC } from 'react'
+import React, { useEffect, useCallback, useReducer, FC } from 'react'
 import { AnyAction } from '@reduxjs/toolkit'
 import { Toast } from 'devextreme-react/toast'
 
@@ -17,7 +17,8 @@ export interface TaskStarter {
 }
 
 interface TaskProgressNotifierContainer extends TaskProgressNotifierProps {
-    child: FC<any>
+    child: FC<any> | null
+    autoStartTask: boolean
 }
 
 interface ToastConfig {
@@ -114,12 +115,17 @@ export default function TaskProgressNotifier(props: TaskProgressNotifierContaine
         })();
     }, [dispatchTaskState, onError, onSuccess, task])
 
+    useEffect(() => {
+        if (props.autoStartTask)
+            startTask()
+    }, [props.autoStartTask])
+
     return (
         <div className={props.className}>
-            <props.child
+            {props.child ? <props.child
                 {...props}
                 startTask={startTask}
-                taskStarted={state.taskStarted} />
+                taskStarted={state.taskStarted} /> : null}
             <Toast
                 {...state.toastConfig}
                 onHiding={onHiding}
@@ -127,3 +133,11 @@ export default function TaskProgressNotifier(props: TaskProgressNotifierContaine
         </div>
     )
 }
+
+const defaultProps = {
+    className: '',
+    child: null,
+    autoStartTask: false,
+}
+
+TaskProgressNotifier.defaultProps = defaultProps
