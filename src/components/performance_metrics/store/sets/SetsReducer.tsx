@@ -17,6 +17,7 @@ export interface SetState extends BaseSetState {
 export const DEFAULT_SET: SetState = {
     title: getDefaultTitle(),
     tents: getDefaultFilterParametersNode<string>(),
+    empTribes: undefined,
     empTents: getDefaultFilterParametersNode<string>(),
     positions: getDefaultFilterParametersNode<string>(),
     levels: getDefaultFilterParametersNode<SupportsNullFilter<number>>(),

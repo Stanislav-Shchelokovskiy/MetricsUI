@@ -10,7 +10,6 @@ import { getDefaultTitle } from '../../../common/store/multiset_container/sets/D
 
 export interface SetState extends BaseSetState {
     empTeams: FilterParametersNode<string> | undefined
-    empTribes: FilterParametersNode<string> | undefined
 }
 
 export const DEFAULT_SET: SetState = {

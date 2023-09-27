@@ -14,6 +14,10 @@ export async function tentNamesToIDs(values: Array<string> | undefined): Promise
     return fetchConvert('TentNames', values)
 }
 
+export async function tribeNamesToIDs(values: Array<string> | undefined): Promise<FetchResult<Array<string>>> {
+    return fetchConvert('TribeNames', values)
+}
+
 async function fetchConvert<T>(uri: string, values: Array<T> | undefined): Promise<FetchResult<Array<T>>> {
     if (values === undefined || values.length === 0) {
         return {

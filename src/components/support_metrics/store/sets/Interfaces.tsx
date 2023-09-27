@@ -22,7 +22,6 @@ export interface SetState extends BaseSetState {
     customersGroups: FilterParametersNode<string> | undefined
     customersTypes: FilterParametersNode<number> | undefined
     conversionsTypes: FilterParametersNode<number> | undefined
-    empTribes: FilterParametersNode<string> | undefined
     assignedTo: FilterParametersNode<string> | undefined
     closedBy: FilterParametersNode<string> | undefined
     fixedBy: FilterParametersNode<string> | undefined

@@ -17,8 +17,9 @@ import { setsValidator as supportSetsValidator } from '../../../support_metrics/
 import { setsValidator as performanceSetsValidator } from '../../../performance_metrics/store/StoreStateValidator'
 import { Context } from '../../store/multiset_container/Context'
 import {
-    positionsNamesToIDS,
+    tribeNamesToIDs,
     tentNamesToIDs,
+    positionsNamesToIDS,
     crmidsToSCIDS,
 } from '../../network_resource_fetcher/converters/Values'
 import TaskProgressNotifier from '../TaskProgressNotifier'
@@ -98,6 +99,7 @@ async function convertSetsValues(key: string) {
         }
 
         if (isCostContextSelected(context)) {
+            await convertEmpTtribes(set)
             await convertEmpTents(set)
             await convertPositions(set)
             await convertEmployees(set)
@@ -113,6 +115,15 @@ async function convertEmployees(set: BaseSetState) {
         const employees = await crmidsToSCIDS(set.employees.values)
         if (employees.success) {
             set.employees.values = employees.data
+        }
+    }
+}
+
+async function convertEmpTtribes(set: BaseSetState) {
+    if (set.empTribes) {
+        const empTribes = await tribeNamesToIDs(set.empTribes.values)
+        if (empTribes.success) {
+            set.empTribes.values = empTribes.data
         }
     }
 }
