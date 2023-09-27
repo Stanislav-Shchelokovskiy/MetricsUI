@@ -1,5 +1,5 @@
-import { SetState } from './Interfaces'
-import { 
+import { SetState } from '../SetsReducer'
+import {
     getDefaultFilterParameterNode,
     getDefaultFilterParametersNode,
     getOptionalDefaultFilterParameterNode,

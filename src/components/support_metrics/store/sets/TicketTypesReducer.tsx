@@ -1,5 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { SetState } from './Interfaces'
+import { SetState } from '../SetsReducer'
 import { FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
 import { DEFAULT_SET } from './Defaults'
 import { bugIsNotSelected } from '../Utils'

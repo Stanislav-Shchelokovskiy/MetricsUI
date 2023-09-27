@@ -1,4 +1,4 @@
-import { SetState } from './Interfaces'
+import { SetState } from '../SetsReducer'
 import { DEFAULT_SET } from './Defaults'
 import { getFilterFields } from '../../../common/components/multiset_container/Toolbar/FilterTooltip'
 

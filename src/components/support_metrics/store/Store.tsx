@@ -1,10 +1,9 @@
 import { configureMultisetContainerStore } from '../../common/store/multiset_container/Store'
 import { containerReducer } from './ContainerReducer'
-import { setsReducer } from './SetsReducer'
+import { setsReducer, SetState } from './SetsReducer'
 import { storeValidator } from './StoreStateValidator'
 import { MultisetContainerStore } from '../../common/store/multiset_container/Store'
 import { ContainerState } from './ContainerReducer'
-import { SetState } from './sets/Interfaces'
 
 export const SUPPORT_METRICS_STORE_NAME = 'support_metrics'
 

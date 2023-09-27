@@ -1,4 +1,4 @@
-import { SetState } from './Interfaces'
+import { SetState } from '../SetsReducer'
 import { getSelector as getSlctr } from '../../../common/store/multiset_container/Selectors'
 
 function getSelector<R>(selector: (set: SetState | undefined) => R | undefined) {

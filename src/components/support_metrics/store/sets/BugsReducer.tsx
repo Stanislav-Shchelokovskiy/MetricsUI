@@ -1,6 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit'
 import { closedIsNotSelected } from '../Utils'
-import { SetState } from './Interfaces'
+import { SetState } from '../SetsReducer'
 import { FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
 import {
     updateSetState,

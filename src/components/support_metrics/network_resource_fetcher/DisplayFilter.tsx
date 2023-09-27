@@ -1,7 +1,7 @@
 import { SUPPORT_METRICS_END_POINT } from '../../common/EndPoint'
 import FetchResult from '../../common/Typing'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
-import { SetState } from '../store/sets/Interfaces'
+import { SetState } from '../store/SetsReducer'
 import { getAliasedSet } from '../store/sets/SetDescriptor'
 
 export type DisplayFilter = Array<any>
