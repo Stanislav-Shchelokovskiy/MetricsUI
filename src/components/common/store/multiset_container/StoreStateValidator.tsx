@@ -37,6 +37,6 @@ export function defaultSetsValidator<SetState extends BaseSetState>(sets: Array<
 
 function groupByOrDefault_(container: OldContainerState): string {
     const groupBy = 'groupBy' in container ? container.groupBy : (container as OldContainerState).groupByPeriod
-    delete (container as OldContainerState)['groupByPeriod']
+    delete (container as OldContainerState).groupByPeriod
     return groupByOrDefault(groupBy)
 }
