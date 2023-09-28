@@ -16,4 +16,4 @@ To run tests, run **npm test**.<br>
 Make sure end point consts at **src > components > EndPoint.tsx** changed accordingly.
 <br>
 
-If you introduce any breaking changes, update all shared states manually and add code to LocalStatesConverter to convert local states accordingly.
+If you introduce any breaking changes, add code to LocalStatesConverter to convert local states accordingly and specify a new vesrion.
