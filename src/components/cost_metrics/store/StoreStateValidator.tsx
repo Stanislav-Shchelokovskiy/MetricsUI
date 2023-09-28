@@ -19,7 +19,9 @@ export function setsValidator(state: CostMetricsShareableStore): Array<SetState>
     const sets = defaultSetsValidator(state.sets)
     for (const set of sets) {
         if ('empPositions' in set) {
+            console.log('empPositions', (set as any).empPositions)
             set.positions = (set as any).empPositions as FilterParametersNode<string>
+            delete (set as any).empPositions
         }
     }
     return sets
