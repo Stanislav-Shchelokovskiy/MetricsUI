@@ -3,31 +3,27 @@ import { Toast } from 'devextreme-react/toast'
 
 function ErrorToast() {
     const context = useNotificationContext()
-    const hidden = {
-        visible: false,
-        message: '',
-    }
-
-    const visible = {
-        visible: true,
-        message: context.error,
-    }
-
-    const [config, setConfig] = useState(context.error && context.error.length !== 0 ? visible : hidden)
+    const [config, setConfig] = useState(createConfig(context.pop()))
 
     const onHiding = () => {
-        context.error = ''
-        setConfig(hidden)
+        setConfig(createConfig(context.popNoTake()))
     }
 
     return (
-        context.error ? < Toast
+        config.visible ? < Toast
             {...config}
             displayTime={4000}
             type='error'
             onHiding={onHiding}
         /> : null
     )
+}
+
+function createConfig(message: string | undefined) {
+    return {
+        visible: message != undefined && message.length > 0,
+        message: message,
+    }
 }
 
 export default function ErrorNotifier(props: PropsWithChildren) {
@@ -38,10 +34,33 @@ export default function ErrorNotifier(props: PropsWithChildren) {
 }
 
 interface Context {
-    error: string
+    push: (error: string) => void
+    pop: () => string | undefined
+    popNoTake: () => string | undefined
 }
 
-const defaultContext = { error: '' }
+const errorQueue = Array<string>()
+
+function push(error: string) {
+    if (error)
+        errorQueue.push(error)
+}
+
+function pop() {
+    return errorQueue.shift()
+}
+
+function popNoTake() {
+    if (errorQueue.length)
+        return errorQueue[0]
+}
+
+const defaultContext = {
+    push: push,
+    pop: pop,
+    popNoTake: popNoTake,
+}
+
 const NotificationContext = createContext<Context>(defaultContext)
 
 export function useNotificationContext() {

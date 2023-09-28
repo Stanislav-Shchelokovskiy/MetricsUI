@@ -10,7 +10,6 @@ import { Context } from '../common/store/multiset_container/Context'
 
 import ErrorPage from './ErrorPage'
 import NavMenu from './Navigation'
-import ErrorNotifier from './ErrorNotifier'
 
 import {
   FORECASTER,
@@ -61,8 +60,6 @@ export const ROUTER = createBrowserRouter([
   },
   {
     path: ENGINEERING_METRICS,
-    element: <ErrorNotifier>
-      <EngineeringMetrics />
-    </ErrorNotifier>,
+    element: <EngineeringMetrics />,
   },
 ])

@@ -32,6 +32,8 @@ import { ContainerState } from './store/ContainerReducer'
 import { engineeringMetricsStore } from './store/Store'
 import { MultisetContainerStore } from '../common/store/multiset_container/Store'
 import { applyState } from '../common/store/view_state/Actions'
+import LocalStatesConverter from './LocalStatesConverter'
+import ErrorNotifier from '../app_components/ErrorNotifier'
 
 export default function EngineeringMetrics() {
     return <EngineeringMetricsContainer content={EngineeringMetricsContent} />
@@ -46,9 +48,15 @@ interface Props {
     content: FC<ContainerState>
 }
 function EngineeringMetricsContainer(props: Props) {
-    return <Provider store={engineeringMetricsStore}>
-        <EngineeringMetricsContainerInner {...props} />
-    </Provider>
+    return (
+        <Provider store={engineeringMetricsStore}>
+            <LocalStatesConverter>
+                <ErrorNotifier>
+                    <EngineeringMetricsContainerInner {...props} />
+                </ErrorNotifier>
+            </LocalStatesConverter>
+        </Provider>
+    )
 }
 
 function getContext(ctx: Context) {

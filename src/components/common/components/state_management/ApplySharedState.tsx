@@ -24,7 +24,7 @@ export default function ApplySharedState() {
     }, [])
 
     const notificationContext = useNotificationContext()
-    notificationContext.error = loadState.error
+    notificationContext.push(loadState.error)
 
     if (loadState.loaded)
         return <Navigate to={context.stateManagement.navigateTo} replace={true} />
