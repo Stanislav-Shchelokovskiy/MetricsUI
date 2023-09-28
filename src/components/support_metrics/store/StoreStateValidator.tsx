@@ -6,10 +6,6 @@ import { defaultContainerValidator, defaultSetsValidator } from '../../common/st
 import { toFriendlyTitle } from '../../common/store/multiset_container/Utils'
 import { SupportMetricsStore } from './Store'
 
-interface OldCustomersActivityShareableStore {
-    customersActivity: ContainerState
-    customersActivitySets: Array<SetState>
-}
 
 export function storeValidator({ customersActivity, customersActivitySets, ...remainder }: any): SupportMetricsStore {
     const state = customersActivity ? {
@@ -23,19 +19,26 @@ export function storeValidator({ customersActivity, customersActivitySets, ...re
     }
 }
 
-export function containerValidator(state: SupportMetricsShareableStore | OldCustomersActivityShareableStore): ContainerState {
-    let container = 'customersActivity' in state ? state.customersActivity : state.container
-    container = defaultContainerValidator(container, CONTEXT)
+export function containerValidator(state: SupportMetricsShareableStore): ContainerState {
+    ensureContainer(state)
+    const container = defaultContainerValidator(state.container, CONTEXT)
     container.sets = container.sets.map(x => toFriendlyTitle(x))
     if (container.baselineAlignedModeEnabled === undefined)
         container.baselineAlignedModeEnabled = false
     return container
 }
 
-export function setsValidator(state: SupportMetricsShareableStore | OldCustomersActivityShareableStore): Array<SetState> {
-    const setsToValidate = 'customersActivitySets' in state ? state.customersActivitySets : state.sets as Array<SetState>
-    const customersActivitySets = defaultSetsValidator(setsToValidate)
-    for (const set of customersActivitySets) {
+function ensureContainer(state: SupportMetricsShareableStore) {
+    if ('customersActivity' in state) {
+        state.container = (state as any).customersActivity
+        delete (state as any).customersActivity
+    }
+}
+
+export function setsValidator(state: SupportMetricsShareableStore): Array<SetState> {
+    ensureSets(state)
+    const sets = defaultSetsValidator(state.sets)
+    for (const set of sets) {
         if (set.percentile === undefined)
             set.percentile = DEFAULT_SET.percentile
 
@@ -46,5 +49,12 @@ export function setsValidator(state: SupportMetricsShareableStore | OldCustomers
         if (set.ticketsTags !== undefined)
             set.ticketsTags.values = set.ticketsTags.values.map(x => x.toString().includes('(') ? x : `(${x})`)
     }
-    return customersActivitySets
+    return sets
+}
+
+function ensureSets(state: SupportMetricsShareableStore) {
+    if ('customersActivitySets' in state) {
+        state.sets = (state as any).customersActivitySets
+        delete (state as any).customersActivitySets
+    }
 }

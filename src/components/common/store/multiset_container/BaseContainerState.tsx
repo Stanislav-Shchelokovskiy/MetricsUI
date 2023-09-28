@@ -13,6 +13,7 @@ export interface BaseContainerState {
     comparisonMethod: string
     sets: Array<string>
     hiddenLegends: Array<string>
+    version: string | undefined
 }
 
 export function getDefaultBaseContainerState(context: Context): BaseContainerState {
@@ -24,5 +25,6 @@ export function getDefaultBaseContainerState(context: Context): BaseContainerSta
         comparisonMethod: validComparisonMethodOrDefault(undefined),
         sets: [getDefaultTitle()],
         hiddenLegends: Array<string>(),
+        version: undefined,
     }
 }

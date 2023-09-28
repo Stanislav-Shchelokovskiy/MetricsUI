@@ -12,14 +12,14 @@ export async function fetchConvert<RawT, ResT>(
     converter: (value: RawT | undefined) => ResT,
     input: RequestInfo | URL,
     init?: RequestInit,
-    responseSelector: ((r: Response) => Promise<any>) = (r: Response) => r.json()
+    responseSelector: ((r: Response) => Promise<any>) = async (r: Response) => await r.json()
 ): Promise<FetchResult<ResT>> {
     try {
         const res = await fetch(input, {
             ...init,
             credentials: 'include',
-        }).then(async response => await responseSelector(response))
-        return getFetchResult(true, converter(res))
+        })
+        return getFetchResult(true, converter(await responseSelector(res)))
     } catch (error) {
         if (!(error instanceof DOMException && error.name === 'AbortError'))
             console.log(error)

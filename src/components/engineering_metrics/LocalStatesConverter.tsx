@@ -24,11 +24,12 @@ import { useNotificationContext } from '../app_components/ErrorNotifier'
 import { SUPPORT_METRICS_STORE_NAME } from '../support_metrics/store/Store'
 import { COST_METRICS_STORE_NAME } from '../cost_metrics/store/Store'
 import { PERFORMANCE_METRICS_STORE_NAME } from '../performance_metrics/store/Store'
-import { setsValidator as costSetsValidator } from '../cost_metrics/store/StoreStateValidator'
-import { setsValidator as supportSetsValidator } from '../support_metrics/store/StoreStateValidator'
-import { setsValidator as performanceSetsValidator } from '../performance_metrics/store/StoreStateValidator'
+import { setsValidator as costSetsValidator, containerValidator as costContainerValidator } from '../cost_metrics/store/StoreStateValidator'
+import { setsValidator as supportSetsValidator, containerValidator as supportContainerValidator } from '../support_metrics/store/StoreStateValidator'
+import { setsValidator as performanceSetsValidator, containerValidator as performanceContainerValidator } from '../performance_metrics/store/StoreStateValidator'
 import { viewStore } from '../common/store/multiset_container/ViewStore'
 
+const NEW_VERSION = '1'
 
 export default function LocalStatesConverter(props: PropsWithChildren) {
     const [conversion, completeConversion] = useState(conversionStatus(false, ''))
@@ -46,8 +47,8 @@ export default function LocalStatesConverter(props: PropsWithChildren) {
 interface Props {
     completeConversion: (s: ConversionStatus) => void
 }
+
 function LocalStatesConverterInner(props: Props) {
-    const newVersion = '1'
     const version = useSelector(versionSelector)
     const stateNames = useSelector(stateNamesSelector)
     const salt = useSelector(saltSelector)
@@ -58,13 +59,13 @@ function LocalStatesConverterInner(props: Props) {
     }
 
     useEffect(() => {
-        if (version === newVersion) {
+        if (version === NEW_VERSION) {
             converted()
             return
         }
 
         const onSuccess = () => {
-            dispatch(changeVersion(newVersion))
+            dispatch(changeVersion(NEW_VERSION))
             converted()
         }
         const onError = (message: string) => { converted(message) }
@@ -104,9 +105,9 @@ async function convertLocalStates(
     return await Promise.all([
         ...stateNames.map(stateName => {
             const key = getStorageItemKey(salt, stateName)
-            return convertSetsValues(key)
+            return convertStateAndSave(key)
         }),
-        ...current_states.map(stateName => convertSetsValues(stateName)),
+        ...current_states.map(stateName => convertStateAndSave(stateName)),
     ]).then(
         (values) => onSuccess(),
         (reason) => {
@@ -125,30 +126,56 @@ async function tryRenameCustomersActivityToSupportMetrics() {
     }
 }
 
-async function convertSetsValues(key: string) {
+async function convertStateAndSave(key: string) {
     const state = loadState(key)
     if (state == null)
         return
 
     const context = getContext(state)
-    const validate = getSetsValidator(context)
-    const sets = validate(state) as Array<BaseSetState>
+    const convertedState = await convertState(context, state)
+    saveState(convertedState, key)
+}
 
+export async function convertState(context: Context, state: any) {
+    const [validContainer, validSets] = getValidators(context)
+    const container = validContainer(state) as BaseContainerState
+    state.container = container
+
+    if (versionIsActual(container))
+        return
+
+    const sets = validSets(state) as Array<BaseSetState>
+    state.sets = await convertSets(context, sets)
+
+    updateVersion(container)
+    return state
+}
+
+function versionIsActual(container: BaseContainerState) {
+    return container.version === NEW_VERSION
+}
+
+function updateVersion(container: BaseContainerState) {
+    container.version = NEW_VERSION
+}
+
+async function convertSets(context: Context, sets: Array<BaseSetState>) {
     for (const set of sets) {
         if (isPerformanceContextSelected(context)) {
             await convertPositions(set)
         }
 
         if (isCostContextSelected(context)) {
-            await convertEmpTtribes(set)
-            await convertEmpTents(set)
-            await convertPositions(set)
-            await convertEmployees(set)
+            await Promise.all([
+                convertEmpTtribes(set),
+                convertEmpTents(set),
+                convertPositions(set),
+                convertEmployees(set),
+            ])
         }
     }
 
-    state.sets = sets
-    saveState(state, key)
+    return sets
 }
 
 async function convertEmployees(set: BaseSetState) {
@@ -187,15 +214,21 @@ async function convertPositions(set: BaseSetState) {
     }
 }
 
-function getSetsValidator(context: Context) {
+function getValidators(context: Context) {
     if (isSupportContextSelected(context))
-        return supportSetsValidator
+        return [supportContainerValidator, supportSetsValidator]
     if (isCostContextSelected(context))
-        return costSetsValidator
-    return performanceSetsValidator
+        return [costContainerValidator, costSetsValidator]
+    if (isPerformanceContextSelected(context))
+        return [performanceContainerValidator, performanceSetsValidator]
+    throw new Error(`Validator for context #${context} is missing.`);
 }
 
 function getContext(state: any) {
-    const container = 'customersActivity' in state ? state.customersActivity : state.container as BaseContainerState
+    const container = getContainer(state)
     return contextOrDefault(container.context)
+}
+
+function getContainer(state: any) {
+    return 'customersActivity' in state ? state.customersActivity : state.container as BaseContainerState
 }
