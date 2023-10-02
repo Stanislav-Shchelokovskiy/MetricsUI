@@ -1,4 +1,4 @@
-import { SetState } from '../SetsReducer'
+import { SetState } from './Interfaces'
 import { getSelector as getSlctr } from '../../../common/store/multiset_container/Selectors'
 
 function getSelector<R>(selector: (set: SetState | undefined) => R | undefined) {
@@ -9,8 +9,6 @@ export const percentileSelector = getSelector(set => set?.percentile)
 export const privacySelector = getSelector(set => set?.privacy)
 export const customersGroupsSelector = getSelector(set => set?.customersGroups)
 export const ticketsTypesSelector = getSelector(set => set?.ticketsTypes)
-export const tribesSelector = getSelector(set => set?.tribes)
-export const tentsSelector = getSelector(set => set?.tents)
 export const platformsSelector = getSelector(set => set?.platforms)
 export const productsSelector = getSelector(set => set?.products)
 export const versionsSelector = getSelector(set => set?.versions)
@@ -28,10 +26,6 @@ export const operatingSystemsSelector = getSelector(set => set?.operatingSystems
 export const idesSelector = getSelector(set => set?.ides)
 export const customersTypesSelector = getSelector(set => set?.customersTypes)
 export const conversionsTypesSelector = getSelector(set => set?.conversionsTypes)
-export const positionsSelector = getSelector(set => set?.positions)
-export const empTribesSelector = getSelector(set => set?.empTribes)
-export const empTentsSelector = getSelector(set => set?.empTents)
-export const employeesSelector = getSelector(set => set?.employees)
 export const assignedToSelector = getSelector(set => set?.assignedTo)
 export const repliesTypesSelector = getSelector(set => set?.repliesTypes)
 export const componentsSelector = getSelector(set => set?.components)

@@ -7,13 +7,13 @@ import { fetchEmployees } from '../../network_resource_fetcher/Employees'
 import { paramOrDefault } from '../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
 import { Knot } from '../../../common/Typing'
+import { empTeamsSelector } from '../../store/sets/Selectors'
 import {
-    empTeamsSelector,
     empTribesSelector,
     empTentsSelector,
     positionsSelector,
     employeesSelector
-} from '../../store/sets/Selectors'
+} from '../../../common/store/multiset_container/sets/selectors/Employees'
 
 export default function EmployeesSelector() {
     const setTitle = useSetTitle()

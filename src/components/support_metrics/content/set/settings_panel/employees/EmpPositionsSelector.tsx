@@ -5,7 +5,7 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changePositions, changePositionsInclude } from '../../../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchPositions, Position } from '../../../../network_resource_fetcher/employees/FetchPositions'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { positionsSelector } from '../../../../store/sets/Selectors'
+import { positionsSelector } from '../../../../../common/store/multiset_container/sets/selectors/Employees'
 
 
 export default function EmpPositionsSelector() {

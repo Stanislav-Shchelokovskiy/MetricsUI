@@ -2,7 +2,6 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { updateSetState } from '../Utils'
 import { BaseSetState } from './Interfaces'
 import { generateSetTitle } from '../Utils'
-import { getViewStateReducer } from '../ViewStateReducer'
 import {
     ADD_SET,
     REMOVE_SET,
@@ -10,22 +9,7 @@ import {
     CHANGE_SET_TITLE,
 } from '../Actions'
 
-export function getSetsReducer<SetState extends BaseSetState, ShareableStateT>(
-    default_set: SetState,
-    initial_sets: Array<SetState>,
-    stateValidator: (state: ShareableStateT) => Array<SetState>)
-    : (sets: Array<SetState>, action: PayloadAction<any>) => Array<SetState> {
-
-    const setsCRUDReducer = getSetsCRUDReducer<SetState>(default_set, initial_sets)
-    const viewStateReducer = getViewStateReducer<Array<SetState>, ShareableStateT>(stateValidator)
-
-    return (sets: Array<SetState> = initial_sets, action: PayloadAction<any>): Array<SetState> => {
-        let res = setsCRUDReducer(sets, action)
-        return viewStateReducer(res, action)
-    }
-}
-
-function getSetsCRUDReducer<SetState extends BaseSetState>(
+export function getSetsCRUDReducer<SetState extends BaseSetState>(
     default_set: SetState,
     initial_sets: Array<SetState>
 ): (sets: Array<SetState>, action: PayloadAction<any>) => Array<SetState> {

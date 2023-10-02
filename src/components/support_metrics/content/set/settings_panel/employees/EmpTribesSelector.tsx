@@ -5,7 +5,7 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeEmpTribes, changeEmpTribesInclude } from '../../../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchEmpTribes, EmpTribe } from '../../../../network_resource_fetcher/employees/FetchEmpTribes'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { empTribesSelector } from '../../../../store/sets/Selectors'
+import { empTribesSelector } from '../../../../../common/store/multiset_container/sets/selectors/Employees'
 
 
 export default function EmpTribesSelector() {

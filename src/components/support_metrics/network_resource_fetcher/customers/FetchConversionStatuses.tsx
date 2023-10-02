@@ -1,7 +1,7 @@
 import { SUPPORT_METRICS_END_POINT } from '../../../common/EndPoint'
 import FetchResult from '../../../common/Typing'
 import { fetchArray } from '../../../common/network_resource_fetcher/FetchOrDefault'
-import { FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
+import { NumberFilterParameters } from '../../../common/store/multiset_container/sets/Interfaces'
 import { allNodesAreConsideredEmpty } from '../../../common/store/multiset_container/Utils'
 
 export interface ConversionStatus {
@@ -9,7 +9,7 @@ export interface ConversionStatus {
     name: string
 }
 
-export async function fetchConversionStatuses(licenseStatuses: FilterParametersNode<number>): Promise<FetchResult<Array<ConversionStatus>>> {
+export async function fetchConversionStatuses(licenseStatuses: NumberFilterParameters): Promise<FetchResult<Array<ConversionStatus>>> {
     if (allNodesAreConsideredEmpty(licenseStatuses))
         return {
             success: true,

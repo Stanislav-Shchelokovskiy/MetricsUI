@@ -1,49 +1,50 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { SetState } from './Interfaces'
-import { 
+import { BaseSetState } from './Interfaces'
+import {
     updateSetState,
     updateValues,
     updateValuesInclude
-} from '../../../common/store/multiset_container/Utils'
+} from '../Utils'
+
 import {
-    CHANGE_PLATFORMS,
-    CHANGE_PLATFORMS_INCLUDE,
-    CHANGE_PRODUCTS,
-    CHANGE_PRODUCTS_INCLUDE,
-} from '../actions/PlatformsProducts'
+    CHANGE_TRIBES,
+    CHANGE_TRIBES_INCLUDE,
+    CHANGE_TENTS,
+    CHANGE_TENTS_INCLUDE,
+} from './actions/Common'
 
 
-export function platformsProductsReducer(sets: Array<SetState>, action: AnyAction): Array<SetState> {
+export function commonReducer<SetState extends BaseSetState>(sets: Array<SetState>, action: AnyAction): Array<SetState> {
     switch (action.type) {
 
-        case CHANGE_PLATFORMS:
+        case CHANGE_TRIBES:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    platforms: updateValues(x.platforms, action.payload.data)
+                    tribes: updateValues(x.tribes, action.payload.data)
                 }
             })
-        case CHANGE_PLATFORMS_INCLUDE:
+        case CHANGE_TRIBES_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    platforms: updateValuesInclude(x.platforms, action.payload.data)
+                    tribes: updateValuesInclude(x.tribes, action.payload.data)
                 }
             })
 
 
-        case CHANGE_PRODUCTS:
+        case CHANGE_TENTS:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    products: updateValues(x.products, action.payload.data)
+                    tents: updateValues(x.tents, action.payload.data)
                 }
             })
-        case CHANGE_PRODUCTS_INCLUDE:
+        case CHANGE_TENTS_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    products: updateValuesInclude(x.products, action.payload.data)
+                    tents: updateValuesInclude(x.tents, action.payload.data)
                 }
             })
 

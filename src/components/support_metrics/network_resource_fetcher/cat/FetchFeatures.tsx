@@ -1,7 +1,7 @@
 import { SUPPORT_METRICS_END_POINT } from '../../../common/EndPoint'
 import FetchResult from '../../../common/Typing'
 import { fetchArray } from '../../../common/network_resource_fetcher/FetchOrDefault'
-import { FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
+import { StringFilterParameters } from '../../../common/store/multiset_container/sets/Interfaces'
 
 export interface Feature {
     feature_id: string
@@ -9,8 +9,8 @@ export interface Feature {
 }
 
 export async function fetchFeatures(
-    tents: FilterParametersNode<string>,
-    components: FilterParametersNode<string>
+    tents: StringFilterParameters,
+    components: StringFilterParameters
 ): Promise<FetchResult<Array<Feature>>> {
     return fetchArray(
         `${SUPPORT_METRICS_END_POINT}/CATFeatures`,

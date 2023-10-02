@@ -6,7 +6,8 @@ import { changeComponents, changeComponentsInclude } from '../../../../store/act
 import { fetchComponents, Component } from '../../../../network_resource_fetcher/cat/FetchComponents'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { tentsSelector, componentsSelector } from '../../../../store/sets/Selectors'
+import { componentsSelector } from '../../../../store/sets/Selectors'
+import { tentsSelector } from '../../../../../common/store/multiset_container/sets/selectors/Common'
 
 export default function ComponentsSelector() {
     const setTitle = useSetTitle()

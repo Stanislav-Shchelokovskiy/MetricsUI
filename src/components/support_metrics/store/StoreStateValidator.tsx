@@ -1,31 +1,18 @@
 import { SupportMetricsShareableStore } from './Store'
 import { ContainerState, CONTEXT } from './ContainerReducer'
-import { SetState } from './SetsReducer'
 import { DEFAULT_SET } from './sets/Defaults'
-import { defaultContainerValidator, defaultSetsValidator } from '../../common/store/multiset_container/StoreStateValidator'
-import { toFriendlyTitle } from '../../common/store/multiset_container/Utils'
-import { SupportMetricsStore } from './Store'
+import { SetState } from './sets/Interfaces'
+import { containerValidator as validateContainer, setsValidator as validateSets } from '../../common/store/multiset_container/StoreStateValidator'
 
-
-export function storeValidator({ customersActivity, customersActivitySets, ...remainder }: any): SupportMetricsStore {
-    const state = customersActivity ? {
-        container: customersActivity,
-        sets: customersActivitySets,
-        ...remainder,
-    } : remainder
-    return {
-        container: containerValidator(state),
-        sets: setsValidator(state),
-    }
-}
 
 export function containerValidator(state: SupportMetricsShareableStore): ContainerState {
     ensureContainer(state)
-    const container = defaultContainerValidator(state.container, CONTEXT)
-    container.sets = container.sets.map(x => toFriendlyTitle(x))
-    if (container.baselineAlignedModeEnabled === undefined)
-        container.baselineAlignedModeEnabled = false
-    return container
+    const customValidator = (container: ContainerState) => {
+        if (container.baselineAlignedModeEnabled === undefined)
+            container.baselineAlignedModeEnabled = false
+        return container
+    }
+    return validateContainer(state.container, CONTEXT, customValidator)
 }
 
 function ensureContainer(state: SupportMetricsShareableStore) {
@@ -37,8 +24,7 @@ function ensureContainer(state: SupportMetricsShareableStore) {
 
 export function setsValidator(state: SupportMetricsShareableStore): Array<SetState> {
     ensureSets(state)
-    const sets = defaultSetsValidator(state.sets)
-    for (const set of sets) {
+    const customValidator = (set: SetState) => {
         if (set.percentile === undefined)
             set.percentile = DEFAULT_SET.percentile
 
@@ -48,8 +34,9 @@ export function setsValidator(state: SupportMetricsShareableStore): Array<SetSta
         // This is for backward compatibility in case tag value is plain number, not str number in brackets.
         if (set.ticketsTags !== undefined)
             set.ticketsTags.values = set.ticketsTags.values.map(x => x.toString().includes('(') ? x : `(${x})`)
+        return set
     }
-    return sets
+    return validateSets(state.sets, customValidator)
 }
 
 function ensureSets(state: SupportMetricsShareableStore) {

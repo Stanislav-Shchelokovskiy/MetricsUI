@@ -12,16 +12,16 @@ import {
     positionsSelector,
     levelsSelector,
     employeesSelector,
-} from '../../store/sets/Selectors'
+} from '../../../common/store/multiset_container/sets/selectors/Employees'
 
 export default function EmployeesSelector() {
     const setTitle = useSetTitle()
     const value = useSelector((state: PerformanceMetricsStore) => employeesSelector(state, setTitle))
 
-    const tents = useSelector((state: PerformanceMetricsStore) => empTentsSelector(state, setTitle))    
+    const tents = useSelector((state: PerformanceMetricsStore) => empTentsSelector(state, setTitle))
     const positions = useSelector((state: PerformanceMetricsStore) => positionsSelector(state, setTitle))
     const levels = useSelector((state: PerformanceMetricsStore) => levelsSelector(state, setTitle))
-    
+
     const fetchArgs = [paramOrDefault(tents), paramOrDefault(positions), paramOrDefault(levels)]
 
     const onValueChange = (allValues: Array<Knot>, values: Array<string>) => changeEmployees({ stateId: setTitle, data: values })

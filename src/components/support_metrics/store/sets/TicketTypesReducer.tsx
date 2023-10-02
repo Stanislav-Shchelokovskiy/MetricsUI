@@ -1,9 +1,9 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { SetState } from '../SetsReducer'
-import { FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
+import { SetState } from './Interfaces'
+import { StrictNumberFilterParameters } from '../../../common/store/multiset_container/sets/Interfaces'
 import { DEFAULT_SET } from './Defaults'
 import { bugIsNotSelected } from '../Utils'
-import { 
+import {
     updateSetState,
     updateValues,
     updateValuesInclude
@@ -66,7 +66,7 @@ function _updateInclude(set: SetState, newTicketTypesInclude: boolean) {
     return tryGetBugFreeState(set, ticketTypes)
 }
 
-function tryGetBugFreeState(set: SetState, ticketTypes: FilterParametersNode<number> | undefined) {
+function tryGetBugFreeState(set: SetState, ticketTypes: StrictNumberFilterParameters) {
     if (bugIsNotSelected(ticketTypes)) {
         return {
             ...set,

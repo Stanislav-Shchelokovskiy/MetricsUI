@@ -1,7 +1,7 @@
 import { AnyAction } from '@reduxjs/toolkit'
 import { closedIsNotSelected } from '../Utils'
-import { SetState } from '../SetsReducer'
-import { FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
+import { SetState } from './Interfaces'
+import { StringFilterParameters } from '../../../common/store/multiset_container/sets/Interfaces'
 import {
     updateSetState,
     updateValues,
@@ -166,7 +166,7 @@ function updateTicketStatusesInclude(set: SetState, newTicketStatusesInclude: bo
     return tryGetClosedFreeState(set, ticketStatuses)
 }
 
-function tryGetClosedFreeState(set: SetState, ticketStatuses: FilterParametersNode<string> | undefined) {
+function tryGetClosedFreeState(set: SetState, ticketStatuses: StringFilterParameters) {
     if (closedIsNotSelected(ticketStatuses)) {
         return {
             ...set,

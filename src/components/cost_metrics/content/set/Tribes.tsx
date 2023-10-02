@@ -4,7 +4,7 @@ import { CostMetricsStore } from '../../store/Store'
 import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { changeEmpTribes, changeEmpTribesInclude } from '../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchTribes } from '../../network_resource_fetcher/Tribes'
-import { empTribesSelector } from '../../store/sets/Selectors'
+import { empTribesSelector } from '../../../common/store/multiset_container/sets/selectors/Employees'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
 import { Knot } from '../../../common/Typing'
 

@@ -1,25 +1,19 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { BaseSetState } from '../../../common/store/multiset_container/sets/Interfaces'
 import { CostMetricsShareableStore } from '../Store'
-import { getSetsReducer } from '../../../common/store/multiset_container/sets/SetsReducerFactory'
+import { getSetsReducer } from '../../../common/store/multiset_container/sets/ReducerFactory'
 import { setsValidator } from '../StoreStateValidator'
-import { FilterParametersNode } from '../../../common/store/multiset_container/sets/Interfaces'
-import { getDefaultFilterParametersNode } from '../../../common/store/multiset_container/sets/Defaults'
+import { StringFilterParameters } from '../../../common/store/multiset_container/sets/Interfaces'
+import { getOptionalFilterParameters, getDefaultBaseSet } from '../../../common/store/multiset_container/sets/Defaults'
 import { employeesReducer } from './EmployeesReducer'
-import { getDefaultTitle } from '../../../common/store/multiset_container/sets/Defaults'
 
 export interface SetState extends BaseSetState {
-    empTeams: FilterParametersNode<string> | undefined
+    empTeams: StringFilterParameters
 }
 
 export const DEFAULT_SET: SetState = {
-    title: getDefaultTitle(),
-    tents: undefined,
-    empTeams: getDefaultFilterParametersNode<string>(),
-    empTribes: getDefaultFilterParametersNode<string>(),
-    empTents: getDefaultFilterParametersNode<string>(),
-    positions: getDefaultFilterParametersNode<string>(),
-    employees: getDefaultFilterParametersNode<string>(),
+    ...getDefaultBaseSet(),
+    empTeams: getOptionalFilterParameters<string>(),
 }
 
 export const INITIAL_SETS: Array<SetState> = [DEFAULT_SET]

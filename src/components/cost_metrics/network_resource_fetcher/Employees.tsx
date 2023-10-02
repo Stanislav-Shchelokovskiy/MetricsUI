@@ -1,13 +1,13 @@
 import { COST_METRICS_END_POINT } from '../../common/EndPoint'
 import FetchResult, { Knot } from '../../common/Typing'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
-import { FilterParametersNode } from '../../common/store/multiset_container/sets/Interfaces'
+import { StringFilterParameters } from '../../common/store/multiset_container/sets/Interfaces'
 
 export async function fetchEmployees(
-    teams: FilterParametersNode<string>,
-    tribes: FilterParametersNode<string>,
-    tents: FilterParametersNode<string>,
-    positions: FilterParametersNode<string>,
+    teams: StringFilterParameters,
+    tribes: StringFilterParameters,
+    tents: StringFilterParameters,
+    positions: StringFilterParameters,
 ): Promise<FetchResult<Array<Knot>>> {
     return fetchArray(
         `${COST_METRICS_END_POINT}/CostMetrics/Employees`,

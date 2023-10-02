@@ -1,15 +1,12 @@
 import { PERFORMANCE_METRICS_END_POINT } from '../../common/EndPoint'
 import FetchResult, { Knot } from '../../common/Typing'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
-import {
-    FilterParametersNode,
-    FilterParameterNode,
-} from '../../common/store/multiset_container/sets/Interfaces'
+import { StringFilterParameters, NumberFilterParameters } from '../../common/store/multiset_container/sets/Interfaces'
 
 export async function fetchEmployees(
-    tents: FilterParametersNode<string>,
-    positions: FilterParametersNode<string>,
-    levels: FilterParametersNode<number>,
+    tents: StringFilterParameters,
+    positions: StringFilterParameters,
+    levels: NumberFilterParameters,
 ): Promise<FetchResult<Array<Knot>>> {
     return fetchArray(
         `${PERFORMANCE_METRICS_END_POINT}/Employees`,

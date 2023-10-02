@@ -1,6 +1,6 @@
 import {
-    FilterParametersNode,
-    FilterParameterNode,
+    FilterParameters,
+    FilterParameter,
 } from '../sets/Interfaces'
 import {
     updateValues,
@@ -17,7 +17,7 @@ describe('testing updateValues', () => {
         expect(updateValues(undefined, [1])).toEqual({ include: true, values: [1] })
     });
     test('obj != undefined && include = true', () => {
-        const obj: FilterParametersNode<number> = {
+        const obj: FilterParameters<number> = {
             include: true,
             values: [1]
         }
@@ -25,7 +25,7 @@ describe('testing updateValues', () => {
         expect(updateValues(obj, undefined)).toEqual(undefined)
     });
     test('obj != undefined && include = false', () => {
-        const obj: FilterParametersNode<number> = {
+        const obj: FilterParameters<number> = {
             include: false,
             values: [1]
         }
@@ -41,14 +41,14 @@ describe('testing updateValuesInclude', () => {
         expect(updateValuesInclude(undefined, false)).toEqual({ include: false, values: [] })
     });
     test('obj != undefined && values = [] && include = true', () => {
-        const obj: FilterParametersNode<number> = {
+        const obj: FilterParameters<number> = {
             include: false,
             values: []
         }
         expect(updateValuesInclude(obj, true)).toEqual(undefined)
     });
     test('obj != undefined && include = false', () => {
-        const obj: FilterParametersNode<number> = {
+        const obj: FilterParameters<number> = {
             include: true,
             values: [1]
         }
@@ -63,7 +63,7 @@ describe('testing updateThreeStateValue', () => {
         expect(updateThreeStateValue(undefined, true)).toEqual({ include: true, value: true })
     });
     test('obj != undefined && include = true', () => {
-        const obj: FilterParameterNode<boolean> = {
+        const obj: FilterParameter<boolean> = {
             include: true,
             value: true
         }
@@ -80,14 +80,14 @@ describe('testing updateThreeStateValueInclude', () => {
         expect(updateThreeStateValueInclude(undefined, false, true)).toEqual(undefined)
     });
     test('obj != undefined && include = true', () => {
-        const obj: FilterParameterNode<boolean> = {
+        const obj: FilterParameter<boolean> = {
             include: false,
             value: false
         }
         expect(updateThreeStateValueInclude(obj, true, true)).toEqual({ include: true, value: false })
     });
     test('obj != undefined && include = false', () => {
-        const obj: FilterParameterNode<boolean> = {
+        const obj: FilterParameter<boolean> = {
             include: false,
             value: false
         }

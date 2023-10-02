@@ -7,13 +7,13 @@ import { DataSourceProps } from '../../../../../common/hooks/UseDataSource'
 import RangePeriodSelector, { RangeSelectorProps } from '../../../../../common/components/RangePeriodSelector'
 import Button, { getClearButtonOptions, getIncludeButtonOptions } from '../../../../../common/components/Button'
 import { SupportMetricsStore } from '../../../../store/Store'
-import { FilterParametersNode } from '../../../../../common/store/multiset_container/sets/Interfaces'
+import { FilterParameters } from '../../../../../common/store/multiset_container/sets/Interfaces'
 
 interface Props extends DataSourceProps<string> {
     className: string
     label: string
     setTitle: string
-    valueSelector: (store: SupportMetricsStore, setTitle: string) => FilterParametersNode<string> | undefined
+    valueSelector: (store: SupportMetricsStore, setTitle: string) => FilterParameters<string> | undefined
     changeSelection: (payload: Payload<string, Array<string>>) => PayloadAction<Payload<string, Array<string>>>
     changeInclude: (payload: Payload<string, boolean>) => PayloadAction<Payload<string, boolean>>
 }
@@ -40,7 +40,7 @@ function BetweenPeriodSelector(props: RangeSelectorProps) {
 
     const periodStart = new Date(props.periodStart)
     const periodEnd = new Date(props.periodEnd)
-    const node = props.selectedRange as FilterParametersNode<string>
+    const node = props.selectedRange as FilterParameters<string>
     const [startStr, endStr] = node?.values || [undefined, undefined]
     const [start, end] = validatePeriod(new Date(startStr || periodStart), new Date(endStr || periodEnd))
 
@@ -109,7 +109,7 @@ function BetweenPeriodSelector(props: RangeSelectorProps) {
 }
 
 function valueIsChanged(props: RangeSelectorProps) {
-    const selectedRange = (props.selectedRange as FilterParametersNode<string>)?.values
+    const selectedRange = (props.selectedRange as FilterParameters<string>)?.values
     return selectedRange?.length === 2 && (
         JSON.stringify(selectedRange[0]) !== JSON.stringify(props.periodStart) ||
         JSON.stringify(selectedRange[1]) !== JSON.stringify(props.periodEnd))

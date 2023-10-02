@@ -1,6 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { SetState } from '../SetsReducer'
-import { 
+import { SetState } from './Interfaces'
+import {
     updateSetState,
     updateValues,
     updateValuesInclude

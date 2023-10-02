@@ -4,9 +4,9 @@ import { Knot } from '../../../../common/Typing'
 import { SupportMetricsStore } from '../../../store/Store'
 import { fetchTribes } from '../../../network_resource_fetcher/Tribes'
 import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
-import { changeTribes, changeTribesInclude } from '../../../store/actions/SetCommon'
+import { changeTribes, changeTribesInclude } from '../../../../common/store/multiset_container/sets/actions/Common'
 import { useSetTitle } from '../../../../common/components/multiset_container/set/SetContext'
-import { tribesSelector } from '../../../store/sets/Selectors'
+import { tribesSelector } from '../../../../common/store/multiset_container/sets/selectors/Common'
 
 
 export default function TribesSelector() {
