@@ -19,12 +19,12 @@ const INITIAL_STATE: ContainerState = {
 
 export function containerReducer(state: ContainerState = INITIAL_STATE, action: PayloadAction<any>): ContainerState {
     let res = containerReducerDefault(state, action)
-    return customOptionsReducer(res, action)
+    return customReducer(res, action)
 }
 
 const containerReducerDefault = getContainerReducer<ContainerState, SupportMetricsShareableStore>(INITIAL_STATE, containerValidator)
 
-function customOptionsReducer(state: ContainerState, action: PayloadAction<any>): ContainerState {
+function customReducer(state: ContainerState, action: PayloadAction<any>): ContainerState {
     switch (action.type) {
 
         case CHANGE_BASELINE_ALIGNED_MODE:

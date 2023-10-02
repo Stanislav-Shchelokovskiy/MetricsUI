@@ -19,15 +19,15 @@ import {
     positionsNamesToIDS,
     crmidsToSCIDS,
 } from '../common/network_resource_fetcher/converters/Values'
-import { dropState } from '../common/LocalStorage'
 import { useNotificationContext } from '../app_components/ErrorNotifier'
-import { SUPPORT_METRICS_STORE_NAME } from '../support_metrics/store/Store'
-import { COST_METRICS_STORE_NAME } from '../cost_metrics/store/Store'
-import { PERFORMANCE_METRICS_STORE_NAME } from '../performance_metrics/store/Store'
 import { setsValidator as costSetsValidator, containerValidator as costContainerValidator } from '../cost_metrics/store/StoreStateValidator'
 import { setsValidator as supportSetsValidator, containerValidator as supportContainerValidator } from '../support_metrics/store/StoreStateValidator'
 import { setsValidator as performanceSetsValidator, containerValidator as performanceContainerValidator } from '../performance_metrics/store/StoreStateValidator'
 import { viewStore } from '../common/store/multiset_container/ViewStore'
+import { getStorename as geSupportStoreName } from '../support_metrics/store/Store'
+import { getStorename as getCostStoreName } from '../cost_metrics/store/Store'
+import { getStorename as getPerformanceStoreName } from '../performance_metrics/store/Store'
+
 
 const NEW_VERSION = '1'
 
@@ -94,20 +94,18 @@ async function convertLocalStates(
     salt: string,
     stateNames: Array<string>,
 ) {
-    const current_states = [
-        SUPPORT_METRICS_STORE_NAME,
-        COST_METRICS_STORE_NAME,
-        PERFORMANCE_METRICS_STORE_NAME,
+    const currentStatesNames = [
+        geSupportStoreName(),
+        getCostStoreName(),
+        getPerformanceStoreName(),
     ]
-
-    tryRenameCustomersActivityToSupportMetrics()
 
     return await Promise.all([
         ...stateNames.map(stateName => {
             const key = getStorageItemKey(salt, stateName)
             return convertStateAndSave(key)
         }),
-        ...current_states.map(stateName => convertStateAndSave(stateName)),
+        ...currentStatesNames.map(stateName => convertStateAndSave(stateName)),
     ]).then(
         (values) => onSuccess(),
         (reason) => {
@@ -115,15 +113,6 @@ async function convertLocalStates(
             onError(`Cannot convert some local states. Reason: ${reason}`)
         }
     )
-}
-
-async function tryRenameCustomersActivityToSupportMetrics() {
-    const old_name = 'current_customers_activity_state_v1'
-    const state = loadState(old_name)
-    if (state) {
-        saveState(state, SUPPORT_METRICS_STORE_NAME)
-        dropState(old_name)
-    }
 }
 
 async function convertStateAndSave(key: string) {
@@ -138,16 +127,15 @@ async function convertStateAndSave(key: string) {
 
 export async function convertState(context: Context, state: any) {
     const [validContainer, validSets] = getValidators(context)
-    const container = validContainer(state) as BaseContainerState
-    state.container = container
+    state.container = validContainer(state) as BaseContainerState
 
-    if (versionIsActual(container))
+    if (versionIsActual(state.container))
         return
 
-    const sets = validSets(state) as Array<BaseSetState>
-    state.sets = await convertSets(context, sets)
+    state.sets = validSets(state) as Array<BaseSetState>
+    state.sets = await convertSets(context, state.sets)
 
-    updateVersion(container)
+    updateVersion(state.container)
     return state
 }
 

@@ -9,12 +9,13 @@ export function containerValidator(state: CostMetricsShareableStore): ContainerS
 }
 
 export function setsValidator(state: CostMetricsShareableStore): Array<SetState> {
-    const customValidator = (set: SetState) => {
-        if ('empPositions' in set) {
-            set.positions = (set as any).empPositions as StringFilterParameters
-            delete (set as any).empPositions
-        }
-        return set
+    return validateSets(state.sets, validateSet)
+}
+
+function validateSet(set: SetState): SetState {
+    if ('empPositions' in set) {
+        set.positions = (set as any).empPositions as StringFilterParameters
+        delete (set as any).empPositions
     }
-    return validateSets(state.sets, customValidator)
+    return set
 }

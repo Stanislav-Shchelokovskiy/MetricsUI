@@ -1,24 +1,34 @@
-import { configureMultisetContainerStore } from '../../common/store/multiset_container/Store'
+import { configureMultisetContainerStore, MultisetContainerStore, getReducer } from '../../common/store/multiset_container/Store'
 import { containerReducer } from './ContainerReducer'
 import { setsReducer } from './sets/SetsReducer'
 import { SetState } from './sets/Interfaces'
-import { MultisetContainerStore } from '../../common/store/multiset_container/Store'
 import { ContainerState } from './ContainerReducer'
 import { stateValidator } from '../../common/store/multiset_container/StoreStateValidator'
 import { containerValidator, setsValidator } from './StoreStateValidator'
 
-export const SUPPORT_METRICS_STORE_NAME = 'support_metrics'
+const config = {
+    storeName: 'support_metrics',
+    reducer: getReducer(containerReducer, setsReducer),
+    storeStateValidator: stateValidator(containerValidator, setsValidator),
+}
 
-export const supportMetricsStore = configureMultisetContainerStore(
-    SUPPORT_METRICS_STORE_NAME,
-    containerReducer,
-    setsReducer,
-    stateValidator(containerValidator, setsValidator)
-)
+const store = configureMultisetContainerStore(config)
+
+export function getShareableState(): MultisetContainerStore {
+    return store.getState()
+}
+
+export function getStoreConfig() {
+    return config
+}
+
+export function getStore() {
+    return store
+}
+
+export function getStorename() {
+    return config.storeName
+}
 
 export type SupportMetricsStore = MultisetContainerStore<ContainerState, SetState>
 export type SupportMetricsShareableStore = MultisetContainerStore<ContainerState, SetState>
-
-export function getShareableState(): MultisetContainerStore {
-    return supportMetricsStore.getState()
-}
