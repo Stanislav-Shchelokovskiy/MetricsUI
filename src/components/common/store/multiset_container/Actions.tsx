@@ -27,3 +27,6 @@ export const changeMetric = getAction<string | undefined>(CHANGE_METRIC)
 
 export const CHANGE_COMPARISON_METHOD = 'change_comparison_method'
 export const changeComparisonMethod = getAction<string | undefined>(CHANGE_COMPARISON_METHOD)
+
+export const VALIDATE_STATE = 'validate_state'
+export const validateState = getAction<undefined>(VALIDATE_STATE)

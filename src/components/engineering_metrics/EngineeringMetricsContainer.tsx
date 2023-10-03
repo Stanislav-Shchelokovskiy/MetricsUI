@@ -28,7 +28,8 @@ import { MultisetContainerStore } from '../common/store/multiset_container/Store
 import { applyState } from '../common/store/view_state/Actions'
 import LocalStatesConverter from './LocalStatesConverter'
 import ErrorNotifier from '../app_components/ErrorNotifier'
-import { getSubStore, getContext } from './Utils'
+import { getContext } from './Utils'
+import { multisetStore } from './store/MetricsStore'
 
 
 export default function EngineeringMetrics() {
@@ -58,6 +59,8 @@ function EngineeringMetricsContainer(props: Props) {
 
 function EngineeringMetricsContainerInner(props: Props) {
     const ctx = useSelector(contextSelector)
+    multisetStore.changeContext(ctx, true)
+
     const dispatch = useDispatch()
     const dispatchMetric = useCallback((metric: Metric) => {
         dispatch(changeMetric(metric))
@@ -69,15 +72,17 @@ function EngineeringMetricsContainerInner(props: Props) {
             return
         }
         const context = contextOrDefault(contentState.container?.context)
-        const contentStore = getSubStore(context)
-        contentStore.dispatch(applyState(contentState))
+        multisetStore.changeContext(context)
+        multisetStore.dispatch(applyState(contentState))
 
-        dispatch(applyState(contentStore.getState()))
+        dispatch(applyState(multisetStore.getState()))
     }, [])
 
     const context = useMemo(() => {
+        const baseContext = getContext(ctx)
+        baseContext.stateManagement.getShareableState = multisetStore.getShareableState
         return {
-            ...getContext(ctx),
+            ...baseContext,
             fetchMetrics: fetchMetrics,
             changeMetric: dispatchMetric,
             changeState: dispatchState,
@@ -87,7 +92,7 @@ function EngineeringMetricsContainerInner(props: Props) {
 
     const store = useStore<EngineeringMetricsStore>()
     return <MultisetContainerContext.Provider value={context}>
-        <Provider store={getSubStore(ctx)}>
+        <Provider store={multisetStore}>
             <props.content {...store.getState()} />
         </Provider>
     </MultisetContainerContext.Provider >

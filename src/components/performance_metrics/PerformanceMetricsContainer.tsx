@@ -13,7 +13,6 @@ import { fetchPeriod } from './network_resource_fetcher/Period'
 import { fetchMetrics, fetchMetricDesc } from './network_resource_fetcher/Metrics'
 import { fetchPeriods } from './network_resource_fetcher/Periods'
 import { fetchAggregates } from './network_resource_fetcher/Aggregates'
-import { getShareableState } from './store/Store'
 import { fetchRaw } from './network_resource_fetcher/Raw'
 import { fetchDisplayFilter } from './network_resource_fetcher/DisplayFilter'
 import { fetchGroupBys } from './network_resource_fetcher/GroupBy'
@@ -35,7 +34,7 @@ const graph = {
 }
 
 const stateManagement = {
-    getShareableState: getShareableState,
+    getShareableState: () => { },
     endPoint: PERFORMANCE_METRICS_END_POINT,
     navigateTo: PERFORMANCE_METRICS,
 }

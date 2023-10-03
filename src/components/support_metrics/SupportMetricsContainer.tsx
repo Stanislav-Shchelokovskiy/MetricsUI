@@ -17,7 +17,6 @@ import { fetchMetrics, fetchMetricDesc } from './network_resource_fetcher/Metric
 import { fetchPeriods } from './network_resource_fetcher/Periods'
 import { fetchAggregates } from './network_resource_fetcher/Aggregates'
 import { SUPPORT_METRICS_END_POINT } from '../common/EndPoint'
-import { getShareableState } from './store/Store'
 import { fetchTicketsWithIterationsRaw } from './network_resource_fetcher/Raw'
 import { fetchDisplayFilter } from './network_resource_fetcher/DisplayFilter'
 import { MultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
@@ -37,7 +36,7 @@ const graph = {
 }
 
 const stateManagement = {
-    getShareableState: getShareableState,
+    getShareableState: () => { },
     endPoint: SUPPORT_METRICS_END_POINT,
     navigateTo: SUPPORT_METRICS,
 }

@@ -24,9 +24,6 @@ import { setsValidator as costSetsValidator, containerValidator as costContainer
 import { setsValidator as supportSetsValidator, containerValidator as supportContainerValidator } from '../support_metrics/store/StoreStateValidator'
 import { setsValidator as performanceSetsValidator, containerValidator as performanceContainerValidator } from '../performance_metrics/store/StoreStateValidator'
 import { viewStore } from '../common/store/multiset_container/ViewStore'
-import { getStorename as geSupportStoreName } from '../support_metrics/store/Store'
-import { getStorename as getCostStoreName } from '../cost_metrics/store/Store'
-import { getStorename as getPerformanceStoreName } from '../performance_metrics/store/Store'
 
 
 const NEW_VERSION = '1'
@@ -94,11 +91,7 @@ async function convertLocalStates(
     salt: string,
     stateNames: Array<string>,
 ) {
-    const currentStatesNames = [
-        geSupportStoreName(),
-        getCostStoreName(),
-        getPerformanceStoreName(),
-    ]
+    const currentStatesNames = Array<string>()
 
     return await Promise.all([
         ...stateNames.map(stateName => {

@@ -14,7 +14,6 @@ import { fetchGroupBys } from './network_resource_fetcher/GroupBy'
 import { fetchMetrics, fetchMetricDesc } from './network_resource_fetcher/Metrics'
 import { fetchPeriods } from './network_resource_fetcher/Periods'
 import { fetchAggregates } from './network_resource_fetcher/Aggregates'
-import { getShareableState } from './store/Store'
 import { fetchCostMetricsRaw } from './network_resource_fetcher/Raw'
 import { fetchDisplayFilter } from '../cost_metrics/network_resource_fetcher/DisplayFilter'
 import { CONTEXT } from './store/ContainerReducer'
@@ -35,7 +34,7 @@ const graph = {
 }
 
 const stateManagement = {
-    getShareableState: getShareableState,
+    getShareableState: () => { },
     endPoint: COST_METRICS_END_POINT,
     navigateTo: COST_METRICS,
 }

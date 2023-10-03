@@ -1,6 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { BaseSetState } from '../../../common/store/multiset_container/sets/Interfaces'
-import { CostMetricsShareableStore } from '../Store'
+import { CostMetricsStore } from '../Store'
 import { getSetsReducer } from '../../../common/store/multiset_container/sets/ReducerFactory'
 import { setsValidator } from '../StoreStateValidator'
 import { StringFilterParameters } from '../../../common/store/multiset_container/sets/Interfaces'
@@ -23,4 +23,4 @@ export function setsReducer(sets: Array<SetState> = INITIAL_SETS, action: Payloa
     return employeesReducer(res, action)
 }
 
-const setsReducerDefault = getSetsReducer<SetState, CostMetricsShareableStore>(DEFAULT_SET, INITIAL_SETS, setsValidator)
+const setsReducerDefault = getSetsReducer<SetState, CostMetricsStore>(DEFAULT_SET, INITIAL_SETS, setsValidator)
