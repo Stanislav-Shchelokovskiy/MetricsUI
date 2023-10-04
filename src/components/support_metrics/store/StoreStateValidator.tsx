@@ -28,6 +28,9 @@ function validateSet(set: SetState): SetState {
 
     // This is for backward compatibility in case tag value is plain number, not str number in brackets.
     if (set.ticketsTags !== undefined)
-        set.ticketsTags.values = set.ticketsTags.values.map(x => x.toString().includes('(') ? x : `(${x})`)
+        set.ticketsTags = {
+            ...set.ticketsTags,
+            values: set.ticketsTags.values.map(x => x.toString().includes('(') ? x : `(${x})`)
+        }
     return set
 }

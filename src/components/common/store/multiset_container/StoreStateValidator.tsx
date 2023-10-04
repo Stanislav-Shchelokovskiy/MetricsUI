@@ -63,7 +63,7 @@ function defaultContainerValidator<ContainerState extends BaseContainerState>(co
     return {
         ...container,
         context: context,
-        groupBy: groupByOrDefault(container.groupBy),
+        groupBy: groupByOrDefault(container.groupBy, context),
         comparisonMethod: validComparisonMethodOrDefault(container.comparisonMethod),
         metric: validMetricOrDefault(container.metric),
         hiddenLegends: hiddenLegendsOrDefault(container.hiddenLegends),

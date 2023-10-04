@@ -20,7 +20,7 @@ export function getDefaultBaseContainerState(context: Context): BaseContainerSta
     return {
         context: context,
         range: getValidRangeOrDefault(undefined),
-        groupBy: groupByOrDefault(undefined),
+        groupBy: groupByOrDefault(undefined, context),
         metric: validMetricOrDefault(undefined),
         comparisonMethod: validComparisonMethodOrDefault(undefined),
         sets: [getDefaultTitle()],
