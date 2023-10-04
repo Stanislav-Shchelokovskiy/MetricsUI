@@ -1,5 +1,5 @@
-import { groupByOrDefault } from "./GroupBySelector"
-import { Context } from "../../../store/multiset_container/Context"
+import { groupByOrDefault } from "../GroupBySelector"
+import { Context } from "../../../../store/multiset_container/Context"
 
 describe('testing groupByOrDefault', () => {
     test('support context', () => {
