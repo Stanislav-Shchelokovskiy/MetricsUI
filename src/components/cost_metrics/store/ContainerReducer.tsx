@@ -1,5 +1,4 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { CostMetricsStore } from './Store'
 import { BaseContainerState, getDefaultBaseContainerState } from '../../common/store/multiset_container/BaseContainerState'
 import { getContainerReducer } from '../../common/store/multiset_container/ContainerReducerFactory'
 import { containerValidator } from './StoreStateValidator'
@@ -18,7 +17,7 @@ export const containerReducer = (state: ContainerState = INITIAL_STATE, action: 
     return customOptionsReducer(res, action)
 }
 
-const containerReducerDefault = getContainerReducer<ContainerState, CostMetricsStore>(INITIAL_STATE, containerValidator)
+const containerReducerDefault = getContainerReducer<ContainerState>(INITIAL_STATE, containerValidator)
 
 function customOptionsReducer(state: ContainerState, action: PayloadAction<any>): ContainerState {
     return state

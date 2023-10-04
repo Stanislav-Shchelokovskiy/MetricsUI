@@ -1,8 +1,8 @@
-export function loadState(key: string) {
+export function loadState<T = any>(key: string): T | undefined {
     try {
         const serializedState = localStorage.getItem(key);
         if (serializedState) {
-            return JSON.parse(serializedState)
+            return JSON.parse(serializedState) as T
         }
     } catch (err) {
         return undefined;

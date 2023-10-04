@@ -17,7 +17,6 @@ import { contextOrDefault } from '../../common/store/multiset_container/Context'
 import { getStateSlice } from '../../common/store/multiset_container/Store'
 import { validateState } from '../../common/store/multiset_container/Actions'
 
-export const CONTEXT = Context.Performance
 
 function getConfig(ctx: Context) {
     if (isSupportContextSelected(ctx))
@@ -94,13 +93,15 @@ const reducer = createReducer()
 const validator = createValidator()
 const slicer = createSlicer()
 
-function changeContext(ctx: Context, validate: boolean = false) {
+let prevContext = contextOrDefault(undefined)
+function changeContext(ctx: Context) {
+    if (ctx === prevContext)
+        return
+    prevContext = ctx
+
     reducer.changeContext(ctx)
     validator.changeContext(ctx)
     slicer.changeContext(ctx)
-
-    if (validate)
-        store.dispatch(validateState(undefined))
 }
 
 const config = {
@@ -111,7 +112,7 @@ const config = {
 
 
 interface StoreEx extends Store {
-    changeContext: (ctx: Context, validate?: boolean) => void,
+    changeContext: (ctx: Context) => void,
     getShareableState: () => MultisetContainerStore
 }
 

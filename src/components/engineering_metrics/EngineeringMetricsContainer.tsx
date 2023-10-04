@@ -26,7 +26,8 @@ import { ContainerState } from './store/ContainerReducer'
 import { engineeringMetricsStore } from './store/Store'
 import { MultisetContainerStore } from '../common/store/multiset_container/Store'
 import { applyState } from '../common/store/view_state/Actions'
-import LocalStatesConverter from './LocalStatesConverter'
+import { validateState } from '../common/store/multiset_container/Actions'
+import LocalStatesConverter, { convertState } from './StatesConverter'
 import ErrorNotifier from '../app_components/ErrorNotifier'
 import { getContext } from './Utils'
 import { multisetStore } from './store/MetricsStore'
@@ -59,21 +60,23 @@ function EngineeringMetricsContainer(props: Props) {
 
 function EngineeringMetricsContainerInner(props: Props) {
     const ctx = useSelector(contextSelector)
-    multisetStore.changeContext(ctx, true)
 
     const dispatch = useDispatch()
     const dispatchMetric = useCallback((metric: Metric) => {
+        multisetStore.changeContext(metric.context)
+        multisetStore.dispatch(validateState(undefined))
         dispatch(changeMetric(metric))
     }, [])
 
-    const dispatchState = useCallback((contentState: MultisetContainerStore | undefined) => {
-        if (contentState === undefined) {
+    const dispatchState = useCallback(async (state?: MultisetContainerStore) => {
+        if (state === undefined) {
             dispatch(resetContext(undefined))
             return
         }
-        const context = contextOrDefault(contentState.container?.context)
+       
+        const context = contextOrDefault(state.container?.context)
         multisetStore.changeContext(context)
-        multisetStore.dispatch(applyState(contentState))
+        multisetStore.dispatch(applyState(state))
 
         dispatch(applyState(multisetStore.getState()))
     }, [])

@@ -49,7 +49,7 @@ interface Context {
     metricDescription: MetricDescriptionContext
     fetchMetrics: (...args: any) => Promise<FetchResult<Array<Metric>>>,
     changeMetric: (metric: Metric) => void
-    changeState: (state: MultisetContainerStore) => void
+    changeState: (state?: MultisetContainerStore) => void
     context: context
     orientation: PlotOrientation
     xName: string

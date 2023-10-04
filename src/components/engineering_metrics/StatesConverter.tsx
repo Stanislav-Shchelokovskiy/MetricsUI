@@ -9,7 +9,6 @@ import {
 import getStorageItemKey from '../common/components/state_management/Utils'
 import { loadState, saveState } from '../common/LocalStorage'
 import { BaseSetState } from '../common/store/multiset_container/sets/Interfaces'
-import { BaseContainerState } from '../common/store/multiset_container/BaseContainerState'
 import { contextOrDefault } from '../common/store/multiset_container/Context'
 import { isSupportContextSelected, isCostContextSelected, isPerformanceContextSelected } from '../common/store/multiset_container/Context'
 import { Context } from '../common/store/multiset_container/Context'
@@ -20,13 +19,15 @@ import {
     crmidsToSCIDS,
 } from '../common/network_resource_fetcher/converters/Values'
 import { useNotificationContext } from '../app_components/ErrorNotifier'
-import { setsValidator as costSetsValidator, containerValidator as costContainerValidator } from '../cost_metrics/store/StoreStateValidator'
-import { setsValidator as supportSetsValidator, containerValidator as supportContainerValidator } from '../support_metrics/store/StoreStateValidator'
-import { setsValidator as performanceSetsValidator, containerValidator as performanceContainerValidator } from '../performance_metrics/store/StoreStateValidator'
+import { getStoreConfig as supportConfig } from '../support_metrics/store/Store'
+import { getStoreConfig as costConfig } from '../cost_metrics/store/Store'
+import { getStoreConfig as performanceConfig } from '../performance_metrics/store/Store'
 import { viewStore } from '../common/store/multiset_container/ViewStore'
+import { preValidateState } from '../common/store/multiset_container/StoreStateValidator'
+import { MultisetContainerStore } from '../common/store/multiset_container/Store'
 
 
-const NEW_VERSION = '1'
+const NEW_VERSION = '2'
 
 export default function LocalStatesConverter(props: PropsWithChildren) {
     const [conversion, completeConversion] = useState(conversionStatus(false, ''))
@@ -109,38 +110,37 @@ async function convertLocalStates(
 }
 
 async function convertStateAndSave(key: string) {
-    const state = loadState(key)
+    const state = loadState<MultisetContainerStore>(key)
     if (state == null)
         return
 
-    const context = getContext(state)
-    const convertedState = await convertState(context, state)
+    const convertedState = await convertState(state)
     saveState(convertedState, key)
 }
 
-export async function convertState(context: Context, state: any) {
-    const [validContainer, validSets] = getValidators(context)
-    state.container = validContainer(state) as BaseContainerState
+export async function convertState(state: MultisetContainerStore, context: Context | undefined = undefined) {
+    context = getContext(state, context)
 
-    if (versionIsActual(state.container))
-        return
+    state = validateState(context, state)
 
-    state.sets = validSets(state) as Array<BaseSetState>
-    state.sets = await convertSets(context, state.sets)
+    if (versionIsActual(state))
+        return state
 
-    updateVersion(state.container)
+    state.sets = await convertSets(state.sets, context)
+
+    updateVersion(state)
     return state
 }
 
-function versionIsActual(container: BaseContainerState) {
-    return container.version === NEW_VERSION
+function versionIsActual(state: MultisetContainerStore) {
+    return state.container.version === NEW_VERSION
 }
 
-function updateVersion(container: BaseContainerState) {
-    container.version = NEW_VERSION
+function updateVersion(state: MultisetContainerStore) {
+    state.container.version = NEW_VERSION
 }
 
-async function convertSets(context: Context, sets: Array<BaseSetState>) {
+async function convertSets(sets: Array<BaseSetState>, context: Context) {
     for (const set of sets) {
         if (isPerformanceContextSelected(context)) {
             await convertPositions(set)
@@ -195,21 +195,25 @@ async function convertPositions(set: BaseSetState) {
     }
 }
 
-function getValidators(context: Context) {
+function validateState(context: Context, state: any) {
+    const config = getConfig(context)
+    return config.validator(state)
+}
+
+function getConfig(context: Context) {
     if (isSupportContextSelected(context))
-        return [supportContainerValidator, supportSetsValidator]
+        return supportConfig()
     if (isCostContextSelected(context))
-        return [costContainerValidator, costSetsValidator]
+        return costConfig()
     if (isPerformanceContextSelected(context))
-        return [performanceContainerValidator, performanceSetsValidator]
-    throw new Error(`Validator for context #${context} is missing.`);
+        return performanceConfig()
+    throw new Error(`Config for context #${context} is missing.`);
 }
 
-function getContext(state: any) {
-    const container = getContainer(state)
-    return contextOrDefault(container.context)
-}
+function getContext(state: MultisetContainerStore, context?: Context) {
+    if (context !== undefined)
+        return context
 
-function getContainer(state: any) {
-    return 'customersActivity' in state ? state.customersActivity : state.container as BaseContainerState
+    preValidateState(state)
+    return contextOrDefault(state.container.context)
 }

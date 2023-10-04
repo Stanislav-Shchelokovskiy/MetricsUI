@@ -15,14 +15,14 @@ import {
     CHANGE_COMPARISON_METHOD,
 } from './Actions'
 
-export function getContainerReducer<ContainerStateT extends BaseContainerState, ShareableStateT>(
+export function getContainerReducer<ContainerStateT extends BaseContainerState>(
     initialState: ContainerStateT,
-    stateValidator: (state: ShareableStateT) => ContainerStateT
+    containerValidator: (container: ContainerStateT) => ContainerStateT
 ): (state: ContainerStateT, action: PayloadAction<any>) => ContainerStateT {
 
     const setsCRUDReducer = getSetsCRUDReducer<ContainerStateT>(initialState)
     const comparisonGraphReducer = getComparisonGraphReducer<ContainerStateT>(initialState)
-    const viewStateReducer = getViewStateReducer<ContainerStateT, ShareableStateT>(stateValidator)
+    const viewStateReducer = getViewStateReducer<ContainerStateT>(containerValidator, (state) => state.container as ContainerStateT)
 
     return (state: ContainerStateT = initialState, action: PayloadAction<any>): ContainerStateT => {
         let res = setsCRUDReducer(state, action)
@@ -31,87 +31,87 @@ export function getContainerReducer<ContainerStateT extends BaseContainerState, 
     }
 }
 
-function getSetsCRUDReducer<ContainerStateT extends BaseContainerState>(initialState: ContainerStateT): (state: ContainerStateT, action: PayloadAction<any>) => ContainerStateT {
-    return (state: ContainerStateT, action: PayloadAction<any>) => {
+function getSetsCRUDReducer<ContainerStateT extends BaseContainerState>(initialState: ContainerStateT): (container: ContainerStateT, action: PayloadAction<any>) => ContainerStateT {
+    return (container: ContainerStateT, action: PayloadAction<any>) => {
         switch (action.type) {
             case ADD_SET:
                 return {
-                    ...state,
-                    sets: [...state.sets, generateSetTitle(state.sets, action.payload)]
+                    ...container,
+                    sets: [...container.sets, generateSetTitle(container.sets, action.payload)]
                 }
 
             case REMOVE_SET:
-                const remove_selector = (x: string) => x !== action.payload
-                const restSets = state.sets.filter(remove_selector)
+                const removeSelector = (x: string) => x !== action.payload
+                const restSets = container.sets.filter(removeSelector)
                 return {
-                    ...state,
+                    ...container,
                     sets: restSets.length ? restSets : [getDefaultTitle()],
-                    hiddenLegends: state.hiddenLegends.filter(remove_selector)
+                    hiddenLegends: container.hiddenLegends.filter(removeSelector)
                 }
 
             case REMOVE_ALL_SETS:
                 return {
-                    ...state,
+                    ...container,
                     sets: [getDefaultTitle()]
                 }
 
             case CHANGE_SET_TITLE:
-                const setTitle = generateSetTitle(state.sets, action.payload.data)
-                const replace_selector = (x: string) => x !== action.payload.stateId ? x : setTitle
+                const setTitle = generateSetTitle(container.sets, action.payload.data)
+                const replaceSelector = (x: string) => x !== action.payload.stateId ? x : setTitle
                 return {
-                    ...state,
-                    sets: state.sets.map(replace_selector),
-                    hiddenLegends: state.hiddenLegends.map(replace_selector)
+                    ...container,
+                    sets: container.sets.map(replaceSelector),
+                    hiddenLegends: container.hiddenLegends.map(replaceSelector)
                 }
 
             default:
-                if (state.sets.length === 0) {
+                if (container.sets.length === 0) {
                     return {
-                        ...state,
+                        ...container,
                         sets: initialState.sets
                     }
                 }
-                return state
+                return container
         }
     }
 }
 
-function getComparisonGraphReducer<ContainerStateT extends BaseContainerState>(initialState: ContainerStateT): (state: ContainerStateT, action: PayloadAction<any>) => ContainerStateT {
-    return (state: ContainerStateT, action: PayloadAction<any>) => {
+function getComparisonGraphReducer<ContainerStateT extends BaseContainerState>(initialState: ContainerStateT): (container: ContainerStateT, action: PayloadAction<any>) => ContainerStateT {
+    return (container: ContainerStateT, action: PayloadAction<any>) => {
         switch (action.type) {
 
             case CHANGE_PERIOD:
                 return {
-                    ...state,
+                    ...container,
                     range: action.payload
                 }
 
             case CHANGE_GROUP_BY:
                 return {
-                    ...state,
+                    ...container,
                     groupBy: action.payload !== undefined ? action.payload : initialState.groupBy
                 }
 
             case CHANGE_METRIC:
                 return {
-                    ...state,
+                    ...container,
                     metric: action.payload !== undefined ? action.payload : initialState.metric
                 }
 
             case CHANGE_COMPARISON_METHOD:
                 return {
-                    ...state,
+                    ...container,
                     comparisonMethod: action.payload !== undefined ? action.payload : initialState.comparisonMethod
                 }
 
             case HIDE_LEGENDS:
                 return {
-                    ...state,
+                    ...container,
                     hiddenLegends: action.payload
                 }
 
             default:
-                return state
+                return container
         }
     }
 }

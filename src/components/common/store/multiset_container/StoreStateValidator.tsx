@@ -9,18 +9,22 @@ import { MultisetContainerStore } from './Store'
 
 
 export function stateValidator<ContainerState extends BaseContainerState, SetState extends BaseSetState>(
-    containerValidator: (state: MultisetContainerStore<ContainerState, SetState>) => ContainerState,
-    setsValidator: (state: MultisetContainerStore<ContainerState, SetState>) => Array<SetState>
+    containerValidator: (container: ContainerState) => ContainerState,
+    setsValidator: (sets: Array<SetState>) => Array<SetState>
 ): (state: MultisetContainerStore<ContainerState, SetState>) => MultisetContainerStore<ContainerState, SetState> {
     return (state: MultisetContainerStore<ContainerState, SetState>) => {
-        ensureContainer(state)
-        ensureSets(state)
-        ensureGroupBy(state)
+        preValidateState(state)
         return {
-            container: containerValidator(state),
-            sets: setsValidator(state),
+            container: containerValidator(state.container),
+            sets: setsValidator(state.sets),
         }
     }
+}
+
+export function preValidateState(state: MultisetContainerStore) {
+    ensureContainer(state)
+    ensureSets(state)
+    ensureGroupBy(state)
 }
 
 function ensureContainer(state: MultisetContainerStore) {
@@ -46,7 +50,10 @@ function ensureGroupBy(state: MultisetContainerStore) {
 }
 
 
-export function containerValidator<ContainerState extends BaseContainerState>(container: ContainerState, context: Context, customValidator: (container: ContainerState) => ContainerState): ContainerState {
+export function containerValidator<ContainerState extends BaseContainerState>(
+    container: ContainerState,
+    context: Context,
+    customValidator: (container: ContainerState) => ContainerState = (container) => container): ContainerState {
     const res = defaultContainerValidator(container, context)
     return customValidator(res)
 }
@@ -69,7 +76,10 @@ function hiddenLegendsOrDefault(hiddenLegends: Array<any> | undefined) {
 }
 
 
-export function setsValidator<SetState extends BaseSetState>(sets: Array<SetState>, customValidator: (set: SetState) => SetState): Array<SetState> {
+export function setsValidator<SetState extends BaseSetState>(
+    sets: Array<SetState>,
+    customValidator: (set: SetState) => SetState = (set) => set,
+): Array<SetState> {
     return sets.map(x => {
         const res = defaultSetValidator(x)
         return customValidator(res)

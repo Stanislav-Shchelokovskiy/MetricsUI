@@ -1,7 +1,7 @@
-import React from 'react';
-import { configureStore } from '@reduxjs/toolkit';
+import React from 'react'
+import { configureStore } from '@reduxjs/toolkit'
 import { loadState as loadBaseState, saveState } from '../../LocalStorage'
-import { getViewStateReducer, ViewState } from './Reducers';
+import { getViewStateReducer, ViewState } from './Reducers'
 
 export function configureViewStore(stateKey: string, stateSalt: string) {
     const store = configureStore({
@@ -15,7 +15,7 @@ export function configureViewStore(stateKey: string, stateSalt: string) {
             There are a lot of CustomersActivity states stored locally.
             We should find them and display.
         */
-        const baseState: ViewState = loadBaseState(stateKey)
+        const baseState = loadBaseState(stateKey)
         const stateNames = new Set<string>()
         for (const key in localStorage) {
             if (key.includes(stateSalt)) {
@@ -33,8 +33,8 @@ export function configureViewStore(stateKey: string, stateSalt: string) {
 
 
     store.subscribe(() => {
-        saveState(store.getState(), stateKey);
-    });
+        saveState(store.getState(), stateKey)
+    })
 
     return store
 }

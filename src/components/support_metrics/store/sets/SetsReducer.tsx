@@ -1,7 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { SupportMetricsShareableStore } from '../Store'
 import { setsValidator } from '../StoreStateValidator'
-import { getSetsReducer } from '../../../common/store/multiset_container/sets/ReducerFactory'
+import { getSetsReducer } from '../../../common/store/multiset_container/sets/SetsReducerFactory'
 import { bugsReducer } from './BugsReducer'
 import { catReducer } from './CATReducer'
 import { commonReducer } from './CommonReducer'
@@ -26,4 +25,4 @@ export function setsReducer(sets: Array<SetState> = INITIAL_SETS, action: Payloa
     return employeesReducer(res, action)
 }
 
-const setsReducerDefault = getSetsReducer<SetState, SupportMetricsShareableStore>(DEFAULT_SET, INITIAL_SETS, setsValidator)
+const setsReducerDefault = getSetsReducer<SetState>(DEFAULT_SET, INITIAL_SETS, setsValidator)

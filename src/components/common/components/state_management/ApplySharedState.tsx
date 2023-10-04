@@ -3,7 +3,7 @@ import { useParams, Navigate } from 'react-router-dom'
 import { PullState } from '../../network_resource_fetcher/FetchState'
 import { useMultisetContainerContext } from '../../components/multiset_container/MultisetContainerContext'
 import { useNotificationContext } from '../../../app_components/ErrorNotifier'
-import { convertState } from '../../../engineering_metrics/LocalStatesConverter'
+import { convertState } from '../../../engineering_metrics/StatesConverter'
 
 const FORBIDDEN = 403
 const NOT_FOUND = 404
@@ -20,7 +20,7 @@ export default function ApplySharedState() {
             const fetchedState = await PullState(context.stateManagement.endPoint, stateId)
             let [status, state] = fetchedState.data
             if (state !== undefined)
-                state = await convertState(context.context, state)
+                state = await convertState(state, context.context)
             context.changeState(state)
             setLoadState(getState(true, status))
         })()

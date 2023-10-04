@@ -1,6 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { BaseContainerState, getDefaultBaseContainerState } from '../../common/store/multiset_container/BaseContainerState'
-import { SupportMetricsStore } from './Store'
 import { containerValidator } from './StoreStateValidator'
 import { getContainerReducer } from '../../common/store/multiset_container/ContainerReducerFactory'
 import { CHANGE_BASELINE_ALIGNED_MODE } from './actions/Common'
@@ -22,7 +21,7 @@ export function containerReducer(state: ContainerState = INITIAL_STATE, action: 
     return customReducer(res, action)
 }
 
-const containerReducerDefault = getContainerReducer<ContainerState, SupportMetricsStore>(INITIAL_STATE, containerValidator)
+const containerReducerDefault = getContainerReducer<ContainerState>(INITIAL_STATE, containerValidator)
 
 function customReducer(state: ContainerState, action: PayloadAction<any>): ContainerState {
     switch (action.type) {
