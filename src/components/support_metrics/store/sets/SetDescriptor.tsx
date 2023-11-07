@@ -5,8 +5,8 @@ import { getFilterFields } from '../../../common/components/multiset_container/T
 export function getAliasedSet(set: SetState) {
     return {
         Percentile: set.percentile,
-        Privacy: set.privacy,
-        'Employee tickets': set.employeeTickets,
+        'Ticket visibility': set.privacy,
+        'Ticket owner': set.employeeTickets,
         Tribes: set.tribes,
         Tents: set.tents,
         Platforms: set.platforms,

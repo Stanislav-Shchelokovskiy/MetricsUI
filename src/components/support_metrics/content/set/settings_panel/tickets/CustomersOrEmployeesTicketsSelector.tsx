@@ -12,19 +12,19 @@ interface Privacy {
 
 export default function CustomersOrEmployeesTicketsSelector() {
     const setTitle = useSetTitle()
-    const ds = useMemo(() => [{ id: 0, name: "Customers' tickets only" }, { id: 1, name: "Employees' tickets only" }], [])
+    const ds = useMemo(() => [{ id: 0, name: 'Customer' }, { id: 1, name: 'Employee' }], [])
     const valueSelector = (store: SupportMetricsStore) => employesTicketsSelector(store, setTitle)?.value
     const onValueChange = (value: number | undefined) => changeEmployeeTickets({ stateId: setTitle, data: value === null ? undefined : value })
 
     return <OptionSelector<Privacy, number | undefined>
-        className='CustomersActivity_CustomersOrEmployeesTicketsSelector'
+        className='CustomersActivity_SingleSelector'
         displayExpr='name'
         valueExpr='id'
-        placeholder="Customers' and employees' tickets"
+        placeholder='Customer or employee'
         dataSource={ds}
         valueSelector={valueSelector}
         onValueChange={onValueChange}
-        label=''
+        label='Ticket owner'
         showDropDownButton={false}
         showClear={true}
     />

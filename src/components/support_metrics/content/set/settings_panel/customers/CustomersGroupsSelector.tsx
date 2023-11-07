@@ -53,7 +53,7 @@ export function BAMCustomersGroupsSelector() {
         return null
 
     return <OptionSelector<CustomersGroup, string>
-        className='CustomersActivity_CustomersGroupsSelector'
+        className='CustomersActivity_SingleSelector'
         displayExpr='name'
         valueExpr='id'
         placeholder='Select user group'

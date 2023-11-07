@@ -12,19 +12,19 @@ interface Privacy {
 
 export default function PrivacySelector() {
     const setTitle = useSetTitle()
-    const ds = useMemo(() => [{ id: 1, name: 'Private tickets only' }, { id: 0, name: 'Public tickets only' }], [])
+    const ds = useMemo(() => [{ id: 1, name: 'Private' }, { id: 0, name: 'Public' }], [])
     const valueSelector = (store: SupportMetricsStore) => privacySelector(store, setTitle)?.value
     const onValueChange = (value: number | undefined) => changePrivacy({ stateId: setTitle, data: value === null ? undefined : value })
 
     return <OptionSelector<Privacy, number | undefined>
-        className='CustomersActivity_PrivacySelector'
+        className='CustomersActivity_SingleSelector'
         displayExpr='name'
         valueExpr='id'
-        placeholder='Public and private tickets'
+        placeholder='Public or private'
         dataSource={ds}
         valueSelector={valueSelector}
         onValueChange={onValueChange}
-        label=''
+        label='Ticket visibility'
         showDropDownButton={false}
         showClear={true}
     />

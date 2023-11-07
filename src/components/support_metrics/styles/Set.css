@@ -52,3 +52,12 @@
 .CustomersActivity_BetweenPeriodSelectorContainer .Selector .DateEdit {
     flex: 1 1 auto;
 }
+
+.CustomersActivity_SingleSelector {
+    padding: 3px;
+    padding-top: 4px;
+}
+
+.CustomersActivity_SingleSelector .dx-label-before {
+    padding-left: 32px;
+}
