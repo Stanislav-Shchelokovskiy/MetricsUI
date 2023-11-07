@@ -35,6 +35,8 @@ export const changeFrameworksInclude = getIncludePayloadAction(CHANGE_FRAMEWORKS
 export const CHANGE_PRIVACY = 'change_privacy'
 export const changePrivacy = getPayloadAction<number | undefined>(CHANGE_PRIVACY)
 
+export const CHANGE_EMPLOYEE_TICKETS = 'change_employee_tickets'
+export const changeEmployeeTickets = getPayloadAction<number | undefined>(CHANGE_EMPLOYEE_TICKETS)
 
 export const CHANGE_TICKETS_TAGS = 'change_tickets_tags'
 export const changeTicketsTags = getValuesPayloadAction<string>(CHANGE_TICKETS_TAGS)

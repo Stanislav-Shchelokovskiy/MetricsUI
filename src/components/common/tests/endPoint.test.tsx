@@ -6,7 +6,7 @@ import {
     MSID_REDIRECT,
 } from '../EndPoint'
 
-const baseEndPoint = 'https://ubuntu-support.corp.devexpress.com:4430'
+const baseEndPoint = 'https://ubuntu-support.corp.devexpress.com'
 
 describe('end points should not contain local urls.', () => {
     test('case 0', () => {

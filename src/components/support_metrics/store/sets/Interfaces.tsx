@@ -10,6 +10,7 @@ import {
 export interface SetState extends BaseSetState {
     percentile: RequiredNumberFilterParameter
     privacy: NumberFilterParameter,
+    employeeTickets: NumberFilterParameter,
     platforms: StringFilterParameters
     products: StringFilterParameters
     ticketsTags: StringFilterParameters
