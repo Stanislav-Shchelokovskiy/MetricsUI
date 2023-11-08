@@ -63,7 +63,7 @@ export default function PercentileSelector() {
     }
 
     return <NumberBox
-        className='CustomersActivity_PercentileSelector'
+        className='CustomersActivity_SingleSelector'
         ref={ref}
         defaultValue={percentile.value}
         step={5}
