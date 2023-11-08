@@ -75,9 +75,13 @@ const FilterLabel = React.memo(() => {
             name='notbetween'
             caption='NOT BETWEEN' />
         <CustomOperation
+            name='>=' />
+        <CustomOperation
             name='<=' />
         <CustomOperation
             name='>' />
+        <CustomOperation
+            name='<' />
         <CustomOperation
             name='='
             caption='IS' />
@@ -93,7 +97,7 @@ export interface FilterField {
     filterOperations: Array<string>
 }
 
-const default_ops = ['<=', '=', '!=', '>', 'in', 'notin', 'between', 'notbetween']
+const default_ops = ['>=', '<=', '=', '!=', '>', '<', 'in', 'notin', 'between', 'notbetween']
 
 export function getFilterFields(o: any): Array<FilterField> {
     return Object.getOwnPropertyNames(o).map(x => {

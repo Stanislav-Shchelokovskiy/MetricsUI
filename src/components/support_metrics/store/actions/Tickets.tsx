@@ -38,6 +38,9 @@ export const changePrivacy = getPayloadAction<number | undefined>(CHANGE_PRIVACY
 export const CHANGE_OWNER_KIND = 'change_owner_kind'
 export const changeOwnerKind = getPayloadAction<number | undefined>(CHANGE_OWNER_KIND)
 
+export const CHANGE_CLOSED_FOR = 'change_closed_for'
+export const changeClosedFor = getPayloadAction<number | undefined>(CHANGE_CLOSED_FOR)
+
 export const CHANGE_TICKETS_TAGS = 'change_tickets_tags'
 export const changeTicketsTags = getValuesPayloadAction<string>(CHANGE_TICKETS_TAGS)
 

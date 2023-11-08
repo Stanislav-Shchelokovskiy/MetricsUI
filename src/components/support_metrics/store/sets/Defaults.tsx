@@ -13,6 +13,7 @@ export const DEFAULT_SET: SetState = {
     ticketsTypes: getFilterParameters<number>([1]),
     privacy: getOptionalFilterParameter<number>(),
     ownerKind: getOptionalFilterParameter<number>(),
+    closedForInDays: getOptionalFilterParameter<number>(),
     platforms: getOptionalFilterParameters<string>(),
     products: getOptionalFilterParameters<string>(),
     ticketsTags: getOptionalFilterParameters<string>(),

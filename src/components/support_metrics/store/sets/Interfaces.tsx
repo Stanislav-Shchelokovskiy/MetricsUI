@@ -11,6 +11,7 @@ export interface SetState extends BaseSetState {
     percentile: RequiredNumberFilterParameter
     privacy: NumberFilterParameter,
     ownerKind: NumberFilterParameter,
+    closedForInDays: NumberFilterParameter,
     platforms: StringFilterParameters
     products: StringFilterParameters
     ticketsTags: StringFilterParameters

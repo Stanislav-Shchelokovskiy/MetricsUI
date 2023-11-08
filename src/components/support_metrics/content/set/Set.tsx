@@ -34,6 +34,7 @@ import FixedBySelector from './settings_panel/bugs/FixedBySelector'
 import ClosedBetweenSelector from './settings_panel/bugs/ClosedBetweenSelector'
 import FixedBetweenSelector from './settings_panel/bugs/FixedBetweenSelector'
 import OwnerKindSelector from './settings_panel/tickets/OwnerKindSelector'
+import ClosedForSelector from './settings_panel/tickets/ClosedForSelector'
 
 
 function Set({ setTitle }: SetProps) {
@@ -42,6 +43,7 @@ function Set({ setTitle }: SetProps) {
             <PercentileSelector />
             <PrivacySelector />
             <OwnerKindSelector />
+            <ClosedForSelector />
             <BAMCustomersGroupsSelector />
             <TicketsTypesSelector />
             <TribesSelector />

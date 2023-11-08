@@ -16,9 +16,11 @@ import {
     CHANGE_FRAMEWORKS_INCLUDE,
     CHANGE_PRIVACY,
     CHANGE_OWNER_KIND,
+    CHANGE_CLOSED_FOR,
     CHANGE_TICKETS_TAGS,
     CHANGE_TICKETS_TAGS_INCLUDE,
 } from '../actions/Tickets'
+import { getOptionalFilterParameter } from '../../../common/store/multiset_container/sets/Defaults'
 
 
 export function ticketsReducer(sets: Array<SetState>, action: AnyAction): Array<SetState> {
@@ -28,10 +30,7 @@ export function ticketsReducer(sets: Array<SetState>, action: AnyAction): Array<
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    privacy: action.payload.data === undefined ? undefined : {
-                        include: true,
-                        value: action.payload.data,
-                    },
+                    privacy: getOptionalFilterParameter(action.payload.data),
                 }
             })
 
@@ -39,10 +38,15 @@ export function ticketsReducer(sets: Array<SetState>, action: AnyAction): Array<
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    ownerKind: action.payload.data === undefined ? undefined : {
-                        include: true,
-                        value: action.payload.data,
-                    },
+                    ownerKind: getOptionalFilterParameter(action.payload.data),
+                }
+            })
+
+        case CHANGE_CLOSED_FOR:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    closedForInDays: getOptionalFilterParameter(action.payload.data),
                 }
             })
 
