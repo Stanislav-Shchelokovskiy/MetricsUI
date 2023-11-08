@@ -15,7 +15,7 @@ import {
     CHANGE_FRAMEWORKS,
     CHANGE_FRAMEWORKS_INCLUDE,
     CHANGE_PRIVACY,
-    CHANGE_EMPLOYEE_TICKETS,
+    CHANGE_OWNER_KIND,
     CHANGE_TICKETS_TAGS,
     CHANGE_TICKETS_TAGS_INCLUDE,
 } from '../actions/Tickets'
@@ -35,11 +35,11 @@ export function ticketsReducer(sets: Array<SetState>, action: AnyAction): Array<
                 }
             })
 
-        case CHANGE_EMPLOYEE_TICKETS:
+        case CHANGE_OWNER_KIND:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    employeeTickets: action.payload.data === undefined ? undefined : {
+                    ownerKind: action.payload.data === undefined ? undefined : {
                         include: true,
                         value: action.payload.data,
                     },

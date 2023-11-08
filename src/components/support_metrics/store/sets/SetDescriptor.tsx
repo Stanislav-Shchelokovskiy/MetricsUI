@@ -6,7 +6,7 @@ export function getAliasedSet(set: SetState) {
     return {
         Percentile: set.percentile,
         'Ticket visibility': set.privacy,
-        'Ticket owner': set.employeeTickets,
+        'Ticket owner': set.ownerKind,
         Tribes: set.tribes,
         Tents: set.tents,
         Platforms: set.platforms,

@@ -1,20 +1,20 @@
 import React, { useMemo } from 'react'
 import OptionSelector from '../../../../../common/components/OptionSelector'
-import { changeEmployeeTickets } from '../../../../store/actions/Tickets'
+import { changeOwnerKind } from '../../../../store/actions/Tickets'
 import { SupportMetricsStore } from '../../../../store/Store'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { employesTicketsSelector } from '../../../../store/sets/Selectors'
+import { ownerKindSelector } from '../../../../store/sets/Selectors'
 
 interface Privacy {
     id: number
     name: string
 }
 
-export default function CustomersOrEmployeesTicketsSelector() {
+export default function OwnerKindSelector() {
     const setTitle = useSetTitle()
     const ds = useMemo(() => [{ id: 0, name: 'Customer' }, { id: 1, name: 'Employee' }], [])
-    const valueSelector = (store: SupportMetricsStore) => employesTicketsSelector(store, setTitle)?.value
-    const onValueChange = (value: number | undefined) => changeEmployeeTickets({ stateId: setTitle, data: value === null ? undefined : value })
+    const valueSelector = (store: SupportMetricsStore) => ownerKindSelector(store, setTitle)?.value
+    const onValueChange = (value: number | undefined) => changeOwnerKind({ stateId: setTitle, data: value === null ? undefined : value })
 
     return <OptionSelector<Privacy, number | undefined>
         className='CustomersActivity_SingleSelector'

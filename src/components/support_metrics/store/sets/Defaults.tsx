@@ -12,7 +12,7 @@ export const DEFAULT_SET: SetState = {
     percentile: getFilterParameter<number>(100),
     ticketsTypes: getFilterParameters<number>([1]),
     privacy: getOptionalFilterParameter<number>(),
-    employeeTickets: getOptionalFilterParameter<number>(),
+    ownerKind: getOptionalFilterParameter<number>(),
     platforms: getOptionalFilterParameters<string>(),
     products: getOptionalFilterParameters<string>(),
     ticketsTags: getOptionalFilterParameters<string>(),

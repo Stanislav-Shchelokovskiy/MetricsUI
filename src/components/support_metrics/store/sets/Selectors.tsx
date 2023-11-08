@@ -7,7 +7,7 @@ function getSelector<R>(selector: (set: SetState | undefined) => R | undefined) 
 
 export const percentileSelector = getSelector(set => set?.percentile)
 export const privacySelector = getSelector(set => set?.privacy)
-export const employesTicketsSelector = getSelector(set => set?.employeeTickets)
+export const ownerKindSelector = getSelector(set => set?.ownerKind)
 export const customersGroupsSelector = getSelector(set => set?.customersGroups)
 export const ticketsTypesSelector = getSelector(set => set?.ticketsTypes)
 export const platformsSelector = getSelector(set => set?.platforms)

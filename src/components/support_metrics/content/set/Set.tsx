@@ -33,7 +33,7 @@ import ClosedBySelector from './settings_panel/bugs/ClosedBySelector'
 import FixedBySelector from './settings_panel/bugs/FixedBySelector'
 import ClosedBetweenSelector from './settings_panel/bugs/ClosedBetweenSelector'
 import FixedBetweenSelector from './settings_panel/bugs/FixedBetweenSelector'
-import CustomersOrEmployeesTicketsSelector from './settings_panel/tickets/CustomersOrEmployeesTicketsSelector'
+import OwnerKindSelector from './settings_panel/tickets/OwnerKindSelector'
 
 
 function Set({ setTitle }: SetProps) {
@@ -41,7 +41,7 @@ function Set({ setTitle }: SetProps) {
         <SetWithHeader setTitle={setTitle}>
             <PercentileSelector />
             <PrivacySelector />
-            <CustomersOrEmployeesTicketsSelector />
+            <OwnerKindSelector />
             <BAMCustomersGroupsSelector />
             <TicketsTypesSelector />
             <TribesSelector />
