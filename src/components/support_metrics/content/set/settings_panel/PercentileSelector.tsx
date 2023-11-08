@@ -1,5 +1,5 @@
-import React, { useRef, useMemo } from 'react'
-import { NumberBox, Button as NumberBoxButton } from 'devextreme-react/number-box'
+import React, { useMemo } from 'react'
+import NumericSelector from '../../../../common/components/NumericSelector'
 import { useSelector, useDispatch } from 'react-redux'
 import { SupportMetricsStore } from '../../../store/Store'
 import { changePercentile, changePercentileInclude } from '../../../store/actions/SetCommon'
@@ -11,7 +11,7 @@ import { percentileSelector } from '../../../store/sets/Selectors'
 
 export default function PercentileSelector() {
     const setTitle = useSetTitle()
-    const ref = useRef<NumberBox>(null)
+    const onValueChange = (value: number | undefined) => changePercentile({ stateId: setTitle, data: value as number })
     const percentile = useSelector((store: SupportMetricsStore) => percentileSelector(store, setTitle) as FilterParameter<number>)
 
     const disabled = useSelector((store: SupportMetricsStore) =>
@@ -25,63 +25,27 @@ export default function PercentileSelector() {
     }
 
     const dispatch = useDispatch()
-    let timerId: NodeJS.Timeout | undefined = undefined
-    const onValueChange = (value: number) => {
-        if (timerId !== undefined)
-            clearTimeout(timerId)
-        timerId = setTimeout(() => {
-            dispatch(changePercentile({ stateId: setTitle, data: value }))
-            clearTimeout(timerId)
-        }, 1000)
-    }
-
     const onIncludeChange = (include: boolean) => {
         dispatch(changePercentileInclude({ stateId: setTitle, data: include }))
     }
 
-    const topBottomButtonOptions = useMemo(() => getIncludeButtonOptions(
+    const customButtons = useMemo(() => [getIncludeButtonOptions(
         percentile.include,
         onIncludeChange,
         undefined,
         undefined,
         'verticalaligntop',
         'verticalalignbottom',
-    ), [percentile.include])
+    )], [percentile.include])
 
-    const maxValue = 100
-    const resetButtonOptions = {
-        text: '',
-        stylingMode: 'text',
-        icon: 'revert',
-        focusStateEnabled: false,
-        elementAttr: {
-            id: 'PercentileSelector_resetButton'
-        },
-        onClick: (e: any) => {
-            ref.current?.instance.option('value', maxValue)
-        }
-    }
-
-    return <NumberBox
+    return <NumericSelector
         className='CustomersActivity_SingleSelector'
-        ref={ref}
-        defaultValue={percentile.value}
-        step={5}
-        min={0}
-        max={maxValue}
+        currentValue={percentile.value}
+        max={100}
+        defaultValue={100}
         format={format}
-        showSpinButtons={true}
-        useLargeSpinButtons={true}
         onValueChange={onValueChange}
         disabled={disabled}
-        mode='number'>
-        <NumberBoxButton
-            name={topBottomButtonOptions.name}
-            location={topBottomButtonOptions.location}
-            options={topBottomButtonOptions} />
-        <NumberBoxButton name='spins' />
-        <NumberBoxButton
-            name='reset'
-            options={resetButtonOptions} />
-    </NumberBox>
+        customButtons={customButtons}
+    />
 }
