@@ -17,6 +17,7 @@ import {
     CHANGE_PRIVACY,
     CHANGE_OWNER_KIND,
     CHANGE_CLOSED_FOR,
+    CHANGE_RESOLUTION_TIME,
     CHANGE_TICKETS_TAGS,
     CHANGE_TICKETS_TAGS_INCLUDE,
 } from '../actions/Tickets'
@@ -47,6 +48,14 @@ export function ticketsReducer(sets: Array<SetState>, action: AnyAction): Array<
                 return {
                     ...x,
                     closedForInDays: getOptionalFilterParameter(action.payload.data),
+                }
+            })
+
+        case CHANGE_RESOLUTION_TIME:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    resolutionTimeInhours: getOptionalFilterParameter(action.payload.data),
                 }
             })
 

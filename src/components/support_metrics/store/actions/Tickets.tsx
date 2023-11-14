@@ -41,6 +41,9 @@ export const changeOwnerKind = getPayloadAction<number | undefined>(CHANGE_OWNER
 export const CHANGE_CLOSED_FOR = 'change_closed_for'
 export const changeClosedFor = getPayloadAction<number | undefined>(CHANGE_CLOSED_FOR)
 
+export const CHANGE_RESOLUTION_TIME = 'change_resolution_timme'
+export const changeResolutionTime = getPayloadAction<number | undefined>(CHANGE_RESOLUTION_TIME)
+
 export const CHANGE_TICKETS_TAGS = 'change_tickets_tags'
 export const changeTicketsTags = getValuesPayloadAction<string>(CHANGE_TICKETS_TAGS)
 

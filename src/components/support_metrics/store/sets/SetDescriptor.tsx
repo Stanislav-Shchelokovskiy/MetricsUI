@@ -8,6 +8,7 @@ export function getAliasedSet(set: SetState) {
         'Ticket visibility': set.privacy,
         'Ticket owner': set.ownerKind,
         'Closed for': set.closedForInDays,
+        'Resolution time': set.resolutionTimeInhours,
         Tribes: set.tribes,
         Tents: set.tents,
         Platforms: set.platforms,
