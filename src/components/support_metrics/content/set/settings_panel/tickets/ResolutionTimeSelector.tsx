@@ -12,7 +12,7 @@ export default function ResolutionTimeSelector() {
     const value = useSelector((store: SupportMetricsStore) => resolutionTimeSelector(store, setTitle)?.value)
     const onValueChange = (value: number | undefined) => changeResolutionTime({ stateId: setTitle, data: value ? value : undefined })
     const format = useCallback((value: number | undefined) => {
-        return value ? `less than ${Math.round(value)} hours(s)` : ''
+        return value ? `less than ${Math.round(value)} hour(s)` : ''
     }, [])
     
     return <NumericSelector
