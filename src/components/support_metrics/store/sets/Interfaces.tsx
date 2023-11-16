@@ -12,7 +12,7 @@ export interface SetState extends BaseSetState {
     privacy: NumberFilterParameter,
     ownerKind: NumberFilterParameter,
     closedForInDays: NumberFilterParameter,
-    resolutionTimeInhours: NumberFilterParameter,
+    resolutionTimeInhours: NumberFilterParameters,
     platforms: StringFilterParameters
     products: StringFilterParameters
     ticketsTags: StringFilterParameters

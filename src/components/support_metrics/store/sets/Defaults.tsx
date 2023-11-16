@@ -14,7 +14,7 @@ export const DEFAULT_SET: SetState = {
     privacy: getOptionalFilterParameter<number>(),
     ownerKind: getOptionalFilterParameter<number>(),
     closedForInDays: getOptionalFilterParameter<number>(),
-    resolutionTimeInhours: getOptionalFilterParameter<number>(),
+    resolutionTimeInhours: getOptionalFilterParameters<number>(),
     platforms: getOptionalFilterParameters<string>(),
     products: getOptionalFilterParameters<string>(),
     ticketsTags: getOptionalFilterParameters<string>(),

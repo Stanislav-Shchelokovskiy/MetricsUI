@@ -76,7 +76,7 @@ function BetweenPeriodSelector(props: RangeSelectorProps) {
     }, [start, end])
 
     return (
-        <div className='CustomersActivity_BetweenPeriodSelectorContainer'>
+        <div className='CustomersActivity_BetweenSelectorContainer'>
             {props.onIncludeChange ?
                 <Button {...includeButtonOptions} /> :
                 null}

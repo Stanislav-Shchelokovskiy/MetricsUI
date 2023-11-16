@@ -55,7 +55,7 @@ export function ticketsReducer(sets: Array<SetState>, action: AnyAction): Array<
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return {
                     ...x,
-                    resolutionTimeInhours: getOptionalFilterParameter(action.payload.data),
+                    resolutionTimeInhours: updateValues(x.resolutionTimeInhours, action.payload.data),
                 }
             })
 

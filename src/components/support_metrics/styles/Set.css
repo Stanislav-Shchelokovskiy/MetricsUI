@@ -17,7 +17,7 @@
     color: rgba(153, 153, 153, 255);
 }
 
-.CustomersActivity_BetweenPeriodSelectorContainer {
+.CustomersActivity_BetweenSelectorContainer {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
@@ -27,20 +27,25 @@
     border-radius: 5px;
     padding-left: 0.5px;
     font-size: small;
+    margin-top: 8px;
 }
 
-.CustomersActivity_BetweenPeriodSelectorContainer .dx-button-content {
+.CustomersActivity_BetweenSelectorContainer .dx-button-content {
     width: 30px;
     height: 30px;
 }
 
-.CustomersActivity_BetweenPeriodSelectorContainer .Content {
+.CustomersActivity_BetweenSelectorContainer .Content {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
 }
 
-.CustomersActivity_BetweenPeriodSelectorContainer .Selector {
+.CustomersActivity_BetweenSelectorContainer .Content .Label {
+    padding-left: 32px;
+}
+
+.CustomersActivity_BetweenSelectorContainer .Selector {
     padding: 4px;
     display: flex;
     flex-flow: row nowrap;
@@ -49,7 +54,7 @@
     gap: 1%;
 }
 
-.CustomersActivity_BetweenPeriodSelectorContainer .Selector .DateEdit {
+.CustomersActivity_BetweenSelectorContainer .Selector .DateEdit {
     flex: 1 1 auto;
 }
 
