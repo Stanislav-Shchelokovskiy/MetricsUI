@@ -14,11 +14,11 @@ export const INITIAL_STATE: ContainerState = {
 
 export const containerReducer = (state: ContainerState = INITIAL_STATE, action: PayloadAction<any>): ContainerState => {
     let res = containerReducerDefault(state, action)
-    return customOptionsReducer(res, action)
+    return customReducer(res, action)
 }
 
 const containerReducerDefault = getContainerReducer<ContainerState>(INITIAL_STATE, containerValidator)
 
-function customOptionsReducer(state: ContainerState, action: PayloadAction<any>): ContainerState {
+function customReducer(state: ContainerState, action: PayloadAction<any>): ContainerState {
     return state
 }
