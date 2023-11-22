@@ -1,11 +1,11 @@
 import React, { useCallback, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Popup, ToolbarItem } from 'devextreme-react/popup'
-import Button from '../../common/components/Button'
+import Button from '../../Button'
 import { CheckBox } from 'devextreme-react/check-box'
-import { SupportMetricsStore } from '../store/Store'
-import { changeBaselineAlignedMode } from '../store/actions/Common'
-import { PopupProps } from '../../common/Typing'
+import { SupportMetricsStore } from '../../../../support_metrics/store/Store'
+import { changeBaselineAlignedMode } from '../../../store/multiset_container/Actions'
+import { PopupProps } from '../../../Typing'
 
 interface AdvancedSettings {
     baselineAlignedMode: boolean

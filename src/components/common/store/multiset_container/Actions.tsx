@@ -30,3 +30,6 @@ export const changeComparisonMethod = getAction<string | undefined>(CHANGE_COMPA
 
 export const VALIDATE_STATE = 'validate_state'
 export const validateState = getAction<undefined>(VALIDATE_STATE)
+
+export const CHANGE_BASELINE_ALIGNED_MODE = 'change_baseline_aligned_mode'
+export const changeBaselineAlignedMode = getAction<boolean>(CHANGE_BASELINE_ALIGNED_MODE)

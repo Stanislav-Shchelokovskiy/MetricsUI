@@ -13,6 +13,7 @@ import {
     CHANGE_GROUP_BY,
     CHANGE_METRIC,
     CHANGE_COMPARISON_METHOD,
+    CHANGE_BASELINE_ALIGNED_MODE,
 } from './Actions'
 
 export function getContainerReducer<ContainerStateT extends BaseContainerState>(
@@ -105,9 +106,16 @@ function getComparisonGraphReducer<ContainerStateT extends BaseContainerState>(i
                 }
 
             case HIDE_LEGENDS:
+                console.log(HIDE_LEGENDS)
                 return {
                     ...container,
                     hiddenLegends: action.payload
+                }
+
+            case CHANGE_BASELINE_ALIGNED_MODE:
+                return {
+                    ...container,
+                    baselineAlignedModeEnabled: action.payload
                 }
 
             default:

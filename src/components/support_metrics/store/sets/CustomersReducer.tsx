@@ -15,7 +15,7 @@ import {
     CHANGE_CUSTOMERS,
     CHANGE_CUSTOMERS_INCLUDE,
 } from '../actions/Customers'
-import { CHANGE_BASELINE_ALIGNED_MODE } from '../actions/Common'
+import { CHANGE_BASELINE_ALIGNED_MODE } from '../../../common/store/multiset_container/Actions'
 
 
 export function customersReducer(sets: Array<SetState>, action: AnyAction): Array<SetState> {

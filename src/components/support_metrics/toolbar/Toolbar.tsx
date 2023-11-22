@@ -1,5 +1,4 @@
 import React from 'react'
-import AdvancedSettingButton from './AdvancedSettingButton'
 import HelpButton from '../../common/components/help/HelpButton'
 import { fetchHelp } from '../network_resource_fetcher/Help'
 import { Toolbar, ToolbarProps } from '../../common/components/multiset_container/Toolbar/Toolbar'
@@ -7,7 +6,6 @@ import { Toolbar, ToolbarProps } from '../../common/components/multiset_containe
 export default function SupportMetricsToolbar(props: ToolbarProps) {
     return (
         <Toolbar {...props}>
-            <AdvancedSettingButton visible={props.menuOpened} />
             <HelpButton
                 visible={props.menuOpened}
                 fetchHelpItems={fetchHelp}

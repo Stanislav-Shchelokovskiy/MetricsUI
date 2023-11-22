@@ -14,6 +14,7 @@ export interface BaseContainerState {
     sets: Array<string>
     hiddenLegends: Array<string>
     version: string | undefined
+    baselineAlignedModeEnabled: boolean
 }
 
 export function getDefaultBaseContainerState(context: Context): BaseContainerState {
@@ -26,5 +27,6 @@ export function getDefaultBaseContainerState(context: Context): BaseContainerSta
         sets: [getDefaultTitle()],
         hiddenLegends: Array<string>(),
         version: undefined,
+        baselineAlignedModeEnabled: false,
     }
 }
