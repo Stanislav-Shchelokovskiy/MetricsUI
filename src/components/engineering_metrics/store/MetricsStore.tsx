@@ -7,7 +7,6 @@ import {
     Context
 } from '../../common/store/multiset_container/Context'
 import { configureMultisetContainerStore, MultisetContainerStore } from '../../common/store/multiset_container/Store'
-
 import { BaseContainerState } from '../../common/store/multiset_container/BaseContainerState'
 import { BaseSetState } from '../../common/store/multiset_container/sets/Interfaces'
 import { getStoreConfig as getSupportConfig } from '../../support_metrics/store/Store'
@@ -15,7 +14,6 @@ import { getStoreConfig as getCostConfig } from '../../cost_metrics/store/Store'
 import { getStoreConfig as getPerformanceConfig } from '../../performance_metrics/store/Store'
 import { contextOrDefault } from '../../common/store/multiset_container/Context'
 import { getStateSlice } from '../../common/store/multiset_container/Store'
-import { validateState } from '../../common/store/multiset_container/Actions'
 
 
 function getConfig(ctx: Context) {
