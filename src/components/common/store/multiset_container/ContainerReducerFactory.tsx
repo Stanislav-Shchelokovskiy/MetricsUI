@@ -3,6 +3,7 @@ import { BaseContainerState } from './BaseContainerState'
 import { generateSetTitle } from './Utils'
 import { getDefaultTitle } from './sets/Defaults'
 import { getViewStateReducer } from './ViewStateReducer'
+import { valueOrDefault, definedValueOrDefault } from './Utils'
 import {
     ADD_SET,
     REMOVE_SET,
@@ -13,7 +14,7 @@ import {
     CHANGE_GROUP_BY,
     CHANGE_METRIC,
     CHANGE_COMPARISON_METHOD,
-    CHANGE_BASELINE_ALIGNED_MODE,
+    CHANGE_DISABLE_PERIOD_EXTENSION,
 } from './Actions'
 
 export function getContainerReducer<ContainerStateT extends BaseContainerState>(
@@ -90,32 +91,31 @@ function getComparisonGraphReducer<ContainerStateT extends BaseContainerState>(i
             case CHANGE_GROUP_BY:
                 return {
                     ...container,
-                    groupBy: action.payload !== undefined ? action.payload : initialState.groupBy
+                    groupBy: definedValueOrDefault(action.payload, initialState.groupBy)
                 }
 
             case CHANGE_METRIC:
                 return {
                     ...container,
-                    metric: action.payload !== undefined ? action.payload : initialState.metric
+                    metric: definedValueOrDefault(action.payload, initialState.metric)
                 }
 
             case CHANGE_COMPARISON_METHOD:
                 return {
                     ...container,
-                    comparisonMethod: action.payload !== undefined ? action.payload : initialState.comparisonMethod
+                    comparisonMethod: definedValueOrDefault(action.payload, initialState.comparisonMethod)
                 }
 
             case HIDE_LEGENDS:
-                console.log(HIDE_LEGENDS)
                 return {
                     ...container,
                     hiddenLegends: action.payload
                 }
 
-            case CHANGE_BASELINE_ALIGNED_MODE:
+            case CHANGE_DISABLE_PERIOD_EXTENSION:
                 return {
                     ...container,
-                    baselineAlignedModeEnabled: action.payload
+                    disablePeriodExtension: valueOrDefault(action.payload, initialState.disablePeriodExtension),
                 }
 
             default:

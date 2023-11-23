@@ -1,20 +1,32 @@
-import React, { useCallback, useState, useRef } from 'react'
+import React, { useCallback, useState, useRef, PropsWithChildren, FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Popup, ToolbarItem } from 'devextreme-react/popup'
 import Button from '../../Button'
 import { CheckBox } from 'devextreme-react/check-box'
-import { SupportMetricsStore } from '../../../../support_metrics/store/Store'
-import { changeBaselineAlignedMode } from '../../../store/multiset_container/Actions'
+import { MultisetContainerStore } from '../../../store/multiset_container/Store'
+import { changeDisablePeriodExtension } from '../../../store/multiset_container/Actions'
 import { PopupProps } from '../../../Typing'
+import { disablePeriodExtensionSelector } from '../../../store/multiset_container/Selectors'
+import { useMultisetContainerContext } from '../MultisetContainerContext'
 
-interface AdvancedSettings {
-    baselineAlignedMode: boolean
+
+interface LazyDispatch {
+    dispatch: () => void
 }
 
-type SettingsPopupProps = AdvancedSettings & PopupProps
+export interface SettingsProps {
+    dispatchRef: React.RefObject<LazyDispatch>
+}
 
+interface CustomSettingsProps {
+    customSettings: FC<SettingsProps> | null
+}
 
-export default function AdvancedSettingsButton({ visible }: { visible: boolean }) {
+export interface AdvancedSettingsProps extends CustomSettingsProps {
+    visible: boolean
+}
+
+export default function AdvancedSettingsButton(props: PropsWithChildren<AdvancedSettingsProps>) {
     const [popupVisible, setPopupVisible] = useState(false)
 
     const onClick = () => setPopupVisible(true)
@@ -22,9 +34,10 @@ export default function AdvancedSettingsButton({ visible }: { visible: boolean }
         setPopupVisible(false)
     }, [])
 
-    const baselineAlignedModeEnabled = useSelector((store: SupportMetricsStore) => store.container.baselineAlignedModeEnabled)
-    const settingsModified = isAnySettingModified({ baselineAlignedMode: baselineAlignedModeEnabled })
-    if (visible) {
+    const context = useMultisetContainerContext()
+    const settingsModified = context.advancedSettings.modified(context.stateManagement.getShareableState())
+
+    if (props.visible) {
         return (
             <div className='CommandButton'>
                 <Button
@@ -33,7 +46,7 @@ export default function AdvancedSettingsButton({ visible }: { visible: boolean }
                     onClick={onClick}
                     type={settingsModified ? 'default' : 'normal'} />
                 <AdvancedSettingsPopup
-                    baselineAlignedMode={baselineAlignedModeEnabled}
+                    customSettings={props.customSettings}
                     visible={popupVisible}
                     onHiding={onHiding} />
             </div>
@@ -42,25 +55,28 @@ export default function AdvancedSettingsButton({ visible }: { visible: boolean }
     return null
 }
 
-function isAnySettingModified(settings: AdvancedSettings) {
-    if (settings.baselineAlignedMode !== false)
-        return true
-    return false
+
+interface SettingsPopupProps extends PopupProps, CustomSettingsProps { }
+
+function lazyDispatch() {
+    return { dispatch: () => { } }
 }
 
-
 function AdvancedSettingsPopup(props: SettingsPopupProps) {
+    const childrenRef = useRef<LazyDispatch>(lazyDispatch())
 
-    const baselineAlignedModeCheckBoxRef = useRef<CheckBox>(null)
-    baselineAlignedModeCheckBoxRef.current?.instance.option('value', props.baselineAlignedMode)
+    const disablePeriodExtensionRef = useRef<CheckBox>(null)
+    const disablePeriodExtension = useSelector<MultisetContainerStore, boolean>(disablePeriodExtensionSelector)
 
-    const appDispatch = useDispatch()
+    const dispatch = useDispatch()
     const onOkClick = useCallback(() => {
-        const newbaselineAlignedModeEnabled = baselineAlignedModeCheckBoxRef.current?.instance.option('value')
-        if (newbaselineAlignedModeEnabled !== props.baselineAlignedMode)
-            appDispatch(changeBaselineAlignedMode((newbaselineAlignedModeEnabled as boolean)))
+        const newVal = !!disablePeriodExtensionRef.current?.instance.option('value')
+        if (newVal !== disablePeriodExtension) {
+            dispatch(changeDisablePeriodExtension(newVal))
+        }
+        childrenRef.current?.dispatch()
         props.onHiding()
-    }, [props.baselineAlignedMode])
+    }, [disablePeriodExtension])
 
     const okButtonOptions = {
         text: 'Ok',
@@ -81,12 +97,17 @@ function AdvancedSettingsPopup(props: SettingsPopupProps) {
             maxWidth='30vw'
             maxHeight='40vh'
         >
-            <CheckBox
-                ref={baselineAlignedModeCheckBoxRef}
-                text='Baseline Aligned Mode'
-                focusStateEnabled={false}
-                defaultValue={props.baselineAlignedMode}
-            />
+            <div className='AdvancedSettings'>
+                <CheckBox
+                    ref={disablePeriodExtensionRef}
+                    text='Disable automatic period extension'
+                    focusStateEnabled={false}
+                    defaultValue={disablePeriodExtension}
+                />
+                {
+                    props.customSettings ? <props.customSettings dispatchRef={childrenRef} /> : null
+                }
+            </div>
             <ToolbarItem
                 widget='dxButton'
                 toolbar='bottom'

@@ -9,6 +9,7 @@ import { getAliasedSet } from '../store/sets/SetDescriptor'
 import { Agg } from '../../common/components/multiset_container/graph/ComparisonGraph'
 import { anyValueIsEmpty } from '../../common/store/multiset_container/Utils'
 import { EMPTY_AGGREGATES, getAggregatesConverter } from '../../common/network_resource_fetcher/converters/Aggregate'
+import { booleanSetting } from '../../common/Typing'
 
 
 export async function fetchAggregates(
@@ -32,7 +33,7 @@ export async function fetchAggregates(
         `group_by_period=${containerState.groupBy}` +
         `&range_start=${rangeStart}` +
         `&range_end=${rangeEnd}` +
-        `&baseline_aligned_mode_enabled=${(containerState as ContainerState).baselineAlignedModeEnabled}` +
+        `&baseline_aligned_mode_enabled=${booleanSetting((containerState as ContainerState).baselineAlignedModeEnabled)}` +
         `&metric=${containerState.metric}`,
         {
             method: 'POST',

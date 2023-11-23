@@ -7,6 +7,7 @@ import { FilterParameter } from '../../../../common/store/multiset_container/set
 import { getIncludeButtonOptions } from '../../../../common/components/Button'
 import { useSetTitle } from '../../../../common/components/multiset_container/set/SetContext'
 import { percentileSelector } from '../../../store/sets/Selectors'
+import { booleanSetting } from '../../../../common/Typing'
 
 
 export default function PercentileSelector() {
@@ -15,7 +16,7 @@ export default function PercentileSelector() {
     const percentile = useSelector((store: SupportMetricsStore) => percentileSelector(store, setTitle) as FilterParameter<number>)
 
     const disabled = useSelector((store: SupportMetricsStore) =>
-        store.container.baselineAlignedModeEnabled
+        booleanSetting(store.container.baselineAlignedModeEnabled)
     )
 
     const format = (value: number) => {

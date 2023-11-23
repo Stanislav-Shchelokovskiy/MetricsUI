@@ -5,6 +5,7 @@ import { SetState } from '../store/sets/Interfaces'
 import { getAliasedSet } from '../store/sets/SetDescriptor'
 import { ContainerState } from '../store/ContainerReducer'
 import { toDate } from '../../common/Utils'
+import { booleanSetting } from '../../common/Typing'
 
 export interface RawData {
     creation_date: any
@@ -24,7 +25,7 @@ export async function fetchTicketsWithIterationsRaw(
     return fetchConvert(converter, `${SUPPORT_METRICS_END_POINT}/TicketsWithIterationsRaw?` +
         `&range_start=${rangeStart}` +
         `&range_end=${rangeEnd}` +
-        `&baseline_aligned_mode_enabled=${containerState.baselineAlignedModeEnabled}`,
+        `&baseline_aligned_mode_enabled=${booleanSetting(containerState.baselineAlignedModeEnabled)}`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

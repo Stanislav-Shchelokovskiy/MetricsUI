@@ -1,9 +1,12 @@
 import { getDefaultTitle } from './sets/Defaults'
-import { groupByOrDefault as groupByOrDefault } from '../../components/multiset_container/graph/GroupBySelector'
+import { BooleanSetting } from '../../Typing'
+import { groupByOrDefault } from '../../components/multiset_container/graph/GroupBySelector'
 import { validComparisonMethodOrDefault } from '../../components/multiset_container/graph/ComparisonMethodSelector'
 import { validMetricOrDefault } from '../../components/multiset_container/graph/MetricSelector'
-import { getValidRangeOrDefault } from '../../components/RangePeriodSelector'
+import { rangeOrDefault } from '../../components/RangePeriodSelector'
 import { Context } from './Context'
+import { booleanSetting } from '../../Typing'
+
 
 export interface BaseContainerState {
     context: Context
@@ -14,19 +17,23 @@ export interface BaseContainerState {
     sets: Array<string>
     hiddenLegends: Array<string>
     version: string | undefined
-    baselineAlignedModeEnabled: boolean
+    disablePeriodExtension: BooleanSetting
 }
 
 export function getDefaultBaseContainerState(context: Context): BaseContainerState {
     return {
         context: context,
-        range: getValidRangeOrDefault(undefined),
+        range: rangeOrDefault(undefined),
         groupBy: groupByOrDefault(undefined, context),
         metric: validMetricOrDefault(undefined),
         comparisonMethod: validComparisonMethodOrDefault(undefined),
         sets: [getDefaultTitle()],
         hiddenLegends: Array<string>(),
         version: undefined,
-        baselineAlignedModeEnabled: false,
+        disablePeriodExtension: undefined,
     }
+}
+
+export function advancedSettingsModified(container: BaseContainerState): boolean {
+    return booleanSetting(container.disablePeriodExtension)
 }

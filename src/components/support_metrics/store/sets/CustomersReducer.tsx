@@ -1,6 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit'
 import { SetState } from './Interfaces'
-import { 
+import {
     updateSetState,
     updateValues,
     updateValuesInclude
@@ -15,7 +15,7 @@ import {
     CHANGE_CUSTOMERS,
     CHANGE_CUSTOMERS_INCLUDE,
 } from '../actions/Customers'
-import { CHANGE_BASELINE_ALIGNED_MODE } from '../../../common/store/multiset_container/Actions'
+import { CHANGE_BASELINE_ALIGNED_MODE } from '../actions/Common'
 
 
 export function customersReducer(sets: Array<SetState>, action: AnyAction): Array<SetState> {

@@ -106,3 +106,11 @@ export function anyValueIsEmpty(...values: Array<any>): boolean {
 export function paramOrDefault<T>(param: FilterParameters<T> | undefined): FilterParameters<T> | Array<T> {
     return param || ((getOptionalFilterParameters<T>([]) as unknown) as Array<T>)
 }
+
+export function definedValueOrDefault(val: any, defaultVal: any) {
+    return val !== undefined ? val : defaultVal
+}
+
+export function valueOrDefault(val: any, defaultVal: any) {
+    return val || defaultVal
+}

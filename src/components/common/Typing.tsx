@@ -38,3 +38,10 @@ export interface HelpItem {
 
 export const NULL_FILTER_VALUE = '#_NULL_FILTER_VALUE_#'
 export type SupportsNullFilter<T> = T | '#_NULL_FILTER_VALUE_#'
+
+export type Undefinable<T> = T | undefined
+export type BooleanSetting = Undefinable<Boolean>
+
+export function booleanSetting(setting: BooleanSetting): boolean {
+    return !!setting
+}

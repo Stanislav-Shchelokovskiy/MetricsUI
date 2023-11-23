@@ -9,7 +9,7 @@ import ApplySharedState from '../common/components/state_management/ApplySharedS
 import Sets from './content/Sets'
 import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
 import SupportMetricsToolbar from './toolbar/Toolbar'
-import { ContainerState, CONTEXT } from './store/ContainerReducer'
+import { ContainerState, CONTEXT, advancedSettingsModified } from './store/ContainerReducer'
 import { BaseContainerState } from '../common/store/multiset_container/BaseContainerState'
 import { fetchGroupBys } from './network_resource_fetcher/GroupBy'
 import { fetchPeriod } from './network_resource_fetcher/Period'
@@ -22,6 +22,7 @@ import { fetchDisplayFilter } from './network_resource_fetcher/DisplayFilter'
 import { MultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
 import { SUPPORT_METRICS } from '../app_components/Paths'
 import { getSetDataFields } from './store/sets/SetDescriptor'
+import { SupportMetricsStore } from './store/Store'
 
 
 const graphSettings = {
@@ -54,6 +55,12 @@ const metricDescription = {
     fetchMetricDescription: fetchMetricDesc,
 }
 
+const advancedSettings = {
+    modified: (store: SupportMetricsStore) => {
+        return advancedSettingsModified(store.container)
+    }
+}
+
 export const supportMetricsContext = {
     graphSettingsPanel: graphSettings,
     graph: graph,
@@ -61,6 +68,7 @@ export const supportMetricsContext = {
     rawData: rawData,
     filterLabel: filterLabel,
     metricDescription: metricDescription,
+    advancedSettings: advancedSettings,
     fetchMetrics: fetchMetrics,
     changeMetric: (ctx: any) => { },
     changeState: (state: any) => { },

@@ -1,19 +1,12 @@
 import { ContainerState, CONTEXT } from './ContainerReducer'
 import { DEFAULT_SET } from './sets/Defaults'
 import { SetState } from './sets/Interfaces'
-import { containerValidator as containerValidator_, setsValidator as validateSets } from '../../common/store/multiset_container/StoreStateValidator'
+import { containerValidator as validateContainer, setsValidator as validateSets } from '../../common/store/multiset_container/StoreStateValidator'
 
 
 export function containerValidator(container: ContainerState): ContainerState {
-    return containerValidator_(container, CONTEXT, validateContainer)
+    return validateContainer(container, CONTEXT)
 }
-
-function validateContainer(container: ContainerState): ContainerState {
-    if (container.baselineAlignedModeEnabled === undefined)
-        container.baselineAlignedModeEnabled = false
-    return container
-}
-
 
 export function setsValidator(sets: Array<SetState>): Array<SetState> {
     return validateSets(sets, validateSet)

@@ -1,5 +1,5 @@
 import { SupportsNullFilter } from '../../../Typing'
-
+import { Undefinable } from '../../../Typing'
 interface Filter {
     include: boolean
 }
@@ -12,7 +12,6 @@ export interface FilterParameter<T> extends Filter {
     value: T
 }
 
-export type Undefinable<T> = T | undefined
 
 //  multiples
 export type StringFilterParameters = Undefinable<FilterParameters<SupportsNullFilter<string>>>

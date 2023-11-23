@@ -6,7 +6,7 @@ import '../common/styles/multiset_container/FilterTooltip.css'
 import React from 'react'
 import { PERFORMANCE_METRICS_END_POINT } from '../common/EndPoint'
 import ApplySharedState from '../common/components/state_management/ApplySharedState'
-import { BaseContainerState } from '../common/store/multiset_container/BaseContainerState'
+import { BaseContainerState, advancedSettingsModified } from '../common/store/multiset_container/BaseContainerState'
 import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
 import { MultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
 import { fetchPeriod } from './network_resource_fetcher/Period'
@@ -21,6 +21,7 @@ import Sets from './content/Sets'
 import PerformanceMetricsToolbar from './toolbar/Toolbar'
 import { PERFORMANCE_METRICS } from '../app_components/Paths'
 import { getSetDataFields } from './store/sets/SetDescriptor'
+import { MultisetContainerStore } from '../common/store/multiset_container/Store'
 
 const graphSettings = {
     fetchPeriod: fetchPeriod,
@@ -52,6 +53,12 @@ const metricDescription = {
     fetchMetricDescription: fetchMetricDesc,
 }
 
+const advancedSettings = {
+    modified: (store: MultisetContainerStore) => {
+        return advancedSettingsModified(store.container)
+    }
+}
+
 export const performanceMetricsContext = {
     graphSettingsPanel: graphSettings,
     graph: graph,
@@ -59,6 +66,7 @@ export const performanceMetricsContext = {
     rawData: rawData,
     filterLabel: filterLabel,
     metricDescription: metricDescription,
+    advancedSettings: advancedSettings,
     fetchMetrics: fetchMetrics,
     changeMetric: (ctx: any) => { },
     changeState: (state: any) => { },

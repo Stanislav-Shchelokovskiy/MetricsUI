@@ -11,7 +11,6 @@ import ComparisonGraph from './graph/ComparisonGraph'
 import { changeMetric } from '../../store/multiset_container/Actions'
 
 
-
 export interface SetProps { setTitle: string }
 
 interface SettingsSetsProps {
@@ -65,6 +64,7 @@ export default function MultisetContainer(props: MultisetContainerProps) {
             <props.toolbar
                 showHideMenu={showHideMenuCallback}
                 menuOpened={opened}
+                settings={null}
             />
             <Drawer
                 className='MultisetContainer_ContentDrawer'

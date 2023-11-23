@@ -36,7 +36,7 @@ function validatePeriod(period: PeriodStr | any, possiblePeriod: PeriodStr, _: a
     return [[possiblePeriodStartStr, possiblePeriodEndStr], true]
 }
 
-export function getValidRangeOrDefault(value: PeriodStr | undefined) {
+export function rangeOrDefault(value: PeriodStr | undefined) {
     return value ? value : ['', '']
 }
 

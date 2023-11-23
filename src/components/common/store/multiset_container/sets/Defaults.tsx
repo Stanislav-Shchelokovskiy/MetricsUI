@@ -1,4 +1,5 @@
-import { FilterParameters, FilterParameter, Undefinable } from './Interfaces'
+import { FilterParameters, FilterParameter } from './Interfaces'
+import { Undefinable } from '../../../Typing'
 import { generateSetTitle } from '../Utils'
 import { BaseSetState } from './Interfaces'
 import { SupportsNullFilter } from '../../../Typing'

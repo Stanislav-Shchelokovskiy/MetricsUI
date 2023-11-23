@@ -2,9 +2,18 @@ import { createSelector } from '@reduxjs/toolkit'
 import { MultisetContainerStore } from "./Store"
 import { BaseContainerState } from "./BaseContainerState"
 import { BaseSetState } from "./sets/Interfaces"
+import { booleanSetting } from '../../Typing'
 
 export function metricSelector<ContainerState extends BaseContainerState>(store: MultisetContainerStore<ContainerState>) {
     return store.container.metric
+}
+
+export function rangeSelector<ContainerState extends BaseContainerState>(store: MultisetContainerStore<ContainerState>) {
+    return store.container.range
+}
+
+export function disablePeriodExtensionSelector<ContainerState extends BaseContainerState>(store: MultisetContainerStore<ContainerState>): boolean {
+    return booleanSetting(store.container.disablePeriodExtension)
 }
 
 export function setsSelector<T>(store: MultisetContainerStore<BaseContainerState, T>) {

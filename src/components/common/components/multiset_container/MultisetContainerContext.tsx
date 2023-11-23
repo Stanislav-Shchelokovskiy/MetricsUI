@@ -40,6 +40,10 @@ interface MetricDescriptionContext {
     fetchMetricDescription: (metric: string) => Promise<FetchResult<HelpItem>>
 }
 
+interface AdvancedSettingsContext {
+    modified: (store: any) => boolean
+}
+
 interface Context {
     graphSettingsPanel: GraphSettingsPanelContext
     graph: GraphContext
@@ -47,6 +51,7 @@ interface Context {
     rawData: RawDataContext
     filterLabel: FilterLabelContext
     metricDescription: MetricDescriptionContext
+    advancedSettings: AdvancedSettingsContext
     fetchMetrics: (...args: any) => Promise<FetchResult<Array<Metric>>>,
     changeMetric: (metric: Metric) => void
     changeState: (state?: MultisetContainerStore) => void
