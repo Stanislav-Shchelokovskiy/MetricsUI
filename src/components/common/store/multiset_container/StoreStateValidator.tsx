@@ -63,10 +63,6 @@ export function containerValidator<ContainerState extends BaseContainerState>(
 
 
 function defaultContainerValidator<ContainerState extends BaseContainerState>(container: ContainerState, context: Context): ContainerState {
-    let range = container.range
-    if (!booleanSetting(container.disablePeriodExtension) && range?.length) {
-        range = [container.range[0], dateToISOstr(new Date())]
-    }
     return {
         ...container,
         context: context,
@@ -75,8 +71,15 @@ function defaultContainerValidator<ContainerState extends BaseContainerState>(co
         metric: metricOrDefault(container.metric),
         hiddenLegends: hiddenLegendsOrDefault(container.hiddenLegends),
         sets: container.sets.map(x => toFriendlyTitle(x)),
-        range: rangeOrDefault(range),
+        range: rangeOrDefault(extendedRange(container)),
     }
+}
+
+function extendedRange<ContainerState extends BaseContainerState>(container: ContainerState) {
+    let range = container.range
+    if (!booleanSetting(container.disablePeriodExtension) && range?.length)
+        return [range[0], dateToISOstr(new Date())]
+    return range
 }
 
 function hiddenLegendsOrDefault(hiddenLegends: Array<any> | undefined) {
