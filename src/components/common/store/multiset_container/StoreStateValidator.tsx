@@ -1,11 +1,14 @@
 import { groupByOrDefault } from '../../components/multiset_container/graph/GroupBySelector'
-import { validComparisonMethodOrDefault } from '../../components/multiset_container/graph/ComparisonMethodSelector'
-import { validMetricOrDefault } from '../../components/multiset_container/graph/MetricSelector'
+import { comparisonMethodOrDefault } from '../../components/multiset_container/graph/ComparisonMethodSelector'
+import { metricOrDefault } from '../../components/multiset_container/graph/MetricSelector'
+import { rangeOrDefault } from '../../components/RangePeriodSelector'
 import { BaseContainerState } from './BaseContainerState'
 import { BaseSetState } from './sets/Interfaces'
 import { Context } from './Context'
 import { toFriendlyTitle } from './Utils'
 import { MultisetContainerStore } from './Store'
+import { booleanSetting } from '../../Typing'
+import { dateToISOstr } from '../../DateUtils'
 
 
 export function stateValidator<ContainerState extends BaseContainerState, SetState extends BaseSetState>(
@@ -60,14 +63,19 @@ export function containerValidator<ContainerState extends BaseContainerState>(
 
 
 function defaultContainerValidator<ContainerState extends BaseContainerState>(container: ContainerState, context: Context): ContainerState {
+    let range = container.range
+    if (!booleanSetting(container.disablePeriodExtension) && range?.length) {
+        range = [container.range[0], dateToISOstr(new Date())]
+    }
     return {
         ...container,
         context: context,
         groupBy: groupByOrDefault(container.groupBy, context),
-        comparisonMethod: validComparisonMethodOrDefault(container.comparisonMethod),
-        metric: validMetricOrDefault(container.metric),
+        comparisonMethod: comparisonMethodOrDefault(container.comparisonMethod),
+        metric: metricOrDefault(container.metric),
         hiddenLegends: hiddenLegendsOrDefault(container.hiddenLegends),
         sets: container.sets.map(x => toFriendlyTitle(x)),
+        range: rangeOrDefault(range),
     }
 }
 

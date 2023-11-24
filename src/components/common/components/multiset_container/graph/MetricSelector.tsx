@@ -109,6 +109,6 @@ function HelpProvider({ Wrapped, fetchMetricDescription, fetchArgsSelector, ...w
     </>
 }
 
-export function validMetricOrDefault(value: string | undefined) {
+export function metricOrDefault(value: string | undefined) {
     return value ? value : TAKE_FROM_DEFAULT_SELECTOR
 }

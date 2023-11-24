@@ -4,7 +4,7 @@ import { SetState } from '../store/sets/SetsReducer'
 import { getAliasedSet } from '../store/sets/SetDescriptor'
 import FetchResult from '../../common/Typing'
 import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'
-import { toDate } from '../../common/Utils'
+import { toDate } from '../../common/DateUtils'
 
 interface RawData {
     year_month: any

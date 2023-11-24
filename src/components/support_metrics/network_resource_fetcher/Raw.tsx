@@ -4,7 +4,7 @@ import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefau
 import { SetState } from '../store/sets/Interfaces'
 import { getAliasedSet } from '../store/sets/SetDescriptor'
 import { ContainerState } from '../store/ContainerReducer'
-import { toDate } from '../../common/Utils'
+import { toDate } from '../../common/DateUtils'
 import { booleanSetting } from '../../common/Typing'
 
 export interface RawData {
