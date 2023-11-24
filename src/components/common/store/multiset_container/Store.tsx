@@ -2,6 +2,7 @@ import { combineReducers, configureStore, PayloadAction } from '@reduxjs/toolkit
 import { loadState, saveState } from '../../LocalStorage'
 import { BaseContainerState } from './BaseContainerState'
 import { BaseSetState } from './sets/Interfaces'
+import { Context, contextOrDefault } from './Context'
 
 export interface MultisetContainerStore<ContainerState = BaseContainerState, SetState = BaseSetState> {
     container: ContainerState
@@ -13,7 +14,6 @@ type SetsReducer<SetState> = (state: Array<SetState> | undefined, action: Payloa
 
 
 interface config<ContainerState, SetState> {
-    storeName: string,
     reducer: (state: MultisetContainerStore<ContainerState, SetState> | undefined, action: PayloadAction) => MultisetContainerStore<ContainerState, SetState>,
     validator: (state: MultisetContainerStore<ContainerState, SetState>) => MultisetContainerStore<ContainerState, SetState>,
 }
@@ -24,18 +24,17 @@ export interface Config<ContainerState, SetState> extends config<ContainerState,
 }
 
 export function configureMultisetContainerStore<ContainerState extends BaseContainerState, SetState extends BaseSetState>(
-    { storeName, reducer, validator }: config<ContainerState, SetState>
+    storeName: string,
+    config: (ctx: Context) => config<ContainerState, SetState>,
 ) {
-    function loadValidState() {
-        let storedState = loadState(storeName)
-        if (storedState !== undefined)
-            storedState = validator(storedState)
-        return storedState
-    }
+    let storedState = loadState(storeName) as MultisetContainerStore<ContainerState, SetState>
+    const { reducer, validator } = config(contextOrDefault(storedState?.container?.context))
+    if (storedState !== undefined)
+        storedState = validator(storedState)
 
     const store = configureStore<MultisetContainerStore<ContainerState, SetState>, PayloadAction>({
         reducer: reducer,
-        preloadedState: loadValidState()
+        preloadedState: storedState as any
     })
 
     store.subscribe(() => {

@@ -102,19 +102,20 @@ function changeContext(ctx: Context) {
     slicer.changeContext(ctx)
 }
 
-const config = {
-    storeName: 'multiset_store',
-    reducer: reducer.reducer,
-    validator: validator.validator,
+function config(ctx: Context) {
+    changeContext(ctx)
+    return {
+        reducer: reducer.reducer,
+        validator: validator.validator,
+    }
 }
-
 
 interface StoreEx extends Store {
     changeContext: (ctx: Context) => void,
     getShareableState: () => MultisetContainerStore
 }
 
-const store = configureMultisetContainerStore(config)
+const store = configureMultisetContainerStore('multiset_store', config)
 
 export const multisetStore: StoreEx = {
     ...store,

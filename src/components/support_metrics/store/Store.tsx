@@ -10,7 +10,6 @@ import { DEFAULT_SET } from './sets/Defaults'
 
 
 const config: Config<ContainerState, SetState> = {
-    storeName: 'support_metrics',
     reducer: getReducer(containerReducer, setsReducer),
     validator: stateValidator(containerValidator, setsValidator),
     containerKeysSource: INITIAL_STATE,
