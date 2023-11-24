@@ -11,7 +11,7 @@ import { Payload } from '../Typing'
 type Period = [Date, Date]
 type PeriodStr = Array<string>
 type PeriodContainer = { values: PeriodStr | undefined }
-export type PeriodGroupBy = '%Y-%m-%d' | '%Y-%W' | '%Y-%m' | '%Y'
+export type PeriodGroupBy = '%Y-%m-%d' | '%Y-%W' | '%Y-%m' | '%Y-%Q' | '%Y' | string
 
 
 export function rangeOrDefault(value: PeriodStr | undefined) {
@@ -79,15 +79,10 @@ export interface RangeSelectorProps {
 }
 
 function DefaultRangeSelector(props: RangeSelectorProps) {
-    const minorTickIntervals = useMemo(() => {
-        return {
-            '%Y-%m-%d': 'day',
-            '%Y-%W': 'week',
-            '%Y-%m': 'week',
-            '%Y': 'month',
-        }
-    }, [])
-    const minorTickInterval = minorTickIntervals[props.groupByPeriod as keyof typeof minorTickIntervals]
+    const minorTickInterval = {
+        '%Y-%m-%d': 'day',
+        '%Y': 'month',
+    }[props.groupByPeriod] || 'week'
     const tick = useMemo(() => { return { visible: false } }, [])
     return (
         <DxRangeSelector
