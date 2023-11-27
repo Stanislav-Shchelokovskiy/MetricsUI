@@ -24,7 +24,7 @@ export function useMultiValidate<DataSourceT, ValueExprT = (DataSourceT | keyof 
     const validateSelectedValues = useCallback((
         allValues: Array<DataSourceT>,
         dataSource: Array<DataSourceT> | undefined = undefined) => {
-        if (!valuesToValidate)
+        if (!valuesToValidate?.length) // nulls and empty arrays are considered valid
             return
         const [validValues, valuesAreValid] = validateValues(allValues, valuesToValidate, valueExpr)
         if (valuesAreValid)
