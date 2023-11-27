@@ -1,14 +1,13 @@
 import { groupByOrDefault } from '../../components/multiset_container/graph/GroupBySelector'
 import { comparisonMethodOrDefault } from '../../components/multiset_container/graph/ComparisonMethodSelector'
 import { metricOrDefault } from '../../components/multiset_container/graph/MetricSelector'
-import { rangeOrDefault } from '../../components/RangePeriodSelector'
 import { BaseContainerState } from './BaseContainerState'
 import { BaseSetState } from './sets/Interfaces'
 import { Context } from './Context'
 import { toFriendlyTitle } from './Utils'
 import { MultisetContainerStore } from './Store'
 import { booleanSetting } from '../../Typing'
-import { dateToISOstr } from '../../DateUtils'
+import { dateToISOstr, periodOrDefault } from '../../DatePeriodUtils'
 
 
 export function stateValidator<ContainerState extends BaseContainerState, SetState extends BaseSetState>(
@@ -71,7 +70,7 @@ function defaultContainerValidator<ContainerState extends BaseContainerState>(co
         metric: metricOrDefault(container.metric),
         hiddenLegends: hiddenLegendsOrDefault(container.hiddenLegends),
         sets: container.sets.map(x => toFriendlyTitle(x)),
-        range: rangeOrDefault(extendedRange(container)),
+        range: periodOrDefault(extendedRange(container)),
     }
 }
 

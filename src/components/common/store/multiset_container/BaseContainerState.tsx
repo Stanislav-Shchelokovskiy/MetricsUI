@@ -3,7 +3,7 @@ import { BooleanSetting } from '../../Typing'
 import { groupByOrDefault } from '../../components/multiset_container/graph/GroupBySelector'
 import { comparisonMethodOrDefault } from '../../components/multiset_container/graph/ComparisonMethodSelector'
 import { metricOrDefault } from '../../components/multiset_container/graph/MetricSelector'
-import { rangeOrDefault } from '../../components/RangePeriodSelector'
+import { periodOrDefault } from '../../DatePeriodUtils'
 import { Context } from './Context'
 import { booleanSetting } from '../../Typing'
 
@@ -23,7 +23,7 @@ export interface BaseContainerState {
 export function getDefaultBaseContainerState(context: Context): BaseContainerState {
     return {
         context: context,
-        range: rangeOrDefault(undefined),
+        range: periodOrDefault(undefined),
         groupBy: groupByOrDefault(undefined, context),
         metric: metricOrDefault(undefined),
         comparisonMethod: comparisonMethodOrDefault(undefined),
