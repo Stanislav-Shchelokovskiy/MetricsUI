@@ -14,6 +14,8 @@ import {
     CHANGE_POSITIONS_INCLUDE,
     CHANGE_LEVELS,
     CHANGE_LEVELS_INCLUDE,
+    CHANGE_ROLES,
+    CHANGE_ROLES_INCLUDE,
     CHANGE_EMPLOYEES,
     CHANGE_EMPLOYEES_INCLUDE,
 } from './actions/Employees'
@@ -82,6 +84,22 @@ export function employeesReducer<SetState extends BaseSetState>(sets: Array<SetS
                 return {
                     ...x,
                     levels: updateValuesInclude(x.levels, action.payload.data)
+                }
+            })
+
+
+        case CHANGE_ROLES:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    roles: updateValues(x.roles, action.payload.data)
+                }
+            })
+        case CHANGE_ROLES_INCLUDE:
+            return updateSetState(action.payload.stateId, sets, (x) => {
+                return {
+                    ...x,
+                    roles: updateValuesInclude(x.roles, action.payload.data)
                 }
             })
 

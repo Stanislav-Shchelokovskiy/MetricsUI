@@ -32,5 +32,6 @@ export interface BaseSetState {
     empTents: StringFilterParameters
     positions: StringFilterParameters
     levels: NumberFilterParameters
+    roles: StringFilterParameters
     employees: StringFilterParameters
 }

@@ -43,6 +43,7 @@ export function getDefaultBaseSet(): BaseSetState {
         empTents: getOptionalFilterParameters<string>(),
         positions: getOptionalFilterParameters<string>(),
         levels: getOptionalFilterParameters<SupportsNullFilter<number>>(),
+        roles: getOptionalFilterParameters<string>(),
         employees: getOptionalFilterParameters<string>(),
     }
 }

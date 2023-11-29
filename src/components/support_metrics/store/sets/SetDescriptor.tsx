@@ -31,6 +31,7 @@ export function getAliasedSet(set: SetState) {
         'Employees positions': set.positions,
         'Employees tribes': set.empTribes,
         'Employees tents': set.empTents,
+        'Roles': set.roles,
         'Employees': set.employees,
         'Assigned to': set.assignedTo,
         'Closed by': set.closedBy,

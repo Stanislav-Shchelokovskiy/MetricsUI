@@ -36,6 +36,7 @@ import FixedBetweenSelector from './settings_panel/bugs/FixedBetweenSelector'
 import OwnerKindSelector from './settings_panel/tickets/OwnerKindSelector'
 import ClosedForSelector from './settings_panel/tickets/ClosedForSelector'
 import ResolutionTimeSelector from './settings_panel/tickets/ResolutionTimeSelector'
+import RolesSelector from './settings_panel/employees/RolesSelector'
 
 
 function Set({ setTitle }: SetProps) {
@@ -71,6 +72,7 @@ function Set({ setTitle }: SetProps) {
             <EmpPositionsSelector />
             <EmpTribesSelector />
             <EmpTentsSelector />
+            <RolesSelector />
             <EmployeesSelector />
             <AssignedToSelector />
             <ReplyTypesSelector />

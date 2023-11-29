@@ -13,6 +13,7 @@ export async function fetchEmployees(
     positions: StringFilterParameters,
     tribes: StringFilterParameters,
     tents: StringFilterParameters,
+    roles: StringFilterParameters,
 ): Promise<FetchResult<Array<Employee>>> {
     return fetchArray(
         `${SUPPORT_METRICS_END_POINT}/Employees`,
@@ -23,6 +24,7 @@ export async function fetchEmployees(
                 positions: positions,
                 tribes: tribes,
                 tents: tents,
+                roles: roles,
             }),
         }
     )

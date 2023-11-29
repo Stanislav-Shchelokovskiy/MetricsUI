@@ -9,7 +9,7 @@ import { fetchEmployees, Employee } from '../../../../network_resource_fetcher/e
 import { StringFilterParameters } from '../../../../../common/store/multiset_container/sets/Interfaces'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { positionsSelector, empTribesSelector, empTentsSelector, employeesSelector } from '../../../../../common/store/multiset_container/sets/selectors/Employees'
+import { positionsSelector, empTribesSelector, empTentsSelector, employeesSelector, rolesSelector } from '../../../../../common/store/multiset_container/sets/selectors/Employees'
 
 
 
@@ -24,6 +24,7 @@ export default function EmployeesSelector() {
         positionsSelector={positionsSelector}
         tribesSelector={empTribesSelector}
         tentsSelector={empTentsSelector}
+        rolesSelector={rolesSelector}
     />
 }
 
@@ -38,15 +39,17 @@ export interface EmpSelectorProps {
     positionsSelector: (store: SupportMetricsStore, setTitle: string) => StringFilterParameters
     tribesSelector: (store: SupportMetricsStore, setTitle: string) => StringFilterParameters
     tentsSelector: (store: SupportMetricsStore, setTitle: string) => StringFilterParameters
+    rolesSelector: (store: SupportMetricsStore, setTitle: string) => StringFilterParameters
 }
 
 export function EmpSelector(props: EmpSelectorProps) {
     const setTitle = useSetTitle()
 
-    const positionsNode = useSelector((store: SupportMetricsStore) => props.positionsSelector(store, setTitle))
-    const tribesNode = useSelector((store: SupportMetricsStore) => props.tribesSelector(store, setTitle))
-    const tentsNode = useSelector((store: SupportMetricsStore) => props.tentsSelector(store, setTitle))
-    const fetchArgs = [paramOrDefault(positionsNode), paramOrDefault(tribesNode), paramOrDefault(tentsNode)]
+    const positions = useSelector((store: SupportMetricsStore) => props.positionsSelector(store, setTitle))
+    const tribes = useSelector((store: SupportMetricsStore) => props.tribesSelector(store, setTitle))
+    const tents = useSelector((store: SupportMetricsStore) => props.tentsSelector(store, setTitle))
+    const roles = useSelector((store: SupportMetricsStore) => props.rolesSelector(store, setTitle))
+    const fetchArgs = [paramOrDefault(positions), paramOrDefault(tribes), paramOrDefault(tents), paramOrDefault(roles)]
 
     const value = useSelector((store: SupportMetricsStore) => props.valueSelector(store, setTitle))
     const onValueChange = (allValues: Array<Employee>, values: Array<string>) => props.changeSelection({ stateId: setTitle, data: values })

@@ -28,6 +28,10 @@ export const CHANGE_LEVELS_INCLUDE = 'change_level_include'
 export const changeLevels = getValuesPayloadAction<SupportsNullFilter<number>>(CHANGE_LEVELS)
 export const changeLevelsInclude = getIncludePayloadAction(CHANGE_LEVELS_INCLUDE)
 
+export const CHANGE_ROLES = 'change_roles'
+export const CHANGE_ROLES_INCLUDE = 'change_roles_include'
+export const changeRoles = getValuesPayloadAction<string>(CHANGE_ROLES)
+export const changeRolesInclude = getIncludePayloadAction(CHANGE_ROLES_INCLUDE)
 
 export const CHANGE_EMPLOYEES = 'change_employees'
 export const CHANGE_EMPLOYEES_INCLUDE = 'change_employees_include'
