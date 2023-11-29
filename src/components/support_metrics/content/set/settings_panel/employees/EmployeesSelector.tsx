@@ -21,10 +21,6 @@ export default function EmployeesSelector() {
         valueSelector={employeesSelector}
         changeSelection={changeEmployees}
         changeInclude={changeEmployeesInclude}
-        positionsSelector={positionsSelector}
-        tribesSelector={empTribesSelector}
-        tentsSelector={empTentsSelector}
-        rolesSelector={rolesSelector}
     />
 }
 
@@ -36,19 +32,15 @@ export interface EmpSelectorProps {
     valueSelector: (store: SupportMetricsStore, setTitle: string) => StringFilterParameters
     changeSelection: (payload: Payload<string, Array<string>>) => PayloadAction<Payload<string, Array<string>>>
     changeInclude: (payload: Payload<string, boolean>) => PayloadAction<Payload<string, boolean>>
-    positionsSelector: (store: SupportMetricsStore, setTitle: string) => StringFilterParameters
-    tribesSelector: (store: SupportMetricsStore, setTitle: string) => StringFilterParameters
-    tentsSelector: (store: SupportMetricsStore, setTitle: string) => StringFilterParameters
-    rolesSelector: (store: SupportMetricsStore, setTitle: string) => StringFilterParameters
 }
 
 export function EmpSelector(props: EmpSelectorProps) {
     const setTitle = useSetTitle()
 
-    const positions = useSelector((store: SupportMetricsStore) => props.positionsSelector(store, setTitle))
-    const tribes = useSelector((store: SupportMetricsStore) => props.tribesSelector(store, setTitle))
-    const tents = useSelector((store: SupportMetricsStore) => props.tentsSelector(store, setTitle))
-    const roles = useSelector((store: SupportMetricsStore) => props.rolesSelector(store, setTitle))
+    const positions = useSelector((store: SupportMetricsStore) => positionsSelector(store, setTitle))
+    const tribes = useSelector((store: SupportMetricsStore) => empTribesSelector(store, setTitle))
+    const tents = useSelector((store: SupportMetricsStore) => empTentsSelector(store, setTitle))
+    const roles = useSelector((store: SupportMetricsStore) => rolesSelector(store, setTitle))
     const fetchArgs = [paramOrDefault(positions), paramOrDefault(tribes), paramOrDefault(tents), paramOrDefault(roles)]
 
     const value = useSelector((store: SupportMetricsStore) => props.valueSelector(store, setTitle))

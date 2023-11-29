@@ -4,7 +4,6 @@ import { EmpSelector } from '../employees/EmployeesSelector'
 import BugsSelectorWrapper from './BugsSelectors'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 import { fixedBySelector } from '../../../../store/sets/Selectors'
-import { empTribesSelector } from '../../../../../common/store/multiset_container/sets/selectors/Employees'
 
 
 export default function FixedBySelector() {
@@ -18,6 +17,5 @@ export default function FixedBySelector() {
         valueSelector={fixedBySelector}
         changeSelection={changeFixedBy}
         changeInclude={changeFixedByInclude}
-        tribesSelector={empTribesSelector}
     />
 }

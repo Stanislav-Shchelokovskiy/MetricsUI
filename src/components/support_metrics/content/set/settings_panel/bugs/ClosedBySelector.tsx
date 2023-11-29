@@ -4,7 +4,6 @@ import { EmpSelector } from '../employees/EmployeesSelector'
 import { ClosedBugsSelectorWrapper } from './BugsSelectors'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 import { closedBySelector } from '../../../../store/sets/Selectors'
-import { empTribesSelector } from '../../../../../common/store/multiset_container/sets/selectors/Employees'
 
 
 export default function ClosedBySelector() {
@@ -18,6 +17,5 @@ export default function ClosedBySelector() {
         valueSelector={closedBySelector}
         changeSelection={changeClosedBy}
         changeInclude={changeClosedByInclude}
-        tribesSelector={empTribesSelector}
     />
 }
