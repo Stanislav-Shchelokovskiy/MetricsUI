@@ -12,7 +12,6 @@ import { useSetTitle } from '../../../../../common/components/multiset_container
 import { positionsSelector, empTribesSelector, empTentsSelector, employeesSelector, rolesSelector } from '../../../../../common/store/multiset_container/sets/selectors/Employees'
 
 
-
 export default function EmployeesSelector() {
     return <EmpSelector
         className='CustomersActivity_EmployeesSelector'
@@ -64,10 +63,3 @@ export function EmpSelector(props: EmpSelectorProps) {
         showNullItem={true}
     />
 }
-
-const defaultProps = {
-    positionsSelector: (store: SupportMetricsStore, setTitle: string) => undefined,
-    tribesSelector: (store: SupportMetricsStore, setTitle: string) => undefined,
-    tentsSelector: (store: SupportMetricsStore, setTitle: string) => undefined,
-}
-EmpSelector.defaultProps = defaultProps
