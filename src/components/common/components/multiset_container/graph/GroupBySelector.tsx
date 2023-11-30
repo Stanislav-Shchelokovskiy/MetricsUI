@@ -30,18 +30,10 @@ export default function GroupBySelector() {
 
 export function groupByOrDefault(value: string | undefined, context: Context) {
     const ym = '%Y-%m'
-    const tent = 'Tent'
     if (value) {
-        if (isPerformanceContextSelected(context)) {
-            if (value.startsWith('%Y'))
-                return tent
-        } else if (!value.startsWith('%Y')) {
+        if (!value.startsWith('%Y'))
             return ym
-        }
         return value
     }
-
-    if (isPerformanceContextSelected(context))
-        return tent
     return ym
 }

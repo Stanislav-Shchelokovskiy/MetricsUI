@@ -71,9 +71,9 @@ export const performanceMetricsContext = {
     changeMetric: (ctx: any) => { },
     changeState: (state: any) => { },
     context: CONTEXT,
-    orientation: 'h' as const,
-    xName: 'Value',
-    yName: 'Name',
+    orientation: undefined,
+    xName: 'Period',
+    yName: 'Value',
 }
 
 export function PerformanceMetricsApplySharedState() {
