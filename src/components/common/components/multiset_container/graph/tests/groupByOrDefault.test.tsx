@@ -15,9 +15,8 @@ describe('testing groupByOrDefault', () => {
     });
 
     test('performance context', () => {
-        expect(groupByOrDefault(undefined, Context.Performance)).toEqual('Tent')
-        expect(groupByOrDefault('qwe', Context.Performance)).toEqual('qwe')
-        expect(groupByOrDefault('%Y-%m', Context.Performance)).toEqual('Tent')
-        expect(groupByOrDefault('%Y', Context.Performance)).toEqual('Tent')
+        expect(groupByOrDefault(undefined, Context.Performance)).toEqual('%Y-%m')
+        expect(groupByOrDefault('qwe', Context.Performance)).toEqual('%Y-%m')
+        expect(groupByOrDefault('%Y-%W', Context.Performance)).toEqual('%Y-%W')
     });
 })
