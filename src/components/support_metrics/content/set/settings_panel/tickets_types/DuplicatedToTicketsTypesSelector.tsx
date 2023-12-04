@@ -15,9 +15,8 @@ export default function DuplicatedToTicketsTypesSelector() {
     const onIncludeChange = (include: boolean) => changeDuplicatedToTicketsTypesInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<TicketsType, number>
-        className='CustomersActivity_ReferredTicketsTypesSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select referred ticket types'
         label='Duplicated to ticket types'
         fetchDataSource={fetchTicketsTypes}

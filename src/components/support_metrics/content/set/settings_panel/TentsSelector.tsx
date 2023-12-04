@@ -16,9 +16,8 @@ export default function TentsSelector() {
     const onIncludeChange = (include: boolean) => changeTentsInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<Knot, string>
-        className='TentsSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select tents to display...'
         label='Tents'
         fetchDataSource={fetchTents}

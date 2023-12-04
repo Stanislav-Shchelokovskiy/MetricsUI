@@ -15,9 +15,8 @@ export default function VersionsSelector() {
     const onIncludeChange = (include: boolean) => changeVersionsInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<Version, string>
-        className='CustomersActivity_VersionsSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select versions'
         label='Versions'
         fetchDataSource={fetchVersions}

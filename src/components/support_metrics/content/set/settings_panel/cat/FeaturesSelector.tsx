@@ -21,9 +21,8 @@ export default function FeaturesSelector() {
     const onIncludeChange = (include: boolean) => changeFeaturesInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<Feature, string>
-        className='CustomersActivity_FeaturesSelector'
-        displayExpr='feature_name'
-        valueExpr='feature_id'
+        displaySelector='feature_name'
+        valueSelector='feature_id'
         placeholder='Select features'
         label='CAT features'
         fetchDataSource={fetchFeatures}

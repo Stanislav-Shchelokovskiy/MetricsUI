@@ -28,8 +28,8 @@ export default function EmpTentsSelector() {
     }
 
     return <MultiOptionSelector<Knot, string>
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select tents to display...'
         label='Employee Tents'
         fetchDataSource={fetchTents}

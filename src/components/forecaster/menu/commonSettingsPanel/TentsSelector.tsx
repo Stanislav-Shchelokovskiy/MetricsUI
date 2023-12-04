@@ -25,8 +25,8 @@ export default function TentsSelector() {
 
     return <MultiOptionSelector<Knot, string>
         className='TentsSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select tents to display...'
         label='Tents'
         fetchDataSource={fetchTents}
@@ -35,8 +35,4 @@ export default function TentsSelector() {
         onValueChange={onValueChange}
         showSelectionControls={true}
     />
-}
-
-TentsSelector.defaultProps = {
-    onIncludeChange: undefined
 }

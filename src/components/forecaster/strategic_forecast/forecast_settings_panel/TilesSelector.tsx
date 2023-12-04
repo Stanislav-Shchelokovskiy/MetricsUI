@@ -14,7 +14,6 @@ export default function TilesSelector() {
     const onValueChange = (value: number | undefined) => changeTile(tentId, value)
 
     return <OptionSelector<number, number>
-        className=''
         fetchDataSource={fetchTiles}
         valueSelector={valueSelector}
         defaultValueSelector={defaultValueSelector}

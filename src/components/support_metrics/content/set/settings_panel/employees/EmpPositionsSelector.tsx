@@ -15,9 +15,8 @@ export default function EmpPositionsSelector() {
     const onIncludeChange = (include: boolean) => changePositionsInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<Position, string>
-        className='CustomersActivity_PositionsSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select employees positions'
         label='Employees positions'
         fetchDataSource={fetchPositions}

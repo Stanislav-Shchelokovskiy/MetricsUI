@@ -104,6 +104,7 @@ function defaultValueIsSelected<ValueExprT>(value: ValueExprT | undefined, defau
 }
 
 const defaultProps = {
+    className: 'OptionSelector',
     displayExpr: undefined,
     valueExpr: undefined,
     groupExpr: undefined,

@@ -14,8 +14,8 @@ import { NULL_FILTER_VALUE } from '../Typing'
 
 export interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
     className: string
-    displayExpr: string
-    valueExpr: string
+    displaySelector: string
+    valueSelector: string
     placeholder: string
     label: string
     hideIfDataSourceEmpty: boolean
@@ -45,11 +45,11 @@ const NULL_FILTER = {
 export default function MultiOptionSelector<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: Props<DataSourceT, ValueExprT>) {
     const addNullItemToDS = useCallback((ds: any): Array<any> => {
         if (props.showNullItem && ds && (ds as Array<any>).length > 0)
-            (ds as Array<any>).unshift({ [props.valueExpr]: NULL_FILTER.value, [props.displayExpr]: NULL_FILTER.displayValue })
+            (ds as Array<any>).unshift({ [props.valueSelector]: NULL_FILTER.value, [props.displaySelector]: NULL_FILTER.displayValue })
         return ds
     }, [])
 
-    const validateSelectedValues = useMultiValidate<DataSourceT, ValueExprT>(props.value, props.onValueChange, props.valueExpr)
+    const validateSelectedValues = useMultiValidate<DataSourceT, ValueExprT>(props.value, props.onValueChange, props.valueSelector)
     const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, validateSelectedValues, addNullItemToDS)
 
     if (dataSource.length > 0) {
@@ -72,7 +72,7 @@ export function SearchMultioptionSelector<DataSourceT, ValueExprT = DataSourceT 
     useServerMultiValidate(props.fetchValidValues, props.fetchValidValuesArgs, props.value, props.onValueChange)
 
     const dataStore = useMemo(() => new CustomStore({
-        key: props.valueExpr,
+        key: props.valueSelector,
         loadMode: 'processed',
         load: (loadOptions: LoadOptions) => {
             if (!props.fetchDataSource)
@@ -135,13 +135,13 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
                 selectedValues = selectedValues?.filter((x) => x !== NULL_FILTER_VALUE as any)
                 let values: Array<DataSourceT>
                 if (selectedValues?.length > 0)
-                    values = props.dataSource.filter((x) => selectedValues.includes(x[props.valueExpr as keyof DataSourceT] as any))
+                    values = props.dataSource.filter((x) => selectedValues.includes(x[props.valueSelector as keyof DataSourceT] as any))
                 else {
                     const stop = 30
                     const start = props.showNullItem ? 1 : 0
                     values = props.dataSource.slice(start, stop)
                 }
-                dispatch(props.onDecomposition(values, props.displayExpr, props.valueExpr))
+                dispatch(props.onDecomposition(values, props.displaySelector, props.valueSelector))
             }
         }
     }, [props.dataSource])
@@ -165,9 +165,9 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
     }, [wrapperAttr])
 
     const renderTag = useCallback((tag: any) => {
-        const keySelector = props.displayExpr === undefined ?
+        const keySelector = props.displaySelector === undefined ?
             (x: keyof DataSourceT) => (x as unknown) as string :
-            (x: DataSourceT) => (x[props.displayExpr as keyof DataSourceT] as unknown) as string
+            (x: DataSourceT) => (x[props.displaySelector as keyof DataSourceT] as unknown) as string
         return <div className='dx-tag-content'>
             {keySelector(tag)}
             {defaultValueIsSelected(props.value, props.defaultValue) ? null : <div className='dx-tag-remove-button'></div>}
@@ -176,6 +176,8 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
 
     return <TagBox
         {...props}
+        valueExpr={props.valueSelector}
+        displayExpr={props.displaySelector}
         ref={tagBoxRef}
         dataSource={ds}
         onValueChange={onValueChangeHandler}
@@ -234,8 +236,8 @@ function defaultValueIsSelected<ValueExprT>(value: Array<ValueExprT> | undefined
 
 const defaultProps = {
     className: 'MultiOptionSelector',
-    displayExpr: undefined,
-    valueExpr: undefined,
+    displaySelector: undefined,
+    valueSelector: undefined,
     onIncludeChange: undefined,
     includeButtonState: undefined,
     dataSource: [],

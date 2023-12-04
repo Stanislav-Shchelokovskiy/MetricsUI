@@ -18,9 +18,8 @@ export default function CustomersConversionsTypesSelector() {
     const onIncludeChange = (include: boolean) => changeConversionsTypesInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<ConversionStatus, number>
-        className='CustomersActivity_ConversionsTypesSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select conversion types'
         label='User conversion types'
         fetchDataSource={fetchConversionStatuses}

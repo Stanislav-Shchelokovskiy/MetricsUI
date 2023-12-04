@@ -20,9 +20,8 @@ export default function PlatformsSelector() {
     const onIncludeChange = (include: boolean) => changePlatformsInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<Platform, string>
-        className='CustomersActivity_PlatformSelector'
-        displayExpr='platform_name'
-        valueExpr='platform_id'
+        displaySelector='platform_name'
+        valueSelector='platform_id'
         placeholder='Select platforms'
         label='Platforms'
         fetchDataSource={fetchPlatforms}

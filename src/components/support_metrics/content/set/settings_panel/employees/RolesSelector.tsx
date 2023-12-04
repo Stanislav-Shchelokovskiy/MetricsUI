@@ -15,9 +15,8 @@ export default function RolesSelector() {
     const onIncludeChange = (include: boolean) => changeRolesInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<Role, string>
-        className='CustomersActivity_RolesSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select employees roles'
         label='Employees roles'
         fetchDataSource={fetchRoles}

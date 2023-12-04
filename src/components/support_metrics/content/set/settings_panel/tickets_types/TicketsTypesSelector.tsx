@@ -16,9 +16,8 @@ export default function TicketsTypesSelector() {
     const defaultValue = useMemo(() => [1], [])
 
     return <MultiOptionSelector<TicketsType, number>
-        className='CustomersActivity_TicketsTypesSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select ticket types'
         label='Ticket types'
         fetchDataSource={fetchTicketsTypes}

@@ -15,9 +15,8 @@ export default function FrameworksSelector() {
     const onIncludeChange = (include: boolean) => changeFrameworksInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<Framework, string>
-        className='CustomersActivity_FrameworksSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select frameworks'
         label='Frameworks/Specifics'
         fetchDataSource={FetchFrameworks}

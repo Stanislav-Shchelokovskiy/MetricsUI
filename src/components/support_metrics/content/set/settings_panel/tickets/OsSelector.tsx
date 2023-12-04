@@ -15,9 +15,8 @@ export default function OsSelector() {
     const onIncludeChange = (include: boolean) => changeOperatingSystemsInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<OS, string>
-        className='CustomersActivity_OsSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select operating systems'
         label='Operating system'
         fetchDataSource={fetchOperatingSystems}

@@ -16,9 +16,8 @@ export default function TribesSelector() {
     const onIncludeChange = (include: boolean) => changeTribesInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<Knot, string>
-        className='TribesSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select tribes to display...'
         label='Tribes'
         fetchDataSource={fetchTribes}

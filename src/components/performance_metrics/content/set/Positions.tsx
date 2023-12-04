@@ -27,8 +27,8 @@ export default function PositionsSelector() {
     }
 
     return <MultiOptionSelector<Knot, string>
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select employees positions'
         label='Positions'
         fetchDataSource={fetchPositions}

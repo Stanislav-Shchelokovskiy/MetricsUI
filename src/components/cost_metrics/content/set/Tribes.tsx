@@ -17,8 +17,8 @@ export default function EmpTribesSelector() {
 
     return <MultiOptionSelector<Knot, string>
         className='CostMetrics_EmpTribesSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select employees tribes'
         label='Tribes'
         fetchDataSource={fetchTribes}

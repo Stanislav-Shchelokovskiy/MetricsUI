@@ -15,9 +15,8 @@ export default function CustomersTypesSelector() {
     const onIncludeChange = (include: boolean) => changeCustomersTypesInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<LicenseStatus, number>
-        className='CustomersActivity_CustomersTypesSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select user types'
         label='User types'
         fetchDataSource={fetchLicenseStatuses}

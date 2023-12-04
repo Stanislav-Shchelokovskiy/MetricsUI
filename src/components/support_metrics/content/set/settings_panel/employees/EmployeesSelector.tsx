@@ -14,7 +14,6 @@ import { positionsSelector, empTribesSelector, empTentsSelector, employeesSelect
 
 export default function EmployeesSelector() {
     return <EmpSelector
-        className='CustomersActivity_EmployeesSelector'
         placeholder='Select posts owners'
         label='Employees (posts owners)'
         valueSelector={employeesSelector}
@@ -25,7 +24,6 @@ export default function EmployeesSelector() {
 
 
 export interface EmpSelectorProps {
-    className: string
     placeholder: string
     label: string
     valueSelector: (store: SupportMetricsStore, setTitle: string) => StringFilterParameters
@@ -47,9 +45,8 @@ export function EmpSelector(props: EmpSelectorProps) {
     const onIncludeChange = (include: boolean) => props.changeInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<Employee, string>
-        className={props.className}
-        displayExpr='name'
-        valueExpr='scid'
+        displaySelector='name'
+        valueSelector='scid'
         placeholder={props.placeholder}
         label={props.label}
         fetchDataSource={fetchEmployees}

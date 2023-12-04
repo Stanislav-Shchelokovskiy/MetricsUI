@@ -13,7 +13,6 @@ export default function PositionsSelector() {
     const tentId = useTentId()
     const selectedPositions = useSelector((store: ForecasterStore) => positionsSelector(store, tentId))
     const onPositionsChange = (allValues: Array<string>, selectedValues: Array<string>) => changePositionsFilter(tentId, selectedValues)
-
     const defaultValue = useMemo(() => [], [])
 
     return <MultiOptionSelector<string, string>

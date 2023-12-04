@@ -9,7 +9,6 @@ export default function IncomeSelector() {
     const defaultValueSelector = (values: Array<string>) => values[0]
 
     return <OptionSelector<string, string>
-        className=''
         fetchDataSource={fetchIncomeTypes}
         valueSelector={incomeTypeSelector}
         defaultValueSelector={defaultValueSelector}

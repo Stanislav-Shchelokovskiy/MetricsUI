@@ -22,9 +22,8 @@ export default function CustomersGroupsSelector() {
         return null
 
     return <MultiOptionSelector<CustomersGroup, string>
-        className='CustomersActivity_CustomersGroupsSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select user groups'
         label='User groups'
         fetchDataSource={fetchCustomersGroups}

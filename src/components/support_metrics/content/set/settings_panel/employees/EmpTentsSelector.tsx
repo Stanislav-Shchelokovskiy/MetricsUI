@@ -15,9 +15,8 @@ export default function EmpTentsSelector() {
     const onIncludeChange = (include: boolean) => changeEmpTentsInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<EmpTent, string>
-        className='CustomersActivity_EmpTentsSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select employees tents'
         label='Employees tents'
         fetchDataSource={fetchEmpTents}

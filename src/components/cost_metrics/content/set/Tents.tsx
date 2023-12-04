@@ -17,8 +17,8 @@ export default function EmpTentsSelector() {
 
     return <MultiOptionSelector<Knot, string>
         className='CostMetrics_EmpTentsSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select employees tents'
         label='Tents'
         fetchDataSource={fetchTents}

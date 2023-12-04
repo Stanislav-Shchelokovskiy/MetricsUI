@@ -15,9 +15,8 @@ export default function EmpTribesSelector() {
     const onIncludeChange = (include: boolean) => changeEmpTribesInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<EmpTribe, string>
-        className='CustomersActivity_EmpTribesSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select employees tribes'
         label='Employees tribes'
         fetchDataSource={fetchEmpTribes}

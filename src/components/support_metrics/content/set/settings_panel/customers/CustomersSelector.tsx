@@ -15,9 +15,8 @@ export default function CustomersSelector() {
     const onIncludeChange = (include: boolean) => changeCustomersInclude({ stateId: setTitle, data: include })
 
     return <SearchMultioptionSelector<Customer, string>
-        className='CustomersActivity_CustomersSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Search by friendly id'
         label='Customers'
         fetchDataSource={fetchCustomers}

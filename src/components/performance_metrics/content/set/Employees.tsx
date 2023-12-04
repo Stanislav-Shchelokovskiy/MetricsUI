@@ -42,8 +42,8 @@ export default function EmployeesSelector() {
     return <MultiOptionSelector<Knot, string>
         placeholder='Select employees'
         label='Employees'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         fetchDataSource={fetchEmployees}
         fetchArgs={fetchArgs}
         hideIfDataSourceEmpty={true}

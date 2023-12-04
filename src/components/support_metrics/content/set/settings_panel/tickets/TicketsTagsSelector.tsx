@@ -15,9 +15,8 @@ export default function TicketsTagsSelector() {
     const onIncludeChange = (include: boolean) => changeTicketsTagsInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<TicketsTag, string>
-        className='CustomersActivity_TicketsTagsSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select ticket tags'
         label='Ticket tags'
         fetchDataSource={fetchTicketsTags}

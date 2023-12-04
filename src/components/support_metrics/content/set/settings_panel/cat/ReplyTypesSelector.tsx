@@ -15,9 +15,8 @@ export default function ReplyTypesSelector() {
     const onIncludeChange = (include: boolean) => changeRepliesTypesInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<ReplyType, string>
-        className='CustomersActivity_ReplyTypesSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select replies type'
         label='CAT replies types'
         fetchDataSource={fetchRepliesTypes}

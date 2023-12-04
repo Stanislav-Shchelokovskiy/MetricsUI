@@ -20,9 +20,8 @@ export default function ProductsSelector() {
     const onIncludeChange = (include: boolean) => changeProductsInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<Product, string>
-        className='CustomersActivity_ProductsSelector'
-        displayExpr='product_name'
-        valueExpr='product_id'
+        displaySelector='product_name'
+        valueSelector='product_id'
         placeholder='Select products'
         label='Products'
         fetchDataSource={fetchProducts}

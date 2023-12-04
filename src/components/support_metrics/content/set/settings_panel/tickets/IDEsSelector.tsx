@@ -15,9 +15,8 @@ export default function IDEsSelector() {
     const onIncludeChange = (include: boolean) => changeIDEsInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<IDE, string>
-        className='CustomersActivity_IDEsSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select IDEs'
         label='IDE'
         fetchDataSource={fetchIDEs}

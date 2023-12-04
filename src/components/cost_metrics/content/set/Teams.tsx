@@ -16,8 +16,8 @@ export default function EmpTeamsSelector() {
 
     return <MultiOptionSelector<Knot, string>
         className='CostMetrics_TeamsSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select employees teams'
         label='Teams'
         fetchDataSource={fetchTeams}

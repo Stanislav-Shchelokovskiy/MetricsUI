@@ -14,7 +14,6 @@ export default function ForecastHorizonSelector() {
     const onValueChange = (value: string | undefined) => changeForecastHorizon(tentId, value)
 
     return <OptionSelector<string, string>
-        className=''
         fetchDataSource={fetchForecastHorizons}
         valueSelector={valueSelector}
         defaultValueSelector={defaultValueSelector}

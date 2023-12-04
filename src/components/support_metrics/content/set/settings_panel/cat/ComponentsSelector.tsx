@@ -19,9 +19,8 @@ export default function ComponentsSelector() {
     const onIncludeChange = (include: boolean) => changeComponentsInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<Component, string>
-        className='CustomersActivity_ComponentsSelector'
-        displayExpr='component_name'
-        valueExpr='component_id'
+        displaySelector='component_name'
+        valueSelector='component_id'
         placeholder='Select components'
         label='CAT components'
         fetchDataSource={fetchComponents}

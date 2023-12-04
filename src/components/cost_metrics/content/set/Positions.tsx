@@ -16,8 +16,8 @@ export default function EmpPositionsSelector() {
 
     return <MultiOptionSelector<Knot, string>
         className='CostMetrics_PositionsSelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select employees positions'
         label='Positions'
         fetchDataSource={fetchPositions}
