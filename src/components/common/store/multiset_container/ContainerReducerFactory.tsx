@@ -7,6 +7,8 @@ import { valueOrDefault, definedValueOrDefault } from './Utils'
 import {
     ADD_SET,
     REMOVE_SET,
+    DECOMPOSE_SET,
+    Decomposition,
     REMOVE_ALL_SETS,
     CHANGE_SET_TITLE,
     HIDE_LEGENDS,
@@ -49,6 +51,13 @@ function getSetsCRUDReducer<ContainerStateT extends BaseContainerState>(initialS
                     ...container,
                     sets: restSets.length ? restSets : [getDefaultTitle()],
                     hiddenLegends: container.hiddenLegends.filter(removeSelector)
+                }
+
+            case DECOMPOSE_SET:
+                const decomposition = action.payload as Decomposition
+                return {
+                    ...container,
+                    sets: decomposition.values.map(x => x[decomposition.displaySelector])
                 }
 
             case REMOVE_ALL_SETS:

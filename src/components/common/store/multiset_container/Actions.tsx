@@ -7,6 +7,16 @@ export const addSet = getAction<string>(ADD_SET)
 export const REMOVE_SET = 'remove_set'
 export const removeSet = getAction<string>(REMOVE_SET)
 
+export const DECOMPOSE_SET = 'decompose_set'
+export interface Decomposition {
+    sourceSet: string
+    propertyName: string
+    values: Array<any>
+    displaySelector: string
+    valueSelector: string
+}
+export const decomposeSet = getAction<Decomposition>(DECOMPOSE_SET)
+
 export const REMOVE_ALL_SETS = 'remove_all_sets'
 export const removeAllSets = getAction<undefined>(REMOVE_ALL_SETS)
 

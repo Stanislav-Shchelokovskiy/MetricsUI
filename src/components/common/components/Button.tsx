@@ -2,6 +2,7 @@ import React from 'react'
 import { Button as DxButton } from 'devextreme-react/button'
 import * as includeIconSvg from './assets/include.svg'
 import * as excludeIconSvg from './assets/exclude.svg'
+import * as decomposeIconSvg from './assets/decompose.svg'
 
 interface Props {
     className: string
@@ -100,5 +101,18 @@ export function getHelpButtonOptions() {
         hoverStateEnabled: true,
         focusStateEnabled: false,
         activeStateEnabled: false,
+    }
+}
+
+export function getDecomposeButtonOptions() {
+    return {
+        text: '',
+        stylingMode: 'text',
+        icon: decomposeIconSvg.default,
+        type: 'normal',
+        location: 'after',
+        hoverStateEnabled: true,
+        focusStateEnabled: false,
+        activeStateEnabled: true,
     }
 }

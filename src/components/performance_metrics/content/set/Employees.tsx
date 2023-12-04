@@ -13,6 +13,8 @@ import {
     levelsSelector,
     employeesSelector,
 } from '../../../common/store/multiset_container/sets/selectors/Employees'
+import { decomposeSet, Decomposition } from '../../../common/store/multiset_container/Actions'
+import { nameOf } from '../../../common/store/multiset_container/sets/Interfaces'
 
 export default function EmployeesSelector() {
     const setTitle = useSetTitle()
@@ -26,9 +28,18 @@ export default function EmployeesSelector() {
 
     const onValueChange = (allValues: Array<Knot>, values: Array<string>) => changeEmployees({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeEmployeesInclude({ stateId: setTitle, data: include })
+    const onDecomposition = (values: Array<Knot>, displaySelector: string, valueSelector: string) => {
+        const decomposition: Decomposition = {
+            sourceSet: setTitle,
+            propertyName: nameOf('employees'),
+            values: values,
+            displaySelector: displaySelector,
+            valueSelector: valueSelector,
+        }
+        return decomposeSet(decomposition)
+    }
 
     return <MultiOptionSelector<Knot, string>
-        className='EmployeesSelector'
         placeholder='Select employees'
         label='Employees'
         displayExpr='name'
@@ -42,5 +53,6 @@ export default function EmployeesSelector() {
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
         showNullItem={true}
+        onDecomposition={onDecomposition}
     />
 }

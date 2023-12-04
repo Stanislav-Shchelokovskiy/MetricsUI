@@ -7,6 +7,8 @@ import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { changeTents, changeTentsInclude } from '../../../common/store/multiset_container/sets/actions/Common'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
 import { tentsSelector } from '../../../common/store/multiset_container/sets/selectors/Common'
+import { decomposeSet, Decomposition } from '../../../common/store/multiset_container/Actions'
+import { nameOf } from '../../../common/store/multiset_container/sets/Interfaces'
 
 
 export default function TentsSelector() {
@@ -14,9 +16,18 @@ export default function TentsSelector() {
     const value = useSelector((store: PerformanceMetricsStore) => tentsSelector(store, setTitle))
     const onValueChange = (allValues: Array<Knot>, values: Array<string>) => changeTents({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTentsInclude({ stateId: setTitle, data: include })
+    const onDecomposition = (values: Array<Knot>, displaySelector: string, valueSelector: string) => {
+        const decomposition: Decomposition = {
+            sourceSet: setTitle,
+            values: values,
+            displaySelector: displaySelector,
+            valueSelector: valueSelector,
+            propertyName: nameOf('tents'),
+        }
+        return decomposeSet(decomposition)
+    }
 
     return <MultiOptionSelector<Knot, string>
-        className='TentsSelector'
         displayExpr='name'
         valueExpr='id'
         placeholder='Select tents to display...'
@@ -28,5 +39,6 @@ export default function TentsSelector() {
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
         showNullItem={true}
+        onDecomposition={onDecomposition}
     />
 }

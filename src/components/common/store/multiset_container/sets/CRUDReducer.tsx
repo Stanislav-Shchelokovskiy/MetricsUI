@@ -5,9 +5,12 @@ import { generateSetTitle } from '../Utils'
 import {
     ADD_SET,
     REMOVE_SET,
+    DECOMPOSE_SET,
+    Decomposition,
     REMOVE_ALL_SETS,
     CHANGE_SET_TITLE,
 } from '../Actions'
+import { getOptionalFilterParameters } from './Defaults'
 
 export function getSetsCRUDReducer<SetState extends BaseSetState>(
     default_set: SetState,
@@ -24,6 +27,17 @@ export function getSetsCRUDReducer<SetState extends BaseSetState>(
             case REMOVE_SET:
                 const restSets = sets.filter(set => set.title !== action.payload)
                 return restSets.length ? restSets : initial_sets
+
+            case DECOMPOSE_SET:
+                const decomposition = action.payload as Decomposition
+                const sourceSet = sets.find(x => x.title === decomposition.sourceSet) || default_set
+                const newSets = decomposition.values.map((x) => {
+                    const newSet = { ...sourceSet }
+                    newSet.title = x[decomposition.displaySelector]
+                    newSet[decomposition.propertyName as keyof SetState] = getOptionalFilterParameters([x[decomposition.valueSelector]]) as any
+                    return newSet
+                })
+                return newSets.length ? newSets : initial_sets
 
             case REMOVE_ALL_SETS:
                 return initial_sets

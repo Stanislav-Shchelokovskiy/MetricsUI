@@ -16,7 +16,6 @@ export default function LevelsSelector() {
     const onIncludeChange = (include: boolean) => changeLevelsInclude({ stateId: setTitle, data: include })
 
     return <MultiOptionSelector<Knot, number | SupportsNullFilter<number>>
-        className='LevelsSelector'
         displayExpr='name'
         valueExpr='id'
         placeholder='Select employees levels'

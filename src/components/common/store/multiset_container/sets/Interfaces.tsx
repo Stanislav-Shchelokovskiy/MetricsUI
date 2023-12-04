@@ -35,3 +35,7 @@ export interface BaseSetState {
     roles: StringFilterParameters
     employees: StringFilterParameters
 }
+
+export function nameOf(prop: keyof BaseSetState): string {
+    return prop
+}

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    xml:space="preserve" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" width="400px"
+    height="400px">
+    <path d="M87.5,12.5L87.5,32.5L12.5,32.5L12.5,12.5L87.5,12.5M95,5L5,5L5,40L95,40L95,5L95,5Z" stroke="none" fill="#999999"></path>
+    <path d="M57.5,75L57.5,90L42.5,90L42.5,75L57.5,75M62.5,70L37.5,70L37.5,95L62.5,95L62.5,70L62.5,70Z" stroke="none" fill="#999999"></path>
+    <path d="M90,75L90,90L75,90L75,75L90,75M95,70L70,70L70,95L95,95L95,70L95,70Z" stroke="none" fill="#999999"></path>
+    <path d="M25,75L25,90L10,90L10,75L25,75M30,70L5,70L5,95L30,95L30,70L30,70Z" stroke="none" fill="#999999"></path>
+    <path d="M15,45L15,55L10,55L17.5,65L25,55L20,55L20,45Z" stroke="none" fill="#999999"></path>
+    <path d="M47.5,45L47.5,55L42.5,55L50,65L57.5,55L52.5,55L52.5,45Z" stroke="none" fill="#999999"></path>
+    <path d="M80,45L80,55L75,55L82.5,65L90,55L85,55L85,45Z" stroke="none" fill="#999999"></path>
+</svg>

@@ -9,7 +9,7 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import CustomStore from 'devextreme/data/custom_store'
 import { LoadOptions } from 'devextreme/data'
 import useServerMultiValidate, { ValidateProps, useMultiValidate } from '../hooks/UseValidate'
-import { getIncludeButtonOptions, getClearButtonOptions, ButtonOptions } from './Button'
+import { getIncludeButtonOptions, getClearButtonOptions, getDecomposeButtonOptions, ButtonOptions } from './Button'
 import { NULL_FILTER_VALUE } from '../Typing'
 
 export interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSourceT> {
@@ -27,6 +27,7 @@ export interface Props<DataSourceT, ValueExprT> extends DataSourceProps<DataSour
     includeButtonState: boolean | undefined
     onIncludeChange: ((include: boolean) => PayloadAction<any>) | undefined
     hideSelectedItems: boolean
+    onDecomposition: (values: Array<DataSourceT>, displaySelector: string, valueSelector: string) => PayloadAction<any>
     dataStore: CustomStore
     openOnFieldClick: boolean
     applyValueMode: 'instantly' | 'useButtons'
@@ -126,6 +127,25 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
     ), [props.includeButtonState])
 
     const tagBoxRef = useRef<TagBox>(null)
+    const decomposeButtonOptions = useMemo(() => {
+        return {
+            ...getDecomposeButtonOptions(),
+            onClick: (e: any) => {
+                let selectedValues = tagBoxRef.current?.instance.option('value') as Array<ValueExprT>
+                selectedValues = selectedValues?.filter((x) => x !== NULL_FILTER_VALUE as any)
+                let values: Array<DataSourceT>
+                if (selectedValues?.length > 0)
+                    values = props.dataSource.filter((x) => selectedValues.includes(x[props.valueExpr as keyof DataSourceT] as any))
+                else {
+                    const stop = 30
+                    const start = props.showNullItem ? 1 : 0
+                    values = props.dataSource.slice(start, stop)
+                }
+                dispatch(props.onDecomposition(values, props.displayExpr, props.valueExpr))
+            }
+        }
+    }, [props.dataSource])
+
     const clearButtonOptions = useMemo(() => {
         return {
             ...getClearButtonOptions(),
@@ -199,6 +219,10 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
                 location='after'
                 options={clearButtonOptions} /> :
             null}
+        {props.onDecomposition !== undefined ? <Button
+            name='groupBy'
+            location='after'
+            options={decomposeButtonOptions} /> : null}
     </TagBox >
 }
 
@@ -209,6 +233,7 @@ function defaultValueIsSelected<ValueExprT>(value: Array<ValueExprT> | undefined
 
 
 const defaultProps = {
+    className: 'MultiOptionSelector',
     displayExpr: undefined,
     valueExpr: undefined,
     onIncludeChange: undefined,
@@ -227,6 +252,7 @@ const defaultProps = {
     customButtons: undefined,
     defaultValue: undefined,
     showNullItem: false,
+    onDecomposition: undefined,
 }
 
 MultiOptionSelector.defaultProps = defaultProps
