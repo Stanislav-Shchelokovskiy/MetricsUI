@@ -14,6 +14,7 @@ interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> exten
     displayExpr: string
     valueExpr: string
     groupExpr: string,
+    sortExpr: string,
     placeholder: string
     label: string
     container: string
@@ -50,6 +51,7 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
         paginate: true,
         pageSize: 20,
         group: props.groupExpr,
+        sort: props.sortExpr,
     })
 
     const defaultValue = useMemo(() => props.defaultValueSelector?.(dataSource), [dataSource])
@@ -108,6 +110,7 @@ const defaultProps = {
     displayExpr: undefined,
     valueExpr: undefined,
     groupExpr: undefined,
+    sortExpr: undefined,
     placeholder: undefined,
     container: undefined,
     defaultValueSelector: undefined,

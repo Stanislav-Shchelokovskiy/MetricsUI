@@ -40,6 +40,7 @@ export default function MetricSelector() {
         displayExpr='displayName'
         valueExpr='name'
         groupExpr='group'
+        sortExpr='displayName'
         fetchDataSource={context.fetchMetrics}
         valueSelector={metricSelector}
         defaultValueSelector={defaultValueSelector}
