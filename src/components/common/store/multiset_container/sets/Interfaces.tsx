@@ -1,4 +1,5 @@
 import { SupportsNullFilter } from '../../../Typing'
+import { ValuesDecomposition } from '../../Actions'
 import { Undefinable } from '../../../Typing'
 interface Filter {
     include: boolean
@@ -36,6 +37,11 @@ export interface BaseSetState {
     employees: StringFilterParameters
 }
 
-export function nameOf(prop: keyof BaseSetState): string {
-    return prop
+export interface Decomposition extends ValuesDecomposition{
+    sourceSet: string
+    propertyName: string
+}
+
+export function nameOf<SetState extends BaseSetState>(prop: keyof SetState): string {
+    return prop.toString()
 }

@@ -7,8 +7,6 @@ import { valueOrDefault, definedValueOrDefault } from './Utils'
 import {
     ADD_SET,
     REMOVE_SET,
-    DECOMPOSE_SET,
-    Decomposition,
     REMOVE_ALL_SETS,
     CHANGE_SET_TITLE,
     HIDE_LEGENDS,
@@ -18,6 +16,7 @@ import {
     CHANGE_COMPARISON_METHOD,
     CHANGE_DISABLE_PERIOD_EXTENSION,
 } from './Actions'
+import { DECOMPOSE_VALUES, ValuesDecomposition } from '../Actions'
 
 export function getContainerReducer<ContainerStateT extends BaseContainerState>(
     initialState: ContainerStateT,
@@ -53,8 +52,8 @@ function getSetsCRUDReducer<ContainerStateT extends BaseContainerState>(initialS
                     hiddenLegends: container.hiddenLegends.filter(removeSelector)
                 }
 
-            case DECOMPOSE_SET:
-                const decomposition = action.payload as Decomposition
+            case DECOMPOSE_VALUES:
+                const decomposition = action.payload as ValuesDecomposition
                 return {
                     ...container,
                     sets: decomposition.values.map(x => x[decomposition.displaySelector])
