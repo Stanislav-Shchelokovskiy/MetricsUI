@@ -14,3 +14,12 @@
     padding: 10px;
     color: rgba(153, 153, 153, 255);
 }
+
+.OptionSelector {
+    padding: 3px;
+    padding-top: 4px;
+}
+
+.OptionSelector .dx-label-before {
+    padding-left: 32px;
+}

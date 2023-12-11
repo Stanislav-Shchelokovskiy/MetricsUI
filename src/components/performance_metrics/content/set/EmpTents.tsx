@@ -6,8 +6,8 @@ import { fetchTents } from '../../network_resource_fetcher/Tents'
 import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { changeEmpTents, changeEmpTentsInclude } from '../../../common/store/multiset_container/sets/actions/Employees'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
-import { empTentsSelector } from '../../../common/store/multiset_container/sets/selectors/Employees'
-import { nameOf } from '../../../common/store/multiset_container/sets/Interfaces'
+import { empTentsSelector, empTentsSelectorName } from '../../../common/store/multiset_container/sets/selectors/Employees'
+import { setDecomposition } from '../../../common/store/multiset_container/sets/Defaults'
 
 
 export default function EmpTentsSelector() {
@@ -16,10 +16,7 @@ export default function EmpTentsSelector() {
 
     const onValueChange = (allValues: Array<Knot>, values: Array<string>) => changeEmpTents({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeEmpTentsInclude({ stateId: setTitle, data: include })
-    const decompositionArgs = {
-        sourceSet: setTitle,
-        propertyName: nameOf('empTents'),
-    }
+    const decompositionArgs = setDecomposition(setTitle, empTentsSelectorName)
 
     return <MultiOptionSelector<Knot, string>
         displaySelector='name'

@@ -37,10 +37,12 @@ export interface BaseSetState {
     employees: StringFilterParameters
 }
 
-export interface Decomposition extends ValuesDecomposition{
+export interface SetDecomposition {
     sourceSet: string
     propertyName: string
 }
+
+export interface Decomposition extends ValuesDecomposition, SetDecomposition{ }
 
 export function nameOf<SetState extends BaseSetState>(prop: keyof SetState): string {
     return prop.toString()

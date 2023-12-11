@@ -17,7 +17,7 @@ export default function ClosedForSelector() {
     }, [])
 
     return <NumericSelector
-        className='CustomersActivity_SingleSelector'
+        className='OptionSelector'
         min={0}
         defaultValue={0}
         format={format}

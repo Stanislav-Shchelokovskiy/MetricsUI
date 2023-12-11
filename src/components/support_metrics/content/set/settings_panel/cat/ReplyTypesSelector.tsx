@@ -5,7 +5,8 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeRepliesTypes, changeRepliesTypesInclude } from '../../../../store/actions/CAT'
 import { fetchRepliesTypes, ReplyType } from '../../../../network_resource_fetcher/cat/FetchRepliesTypes'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { repliesTypesSelector } from '../../../../store/sets/Selectors'
+import { repliesTypesSelector, repliesTypesSelectorName } from '../../../../store/sets/Selectors'
+import { setDecomposition } from '../../../../../common/store/multiset_container/sets/Defaults'
 
 
 export default function ReplyTypesSelector() {
@@ -13,6 +14,7 @@ export default function ReplyTypesSelector() {
     const value = useSelector((store: SupportMetricsStore) => repliesTypesSelector(store, setTitle))
     const onValueChange = (allValues: Array<ReplyType>, values: Array<string>) => changeRepliesTypes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeRepliesTypesInclude({ stateId: setTitle, data: include })
+    const decompositionArgs = setDecomposition(setTitle, repliesTypesSelectorName)
 
     return <MultiOptionSelector<ReplyType, string>
         displaySelector='name'
@@ -26,5 +28,6 @@ export default function ReplyTypesSelector() {
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
         showNullItem={true}
+        decompositionArgs={decompositionArgs}
     />
 } 

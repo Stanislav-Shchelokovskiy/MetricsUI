@@ -6,8 +6,9 @@ import { changePlatforms, changePlatformsInclude } from '../../../../store/actio
 import { fetchPlatforms, Platform } from '../../../../network_resource_fetcher/platforms_products/FetchPlatforms'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { platformsSelector } from '../../../../store/sets/Selectors'
 import { tentsSelector } from '../../../../../common/store/multiset_container/sets/selectors/Common'
+import { platformsSelector, platformsSelectorName } from '../../../../store/sets/Selectors'
+import { setDecomposition } from '../../../../../common/store/multiset_container/sets/Defaults'
 
 
 export default function PlatformsSelector() {
@@ -18,6 +19,7 @@ export default function PlatformsSelector() {
     const value = useSelector((store: SupportMetricsStore) => platformsSelector(store, setTitle))
     const onValueChange = (allValues: Array<Platform>, values: Array<string>) => changePlatforms({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changePlatformsInclude({ stateId: setTitle, data: include })
+    const decompositionArgs = setDecomposition(setTitle, platformsSelectorName)
 
     return <MultiOptionSelector<Platform, string>
         displaySelector='platform_name'
@@ -33,5 +35,6 @@ export default function PlatformsSelector() {
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
         showNullItem={true}
+        decompositionArgs={decompositionArgs}
     />
 } 

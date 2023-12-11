@@ -6,8 +6,9 @@ import { changeProducts, changeProductsInclude } from '../../../../store/actions
 import { fetchProducts, Product } from '../../../../network_resource_fetcher/platforms_products/FetchProducts'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { productsSelector } from '../../../../store/sets/Selectors'
 import { tentsSelector } from '../../../../../common/store/multiset_container/sets/selectors/Common'
+import { productsSelector, productsSelectorName } from '../../../../store/sets/Selectors'
+import { setDecomposition } from '../../../../../common/store/multiset_container/sets/Defaults'
 
 
 export default function ProductsSelector() {
@@ -18,6 +19,7 @@ export default function ProductsSelector() {
     const value = useSelector((store: SupportMetricsStore) => productsSelector(store, setTitle))
     const onValueChange = (allValues: Array<Product>, values: Array<string>) => changeProducts({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeProductsInclude({ stateId: setTitle, data: include })
+    const decompositionArgs = setDecomposition(setTitle, productsSelectorName)
 
     return <MultiOptionSelector<Product, string>
         displaySelector='product_name'
@@ -33,5 +35,6 @@ export default function ProductsSelector() {
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
         showNullItem={true}
+        decompositionArgs={decompositionArgs}
     />
 } 

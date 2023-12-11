@@ -5,7 +5,8 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeDuplicatedToTicketTypes, changeDuplicatedToTicketsTypesInclude, } from '../../../../store/actions/TicketsTypes'
 import { fetchTicketsTypes, TicketsType } from '../../../../network_resource_fetcher/tickets/FetchTicketsTypes'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { duplicatedToTicketsTypesSelector } from '../../../../store/sets/Selectors'
+import { duplicatedToTicketsTypesSelector, duplicatedToTicketsTypesSelectorName } from '../../../../store/sets/Selectors'
+import { setDecomposition } from '../../../../../common/store/multiset_container/sets/Defaults'
 
 
 export default function DuplicatedToTicketsTypesSelector() {
@@ -13,6 +14,7 @@ export default function DuplicatedToTicketsTypesSelector() {
     const value = useSelector((store: SupportMetricsStore) => duplicatedToTicketsTypesSelector(store, setTitle))
     const onValueChange = (allValues: Array<TicketsType>, values: Array<number>) => changeDuplicatedToTicketTypes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeDuplicatedToTicketsTypesInclude({ stateId: setTitle, data: include })
+    const decompositionArgs = setDecomposition(setTitle, duplicatedToTicketsTypesSelectorName)
 
     return <MultiOptionSelector<TicketsType, number>
         displaySelector='name'
@@ -25,5 +27,6 @@ export default function DuplicatedToTicketsTypesSelector() {
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
+        decompositionArgs={decompositionArgs}
     />
 } 

@@ -5,8 +5,9 @@ import OptionSelector from '../../../../../common/components/OptionSelector'
 import { SupportMetricsStore } from '../../../../store/Store'
 import { changeCustomersGroups, changeCustomersGroupsInclude } from '../../../../store/actions/Customers'
 import { fetchCustomersGroups, CustomersGroup } from '../../../../network_resource_fetcher/customers/FetchCustomersGroups'
-import { customersGroupsSelector } from '../../../../store/sets/Selectors'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
+import { customersGroupsSelector, customersGroupsSelectorName } from '../../../../store/sets/Selectors'
+import { setDecomposition } from '../../../../../common/store/multiset_container/sets/Defaults'
 
 
 export default function CustomersGroupsSelector() {
@@ -21,6 +22,8 @@ export default function CustomersGroupsSelector() {
     if (baselineAlignedModeEnabled)
         return null
 
+    const decompositionArgs = setDecomposition(setTitle, customersGroupsSelectorName)
+
     return <MultiOptionSelector<CustomersGroup, string>
         displaySelector='name'
         valueSelector='id'
@@ -34,6 +37,7 @@ export default function CustomersGroupsSelector() {
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
         showNullItem={true}
+        decompositionArgs={decompositionArgs}
     />
 }
 
@@ -52,7 +56,6 @@ export function BAMCustomersGroupsSelector() {
         return null
 
     return <OptionSelector<CustomersGroup, string>
-        className='CustomersActivity_SingleSelector'
         displayExpr='name'
         valueExpr='id'
         placeholder='Select user group'

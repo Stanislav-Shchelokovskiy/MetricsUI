@@ -6,7 +6,8 @@ import { fetchSeverityValues, Severity } from '../../../../network_resource_fetc
 import MultiOptionSelector from '../../../../../common/components/MultiOptionSelector'
 import BugsSelectorWrapper from './BugsSelectors'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { severitySelector } from '../../../../store/sets/Selectors'
+import { severitySelector, severitySelectorName } from '../../../../store/sets/Selectors'
+import { setDecomposition } from '../../../../../common/store/multiset_container/sets/Defaults'
 
 
 export default function SeveritySelector() {
@@ -14,13 +15,13 @@ export default function SeveritySelector() {
     const value = useSelector((store: SupportMetricsStore) => severitySelector(store, setTitle))
     const onValueChange = (allValues: Array<Severity>, values: Array<string>) => changeSeverity({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeSeverityInclude({ stateId: setTitle, data: include })
+    const decompositionArgs = setDecomposition(setTitle, severitySelectorName)
 
     return <BugsSelectorWrapper
         Wrapped={MultiOptionSelector}
         setTitle={setTitle}
-        className='CustomersActivity_SeveritySelector'
-        displayExpr='name'
-        valueExpr='id'
+        displaySelector='name'
+        valueSelector='id'
         placeholder='Select severity values'
         label='Severity'
         fetchDataSource={fetchSeverityValues}
@@ -28,5 +29,6 @@ export default function SeveritySelector() {
         includeButtonState={value === undefined || value.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
+        decompositionArgs={decompositionArgs}
     />
 } 

@@ -1,7 +1,7 @@
 import { FilterParameters, FilterParameter } from './Interfaces'
 import { Undefinable } from '../../../Typing'
 import { generateSetTitle } from '../Utils'
-import { BaseSetState } from './Interfaces'
+import { BaseSetState, SetDecomposition } from './Interfaces'
 import { SupportsNullFilter } from '../../../Typing'
 
 export function getOptionalFilterParameters<T>(defaultValue: Array<T> | undefined = undefined): Undefinable<FilterParameters<T>> {
@@ -45,5 +45,12 @@ export function getDefaultBaseSet(): BaseSetState {
         levels: getOptionalFilterParameters<SupportsNullFilter<number>>(),
         roles: getOptionalFilterParameters<string>(),
         employees: getOptionalFilterParameters<string>(),
+    }
+}
+
+export function setDecomposition(sourceSet: string, propertyName: string): SetDecomposition {
+    return {
+        sourceSet: sourceSet,
+        propertyName: propertyName,
     }
 }

@@ -65,7 +65,6 @@ export default function ResolutionTimeSelector() {
     }
 
     const defaultProps = {
-        className: 'CustomersActivity_SingleSelector',
         min: 0,
         placeholder: '...',
         step: 1,

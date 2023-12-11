@@ -12,7 +12,6 @@ export default function ClosedBetweenSelector() {
     return <ClosedBugsSelectorWrapper
         Wrapped={BetweenPeriodSelectorWrapper}
         setTitle={setTitle}
-        className='CustomersActivity_ClosedBetweenSelector'
         label='Bugs closed'
         fetchDataSource={fetchPeriod}
         valueSelector={closedBetweenSelector}

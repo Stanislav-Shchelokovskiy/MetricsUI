@@ -3,7 +3,7 @@ import { changeAssignedTo, changeAssignedToInclude } from '../../../../store/act
 import { EmpSelector } from '../employees/EmployeesSelector'
 import BugsSelectorWrapper from './BugsSelectors'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { assignedToSelector } from '../../../../store/sets/Selectors'
+import { assignedToSelector, assignedToSelectorName } from '../../../../store/sets/Selectors'
 
 
 export default function AssignedToSelector() {
@@ -11,11 +11,11 @@ export default function AssignedToSelector() {
     return <BugsSelectorWrapper
         Wrapped={EmpSelector}
         setTitle={setTitle}
-        className='CustomersActivity_AssignedToSelector'
         placeholder='Select whom bugs are assigned to'
         label='Bugs assigned to'
         valueSelector={assignedToSelector}
         changeSelection={changeAssignedTo}
         changeInclude={changeAssignedToInclude}
+        decomposePropName={assignedToSelectorName}
     />
 }

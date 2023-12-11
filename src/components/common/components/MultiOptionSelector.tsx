@@ -138,7 +138,7 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
                 if (selectedValues?.length > 0)
                     values = props.dataSource.filter((x) => selectedValues.includes(x[props.valueSelector as keyof DataSourceT] as any))
                 else {
-                    const stop = 30
+                    const stop = 20
                     const start = props.showNullItem ? 1 : 0
                     values = props.dataSource.slice(start, stop)
                 }

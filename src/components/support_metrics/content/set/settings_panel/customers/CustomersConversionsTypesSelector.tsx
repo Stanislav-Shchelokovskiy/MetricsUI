@@ -5,7 +5,8 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeConversionsTypes, changeConversionsTypesInclude } from '../../../../store/actions/Customers'
 import { fetchConversionStatuses, ConversionStatus } from '../../../../network_resource_fetcher/customers/FetchConversionStatuses'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { customersTypesSelector, conversionsTypesSelector } from '../../../../store/sets/Selectors'
+import { customersTypesSelector, conversionsTypesSelector, conversionsTypesSelectorName } from '../../../../store/sets/Selectors'
+import { setDecomposition } from '../../../../../common/store/multiset_container/sets/Defaults'
 
 
 export default function CustomersConversionsTypesSelector() {
@@ -16,6 +17,7 @@ export default function CustomersConversionsTypesSelector() {
     const value = useSelector((store: SupportMetricsStore) => conversionsTypesSelector(store, setTitle))
     const onValueChange = (allValues: Array<ConversionStatus>, values: Array<number>) => changeConversionsTypes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeConversionsTypesInclude({ stateId: setTitle, data: include })
+    const decompositionArgs = setDecomposition(setTitle, conversionsTypesSelectorName)
 
     return <MultiOptionSelector<ConversionStatus, number>
         displaySelector='name'
@@ -30,5 +32,6 @@ export default function CustomersConversionsTypesSelector() {
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
+        decompositionArgs={decompositionArgs}
     />
 }

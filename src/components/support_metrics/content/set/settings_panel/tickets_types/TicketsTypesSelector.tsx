@@ -5,7 +5,8 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeTicketsTypes, changeTicketsTypesInclude } from '../../../../store/actions/TicketsTypes'
 import { fetchTicketsTypes, TicketsType } from '../../../../network_resource_fetcher/tickets/FetchTicketsTypes'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { ticketsTypesSelector } from '../../../../store/sets/Selectors'
+import { ticketsTypesSelector, ticketsTypesSelectorName } from '../../../../store/sets/Selectors'
+import { setDecomposition } from '../../../../../common/store/multiset_container/sets/Defaults'
 
 
 export default function TicketsTypesSelector() {
@@ -14,6 +15,7 @@ export default function TicketsTypesSelector() {
     const onValueChange = (allValues: Array<TicketsType>, values: Array<number>) => changeTicketsTypes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTicketsTypesInclude({ stateId: setTitle, data: include })
     const defaultValue = useMemo(() => [1], [])
+    const decompositionArgs = setDecomposition(setTitle, ticketsTypesSelectorName)
 
     return <MultiOptionSelector<TicketsType, number>
         displaySelector='name'
@@ -27,5 +29,6 @@ export default function TicketsTypesSelector() {
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
+        decompositionArgs={decompositionArgs}
     />
 } 

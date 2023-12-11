@@ -1,5 +1,29 @@
 import { SetState } from './Interfaces'
 import { getSelector as getSlctr } from '../../../common/store/multiset_container/Selectors'
+import { nameOf } from '../../../common/store/multiset_container/sets/Interfaces'
+
+export const customersGroupsSelectorName = nameOf<SetState>('customersGroups')
+export const ticketsTypesSelectorName = nameOf<SetState>('ticketsTypes')
+export const platformsSelectorName = nameOf<SetState>('platforms')
+export const productsSelectorName = nameOf<SetState>('products')
+export const versionsSelectorName = nameOf<SetState>('versions')
+export const ticketsTagsSelectorName = nameOf<SetState>('ticketsTags')
+export const duplicatedToTicketsTypesSelectorName = nameOf<SetState>('duplicatedToTicketsTypes')
+export const fixedInSelectorName = nameOf<SetState>('fixedIn')
+export const fixedBySelectorName = nameOf<SetState>('fixedBy')
+export const severitySelectorName = nameOf<SetState>('severity')
+export const ticketStatusesSelectorName = nameOf<SetState>('ticketStatuses')
+export const closedBySelectorName = nameOf<SetState>('closedBy')
+export const frameworksSelectorName = nameOf<SetState>('frameworks')
+export const operatingSystemsSelectorName = nameOf<SetState>('operatingSystems')
+export const idesSelectorName = nameOf<SetState>('ides')
+export const customersTypesSelectorName = nameOf<SetState>('customersTypes')
+export const conversionsTypesSelectorName = nameOf<SetState>('conversionsTypes')
+export const assignedToSelectorName = nameOf<SetState>('assignedTo')
+export const repliesTypesSelectorName = nameOf<SetState>('repliesTypes')
+export const componentsSelectorName = nameOf<SetState>('components')
+export const featuresSelectorName = nameOf<SetState>('features')
+
 
 function getSelector<R>(selector: (set: SetState | undefined) => R | undefined) {
     return getSlctr<SetState>(selector)

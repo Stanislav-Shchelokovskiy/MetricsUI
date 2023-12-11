@@ -6,8 +6,10 @@ import { changeComponents, changeComponentsInclude } from '../../../../store/act
 import { fetchComponents, Component } from '../../../../network_resource_fetcher/cat/FetchComponents'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { componentsSelector } from '../../../../store/sets/Selectors'
+import { componentsSelector, componentsSelectorName } from '../../../../store/sets/Selectors'
 import { tentsSelector } from '../../../../../common/store/multiset_container/sets/selectors/Common'
+import { setDecomposition } from '../../../../../common/store/multiset_container/sets/Defaults'
+
 
 export default function ComponentsSelector() {
     const setTitle = useSetTitle()
@@ -17,6 +19,7 @@ export default function ComponentsSelector() {
     const value = useSelector((store: SupportMetricsStore) => componentsSelector(store, setTitle))
     const onValueChange = (allValues: Array<Component>, values: Array<string>) => changeComponents({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeComponentsInclude({ stateId: setTitle, data: include })
+    const decompositionArgs = setDecomposition(setTitle, componentsSelectorName)
 
     return <MultiOptionSelector<Component, string>
         displaySelector='component_name'
@@ -32,5 +35,6 @@ export default function ComponentsSelector() {
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
         showNullItem={true}
+        decompositionArgs={decompositionArgs}
     />
 } 

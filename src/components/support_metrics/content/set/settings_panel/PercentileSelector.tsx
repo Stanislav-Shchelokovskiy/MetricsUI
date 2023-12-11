@@ -40,7 +40,7 @@ export default function PercentileSelector() {
     )], [percentile.include])
 
     return <NumericSelector
-        className='CustomersActivity_SingleSelector'
+        className='OptionSelector'
         currentValue={percentile.value}
         max={100}
         defaultValue={100}

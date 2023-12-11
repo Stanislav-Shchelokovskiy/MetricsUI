@@ -6,8 +6,9 @@ import { changeFeatures, changeFeaturesInclude } from '../../../../store/actions
 import { fetchFeatures, Feature } from '../../../../network_resource_fetcher/cat/FetchFeatures'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { componentsSelector, featuresSelector } from '../../../../store/sets/Selectors'
 import { tentsSelector } from '../../../../../common/store/multiset_container/sets/selectors/Common'
+import { componentsSelector, featuresSelector, featuresSelectorName } from '../../../../store/sets/Selectors'
+import { setDecomposition } from '../../../../../common/store/multiset_container/sets/Defaults'
 
 
 export default function FeaturesSelector() {
@@ -19,6 +20,7 @@ export default function FeaturesSelector() {
     const value = useSelector((store: SupportMetricsStore) => featuresSelector(store, setTitle))
     const onValueChange = (allValues: Array<Feature>, values: Array<string>) => changeFeatures({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeFeaturesInclude({ stateId: setTitle, data: include })
+    const decompositionArgs = setDecomposition(setTitle, featuresSelectorName)
 
     return <MultiOptionSelector<Feature, string>
         displaySelector='feature_name'
@@ -34,5 +36,6 @@ export default function FeaturesSelector() {
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
         showNullItem={true}
+        decompositionArgs={decompositionArgs}
     />
 } 

@@ -12,8 +12,10 @@ import {
     positionsSelector,
     levelsSelector,
     employeesSelector,
+    empTentsSelectorName,
 } from '../../../common/store/multiset_container/sets/selectors/Employees'
-import { nameOf } from '../../../common/store/multiset_container/sets/Interfaces'
+import { setDecomposition } from '../../../common/store/multiset_container/sets/Defaults'
+
 
 export default function EmployeesSelector() {
     const setTitle = useSetTitle()
@@ -27,10 +29,7 @@ export default function EmployeesSelector() {
 
     const onValueChange = (allValues: Array<Knot>, values: Array<string>) => changeEmployees({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeEmployeesInclude({ stateId: setTitle, data: include })
-    const decompositionArgs = {
-        sourceSet: setTitle,
-        propertyName: nameOf('employees'),
-    }
+    const decompositionArgs = setDecomposition(setTitle, empTentsSelectorName)
 
     return <MultiOptionSelector<Knot, string>
         placeholder='Select employees'

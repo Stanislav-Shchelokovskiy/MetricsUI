@@ -9,7 +9,15 @@ import { fetchEmployees, Employee } from '../../../../network_resource_fetcher/e
 import { StringFilterParameters } from '../../../../../common/store/multiset_container/sets/Interfaces'
 import { paramOrDefault } from '../../../../../common/store/multiset_container/Utils'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { positionsSelector, empTribesSelector, empTentsSelector, employeesSelector, rolesSelector } from '../../../../../common/store/multiset_container/sets/selectors/Employees'
+import {
+    positionsSelector,
+    empTribesSelector,
+    empTentsSelector,
+    employeesSelector,
+    rolesSelector,
+    employeesSelectorName
+} from '../../../../../common/store/multiset_container/sets/selectors/Employees'
+import { setDecomposition } from '../../../../../common/store/multiset_container/sets/Defaults'
 
 
 export default function EmployeesSelector() {
@@ -19,6 +27,7 @@ export default function EmployeesSelector() {
         valueSelector={employeesSelector}
         changeSelection={changeEmployees}
         changeInclude={changeEmployeesInclude}
+        decomposePropName={employeesSelectorName}
     />
 }
 
@@ -29,6 +38,7 @@ export interface EmpSelectorProps {
     valueSelector: (store: SupportMetricsStore, setTitle: string) => StringFilterParameters
     changeSelection: (payload: Payload<string, Array<string>>) => PayloadAction<Payload<string, Array<string>>>
     changeInclude: (payload: Payload<string, boolean>) => PayloadAction<Payload<string, boolean>>
+    decomposePropName: string
 }
 
 export function EmpSelector(props: EmpSelectorProps) {
@@ -43,6 +53,7 @@ export function EmpSelector(props: EmpSelectorProps) {
     const value = useSelector((store: SupportMetricsStore) => props.valueSelector(store, setTitle))
     const onValueChange = (allValues: Array<Employee>, values: Array<string>) => props.changeSelection({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => props.changeInclude({ stateId: setTitle, data: include })
+    const decompositionArgs = setDecomposition(setTitle, props.decomposePropName)
 
     return <MultiOptionSelector<Employee, string>
         displaySelector='name'
@@ -58,5 +69,6 @@ export function EmpSelector(props: EmpSelectorProps) {
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
         showNullItem={true}
+        decompositionArgs={decompositionArgs}
     />
 }

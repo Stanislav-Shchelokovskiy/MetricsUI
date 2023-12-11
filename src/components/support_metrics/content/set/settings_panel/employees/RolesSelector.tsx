@@ -5,7 +5,8 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeRoles, changeRolesInclude } from '../../../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchRoles, Role } from '../../../../network_resource_fetcher/employees/FetchRoles'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { rolesSelector } from '../../../../../common/store/multiset_container/sets/selectors/Employees'
+import { rolesSelector, rolesSelectorName } from '../../../../../common/store/multiset_container/sets/selectors/Employees'
+import { setDecomposition } from '../../../../../common/store/multiset_container/sets/Defaults'
 
 
 export default function RolesSelector() {
@@ -13,6 +14,7 @@ export default function RolesSelector() {
     const value = useSelector((store: SupportMetricsStore) => rolesSelector(store, setTitle))
     const onValueChange = (allValues: Array<Role>, values: Array<string>) => changeRoles({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeRolesInclude({ stateId: setTitle, data: include })
+    const decompositionArgs = setDecomposition(setTitle, rolesSelectorName)
 
     return <MultiOptionSelector<Role, string>
         displaySelector='name'
@@ -26,5 +28,6 @@ export default function RolesSelector() {
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
         showNullItem={true}
+        decompositionArgs={decompositionArgs}
     />
 } 

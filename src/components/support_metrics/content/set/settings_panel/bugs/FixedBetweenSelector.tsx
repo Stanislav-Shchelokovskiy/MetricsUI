@@ -12,7 +12,6 @@ export default function FixedBetweenSelector() {
     return <BugsSelectorWrapper
         Wrapped={BetweenPeriodSelectorWrapper}
         setTitle={setTitle}
-        className='CustomersActivity_FixedBetweenSelector'
         label='Fixed'
         fetchDataSource={fetchPeriod}
         valueSelector={fixedBetweenSelector}

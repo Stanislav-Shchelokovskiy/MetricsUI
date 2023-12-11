@@ -17,7 +17,6 @@ export default function OwnerKindSelector() {
     const onValueChange = (value: number | undefined) => changeOwnerKind({ stateId: setTitle, data: value === null ? undefined : value })
 
     return <OptionSelector<Privacy, number | undefined>
-        className='CustomersActivity_SingleSelector'
         displayExpr='name'
         valueExpr='id'
         placeholder='Customer or employee'

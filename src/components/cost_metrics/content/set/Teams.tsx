@@ -4,18 +4,21 @@ import { CostMetricsStore } from '../../store/Store'
 import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { changeTeams, changeTeamsInclude } from '../../store/sets/Actions'
 import { fetchTeams } from '../../network_resource_fetcher/Teams'
-import { empTeamsSelector } from '../../store/sets/Selectors'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
 import { Knot } from '../../../common/Typing'
+import { empTeamsSelector, empTeamsSelectorName } from '../../store/sets/Selectors'
+import { setDecomposition } from '../../../common/store/multiset_container/sets/Defaults'
+
 
 export default function EmpTeamsSelector() {
     const setTitle = useSetTitle()
     const value = useSelector((state: CostMetricsStore) => empTeamsSelector(state, setTitle))
     const onValueChange = (allValues: Array<Knot>, values: Array<string>) => changeTeams({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTeamsInclude({ stateId: setTitle, data: include })
+    const decompositionArgs = setDecomposition(setTitle, empTeamsSelectorName)
+
 
     return <MultiOptionSelector<Knot, string>
-        className='CostMetrics_TeamsSelector'
         displaySelector='name'
         valueSelector='id'
         placeholder='Select employees teams'
@@ -27,5 +30,6 @@ export default function EmpTeamsSelector() {
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
         showNullItem={true}
+        decompositionArgs={decompositionArgs}
     />
 } 

@@ -17,7 +17,6 @@ export default function PrivacySelector() {
     const onValueChange = (value: number | undefined) => changePrivacy({ stateId: setTitle, data: value === null ? undefined : value })
 
     return <OptionSelector<Privacy, number | undefined>
-        className='CustomersActivity_SingleSelector'
         displayExpr='name'
         valueExpr='id'
         placeholder='Public or private'

@@ -6,7 +6,8 @@ import { fetchTribes } from '../../../network_resource_fetcher/Tribes'
 import MultiOptionSelector from '../../../../common/components/MultiOptionSelector'
 import { changeTribes, changeTribesInclude } from '../../../../common/store/multiset_container/sets/actions/Common'
 import { useSetTitle } from '../../../../common/components/multiset_container/set/SetContext'
-import { tribesSelector } from '../../../../common/store/multiset_container/sets/selectors/Common'
+import { tribesSelector, tribesSelectorName } from '../../../../common/store/multiset_container/sets/selectors/Common'
+import { setDecomposition } from '../../../../common/store/multiset_container/sets/Defaults'
 
 
 export default function TribesSelector() {
@@ -14,6 +15,7 @@ export default function TribesSelector() {
     const value = useSelector((store: SupportMetricsStore) => tribesSelector(store, setTitle))
     const onValueChange = (allValues: Array<Knot>, selectedTribes: Array<string>) => changeTribes({ stateId: setTitle, data: selectedTribes })
     const onIncludeChange = (include: boolean) => changeTribesInclude({ stateId: setTitle, data: include })
+    const decompositionArgs = setDecomposition(setTitle, tribesSelectorName)
 
     return <MultiOptionSelector<Knot, string>
         displaySelector='name'
@@ -27,5 +29,6 @@ export default function TribesSelector() {
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
         showNullItem={true}
+        decompositionArgs={decompositionArgs}
     />
 }

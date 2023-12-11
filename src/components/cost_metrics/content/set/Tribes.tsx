@@ -4,9 +4,10 @@ import { CostMetricsStore } from '../../store/Store'
 import MultiOptionSelector from '../../../common/components/MultiOptionSelector'
 import { changeEmpTribes, changeEmpTribesInclude } from '../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchTribes } from '../../network_resource_fetcher/Tribes'
-import { empTribesSelector } from '../../../common/store/multiset_container/sets/selectors/Employees'
+import { empTribesSelector, empTribesSelectorName } from '../../../common/store/multiset_container/sets/selectors/Employees'
 import { useSetTitle } from '../../../common/components/multiset_container/set/SetContext'
 import { Knot } from '../../../common/Typing'
+import { setDecomposition } from '../../../common/store/multiset_container/sets/Defaults'
 
 
 export default function EmpTribesSelector() {
@@ -14,9 +15,9 @@ export default function EmpTribesSelector() {
     const value = useSelector((state: CostMetricsStore) => empTribesSelector(state, setTitle))
     const onValueChange = (allValues: Array<Knot>, values: Array<string>) => changeEmpTribes({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeEmpTribesInclude({ stateId: setTitle, data: include })
+    const decompositionArgs = setDecomposition(setTitle, empTribesSelectorName)
 
     return <MultiOptionSelector<Knot, string>
-        className='CostMetrics_EmpTribesSelector'
         displaySelector='name'
         valueSelector='id'
         placeholder='Select employees tribes'
@@ -28,5 +29,6 @@ export default function EmpTribesSelector() {
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
         showNullItem={true}
+        decompositionArgs={decompositionArgs}
     />
 } 

@@ -5,7 +5,8 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeEmpTents, changeEmpTentsInclude } from '../../../../../common/store/multiset_container/sets/actions/Employees'
 import { fetchEmpTents, EmpTent } from '../../../../network_resource_fetcher/employees/FetchEmptTents'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { empTentsSelector } from '../../../../../common/store/multiset_container/sets/selectors/Employees'
+import { empTentsSelector, empTentsSelectorName } from '../../../../../common/store/multiset_container/sets/selectors/Employees'
+import { setDecomposition } from '../../../../../common/store/multiset_container/sets/Defaults'
 
 
 export default function EmpTentsSelector() {
@@ -13,6 +14,7 @@ export default function EmpTentsSelector() {
     const value = useSelector((store: SupportMetricsStore) => empTentsSelector(store, setTitle))
     const onValueChange = (allValues: Array<EmpTent>, values: Array<string>) => changeEmpTents({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeEmpTentsInclude({ stateId: setTitle, data: include })
+    const decompositionArgs = setDecomposition(setTitle, empTentsSelectorName)
 
     return <MultiOptionSelector<EmpTent, string>
         displaySelector='name'
@@ -26,5 +28,6 @@ export default function EmpTentsSelector() {
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'
         showNullItem={true}
+        decompositionArgs={decompositionArgs}
     />
 } 
