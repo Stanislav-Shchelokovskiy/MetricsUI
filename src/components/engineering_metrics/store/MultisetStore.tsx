@@ -14,6 +14,13 @@ import { getStoreConfig as getCostConfig } from '../../cost_metrics/store/Store'
 import { getStoreConfig as getPerformanceConfig } from '../../performance_metrics/store/Store'
 import { contextOrDefault } from '../../common/store/multiset_container/Context'
 import { getStateSlice } from '../../common/store/multiset_container/Store'
+import { applyState as _applyState} from '../../common/store/view_state/Actions'
+import {
+    validateState as _validateState,
+    changeMetric as _changeMetric,
+} from '../../common/store/multiset_container/Actions'
+import { metricSelector } from '../../common/store/multiset_container/Selectors'
+
 
 
 function getConfig(ctx: Context) {
@@ -91,15 +98,43 @@ const reducer = createReducer()
 const validator = createValidator()
 const slicer = createSlicer()
 
-let prevContext = contextOrDefault(undefined)
+
+let currentContext = contextOrDefault(undefined)
+let prevContext = currentContext
 function changeContext(ctx: Context) {
-    if (ctx === prevContext)
+    prevContext = currentContext
+    if (ctx === currentContext)
         return
-    prevContext = ctx
+    currentContext = ctx
 
     reducer.changeContext(ctx)
     validator.changeContext(ctx)
     slicer.changeContext(ctx)
+}
+
+function resetContext() {
+    changeContext(prevContext)
+}
+
+function getContext(): Context {
+    return currentContext
+}
+
+function getMetric(): string {
+    return metricSelector(getStore().getState())
+}
+
+const store = configureMultisetContainerStore('multiset_store', config)
+function getStore(): Store {
+    return store
+}
+
+function validateState() {
+    store.dispatch(_validateState(undefined))
+}
+
+function applyState(state: MultisetContainerStore) {
+    store.dispatch(_applyState(state))
 }
 
 function config(ctx: Context) {
@@ -110,15 +145,25 @@ function config(ctx: Context) {
     }
 }
 
-interface StoreEx extends Store {
+
+interface StoreEx {
     changeContext: (ctx: Context) => void,
+    resetContext: () => void,
+    getContext: () => Context,
+    getMetric: () => string,
+    validateState: () => void,
+    applyState: (state: MultisetContainerStore) => void,
     getShareableState: () => MultisetContainerStore
+    getStore: () => Store,
 }
 
-const store = configureMultisetContainerStore('multiset_store', config)
-
 export const multisetStore: StoreEx = {
-    ...store,
     changeContext: changeContext,
-    getShareableState: () => slicer.slice(store.getState()),
+    resetContext: resetContext,
+    getContext: getContext,
+    getMetric: getMetric,
+    getStore: getStore,
+    validateState: validateState,
+    applyState: applyState,
+    getShareableState: () => slicer.slice(getStore().getState()),
 }

@@ -1,19 +1,15 @@
-import React, { useCallback, useMemo, FC } from 'react'
-import { Provider, useStore, useDispatch, useSelector } from 'react-redux'
-import { changeMetric, changeContext, resetContext } from './store/Actions'
+import React, { useReducer, useCallback, useMemo, FC } from 'react'
+import { Provider } from 'react-redux'
 import {
     isSupportContextSelected,
     isCostContextSelected,
     contextOrDefault,
-    Context
+    Context,
 } from '../common/store/multiset_container/Context'
-import { contextSelector } from './store/Selectors'
 import { MultisetContainerContext, useMultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
 import ApplySharedState from '../common/components/state_management/ApplySharedState'
-
 import { fetchMetrics } from './fetchMetrics'
 import { Metric } from '../common/components/multiset_container/graph/MetricSelector'
-import { EngineeringMetricsStore } from './store/Store'
 import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
 import { SettingsSets } from '../common/components/multiset_container/MultisetContainer'
 import SupportMetricsSet from '../support_metrics/content/set/Set'
@@ -22,15 +18,17 @@ import PerformanceMetricsSet from '../performance_metrics/content/set/Set'
 import SupportMetricsToolbar from '../support_metrics/toolbar/Toolbar'
 import CostMetricsToolbar from '../cost_metrics/toolbar/Toolbar'
 import PerformanceMetricsToolbar from '../performance_metrics/toolbar/Toolbar'
-import { ContainerState } from './store/ContainerReducer'
-import { engineeringMetricsStore } from './store/Store'
 import { MultisetContainerStore } from '../common/store/multiset_container/Store'
-import { applyState } from '../common/store/view_state/Actions'
-import { validateState } from '../common/store/multiset_container/Actions'
 import LocalStatesConverter from './StatesConverter'
 import ErrorNotifier from '../app_components/ErrorNotifier'
 import { getContext } from './Utils'
-import { multisetStore } from './store/MetricsStore'
+import { multisetStore } from './store/MultisetStore'
+import {
+    containerReducer,
+    newContainerState,
+    changeContext as _changeContext,
+    changeMetric as _changeMetric,
+} from './store/ContainerReducer'
 
 
 export default function EngineeringMetrics() {
@@ -39,70 +37,68 @@ export default function EngineeringMetrics() {
 
 
 export function EngineeringMetricsApplySharedState({ context }: { context: Context }) {
-    engineeringMetricsStore.dispatch(changeContext(context))
+    multisetStore.changeContext(context)
     return <EngineeringMetricsContainer content={ApplySharedState} />
 }
 
-
-interface Props { content: FC<ContainerState> }
+interface ContainerProps {
+    metric: string
+    context: Context
+}
+interface Props { content: FC<ContainerProps> }
 function EngineeringMetricsContainer(props: Props) {
     return (
-        <Provider store={engineeringMetricsStore}>
-            <LocalStatesConverter>
-                <ErrorNotifier>
-                    <EngineeringMetricsContainerInner {...props} />
-                </ErrorNotifier>
-            </LocalStatesConverter>
-        </Provider>
+        < LocalStatesConverter >
+            <ErrorNotifier>
+                <EngineeringMetricsContainerInner {...props} />
+            </ErrorNotifier>
+        </LocalStatesConverter >
     )
 }
 
-
 function EngineeringMetricsContainerInner(props: Props) {
-    const ctx = useSelector(contextSelector)
+    const [state, dispatch] = useReducer(containerReducer, newContainerState(multisetStore.getContext(), multisetStore.getMetric()))
 
-    const dispatch = useDispatch()
-    const dispatchMetric = useCallback((metric: Metric) => {
-        multisetStore.changeContext(metric.context)
-        multisetStore.dispatch(validateState(undefined))
-        dispatch(changeMetric(metric))
-    }, [])
+    const changeMetric = useCallback((metric: Metric) => {
+        const ctx = contextOrDefault(metric.context)
+        multisetStore.changeContext(ctx)
+        multisetStore.validateState()
+        dispatch(_changeMetric(metric))
+    }, [dispatch])
 
-    const dispatchState = useCallback(async (state?: MultisetContainerStore) => {
+    const changeState = useCallback((state?: MultisetContainerStore) => {
         if (state === undefined) {
-            dispatch(resetContext(undefined))
-            return
+            multisetStore.resetContext()
+        } else {
+            const ctx = contextOrDefault(state.container?.context)
+            multisetStore.changeContext(ctx)
+            multisetStore.applyState(state)
         }
-       
-        const context = contextOrDefault(state.container?.context)
-        multisetStore.changeContext(context)
-        multisetStore.dispatch(applyState(state))
-
-        dispatch(applyState(multisetStore.getState()))
-    }, [])
+        dispatch(_changeContext(multisetStore.getContext()))
+    }, [dispatch])
 
     const context = useMemo(() => {
-        const baseContext = getContext(ctx)
+        const baseContext = getContext(state.context)
         baseContext.stateManagement.getShareableState = multisetStore.getShareableState
         return {
             ...baseContext,
             fetchMetrics: fetchMetrics,
-            changeMetric: dispatchMetric,
-            changeState: dispatchState,
-            context: ctx,
+            changeMetric: changeMetric,
+            changeState: changeState,
+            context: state.context,
         }
-    }, [ctx])
+    }, [state.context])
 
-    const store = useStore<EngineeringMetricsStore>()
+    const store = multisetStore.getStore()
     return <MultisetContainerContext.Provider value={context}>
-        <Provider store={multisetStore}>
-            <props.content {...store.getState()} />
+        <Provider store={store}>
+            <props.content {...state} />
         </Provider>
     </MultisetContainerContext.Provider >
 }
 
 
-function EngineeringMetricsContent(props: ContainerState) {
+function EngineeringMetricsContent(props: ContainerProps) {
     return <MultisetContainer
         metric={props.metric}
         sets={Sets}
