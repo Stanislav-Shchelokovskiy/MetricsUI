@@ -5,7 +5,7 @@ import { SupportMetricsStore } from '../../../../store/Store'
 import { changeTicketsTags, changeTicketsTagsInclude } from '../../../../store/actions/Tickets'
 import { fetchTicketsTags, TicketsTag } from '../../../../network_resource_fetcher/tickets/FetchTicketsTags'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
-import { ticketsTagsSelector, ticketStatusesSelectorName } from '../../../../store/sets/Selectors'
+import { ticketsTagsSelector, ticketsTagsSelectorName } from '../../../../store/sets/Selectors'
 import { setDecomposition } from '../../../../../common/store/multiset_container/sets/Defaults'
 
 
@@ -14,7 +14,7 @@ export default function TicketsTagsSelector() {
     const value = useSelector((store: SupportMetricsStore) => ticketsTagsSelector(store, setTitle))
     const onValueChange = (allValues: Array<TicketsTag>, values: Array<string>) => changeTicketsTags({ stateId: setTitle, data: values })
     const onIncludeChange = (include: boolean) => changeTicketsTagsInclude({ stateId: setTitle, data: include })
-    const decompositionArgs = setDecomposition(setTitle, ticketStatusesSelectorName)
+    const decompositionArgs = setDecomposition(setTitle, ticketsTagsSelectorName)
 
     return <MultiOptionSelector<TicketsTag, string>
         displaySelector='name'
