@@ -102,7 +102,7 @@ const slicer = createSlicer()
 let currentContext = contextOrDefault(undefined)
 let prevContext = currentContext
 function changeContext(ctx: Context) {
-    prevContext = currentContext
+    updatePrevContext()
     if (ctx === currentContext)
         return
     currentContext = ctx
@@ -114,6 +114,11 @@ function changeContext(ctx: Context) {
 
 function resetContext() {
     changeContext(prevContext)
+    updatePrevContext()
+}
+
+function updatePrevContext() {
+    prevContext = currentContext
 }
 
 function getContext(): Context {
