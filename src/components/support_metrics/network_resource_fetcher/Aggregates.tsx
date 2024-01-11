@@ -38,10 +38,7 @@ export async function fetchAggregates(
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                ...getAliasedSet(set as SetState),
-                Percentile: { metric: containerState.metric, value: (set as SetState).percentile }
-            }),
+            body: JSON.stringify(getAliasedSet(set as SetState, containerState.metric)),
             signal: signal,
         })
 }

@@ -29,10 +29,7 @@ export async function fetchTicketsWithIterationsRaw(
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                ...getAliasedSet(set),
-                Percentile: { metric: containerState.metric, value: set.percentile }
-            }),
+            body: JSON.stringify(getAliasedSet(set, containerState.metric)),
         })
 }
 

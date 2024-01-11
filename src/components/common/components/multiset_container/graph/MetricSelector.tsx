@@ -11,6 +11,7 @@ import Markdown from 'markdown-to-jsx'
 import ScrollView from 'devextreme-react/scroll-view'
 import { HelpItem } from '../../../Typing'
 import { useSelector } from 'react-redux'
+import { Undefinable } from '../../../Typing'
 
 
 export interface Metric {
@@ -110,6 +111,6 @@ function HelpProvider({ Wrapped, fetchMetricDescription, fetchArgsSelector, ...w
     </>
 }
 
-export function metricOrDefault(value: string | undefined) {
+export function metricOrDefault(value: Undefinable<string>): string {
     return value ? value : TAKE_FROM_DEFAULT_SELECTOR
 }

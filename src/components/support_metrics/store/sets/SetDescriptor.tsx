@@ -1,13 +1,15 @@
 import { SetState } from './Interfaces'
 import { DEFAULT_SET } from './Defaults'
 import { getFilterFields } from '../../../common/components/multiset_container/Toolbar/FilterTooltip'
+import { isTicketLifetimeSelected } from '../../../common/store/multiset_container/Selectors'
+import { getOptionalFilterParameter } from '../../../common/store/multiset_container/sets/Defaults'
 
-export function getAliasedSet(set: SetState) {
+export function getAliasedSet(set: SetState, metric: string) {
     return {
-        Percentile: set.percentile,
+        Percentile: { metric: metric, value: set.percentile },
         'Ticket visibility': set.privacy,
         'Ticket owner': set.ownerKind,
-        'Closed for': set.closedForInDays,
+        'Closed for': isTicketLifetimeSelected(metric) ? getOptionalFilterParameter<number>(21) : set.closedForInDays,
         'Resolution time': set.resolutionTimeInhours,
         Tribes: set.tribes,
         Tents: set.tents,
@@ -44,5 +46,5 @@ export function getAliasedSet(set: SetState) {
 }
 
 export function getSetDataFields() {
-    return getFilterFields(getAliasedSet(DEFAULT_SET))
+    return getFilterFields(getAliasedSet(DEFAULT_SET, ''))
 }

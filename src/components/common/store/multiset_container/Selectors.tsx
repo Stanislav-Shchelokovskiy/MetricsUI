@@ -8,6 +8,14 @@ export function metricSelector<ContainerState extends BaseContainerState>(store:
     return store.container.metric
 }
 
+export function isTicketLifetimeSelector<ContainerState extends BaseContainerState>(store: MultisetContainerStore<ContainerState>) {
+    return isTicketLifetimeSelected(metricSelector(store))
+}
+
+export function isTicketLifetimeSelected(metric: string): boolean {
+    return metric == 'Ticket Lifetime'
+}
+
 export function rangeSelector<ContainerState extends BaseContainerState>(store: MultisetContainerStore<ContainerState>) {
     return store.container.range
 }
@@ -31,3 +39,4 @@ function setSelector<T extends BaseSetState>(sets: Array<T>, setTitle: string) {
 export function getSelector<T extends BaseSetState, R = any>(selector: (set: T | undefined) => R | undefined) {
     return createSelector([setsSelector, setTitleSelector], (sets, setTitle) => selector(setSelector<T>(sets as Array<T>, setTitle)))
 }
+
