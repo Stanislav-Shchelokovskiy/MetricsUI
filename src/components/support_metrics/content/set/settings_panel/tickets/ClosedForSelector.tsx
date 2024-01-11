@@ -30,6 +30,5 @@ export default function ClosedForSelector() {
         placeholder='Any number of days'
         label='Ticket closed for'
         spinDelay={700}
-        disabled={ticketLifetimeSelected}
     />
 }
