@@ -35,6 +35,7 @@ export default function NumericSelector(props: Props) {
     }
 
     const resetButtonOptions = {
+        name: 'reset',
         text: '',
         stylingMode: 'text',
         icon: 'revert',
@@ -61,13 +62,13 @@ export default function NumericSelector(props: Props) {
                     key={o.name}
                     name={o.name}
                     location={o.location}
-                    options={o} />) :
+                    options={o as any} />) :
                 null
         }
         <Button name='spins' />
         <Button
-            name='reset'
-            options={resetButtonOptions} />
+            name={resetButtonOptions.name}
+            options={resetButtonOptions as any} />
     </NumberBox>
 }
 

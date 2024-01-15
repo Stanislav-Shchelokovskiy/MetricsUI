@@ -84,14 +84,14 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
                         key={o.name}
                         name={o.name}
                         location={o.location}
-                        options={o} />) :
+                        options={o as any} />) :
                     null
             }
             <Button name='dropDown' />
             {props.showClear && !defaultValueIsSelected(value, defaultValue) ?
                 <Button
-                    name='customclear'
-                    location='after'
+                    name={clearButtonOptions.name}
+                    location={clearButtonOptions.location}
                     options={clearButtonOptions} /> :
                 null}
         </SelectBox >

@@ -23,3 +23,8 @@
 .OptionSelector .dx-label-before {
     padding-left: 32px;
 }
+
+
+.dx-overlay-content .dx-popup-content-scrollable {
+    overflow: hidden;
+}

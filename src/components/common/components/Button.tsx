@@ -37,9 +37,11 @@ Button.defaultProps = {
     id: '',
 }
 
+
+type location = 'before' | 'after'
 export interface ButtonOptions {
     name: string
-    location: string,
+    location: location,
     [index: string]: any;
 }
 
@@ -47,14 +49,14 @@ export function getIncludeButtonOptions(
     isInIncludeState: boolean,
     onIncludeChange: ((include: boolean) => void),
     name: string = 'include',
-    location: string = 'before',
+    location: location = 'before',
     includeIcon: string = includeIconSvg.default,
     excludeIcon: string = excludeIconSvg.default,
     includeHint: string = '',
     excludeHint: string = '',
     includeState: string = 'success',
     excludeState: string = 'danger',
-) {
+): ButtonOptions {
     return {
         name: name,
         className: name,
@@ -78,8 +80,10 @@ export function getIncludeButtonOptions(
     }
 }
 
-export function getClearButtonOptions() {
+export function getClearButtonOptions(): ButtonOptions {
     return {
+        name: 'customclear',
+        location: 'after',
         text: '',
         stylingMode: 'text',
         icon: 'clear',
@@ -91,7 +95,7 @@ export function getClearButtonOptions() {
     }
 }
 
-export function getHelpButtonOptions() {
+export function getHelpButtonOptions(): ButtonOptions {
     return {
         name: 'helpButton',
         location: 'before',
@@ -104,13 +108,14 @@ export function getHelpButtonOptions() {
     }
 }
 
-export function getDecomposeButtonOptions() {
+export function getDecomposeButtonOptions(): ButtonOptions {
     return {
+        name: 'decomposeValues',
+        location: 'after',
         text: '',
         stylingMode: 'text',
         icon: decomposeIconSvg.default,
         type: 'normal',
-        location: 'after',
         hoverStateEnabled: true,
         focusStateEnabled: false,
         activeStateEnabled: true,

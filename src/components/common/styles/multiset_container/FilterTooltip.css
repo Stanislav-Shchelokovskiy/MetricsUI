@@ -5,6 +5,10 @@
     padding-right: 7px;
 }
 
+.dx-popover-wrapper .dx-popup-content-scrollable {
+    overflow: hidden;
+}
+
 .MultisetContainerFilterTooltip {
     max-width: 90vw;
 }

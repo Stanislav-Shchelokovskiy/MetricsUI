@@ -45,7 +45,7 @@ export default function InputBox(props: InputBoxProps) {
             showTitle={true}
             title={props.title}
             maxWidth='30vw'
-            maxHeight='25vh'
+            maxHeight='27vh'
         >
             <TextBox ref={inputRef} defaultValue={props.value} valueChangeEvent='keyup' onEnterKey={onOk} />
             <ToolbarItem

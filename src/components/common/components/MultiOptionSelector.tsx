@@ -209,7 +209,7 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
                 <Button
                     name={includeButtonOptions.name}
                     location={includeButtonOptions.location}
-                    options={includeButtonOptions} />
+                    options={includeButtonOptions as any} />
                 : null
         }
         {
@@ -218,18 +218,18 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
                     key={o.name}
                     name={o.name}
                     location={o.location}
-                    options={o} />) :
+                    options={o as any} />) :
                 null
         }
         {!defaultValueIsSelected(props.value, props.defaultValue) ?
             <Button
-                name='customclear'
-                location='after'
+                name={clearButtonOptions.name}
+                location={clearButtonOptions.location}
                 options={clearButtonOptions} /> :
             null}
         {props.decompositionArgs !== undefined ? <Button
-            name='decomposeValues'
-            location='after'
+            name={decomposeButtonOptions.name}
+            location={decomposeButtonOptions.location}
             options={decomposeButtonOptions} /> : null}
     </TagBox >
 }

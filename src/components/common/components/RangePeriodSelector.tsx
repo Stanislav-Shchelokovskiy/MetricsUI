@@ -68,9 +68,9 @@ export interface RangeSelectorProps {
 
 function DefaultRangeSelector(props: RangeSelectorProps) {
     const minorTickInterval = {
-        '%Y-%m-%d': 'day',
-        '%Y': 'month',
-    }[props.groupByPeriod] || 'week'
+        '%Y-%m-%d': 'day' as const,
+        '%Y': 'month' as const,
+    }[props.groupByPeriod] || 'week' as const
     const tick = useMemo(() => { return { visible: false } }, [])
     return (
         <DxRangeSelector
@@ -78,7 +78,7 @@ function DefaultRangeSelector(props: RangeSelectorProps) {
             value={getPeriod(props.selectedRange)}
             className={props.className}
             size={{ height: 125 }}
-            onValueChange={props.changeRange}
+            onValueChange={props.changeRange as any}
             onIncidentOccurred={props.onIncidentOccurred}
         >
             <Margin top={10} />

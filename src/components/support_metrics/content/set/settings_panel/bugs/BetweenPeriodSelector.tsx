@@ -89,7 +89,7 @@ function BetweenPeriodSelector(props: RangeSelectorProps) {
                         value={start}
                         min={periodStart}
                         max={periodEnd}
-                        onValueChange={onStartChange}
+                        onValueChange={onStartChange as any}
                     />
                     <div>and</div>
                     <DateBox
@@ -97,7 +97,7 @@ function BetweenPeriodSelector(props: RangeSelectorProps) {
                         value={end}
                         min={periodStart}
                         max={periodEnd}
-                        onValueChange={onEndChange}
+                        onValueChange={onEndChange as any}
                     />
                 </div>
             </div>
