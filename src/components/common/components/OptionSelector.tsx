@@ -27,7 +27,7 @@ interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> exten
     showClear: boolean
     customButtons: Array<ButtonOptions> | undefined
     hideIfEmpty: boolean
-    customPopup: FC<CustomPopupProps<DataSourceT, ValueExprT>>
+    customPopup: FC<CustomPopupProps<DataSourceT, ValueExprT>> | undefined
 }
 
 export interface CustomPopupProps<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> {
@@ -35,7 +35,7 @@ export interface CustomPopupProps<DataSourceT, ValueExprT = DataSourceT | keyof 
     value: Undefinable<ValueExprT>
     dispatchValue: (value: ValueExprT) => void
     visible: boolean
-    onHiding: ()=>void
+    onHiding: () => void
 }
 
 
@@ -102,7 +102,7 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
                     hideOnOutsideClick={true}
                     hideOnParentScroll={true}
                     focusStateEnabled={false}
-                    onShowing={showPopup}
+                    onShowing={props.customPopup ? showPopup : undefined}
                     container={props.container} />
                 {
                     props.customButtons !== undefined ?
