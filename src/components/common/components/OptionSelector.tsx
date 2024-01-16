@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, FC, useCallback, useState, useRef } from 'react'
 import SelectBox, { DropDownOptions, Button } from 'devextreme-react/select-box'
 import DataSource from 'devextreme/data/data_source'
 import LoadIndicator from './LoadIndicator'
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import useDataSource, { DataSourceProps } from '../../common/hooks/UseDataSource'
 import { useSingleValidate } from '../hooks/UseValidate'
 import { getClearButtonOptions, ButtonOptions } from './Button'
+import { Undefinable } from '../Typing'
 
 
 interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> extends DataSourceProps<DataSourceT> {
@@ -26,6 +27,15 @@ interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> exten
     showClear: boolean
     customButtons: Array<ButtonOptions> | undefined
     hideIfEmpty: boolean
+    customPopup: FC<CustomPopupProps<DataSourceT, ValueExprT>>
+}
+
+export interface CustomPopupProps<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> {
+    dataSource: DataSource<DataSourceT, ValueExprT>
+    value: Undefinable<ValueExprT>
+    dispatchValue: (value: ValueExprT) => void
+    visible: boolean
+    onHiding: ()=>void
 }
 
 
@@ -46,9 +56,9 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
     const validateSelectedValue = useSingleValidate<DataSourceT, ValueExprT>(value, props.onValueChange, props.valueExpr, props.defaultValueSelector)
     const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, validateSelectedValue)
 
-    const ds = new DataSource({
+    const ds = new DataSource<DataSourceT, ValueExprT>({
         store: dataSource,
-        paginate: true,
+        paginate: props.customPopup == null,
         pageSize: 20,
         group: props.groupExpr,
         sort: props.sortExpr,
@@ -64,37 +74,62 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
         }
     }, [defaultValue])
 
+
+    const [popupVisible, setHelpPopupVisible] = useState(false)
+    const ref = useRef<SelectBox>(null)
+    const showPopup = useCallback((e: any) => {
+        ref.current?.instance.option('opened', false)
+        e.cancel = true
+        setHelpPopupVisible(true)
+    }, [])
+    const hidePopup = useCallback(() => {
+        setHelpPopupVisible(false)
+    }, [])
+
+
     if (dataSource.length > 0) {
-        return <SelectBox
-            {...props}
-            dataSource={ds}
-            grouped={props.groupExpr !== undefined}
-            value={value}
-            onValueChange={onValueChangeHandler}
-            labelMode='static'
-            focusStateEnabled={false}>
-            <DropDownOptions
-                hideOnOutsideClick={true}
-                hideOnParentScroll={true}
-                focusStateEnabled={false}
-                container={props.container} />
-            {
-                props.customButtons !== undefined ?
-                    props.customButtons.map(o => <Button
-                        key={o.name}
-                        name={o.name}
-                        location={o.location}
-                        options={o as any} />) :
-                    null
-            }
-            <Button name='dropDown' />
-            {props.showClear && !defaultValueIsSelected(value, defaultValue) ?
-                <Button
-                    name={clearButtonOptions.name}
-                    location={clearButtonOptions.location}
-                    options={clearButtonOptions} /> :
-                null}
-        </SelectBox >
+        return <>
+            <SelectBox
+                {...props}
+                ref={ref}
+                dataSource={ds}
+                grouped={props.groupExpr !== undefined}
+                value={value}
+                onValueChange={onValueChangeHandler}
+                labelMode='static'
+                focusStateEnabled={false}>
+                <DropDownOptions
+                    hideOnOutsideClick={true}
+                    hideOnParentScroll={true}
+                    focusStateEnabled={false}
+                    onShowing={showPopup}
+                    container={props.container} />
+                {
+                    props.customButtons !== undefined ?
+                        props.customButtons.map(o => <Button
+                            key={o.name}
+                            name={o.name}
+                            location={o.location}
+                            options={o as any} />) :
+                        null
+                }
+                <Button name='dropDown' />
+                {props.showClear && !defaultValueIsSelected(value, defaultValue) ?
+                    <Button
+                        name={clearButtonOptions.name}
+                        location={clearButtonOptions.location}
+                        options={clearButtonOptions} /> :
+                    null}
+            </SelectBox >
+            {props.customPopup ?
+                <props.customPopup
+                    dataSource={ds}
+                    value={value}
+                    dispatchValue={onValueChangeHandler}
+                    visible={popupVisible}
+                    onHiding={hidePopup}
+                /> : null}
+        </>
     }
     if (props.hideIfEmpty)
         return null
@@ -123,6 +158,7 @@ const defaultProps = {
     onValueChangeEx: undefined,
     customButtons: undefined,
     hideIfEmpty: false,
+    customPopup: null,
 }
 
 OptionSelector.defaultProps = defaultProps
