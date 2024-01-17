@@ -24,7 +24,6 @@ export default function TentsSelector() {
     const defaultValue = useMemo(() => [], [])
 
     return <MultiOptionSelector<Knot, string>
-        className='TentsSelector'
         displaySelector='name'
         valueSelector='id'
         placeholder='Select tents to display...'
@@ -33,6 +32,5 @@ export default function TentsSelector() {
         value={selectedTentIds}
         defaultValue={defaultValue}
         onValueChange={onValueChange}
-        showSelectionControls={true}
-    />
+        showSelectionControls={true} />
 }

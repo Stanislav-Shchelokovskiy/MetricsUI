@@ -22,7 +22,9 @@ function LoadIndicator({ width, height, className }: Size) {
 }
 
 LoadIndicator.defaultProps = {
-    className: 'LoadIndicator'
+    className: 'LoadIndicator',
+    width: undefined,
+    height: undefined,
 }
 
 export default LoadIndicator

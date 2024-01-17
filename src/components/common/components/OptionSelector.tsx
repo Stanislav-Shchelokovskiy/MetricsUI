@@ -97,6 +97,7 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
                 value={value}
                 onValueChange={onValueChangeHandler}
                 labelMode='static'
+                stylingMode='filled'
                 focusStateEnabled={false}>
                 <DropDownOptions
                     hideOnOutsideClick={true}
@@ -133,7 +134,7 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
     }
     if (props.hideIfEmpty)
         return null
-    return <LoadIndicator width={undefined} height={25} />
+    return <LoadIndicator />
 }
 
 function defaultValueIsSelected<ValueExprT>(value: ValueExprT | undefined, defaultValue: ValueExprT | undefined) {

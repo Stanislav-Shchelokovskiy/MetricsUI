@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import DateBox from 'devextreme-react/date-box'
+import DateRangeBox from 'devextreme-react/date-range-box'
 import { useDispatch } from 'react-redux'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { Payload } from '../../../../../common/Typing'
@@ -44,13 +44,10 @@ function BetweenPeriodSelector(props: RangeSelectorProps) {
     const [startStr, endStr] = node?.values || [undefined, undefined]
     const [start, end] = validatePeriod(new Date(startStr || periodStart), new Date(endStr || periodEnd))
 
-    const onStartChange = useCallback((newStart: Date) => {
-        props.changeRange(validatePeriod(newStart, end ? end : newStart))
-    }, [end])
-
-    const onEndChange = useCallback((newEnd: Date) => {
-        props.changeRange(validatePeriod(start ? start : newEnd, newEnd))
-    }, [start])
+    const onPeriodChange = useCallback((period: Array<Date | any>) => {
+        const [newStart, newEnd] = period
+        props.changeRange(validatePeriod(newStart, newEnd))
+    }, [start, end])
 
     const dispatch = useDispatch()
     const onIncludeChangeHandler = useCallback((include: boolean) => {
@@ -74,38 +71,28 @@ function BetweenPeriodSelector(props: RangeSelectorProps) {
             }
         }
     }, [start, end])
-
-    return (
-        <div className='CustomersActivity_BetweenSelectorContainer'>
-            {props.onIncludeChange ?
-                <Button {...includeButtonOptions} /> :
-                null}
-
-            <div className='Content'>
-                <div>{props.label} between</div>
-                <div className='Selector'>
-                    <DateBox
-                        className='DateEdit'
-                        value={start}
-                        min={periodStart}
-                        max={periodEnd}
-                        onValueChange={onStartChange as any}
-                    />
-                    <div>and</div>
-                    <DateBox
-                        className='DateEdit'
-                        value={end}
-                        min={periodStart}
-                        max={periodEnd}
-                        onValueChange={onEndChange as any}
-                    />
-                </div>
-            </div>
-            {valueIsChanged(props) ?
-                <Button {...clearButtonOptions} /> :
-                null}
+    return <div className='BetweenSelectorContainer'>
+        <Button {...includeButtonOptions} />
+        <div className='Content'>
+            <div className='Label'>{props.label} between</div>
+            <DateRangeBox
+                className='BetweenPeriodSelector'
+                startDateLabel=''
+                endDateLabel=''
+                stylingMode='filled'
+                min={periodStart}
+                max={periodEnd}
+                startDate={start}
+                endDate={end}
+                showDropDownButton={false}
+                onValueChange={onPeriodChange}
+            >
+            </DateRangeBox>
         </div>
-    )
+        {valueIsChanged(props) ?
+            <Button {...clearButtonOptions} /> :
+            null}
+    </div>
 }
 
 function valueIsChanged(props: RangeSelectorProps) {

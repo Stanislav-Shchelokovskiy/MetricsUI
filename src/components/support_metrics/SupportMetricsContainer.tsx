@@ -1,4 +1,3 @@
-import './styles/Set.css'
 import '../common/styles/multiset_container/ComparisonGraph.css'
 import '../common/styles/multiset_container/MultisetContainer.css'
 import '../common/styles/multiset_container/Toolbar.css'

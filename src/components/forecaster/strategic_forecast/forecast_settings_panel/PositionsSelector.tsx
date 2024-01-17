@@ -16,7 +16,6 @@ export default function PositionsSelector() {
     const defaultValue = useMemo(() => [], [])
 
     return <MultiOptionSelector<string, string>
-        className='PositionsSelector'
         placeholder='Select positions to filter by...'
         label='Display only positions'
         showSelectionControls={true}

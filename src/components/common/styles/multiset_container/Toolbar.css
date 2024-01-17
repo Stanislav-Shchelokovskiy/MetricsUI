@@ -41,3 +41,12 @@
     margin-top: 7px;
     margin-bottom: 7px;
 }
+
+.AdvancedSettings {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex: 1;
+    padding: 15px;
+}

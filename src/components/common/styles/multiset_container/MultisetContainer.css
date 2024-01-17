@@ -4,12 +4,13 @@
     justify-content: flex-start;
     align-items: center;
     gap: 1%;
-    background-color: rgba(240, 240, 240, 0.7);
+    background-color: rgba(230, 230, 230, 1);
 }
 
 .SetHeaderTitle {
     font-weight: bold;
     font-size: large;
+    padding: 8px;
     padding-right: 25px;
     padding-left: 15px;
 }
@@ -36,9 +37,9 @@
     flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: stretch;
-    gap: 3px;
+    gap: 5px;
     padding-right: 6px;
-    padding-bottom: 3%;
+    padding-bottom: 2%;
 }
 
 .SetSettingsPanel {

@@ -40,6 +40,7 @@ export default function PercentileSelector() {
     )], [percentile.include])
 
     return <NumericSelector
+        label='Percentile'
         className='OptionSelector'
         currentValue={percentile.value}
         max={100}

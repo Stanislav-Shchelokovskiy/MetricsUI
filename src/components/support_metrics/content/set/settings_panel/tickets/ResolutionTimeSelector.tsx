@@ -73,22 +73,26 @@ export default function ResolutionTimeSelector() {
         mode: 'number' as any,
     }
 
-    return (<div className='CustomersActivity_BetweenSelectorContainer'>
+    return (<div className='BetweenSelectorContainer'>
         <div className='Content'>
-            <div className='Label'>Ticket resolution time</div>
+            <div className='LabelWithoutButton'>Ticket resolution time</div>
             <div className='Selector'>
                 <NumberBox
                     ref={fromRef}
                     defaultValue={from}
                     onValueChange={onFromChange}
+                    stylingMode='filled'
                     label='from'
+                    labelMode='static'
                     {...defaultProps}
                 />
                 <NumberBox
                     ref={toRef}
                     defaultValue={to}
                     onValueChange={onToChange}
+                    stylingMode='filled'
                     label='to'
+                    labelMode='static'
                     {...defaultProps}
                 />
             </div>

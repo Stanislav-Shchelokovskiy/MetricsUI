@@ -88,7 +88,7 @@ export function getClearButtonOptions(): ButtonOptions {
         stylingMode: 'text',
         icon: 'clear',
         type: 'normal',
-        hoverStateEnabled: false,
+        hoverStateEnabled: true,
         focusStateEnabled: false,
         activeStateEnabled: false,
         onClick: undefined

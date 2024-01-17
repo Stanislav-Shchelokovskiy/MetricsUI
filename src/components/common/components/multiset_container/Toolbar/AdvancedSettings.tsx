@@ -79,7 +79,7 @@ function AdvancedSettingsPopup(props: SettingsPopupProps) {
     }, [disablePeriodExtension])
 
     const okButtonOptions = {
-        text: 'Ok',
+        text: 'OK',
         type: 'normal',
         stylingMode: 'outlined',
         focusStateEnabled: false,

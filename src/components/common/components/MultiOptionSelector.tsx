@@ -63,7 +63,7 @@ export default function MultiOptionSelector<DataSourceT, ValueExprT = DataSource
     }
     if (props.hideIfDataSourceEmpty)
         return null
-    return <LoadIndicator width={undefined} height={25} />
+    return <LoadIndicator />
 }
 
 
@@ -196,6 +196,7 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
         showMultiTagOnly={false}
         showClearButton={false}
         labelMode='static'
+        stylingMode='filled'
         onKeyDown={acceptSelectedValuesOnEndKey}
     >
         < DropDownOptions

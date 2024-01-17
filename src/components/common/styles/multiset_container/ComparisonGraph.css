@@ -42,7 +42,20 @@
 }
 
 .ComparisonGraph_MetricSelector {
-    flex: 1.95;
+    flex: 1.8;
+}
+
+.dx-popup-content {
+    padding: 0px;
+}
+
+.ComparisonGraph_MetricsTabPanel {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    min-width: 360px;
+    border: 10px;
+    padding: 10px;
 }
 
 .ComparisonGraph_ComparisonMethodSelector {
@@ -56,7 +69,6 @@
     justify-content: flex-start;
     align-items: stretch;
     flex: 1;
-
 }
 
 .ComparisonPlot {

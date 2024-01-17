@@ -20,5 +20,6 @@ export default function ThreeStateSelectorSelector(props: Props) {
         defaultValue={props.defaultValue}
         onValueChange={onValueChange}
         enableThreeStateBehavior={true}
+        stylingMode='filled'
     />
 }

@@ -55,6 +55,8 @@ export default function NumericSelector(props: Props) {
         showSpinButtons={true}
         useLargeSpinButtons={true}
         onValueChange={onValueChange}
+        labelMode='static'
+        stylingMode='filled'
         mode='number'>
         {
             props.customButtons !== undefined ?

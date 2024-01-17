@@ -14,7 +14,6 @@ export default function ReplyTypeSelector() {
     const onValueChange = (value: string | undefined) => changeReplyType(tentId, value)
 
     return <OptionSelector<string, string>
-        className='ForecasterReplyTypeSelector'
         fetchDataSource={fetchReplyTypes}
         valueSelector={valueSelector}
         defaultValueSelector={defaultValueSelector}
