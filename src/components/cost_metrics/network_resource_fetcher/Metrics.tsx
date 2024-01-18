@@ -16,9 +16,10 @@ function converter(value: HelpItem | undefined): HelpItem {
     }
 }
 
-export async function fetchMetricDesc(metric: string): Promise<FetchResult<HelpItem>> {
+export async function fetchMetricDesc(metric: string, signal: AbortSignal): Promise<FetchResult<HelpItem>> {
     return fetchConvert(converter,
         `${COST_METRICS_END_POINT}/CostMetrics/MetricDescription?` +
-        `metric=${metric}`
+        `metric=${metric}`,
+        { signal: signal },
     )
 }

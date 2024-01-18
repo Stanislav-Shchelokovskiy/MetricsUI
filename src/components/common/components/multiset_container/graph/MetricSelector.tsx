@@ -1,16 +1,16 @@
-import React, { useCallback, useState, useEffect, useMemo, FC } from 'react'
-import OptionSelector from '../../OptionSelector'
+import React, { useCallback, useState, useEffect } from 'react'
+import TabPanel from 'devextreme-react/tab-panel'
+import { Popup, ToolbarItem } from 'devextreme-react/popup'
+import ScrollView from 'devextreme-react/scroll-view'
+import Markdown from 'markdown-to-jsx'
+import LoadIndicator from '../../LoadIndicator'
+import OptionSelector, { CustomPopupProps } from '../../OptionSelector'
 import { changeMetric } from '../../../store/multiset_container/Actions'
 import { TAKE_FROM_DEFAULT_SELECTOR } from '../../../store/multiset_container/Utils'
 import { useMultisetContainerContext } from '../MultisetContainerContext'
 import { metricSelector } from '../../../store/multiset_container/Selectors'
-import { getHelpButtonOptions } from '../../Button'
 import { useHelp } from '../../../hooks/UseHelp'
-import { Popup } from 'devextreme-react/popup'
-import Markdown from 'markdown-to-jsx'
-import ScrollView from 'devextreme-react/scroll-view'
 import { HelpItem } from '../../../Typing'
-import { useSelector } from 'react-redux'
 import { Undefinable } from '../../../Typing'
 
 
@@ -25,18 +25,14 @@ export default function MetricSelector() {
     const [metric, dispatchMetric] = useState<Metric>()
     const context = useMultisetContainerContext()
     const defaultValueSelector = useCallback((values: Array<Metric>) => values.find(x => x.context === context.context)?.name || values[0]?.name, [])
-    const onValueChangeEx = useCallback((dsVal: Metric) => {
-        dispatchMetric(dsVal)
-    }, [])
+    const onValueChangeEx = useCallback((dsVal: Metric) => { dispatchMetric(dsVal) }, [])
 
     useEffect(() => {
         if (metric)
             context.changeMetric(metric)
     }, [metric])
 
-
-    return <HelpProvider
-        Wrapped={OptionSelector}
+    return <OptionSelector
         className='ComparisonGraph_MetricSelector'
         displayExpr='displayName'
         valueExpr='name'
@@ -48,67 +44,110 @@ export default function MetricSelector() {
         onValueChange={changeMetric}
         onValueChangeEx={onValueChangeEx}
         label='Metric'
-        fetchMetricDescription={context.metricDescription.fetchMetricDescription}
-        fetchArgsSelector={metricSelector}
+        customPopup={MetricsPopup}
     />
 }
 
-interface HelpProviderProps {
-    Wrapped: FC<any>
-    fetchMetricDescription: (...args: any) => any
-    fetchArgsSelector: (store: any) => any
-}
-function HelpProvider({ Wrapped, fetchMetricDescription, fetchArgsSelector, ...wrappedProps }: HelpProviderProps & any) {
-    const metric = useSelector<any>(fetchArgsSelector)
+function MetricsPopup<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: CustomPopupProps<DataSourceT, ValueExprT>) {
+    const [selected, setSelected] = useState<string>(props.value as string)
+    const context = useMultisetContainerContext()
+    const help = useHelp<HelpItem>(context.fetchMetricDescription, [selected])
 
-    const help = useHelp<HelpItem>(fetchMetricDescription, [metric])
-    const [helpPopupVisible, setHelpPopupVisible] = useState(false)
+    function itemTitle(data: any) { return data.key }
 
-    const hideHelpPopup = useCallback(() => {
-        setHelpPopupVisible(false)
-    }, [])
-
-    const customButtons = useMemo(() => help ? [
-        {
-            ...getHelpButtonOptions(),
-            onClick: (e: any) => { if (help) setHelpPopupVisible(true) }
-        }] : [], [help])
-
-    return <>
-        <Wrapped
-            {...wrappedProps}
-            customButtons={customButtons}
-        />
-        {help ?
-            <Popup
-                visible={helpPopupVisible}
-                onHiding={hideHelpPopup}
-                dragEnabled={false}
-                hideOnOutsideClick={true}
-                showCloseButton={true}
-                showTitle={true}
-                title={help.title}
-                maxWidth='60vw'
-                maxHeight='70vh'
-
+    function TabPanelItem({ data }: any) {
+        const taskItems = (data.items as Array<any>).map((value, index) => <MetricItem key={index} {...value} />)
+        return (
+            <ScrollView
+                id='Metrics_ScrollView_id1'
+                showScrollbar='onHover'
+                scrollByThumb={true}
+                scrollByContent={false}
             >
+                <div className='tabpanel-item'>{taskItems}</div>
+            </ScrollView>
+        )
+    }
 
-                <ScrollView
-                    className='Help_ScrollView'
-                    id='Help_ScrollView_id'
-                    showScrollbar='onHover'
-                    scrollByThumb={true}
-                    scrollByContent={false}
-                >
-                    <span>
-                        <Markdown>{help.content}</Markdown>
-                    </span>
-                </ScrollView>
+    function MetricItem(metric: Metric) {
+        function onClick() { setSelected(metric.name) }
+        return (
+            <div
+                className={`tabpanel-item-info ${metric.name == selected ? 'selected' : ''}`}
+                onClick={onClick}
+            >
+                <div className='tabpanel-item-text'>{metric.displayName}</div>
+            </div>
+        )
+    }
 
-            </Popup > :
-            null
-        }
-    </>
+    function apply() {
+        props.onHiding()
+        const timerId = setTimeout(() => {
+            if (selected != props.value)
+                props.dispatchValue(selected as ValueExprT)
+            clearTimeout(timerId)
+        }, 100)
+    }
+
+    const okButtonOptions = {
+        //text: 'Apply',
+        icon: 'check',
+        hint: 'Apply',
+        type: 'normal',
+        stylingMode: 'text',
+        focusStateEnabled: false,
+        onClick: apply,
+    }
+    return (
+        <Popup
+            visible={props.visible}
+            onHiding={props.onHiding}
+            dragEnabled={false}
+            hideOnOutsideClick={true}
+            showCloseButton={true}
+            showTitle={true}
+            title='Metrics'
+            maxWidth='70vw'
+            maxHeight='70vh'
+        >
+            <div className='ComparisonGraph_MetricsPopup'>
+                <TabPanel
+                    className='ComparisonGraph_MetricsTabPanel'
+                    animationEnabled={true}
+                    swipeEnabled={true}
+                    dataSource={props.dataSource}
+                    tabsPosition='left'
+                    stylingMode='primary'
+                    iconPosition='start'
+                    itemComponent={TabPanelItem}
+                    itemTitleTemplate={itemTitle}
+                    activeStateEnabled={false}
+                    focusStateEnabled={false}
+                />
+                {help ?
+                    <div>
+                        <ScrollView
+                            id='Metrics_ScrollView_id'
+                            showScrollbar='onHover'
+                            scrollByThumb={true}
+                            scrollByContent={false}
+                        >
+                            <div className='ComparisonGraph_MetricsDesc'>
+                                <h3 className='title'>{help.title}</h3>
+                                <span > <Markdown>{help.content}</Markdown> </span>
+                            </div>
+                        </ScrollView>
+                    </div> : <LoadIndicator width={100} height={100} />}
+            </div>
+            <ToolbarItem
+                widget='dxButton'
+                toolbar='top'
+                location='after'
+                options={okButtonOptions}
+            />
+        </Popup >
+    )
 }
 
 export function metricOrDefault(value: Undefinable<string>): string {

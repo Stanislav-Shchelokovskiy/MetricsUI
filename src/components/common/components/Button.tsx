@@ -95,19 +95,6 @@ export function getClearButtonOptions(): ButtonOptions {
     }
 }
 
-export function getHelpButtonOptions(): ButtonOptions {
-    return {
-        name: 'helpButton',
-        location: 'before',
-        stylingMode: 'text',
-        icon: 'help',
-        type: 'normal',
-        hoverStateEnabled: true,
-        focusStateEnabled: false,
-        activeStateEnabled: false,
-    }
-}
-
 export function getDecomposeButtonOptions(): ButtonOptions {
     return {
         name: 'decomposeValues',

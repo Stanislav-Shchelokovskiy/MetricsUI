@@ -8,10 +8,11 @@ export async function fetchMetrics(): Promise<FetchResult<Array<Metric>>> {
     return fetchArray(`${PERFORMANCE_METRICS_END_POINT}/Metrics`)
 }
 
-export async function fetchMetricDesc(metric: string): Promise<FetchResult<HelpItem>> {
+export async function fetchMetricDesc(metric: string, signal: AbortSignal): Promise<FetchResult<HelpItem>> {
     return fetchConvert(converter,
         `${PERFORMANCE_METRICS_END_POINT}/MetricDescription?` +
-        `metric=${metric}`
+        `metric=${metric}`,
+        { signal: signal },
     )
 }
 

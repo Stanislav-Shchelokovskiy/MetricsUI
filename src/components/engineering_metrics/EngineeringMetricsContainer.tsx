@@ -8,7 +8,7 @@ import {
 } from '../common/store/multiset_container/Context'
 import { MultisetContainerContext, useMultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
 import ApplySharedState from '../common/components/state_management/ApplySharedState'
-import { fetchMetrics } from './fetchMetrics'
+import { fetchMetrics, fetchMetricDesc } from './fetchMetrics'
 import { Metric } from '../common/components/multiset_container/graph/MetricSelector'
 import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
 import { SettingsSets } from '../common/components/multiset_container/MultisetContainer'
@@ -83,6 +83,7 @@ function EngineeringMetricsContainerInner(props: Props) {
         return {
             ...baseContext,
             fetchMetrics: fetchMetrics,
+            fetchMetricDescription: fetchMetricDesc,
             changeMetric: changeMetric,
             changeState: changeState,
             context: state.context,

@@ -1,6 +1,7 @@
 import 'devextreme/dist/css/dx.fluent.saas.light.css'
 import './components/common/styles/App.css'
 import './components/common/styles/Components.css'
+import './components/common/styles/Tabs.css'
 
 import React from 'react'
 import { RouterProvider } from 'react-router-dom'

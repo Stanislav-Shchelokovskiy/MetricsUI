@@ -6,7 +6,7 @@
     display: flex;
     padding-top: 20vh;
     justify-content: center;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.25);
 }
 
 .ComparisonGraph_SettingsPanel {
@@ -49,13 +49,30 @@
     padding: 0px;
 }
 
+.ComparisonGraph_MetricsPopup {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: 'flex-start';
+    align-items: stretch;
+    max-height: 100%;
+    padding-bottom: 10px;
+}
+
+.ComparisonGraph_MetricsDesc {
+    padding-right: 6px;
+}
+
+.ComparisonGraph_MetricsDesc .title {
+    text-align: center;
+}
+
 .ComparisonGraph_MetricsTabPanel {
     display: flex;
     justify-content: center;
-    flex-grow: 1;
-    min-width: 360px;
-    border: 10px;
     padding: 10px;
+    max-width: 45%;
+    min-width: 45%;
+    min-height: 100%;
 }
 
 .ComparisonGraph_ComparisonMethodSelector {

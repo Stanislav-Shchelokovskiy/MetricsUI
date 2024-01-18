@@ -28,7 +28,7 @@ export default function InputBox(props: InputBoxProps) {
     }, [props.visible])
 
     const okButtonOptions = {
-        text: 'Ok',
+        text: 'OK',
         type: 'normal',
         stylingMode: 'outlined',
         focusStateEnabled: false,

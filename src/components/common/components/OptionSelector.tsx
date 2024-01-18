@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import useDataSource, { DataSourceProps } from '../../common/hooks/UseDataSource'
 import { useSingleValidate } from '../hooks/UseValidate'
 import { getClearButtonOptions, ButtonOptions } from './Button'
-import { Undefinable } from '../Typing'
+import { PopupProps } from '../Typing'
 
 
 interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> extends DataSourceProps<DataSourceT> {
@@ -30,12 +30,10 @@ interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> exten
     customPopup: FC<CustomPopupProps<DataSourceT, ValueExprT>> | undefined
 }
 
-export interface CustomPopupProps<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> {
+export interface CustomPopupProps<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> extends PopupProps{
     dataSource: DataSource<DataSourceT, ValueExprT>
-    value: Undefinable<ValueExprT>
+    value: ValueExprT
     dispatchValue: (value: ValueExprT) => void
-    visible: boolean
-    onHiding: () => void
 }
 
 
@@ -125,7 +123,7 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
             {props.customPopup ?
                 <props.customPopup
                     dataSource={ds}
-                    value={value}
+                    value={value as ValueExprT}
                     dispatchValue={onValueChangeHandler}
                     visible={popupVisible}
                     onHiding={hidePopup}

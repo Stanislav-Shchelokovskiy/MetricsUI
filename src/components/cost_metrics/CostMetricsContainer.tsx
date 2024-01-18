@@ -49,10 +49,6 @@ const filterLabel = {
     getFilterFields: getSetDataFields,
 }
 
-const metricDescription = {
-    fetchMetricDescription: fetchMetricDesc,
-}
-
 const advancedSettings = {
     modified: (store: MultisetContainerStore) => {
         return advancedSettingsModified(store.container)
@@ -65,9 +61,9 @@ export const costMetricsContext = {
     stateManagement: stateManagement,
     rawData: rawData,
     filterLabel: filterLabel,
-    metricDescription: metricDescription,
     advancedSettings: advancedSettings,
     fetchMetrics: fetchMetrics,
+    fetchMetricDescription: fetchMetricDesc,
     changeMetric: (ctx: any) => { },
     changeState: (state: any) => { },
     context: CONTEXT,
