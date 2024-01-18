@@ -67,10 +67,11 @@ export default function ResolutionTimeSelector() {
     const defaultProps = {
         min: 0,
         placeholder: '...',
+        stylingMode: 'filled' as const,
         step: 1,
         showSpinButtons: true,
         useLargeSpinButtons: true,
-        mode: 'number' as any,
+        mode: 'number' as const,
     }
 
     return (<div className='BetweenSelectorContainer'>
@@ -81,18 +82,13 @@ export default function ResolutionTimeSelector() {
                     ref={fromRef}
                     defaultValue={from}
                     onValueChange={onFromChange}
-                    stylingMode='filled'
-                    label='from'
-                    labelMode='static'
                     {...defaultProps}
                 />
+                <i className='dx-icon-to dx-icon-custom-style'></i>
                 <NumberBox
                     ref={toRef}
                     defaultValue={to}
                     onValueChange={onToChange}
-                    stylingMode='filled'
-                    label='to'
-                    labelMode='static'
                     {...defaultProps}
                 />
             </div>

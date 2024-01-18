@@ -124,3 +124,8 @@
 .dx-state-hover .dx-numberbox-spin-down-icon {
     color: rgba(153, 153, 153, 255);
 }
+
+.dx-icon-custom-style {
+    font-size: 22px;
+    color: rgba(187, 195, 215, 255);
+}
