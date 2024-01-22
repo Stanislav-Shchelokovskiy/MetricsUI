@@ -80,31 +80,37 @@ export function getIncludeButtonOptions(
     }
 }
 
+const defaultOptions = {
+    location: 'after' as const,
+    text: '',
+    stylingMode: 'text',
+    type: 'normal',
+    hoverStateEnabled: true,
+    focusStateEnabled: false,
+    activeStateEnabled: false,
+    onClick: undefined,
+}
+
 export function getClearButtonOptions(): ButtonOptions {
     return {
+        ...defaultOptions,
         name: 'customclear',
-        location: 'after',
-        text: '',
-        stylingMode: 'text',
         icon: 'clear',
-        type: 'normal',
-        hoverStateEnabled: true,
-        focusStateEnabled: false,
-        activeStateEnabled: false,
-        onClick: undefined
     }
 }
 
 export function getDecomposeButtonOptions(): ButtonOptions {
     return {
+        ...defaultOptions,
         name: 'decomposeValues',
-        location: 'after',
-        text: '',
-        stylingMode: 'text',
         icon: decomposeIconSvg.default,
-        type: 'normal',
-        hoverStateEnabled: true,
-        focusStateEnabled: false,
-        activeStateEnabled: true,
+    }
+}
+
+export function getFavoriteButtonOptions(): ButtonOptions {
+    return {
+        ...defaultOptions,
+        name: 'favorites',
+        icon: 'favorites',
     }
 }
