@@ -7,30 +7,33 @@ import { useDispatch, useSelector } from 'react-redux'
 import useDataSource, { DataSourceProps } from '../../common/hooks/UseDataSource'
 import { useSingleValidate } from '../hooks/UseValidate'
 import { getClearButtonOptions, ButtonOptions } from './Button'
-import { PopupProps } from '../Typing'
+import { PopupProps, Undefinable } from '../Typing'
 
 
 interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> extends DataSourceProps<DataSourceT> {
-    className: string | undefined
+    className: Undefinable<string>
     displayExpr: string
     valueExpr: string
     groupExpr: string,
     sortExpr: string,
+    filterExpr: string,
     placeholder: string
     label: string
     container: string
-    valueSelector: (store: any) => ValueExprT | undefined
+    valueSelector: (store: any) => Undefinable<ValueExprT>
     defaultValueSelector: (dataSource: Array<DataSourceT>) => ValueExprT
-    onValueChange: (value: ValueExprT | undefined) => PayloadAction<any>
-    onValueChangeEx: ((dsValue: DataSourceT) => void) | undefined
+    onValueChange: (value: Undefinable<ValueExprT>) => PayloadAction<any>
+    onValueChangeEx: Undefinable<(dsValue: DataSourceT) => void>
     showDropDownButton: boolean
     showClear: boolean
-    customButtons: Array<ButtonOptions> | undefined
+    customButtons: Undefinable<Array<ButtonOptions>>
     hideIfEmpty: boolean
-    customPopup: FC<CustomPopupProps<DataSourceT, ValueExprT>> | undefined
+    customPopup: Undefinable<FC<CustomPopupProps<DataSourceT, ValueExprT>>>
+    filteredPopupButtonOptions: ButtonOptions
+    filter: Undefinable<Array<any>>
 }
 
-export interface CustomPopupProps<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> extends PopupProps{
+export interface CustomPopupProps<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> extends PopupProps {
     dataSource: DataSource<DataSourceT, ValueExprT>
     value: ValueExprT
     dispatchValue: (value: ValueExprT) => void
@@ -73,16 +76,45 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
     }, [defaultValue])
 
 
-    const [popupVisible, setHelpPopupVisible] = useState(false)
     const ref = useRef<SelectBox>(null)
-    const showPopup = useCallback((e: any) => {
-        ref.current?.instance.option('opened', false)
+    const [customPopupVisible, showCustomPopup] = useState(false)
+    const showOriginalPopup = useRef<boolean>(!props.customPopup)
+
+    function onPopupShowing(e: any) {
+        if (showOriginalPopup.current) {
+            showOriginalPopup.current = false
+            return
+        }
         e.cancel = true
-        setHelpPopupVisible(true)
-    }, [])
-    const hidePopup = useCallback(() => {
-        setHelpPopupVisible(false)
-    }, [])
+
+        ds.filter(null)
+        showCustomPopup(true)
+    }
+
+    function hideCustomPopup() {
+        ref.current?.instance.close()
+        showCustomPopup(false)
+    }
+
+    function showFilteredPopup() {
+        if (props.filterExpr) {
+            const newFilter: Array<any> = [[props.valueExpr, '=', value]]
+            if (props.filter)
+                for (const filterVal of props.filter) {
+                    newFilter.push('or')
+                    newFilter.push([props.filterExpr, '=', filterVal])
+                }
+            ds.filter(newFilter)
+            ds.load()
+        }
+        showOriginalPopup.current = true
+        ref.current?.instance.open()
+    }
+
+    const filteredPopupButtonOptions = props.filteredPopupButtonOptions ? {
+        ...props.filteredPopupButtonOptions,
+        onClick: showFilteredPopup,
+    } : null
 
 
     if (dataSource.length > 0) {
@@ -96,12 +128,13 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
                 onValueChange={onValueChangeHandler}
                 labelMode='static'
                 stylingMode='filled'
+                showDropDownButton={false}
                 focusStateEnabled={false}>
                 <DropDownOptions
                     hideOnOutsideClick={true}
                     hideOnParentScroll={true}
                     focusStateEnabled={false}
-                    onShowing={props.customPopup ? showPopup : undefined}
+                    onShowing={props.customPopup ? onPopupShowing : undefined}
                     container={props.container} />
                 {
                     props.customButtons !== undefined ?
@@ -113,6 +146,13 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
                         null
                 }
                 <Button name='dropDown' />
+                {filteredPopupButtonOptions ?
+                    <Button
+                        name={filteredPopupButtonOptions.name}
+                        location={filteredPopupButtonOptions.location}
+                        options={filteredPopupButtonOptions as any} /> :
+                    null}
+
                 {props.showClear && !defaultValueIsSelected(value, defaultValue) ?
                     <Button
                         name={clearButtonOptions.name}
@@ -125,8 +165,8 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
                     dataSource={ds}
                     value={value as ValueExprT}
                     dispatchValue={onValueChangeHandler}
-                    visible={popupVisible}
-                    onHiding={hidePopup}
+                    visible={customPopupVisible}
+                    onHiding={hideCustomPopup}
                 /> : null}
         </>
     }
@@ -145,6 +185,7 @@ const defaultProps = {
     valueExpr: undefined,
     groupExpr: undefined,
     sortExpr: undefined,
+    filterExpr: undefined,
     placeholder: undefined,
     container: undefined,
     defaultValueSelector: undefined,
@@ -158,6 +199,8 @@ const defaultProps = {
     customButtons: undefined,
     hideIfEmpty: false,
     customPopup: null,
+    filteredPopupButtonOptions: null,
+    filter: null,
 }
 
 OptionSelector.defaultProps = defaultProps
