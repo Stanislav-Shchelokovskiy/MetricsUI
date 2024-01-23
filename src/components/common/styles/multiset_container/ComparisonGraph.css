@@ -45,10 +45,6 @@
     flex: 1.8;
 }
 
-.dx-popup-content {
-    padding: 0px;
-}
-
 .ComparisonGraph_MetricsPopup {
     display: flex;
     flex-flow: row nowrap;

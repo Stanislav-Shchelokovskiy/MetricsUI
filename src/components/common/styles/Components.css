@@ -95,8 +95,14 @@
 }
 
 .dx-popup-bottom.dx-toolbar {
-    padding: 0px 24px 12px 0px;
+    padding: 0px;
+    padding-left: 24px;
+    padding-right: 12px;
     overflow: visible;
+}
+
+.dx-popup-content {
+    padding: 0px;
 }
 
 .dx-texteditor-label {
