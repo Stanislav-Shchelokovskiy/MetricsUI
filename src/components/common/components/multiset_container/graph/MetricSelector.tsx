@@ -1,17 +1,18 @@
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useCallback, useState, useEffect, useMemo } from 'react'
 import TabPanel from 'devextreme-react/tab-panel'
 import { Popup, ToolbarItem } from 'devextreme-react/popup'
 import ScrollView from 'devextreme-react/scroll-view'
+import DataSource from 'devextreme/data/data_source'
 import Markdown from 'markdown-to-jsx'
 import LoadIndicator from '../../LoadIndicator'
-import OptionSelector, { CustomPopupProps } from '../../OptionSelector'
+import OptionSelector from '../../OptionSelector'
 import { changeMetric } from '../../../store/multiset_container/Actions'
 import { TAKE_FROM_DEFAULT_SELECTOR } from '../../../store/multiset_container/Utils'
 import { useMultisetContainerContext } from '../MultisetContainerContext'
 import { metricSelector } from '../../../store/multiset_container/Selectors'
 import { useHelp } from '../../../hooks/UseHelp'
-import { HelpItem } from '../../../Typing'
-import { Undefinable } from '../../../Typing'
+import { HelpItem, Undefinable, PopupProps } from '../../../Typing'
+import { getFavoriteButtonOptions } from '../../Button'
 
 
 export interface Metric {
@@ -32,7 +33,55 @@ export default function MetricSelector() {
             context.changeMetric(metric)
     }, [metric])
 
-    return <OptionSelector
+
+    const [popupProps, showPopup] = useState<Undefinable<MetricsPopupProps<Metric, string>>>(undefined)
+    const [defaultPopupOpened, openDefaultPopup] = useState(false)
+
+    const onPopupShowing = useCallback((
+        dataSource: DataSource<Metric, string>,
+        value: string,
+        dispatchValue: (value: string) => void,
+        setFilter: (filter: Array<any> | null) => void,
+        cancelDefault: () => void,
+        onHiding: () => void
+    ) => {
+        if (defaultPopupOpened) {
+            const metricName = 'name'
+            const newFilter: Array<any> = [[metricName, '=', value]]
+            for (const filterVal of ['People', 'Tickets', 'Iterations', 'Ticket Cost (gross)']) {
+                newFilter.push('or')
+                newFilter.push([metricName, '=', filterVal])
+            }
+            setFilter(newFilter)
+            return
+        }
+
+        cancelDefault()
+
+        showPopup({
+            dataSource: dataSource,
+            value: value,
+            dispatchValue: dispatchValue,
+            visible: true,
+            onHiding: onHiding,
+        })
+    }, [defaultPopupOpened])
+
+
+    const onHiding = useCallback((clearFilter: () => void) => {
+        showPopup(undefined)
+        openDefaultPopup(false)
+        clearFilter()
+    }, [])
+
+
+    const customButtons = useMemo(() => [{
+        ...getFavoriteButtonOptions(),
+        onClick: () => openDefaultPopup(true),
+    }], [])
+
+
+    return <><OptionSelector<Metric, string>
         className='ComparisonGraph_MetricSelector'
         displayExpr='displayName'
         valueExpr='name'
@@ -44,11 +93,23 @@ export default function MetricSelector() {
         onValueChange={changeMetric}
         onValueChangeEx={onValueChangeEx}
         label='Metric'
-        customPopup={MetricsPopup}
+        opened={defaultPopupOpened}
+        paginate={false}
+        onPopupShowing={onPopupShowing}
+        onPopupHiding={onHiding}
+        customButtons={customButtons}
     />
+        {popupProps ? <MetricsPopup {...popupProps} /> : null}
+    </>
 }
 
-function MetricsPopup<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: CustomPopupProps<DataSourceT, ValueExprT>) {
+interface MetricsPopupProps<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> extends PopupProps {
+    dataSource: DataSource<DataSourceT, ValueExprT>
+    value: ValueExprT
+    dispatchValue: (value: ValueExprT) => void
+}
+
+function MetricsPopup<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT>(props: MetricsPopupProps<DataSourceT, ValueExprT>) {
     const [selected, setSelected] = useState<string>(props.value as string)
     const context = useMultisetContainerContext()
     const help = useHelp<HelpItem>(context.fetchMetricDescription, [selected])
