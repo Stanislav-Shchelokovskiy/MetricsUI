@@ -1,4 +1,4 @@
-import React, { useMemo, FC, useCallback, useState, useRef } from 'react'
+import React, { useMemo, FC, useState, useRef } from 'react'
 import SelectBox, { DropDownOptions, Button } from 'devextreme-react/select-box'
 import DataSource from 'devextreme/data/data_source'
 import LoadIndicator from './LoadIndicator'
@@ -57,13 +57,13 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
     const validateSelectedValue = useSingleValidate<DataSourceT, ValueExprT>(value, props.onValueChange, props.valueExpr, props.defaultValueSelector)
     const dataSource = useDataSource(props.dataSource, props.fetchDataSource, props.fetchArgs, validateSelectedValue)
 
-    const ds = new DataSource<DataSourceT, ValueExprT>({
+    const ds = useMemo(() => new DataSource<DataSourceT, ValueExprT>({
         store: dataSource,
         paginate: props.customPopup == null,
         pageSize: 20,
         group: props.groupExpr,
         sort: props.sortExpr,
-    })
+    }), [dataSource])
 
     const defaultValue = useMemo(() => props.defaultValueSelector?.(dataSource), [dataSource])
     const clearButtonOptions = useMemo(() => {

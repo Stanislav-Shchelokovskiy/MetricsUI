@@ -116,11 +116,11 @@ function MultiOptionSelectorInner<DataSourceT, ValueExprT>(props: Props<DataSour
 
     const pageSize = 20
 
-    const ds = new DataSource({
+    const ds = useMemo(() => new DataSource({
         store: props.dataStore || props.dataSource,
         paginate: true,
         pageSize: pageSize,
-    });
+    }), [props.dataStore, props.dataSource])
 
     const includeButtonOptions = useMemo(() => getIncludeButtonOptions(
         props.includeButtonState === undefined ? true : props.includeButtonState,
