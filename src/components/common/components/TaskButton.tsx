@@ -17,7 +17,7 @@ export default function TaskButton(props: ButtonProps & TaskProgressNotifierProp
 
 function SpinnerButton(props: ButtonProps & TaskStarter) {
     return props.taskStarted === true ?
-        <LoadIndicator width={36} height={32} /> :
+        <LoadIndicator width={24} height={24} /> :
         <Button
             icon={props.icon}
             hint={props.hint}
