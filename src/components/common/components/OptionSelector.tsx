@@ -105,8 +105,10 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
         props.onPopupHiding?.(
             () => {
                 const timerId = setTimeout(() => {
-                    ds.filter(null)
-                    ds.load()
+                    if (!opened) {
+                        ds.filter(null)
+                        ds.load()
+                    }
                     clearTimeout(timerId)
                 }, 300)
 
