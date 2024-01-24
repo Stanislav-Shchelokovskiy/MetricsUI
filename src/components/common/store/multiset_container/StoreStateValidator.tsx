@@ -55,7 +55,8 @@ function ensureGroupBy(state: MultisetContainerStore) {
 export function containerValidator<ContainerState extends BaseContainerState>(
     container: ContainerState,
     context: Context,
-    customValidator: (container: ContainerState) => ContainerState = (container) => container): ContainerState {
+    customValidator: (container: ContainerState) => ContainerState = (container) => container
+): ContainerState {
     const res = defaultContainerValidator(container, context)
     return customValidator(res)
 }

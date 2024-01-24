@@ -5,7 +5,7 @@ import { comparisonMethodOrDefault } from '../../components/multiset_container/g
 import { metricOrDefault } from '../../components/multiset_container/graph/MetricSelector'
 import { periodOrDefault } from '../../DatePeriodUtils'
 import { Context } from './Context'
-import { booleanSetting } from '../../Typing'
+import { booleanSetting, Undefinable } from '../../Typing'
 
 
 export interface BaseContainerState {
@@ -16,7 +16,7 @@ export interface BaseContainerState {
     comparisonMethod: string
     sets: Array<string>
     hiddenLegends: Array<string>
-    version: string | undefined
+    version: Undefinable<string>
     disablePeriodExtension: BooleanSetting
 }
 

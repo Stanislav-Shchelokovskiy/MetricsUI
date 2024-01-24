@@ -57,6 +57,7 @@
 .BetweenSelectorContainer .Content .Label {
     padding-left: 0px;
 }
+
 .BetweenSelectorContainer .Content .LabelWithoutButton {
     padding-left: 32px;
 }
@@ -120,7 +121,6 @@
 
 .dx-state-hover .dx-button-content .dx-icon-clear,
 .dx-button-content .dx-icon-clear,
-
 .dx-state-hover .dx-button-content .dx-icon-revert,
 .dx-button-content .dx-icon-revert,
 .dx-numberbox-spin-up-icon,

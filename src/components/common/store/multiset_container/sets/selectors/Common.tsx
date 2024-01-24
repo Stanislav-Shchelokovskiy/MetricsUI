@@ -1,5 +1,5 @@
-import { getSelector } from "../../Selectors"
-import { nameOf } from "../Interfaces"
+import { getSelector } from '../../Selectors'
+import { nameOf } from '../Interfaces'
 
 export const tribesSelectorName = nameOf('tribes')
 export const tentsSelectorName = nameOf('tents')
