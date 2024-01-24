@@ -107,7 +107,7 @@ export function getDecomposeButtonOptions(): ButtonOptions {
     }
 }
 
-export function getFavoriteButtonOptions(): ButtonOptions {
+export function getFavoritesButtonOptions(): ButtonOptions {
     return {
         ...defaultOptions,
         name: 'favorites',
