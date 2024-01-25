@@ -1,11 +1,11 @@
 import { groupByOrDefault } from '../../components/multiset_container/graph/GroupBySelector'
 import { comparisonMethodOrDefault } from '../../components/multiset_container/graph/ComparisonMethodSelector'
-import { metricOrDefault } from '../../components/multiset_container/graph/MetricSelector'
+import { metricOrDefault } from '../../components/multiset_container/graph/metric_selector/MetricSelector'
 import { BaseContainerState } from './BaseContainerState'
 import { BaseSetState } from './sets/Interfaces'
 import { Context } from './Context'
 import { toFriendlyTitle } from './Utils'
-import { MultisetContainerStore } from './Store'
+import { MultisetContainerStore, StateValidator } from './Store'
 import { booleanSetting } from '../../Typing'
 import { dateToISOstr, periodOrDefault } from '../../DatePeriodUtils'
 
@@ -13,12 +13,14 @@ import { dateToISOstr, periodOrDefault } from '../../DatePeriodUtils'
 export function stateValidator<ContainerState extends BaseContainerState, SetState extends BaseSetState>(
     containerValidator: (container: ContainerState) => ContainerState,
     setsValidator: (sets: Array<SetState>) => Array<SetState>
-): (state: MultisetContainerStore<ContainerState, SetState>) => MultisetContainerStore<ContainerState, SetState> {
-    return (state: MultisetContainerStore<ContainerState, SetState>) => {
-        preValidateState(state)
+): StateValidator<ContainerState, SetState> {
+    return (newState: MultisetContainerStore<ContainerState, SetState>, currentState?: MultisetContainerStore<ContainerState, SetState>) => {
+        preValidateState(newState)
+        const nonValidatedState = currentState || newState
         return {
-            container: containerValidator(state.container),
-            sets: setsValidator(state.sets),
+            ...nonValidatedState,
+            container: containerValidator(newState.container),
+            sets: setsValidator(newState.sets),
         }
     }
 }
@@ -55,7 +57,8 @@ function ensureGroupBy(state: MultisetContainerStore) {
 export function containerValidator<ContainerState extends BaseContainerState>(
     container: ContainerState,
     context: Context,
-    customValidator: (container: ContainerState) => ContainerState = (container) => container): ContainerState {
+    customValidator: (container: ContainerState) => ContainerState = (container) => container
+): ContainerState {
     const res = defaultContainerValidator(container, context)
     return customValidator(res)
 }

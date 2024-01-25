@@ -3,19 +3,29 @@ import { loadState, saveState } from '../../LocalStorage'
 import { BaseContainerState } from './BaseContainerState'
 import { BaseSetState } from './sets/Interfaces'
 import { Context, contextOrDefault } from './Context'
+import { NonShareableState } from './non_shareable_state/NonShareableState'
+import { nonShareableReducer } from './non_shareable_state/NonShareableStateReducer'
+
 
 export interface MultisetContainerStore<ContainerState = BaseContainerState, SetState = BaseSetState> {
     container: ContainerState
     sets: Array<SetState>
 }
 
+export interface MultisetContainerStoreEx<ContainerState = BaseContainerState, SetState = BaseSetState> extends MultisetContainerStore<ContainerState, SetState> {
+    nonShareable: NonShareableState
+}
+
 type ContainerReducer<ContainerState> = (state: ContainerState | undefined, action: PayloadAction) => ContainerState
 type SetsReducer<SetState> = (state: Array<SetState> | undefined, action: PayloadAction) => Array<SetState>
-
+export type StateValidator<ContainerState, SetState> = (
+    newState: MultisetContainerStore<ContainerState, SetState>,
+    currentState?: MultisetContainerStore<ContainerState, SetState>,
+) => MultisetContainerStore<ContainerState, SetState>
 
 interface config<ContainerState, SetState> {
-    reducer: (state: MultisetContainerStore<ContainerState, SetState> | undefined, action: PayloadAction) => MultisetContainerStore<ContainerState, SetState>,
-    validator: (state: MultisetContainerStore<ContainerState, SetState>) => MultisetContainerStore<ContainerState, SetState>,
+    reducer: (state: MultisetContainerStoreEx<ContainerState, SetState> | undefined, action: PayloadAction) => MultisetContainerStoreEx<ContainerState, SetState>,
+    validator: StateValidator<ContainerState, SetState>,
 }
 
 export interface Config<ContainerState, SetState> extends config<ContainerState, SetState> {
@@ -32,7 +42,7 @@ export function configureMultisetContainerStore<ContainerState extends BaseConta
     if (storedState !== undefined)
         storedState = validator(storedState)
 
-    const store = configureStore<MultisetContainerStore<ContainerState, SetState>, PayloadAction>({
+    const store = configureStore<MultisetContainerStoreEx<ContainerState, SetState>, PayloadAction>({
         reducer: reducer,
         preloadedState: storedState as any
     })
@@ -51,6 +61,7 @@ export function getReducer<ContainerState extends BaseContainerState, SetState e
     return combineReducers({
         container: containerReducer,
         sets: setsReducer,
+        nonShareable: nonShareableReducer,
     })
 }
 

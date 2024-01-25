@@ -24,7 +24,6 @@
     padding-left: 6px;
     padding-right: 6px;
     font-size: small;
-    border-radius: 4px;
 }
 
 .BetweenSelectorContainer:hover,
@@ -58,6 +57,7 @@
 .BetweenSelectorContainer .Content .Label {
     padding-left: 0px;
 }
+
 .BetweenSelectorContainer .Content .LabelWithoutButton {
     padding-left: 32px;
 }
@@ -96,8 +96,14 @@
 }
 
 .dx-popup-bottom.dx-toolbar {
-    padding: 0px 24px 12px 0px;
+    padding: 0px;
+    padding-left: 24px;
+    padding-right: 12px;
     overflow: visible;
+}
+
+.dx-popup-content {
+    padding: 0px;
 }
 
 .dx-texteditor-label {
@@ -115,7 +121,6 @@
 
 .dx-state-hover .dx-button-content .dx-icon-clear,
 .dx-button-content .dx-icon-clear,
-
 .dx-state-hover .dx-button-content .dx-icon-revert,
 .dx-button-content .dx-icon-revert,
 .dx-numberbox-spin-up-icon,

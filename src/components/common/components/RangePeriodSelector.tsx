@@ -51,7 +51,7 @@ export default function RangePeriodSelector(props: Props) {
             {...props}
         />
     }
-    return <LoadIndicator width={50} height={50} />
+    return <LoadIndicator width={40} height={40} />
 }
 
 
