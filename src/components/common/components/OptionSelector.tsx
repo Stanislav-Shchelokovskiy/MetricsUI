@@ -11,7 +11,7 @@ import { Undefinable } from '../Typing'
 
 
 interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> extends DataSourceProps<DataSourceT> {
-    className: Undefinable<string>
+    className?: string
     displayExpr: string
     valueExpr: string
     groupExpr: string,
@@ -22,23 +22,22 @@ interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> exten
     container: string
     valueSelector: (store: any) => Undefinable<ValueExprT>
     defaultValueSelector: (dataSource: Array<DataSourceT>) => ValueExprT
-    onValueChange: (value: Undefinable<ValueExprT>) => PayloadAction<any>
-    onValueChangeEx: Undefinable<(dsValue: DataSourceT) => void>
+    onValueChange: (value?: ValueExprT) => PayloadAction<any>
+    onValueChangeEx?: (dsValue: DataSourceT) => void
     showDropDownButton: boolean
     showClear: boolean
-    customButtons: Undefinable<Array<ButtonOptions>>
+    customButtons?: Array<ButtonOptions>
     hideIfEmpty: boolean
     opened: boolean
     paginate: boolean
-    onPopupShowing: Undefinable<
-        (dataSource: DataSource<DataSourceT, ValueExprT>,
-            value: ValueExprT,
-            dispatchValue: (value: ValueExprT) => void,
-            setFilter: (filter: Array<any> | null) => void,
-            cancelDefault: () => void,
-            onHiding: () => void) => void
-    >
-    onPopupHiding: Undefinable<(clearFilter: () => void) => void>
+    onPopupShowing?: (dataSource: DataSource<DataSourceT, ValueExprT>,
+        value: ValueExprT,
+        dispatchValue: (value: ValueExprT) => void,
+        setFilter: (filter: Array<any> | null) => void,
+        cancelDefault: () => void,
+        onHiding: () => void
+    ) => void
+    onPopupHiding?: () => void
 }
 
 
@@ -51,6 +50,7 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
                 (x: DataSourceT) => (x[props.valueExpr as keyof DataSourceT] as unknown) as ValueExprT
             const dsValue = (dataSource as Array<any>).find(x => keySelector(x) === value)
             props.onValueChangeEx(dsValue)
+            return
         }
         dispatch(props.onValueChange(value))
     }
@@ -101,18 +101,15 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
         setOpened(opened)
     }
 
-    function onHiding() {
-        props.onPopupHiding?.(
-            () => {
-                const timerId = setTimeout(() => {
-                    if (!opened) {
-                        ds.filter(null)
-                        ds.load()
-                    }
-                    clearTimeout(timerId)
-                }, 300)
+    useEffect(() => {
+        if (!opened) {
+            ds.filter(null)
+            ds.load()
+        }
+    }, [opened, ds])
 
-            },)
+    function onHiding() {
+        props.onPopupHiding?.()
         setOpened(false)
     }
 

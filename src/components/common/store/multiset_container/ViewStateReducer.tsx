@@ -3,6 +3,7 @@ import { APPLY_STATE } from '../view_state/Actions'
 import { VALIDATE_STATE } from './Actions'
 import { MultisetContainerStore } from './Store'
 
+
 export function getViewStateReducer<T>(
     stateValidator: (state: T) => T,
     stateSelector: (state: MultisetContainerStore) => T,
