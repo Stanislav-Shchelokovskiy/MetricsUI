@@ -1,24 +1,31 @@
 .tabpanel-item {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
     padding: 12px;
 }
 
-.tabpanel-item-info,
-.tabpanel-item-text {
-    margin: 0;
-    padding: 8px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.tabpanel-item-info {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.tabpanel-item-info:hover,
-.tabpanel-item-info.selected {
-    background-color: rgba(229, 237, 255, 1);
-    cursor: pointer;
+#favoritesButton .dx-icon:hover {
+    color: orange;
 }
 
-.tabpanel-item-info:active {
-    background-color: rgba(209, 223, 255, 1);
+#favoritesButton .dx-icon:active {
+    color: orangered;
+}
+
+.favoritesButton-selected.dx-button .dx-icon {
+    color: coral;
+}
+
+.favoritesButton-selected.dx-button.dx-button-normal.dx-state-active,
+.favoritesButton.dx-button.dx-button-normal.dx-state-active {
+    background-color: transparent;
+}
+
+.dx-item.dx-toolbar-item.dx-toolbar-label {
+    max-width: unset !important;
 }

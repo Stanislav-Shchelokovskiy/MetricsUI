@@ -9,7 +9,7 @@ import {
 import { MultisetContainerContext, useMultisetContainerContext } from '../common/components/multiset_container/MultisetContainerContext'
 import ApplySharedState from '../common/components/state_management/ApplySharedState'
 import { fetchMetrics, fetchMetricDesc } from './fetchMetrics'
-import { Metric } from '../common/components/multiset_container/graph/MetricSelector'
+import { Metric } from '../common/components/multiset_container/graph/metric_selector/Metric'
 import MultisetContainer from '../common/components/multiset_container/MultisetContainer'
 import { SettingsSets } from '../common/components/multiset_container/MultisetContainer'
 import SupportMetricsSet from '../support_metrics/content/set/Set'

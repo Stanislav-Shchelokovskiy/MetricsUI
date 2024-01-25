@@ -1,5 +1,5 @@
 import FetchResult from '../common/Typing'
-import { Metric } from '../common/components/multiset_container/graph/MetricSelector'
+import { Metric } from '../common/components/multiset_container/graph/metric_selector/Metric'
 import { getFetchResult } from '../common/network_resource_fetcher/FetchOrDefault'
 import { HelpItem } from '../common/Typing'
 import {

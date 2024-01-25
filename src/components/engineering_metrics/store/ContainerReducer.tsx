@@ -2,7 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { APPLY_STATE } from '../../common/store/view_state/Actions'
 import { MultisetContainerStore } from '../../common/store/multiset_container/Store'
 import { getAction } from '../../common/store/Actions'
-import { Metric } from '../../common/components/multiset_container/graph/MetricSelector'
+import { Metric } from '../../common/components/multiset_container/graph/metric_selector/Metric'
 import { Context } from '../../common/store/multiset_container/Context'
 
 
