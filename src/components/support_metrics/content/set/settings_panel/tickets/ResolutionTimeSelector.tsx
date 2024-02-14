@@ -6,6 +6,7 @@ import { changeResolutionTime } from '../../../../store/actions/Tickets'
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 import { resolutionTimeSelector } from '../../../../store/sets/Selectors'
 import Button, { getClearButtonOptions } from '../../../../../common/components/Button'
+import { isTicketResolutionTimeSelector } from '../../../../../common/store/multiset_container/Selectors'
 
 
 export default function ResolutionTimeSelector() {
@@ -19,6 +20,12 @@ export default function ResolutionTimeSelector() {
     const toRef = useRef<NumberBox>(null)
     const fromRef = useRef<NumberBox>(null)
     const lockUpdate = useRef(false)
+
+    const dispatch = useDispatch()
+
+    const ticketResolutionTimeSelected = useSelector((store: SupportMetricsStore) => isTicketResolutionTimeSelector(store))
+    if (ticketResolutionTimeSelected)
+        return null
 
     function setValues(range: Array<number>) {
         const [newFrom, newTo] = range.length ? range : emptyRange
@@ -53,7 +60,6 @@ export default function ResolutionTimeSelector() {
         onValueChange(range)
     }
 
-    const dispatch = useDispatch()
     let timerId: NodeJS.Timeout | undefined = undefined
     const onValueChange = (range: Array<number>) => {
         if (timerId !== undefined)

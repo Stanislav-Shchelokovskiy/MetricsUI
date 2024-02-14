@@ -1,22 +1,23 @@
 import { SetState } from './Interfaces'
 import { DEFAULT_SET } from './Defaults'
 import { getFilterFields } from '../../../common/components/multiset_container/Toolbar/FilterTooltip'
-import { isTicketLifetimeSelected } from '../../../common/store/multiset_container/Selectors'
-import { getOptionalFilterParameter } from '../../../common/store/multiset_container/sets/Defaults'
+import { isTicketLifetimeSelected, isTicketResolutionTimeSelected } from '../../../common/store/multiset_container/Selectors'
+import { getFilterParameter, getFilterParameters } from '../../../common/store/multiset_container/sets/Defaults'
+import { paramOrDefault } from '../../../common/store/multiset_container/Utils'
 
 export function getAliasedSet(set: SetState, metric: string) {
     return {
         Percentile: { metric: metric, value: set.percentile },
         'Ticket visibility': set.privacy,
         'Ticket owner': set.ownerKind,
-        'Closed for': isTicketLifetimeSelected(metric) ? getOptionalFilterParameter<number>(21) : set.closedForInDays,
-        'Resolution time': set.resolutionTimeInhours,
+        'Closed for': getClosedFor(metric, set),
+        'Resolution time': getResolutionTime(metric, set),
         Tribes: set.tribes,
         Tents: set.tents,
         Platforms: set.platforms,
         Products: set.products,
         'Versions': set.versions,
-        'Ticket tags': set.ticketsTags,
+        'Ticket tags': getTicketTags(metric, set),
         'Ticket types': set.ticketsTypes,
         'Fixed In': set.fixedIn,
         'Fixed': set.fixedBetween,
@@ -43,6 +44,29 @@ export function getAliasedSet(set: SetState, metric: string) {
         'CAT features': set.features,
         'Customers': set.customers,
     }
+}
+
+function getClosedFor(metric: string, set: SetState) {
+    return isTicketLifetimeSelected(metric) ? getFilterParameter<number>(21) : set.closedForInDays
+}
+
+function getResolutionTime(metric: string, set: SetState) {
+    return isTicketResolutionTimeSelected(metric) ? getFilterParameters<number>([0, 192]) : set.resolutionTimeInhours
+}
+
+function getTicketTags(metric: string, set: SetState) {
+    if (isTicketResolutionTimeSelected(metric)) {
+        const additionalTags = paramOrDefault(set.ticketsTags).values
+        return getFilterParameters<string>([
+            "(64)"  /* security issue (pass through Ray) */,
+            "(179)" /* support for Ray */,
+            "(4)"   /* escalated */,
+            "(94)"  /* postponed */,
+            "(168)" /* veracode */,
+            ...additionalTags,
+        ])
+    }
+    return set.ticketsTags
 }
 
 export function getSetDataFields() {

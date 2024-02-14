@@ -7,6 +7,7 @@ import { fetchTicketsTags, TicketsTag } from '../../../../network_resource_fetch
 import { useSetTitle } from '../../../../../common/components/multiset_container/set/SetContext'
 import { ticketsTagsSelector, ticketsTagsSelectorName } from '../../../../store/sets/Selectors'
 import { setDecomposition } from '../../../../../common/store/multiset_container/sets/Defaults'
+import { isTicketResolutionTimeSelector } from '../../../../../common/store/multiset_container/Selectors'
 
 
 export default function TicketsTagsSelector() {
@@ -16,6 +17,8 @@ export default function TicketsTagsSelector() {
     const onIncludeChange = (include: boolean) => changeTicketsTagsInclude({ stateId: setTitle, data: include })
     const decompositionArgs = setDecomposition(setTitle, ticketsTagsSelectorName)
 
+    const ticketResolutionTimeSelected = useSelector((store: SupportMetricsStore) => isTicketResolutionTimeSelector(store))
+
     return <MultiOptionSelector<TicketsTag, string>
         displaySelector='name'
         valueSelector='id'
@@ -23,7 +26,7 @@ export default function TicketsTagsSelector() {
         label='Ticket tags'
         fetchDataSource={fetchTicketsTags}
         value={value?.values}
-        includeButtonState={value === undefined || value.include}
+        includeButtonState={ticketResolutionTimeSelected ? undefined : value === undefined || value.include}
         onValueChange={onValueChange}
         onIncludeChange={onIncludeChange}
         container='#Sets_ScrollView_div'

@@ -16,6 +16,14 @@ export function isTicketLifetimeSelected(metric: string): boolean {
     return metric == 'Ticket Lifetime'
 }
 
+export function isTicketResolutionTimeSelector<ContainerState extends BaseContainerState>(store: MultisetContainerStore<ContainerState>) {
+    return isTicketResolutionTimeSelected(metricSelector(store))
+}
+
+export function isTicketResolutionTimeSelected(metric: string): boolean {
+    return metric == 'Ticket Resolution Time'
+}
+
 export function rangeSelector<ContainerState extends BaseContainerState>(store: MultisetContainerStore<ContainerState>) {
     return store.container.range
 }
