@@ -1,6 +1,6 @@
 import { FilterParameters, FilterParameter } from './sets/Interfaces'
 import { BaseSetState } from './sets/Interfaces'
-import { getOptionalFilterParameters, getFilterParameter } from './sets/Defaults'
+import { getFilterParameters, getFilterParameter } from './sets/Defaults'
 
 export function updateSetState<T extends BaseSetState>(title: string, state: Array<T>, replaceState: (currState: T) => T): Array<T> {
     return state.map((x) => { return x.title === title ? replaceState(x) : x })
@@ -9,7 +9,7 @@ export function updateSetState<T extends BaseSetState>(title: string, state: Arr
 export function updateValues<T>(obj: FilterParameters<T> | undefined, values: Array<T> | undefined): FilterParameters<T> | undefined {
     if (!obj) {
         if (values && values.length > 0)
-            return getOptionalFilterParameters(values)
+            return getFilterParameters(values)
         return undefined
     }
     if (obj.include && (!values || values.length === 0))
@@ -103,8 +103,8 @@ export function anyValueIsEmpty(...values: Array<any>): boolean {
     return false
 }
 
-export function paramOrDefault<T>(param: FilterParameters<T> | undefined): FilterParameters<T> | Array<T> {
-    return param || ((getOptionalFilterParameters<T>([]) as unknown) as Array<T>)
+export function paramOrDefault<T>(param: FilterParameters<T> | undefined): FilterParameters<T> {
+    return param || getFilterParameters<T>([])
 }
 
 export function definedValueOrDefault(val: any, defaultVal: any) {
