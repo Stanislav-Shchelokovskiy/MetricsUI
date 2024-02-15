@@ -4,6 +4,7 @@ on:
     branches:
       - rc
       - release
+      - old
 
 jobs:
   test:
