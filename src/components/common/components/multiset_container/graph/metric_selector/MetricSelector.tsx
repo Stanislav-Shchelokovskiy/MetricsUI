@@ -63,9 +63,8 @@ export default function MetricSelector() {
             dispatchValue: dispatchValue,
             visible: true,
             onHiding: onHiding,
-            favoriteMetrics: favoriteMetrics,
         }))
-    }, [state.defaultPopupOpened, favoriteMetrics])
+    }, [state.defaultPopupOpened])
 
 
     const onHiding = useCallback(() => {
