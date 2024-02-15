@@ -23,7 +23,7 @@ export default function ClosedForSelector() {
     return <NumericSelector
         className='OptionSelector'
         min={0}
-        defaultValue={0}
+        defaultValue={undefined}
         format={format}
         currentValue={value}
         onValueChange={onValueChange}
