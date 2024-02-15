@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect, useRef } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import SelectBox, { DropDownOptions, Button } from 'devextreme-react/select-box'
 import DataSource from 'devextreme/data/data_source'
 import LoadIndicator from './LoadIndicator'
@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import useDataSource, { DataSourceProps } from '../../common/hooks/UseDataSource'
 import { useSingleValidate } from '../hooks/UseValidate'
 import { getClearButtonOptions, ButtonOptions } from './Button'
-import { Undefinable, Token } from '../Typing'
+import { Undefinable } from '../Typing'
 
 
 interface Props<DataSourceT, ValueExprT = DataSourceT | keyof DataSourceT> extends DataSourceProps<DataSourceT> {
@@ -100,19 +100,6 @@ export default function OptionSelector<DataSourceT, ValueExprT = DataSourceT | k
         )
         setOpened(opened)
     }
-    const cancellationToken = useRef<Token>({ cancel: () => { } })
-    useEffect(() => {
-        cancellationToken.current.cancel()
-        if (props.onPopupShowing && !opened) {
-            // we use timer in order not to disturb animation by update
-            const timerId = setTimeout(() => {
-                ds.filter(null)
-                ds.load()
-                clearTimeout(timerId)
-            }, 400)
-            cancellationToken.current.cancel = () => { clearTimeout(timerId) }
-        }
-    }, [opened, ds])
 
     function onHiding() {
         props.onPopupHiding?.()
