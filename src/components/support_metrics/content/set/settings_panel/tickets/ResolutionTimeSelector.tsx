@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { NumberBox } from 'devextreme-react/number-box'
 import { useSelector, useDispatch } from 'react-redux'
 import { SupportMetricsStore } from '../../../../store/Store'
@@ -10,37 +10,27 @@ import { isTicketResolutionTimeSelector } from '../../../../../common/store/mult
 
 
 export default function ResolutionTimeSelector() {
-    const emptyRange = [0, 0]
     const setTitle = useSetTitle()
-    const [from, to] = useSelector((store: SupportMetricsStore) => {
+    const emptyRange = [0, 0]
+    const appliedRange = useSelector((store: SupportMetricsStore) => {
         const values = resolutionTimeSelector(store, setTitle)?.values
         return values ? values : emptyRange
     })
+    const [[from, to], setRange] = useState<Array<number>>(appliedRange)
 
-    const toRef = useRef<NumberBox>(null)
-    const fromRef = useRef<NumberBox>(null)
-    const lockUpdate = useRef(false)
+    useEffect(() => {
+        setRange(appliedRange)
+    }, appliedRange)
 
     const dispatch = useDispatch()
+
+    const timer = useRef<{ timeout: NodeJS.Timeout | undefined }>({ timeout: undefined })
 
     const ticketResolutionTimeSelected = useSelector((store: SupportMetricsStore) => isTicketResolutionTimeSelector(store))
     if (ticketResolutionTimeSelected)
         return null
 
-    function setValues(range: Array<number>) {
-        const [newFrom, newTo] = range.length ? range : emptyRange
-        if (newFrom != from || newTo != to) {
-            lockUpdate.current = true
-            fromRef.current?.instance.option('value', newFrom)
-            toRef.current?.instance.option('value', newTo)
-            lockUpdate.current = false
-            dispatch(changeResolutionTime({ stateId: setTitle, data: range }))
-        }
-    }
-
-    const onFromChange = (from: number) => {
-        if (lockUpdate.current)
-            return
+    function onFromChange(from: number) {
         let range: Array<number> = []
         if (to > from)
             range = [from, to]
@@ -49,9 +39,7 @@ export default function ResolutionTimeSelector() {
         onValueChange(range)
     }
 
-    const onToChange = (to: number) => {
-        if (lockUpdate.current)
-            return
+    function onToChange(to: number) {
         let range: Array<number> = []
         if (to > from)
             range = [from, to]
@@ -60,24 +48,34 @@ export default function ResolutionTimeSelector() {
         onValueChange(range)
     }
 
-    let timerId: NodeJS.Timeout | undefined = undefined
-    const onValueChange = (range: Array<number>) => {
-        if (timerId !== undefined)
-            clearTimeout(timerId)
-        timerId = setTimeout(() => {
-            setValues(range)
-            clearTimeout(timerId)
-        }, 700)
+    function onValueChange(range: Array<number>) {
+        if (timer.current.timeout != null)
+            clearTimeout(timer.current.timeout)
+
+        const [newFrom, newTo] = range.length ? range : emptyRange
+        setRange([newFrom, newTo])
+
+        if (newFrom != from || newTo != to) {
+            timer.current.timeout = setTimeout(() => {
+                dispatch(changeResolutionTime({ stateId: setTitle, data: range }))
+                clearTimeout(timer.current.timeout)
+            }, 700)
+        }
+    }
+
+    function clear() {
+        setRange(emptyRange)
+        dispatch(changeResolutionTime({ stateId: setTitle, data: [] }))
     }
 
     const defaultProps = {
         min: 0,
-        placeholder: '...',
         stylingMode: 'filled' as const,
         step: 1,
         showSpinButtons: true,
         useLargeSpinButtons: true,
         mode: 'number' as const,
+        defaultValue: 0,
     }
 
     return (<div className='BetweenSelectorContainer'>
@@ -85,24 +83,22 @@ export default function ResolutionTimeSelector() {
             <div className='LabelWithoutButton'>Ticket resolution time</div>
             <div className='Selector'>
                 <NumberBox
-                    ref={fromRef}
-                    defaultValue={from}
+                    value={from}
                     onValueChange={onFromChange}
                     {...defaultProps}
                 />
                 <i className='dx-icon-to dx-icon-custom-style'></i>
                 <NumberBox
-                    ref={toRef}
-                    defaultValue={to}
+                    value={to}
                     onValueChange={onToChange}
                     {...defaultProps}
                 />
             </div>
         </div>
-        {(from || to) ?
+        {(appliedRange != emptyRange) ?
             <Button
                 {...getClearButtonOptions()}
-                onClick={() => setValues([])}
+                onClick={clear}
             /> :
             null}
     </div>)
