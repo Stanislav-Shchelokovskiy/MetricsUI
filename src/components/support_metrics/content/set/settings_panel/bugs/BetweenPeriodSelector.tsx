@@ -46,6 +46,8 @@ function BetweenPeriodSelector(props: RangeSelectorProps) {
 
     const onPeriodChange = useCallback((period: Array<Date | any>) => {
         const [newStart, newEnd] = period
+        if (newStart == null || newEnd == null)
+            return
         props.changeRange(validatePeriod(newStart, newEnd))
     }, [start, end])
 
