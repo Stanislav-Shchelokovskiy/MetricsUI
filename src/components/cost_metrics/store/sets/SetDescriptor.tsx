@@ -1,4 +1,5 @@
-import { SetState, DEFAULT_SET } from './SetsReducer'
+import { SetState } from './Interfaces'
+import { DEFAULT_SET } from './Defaults'
 import { getFilterFields } from '../../../common/components/multiset_container/Toolbar/FilterTooltip'
 
 export function getAliasedSet(set: SetState) {

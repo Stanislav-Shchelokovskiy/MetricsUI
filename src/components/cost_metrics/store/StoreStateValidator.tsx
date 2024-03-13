@@ -1,5 +1,5 @@
 import { ContainerState, CONTEXT } from './ContainerReducer'
-import { SetState } from './sets/SetsReducer'
+import { SetState } from './sets/Interfaces'
 import { containerValidator as validateContainer, setsValidator as validateSets } from '../../common/store/multiset_container/StoreStateValidator'
 import { StringFilterParameters } from '../../common/store/multiset_container/sets/Interfaces'
 

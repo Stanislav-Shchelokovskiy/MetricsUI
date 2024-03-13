@@ -1,6 +1,6 @@
 import { COST_METRICS_END_POINT } from '../../common/EndPoint'
 import { ContainerState } from '../store/ContainerReducer'
-import { SetState } from '../store/sets/SetsReducer'
+import { SetState } from '../store/sets/Interfaces'
 import { getAliasedSet } from '../store/sets/SetDescriptor'
 import FetchResult from '../../common/Typing'
 import { fetchConvert } from '../../common/network_resource_fetcher/FetchOrDefault'

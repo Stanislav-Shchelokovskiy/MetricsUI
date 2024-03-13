@@ -1,21 +1,10 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { BaseSetState } from '../../../common/store/multiset_container/sets/Interfaces'
+import { SetState } from './Interfaces'
+import { INITIAL_SETS, DEFAULT_SET } from './Defaults'
 import { getSetsReducer } from '../../../common/store/multiset_container/sets/SetsReducerFactory'
 import { setsValidator } from '../StoreStateValidator'
-import { StringFilterParameters } from '../../../common/store/multiset_container/sets/Interfaces'
-import { getOptionalFilterParameters, getDefaultBaseSet } from '../../../common/store/multiset_container/sets/Defaults'
 import { employeesReducer } from './EmployeesReducer'
 
-export interface SetState extends BaseSetState {
-    empTeams: StringFilterParameters
-}
-
-export const DEFAULT_SET: SetState = {
-    ...getDefaultBaseSet(),
-    empTeams: getOptionalFilterParameters<string>(),
-}
-
-export const INITIAL_SETS: Array<SetState> = [DEFAULT_SET]
 
 export function setsReducer(sets: Array<SetState> = INITIAL_SETS, action: PayloadAction<any>): Array<SetState> {
     let res = setsReducerDefault(sets, action)

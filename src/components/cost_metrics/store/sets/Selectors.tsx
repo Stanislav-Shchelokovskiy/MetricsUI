@@ -1,4 +1,4 @@
-import { SetState } from './SetsReducer'
+import { SetState } from './Interfaces'
 import { getSelector } from '../../../common/store/multiset_container/Selectors'
 import { nameOf } from '../../../common/store/multiset_container/sets/Interfaces'
 

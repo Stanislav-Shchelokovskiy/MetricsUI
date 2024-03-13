@@ -1,5 +1,5 @@
 import FetchResult from '../../common/Typing'
-import { SetState } from '../store/sets/SetsReducer'
+import { SetState } from '../store/sets/Interfaces'
 import { COST_METRICS_END_POINT } from '../../common/EndPoint'
 import { fetchArray } from '../../common/network_resource_fetcher/FetchOrDefault'
 import { getAliasedSet } from '../store/sets/SetDescriptor'

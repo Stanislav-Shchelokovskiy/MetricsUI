@@ -2,12 +2,12 @@ import { containerReducer } from './ContainerReducer'
 import { setsReducer } from './sets/SetsReducer'
 import { MultisetContainerStore, getReducer } from '../../common/store/multiset_container/Store'
 import { ContainerState } from '../store/ContainerReducer'
-import { SetState } from './sets/SetsReducer'
+import { SetState } from './sets/Interfaces'
+import { DEFAULT_SET } from './sets/Defaults'
 import { stateValidator } from '../../common/store/multiset_container/StoreStateValidator'
 import { containerValidator, setsValidator } from './StoreStateValidator'
 import { Config } from '../../common/store/multiset_container/Store'
 import { INITIAL_STATE } from './ContainerReducer'
-import { DEFAULT_SET } from './sets/SetsReducer'
 
 
 const config: Config<ContainerState, SetState> = {
