@@ -3,7 +3,7 @@ import { BaseContainerState } from './BaseContainerState'
 import { generateSetTitle } from './Utils'
 import { getDefaultTitle } from './sets/Defaults'
 import { getViewStateReducer } from './ViewStateReducer'
-import { valueOrDefault, definedValueOrDefault } from './Utils'
+import { definedValueOrDefault } from './Utils'
 import {
     ADD_SET,
     REMOVE_SET,
@@ -123,7 +123,7 @@ function getComparisonGraphReducer<ContainerStateT extends BaseContainerState>(i
             case CHANGE_DISABLE_PERIOD_EXTENSION:
                 return {
                     ...container,
-                    disablePeriodExtension: valueOrDefault(action.payload, initialState.disablePeriodExtension),
+                    disablePeriodExtension: definedValueOrDefault(action.payload, initialState.disablePeriodExtension),
                 }
 
             default:

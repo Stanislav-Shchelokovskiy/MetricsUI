@@ -38,7 +38,7 @@ export function updateValuesInclude<T>(obj: FilterParameters<T> | undefined, inc
 }
 
 export function updateThreeStateValue(obj: FilterParameter<boolean> | undefined, value: boolean | undefined): FilterParameter<boolean> | undefined {
-    if (value === undefined)
+    if (value == null)
         return undefined
     return getFilterParameter(value)
 }
@@ -85,9 +85,9 @@ export function anyNodeIsConsideredEmpty<T>(...nodes: Array<FilterParameters<T> 
 
 export function nodeIsEmpty<T>(node: FilterParameters<T> | undefined, mustHaveValue: T | undefined = undefined) {
     return (
-        node === undefined ||
+        node == null ||
         (node.include && node.values.length === 0) || (
-            mustHaveValue !== undefined && (
+            mustHaveValue != null && (
                 (node.include && !node.values.includes(mustHaveValue)) ||
                 (!node.include && node.values.includes(mustHaveValue))
             )
@@ -98,7 +98,7 @@ export function nodeIsEmpty<T>(node: FilterParameters<T> | undefined, mustHaveVa
 export const TAKE_FROM_DEFAULT_SELECTOR = '#takeFromValues#'
 export function anyValueIsEmpty(...values: Array<any>): boolean {
     for (const value of values)
-        if (value === undefined || value === null || value.toString() === '' || value.toString() === TAKE_FROM_DEFAULT_SELECTOR)
+        if (value == null || value.toString() === '' || value.toString() === TAKE_FROM_DEFAULT_SELECTOR)
             return true
     return false
 }
@@ -108,9 +108,5 @@ export function paramOrDefault<T>(param: FilterParameters<T> | undefined): Filte
 }
 
 export function definedValueOrDefault(val: any, defaultVal: any) {
-    return val !== undefined ? val : defaultVal
-}
-
-export function valueOrDefault(val: any, defaultVal: any) {
-    return val || defaultVal
+    return val != null ? val : defaultVal
 }

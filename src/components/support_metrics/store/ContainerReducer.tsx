@@ -9,7 +9,7 @@ import { getContainerReducer } from '../../common/store/multiset_container/Conta
 import { CHANGE_BASELINE_ALIGNED_MODE } from './actions/Common'
 import { Context } from '../../common/store/multiset_container/Context'
 import { BooleanSetting, booleanSetting } from '../../common/Typing'
-import { valueOrDefault } from '../../common/store/multiset_container/Utils'
+import { definedValueOrDefault } from '../../common/store/multiset_container/Utils'
 
 export const CONTEXT = Context.Support
 
@@ -39,7 +39,7 @@ function customReducer(state: ContainerState, action: PayloadAction<any>): Conta
         case CHANGE_BASELINE_ALIGNED_MODE:
             return {
                 ...state,
-                baselineAlignedModeEnabled: valueOrDefault(action.payload, INITIAL_STATE.baselineAlignedModeEnabled)
+                baselineAlignedModeEnabled: definedValueOrDefault(action.payload, INITIAL_STATE.baselineAlignedModeEnabled)
             }
 
         default:

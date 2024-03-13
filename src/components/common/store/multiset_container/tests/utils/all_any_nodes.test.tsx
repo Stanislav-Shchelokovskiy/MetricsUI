@@ -1,10 +1,10 @@
-import { FilterParameters } from '../sets/Interfaces'
+import { FilterParameters } from '../../sets/Interfaces'
 import {
     allNodesAreConsideredEmpty,
     anyNodeIsConsideredEmpty,
     anyValueIsEmpty,
     nodeIsEmpty,
-} from '../Utils'
+} from '../../Utils'
 
 describe('testing allNodesAreConsideredEmpty: nodes are empty if include of all nodes is true and no one node contains a value ', () => {
     test('case 0', () => {

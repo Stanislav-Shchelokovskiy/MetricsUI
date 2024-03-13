@@ -1,13 +1,13 @@
 import {
     FilterParameters,
     FilterParameter,
-} from '../sets/Interfaces'
+} from '../../sets/Interfaces'
 import {
     updateValues,
     updateValuesInclude,
     updateThreeStateValue,
     updateThreeStateValueInclude,
-} from '../Utils'
+} from '../../Utils'
 
 
 describe('testing updateValues', () => {

@@ -1,4 +1,4 @@
-import { generateSetTitle } from '../Utils'
+import { generateSetTitle } from '../../Utils'
 
 describe('testing generateNewSetTitle', () => {
     test('case 0', () => {
