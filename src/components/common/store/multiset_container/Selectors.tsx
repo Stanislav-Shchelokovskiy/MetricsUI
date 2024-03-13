@@ -40,7 +40,7 @@ function setTitleSelector(store: any, setTitle: string) {
     return setTitle
 }
 
-function setSelector<T extends BaseSetState>(sets: Array<T>, setTitle: string) {
+export function setSelector<T extends BaseSetState>(sets: Array<T>, setTitle: string) {
     return sets.find(x => x.title === setTitle)
 }
 

@@ -3,12 +3,144 @@ import {
     FilterParameter,
 } from '../../sets/Interfaces'
 import {
+    updateSetState,
+    updateSetStateEnsureVal,
     updateValues,
     updateValuesInclude,
     updateThreeStateValue,
     updateThreeStateValueInclude,
 } from '../../Utils'
 
+import { BaseSetState } from '../../sets/Interfaces'
+import { getDefaultBaseSet, getFilterParameters } from '../../sets/Defaults';
+
+describe('testing updateSetState', () => {
+    test('set found', () => {
+        const state1: BaseSetState = getDefaultBaseSet()
+        state1.title = 'state1'
+        const state2: BaseSetState = getDefaultBaseSet()
+        state2.title = 'state2'
+        const states = [state1, state2]
+        const tents = ['tent1', 'tent2']
+
+        const got = updateSetState(state1.title, states, (x) => {
+            return {
+                ...x,
+                empTents: getFilterParameters(tents)
+            }
+        })
+
+        const want = [{
+            ...state1,
+            empTents: getFilterParameters(tents)
+        }, state2]
+
+        expect(got).toEqual(want)
+    });
+
+    test('set  not found', () => {
+        const state1: BaseSetState = getDefaultBaseSet()
+        state1.title = 'state1'
+        const state2: BaseSetState = getDefaultBaseSet()
+        state2.title = 'state2'
+        const states = [state1, state2]
+        const tents = ['tent1', 'tent2']
+
+        const got = updateSetState('not found', states, (x) => {
+            return {
+                ...x,
+                empTents: getFilterParameters(tents)
+            }
+        })
+
+        const want = states
+
+        expect(got).toEqual(want)
+    });
+});
+
+describe('testing updateSetStateEnsureVal', () => {
+    test('not empty val', () => {
+        const state1: BaseSetState = getDefaultBaseSet()
+        state1.title = 'state1'
+        const state2: BaseSetState = getDefaultBaseSet()
+        state2.title = 'state2'
+        const states = [state1, state2]
+        const tents = ['tent1', 'tent2']
+        const defaultTents = ['tent3']
+
+        const got = updateSetStateEnsureVal(state1.title, states, (set) => set?.empTents?.values, tents, defaultTents, (set, newVal) => {
+            return {
+                ...set,
+                empTents: getFilterParameters(newVal)
+            }
+        })
+
+        const want = [{
+            ...state1,
+            empTents: getFilterParameters(tents)
+        }, state2]
+
+        expect(got).toEqual(want)
+    });
+
+    test('equal vals', () => {
+        const tents = ['tent1', 'tent2']
+        const defaultTents = ['tent3']
+
+        const state1: BaseSetState = getDefaultBaseSet()
+        state1.title = 'state1'
+        state1.empTents = getFilterParameters(tents)
+        const state2: BaseSetState = getDefaultBaseSet()
+        state2.title = 'state2'
+        const states = [state1, state2]
+
+        const got = updateSetStateEnsureVal(state1.title, states, (set) => set?.empTents?.values, tents, defaultTents, (set, newVal) => {
+            return {
+                ...set,
+                empTents: getFilterParameters(newVal)
+            }
+        })
+
+        expect(got).toBe(states)
+    });
+
+    test('empty val', () => {
+        const state1: BaseSetState = getDefaultBaseSet()
+        state1.title = 'state1'
+        const state2: BaseSetState = getDefaultBaseSet()
+        state2.title = 'state2'
+        const states = [state1, state2]
+        const defaultTents = ['tent3']
+
+        const got1 = updateSetStateEnsureVal(state1.title, states, (set) => set?.empTents?.values, [], defaultTents, (set, newVal) => {
+            return {
+                ...set,
+                empTents: getFilterParameters(newVal)
+            }
+        })
+
+        const got2 = updateSetStateEnsureVal(state2.title, states, (set) => set?.empTents?.values, undefined, defaultTents, (set, newVal) => {
+            return {
+                ...set,
+                empTents: getFilterParameters(newVal)
+            }
+        })
+
+        const want1 = [{
+            ...state1,
+            empTents: getFilterParameters(defaultTents)
+        }, state2]
+
+        const want2 = [state1, {
+            ...state2,
+            empTents: getFilterParameters(defaultTents)
+        }]
+
+        expect(got1).toEqual(want1)
+        expect(got2).toEqual(want2)
+    });
+});
 
 describe('testing updateValues', () => {
     test('obj = undefined', () => {

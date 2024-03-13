@@ -5,6 +5,7 @@ import { DEFAULT_SET } from './Defaults'
 import { bugIsNotSelected } from '../Utils'
 import {
     updateSetState,
+    updateSetStateEnsureVal,
     updateValues,
     updateValuesInclude
 } from '../../../common/store/multiset_container/Utils'
@@ -20,15 +21,14 @@ export function ticketTypesReducer(sets: Array<SetState>, action: AnyAction): Ar
     switch (action.type) {
 
         case CHANGE_TICKETS_TYPES:
-            const newValues = action.payload.data === undefined || action.payload.data.length === 0 ? DEFAULT_SET.ticketsTypes?.values : action.payload.data
-            const targetSet = sets.find(x => x.title === action.payload.stateId)
-            const values = targetSet?.ticketsTypes?.values
-            if (JSON.stringify(values) === JSON.stringify(newValues))
-                return sets
-
-            return updateSetState(action.payload.stateId, sets, (x) => {
-                return _updateValues(x, newValues)
-            })
+            return updateSetStateEnsureVal(
+                action.payload.stateId,
+                sets,
+                (set) => set?.ticketsTypes?.values,
+                action.payload.data,
+                DEFAULT_SET.ticketsTypes?.values,
+                (set, newVal) => _updateValues(set, newVal)
+            )
         case CHANGE_TICKETS_TYPES_INCLUDE:
             return updateSetState(action.payload.stateId, sets, (x) => {
                 return _updateInclude(x, action.payload.data)

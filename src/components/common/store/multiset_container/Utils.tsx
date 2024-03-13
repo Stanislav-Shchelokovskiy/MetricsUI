@@ -1,9 +1,27 @@
 import { FilterParameters, FilterParameter } from './sets/Interfaces'
 import { BaseSetState } from './sets/Interfaces'
 import { getFilterParameters, getFilterParameter } from './sets/Defaults'
+import { setSelector } from './Selectors'
+import { Undefinable } from '../../Typing'
 
-export function updateSetState<T extends BaseSetState>(title: string, state: Array<T>, replaceState: (currState: T) => T): Array<T> {
+export function updateSetState<T extends BaseSetState>(title: string, state: Array<T>, replaceState: (state: T) => T): Array<T> {
     return state.map((x) => { return x.title === title ? replaceState(x) : x })
+}
+
+export function updateSetStateEnsureVal<T extends BaseSetState, V>(
+    title: string,
+    state: Array<T>,
+    currValSelector: (set?: T) => Undefinable<V>,
+    val: Undefinable<V>,
+    defaultVal: V,
+    replaceState: (currState: T, val: V) => T
+): Array<T> {
+    const newVal = (val == null || (val as Array<any>)?.length === 0) ? defaultVal : val
+    const targetSet = setSelector(state, title)
+    const currVal = currValSelector(targetSet)
+    if (JSON.stringify(currVal) === JSON.stringify(newVal))
+        return state
+    return updateSetState(title, state, (set)=>replaceState(set, newVal))
 }
 
 export function updateValues<T>(obj: FilterParameters<T> | undefined, values: Array<T> | undefined): FilterParameters<T> | undefined {
