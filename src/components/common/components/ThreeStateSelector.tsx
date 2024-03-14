@@ -9,13 +9,13 @@ interface Props {
     onValueChange: (value: boolean | null | undefined) => PayloadAction<any>
 }
 
-export default function ThreeStateSelectorSelector(props: Props) {
+export default function ThreeStateSelector(props: Props) {
     const dispatch = useDispatch()
     const onValueChange = (value: boolean | null | undefined) => {
         dispatch(props.onValueChange(value))
     }
     return <CheckBox
-        className='ThreeStateSelectorSelector'
+        className='ThreeStateSelector'
         text={props.text}
         defaultValue={props.defaultValue}
         onValueChange={onValueChange}
