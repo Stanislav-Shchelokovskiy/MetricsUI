@@ -1,4 +1,4 @@
-import { defaultValidateValues } from '../hooks/UseValidate'
+import { defaultValidateValues } from '../UseValidate'
 
 
 describe('testing validateValues: first returning value should contain valid values, the second returning value indicate whether the values are valid', () => {

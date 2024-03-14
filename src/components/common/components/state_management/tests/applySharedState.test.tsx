@@ -1,4 +1,4 @@
-import { getState } from '../components/state_management/ApplySharedState'
+import { getState } from '../ApplySharedState'
 
 describe('testing ApplySharedState.getState: meaningful error should be returned in case of 403 and 404.', () => {
     test('case 0', () => {

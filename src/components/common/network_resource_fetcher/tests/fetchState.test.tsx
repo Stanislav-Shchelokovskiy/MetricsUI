@@ -1,4 +1,4 @@
-import { convertPull } from '../network_resource_fetcher/FetchState'
+import { convertPull } from '../FetchState'
 
 
 describe('testing convertPull: undefined should be returned in all cases when status code != 200.', () => {
