@@ -32,4 +32,9 @@ describe('testing validateValues: first returning value should contain valid val
         expect(areValuesValid).toBeFalsy()
         expect(validValues).toEqual([2])
     });
+    test('case 6', () => {
+        const [validValues, areValuesValid] = defaultValidateValues([], [2, 3], 'id')
+        expect(areValuesValid).toBeFalsy()
+        expect(validValues).toEqual([])
+    });
 });
