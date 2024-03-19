@@ -1,4 +1,5 @@
 import { fetchConvert } from './FetchOrDefault'
+import { authHeader } from '../ms_id/Msal'
 
 function convertPush(stateId: string | undefined): string {
     return stateId ? stateId : ''
@@ -9,7 +10,10 @@ export async function PushState(endPoint: string, state: any) {
         `${endPoint}/PushState`,
         {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                ...await authHeader(),
+            },
             body: JSON.stringify({ state: JSON.stringify(state) }),
         },
         (r: Response) => r.text(),
@@ -30,7 +34,7 @@ export async function PullState(endPoint: string, stateId: string) {
         new URLSearchParams({
             state_id: stateId,
         }),
-        {},
+        { headers: await authHeader() },
         async (r: Response) => [r.status, await r.json()],
     )
 }

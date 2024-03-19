@@ -1,5 +1,5 @@
 import FetchResult from '../Typing'
-import { getAccessToken } from '../ms_id/Msal'
+import { authHeader } from '../ms_id/Msal'
 
 export async function fetchArray<T>(input: RequestInfo | URL, init?: RequestInit): Promise<FetchResult<Array<T>>> {
     return fetchConvert<Array<T>, Array<T>>(fetchArrayConverter, input, init)
@@ -16,13 +16,11 @@ export async function fetchConvert<RawT, ResT>(
     responseSelector: ((r: Response) => Promise<any>) = async (r: Response) => await r.json()
 ): Promise<FetchResult<ResT>> {
     try {
-        const accessToken = await getAccessToken()
-
         const res = await fetch(input, {
             ...init,
             headers: {
                 ...init?.headers,
-                'Authorization': `Bearer ${accessToken}`,
+                ...await authHeader(),
             },
             credentials: 'include',
         })

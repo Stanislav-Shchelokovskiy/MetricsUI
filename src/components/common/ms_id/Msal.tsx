@@ -53,7 +53,7 @@ export function getMsalInstance() {
     return msalInstance
 }
 
-export async function getAccessToken(): Promise<string | undefined> {
+async function getAccessToken(): Promise<string | undefined> {
     // https://learn.microsoft.com/en-us/entra/identity-platform/scenario-spa-acquire-token?tabs=react
     const accessTokenRequest = {
         scopes: ["user.read"],
@@ -68,4 +68,9 @@ export async function getAccessToken(): Promise<string | undefined> {
             return undefined
         }
     })
+}
+
+export async function authHeader() {
+    const accessToken = await getAccessToken()
+    return {'Authorization': `Bearer ${accessToken}`}
 }
