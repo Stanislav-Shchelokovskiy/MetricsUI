@@ -5,9 +5,7 @@ import {
     AccountInfo,
     InteractionRequiredAuthError,
 } from '@azure/msal-browser'
-import Cookies from 'js-cookie'
 import { MSAL_CONFIG } from './AuthConfig'
-import { getRole } from './Roles'
 
 
 function setActiveAccount(msalInstance: PublicClientApplication): AccountInfo | undefined {
@@ -27,24 +25,17 @@ function resetActiveAccount(msalInstance: PublicClientApplication): AccountInfo 
 let msalInstance: PublicClientApplication | null = null
 export function getMsalInstance() {
     const instance = new PublicClientApplication(MSAL_CONFIG)
-
     setActiveAccount(instance)
 
-    const ROLE = 'role'
     instance.addEventCallback((event: EventMessage) => {
         switch (event.eventType) {
             case EventType.LOGIN_SUCCESS:
-                const account = setActiveAccount(instance)
-                const role = getRole(account)
-                if (role)
-                    Cookies.set(ROLE, role, { secure: true, expires: 90 })
+                setActiveAccount(instance)
                 break
             case EventType.LOGOUT_SUCCESS:
                 resetActiveAccount(instance)
-                Cookies.remove(ROLE)
                 break
             case EventType.LOGIN_FAILURE:
-                Cookies.remove(ROLE)
                 console.log(JSON.stringify(event))
                 break
         }
@@ -72,5 +63,5 @@ async function getAccessToken(): Promise<string | undefined> {
 
 export async function authHeader() {
     const accessToken = await getAccessToken()
-    return {'Authorization': `Bearer ${accessToken}`}
+    return { 'Authorization': `Bearer ${accessToken}` }
 }
