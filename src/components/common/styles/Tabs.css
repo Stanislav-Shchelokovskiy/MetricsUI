@@ -1,0 +1,31 @@
+.tabpanel-item {
+    padding: 12px;
+}
+
+.tabpanel-item-info {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#favoritesButton .dx-icon:hover {
+    color: orange;
+}
+
+#favoritesButton .dx-icon:active {
+    color: orangered;
+}
+
+.favoritesButton-selected.dx-button .dx-icon {
+    color: coral;
+}
+
+.favoritesButton-selected.dx-button.dx-button-normal.dx-state-active,
+.favoritesButton.dx-button.dx-button-normal.dx-state-active {
+    background-color: transparent;
+}
+
+.dx-item.dx-toolbar-item.dx-toolbar-label {
+    max-width: unset !important;
+}

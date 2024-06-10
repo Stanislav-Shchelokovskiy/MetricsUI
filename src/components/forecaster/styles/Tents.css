@@ -1,0 +1,12 @@
+.Tents {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    /* background-color: green; */
+    gap: 30px;
+}
+
+.TentsContainer {
+    height: 89vh
+}

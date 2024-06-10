@@ -1,0 +1,136 @@
+.MultiOptionSelector,
+.OptionSelector,
+.BetweenPeriodSelector {
+    padding-left: 0px;
+    padding-right: 0.5px;
+    padding-top: 12px;
+    padding-bottom: 6px;
+    min-width: 22%;
+}
+
+.MultiOptionSelectorPopup .dx-overlay-content .dx-toolbar {
+    padding: 0px;
+    margin: 0px;
+}
+
+.BetweenSelectorContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    color: rgba(153, 153, 153, 255);
+    background-color: rgba(246, 246, 246, 0.5);
+    border-radius: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: small;
+}
+
+.BetweenSelectorContainer:hover,
+.BetweenSelectorContainer:focus-within {
+    background-color: rgba(243, 245, 248, 1);
+}
+
+.BetweenSelectorContainer:focus-within {
+    color: rgba(84, 134, 255, 1);
+}
+
+.BetweenSelectorContainer .Selector {
+    padding: 4px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1%;
+}
+
+.BetweenSelectorContainer .dx-texteditor.dx-editor-filled {
+    background-color: transparent;
+}
+
+.BetweenSelectorContainer .Content {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+}
+
+.BetweenSelectorContainer .Content .Label {
+    padding-left: 0px;
+}
+
+.BetweenSelectorContainer .Content .LabelWithoutButton {
+    padding-left: 32px;
+}
+
+.BetweenPeriodSelector {
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-left: 6px;
+    margin: 0px;
+    background-color: transparent
+}
+
+.BetweenPeriodSelector .dx-editor-filled.dx-texteditor-label-outside .dx-label span {
+    color: rgba(153, 153, 153, 255);
+    font-size: small;
+}
+
+.SetSettingsPanel .OptionSelector .dx-label-before {
+    padding-left: 38px;
+}
+
+.ThreeStateSelector {
+    padding: 16px;
+    background-color: rgba(246, 246, 246, 0.5);
+    border-radius: 4px;
+    color: rgba(153, 153, 153, 255);
+}
+
+.dx-overlay-content .dx-popup-content-scrollable {
+    overflow: hidden;
+}
+
+.dx-popup-bottom.dx-toolbar .dx-toolbar-items-container {
+    overflow: hidden;
+    padding: 0px;
+}
+
+.dx-popup-bottom.dx-toolbar {
+    padding: 0px;
+    padding-left: 24px;
+    padding-right: 12px;
+    overflow: visible;
+}
+
+.dx-popup-content {
+    padding: 0px;
+}
+
+.dx-texteditor-label {
+    padding: 0px;
+    padding-top: 3px;
+    margin: 0px;
+    min-block-size: 30px;
+}
+
+.dx-texteditor.dx-editor-filled {
+    background-color: rgba(246, 246, 246, 0.5);
+    border-radius: 4px;
+    border: 0px;
+}
+
+.dx-state-hover .dx-button-content .dx-icon-clear,
+.dx-button-content .dx-icon-clear,
+.dx-state-hover .dx-button-content .dx-icon-revert,
+.dx-button-content .dx-icon-revert,
+.dx-numberbox-spin-up-icon,
+.dx-state-hover .dx-numberbox-spin-up-icon,
+.dx-numberbox-spin-down-icon,
+.dx-state-hover .dx-numberbox-spin-down-icon {
+    color: rgba(153, 153, 153, 255);
+}
+
+.dx-icon-custom-style {
+    font-size: 22px;
+    color: rgba(187, 195, 215, 255);
+}

@@ -1,0 +1,56 @@
+.SetHeader {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1%;
+    background-color: rgba(230, 230, 230, 1);
+}
+
+.SetHeaderTitle {
+    font-weight: bold;
+    font-size: large;
+    padding: 8px;
+    padding-right: 25px;
+    padding-left: 15px;
+}
+
+.SetHeaderRenameButton {
+    margin-left: 7px;
+}
+
+.Sets_ScrollView {
+    width: 30vw;
+}
+
+.MultisetContainer_ContentDrawer {
+    display: flex;
+    flex-flow: column nowrap;
+    min-width: 70vw;
+    height: 93vh;
+}
+
+.Set,
+.SetSettingsPanel,
+.AdvancedSettings {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 5px;
+    padding-right: 6px;
+    padding-bottom: 2%;
+}
+
+.SetSettingsPanel {
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+.MultisetContainer,
+.MultisetContainerContent {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+}

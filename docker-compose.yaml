@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  stat_app:
+    image: shchelokovskiy/metrics:metrics_ui
+    restart: always
+    hostname: stat_app
+    container_name: stat_app
+    command: nginx -g "daemon off;"
+
+networks:
+  default:
+    name: support_analytics
+    external: true

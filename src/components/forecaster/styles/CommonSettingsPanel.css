@@ -1,0 +1,11 @@
+.ForecasterCommonSettingsPanel {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    /* background-color: rgb(150, 212, 212); */
+    padding-left: 8px;
+    padding-bottom: 8px;
+    gap: 10px;
+    width: 80%;
+}

@@ -1,0 +1,11 @@
+.Tent {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    /* background-color: orange; */
+}
+
+.TentHeader {
+    padding-left: 10px;
+}

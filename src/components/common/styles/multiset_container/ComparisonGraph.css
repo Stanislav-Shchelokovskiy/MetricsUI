@@ -1,0 +1,94 @@
+.ComparisonGraph_LoadingIndicator {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 10000;
+    display: flex;
+    padding-top: 20vh;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.ComparisonGraph_SettingsPanel {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+    flex: 1;
+    height: 18vh;
+    min-width: 70vw;
+}
+
+.ComparisonGraph_PeriodSelector {
+    margin-bottom: 0px;
+    padding-right: 0px;
+    margin-right: 0px;
+    flex: 1.13;
+    min-width: 50vw;
+}
+
+.ComparisonGraph_GroupBySelector,
+.ComparisonGraph_MetricSelector,
+.ComparisonGraph_ComparisonMethodSelector {
+    min-height: 3rem;
+    height: 3rem;
+    width: 10vw;
+    margin-left: 10px;
+}
+
+.ComparisonGraph_GroupBySelector {
+    flex: 0.7;
+}
+
+.ComparisonGraph_MetricSelector {
+    flex: 1.8;
+}
+
+.ComparisonGraph_MetricsPopup {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: 'flex-start';
+    align-items: stretch;
+    max-height: 100%;
+    padding-bottom: 10px;
+}
+
+.ComparisonGraph_MetricsDesc {
+    padding-right: 6px;
+}
+
+.ComparisonGraph_MetricsDesc .title {
+    text-align: center;
+}
+
+.ComparisonGraph_MetricsTabPanel {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    max-width: 45%;
+    min-width: 45%;
+    min-height: 100%;
+}
+
+.ComparisonGraph_ComparisonMethodSelector {
+    margin-right: 10px;
+    flex: 0.95;
+}
+
+.ComparisonGraph {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex: 1;
+}
+
+.ComparisonPlot {
+    width: 100%;
+    height: 100%;
+}
+
+.GraphPlot_ScrollView {
+    height: 75vh;
+}
