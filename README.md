@@ -18,3 +18,5 @@ Make sure end point consts at **src > components > EndPoint.tsx** changed accord
 <br>
 
 If you introduce any breaking changes, add code to LocalStatesConverter to convert local states accordingly and specify a new vesrion.
+
+### See [Engineering Metrics WIKI](https://github.com/Stanislav-Shchelokovskiy/MetricsUI/blob/release/wiki/WIKI.md) for a full review of the overall platform functionality.
